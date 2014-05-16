@@ -1,0 +1,23 @@
+
+<ul {% if subsection %}style="display: none; opacity: 0; margin-left: 15px;"{% endif %}>
+  {% for item in tree %}
+    {% if item.status %}
+      {% capture statusHTML %}<sup>{{item.status}}</sup>{% endcapture %}
+    {% end if %}
+    {% if item.section %}
+      {% capture sectionHTML %}<a class="tlw-control tlw-collapsed">▸</a>{% endcapture %}
+    {% if item.path %}
+      <li>{{ sectionHTML }}<a href="{{ item.path }}" title="{{ item.title }}" data-title="{{ item.title }}"><span>{{ item.title }} {{ statusHTML }}</span></a></li>
+    {% else %}
+      <li>{{ sectionHTML }}<span class="tlw-title tlw-control-title" data-title="{{ item.title }}">{{ item.title }} {{ statusHTML }}</span></li>
+    {% endif %}
+    {% if item.break %}
+      <hr>
+    {% endif %}
+    {% if item.section %}
+      {% assign tree = item.section %}
+      {% assign subsection=true %}
+      {% include tree.html %}
+    {% endif %}
+  {% endfor %}
+</ul>

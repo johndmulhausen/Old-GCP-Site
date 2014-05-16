@@ -1,0 +1,66 @@
+{% include jswidgets.html %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <title>{{ site.name }} - {{ page.title }}</title>
+    
+    <link rel="stylesheet" href="/docs/css/style.css" type="text/css">
+    <link rel="stylesheet" href="/docs/css/pygments.css" type="text/css">
+    <link rel="stylesheet" href="/docs/css/custom.css" type="text/css">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script type="text/javascript" src="/docs/js/sidebar.js"></script>
+    <link rel="top" title="{{ page.title }}" href="{{ page.url }}">
+    <link rel="next" title="{{ page.title }}" href="{{ page.url }}"> 
+  </head>
+  <body role="document" class="two-column docs"><a href="https://github.com/GoogleCloudPlatform/docs/edit/gh-pages/{{ page.path }}"><img style="position: absolute; top: 0; right: 0; border: 0; z-index: 999;" src="/docs/images/forkme.png" alt="Fork me on GitHub"></a>
+    <div id="sandbar">
+      <header id="gc-googlebar">
+      <a id="gc-logo" href="{{ site.baseurl }}"><img src="/docs/images/cloudplatform-horizontal.png" alt="Google Cloud Platform logo"></a>
+        <form class="gc-search" action="http://googlecloudplatform.github.io/gcloud-python/search.html" method="GET">
+          <div class="searchbox" style="width: 429px;">
+            <span class="button button-blue mini">Google Cloud Platform</span>
+            <input type="text" name="q" class="q" id="q" value="" placeholder="Search" autocomplete="off" style="width: 263px;">
+          </div>
+          <button class="button button-blue" style="top: 0px; left: 444px;">
+          <img src="/docs/images/search.png" alt="Search">
+        </button>
+      </form>
+      </header>
+    </div>
+    
+<div id="gc-wrapper">
+  <div id="gc-appbar">
+    <h1><a href="{{ site.baseurl }}">{{ site.name }}</a></h1>
+  </div>
+    <div id="gc-main" class="main">
+      <div id="gc-sidebar" class="sphinxsidebar" role="navigation" aria-label="main navigation">
+
+<nav class="gc-toc">
+{% assign tree = site.data.book[page.toc] %}
+{% include tree.html %}
+
+            </nav>
+            
+            
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main" id="gc-content">
+          <h1>{{ page.title }}</h1>
+          {{pagetoc}}
+          <div id="mainContent">{{ content }}</div>
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    </div>
+  </div>
+    <footer id="gc-footer" class="footer" role="contentinfo">
+    <div id="gc-copyright">
+        For the purposes of copyright, this document is © Copyright 2014, Google.
+      </div>
+    </footer>
+</body></html>

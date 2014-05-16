@@ -1,0 +1,244 @@
+main:
+- title: "What is App Engine?"
+  path: /docs/appengine/docs/whatisgoogleappengine
+- title: "App Engine Features"
+  path: /docs/appengine/features
+
+- title: "Pricing and Quotas"
+  section:
+  - title: "Pricing"
+    path: /docs/appengine/pricing
+  - title: "Quotas"
+    path: /docs/appengine/docs/quotas
+- title: "Downloads"
+  path: /docs/appengine/downloads
+
+- break: true
+
+- title: "Python"
+  section:
+  - include: "test"
+- title: "Java"
+  section:
+  - include: "test"
+- title: "PHP"
+  status_text: "Preview"
+  section:
+  - include: "test"
+- title: "Go"
+  status: experimental
+  section:
+  - include: "test"
+- title: "Managing Your App"
+  section:
+  - title: "Admin Console"
+    section:
+    - title: "Overview"
+      path: /docs/appengine/docs/adminconsole/
+    - title: "Usage Charts"
+      path: /docs/appengine/docs/adminconsole/usagecharts
+    - title: "Instances"
+      path: /docs/appengine/docs/adminconsole/instances
+    - title: "Roles"
+      path: /docs/appengine/docs/adminconsole/roles
+    - title: "Application Settings"
+      path: /docs/appengine/docs/adminconsole/applicationsettings
+    - title: "Migrating to the High Replication Datastore"
+      path: /docs/appengine/docs/adminconsole/migration
+    - title: "Datastore"
+      path: /docs/appengine/docs/adminconsole/datastoreconsole
+      section:
+      - title: "Backup/Restore, Copy, and Delete"
+        path: /docs/appengine/docs/adminconsole/datastoreadmin
+      - title: "Statistics"
+        path: /docs/appengine/docs/adminconsole/datastorestats
+    - title: "Performance Settings"
+      path: /docs/appengine/docs/adminconsole/performancesettings
+    - title: "PageSpeed"
+      path: /docs/appengine/docs/adminconsole/pagespeed
+    - title: "Traffic Splitting"
+      path: /docs/appengine/docs/adminconsole/trafficsplitting
+    - title: "Memcache"
+      path: /docs/appengine/docs/adminconsole/memcache
+  - title: "The App Config Tool"
+    path: /docs/appengine/docs/appcfg
+  - title: "Premier Accounts"
+    path: /docs/appengine/docs/premier
+  - title: "Custom Domains"
+    section:
+    - title: "Using a Custom Domain"
+      path: /docs/appengine/docs/domain
+    - title: "SSL for a Custom Domain"
+      path: /docs/appengine/docs/ssl
+  - title: "Managing App Resources"
+    path: /docs/appengine/docs/managing-resources
+  - title: "Using Git to Push and Deploy"
+    path: /docs/appengine/docs/push-to-deploy
+  - title: "Integrating with Google Analytics"
+    path: /docs/appengine/docs/google-analytics
+- title: "Sample Code, Tutorials and Videos"
+  section:
+  - title: "Sample Code"
+    section:
+    - title: "SDK Code"
+      path: http://code.google.com/p/google/docs/appengine/
+    - title: "JDO/JPA Code"
+      path: http://code.google.com/p/datanucleus-/docs/appengine/
+    - title: "Sample Apps Code"
+      path: https://github.com/GoogleCloudPlatform/
+    - title: "Launcher Code"
+      section:
+      - title: "Mac"
+        path: http://code.google.com/p/google-appengine-mac-launcher/
+      - title: "Windows/wx"
+        path: http://code.google.com/p/google-appengine-wx-launcher/
+  - title: "Videos"
+    path: /docs/appengine/docs/videoresources
+  - title: "Tutorials and Training"
+    path: /academy/apis/cloud/appengine
+- title: "Further Reading"
+  section:
+  - title: "Articles"
+    section:
+    - title: "Overview"
+      path: /docs/appengine/articles
+    - title: "Discovery Based APIs"
+      path: /docs/appengine/articles/efficient_use_of_discovery_based_apis
+    - title: "Designing for Scale"
+      path: /docs/appengine/articles/scalability
+    - title: "Optimizing Spring Framework"
+      path: /docs/appengine/articles/spring_optimization
+    - title: "JPA facets & Cloud SQL"
+      path: /docs/appengine/articles/using_jpa_tool
+    - title: "Service Accounts & Google Prediction API"
+      path: /docs/appengine/articles/prediction_service_accounts
+    - title: "Datastore Index Selection & Advanced Search"
+      path: /docs/appengine/articles/indexselection
+    - title: "Tasks API"
+      path: /docs/appengine/articles/python/getting_started_with_tasks_api
+    - title: "Workflows with Fantasm"
+      path: /docs/appengine/articles/fantasm
+    - title: "Pure Django Projects"
+      path: /docs/appengine/articles/django-nonrel
+    - title: "Modern Funnel Analytics Using Mapper"
+      path: /docs/appengine/articles/mr/mapper
+    - title: "Federated Authentication"
+      path: /docs/appengine/articles/openid
+    - title: "Recording Exceptions with ereporter"
+      path: /docs/appengine/articles/python/recording_exceptions_with_ereporter
+    - title: "Life of a Datastore Write"
+      path: /docs/appengine/articles/life_of_write
+    - title: "Storing Entities & Indexes"
+      path: /docs/appengine/articles/storage_breakdown
+    - title: "Handling Datastore Errors"
+      path: /docs/appengine/articles/handling_datastore_errors
+    - title: "Deferred Library"
+      path: /docs/appengine/articles/deferred
+    - title: "XMPP Service"
+      path: /docs/appengine/articles/using_xmpp
+    - title: "Effective PolyModel"
+      path: /docs/appengine/articles/polymodel
+    - title: "Load Testing"
+      path: /docs/appengine/articles/load_test
+    - title: "Minimizing Work"
+      path: /docs/appengine/articles/scaling/minimize
+    - title: "Avoiding Datastore Contention"
+      path: /docs/appengine/articles/scaling/contention
+    - title: "Effective Memcache"
+      path: /docs/appengine/articles/scaling/memcache
+    - title: "Django & app-engine-patch"
+      path: /docs/appengine/articles/app-engine-patch
+    - title: "Datastore Access with remote_api"
+      path: /docs/appengine/articles/remote_api
+    - title: "Voting and Decay Example App"
+      path: /docs/appengine/articles/overheard
+    - title: "Paging Through Large Datasets"
+      path: /docs/appengine/articles/paging
+    - title: "Sharding Counters"
+      path: /docs/appengine/articles/sharding_counters
+    - title: "Index Building"
+      path: /docs/appengine/articles/index_building
+    - title: "Running Applications on Django"
+      path: /docs/appengine/articles/pure_django
+    - title: "OpenSocial App"
+      path: http://wiki.opensocial.org.php?title=Building_an_OpenSocial_App_with_Google_App_Engine
+    - title: "Django 1.0 & Zipimport"
+      path: /docs/appengine/articles/django10_zipimport
+    - title: "Extending Model Properties"
+      path: /docs/appengine/articles/extending_models
+    - title: "Modeling Entity Relationships"
+      path: /docs/appengine/articles/modeling
+    - title: "Configuring Eclipse on Windows"
+      path: /docs/appengine/articles/eclipse
+    - title: "Updating Your Model's Schema"
+      path: /docs/appengine/articles/update_schema
+    - title: "Helper for Django"
+      path: /docs/appengine/articles/appengine_helper_for_django
+    - title: "Rietveld Code Review Tool"
+      path: /docs/appengine/articles/rietveld
+    - title: "Transaction Isolation"
+      path: /docs/appengine/articles/transaction_isolation
+    - title: "Configuring Authentication"
+      path: /docs/appengine/articles/auth
+    - title: "Serving Dynamic Images"
+      path: /docs/appengine/articles/python/serving_dynamic_images
+    - title: "Logging Events"
+      path: /docs/appengine/articles/logging
+    - title: "Running Django"
+      path: /docs/appengine/articles/django
+  - title: "Blog"
+    path: http://googlecloudplatform.blogspot.com/
+  - title: "Tools and Tips"
+    path: /docs/appengine/tools_tips
+  - title: "Case Studies"
+    path: https://cloud.google.com/customers/
+  - title: "Glossary"
+    path: /docs/appengine/docs/glossary
+
+- break: true
+
+- title: "Support"
+  section:
+  - title: "Community"
+    path: /docs/appengine/community
+  - title: "Submit Bugs or Feature Requests"
+    path: https://code.google.com/p/google/docs/appengine/wiki/FilingIssues?tm=3
+  - title: "Contact Support"
+    path: https://support.google.com/cloud/#topic=3473162
+  - title: "FAQ"
+    path: /docs/appengine/kb/
+
+- title: "Admin Console"
+  path: https://appengine.google.com/
+- title: "System Status"
+  path: http://code.google.com/status/appengine
+
+- break: true
+
+- title: "Other Cloud Platform Services"
+  section:
+    - title: "BigQuery"
+      path: /bigquery/
+    - title: "Cloud Datastore"
+      path: /datastore/
+    - title: "Cloud SQL"
+      path: /cloud-sql/
+    - title: "Cloud Storage"
+      path: /storage/
+    - title: "Compute Engine"
+      path: /compute/
+    - title: "Prediction API"
+      path: /prediction/
+    - title: "Translate API"
+      path: /translate/
+
+- title: "Legal"
+  section:
+  - title: "Terms of Service"
+    path: /cloud/terms/
+  - title: "Service Level Agreement"
+    path: /docs/appengine/sla
+
+test:
+- title: "Test Node"
+  path: /testing

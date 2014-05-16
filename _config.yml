@@ -1,0 +1,8 @@
+name: Google Cloud Documentation
+markdown: kramdown
+kramdown:
+  input: GFM
+  html_to_native: true
+  hard_wrap: false
+pygments: true
+baseurl: /docs
