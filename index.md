@@ -21,6 +21,9 @@ toc:
 This is a note.
 {: class="note"}
 
+This is a warning
+{: class="warning" }
+
 #### Last Build
 
 [![Build Status](https://magnum.travis-ci.com/GoogleCloudPlatform/docs.svg?token=9opyxGM94DZFoFqawuGn&branch=gh-pages)](https://magnum.travis-ci.com/GoogleCloudPlatform/docs)
