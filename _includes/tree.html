@@ -3,6 +3,8 @@
   {% for item in tree %}
     {% if item.status %}
       {% capture statusHTML %} <sup>{{item.status}}</sup>{% endcapture %}
+    {% else %}
+      {% assign statusHTML = "" %}
     {% endif %}
     {% if item.section %}
       {% capture sectionHTML %}<a class="tlw-control tlw-collapsed">▸</a>{% endcapture %}
