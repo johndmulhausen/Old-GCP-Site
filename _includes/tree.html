@@ -6,6 +6,8 @@
     {% endif %}
     {% if item.section %}
       {% capture sectionHTML %}<a class="tlw-control tlw-collapsed">▸</a>{% endcapture %}
+    {% else %}
+      {% assign sectionHTML = "" %}
     {% endif %}
     {% if item.path %}
       <li>{{ sectionHTML }}<a href="{{ item.path }}" title="{{ item.title }}" data-title="{{ item.title }}"><span>{{ item.title }} {{ statusHTML }}</span></a></li>
