@@ -3,7 +3,7 @@
   {% for item in tree %}
     {% if item.status %}
       {% capture statusHTML %}<sup>{{item.status}}</sup>{% endcapture %}
-    {% end if %}
+    {% endif %}
     {% if item.section %}
       {% capture sectionHTML %}<a class="tlw-control tlw-collapsed">▸</a>{% endcapture %}
     {% if item.path %}
