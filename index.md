@@ -62,7 +62,7 @@ print s
 {% assign gitBranch = "master" %}
 {% assign regionTag = "region" %}
 {% assign lang="js" %}
-{{ gitsnippet }}
+{% include gitsnippet.html %}
 
 ## Tables
 
