@@ -32,7 +32,7 @@ Important: This is important.
 s = "Python syntax highlighting"
 print s
 ```
-{: class="lang-python"}
+{: class="prettyprint lang-python"}
 
 This is a note.
 {: class="note"}
