@@ -12,7 +12,8 @@ $(document).ready(function(){
     dataType: "text",
   }).done(function(data) {
     $("#testSnippet").html(data)
+    $("#testSnippet").addClass("lang-{{lang}}")
   });
 });
 </script>
-<pre class="prettyprint lang-{{lang}}" id="testSnippet">Loading from https://cdn.rawgit.com/{{gitAccount}}/{{gitRepo}}/{{gitCommit}}/{{gitFile}}</pre>
+<pre class="prettyprint" id="testSnippet"></pre>
