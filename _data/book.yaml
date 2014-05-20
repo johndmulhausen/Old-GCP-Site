@@ -22,11 +22,11 @@ main:
   section:
   - include: "test"
 - title: "PHP"
-  status_text: "Preview"
+  status: "Preview"
   section:
   - include: "test"
 - title: "Go"
-  status: experimental
+  status: "Experimental"
   section:
   - include: "test"
 - title: "Managing Your App"
