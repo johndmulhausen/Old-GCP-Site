@@ -19,22 +19,27 @@ Testing Markdown + Includes + Submoduled templates
 
 Important: This is important.
 
-```
+### <pre>-using codeblock
+<pre class="prettyprint lang-yaml">
 toc:
 - title: "Testing"
   path: /docs/test
-```
-{: class="prettyprint lang-yaml" }
+</pre>
 
+
+### Indent-using codeblock
     var s = "JavaScript syntax highlighting";
     alert(s);
 {: class="prettyprint lang-javascript" }
 
+### Fenced codeblock
 ```
 s = "Python syntax highlighting"
 print s
 ```
 {: class="prettyprint lang-python"}
+
+### Asides
 
 This is a note.
 {: class="note"}
