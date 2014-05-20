@@ -62,11 +62,8 @@ print s
 {% assign gitBranch = "master" %}
 {% assign regionTag = "region" %}
 {% assign lang="js" %}
- include gitsnippet.html
+{% include gitsnippet.html %}
 
-### Gist test
-
-<script src="https://gist.github.com/johndmulhausen/395d271500aee13b7304.js"></script>
 
 ## Tables
 
