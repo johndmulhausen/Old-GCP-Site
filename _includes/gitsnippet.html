@@ -11,9 +11,8 @@ $(document).ready(function(){
     context: document.body,
     dataType: "text",
   }).done(function(data) {
-    $("#testSnippet").html(data)
-    $("#testSnippet").addClass("lang-{{lang}}")
-    prettyPrint();
+    $("#testSnippet").html(data);
+    $("#testSnippet").addClass("lang-{{lang}}");
   });
 });
 </script>
