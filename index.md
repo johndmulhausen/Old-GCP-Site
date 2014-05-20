@@ -19,12 +19,11 @@ Testing Markdown + Includes + Submoduled templates
 
 Important: This is important.
 
-~~~~~
+```YAML
 toc:
 - title: "Testing"
   path: /docs/test
-~~~~~
-{:lang="YAML"}
+```
 
 ~~~~~
 var s = "JavaScript syntax highlighting";
