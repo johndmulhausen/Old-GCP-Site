@@ -10,11 +10,11 @@ Testing Markdown + Includes + Submoduled templates
 
 [Button](http://www.google.com){: class="button"}
 [Red Button](http://www.google.com){: class="button-red"}
-[Blue Button](http://www.google.com){: class="button-red"}
+[Blue Button](http://www.google.com){: class="button-blue"}
 
 Important: This is important.
 
-{% highlight yaml %}
+{% highlight YAML %}
 toc:
 - title: "Testing"
   path: /docs/test
