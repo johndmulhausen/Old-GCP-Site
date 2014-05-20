@@ -43,7 +43,7 @@ buildRec = function(headingNodes, $elm, lv) {
 };
 $(document).ready(function(){
   var headingNodes = $('#mainContent').children().filter(":header");
-  var result = $('<ul style="list-style-type: none;">');
+  var result = $('<ul style="list-style-type: none; margin-left:0px;">');
   buildRec(headingNodes,result,1);
   $("#pageTOC").append(result);
 });
