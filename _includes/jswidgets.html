@@ -50,3 +50,21 @@ $(document).ready(function(){
 </script>
 <div id="pageTOC" style="padding-top:15px; font-weight: bold;"></div>
 {% endcapture %}
+
+{% capture pagetoc %}
+<script language="javascript">
+var gitFile = "{{gitFile}}";
+var gitBranch = "{{gitBranch}}";
+var regionTag = "{{regionTag}}";
+var lang="{{lang}}";
+
+$.ajax({
+  url: "{{gitFile}}",
+  context: document.body
+}).done(function(data) {
+  $("#testSnippet").html(data)
+});
+
+</script>
+<pre class="prettyprint lang-{{lang}}" id="testSnippet"></pre>
+{% endcapture %}
