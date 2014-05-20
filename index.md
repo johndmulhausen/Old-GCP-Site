@@ -21,6 +21,16 @@ toc:
   path: /docs/test
 {% endhighlight %}
 
+```javascript
+var s = "JavaScript syntax highlighting";
+alert(s);
+```
+ 
+```python
+s = "Python syntax highlighting"
+print s
+```
+
 This is a note.
 {: class="note"}
 
