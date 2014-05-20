@@ -49,6 +49,9 @@ This is a warning
 This is special.
 {: class="special" }
 
+This warrants caution.
+{: class="caution" }
+
 ## Tables
 
 | Tables        | Are           | Cool  |
