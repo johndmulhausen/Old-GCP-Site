@@ -62,7 +62,9 @@ print s
 {% assign gitBranch = "master" %}
 {% assign regionTag = "region" %}
 {% assign lang="java" %}
-{% include gitsnippet.html %}
+
+<script src="https://raw.githubusercontent.com/GoogleCloudPlatform/appengine-guestbook-python/master/guestbook.py" id="test"></script>
+
 
 
 ## Tables
