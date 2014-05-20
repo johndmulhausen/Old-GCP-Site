@@ -8,9 +8,10 @@ Testing Markdown + Includes + Submoduled templates
 
 {% include _testinclude.md %}
 
-[Button](http://www.google.com){: class="button"}
+[Grey Button](http://www.google.com){: class="button"}
 [Red Button](http://www.google.com){: class="button button-red"}
 [Blue Button](http://www.google.com){: class="button button-blue"}
+[Green Button](http://www.google.com){: class="button button-green"}
 
 Important: This is important.
 
