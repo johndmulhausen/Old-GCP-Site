@@ -57,13 +57,13 @@ print s
 ### Git sample
 
 {% assign gitAccount = "GoogleCloudPlatform" %}
-{% assign gitRepo = "appengine-maven-archetypes-java" %}
-{% assign gitFile = "guestbook-archetype/src/main/resources/archetype-resources/src/main/java/GuestbookServlet.java" %}
-{% assign gitBranch = "master" %}
+{% assign gitRepo = "appengine-guestbook-python" %}
+{% assign gitFile = "guestbook.py" %}
 {% assign regionTag = "region" %}
-{% assign lang="java" %}
+{% assign gitCommit = "c9f4e90b07f13e3bda886c20cb824e1fa3cf7d0f" %}
+{% assign lang="py" %}
+{% include gitsnippet.html %}
 
-<script src="https://raw.githubusercontent.com/GoogleCloudPlatform/appengine-guestbook-python/master/guestbook.py" id="test"></script>
 
 
 
