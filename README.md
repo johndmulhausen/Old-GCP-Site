@@ -6,4 +6,4 @@ Build results:
 https://travis-ci.org/GoogleDevDocs/googledevdocs.github.io
 
 Live preview:
-http://googlecloudplatform.github.io/docs/
+http://googledevdocs.github.io/
