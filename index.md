@@ -32,12 +32,9 @@ alert(s);
 ~~~~~
 {:lang="JavaScript"}
  
-{% highlight Python %}
-
-s = "Python syntax highlighting"
-print s
-
-{% endhighlight %}
+    s = "Python syntax highlighting"
+    print s
+{:lang="Python"}
 
 This is a note.
 {: class="note"}
