@@ -19,11 +19,11 @@ Testing Markdown + Includes + Submoduled templates
 
 Important: This is important.
 
-```YAML
+<pre class="prettyprint lang-yaml">
 toc:
 - title: "Testing"
   path: /docs/test
-```
+</pre>
 
 ~~~~~
 var s = "JavaScript syntax highlighting";
