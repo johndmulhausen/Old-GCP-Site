@@ -12,10 +12,26 @@ Testing Markdown + Includes + Submoduled templates
 
 ## CSS Tests 
 
+### Buttons
+
 [Grey Button](http://www.google.com){: class="button"}
 [Red Button](http://www.google.com){: class="button button-red"}
 [Blue Button](http://www.google.com){: class="button button-blue"}
 [Green Button](http://www.google.com){: class="button button-green"}
+
+### Asides
+
+This is a note.
+{: class="note"}
+
+This is a warning
+{: class="warning" }
+
+This is special.
+{: class="special" }
+
+This warrants caution.
+{: class="caution" }
 
 ## Code snippets
 
@@ -47,20 +63,6 @@ print s
 {% assign regionTag = "region" %}
 {% assign lang="js" %}
 {{gitsnippet}}
-
-### Asides
-
-This is a note.
-{: class="note"}
-
-This is a warning
-{: class="warning" }
-
-This is special.
-{: class="special" }
-
-This warrants caution.
-{: class="caution" }
 
 ## Tables
 
