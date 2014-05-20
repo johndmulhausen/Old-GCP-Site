@@ -13,6 +13,7 @@ $(document).ready(function(){
   }).done(function(data) {
     $("#testSnippet").html(data)
     $("#testSnippet").addClass("lang-{{lang}}")
+    prettyPrint();
   });
 });
 </script>
