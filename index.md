@@ -9,6 +9,8 @@ Testing Markdown + Includes + Submoduled templates
 {% include _testinclude.md %}
 
 [Button](http://www.google.com){: class="button"}
+[Red Button](http://www.google.com){: class="red-button"}
+
 
 Important: This is important.
 
@@ -23,6 +25,9 @@ This is a note.
 
 This is a warning
 {: class="warning" }
+
+This is special.
+{: class="special" }
 
 #### Last Build
 
