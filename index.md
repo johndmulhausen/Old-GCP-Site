@@ -14,11 +14,11 @@ Testing Markdown + Includes + Submoduled templates
 
 Important: This is important.
 
-```YAML
+{% highlight yaml %}
 toc:
 - title: "Testing"
   path: /docs/test
-```
+{% endhighlight %}
 
 This is a note.
 {: class="note"}
