@@ -14,7 +14,7 @@ Testing Markdown + Includes + Submoduled templates
 
 Important: This is important.
 
-```yaml
+```YAML
 toc:
 - title: "Testing"
   path: /docs/test
