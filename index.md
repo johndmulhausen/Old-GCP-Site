@@ -24,15 +24,15 @@ Important: This is important.
   path: /docs/test
 </pre>
 
-~~~~~
-var s = "JavaScript syntax highlighting";
-alert(s);
-~~~~~
-{:lang="JavaScript"}
- 
-    s = "Python syntax highlighting"
-    print s
-{:.language-python}
+
+    var s = "JavaScript syntax highlighting";
+    alert(s);
+
+```
+s = "Python syntax highlighting"
+print s
+```
+{: class="lang-python"}
 
 This is a note.
 {: class="note"}
