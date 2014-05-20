@@ -5,7 +5,5 @@ kramdown:
   html_to_native: true
   hard_wrap: false
 pygments: true
-syntax-highlighting:
-  enabled : true
-  css: syntax.css
+highlighter: pygments
 baseurl: /
