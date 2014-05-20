@@ -17,8 +17,6 @@ Testing Markdown + Includes + Submoduled templates
 [Blue Button](http://www.google.com){: class="button button-blue"}
 [Green Button](http://www.google.com){: class="button button-green"}
 
-Important: This is important.
-
 ### <pre>-using codeblock
 
 <pre class="prettyprint lang-yaml">toc:
