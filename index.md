@@ -22,7 +22,7 @@ Important: This is important.
 ### <pre>-using codeblock
 <pre class="prettyprint lang-yaml">toc:
 - title: "Testing"
-  path: /docs/test
+  path: "/docs/test"
 </pre>
 
 
