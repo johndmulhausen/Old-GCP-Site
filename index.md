@@ -34,7 +34,7 @@ alert(s);
  
     s = "Python syntax highlighting"
     print s
-{:lang="Python"}
+{:.language-python}
 
 This is a note.
 {: class="note"}
