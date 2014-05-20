@@ -7,7 +7,7 @@ $(document).ready(function(){
   var regionTag = "{{regionTag}}";
   var lang="{{lang}}";
   $.ajax({
-    url: "https://raw.githubusercontent.com/{{gitAccount}}/{{gitRepo}}/master/{{gitFile}}",
+    url: "https://rawgithub.com/{{gitAccount}}/{{gitRepo}}/master/{{gitFile}}",
     context: document.body,
     dataType: "text",
   }).done(function(data) {
