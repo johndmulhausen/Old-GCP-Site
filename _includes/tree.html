@@ -25,7 +25,7 @@
       {% include tree.html %}
     {% endif %}
     {% if item.include %}
-      {% assign tree = item.include %}
+      {% assign tree = site.data.book[item.include] %}
       {% assign subsection=true %}
       {% include tree.html %}
     {% endif %}
