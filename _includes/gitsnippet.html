@@ -8,7 +8,8 @@ $(document).ready(function(){
   var lang="{{lang}}";
   $.ajax({
     url: "https://raw.githubusercontent.com/{{gitAccount}}/{{gitRepo}}/master/{{gitFile}}",
-    context: document.body
+    context: document.body,
+    crossDomain: true,
   }).done(function(data) {
     $("#testSnippet").html(data)
   });
