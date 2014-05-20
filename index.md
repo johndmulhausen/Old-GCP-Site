@@ -20,11 +20,11 @@ Testing Markdown + Includes + Submoduled templates
 Important: This is important.
 
 ### <pre>-using codeblock
+
 <pre class="prettyprint lang-yaml">toc:
 - title: "Testing"
   path: "/docs/test"
 </pre>
-
 
 ### Indent-using codeblock
     var s = "JavaScript syntax highlighting";
