@@ -53,13 +53,18 @@ $(document).ready(function(){
 
 {% capture gitsnippet %}
 <script language="javascript">
+
+https://raw.githubusercontent.com/GoogleDevDocs/googledevdocs.github.io/master/js/sidebar.js
+
+var gitAccount = "{{gitAccount}}";
+var gitRepo = "{{gitRepo}}";
 var gitFile = "{{gitFile}}";
 var gitBranch = "{{gitBranch}}";
 var regionTag = "{{regionTag}}";
 var lang="{{lang}}";
 
 $.ajax({
-  url: "{{gitFile}}",
+  url: "https://raw.githubusercontent.com/{{gitAccount}}/{{gitRepo}}/master/{{gitFile}}",
   context: document.body
 }).done(function(data) {
   $("#testSnippet").html(data)
