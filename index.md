@@ -27,12 +27,11 @@ toc:
 
 {% endhighlight %}
 
-{% highlight Javascript %}
-
+~~~~
 var s = "JavaScript syntax highlighting";
 alert(s);
-
-{% endhighlight %}
+~~~~
+{: lang="JavaScript" }
  
 {% highlight Python %}
 
