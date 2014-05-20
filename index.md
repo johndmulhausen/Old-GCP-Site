@@ -40,6 +40,13 @@ This is a warning
 This is special.
 {: class="special" }
 
+| Tables        | Are           | Cool  |
+| ------------- |:-------------:| -----:|
+| col 3 is      | right-aligned | $1600 |
+| col 2 is      | centered      |   $12 |
+| zebra stripes | are neat      |    $1 |
+
+
 #### Last Build
 
 [![Build Status](https://magnum.travis-ci.com/GoogleCloudPlatform/docs.svg?token=9opyxGM94DZFoFqawuGn&branch=gh-pages)](https://magnum.travis-ci.com/GoogleCloudPlatform/docs)
