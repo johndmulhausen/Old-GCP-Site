@@ -17,7 +17,7 @@ main:
 
 - title: "Python"
   section:
-  - {% include site.data.appengine.php.book %}
+  - include: "test"
 - title: "Java"
   section:
   - include: "test"
