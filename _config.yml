@@ -4,6 +4,6 @@ kramdown:
   input: GFM
   html_to_native: true
   hard_wrap: false
+  highlighter: pygments
 pygments: true
-highlighter: pygments
 baseurl: /
