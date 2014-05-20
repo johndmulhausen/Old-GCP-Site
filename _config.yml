@@ -1,15 +1,5 @@
 name: Google Cloud Documentation
-markdown: kramdown
-kramdown:
-  input: GFM
-  html_to_native: true
-  hard_wrap: false
-  use_coderay: true
-  coderay:
-    coderay_wrap: div
-    coderay_line_numbers: inline
-    coderay_line_numbers_start: 1
-    coderay_tab_width: 4
-    coderay_bold_every: 10
-    coderay_css: style
+markdown:redcarpet
+pygments: true
+highlighter: pygments
 baseurl: /
