@@ -17,6 +17,8 @@ Testing Markdown + Includes + Submoduled templates
 [Blue Button](http://www.google.com){: class="button button-blue"}
 [Green Button](http://www.google.com){: class="button button-green"}
 
+## Code snippets
+
 ### <pre>-using codeblock
 
 <pre class="prettyprint lang-yaml">toc:
@@ -35,6 +37,16 @@ s = "Python syntax highlighting"
 print s
 ```
 {: class="prettyprint lang-python"}
+
+### Git sample
+
+{% assign gitAccount = "GoogleDevDocs" %}
+{% assign gitRepo = "googledevdocs.github.io" %}
+{% assign gitFile = "js/sidebar.js" %}
+{% assign gitBranch = "master" %}
+{% assign regionTag = "region" %}
+{% assign lang="js" %}
+{{gitsnippet}}
 
 ### Asides
 
@@ -57,7 +69,6 @@ This warrants caution.
 | col 3 is      | right-aligned | $1600 |
 | col 2 is      | centered      |   $12 |
 | zebra stripes | are neat      |    $1 |
-
 
 ## Last Build
 
