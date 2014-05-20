@@ -5,4 +5,7 @@ kramdown:
   html_to_native: true
   hard_wrap: false
 pygments: true
-baseurl: /docs
+syntax-highlighting:
+  enabled : true
+  css: syntax.css
+baseurl: /
