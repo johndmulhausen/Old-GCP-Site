@@ -1,0 +1,17 @@
+<script language="javascript">
+$(document).ready(function(){
+  var gitAccount = "{{gitAccount}}";
+  var gitRepo = "{{gitRepo}}";
+  var gitFile = "{{gitFile}}";
+  var gitBranch = "{{gitBranch}}";
+  var regionTag = "{{regionTag}}";
+  var lang="{{lang}}";
+  $.ajax({
+    url: "https://raw.githubusercontent.com/{{gitAccount}}/{{gitRepo}}/master/{{gitFile}}",
+    context: document.body
+  }).done(function(data) {
+    $("#testSnippet").html(data)
+  });
+});
+</script>
+<pre class="prettyprint lang-{{lang}}" id="testSnippet"></pre>
