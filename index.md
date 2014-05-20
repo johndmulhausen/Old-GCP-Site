@@ -64,9 +64,6 @@ print s
 {% assign lang="python" %}
 {% include gitsnippet.html %}
 
-
-
-
 ## Tables
 
 | Tables        | Are           | Cool  |
