@@ -49,4 +49,4 @@ This is special.
 
 #### Last Build
 
-[![Build Status](https://magnum.travis-ci.com/GoogleCloudPlatform/docs.svg?token=9opyxGM94DZFoFqawuGn&branch=gh-pages)](https://magnum.travis-ci.com/GoogleCloudPlatform/docs)
+[![Build Status](https://travis-ci.org/GoogleDevDocs/googledevdocs.github.io.svg?branch=master)](https://travis-ci.org/GoogleDevDocs/googledevdocs.github.io)
