@@ -3,11 +3,12 @@ $(document).ready(function(){
   var gitAccount = "{{gitAccount}}";
   var gitRepo = "{{gitRepo}}";
   var gitFile = "{{gitFile}}";
-  var gitBranch = "{{gitBranch}}";
+  var gitCommit = "{{gitCommit}}";
   var regionTag = "{{regionTag}}";
   var lang="{{lang}}";
+  GoogleCloudPlatform/appengine-guestbook-python//guestbook.py
   $.ajax({
-    url: "https://rawgit.com/{{gitAccount}}/{{gitRepo}}/master/{{gitFile}}",
+    url: "https://cdn.rawgit.com/{{gitAccount}}/{{gitRepo}}/{{gitCommit}}/{{gitFile}}",
     context: document.body,
     dataType: "text",
   }).done(function(data) {
