@@ -61,7 +61,7 @@ print s
 {% assign gitFile = "guestbook.py" %}
 {% assign regionTag = "region" %}
 {% assign gitCommit = "c9f4e90b07f13e3bda886c20cb824e1fa3cf7d0f" %}
-{% assign lang="py" %}
+{% assign lang="python" %}
 {% include gitsnippet.html %}
 
 
