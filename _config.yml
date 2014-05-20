@@ -1,5 +1,8 @@
 name: Google Cloud Documentation
-markdown: redcarpet
-pygments: true
-highlighter: pygments
+markdown: kramdown
+kramdown:
+  input: GFM
+  html_to_native: true
+  hard_wrap: false
+  use_coderay: true
 baseurl: /
