@@ -56,12 +56,12 @@ print s
 
 ### Git sample
 
-{% assign gitAccount = "GoogleDevDocs" %}
-{% assign gitRepo = "googledevdocs.github.io" %}
-{% assign gitFile = "js/sidebar.js" %}
+{% assign gitAccount = "GoogleCloudPlatform" %}
+{% assign gitRepo = "appengine-maven-archetypes-java" %}
+{% assign gitFile = "guestbook-archetype/src/main/resources/archetype-resources/src/main/java/GuestbookServlet.java" %}
 {% assign gitBranch = "master" %}
 {% assign regionTag = "region" %}
-{% assign lang="js" %}
+{% assign lang="java" %}
 {% include gitsnippet.html %}
 
 
