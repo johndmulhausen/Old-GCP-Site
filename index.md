@@ -19,8 +19,7 @@ Testing Markdown + Includes + Submoduled templates
 
 Important: This is important.
 
-<pre class="prettyprint lang-yaml">
-toc:
+<pre class="prettyprint lang-yaml">toc:
 - title: "Testing"
   path: /docs/test
 </pre>
