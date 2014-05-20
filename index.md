@@ -19,19 +19,18 @@ Testing Markdown + Includes + Submoduled templates
 
 Important: This is important.
 
-{% highlight YAML %}
-
+~~~~~
 toc:
 - title: "Testing"
   path: /docs/test
+~~~~~
+{:lang="YAML"}
 
-{% endhighlight %}
-
-~~~~
+~~~~~
 var s = "JavaScript syntax highlighting";
 alert(s);
-~~~~
-{: lang="JavaScript" }
+~~~~~
+{:lang="JavaScript"}
  
 {% highlight Python %}
 
