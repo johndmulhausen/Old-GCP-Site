@@ -6,7 +6,11 @@ toc: main
 
 Testing Markdown + Includes + Submoduled templates
 
+## Included Markdown content
+
 {% include _testinclude.md %}
+
+## CSS Tests 
 
 [Grey Button](http://www.google.com){: class="button"}
 [Red Button](http://www.google.com){: class="button button-red"}
@@ -46,6 +50,8 @@ This is a warning
 This is special.
 {: class="special" }
 
+## Tables
+
 | Tables        | Are           | Cool  |
 | ------------- |:-------------:| -----:|
 | col 3 is      | right-aligned | $1600 |
@@ -53,6 +59,6 @@ This is special.
 | zebra stripes | are neat      |    $1 |
 
 
-#### Last Build
+## Last Build
 
 [![Build Status](https://travis-ci.org/GoogleDevDocs/googledevdocs.github.io.svg?branch=master)](https://travis-ci.org/GoogleDevDocs/googledevdocs.github.io)
