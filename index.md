@@ -8,6 +8,8 @@ Testing Markdown + Includes + Submoduled templates
 
 ## Included Markdown content
 
+Hi guys
+
 {% include _testinclude.md %}
 
 ## CSS Tests 
