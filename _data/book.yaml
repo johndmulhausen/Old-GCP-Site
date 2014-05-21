@@ -9,7 +9,7 @@ main:
   - title: "Pricing"
     path: /appengine/pricing
   - title: "Quotas"
-    path: /appengine/appengine/quotas
+    path: /appengine/quotas
 - title: "Downloads"
   path: /appengine/downloads
 
@@ -34,48 +34,48 @@ main:
   - title: "Admin Console"
     section:
     - title: "Overview"
-      path: /appengine/appengine/adminconsole/
+      path: /appengine/adminconsole/
     - title: "Usage Charts"
-      path: /appengine/appengine/adminconsole/usagecharts
+      path: /appengine/adminconsole/usagecharts
     - title: "Instances"
-      path: /appengine/appengine/adminconsole/instances
+      path: /appengine/adminconsole/instances
     - title: "Roles"
-      path: /appengine/appengine/adminconsole/roles
+      path: /appengine/adminconsole/roles
     - title: "Application Settings"
-      path: /appengine/appengine/adminconsole/applicationsettings
+      path: /appengine/adminconsole/applicationsettings
     - title: "Migrating to the High Replication Datastore"
-      path: /appengine/appengine/adminconsole/migration
+      path: /appengine/adminconsole/migration
     - title: "Datastore"
-      path: /appengine/appengine/adminconsole/datastoreconsole
+      path: /appengine/adminconsole/datastoreconsole
       section:
       - title: "Backup/Restore, Copy, and Delete"
-        path: /appengine/appengine/adminconsole/datastoreadmin
+        path: /appengine/adminconsole/datastoreadmin
       - title: "Statistics"
-        path: /appengine/appengine/adminconsole/datastorestats
+        path: /appengine/adminconsole/datastorestats
     - title: "Performance Settings"
-      path: /appengine/appengine/adminconsole/performancesettings
+      path: /appengine/adminconsole/performancesettings
     - title: "PageSpeed"
-      path: /appengine/appengine/adminconsole/pagespeed
+      path: /appengine/adminconsole/pagespeed
     - title: "Traffic Splitting"
-      path: /appengine/appengine/adminconsole/trafficsplitting
+      path: /appengine/adminconsole/trafficsplitting
     - title: "Memcache"
-      path: /appengine/appengine/adminconsole/memcache
+      path: /appengine/adminconsole/memcache
   - title: "The App Config Tool"
-    path: /appengine/appengine/appcfg
+    path: /appengine/appcfg
   - title: "Premier Accounts"
-    path: /appengine/appengine/premier
+    path: /appengine/premier
   - title: "Custom Domains"
     section:
     - title: "Using a Custom Domain"
-      path: /appengine/appengine/domain
+      path: /appengine/domain
     - title: "SSL for a Custom Domain"
-      path: /appengine/appengine/ssl
+      path: /appengine/ssl
   - title: "Managing App Resources"
-    path: /appengine/appengine/managing-resources
+    path: /appengine/managing-resources
   - title: "Using Git to Push and Deploy"
-    path: /appengine/appengine/push-to-deploy
+    path: /appengine/push-to-deploy
   - title: "Integrating with Google Analytics"
-    path: /appengine/appengine/google-analytics
+    path: /appengine/google-analytics
 - title: "Sample Code, Tutorials and Videos"
   section:
   - title: "Sample Code"
@@ -93,7 +93,7 @@ main:
       - title: "Windows/wx"
         path: http://code.google.com/p/google-appengine-wx-launcher/
   - title: "Videos"
-    path: /appengine/appengine/videoresources
+    path: /appengine/videoresources
   - title: "Tutorials and Training"
     path: /academy/apis/cloud/appengine
 - title: "Further Reading"
@@ -193,7 +193,7 @@ main:
   - title: "Case Studies"
     path: https://cloud.google.com/customers/
   - title: "Glossary"
-    path: /appengine/appengine/glossary
+    path: /appengine/glossary
 
 - break: true
 
