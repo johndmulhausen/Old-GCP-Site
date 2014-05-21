@@ -1,6 +1,6 @@
 main:
 - title: "What is App Engine?"
-  path: /appengine/appengine/whatisgoogleappengine
+  path: /appengine/whatisgoogleappengine
 - title: "App Engine Features"
   path: /appengine/features
 
