@@ -1,5 +1,5 @@
 ---
-layout: test
+layout: cloud
 title: Tech Demo for GH-Pages + Markdown + Jekyll + DevSite theme
 toc: main
 ---
