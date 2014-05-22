@@ -17,7 +17,7 @@ $(".tlw-control").click(function() {
 });
 
 $("#searchButton").click(function() {
-  window.location.replace("http://googledevdocs.github.io/search?q=" + $("#q").val());
+  window.location.replace("/search?q=" + $("#q").val());
 });
 
 }); // end "ready" 
