@@ -3,11 +3,12 @@ layout: cloud
 title: Search Results
 toc: main
 ---
-<script language="javascript">
-$(document).ready(function(){
-  $("table").attr("border","0")
-  });
-</script>
+<style>
+  table[style] {
+    border: 0px !important;
+    border-color: #FFF !important;
+  }
+</style>
 <script>
   (function() {
     var cx = '013288817511911618469:ouqstys-bl4';
