@@ -8,6 +8,7 @@ hidepagenav: true
 <style>
   .gs-title[style], .gs-title {
     height: 1.5em !important;
+    height: 1.5em;
   }
 </style>
 <script>
