@@ -3,6 +3,11 @@ layout: cloud
 title: Search Results
 toc: main
 ---
+<style>
+table {
+  border: 0px;
+}
+</style>
 <script>
   (function() {
     var cx = '013288817511911618469:ouqstys-bl4';
