@@ -5,7 +5,7 @@ toc: main
 rawtables: true
 ---
 <style>
-  gsc-control-cse {
+  gsc-control-cse[style] {
     border: 0px !important;
     padding: 0px !important;
   }
