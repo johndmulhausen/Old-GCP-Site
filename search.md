@@ -6,9 +6,8 @@ rawtables: true
 hidepagenav: true
 ---
 <style>
-  gsc-control-cse[style] {
-    border: 0px !important;
-    padding: 0px !important;
+  .gs-title[style], .gs-title {
+    height: 1.5em;
   }
 </style>
 <script>
