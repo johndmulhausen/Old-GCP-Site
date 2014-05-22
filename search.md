@@ -3,6 +3,7 @@ layout: cloud
 title: Search Results
 toc: main
 rawtables: true
+hidepagenav: true
 ---
 <style>
   gsc-control-cse[style] {
