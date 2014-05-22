@@ -10,6 +10,10 @@ hidepagenav: true
     height: 1.5em !important;
     height: 1.5em;
   }
+  .gsc-control-cse[style], .gsc-control-cse {
+    padding: 0px;
+    padding: 0px !important;
+  }
 </style>
 <script>
   (function() {
