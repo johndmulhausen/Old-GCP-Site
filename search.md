@@ -5,9 +5,9 @@ toc: main
 rawtables: true
 ---
 <style>
-  table[style] {
+  gsc-control-cse {
     border: 0px !important;
-    border-color: #FFF !important;
+    padding: 0px !important;
   }
 </style>
 <script>
