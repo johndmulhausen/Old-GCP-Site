@@ -2,6 +2,7 @@
 layout: cloud
 title: Search Results
 toc: main
+rawtables: true
 ---
 <style>
   table[style] {
