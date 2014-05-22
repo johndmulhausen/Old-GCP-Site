@@ -23,7 +23,9 @@
       <a id="gc-logo" href="{{ site.baseurl }}"><img src="/images/cloudplatform-horizontal.png" alt="Google Cloud Platform logo"></a>
           <form class="gc-search" action="/search" method="get">
             <div class="searchbox" style="width: 429px;">
-            <span class="button button-blue mini">Google Cloud Platform</span>
+            <!--googleoff: index-->
+            <span class="button button-blue mini">{{ site.name }}</span>
+            <!--googleon: index-->
             <input type="text" name="q" class="q" id="q" value="" placeholder="Search" autocomplete="on" style="width: 263px;">
           </div>
           <button class="button button-blue" style="top: 0px; left: 444px;">
@@ -40,11 +42,10 @@
     <div id="gc-main" class="main">
       <div id="gc-sidebar" class="sphinxsidebar" role="navigation" aria-label="main navigation">
 
-<nav class="gc-toc">
+<nav class="gc-toc"><!--googleoff: index-->
 {% assign tree = site.data.book[page.toc] %}
 {% include tree.html %}
-
-            </nav>
+<!--googleon: index--></nav>
             
             
       </div>
@@ -64,8 +65,9 @@
     </div>
   </div>
     <footer id="gc-footer" class="footer" role="contentinfo">
-    <div id="gc-copyright">
+    <div id="gc-copyright"><!--googleoff: index-->
         For the purposes of copyright, this document is © Copyright 2014, Google.
+        <!--googleon: index-->
       </div>
     </footer>
 </body></html>
