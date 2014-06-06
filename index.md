@@ -8,7 +8,7 @@ Testing Markdown + Includes + Submoduled templates
 
 ## Included Markdown content
 
-Hi guys
+WHat's up Scott
 
 {% include _testinclude.md %}
 
