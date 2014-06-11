@@ -1,0 +1,81 @@
+#related-sidebar,
+.sidebar {
+  float:right;
+  margin: 0 0px 15px 15px;
+  padding:0px;
+  clear:right;
+}
+
+.sidebar,
+#related-sidebar #related-info,
+#related-sidebar #related-stackoverflow {
+  width: 240px;
+  padding:15px;
+  margin-top:15px;
+  border-radius: 5px;
+}
+
+#related-sidebar #related-info,
+#related-sidebar #related-stackoverflow {
+  background-color:#efefef;
+  border:1px solid #ccc;
+}
+
+.sidebar {
+  border: 1px solid #ccc;
+}
+
+#related-sidebar nav header {
+  font-weight: bold;
+  font-size: 133%;
+}
+
+#related-sidebar ul {
+  list-style-type:square;
+}
+
+#related-sidebar iframe {
+  margin-bottom: 1em;
+  width: 240px;
+  height: 130px;
+}
+
+/* Transform the repeated article elements to act as a list using CSS */
+#related-sidebar .feed.rendered>article {
+  display: list-item;
+  list-style-type: square;
+  padding: 0;
+  margin-left: 26px;
+  font-size: 10pt;
+  color: #000;
+}
+
+#related-sidebar .feed.rendered>article header {
+  font-size: 10pt;
+  padding: 0;
+  line-height: 1.67;
+  display: inline;
+}
+
+#related-sidebar .feed {
+  margin-bottom: 1em;
+}
+
+#related-sidebar .feed>article a {
+  text-decoration: underline;
+}
+
+#related-sidebar .more {
+  font-weight: bold;
+}
+
+#related-bigvid {
+  float: right;
+  clear: right;
+  width: 400px;
+  height: 225px;
+  margin-left: 15px;
+}
+
+/* Fix the H2's border from flowing into the floats */
+body.docs h2, aside { overflow-x: auto;}
