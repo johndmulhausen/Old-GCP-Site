@@ -8,13 +8,12 @@ toc: main
 {% include jswidgets.html %}
 {% assign bigvid="ytT2-kL9v2o" %}
 {% include sidebar.html %}
-Testing Markdown + Includes + Submoduled templates
 
 {{pagetoc}}
 
 ## Included Markdown content
 
-WHat's up Scott
+Testing Markdown + Includes + Submoduled templates
 
 {% include _testinclude.md %}
 
