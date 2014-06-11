@@ -264,7 +264,7 @@ Example use (put this code right underneath the title of your doc):
     <script language="javascript">
     function parseRSS(url, callback) {
       $.ajax({
-        url: document.location.protocol + '//ajax.googleapis.com/ajax/services/feed/load?v=1.0&num=10&callback=?&q=' + encodeURIComponent("{{feedURL}}"),
+        url: document.location.protocol + '//ajax.googleapis.com/ajax/services/feed/load?v=1.0&num=10&callback=?&q=' + encodeURIComponent(url),
         dataType: 'json',
         success: function(data) {
           var feedLimit = 5;
@@ -284,8 +284,8 @@ Example use (put this code right underneath the title of your doc):
         src="/images/stack_overflow_questions.png" width="240" height="53"
         title="Stack Overflow Questions" border="0"></a>
 
-        <ul id="soquestions" class="feed hfeed">
-        </ul>
+        <div id="soquestions" class="feed hfeed">
+        </div>
         <div class="more">
           <a href="http://stackoverflow.com/questions/tagged/{{ tags }}?sort=votes"
             data-category="Sidebar"
