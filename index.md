@@ -7,6 +7,8 @@ toc: main
 {% assign feedID="testFeed" %}
 {% include jswidgets.html %}
 {% assign bigvid="ytT2-kL9v2o" %}
+{% assign sotag1="google-app-engine" %}
+{% assign sotag2="task-queue" %}
 {% include sidebar.html %}
 
 {{pagetoc}}
