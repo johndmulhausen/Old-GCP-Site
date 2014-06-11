@@ -5,6 +5,16 @@ toc: main
 ---
 {% include jswidgets.html %}
 {% assign bigvid="ytT2-kL9v2o" %}
+{% assign videoid1="22n06z0rq4c" %}
+{% assign videoid2="9rlMOb93HDE" %}
+{% assign topicurl1="https://developers.google.com/appengine/articles/deferred" %}
+{% assign topictitle1="Background work with the deferred library" %}
+{% assign topicurl2="http://www.google.com/events/io/2010/sessions/high-throughput-data-pipelines-appengine.html" %}
+{% assign topictitle2="Building high-throughput data pipelines with Google App Engine" %}
+{% assign topicurl3="https://code.google.com/p/appengine-pipeline/" %}
+{% assign topictitle3="Google App Engine Pipeline API" %}
+{% assign sampleurl3="https://github.com/GoogleCloudPlatform/appengine-last-across-the-finish-line-python" %}
+{% assign sampletitle3="Last Across the Finish Line (Python)" %}
 {% assign sotag1="google-app-engine" %}
 {% assign sotag2="task-queue" %}
 {% include sidebar.html %}
