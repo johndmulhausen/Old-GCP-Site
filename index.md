@@ -3,6 +3,9 @@ layout: cloud
 title: Tech Demo for GH-Pages + Markdown + Jekyll + DevSite theme
 toc: main
 ---
+{% assign feedURL="http://stackoverflow.com/feeds/tag?tagnames=google-app-engine+task-queue&sort=votes" %}
+{% assign feedID="testFeed" %}
+{% include jswidgets.html %}
 {% assign bigvid="ytT2-kL9v2o" %}
 {% include sidebar.html %}
 Testing Markdown + Includes + Submoduled templates
@@ -79,9 +82,6 @@ print s
 
 ## Stack Overflow feed
 
-{% assign feedURL="http://stackoverflow.com/feeds/tag?tagnames=google-app-engine+task-queue&sort=votes" %}
-{% assign feedID="testFeed" %}
-{% include jswidgets.html %}
 {{ feed }}
 
 ## Last Build
