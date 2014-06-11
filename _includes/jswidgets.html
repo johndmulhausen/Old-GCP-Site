@@ -51,13 +51,18 @@ $(document).ready(function(){
 <div id="pageTOC" style="padding-top:15px; font-weight: bold;"></div>
 {% endcapture %}
 {% capture feed %}
+<script language="javascript">
 function parseRSS(url, callback) {
   $.ajax({
-    url: document.location.protocol + '//ajax.googleapis.com/ajax/services/feed/load?v=1.0&num=10&callback=?&q=' + encodeURIComponent("{{feedurl}}"),
+    url: document.location.protocol + '//ajax.googleapis.com/ajax/services/feed/load?v=1.0&num=10&callback=?&q=' + encodeURIComponent("{{feedURL}}"),
     dataType: 'json',
     success: function(data) {
-      document.write(data.responseData.feed);
+      $("${{feedID}}").append('<p>' + data.responseData.feed + '</p>');
     }
   });
 }
+$(document).ready(function(){
+});
+<div id="{{feedID}}" style="list-style-type: none; padding-left:0px;"></div>
+</script>
 {% endcapture %}
