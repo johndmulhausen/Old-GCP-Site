@@ -261,22 +261,31 @@ Example use (put this code right underneath the title of your doc):
 
     {% comment %} Concatenate all the tags {% endcomment %}
     {% capture tags %}{%if sotag1%}{{sotag1}}{%endif%}{%if sotag2%}+{{sotag2}}{%endif%}{%if sotag3%}+{{sotag3}}{%endif%}{%if sotag4%}+{{sotag4}}{%endif%}{%if sotag5%}+{{sotag5}}{%endif%}{% endcapture %}
-
+    <script language="javascript">
+    function parseRSS(url, callback) {
+      $.ajax({
+        url: document.location.protocol + '//ajax.googleapis.com/ajax/services/feed/load?v=1.0&num=10&callback=?&q=' + encodeURIComponent("{{feedURL}}"),
+        dataType: 'json',
+        success: function(data) {
+          var feedLimit = 5;
+          if (data.responseData.feed.entries.length<5) feedLimit = data.responseData.feed.entries.length;
+          for(i=0;i<feedLimit;i++) {
+            $("#soquestions").append('<li><a href="'+ data.responseData.feed.entries[i].link +'">' + data.responseData.feed.entries[i].title + '</a></li>');
+          }
+        }
+      });
+    }
+    $(document).ready(function(){
+      parseRSS("http://stackoverflow.com/feeds/tag?tagnames={{ tags }}")
+    });
+    </script>
     <div id="related-stackoverflow">
       <a href="http://stackoverflow.com/questions/tagged/{{ tags }}"><img
         src="/images/stack_overflow_questions.png" width="240" height="53"
         title="Stack Overflow Questions" border="0"></a>
 
-        <div class="feed hfeed" data-limit="5">
-          <a href="http://stackoverflow.com/feeds/tag?sort=votes&amp;tagnames={{ tags|urlencode }}"></a>
-          <article class="hentry">
-              <a class="link"
-                data-category="Sidebar"
-                data-action="Stack Overflow question click">
-                <header class="entry-title"></header>
-              </a>
-          </article>
-        </div>
+        <ul id="soquestions" class="feed hfeed">
+        </ul>
         <div class="more">
           <a href="http://stackoverflow.com/questions/tagged/{{ tags }}?sort=votes"
             data-category="Sidebar"
