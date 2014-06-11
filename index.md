@@ -74,6 +74,13 @@ print s
 | col 2 is      | centered      |   $12 |
 | zebra stripes | are neat      |    $1 |
 
+## Stack Overflow feed
+
+{% assign feedURL="http://stackoverflow.com/feeds/tag?tagnames=google-app-engine+task-queue&sort=votes" %}
+{% assign feedID="testFeed" %}
+{% include jswidgets.html %}
+{{ feed }}
+
 ## Last Build
 
 [![Build Status](https://travis-ci.org/GoogleDevDocs/googledevdocs.github.io.svg?branch=master)](https://travis-ci.org/GoogleDevDocs/googledevdocs.github.io)
