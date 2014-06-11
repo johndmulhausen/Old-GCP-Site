@@ -57,8 +57,10 @@ function parseRSS(url, callback) {
     url: document.location.protocol + '//ajax.googleapis.com/ajax/services/feed/load?v=1.0&num=10&callback=?&q=' + encodeURIComponent("{{feedURL}}"),
     dataType: 'json',
     success: function(data) {
-      for(i=0;i<data.responseData.feed.entries.length;i++) {
-        $("#{{feedID}}").append('<p>' + data.responseData.feed.entries[i].title + '</p>');
+      var feedLimit = 5;
+      if (data.responseData.feed.entries.length<5) feedLimit = data.responseData.feed.entries.length;
+      for(i=0;i<feedLimit;i++) {
+        $("#{{feedID}}").append('<a href="'+ data.responseData.feed.entries[i].link +'">' + data.responseData.feed.entries[i].title + '</a><br>');
       }
     }
   });
