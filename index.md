@@ -3,7 +3,8 @@ layout: cloud
 title: Tech Demo for GH-Pages + Markdown + Jekyll + DevSite theme
 toc: main
 ---
-
+{% assign bigvid="ytT2-kL9v2o" %}
+{% include sidebar.html %}
 Testing Markdown + Includes + Submoduled templates
 
 ## Included Markdown content
