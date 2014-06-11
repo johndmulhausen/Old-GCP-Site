@@ -61,6 +61,7 @@ function parseRSS(url, callback) {
       if (data.responseData.feed.entries.length<5) feedLimit = data.responseData.feed.entries.length;
       for(i=0;i<feedLimit;i++) {
         $("#{{feedID}}").append('<a href="'+ data.responseData.feed.entries[i].link +'">' + data.responseData.feed.entries[i].title + '</a><br>');
+        if (i==4) $("#{{feedID}}").append('<a href="'+data.responseData.feed.link+'">See more...</a>');
       }
     }
   });
