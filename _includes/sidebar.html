@@ -284,14 +284,9 @@ Example use (put this code right underneath the title of your doc):
         src="/images/stack_overflow_questions.png" width="240" height="53"
         title="Stack Overflow Questions" border="0"></a>
 
-        <div id="soquestions" class="feed hfeed">
-        </div>
+        <ul id="soquestions" class="feed hfeed"></ul>
         <div class="more">
-          <a href="http://stackoverflow.com/questions/tagged/{{ tags }}?sort=votes"
-            data-category="Sidebar"
-            data-action="Stack Overflow See more link">
-            See more...
-          </a>
+          <a href="http://stackoverflow.com/questions/tagged/{{ tags }}?sort=votes">See more...</a>
         </div>
   </div>
   {% endif %}{% comment %} end of Stack Overflow section {% endcomment %}
