@@ -7,6 +7,8 @@ toc: main
 {% include sidebar.html %}
 Testing Markdown + Includes + Submoduled templates
 
+{{pagetoc}}
+
 ## Included Markdown content
 
 WHat's up Scott
