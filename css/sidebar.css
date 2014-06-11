@@ -73,6 +73,7 @@
 
 #related-bigvid {
   float: right;
+  float: top;
   clear: right;
   width: 400px;
   height: 225px;
