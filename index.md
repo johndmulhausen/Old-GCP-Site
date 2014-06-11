@@ -3,7 +3,6 @@ layout: cloud
 title: Tech Demo for GH-Pages + Markdown + Jekyll + DevSite theme
 toc: main
 ---
-{% include jswidgets.html %}
 {% assign bigvid="ytT2-kL9v2o" %}
 {% assign videoid1="22n06z0rq4c" %}
 {% assign videoid2="9rlMOb93HDE" %}
@@ -19,6 +18,7 @@ toc: main
 {% assign sotag2="task-queue" %}
 {% include sidebar.html %}
 
+{% include jswidgets.html %}
 {{pagetoc}}
 
 ## Included Markdown content
