@@ -58,7 +58,7 @@ function parseRSS(url, callback) {
     dataType: 'json',
     success: function(data) {
       for(i=0;i<data.responseData.feed.length;i++) {
-        $("#{{feedID}}").append('<p>' + data.responseData.feed[i].title + '</p>');
+        $("#{{feedID}}").append('<p>' + data.responseData.feed.length + ' feed, entries: ' + data.responseData.feed.entries.length + '</p>');
       }
     }
   });
