@@ -54,8 +54,9 @@
         <div class="bodywrapper">
           <div class="body" role="main" id="gc-content">
           <h1>{{ page.title }}</h1>
+          <div id="mainContent">
           {% if page.hidepagenav != true %}{{pagetoc}}{% endif %}
-          <div id="mainContent">{{ content }}</div>
+          {{ content }}</div>
           </div>
         </div>
       </div>
