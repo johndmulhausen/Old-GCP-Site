@@ -57,8 +57,8 @@ function parseRSS(url, callback) {
     url: document.location.protocol + '//ajax.googleapis.com/ajax/services/feed/load?v=1.0&num=10&callback=?&q=' + encodeURIComponent("{{feedURL}}"),
     dataType: 'json',
     success: function(data) {
-      for(i=0;i<data.responseData.feed.length;i++) {
-        $("#{{feedID}}").append('<p>' + data.responseData.feed.length + ' feed, entries: ' + data.responseData.feed.entries.length + '</p>');
+      for(i=0;i<data.responseData.feed.entries.length;i++) {
+        $("#{{feedID}}").append('<p>' + data.responseData.feed.entries[i].title + '</p>');
       }
     }
   });
