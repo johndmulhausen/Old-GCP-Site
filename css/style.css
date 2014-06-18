@@ -12,7 +12,7 @@ html{margin:0;padding:0;border:0}
 .breadcrumbs li { 
 	float: left; 
 	padding: 0px;
-	margin: 0px 0px 0px 20px;
+	margin: 0px 0px 0px 0px;
 }
 .breadcrumbs li a {
 	font-size: 100%;
@@ -23,6 +23,12 @@ html{margin:0;padding:0;border:0}
 .breadcrumbs li a:hover { 
 	text-decoration: none;
 	color: #006ac8;
+}
+.separator {
+	margin-left: 20px;
+	margin-right: 20px;
+	margin-top: 0px;
+	margin-bottom: 0px;
 }
 .bp-reset-element,body,h1,h2,h3,h4,h5,h6,article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section,summary,blockquote,q,th,td,caption,table,div,span,object,iframe,p,pre,a,abbr,acronym,address,code,del,dfn,em,img,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,caption,tbody,tfoot,thead,tr{margin:0;padding:0;border:0;font-weight:inherit;font-style:inherit;font-size:100%;font-family:inherit;vertical-align:baseline}
 
