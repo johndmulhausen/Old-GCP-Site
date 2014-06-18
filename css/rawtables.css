@@ -1,7 +1,40 @@
 @import url('http://fonts.googleapis.com/css?family=Open+Sans:400,600');
 
 html{margin:0;padding:0;border:0}
-
+.breadcrumbs {
+	list-style: none;
+	padding-top:10px;
+	padding-bottom: 10px;
+	padding-left: 0px;
+	padding-right: 0px;
+	margin: 0px 0px 0px 0px;
+}
+.breadcrumbs li { 
+	float: left; 
+	padding: 0px;
+	margin: 0px 0px 0px 0px;
+}
+.breadcrumbs li a {
+	font-size: 100%;
+	text-decoration: none;
+	color: black;
+	padding: 0px;
+}
+.breadcrumbs li a:hover { 
+	text-decoration: none;
+	color: #006ac8;
+}
+.separator {
+	padding-left: 10px;
+	padding-right: 10px;
+	padding-top: 0px;
+	padding-bottom: 0px;
+	width: 14px;
+	height: 14px;
+	filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=70);
+	opacity: 0.7;
+	margin-top: 3px;
+}
 .bp-reset-element,body,h1,h2,h3,h4,h5,h6,article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section,summary,blockquote,q,th,td,caption,div,span,object,iframe,p,pre,a,abbr,acronym,address,code,del,dfn,em,img,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,caption,tbody,tfoot,thead,tr{margin:0;padding:0;border:0;font-weight:inherit;font-style:inherit;font-size:100%;font-family:inherit;vertical-align:baseline}
 
 article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section,summary{display:block}
