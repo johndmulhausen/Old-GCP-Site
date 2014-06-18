@@ -142,8 +142,6 @@ img[width="1"][height="1"]{position:absolute;top:-9999px;left:-9999px}
 #gc-topnav li.active a{font-weight:bold}
 #gc-appnav{background:#fff;color:#15c;border-bottom:1px solid #ebebeb;padding-top:15px;padding-bottom:15px;}
 #gc-appnav>div{line-height:33px}
-#gc-appnav li{margin:0 0 0 0}
-#gc-appnav li.active>a{color:#222}
 #gc-footer,#gc-topnav,#gc-appnav{overflow:hidden;*zoom:1;clear:both;padding:0 44px}
 #gc-footer a,#gc-footer a:visited,#gc-topnav a,#gc-topnav a:visited,#gc-appnav a,#gc-appnav a:visited{text-decoration:none}
 #gc-footer a:hover,#gc-footer a:visited:hover,#gc-topnav a:hover,#gc-topnav a:visited:hover,#gc-appnav a:hover,#gc-appnav a:visited:hover{text-decoration:underline}
