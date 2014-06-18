@@ -5,11 +5,14 @@ html{margin:0;padding:0;border:0}
 	list-style: none;
 	padding-top:10px;
 	padding-bottom: 10px;
+	padding-left: 0px;
+	padding-right: 0px;
+	margin: 0px 0px 0px 0px;
 }
 .breadcrumbs li { 
 	float: left; 
 	padding: 0px;
-	margin: 0px;
+	margin: 0px 0px 0px 0px;
 }
 .breadcrumbs li a {
 	font-size: 100%;
