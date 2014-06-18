@@ -18,7 +18,7 @@ html{margin:0;padding:0;border:0}
 	padding: 0px;
 }
 .breadcrumbs li a:after { 
-	content: "&nbsp;&nbsp;&nbsp;>&nbsp;&nbsp;&nbsp;";
+	content: "   >   ";
 	text-decoration: none;
 }
 .breadcrumbs li a:hover { 
