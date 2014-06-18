@@ -9,7 +9,7 @@ html{margin:0;padding:0;border:0}
 .breadcrumbs li { 
 	float: left; 
 	padding: 0px;
-	margin: 10px 0px 10px 10px;
+	margin: 10px 0px 0px 10px;
 }
 .breadcrumbs li a {
 	font-size: 100%;
