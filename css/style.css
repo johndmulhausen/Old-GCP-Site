@@ -2,10 +2,17 @@
 
 html{margin:0;padding:0;border:0}
 .breadcrumbs {
-	list-style: none; 
+	list-style: none;
+	padding: 0px;
 }
 .breadcrumbs li { 
 	float: left; 
+	padding: 0px;
+}
+.breadscrumbs li a {
+	text-decoration: none;
+	color: black;
+	padding: 0px;
 }
 .breadcrumbs li a:after { 
 	content: " > ";
