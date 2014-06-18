@@ -24,7 +24,7 @@ html{margin:0;padding:0;border:0}
 	text-decoration: none;
 	color: #006ac8;
 }
-.separator {
+.breadcrumbs li .separator {
 	margin-left: 20px;
 	margin-right: 20px;
 	margin-top: 0px;
