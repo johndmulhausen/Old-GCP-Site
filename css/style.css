@@ -10,6 +10,7 @@ html{margin:0;padding:0;border:0}
 	padding: 0px;
 }
 .breadcrumbs li a {
+	font-size: 100%;
 	text-decoration: none;
 	color: black;
 	padding: 0px;
