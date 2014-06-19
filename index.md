@@ -52,7 +52,7 @@ This warrants caution.
 
 ## Code snippets
 
-### <pre>-using codeblock
+### pre-using codeblock
 
 <pre class="prettyprint lang-yaml">toc:
 - title: "Testing"
