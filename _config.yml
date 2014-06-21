@@ -7,3 +7,4 @@ kramdown:
   use_coderay: true
 baseurl: /
 permalink: /:title
+post_dirs: false
