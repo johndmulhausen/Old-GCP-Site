@@ -27,7 +27,7 @@ Testing Markdown & Includes & Submoduled templates...
 
 {% include _testinclude.md %}
 
-Test 1
+Test autopush...
 
 ## CSS Tests 
 
