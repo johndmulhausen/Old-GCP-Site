@@ -23,7 +23,7 @@ toc: main
 
 ## Included Markdown content
 
-Testing Markdown + Includes + Submoduled templates...
+Testing Markdown & Includes & Submoduled templates...
 
 {% include _testinclude.md %}
 
