@@ -6,3 +6,4 @@ kramdown:
   hard_wrap: false
   use_coderay: true
 baseurl: /
+permalink: /:title
