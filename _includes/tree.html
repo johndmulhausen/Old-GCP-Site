@@ -30,13 +30,14 @@
     {% endif %}
     
     {% if item.section %}
-      {% assign tree = site.data['test'].toc %}
+      {% assign tree = item.section %}
       {% assign subsection=true %}
       {% include tree.html %}
     {% endif %}
     
     {% if item.include %}
-      {% assign tree = item.section %}
+      <li>^{{ item.include }}^</li>
+      {% assign tree = site.data['test'].toc %}
       {% assign subsection=true %}
       {% include tree.html %}
     {% endif %}
