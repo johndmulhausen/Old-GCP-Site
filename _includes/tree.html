@@ -26,7 +26,7 @@
     
     
     {% if item.path %}
-      {% if page.url | remove .html | remove index == item.path %}
+      {% if page.url | remove: ".html" | remove "index" == item.path %}
         {% capture tocItemColor %}style="color:red;"{% endcapture %}
       {% else %}
         {% capture tocItemColor %}{% endcapture %}
