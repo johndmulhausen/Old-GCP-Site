@@ -2,6 +2,16 @@
 <ul {% if subsection %}style="display: none; opacity: 0; margin-left: 15px;"{% endif %}>
   {% for item in tree %}
   
+    {% if item.section %}
+      {% assign tree = item.section %}
+      {% assign subsection=true %}
+      {% include tree.html %}
+    {% elsif item.include %}
+      {% assign tree = site.data[item.include].toc %}
+      {% assign subsection=false %}
+      {% include tree.html %}
+    {% else %}
+    
     {% if item.status %}
       {% capture statusHTML %} <sup style="color: red">{{item.status}}</sup>{% endcapture %}
     {% else %}
@@ -14,8 +24,9 @@
       {% assign sectionHTML = "" %}
     {% endif %}
     
+    
     {% if item.path %}
-      {% if page.url==item.path %}
+      {% if page.url | remove .html | remove index == item.path %}
         {% capture tocItemColor %}style="color:red;"{% endcapture %}
       {% else %}
         {% capture tocItemColor %}{% endcapture %}
@@ -30,18 +41,6 @@
     {% if item.break %}
       <hr>
     {% endif %}
-    
-    {% if item.section %}
-      {% assign tree = item.section %}
-      {% assign subsection=true %}
-      {% include tree.html %}
-    {% endif %}
-    
-    {% if item.include %}
-      {% assign tree = site.data[item.include].toc %}
-      {% assign subsection=false %}
-      {% include tree.html %}
-    {% endif %}
-    
+  {% endif %}
   {% endfor %}
 </ul>
