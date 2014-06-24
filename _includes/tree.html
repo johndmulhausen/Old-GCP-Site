@@ -36,7 +36,6 @@
     {% endif %}
     
     {% if item.include %}
-      <li>^{{ item.include }}^</li>
       {% assign tree = site.data[item.include].toc %}
       {% assign subsection=false %}
       {% include tree.html %}
