@@ -1,4 +1,4 @@
-main:
+toc:
 - title: "Home"
   path: /
 - title: "What is App Engine?"
@@ -240,7 +240,3 @@ main:
     path: /cloud/terms/
   - title: "Service Level Agreement"
     path: /appengine/sla
-
-test:
-- title: "Test Node"
-  path: /testing
