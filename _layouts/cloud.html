@@ -52,7 +52,7 @@
 
 <nav class="gc-toc">
 <!-- {{ page.toc }} -->
-{% assign tree = site.data['book'].toc %}
+{% assign tree = site.data[page.toc].toc %}
 {% include tree.html %}
 
             </nav>
