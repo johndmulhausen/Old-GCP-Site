@@ -1,4 +1,5 @@
-# Copyright 2014 Google Inc. All rights reserved.
+#Credit: https://github.com/willnorris/jekyll-clean-urls
+#Copyright 2014 Google Inc. All rights reserved.
 #
 # Use of this source code is governed by the MIT
 # license that can be found in the LICENSE file.
@@ -51,7 +52,8 @@ module Jekyll
     # we drop the :output_ext for non-index HTML pages if clean URLs are
     # requested.
     def template_with_clean_urls
-      if html? && !index? && clean_urls?(permalink)
+      # original: if html? && !index? && clean_urls?(permalink)
+      if html? && !index?
         "/:path/:basename"
       else
         template_without_clean_urls
