@@ -2,7 +2,7 @@
 <ul {% if subsection %}style="display: none; opacity: 0; margin-left: 15px;"{% endif %}>
   {% for item in tree %}
     {% if item.status %}
-      {% capture statusHTML %} <sup>{{item.status}}</sup>{% endcapture %}
+      {% capture statusHTML %} <sup style="color: red">{{item.status}}</sup>{% endcapture %}
     {% else %}
       {% assign statusHTML = "" %}
     {% endif %}
