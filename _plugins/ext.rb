@@ -1,4 +1,4 @@
-Credit: https://github.com/nicholaskuechler/jekyll-rackspace-cloudfiles-clean-urls
+# Credit: https://github.com/nicholaskuechler/jekyll-rackspace-cloudfiles-clean-urls
 
 # Found this ext.rb module from pattex in #jekyll on irc.freenode.net
 # Original file: https://github.com/pattex/kleinerdrei.net/blob/master/_plugins/ext.rb
