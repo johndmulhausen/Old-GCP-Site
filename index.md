@@ -1,7 +1,7 @@
 ---
 layout: cloud
 title: Tech Demo for GH-Pages + Markdown + Jekyll + DevSite theme
-toc: main
+toc: book
 ---
 {% assign bigvid="ytT2-kL9v2o" %}
 {% assign videoid1="22n06z0rq4c" %}
