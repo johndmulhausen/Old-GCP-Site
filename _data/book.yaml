@@ -1,4 +1,6 @@
 main:
+- title: "Home"
+  path: /
 - title: "What is App Engine?"
   path: /appengine/whatisgoogleappengine
 - title: "App Engine Features"
