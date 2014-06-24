@@ -12,7 +12,12 @@
       {% assign sectionHTML = "" %}
     {% endif %}
     {% if item.path %}
-      <li>{{ sectionHTML }}<a href="{{ item.path }}" title="{{ item.title }}" data-title="{{ item.title }}"><span>{{ item.title }} {{ statusHTML }}</span></a></li>
+      {% if page.url==item.path %}
+        {% capture tocItemColor %}style="color:red;"{% endcapture %}
+      {% else %}
+        {% capture tocItemColor %}{% endcapture %}
+      {% endif %}
+      <li {{ tocItemColor }}>{{ sectionHTML }}<a href="{{ item.path }}" title="{{ item.title }}" data-title="{{ item.title }}"><span>{{ item.title }} {{ statusHTML }}</span></a></li>
     {% else %}
       <li>{{ sectionHTML }}<span class="tlw-title tlw-control-title" data-title="{{ item.title }}">{{ item.title }}{{ statusHTML }}</span></li>
     {% endif %}
