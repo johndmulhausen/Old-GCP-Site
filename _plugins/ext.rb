@@ -8,7 +8,7 @@
 
 module Jekyll
 
-  class Post
+  class Page
 
     alias_method :_original_url, :url
 
