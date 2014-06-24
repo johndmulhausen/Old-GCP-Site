@@ -23,11 +23,9 @@ toc: main
 
 ## Included Markdown content
 
-Testing Markdown & Includes & Submoduled templates!
+Testing Markdown, Includes, and Submoduled templates.
 
 {% include _testinclude.md %}
-
-Testing autobuild again!
 
 ## CSS Tests 
 
