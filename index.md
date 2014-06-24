@@ -27,6 +27,8 @@ Testing Markdown, Includes, and Submoduled templates.
 
 {% include _testinclude.md %}
 
+Testing external edit. 
+
 ## CSS Tests 
 
 ### Buttons
