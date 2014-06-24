@@ -6,7 +6,7 @@
       {% assign tree = item.section %}
       {% assign subsection=true %}
       {% include tree.html %}
-    {% elsif item.include %}
+    {% else if item.include %}
       {% assign tree = site.data[item.include].toc %}
       {% assign subsection=false %}
       {% include tree.html %}
