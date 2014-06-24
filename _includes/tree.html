@@ -23,7 +23,11 @@
       {% endif %}
       <li {{ tocItemColor }}>{{ sectionHTML }}<a href="{{ item.path }}" title="{{ item.title }}" data-title="{{ item.title }} - {{ item.path }}"><span>{{ item.title }} {{ statusHTML }}</span></a></li>
     {% else %}
-      {% if item.include == false %}
+      {% if item.include %}
+        {% assign tree = site.data[item.include].toc %}
+        {% assign subsection=false %}
+        {% include tree.html %}
+      {% else %}
         <li>{{ sectionHTML }}<span class="tlw-title tlw-control-title" data-title="{{ item.title }}">{{ item.title }}{{ statusHTML }}</span></li>
       {% endif %}
     {% endif %}
@@ -35,11 +39,6 @@
     {% if item.section %}
       {% assign tree = item.section %}
       {% assign subsection=true %}
-      {% include tree.html %}
-    {% endif %} 
-    {% if item.include %}
-      {% assign tree = site.data[item.include].toc %}
-      {% assign subsection=false %}
       {% include tree.html %}
     {% endif %}
   {% endfor %}
