@@ -116,7 +116,7 @@ img[width="1"][height="1"]{position:absolute;top:-9999px;left:-9999px}
 #restrict label{font-size:13px}
 #restrict label span{font-size:13px;font-weight:bold}
 .gsc-completion-container{z-index:100}
-#gc-appbar{-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box;border-bottom:0px;line-height:24px;overflow:hidden;padding:21px 44px 0px 44px;position:relative}
+#gc-appbar{-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box;border-bottom:1px solid #ebebeb;line-height:24px;overflow:hidden;padding:21px 44px 0px 44px;position:relative}
 #gc-appbar .developers{color:#dd4b39;font-size:20px;margin-right:-2000px;float:left}
 #gc-appbar h1{display:block;font-size:20px;margin:0 16px 0 0}
 #gc-appbar h1 div{vertical-align:top}
