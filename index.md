@@ -25,6 +25,8 @@ toc: book
 
 Testing Markdown, Includes, and Submoduled templates.
 
+Test message. 
+
 {% include _testinclude.md %}
 
 Testing external edit. 
