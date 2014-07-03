@@ -8,4 +8,4 @@ script: bundle exec rake site:deploy --quiet
 
 env:
   global:
-    secure: "boi3d+j4RN4opLPmI3/5bb9jj7zIS1y7ROU8r+5GXDel31mfsNBbQJXWKNp8X1kouOssahKiOdOOBHQE44SGFF4KDaggSe5nyrriXt4SGCmfC+2kngpsHbrvgaVQbxyDWkEofItu2iDW85J38oyK0Klh+yMD0ZduJunX/Gx8d0Y="
+    secure: "JTaERzUUG1q8Z9llY/7e+usgADAEJ+9ZCSttw5CTgSFwRiNmY3ftOw77NIlwzSrJwQ492Dv7tt4cvQryVzARR9FuUbVGTCNmPmgkzJ/fUhc6baySCg7kHQxEgjHEBwsOuzft9UFFFJy8D+e9QqztNM6p6pYEqveS4tM/FbpDD68="
