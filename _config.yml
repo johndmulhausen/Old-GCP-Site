@@ -14,6 +14,7 @@ relative_source: ../googledevdocs.github.io/
 destination: ../googledevdocs.github.io/_site/
 
 username: GoogleDevDocs
+branch: master
 
 permalink: pretty
 
