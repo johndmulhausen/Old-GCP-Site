@@ -29,7 +29,7 @@ CONFIG = YAML.load(File.read('_config.yml'))
 #CUSTOM: 
 SOURCE_BRANCH = "master"
 DESTINATION_BRANCH = "master"
-USERNAME = "GoogleDevDocs"
+USERNAME = "johndmulhausen"
 REPO = "#googledevdocs.github.io"
 
 #############################################################################
