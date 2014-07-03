@@ -1,2 +1,26 @@
 language: ruby
-script: "bundle exec jekyll build"
+
+install:
+  # Install binary pandoc from Rstudio
+  # To use Pandoc, uncomment the following
+  # - export PATH="$HOME/pandoc:$PATH"
+  # - mkdir $HOME/pandoc
+  # - curl -O https://s3.amazonaws.com/rstudio-buildtools/pandoc-1.12.3.zip
+  # - unzip -j pandoc-1.12.3.zip pandoc-1.12.3/linux/debian/x86_64/pandoc
+  #     -d $HOME/pandoc
+  # - chmod +x $HOME/pandoc/pandoc
+  # - pandoc --version
+
+  # Install Jekyll and dependencies
+  - bundle install
+
+script: bundle exec rake site:deploy --quiet
+
+env:
+  global:
+    secure: EXAMPLE
+
+# Generate your secure token with the travis gem:
+# get Github token from your Travis CI profile page
+gem install travis
+travis encrypt 'GIT_NAME="johndmulhausen" GIT_EMAIL="johndylan@google.com" GH_TOKEN=eZSQ3FUpggbk6tu7wWsM'
