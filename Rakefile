@@ -16,21 +16,15 @@ CONFIG = YAML.load(File.read('_config.yml'))
 # Project: master -> gh-pages
 # Name of source branch for user/organization defaults to "source"
 # ORIGINAL:
-# USERNAME = CONFIG["username"] || ENV['GIT_NAME']
-# REPO = CONFIG["repo"] || "#{USERNAME}.github.io"
-# if REPO == "#{USERNAME}.github.io"
-#   SOURCE_BRANCH = CONFIG['branch'] || "source"
-#   DESTINATION_BRANCH = "master"
-# else
-#   SOURCE_BRANCH = "master"
-#   DESTINATION_BRANCH = "gh-pages"
-# end
-
-#CUSTOM: 
-SOURCE_BRANCH = "master"
-DESTINATION_BRANCH = "master"
-USERNAME = "johndmulhausen"
-REPO = "#googledevdocs.github.io"
+USERNAME = CONFIG["username"] || ENV['GIT_NAME']
+REPO = CONFIG["repo"] || "#{USERNAME}.github.io"
+if REPO == "#{USERNAME}.github.io"
+  SOURCE_BRANCH = CONFIG['branch'] || "source"
+  DESTINATION_BRANCH = "master"
+else
+  SOURCE_BRANCH = "master"
+  DESTINATION_BRANCH = "gh-pages"
+end
 
 #############################################################################
 #
