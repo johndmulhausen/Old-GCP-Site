@@ -15,6 +15,7 @@ destination: ../googledevdocs.github.io/_site/
 
 username: GoogleDevDocs
 branch: master
+repo: googledevdocs.github.io
 
 permalink: pretty
 
