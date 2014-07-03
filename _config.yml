@@ -11,7 +11,7 @@ lsi: false
 pygments: true
 
 relative_source: ../googledevdocs.github.io/
-destination: ./googledevdocs.github.io/_site/
+destination: ../googledevdocs.github.io/_site/
 
 username: GoogleDevDocs
 repo: googledevdocs.github.io
