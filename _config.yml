@@ -10,8 +10,8 @@ safe: false
 lsi: false
 pygments: true
 
-relative_source: .
-destination: ./_site/
+relative_source: ../googledevdocs.github.io/
+destination: ./googledevdocs.github.io/_site/
 
 username: GoogleDevDocs
 repo: googledevdocs.github.io
