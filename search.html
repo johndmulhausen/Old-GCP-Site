@@ -1,27 +1,27 @@
-{% include jswidgets.html %}
+
+
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <!-- {{ page.url }}-->
-    <title>{{ site.name }} - {{ page.title }}</title>
-    {% if page.rawtables %}
+    <!-- /search-->
+    <title>Google Cloud Documentation - Search Results</title>
+    
     <link rel="stylesheet" href="/css/rawtables.css" type="text/css">
-    {% else %}
-    <link rel="stylesheet" href="/css/style.css" type="text/css">
-    {% endif %}
+    
     <link rel="stylesheet" href="/css/pygments.css" type="text/css">
     <link rel="stylesheet" href="/css/custom.css" type="text/css">
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="/js/prettify/prettify.js" defer="defer"></script>
     <script src="/js/prettify/run_prettify.js" defer="defer"></script>
     <script type="text/javascript" src="/js/sidebar.js"></script>
-    <link rel="top" title="{{ page.title }}" href="{{ page.url }}">
-    <link rel="next" title="{{ page.title }}" href="{{ page.url }}">
+    <link rel="top" title="Search Results" href="/search">
+    <link rel="next" title="Search Results" href="/search">
     <meta name="google-translate-customization" content="d17d135473e35496-0499b4c25cd86e87-g63ff5752eb1455f2-17"></meta>
     </head>
-  <body role="document" class="two-column docs"><a href="https://github.com/GoogleDevDocs/googledevdocs.github.io/edit/master/{{ page.path }}"><img style="position: absolute; top: 0; right: 0; border: 0; z-index: 999;" src="/images/forkme.png" alt="Fork me on GitHub"></a>
+  <body role="document" class="two-column docs"><a href="https://github.com/GoogleDevDocs/googledevdocs.github.io/edit/master/search.md"><img style="position: absolute; top: 0; right: 0; border: 0; z-index: 999;" src="/images/forkme.png" alt="Fork me on GitHub"></a>
     <div id="sandbar">
       <header id="gc-googlebar">
-      <a id="gc-logo" href="{{ site.baseurl }}"><img src="/images/cloudplatform-horizontal.png" alt="Google Cloud Platform logo"></a>
+      <a id="gc-logo" href="/"><img src="/images/cloudplatform-horizontal.png" alt="Google Cloud Platform logo"></a>
           <form class="gc-search" action="/search" method="get">
             <div class="searchbox" style="width: 429px;">
             <span class="button button-blue mini">Google Cloud Platform</span>
@@ -57,15 +57,19 @@ function googleTranslateElementInit() {
         
     </div>
     
-    <h1><a href="{{ site.baseurl }}">{{ site.name }}</a></h1>
+    <h1><a href="/">Google Cloud Documentation</a></h1>
   </div>
     <div id="gc-main" class="main">
       <div id="gc-sidebar" class="sphinxsidebar" role="navigation" aria-label="main navigation">
 
 <nav class="gc-toc">
-<!-- {{ page.toc }} -->
-{% assign tree = site.data[page.toc].toc %}
-{% include tree.html %}
+<!-- main -->
+
+
+<ul >
+  
+</ul>
+
 
             </nav>
             
@@ -76,9 +80,34 @@ function googleTranslateElementInit() {
       <div class="documentwrapper">
         <div class="bodywrapper">
           <div class="body" role="main" id="gc-content">
-          <h1>{{ page.title }}</h1>
+          <h1>Search Results</h1>
           <div id="mainContent">
-          {{ content }}</div>
+          <style>
+  .gs-title[style], .gs-title {
+    height: 1.5em !important;
+    height: 1.5em;
+  }
+  .gsc-control-cse[style], .gsc-control-cse {
+    padding: 0px;
+    padding: 0px !important;
+  }
+</style>
+
+<script>
+  (function() {
+    var cx = '013288817511911618469:ouqstys-bl4';
+    var gcse = document.createElement('script');
+    gcse.type = 'text/javascript';
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+
+<gcse:searchresults-only></gcse:searchresults-only>
+</div>
           </div>
         </div>
       </div>
