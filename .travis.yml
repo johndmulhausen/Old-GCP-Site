@@ -1,2 +1,21 @@
 language: ruby
-script: "bundle exec jekyll build"
+
+install:
+  # Install binary pandoc from Rstudio
+  # To use Pandoc, uncomment the following
+  # - export PATH="$HOME/pandoc:$PATH"
+  # - mkdir $HOME/pandoc
+  # - curl -O https://s3.amazonaws.com/rstudio-buildtools/pandoc-1.12.3.zip
+  # - unzip -j pandoc-1.12.3.zip pandoc-1.12.3/linux/debian/x86_64/pandoc
+  #     -d $HOME/pandoc
+  # - chmod +x $HOME/pandoc/pandoc
+  # - pandoc --version
+
+  # Install Jekyll and dependencies
+  - bundle install
+
+script: bundle exec rake site:deploy --quiet
+
+env:
+  global:
+    secure: "hKXULzhhJ69pd90hrONHHYYnH0VWAAd4bguBsZGqZ+UB1cvhM98gaoRC2uQ/ouocj8w3wbxtLKSF2PZS4AaTzic7ylRBIZqLFvogGYhUMH6iederbeoChJw/YjmZfFHJHwH+G0SfRnjtxJYH70+ZMERnSMB3SQQrjS2XnCky7uI="
