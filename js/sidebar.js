@@ -21,13 +21,24 @@ $(".tlw-control").click(function() {
 $("pre").addClass("notranslate");
 $("code").addClass("notranslate");
 
+// add functions for tab loading by ID
+$.fn.tabIndex = function () {
+    return $(this).parent().find(this).index() - 1; 
+};
+$.fn.selectTabByID = function (tabID) {
+    $(this).tabs("option", "active", $('#' + tabID).tabIndex());
+};
+$.fn.selectTabByIndex = function (tabIndex) {
+    $(this).tabs("option", "active", tabIndex);
+};
+    
 // activate tabs, link all tabs with the same header ID
-$(".horizontalTabs").tabs({
-  select: function(event,ui){
-    var thisId = $(ui).id;
-    $(".horizontalTabs").tabs("select", "#" + thisId);
-  }
-});
+$(".horizontalTabs").tabs();
+$(".horizontalTabs").on("tabsactivate", function(event,ui)
+  {
+    console.log(ui.newTab + " was clicked!")
+    $(".horizontalTabs").selectTabByID(ui.newTab);
+  });
 
 // kicks off a search
 $("#searchButton").click(function() {
