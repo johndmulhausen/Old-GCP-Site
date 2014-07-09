@@ -40,7 +40,7 @@ $(".horizontalTabs").on("tabsactivate", function(event,ui)
       obj = ui.newTab;
       for (var i in obj) {
         if (obj.hasOwnProperty(i)) {
-            result += objName + "." + i + " = " + obj[i] + "\n";
+            result += "objName." + i + " = " + obj[i] + "\n";
         }
       }
       console.log(result);
