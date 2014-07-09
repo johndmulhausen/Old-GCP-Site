@@ -21,8 +21,13 @@ $(".tlw-control").click(function() {
 $("pre").addClass("notranslate");
 $("code").addClass("notranslate");
 
-// activate tabs
-$(".horizontalTabs").tabs();
+// activate tabs, link all tabs with the same header ID
+$(".horizontalTabs").tabs({
+  select: function(event,ui){
+    var thisId = $(ui).id;
+    $(".horizontalTabs).tabs("select", "#" + thisId);
+  }
+});
 
 // kicks off a search
 $("#searchButton").click(function() {
