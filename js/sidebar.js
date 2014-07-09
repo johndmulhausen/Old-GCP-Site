@@ -37,7 +37,7 @@ $(".horizontalTabs").tabs();
 $(".horizontalTabs").on("tabsactivate", function(event,ui)
   {
       var result = "";
-      obj = ui.newTab.0;
+      obj = ui.newTab[0];
       for (var i in obj) {
         if (obj.hasOwnProperty(i)) {
             result += "objName." + i + " = " + obj[i] + "\n";
