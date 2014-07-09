@@ -95,13 +95,10 @@ print s
 
 ## Tabs
 
-* {Node.js}
-   
-  Testing tabs 1
-
-* {PYTHON}
-
-  Testing tabs 2
+* Node.js tab test{: class="tabheader" }
+* Testing tabs 1{: class="tabcontent" }
+* PYTHON tab test{: class="tabs" }
+* Testing tabs 2{: class="tabcontent" }
 
 
 ## Last Build
