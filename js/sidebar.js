@@ -26,7 +26,7 @@ $.fn.tabIndex = function () {
     return $(this).parent().find(this).index() - 1; 
 };
 $.fn.selectTabByID = function (tabID) {
-    $(this).tabs("option", "active", $('#' + tabID).tabIndex());
+    $(this).tabs("option", "active", $(tabID).tabIndex());
 };
 $.fn.selectTabByIndex = function (tabIndex) {
     $(this).tabs("option", "active", tabIndex);
@@ -36,15 +36,7 @@ $.fn.selectTabByIndex = function (tabIndex) {
 $(".horizontalTabs").tabs();
 $(".horizontalTabs").on("tabsactivate", function(event,ui)
   {
-      var result = "";
-      obj = ui.newPanel;
-      for (var i in obj) {
-        if (obj.hasOwnProperty(i)) {
-            result += "objName." + i + " = " + obj[i] + "\n";
-        }
-      }
-      console.log(result);
-    $(".horizontalTabs").selectTabByID(ui.newTab.id);
+    $(".horizontalTabs").selectTabByID(ui.newPanel.selector);
   });
 
 // kicks off a search
