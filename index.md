@@ -98,24 +98,25 @@ print s
 ### HTML 
 
 <section class="kd-tabbed-horz" id="horzTab">
-  <article class="selected">
-    <header>Horz Tab 1</header>
-    Contents of tab 1.
-  </article>
-  <article>
-    <header>Horz Tab 2</header>
-    Contents of tab 2.
-  </article>
-  <article>
-    <header>Horz Tab 3</header>
-    Contents of tab 3.
-  </article>
-  <article>
-    <header>Horz Tab 4</header>
-    Contents of tab 4.
-  </article>
+<div class="kd-buttonbar kd-tabbar-horz">
+<header class="kd-tabbutton selected">Horz Tab 1</header>
+<header class="kd-tabbutton">Horz Tab 2</header>
+<header class="kd-tabbutton">Horz Tab 3</header>
+<header class="kd-tabbutton">Horz Tab 4</header>
+</div>
+<article class="selected" style="display: block;">
+Contents of tab 1.
+</article>
+<article>
+Contents of tab 2.
+</article>
+<article>
+Contents of tab 3.
+</article>
+<article>
+Contents of tab 4.
+</article>
 </section>
-
 
 ### Markdown
 
