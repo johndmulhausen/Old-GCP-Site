@@ -7,7 +7,7 @@ function enableTabs() {
         var hasSelected = false;
         var $this = $(this);
         $this.children("header").each(function(headerIndex){
-          if (this.hasClass("selected") hasSelected=true;
+          if (this.hasClass("selected")) hasSelected=true;
           this.click(function(){
             switchTabs(index,headerIndex);
           })
