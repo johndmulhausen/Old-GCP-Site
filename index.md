@@ -97,7 +97,7 @@ print s
 
 ### HTML 
 
-<section class="kd-tabbed-horz" id="osTabBar" style="visibility: hidden;">
+<section class="kd-tabbed-horz" id="osTabBar">
 <article id="linMacTab">
 <header>Linux/Mac OS X</header>
 <ol>
