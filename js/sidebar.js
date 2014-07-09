@@ -25,7 +25,7 @@ $("code").addClass("notranslate");
 $(".horizontalTabs").tabs({
   select: function(event,ui){
     var thisId = $(ui).id;
-    $(".horizontalTabs).tabs("select", "#" + thisId);
+    $(".horizontalTabs").tabs("select", "#" + thisId);
   }
 });
 
