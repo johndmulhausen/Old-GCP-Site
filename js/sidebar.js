@@ -16,6 +16,10 @@ $(".tlw-control").click(function() {
   }
 });
 
+# Prevent code from being borked by the Google Translate tool
+$("pre").addClass("notranslate");
+$("code").addClass("notranslate");
+
 $("#searchButton").click(function() {
   window.location.replace("/search?q=" + $("#q").val());
 });
