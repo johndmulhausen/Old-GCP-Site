@@ -21,6 +21,9 @@ $(".tlw-control").click(function() {
 $("pre").addClass("notranslate");
 $("code").addClass("notranslate");
 
+// activate tabs
+$(".horizontalTabs").tabs();
+
 // kicks off a search
 $("#searchButton").click(function() {
   window.location.replace("/search?q=" + $("#q").val());
