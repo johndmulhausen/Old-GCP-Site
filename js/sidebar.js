@@ -8,6 +8,7 @@ function enableTabs() {
         var $this = $(this);
         $this.children("header").each(function(headerIndex)
         {
+          console.log("header #" + headerIndex);
           if (this.hasClass("selected")) hasSelected=true;
           this.click(switchTabs(index,headerIndex));
         });
@@ -19,6 +20,7 @@ function enableTabs() {
 var tabString="";
 function switchTabs(tabSetIndex,tabIndex)
 {
+  console.log("switchTabs called;")
   var $tabSet = $(".kd-tabbed-horz").index(tabSetIndex);
   tabString = $tabSet.children("header").index(tabIndex).innerHTML;
   console.log(tabString + " was clicked!")
