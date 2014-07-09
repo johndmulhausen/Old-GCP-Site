@@ -133,14 +133,6 @@ print s
   </div>
 </div>
 
-### Markdown
-
-* Node.js tab test
-    * Testing tabs 1
-* PYTHON tab test
-    * Testing tabs 2
-{: class="mdHorizontalTabs" }
-
 ## Last Build
 
 [![Build Status](https://travis-ci.org/GoogleDevDocs/googledevdocs.github.io.svg?branch=master)](https://travis-ci.org/GoogleDevDocs/googledevdocs.github.io)
