@@ -27,7 +27,9 @@ Testing Markdown, Includes, and Submoduled templates.
 
 {% include _testinclude.md %}
 
-Testing use of Travis building into "build" branch & GCE replication.
+Testing Travis building into "build" branch & GCE replication.
+
+Test message #9
 
 ## CSS Tests 
 
