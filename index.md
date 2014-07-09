@@ -93,6 +93,17 @@ print s
 | col 2 is      | centered      |   $12 |
 | zebra stripes | are neat      |    $1 |
 
+## Tabs
+
+* {Node.js}
+   
+  Testing tabs 1
+
+* {PYTHON}
+
+  Testing tabs 2
+
+
 ## Last Build
 
 [![Build Status](https://travis-ci.org/GoogleDevDocs/googledevdocs.github.io.svg?branch=master)](https://travis-ci.org/GoogleDevDocs/googledevdocs.github.io)
