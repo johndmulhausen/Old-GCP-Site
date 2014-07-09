@@ -36,7 +36,7 @@ $.fn.selectTabByIndex = function (tabIndex) {
 $(".horizontalTabs").tabs();
 $(".horizontalTabs").on("tabsactivate", function(event,ui)
   {
-    console.log(ui.newTab.id + " was clicked!")
+    console.log(JSON.stringify(ui.newTab) + " was clicked!")
     $(".horizontalTabs").selectTabByID(ui.newTab.id);
   });
 
