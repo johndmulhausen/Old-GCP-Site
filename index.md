@@ -97,166 +97,23 @@ print s
 
 ### HTML 
 
-<section class="kd-tabbed-horz" id="osTabBar">
-<article id="linMacTab">
-<header>Linux/Mac OS X</header>
-<ol>
-<li>
-<p>Download and install Google Cloud SDK by running the following command in your shell or Terminal:</p>
-<pre>curl # | bash</pre>
-<p style="margin-top: 5px;"><small>(Or, you can download <a href="#">#</a> or <a href="#">#</a>, unpack it, and launch the <code>./google-cloud-sdk/install.sh</code> script.)</small></p>
-</li>
-<li>
-<p>Restart your shell or Terminal.</p>
-</li>
-<li>
-<p>Authenticate to Google Cloud Platform by running <code>gcloud auth login</code>.</p>
-</li>
-</ol>
-</article>
-<article id="winTab">
-<header>Windows</header>
-
-<a href="#"><p class="button-blue button"
-style="font-size: 115%; padding: 10px 15px;">Download the Google Cloud
-SDK installer for Windows</p></a>
-
-<ol>
-<li>
-<p>
-Launch the downloaded <code>#</code> installer
-and follow the prompts.
-</p>
-</li>
-<li>
-<p>
-When the installation finishes, open a command prompt (<code>cmd.exe</code>)
-or the <span class="uitext">Google Cloud SDK Shell</span> from Desktop or
-Start Menu.
-</p>
-
-<aside class="caution">If you're planning to use <code>gcutil ssh</code>
-functionality, create the directory <code>%HOMEPATH%\.ssh</code> if it
-doesn't exist. For example, you can use the command 
-<code>mkdir %HOMEPATH%\.ssh</code> to create it.
-</aside>
-</li>
-<li>
-<p>
-Authenticate to Google Cloud Platform by running
-<code>gcloud auth login</code>.
-</p>
-</li>
-</ol>
-</article>
-<article id="alternativeTab">
-<header>Alternative methods</header>
-<p>
-Here are the alternative methods for installing Google Cloud SDK.
-</p>
-<ul>
-<li><a href="#install-cygwin">Installation on Windows using Cygwin</a></li>
-<li><a href="#install-archive">Installation from an archive (.zip)
-on Windows</a></li>
-<li><a href="#install-docker">Installation from a base Docker image</a></li>
-</ul>
-
-<h2 id="install-cygwin">Installation on Windows using Cygwin</h2>
-<ol>
-<li>
-<p>Download and install a <a href="http://cygwin.com/setup-x86.exe"
-target="_blank">32-bit version of Cygwin</a>, following
-<a href="http://cygwin.com/install.html" target="_blank">Cygwin's
-installation instructions</a>. While installing Cygwin, be sure to select
-<code>openssh</code>, <code>curl</code> and the latest 2.7.x version of
-<code>python</code> from the package selection screen.</p>
-
-<aside class="caution">Warning: 64-bit version of Cygwin is unsupported
-due to a <a href="http://stackoverflow.com/questions/18947163/uuid-python-import-fails-on-cygwin-64bits" target="_blank">
-bug</a> in Python 2.7.</aside>
-</li>
-<li>
-<p>Launch Cygwin from Start &rarr; All Programs &rarr; Cygwin &rarr; Cygwin
-Terminal.</p>
-</li>
-<li>
-<p>Download and install Google Cloud SDK by running the following command
-in your Cygwin Terminal:</p>
-<pre>curl # | bash</pre>
-<p style="margin-top: 5px;"><small>
-(Or, you can download
-<a href="#">#</a> or
-<a href="#">#</a>, unpack
-it, and launch the <code>./google-cloud-sdk/install.sh</code> script.)
-</small></p>
-</li>
-<li>
-<p>
-Restart Cygwin Terminal, and authenticate to Google Cloud Platform
-by running
-<code>gcloud auth login</code>.
-</p>
-</li>
-</ol>
-
-<h2 id="install-archive">Installation from an archive (.zip) on Windows</h2>
-<ol>
-<li>
-<p>
-Download
-<a href="#">#</a>
-and extract the contents (right-click the file and choose "Extract
-All...").
-</p>
-</li>
-<li>
-<p>
-Launch the <code>google-cloud-sdk\install.bat</code> script and follow
-the installation prompts.
-</p>
-</li>
-<li>
-<p>
-When the installation finishes, restart the command prompt (
-<code>cmd.exe</code>) and authenticate to Google Cloud Platform by running
-<code>gcloud auth login</code>.
-</p>
-</li>
-</ol>
-
-<h2 id="install-docker">Installation from a base Docker image</h2>
-<ol>
-<li>
-<p>
-Get the Google Cloud SDK
-<a href="https://registry.hub.docker.com/u/google/cloud-sdk/" target="_blank">Docker image</a>:
-<pre>$ docker pull google/cloud-sdk</pre>
-</p>
-</li>
-<li>
-<p>
-Authenticate to Google Cloud Platform and save the OAuth 2.0
-credentials in <code>gcloud-config</code> volume.
-<pre>$ docker run -t -i --name gcloud-config google/cloud-sdk gcloud auth login
-
-Go to the following link in your browser: ...
-Enter verification code: ...</pre>
-</p>
-</li>
-<li>
-<p>
-Re-use the credentials from <code>gcloud-config</code> volume when running
-<code>gcloud</code> commands.
-<pre>$ docker run -t -i --volumes-from gcloud-config google/cloud-sdk gcloud compute instances list</pre>
-</p>
-</li>
-</ol>
-<p>
-For more information see
-<a href="https://registry.hub.docker.com/u/google/cloud-sdk/" target="_blank">
-"google/cloud-sdk" Docker image documentation</a>.
-</p>
-</article>
+<section class="kd-tabbed-horz" id="horzTab">
+  <article class="selected">
+    <header>Horz Tab 1</header>
+    Contents of tab 1.
+  </article>
+  <article>
+    <header>Horz Tab 2</header>
+    Contents of tab 2.
+  </article>
+  <article>
+    <header>Horz Tab 3</header>
+    Contents of tab 3.
+  </article>
+  <article>
+    <header>Horz Tab 4</header>
+    Contents of tab 4.
+  </article>
 </section>
 
 
