@@ -121,7 +121,7 @@ print s
     * Testing tabs 1
 * PYTHON tab test
     * Testing tabs 2
-{: class="tabs" }
+{: class="horizontalTabs" }
 
 ## Last Build
 
