@@ -96,9 +96,9 @@ print s
 ## Tabs
 
 * Node.js tab test
-* Testing tabs 1
+    * Testing tabs 1
 * PYTHON tab test
-* Testing tabs 2
+    * Testing tabs 2
 {: class="tabs" }
 
 ## Last Build
