@@ -38,6 +38,12 @@ $(".horizontalTabs").on("tabsactivate", function(event,ui)
   {
     $(".horizontalTabs").selectTabByID(ui.newPanel.selector);
   });
+$(".verticalTabs").tabs().addClass( "ui-tabs-vertical ui-helper-clearfix" );
+$(".verticalTabs").removeClass( "ui-corner-top" ).addClass( "ui-corner-left" );
+$(".verticalTabs").on("tabsactivate", function(event,ui)
+  {
+    $(".verticalTabs").selectTabByID(ui.newPanel.selector);
+  });
 
 // kicks off a search
 $("#searchButton").click(function() {
