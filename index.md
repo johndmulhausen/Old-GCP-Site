@@ -99,12 +99,12 @@ print s
 
 <section class="kd-tabbed-horz" id="horzTab">
 <div class="kd-buttonbar kd-tabbar-horz">
-<header class="kd-tabbutton selected">Horz Tab 1</header>
+<header class="kd-tabbutton">Horz Tab 1</header>
 <header class="kd-tabbutton">Horz Tab 2</header>
 <header class="kd-tabbutton">Horz Tab 3</header>
 <header class="kd-tabbutton">Horz Tab 4</header>
 </div>
-<article>
+<article class="selected" style="display: block;">
 Contents of tab 1.
 </article>
 <article>
