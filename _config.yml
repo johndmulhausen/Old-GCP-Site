@@ -23,7 +23,7 @@ destination: ../googledevdocs.github.io-build/
 # or "master" otherwise
 username: GoogleDevDocs
 repo: googledevdocs.github.io
-branch: build
+branch: master
 
 permalink: pretty
 
