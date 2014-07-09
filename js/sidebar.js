@@ -9,10 +9,7 @@ function enableTabs() {
         $this.children("header").each(function(headerIndex)
         {
           if (this.hasClass("selected")) hasSelected=true;
-          this.click(function()
-          {
-            switchTabs(index,headerIndex);
-          });
+          this.click(switchTabs(index,headerIndex));
         });
         if (!hasSelected) $(".kd-tabbed-horz header").first().addClass("selected");
     });
