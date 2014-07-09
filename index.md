@@ -104,7 +104,7 @@ print s
 <header class="kd-tabbutton">Horz Tab 3</header>
 <header class="kd-tabbutton">Horz Tab 4</header>
 </div>
-<article class="selected" style="display: block;">
+<article>
 Contents of tab 1.
 </article>
 <article>
