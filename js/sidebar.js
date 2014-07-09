@@ -6,15 +6,16 @@ function enableTabs() {
     $(".kd-tabbed-horz").each(function(index){
         var hasSelected = false;
         var $this = $(this);
-        $this.children("header").each(function(headerIndex){
+        $this.children("header").each(function(headerIndex)
+        {
           if (this.hasClass("selected")) hasSelected=true;
-          this.click(function(){
+          this.click(function()
+          {
             switchTabs(index,headerIndex);
-          })
+          });
         });
         if (!hasSelected) $(".kd-tabbed-horz header").first().addClass("selected");
-      }
-    })
+    });
   }
 }
 
