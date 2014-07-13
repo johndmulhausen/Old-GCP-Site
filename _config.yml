@@ -22,8 +22,8 @@ destination: ../googledevdocs.github.io-build/
 # Branch defaults to "source" for USERNAME.github.io
 # or "master" otherwise
 username: GoogleDevDocs
-repo: googledevdocs.github.io
-branch: master
+sourcerepo: googledevdocs.github.io
+destinationrepo: googledevdocs_build
 
 permalink: pretty
 
