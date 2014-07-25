@@ -27,7 +27,11 @@ Testing Markdown, Includes, and Submoduled templates.
 
 {% include _testinclude.md %}
 
+<<<<<<< HEAD
 Testing Local > GitHub
+=======
+Testing Remote > Git-on-Borg
+>>>>>>> origin/github-master
 
 ## CSS Tests 
 
