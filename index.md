@@ -27,7 +27,7 @@ Testing Markdown, Includes, and Submoduled templates.
 
 {% include _testinclude.md %}
 
-Testing Local > GitHub
+Testing GitHub > Local
 
 ## CSS Tests 
 
