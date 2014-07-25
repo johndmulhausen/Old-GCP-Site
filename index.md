@@ -27,7 +27,7 @@ Testing Markdown, Includes, and Submoduled templates.
 
 {% include _testinclude.md %}
 
-Testing Remote > GoB 
+Testing Remote > GoB (scripted)
 
 ## CSS Tests 
 
