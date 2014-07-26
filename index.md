@@ -27,7 +27,7 @@ Testing Markdown, Includes, and Submoduled templates.
 
 {% include _testinclude.md %}
 
-Testing detection of sync need #2
+Testing detection of sync need #3
 
 ## CSS Tests
 
