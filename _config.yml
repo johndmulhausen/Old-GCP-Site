@@ -35,7 +35,7 @@ exclude:
   - Gemfile
   - Gemfile.lock
   - "*.Rmd"
-  - "*.md"
+  - README.md
   - "*.yml"
   - "*.json"
   - vendor
