@@ -27,7 +27,7 @@ Testing Markdown, Includes, and Submoduled templates.
 
 {% include _testinclude.md %}
 
-Testing Local Edit > Scripted Deploy
+Testing push-to-deploy. Again...
 
 ## CSS Tests 
 
