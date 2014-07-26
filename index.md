@@ -27,7 +27,7 @@ Testing Markdown, Includes, and Submoduled templates.
 
 {% include _testinclude.md %}
 
-Testing push-to-deploy. Again...
+Testing GH>GAE
 
 ## CSS Tests
 
