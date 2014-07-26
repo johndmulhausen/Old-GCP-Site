@@ -31,11 +31,12 @@ paginate: 10
 paginate_path: "blog/page:num"
 
 exclude:
-  - README.md
   - Rakefile
   - Gemfile
   - Gemfile.lock
-  - changelog.md
   - "*.Rmd"
+  - "*.md"
+  - "*.yml"
+  - "*.json"
   - vendor
-  - .travis.yml
+  - .gitignore
