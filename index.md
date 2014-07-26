@@ -29,7 +29,7 @@ Testing Markdown, Includes, and Submoduled templates.
 
 Testing push-to-deploy. Again...
 
-## CSS Tests 
+## CSS Tests
 
 ### Buttons
 
