@@ -27,7 +27,7 @@ Testing Markdown, Includes, and Submoduled templates.
 
 {% include _testinclude.md %}
 
-Testing auto-publish via GoB check-in detection, then build, then deploy
+Testing fork flow.
 
 ## CSS Tests
 
