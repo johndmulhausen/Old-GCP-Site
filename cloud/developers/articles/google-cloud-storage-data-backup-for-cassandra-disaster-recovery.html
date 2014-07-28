@@ -1,0 +1,460 @@
+<html devsite>
+  <head>
+    <title>Disaster Recovery Information &amp; Tutorials</title>
+    <meta name="description" content="Read technical articles about disaster recovery and solutions with Google Cloud Platform. Disaster recovery solutions with cloud storage and data management." />
+    <meta name="hide_page_heading" value="true" />
+    <meta name="full_width" value="true" />
+    <meta name="top_category" value="developers" />
+    <meta name="subcategory" value="articles" />
+    <meta name="viewport" content="initial-scale=1, minimum-scale=1, width=device-width">
+    <link rel="apple-touch-icon" href="//cloud.google.com/_static/images/apple-touch-icon.png">
+    <link href="//fonts.googleapis.com/css?family=Open+Sans:400italic,300,400,600,700" rel="stylesheet">
+
+    <link href="/css/default.css" rel="stylesheet">
+
+    <!--[if lt IE 9]>
+    <link rel="stylesheet" media="screen" href='/c/cp-ie.css'>
+    <![endif]-->
+    <script src="/js/floodlight.js"></script>
+  </head>
+  <body>
+
+
+
+
+
+
+
+
+<div id="maia-main" class="cp-article">
+  <div class="maia-cols">
+    <div class="maia-col-9">
+      <div>
+        <div style="float:right">
+          <div class="g-plusone"></div>
+        </div>
+        <h1 class="title">Using Google Cloud Storage for Cassandra Disaster Recovery</h1>
+      </div>
+      
+<div class="cp-article-tutorial">
+
+  <h5>Contents</h5>
+
+  <ul>
+    <li><a href="#wywl">What you will learn</a></li>
+    <li><a href="#requir">Requirements</a></li>
+    <li><a href="#wywb">What you will build</a></li>
+    <li><a href="#ots">Overview of the Steps</a></li>
+    <li><a href="#dys">Deciding Your Strategy</a></li>
+    <li><a href="#gsgcs">Getting Setup with Google Cloud Storage</a></li>
+    <li><a href="#wbs">Writing the Backup Script</a></li>
+    <li><a href="#ccj">Creating a Cron Job</a></li>
+    <li><a href="#wrs">Writing the Recovery Script</a></li>
+    <li><a href="#fc">Further Considerations</a></li>
+  </ul>
+
+  <a name="wywl"></a>
+  <h2>What you will learn</h2>
+  <p>By going through this brief tutorial, you will learn how Google Cloud Storage can be used to easily add disaster recovery to your <a href="http://cassandra.apache.org/">Cassandra</a> installation by backing your data up into, and restoring it from, Google&rsquo;s cloud. Although this tutorial focuses on backing up and restoring Cassandra data in particular, the concepts can be applied broadly to any backup use case. This tutorial was developed and tested on Google Compute Engine virtual machines running Linux, however the information provided is applicable for any environment supported by the <a href="https://developers.google.com/storage/docs/gsutil_install#specifications">gsutil</a> tool.</p>
+
+  <a name="requir"></a>
+  <h2>Requirements</h2>
+  <p>To follow along with this tutorial you will need:</p>
+
+  <ol>
+    <li>
+      Access to data you would like to back up
+      <ol style="list-style-type:circle;">
+        <li>We will be referring to Cassandra 1.2.2 specific data in the tutorial.</li>
+      </ol>
+    </li>
+    <li>
+      Python 2.7 installed on the target system
+      <ol style="list-style-type:circle;">
+        <li>Having the <a href="http://pyyaml.org/wiki/PyYAMLDocumentation">PyYaml</a> module installed is helpful</li>
+      </ol>
+    </li>
+    <li>Crontab (or some other similar cron job scheduler)</li>
+  </ol>
+
+  <a name="wywb"></a>
+  <h2>What you will build</h2>
+  <p>In this exercise, you will write two scripts. The first script automates the daily backup of your data to Google Cloud Storage. The second script recovers your data after disaster strikes. This tutorial also includes a small cron job that calls your backup script on a designated schedule.</p>
+
+  <a name="ots"></a>
+  <h2>Overview of the Steps</h2>
+  <p>This tutorial assumes that you already have familiarity with Cassandra, and have access to the data files that Cassandra stores in its host&rsquo;s filesystem.</p>
+  <p>Here are the high level steps that will be covered:</p>
+  <ol>
+    <li>Choosing your disaster recovery strategy</li>
+    <li>Getting setup to use Google Cloud Storage</li>
+    <li>Writing a script (Python) to backup data to Google Cloud Storage</li>
+    <li>Adding the script to a daily cron job</li>
+    <li>Writing a script to recover data from Google Cloud Storage</li>
+  </ol>
+
+  <a name="dys"></a>
+  <h2>Choosing Your Strategy</h2>
+  <p>Cassandra has two built-in methods of backing up and restoring data: snapshots and incremental backups. Detailed information about these methods can be found in the <a href="http://www.datastax.com/docs/1.2/operations/backup_restore">documentation</a> on the DataStax&rsquo;s site. Both of these methods can be done without explicitly quiescing Cassandra, and both can be supplemented to provide increased security against catastrophic loss by moving the data into Google Cloud Storage.</p>
+  <p>The strategy used in this tutorial will be to combine snapshots with daily backups to Google Cloud Storage.</p>
+
+  <a name="gsgcs"></a>
+  <h2>Getting Set Up with Google Cloud Storage</h2>
+  <p>If you already have a Google Cloud Storage account and have installed <a href="https://developers.google.com/storage/docs/gsutil">gsutil</a>, you may skip to the next section.</p>
+  <p><a href="https://cloud.google.com/products/cloud-storage">Google Cloud Storage</a> is a service within Google Cloud Platform. It allows developers to store application data directly to Google&rsquo;s infrastructure.</p>
+  <p>Google Cloud Storage can be activated via the <a href="https://code.google.com/apis/console">Google APIs Console</a>. If you are unfamiliar with the Google APIs Console, please refer to the <a href="https://developers.google.com/console/help/#ApiConsole">documentation</a> which walks you through project setup.</p>
+  <p>Once you have created a project in the Google APIs Console you will need to <a href="https://developers.google.com/console/help/#ApiConsole">associate Google Cloud Storage with that project</a>.</p>
+  <p>Finally, download and install the gsutil application. <a href="https://developers.google.com/storage/docs/gsutil_install">Instructions</a> for installing gsutil are available. Ensure that gsutil is on your path, otherwise you will need to include the complete path to your installation when referencing gsutil in your scripts.</p>
+
+  <a name="wbs"></a>
+  <h2>Writing the Backup Script</h2>
+  <p>In this next section, you will create a small python script that automates the task of backing up your data to Google Cloud Storage. You can use the following script as a template:</p>
+
+<pre>
+#! /usr/bin/python
+
+# Copyright (c) 2013 Google Inc. All Rights Reserved.
+#
+# Licensed under the Apache License, Version 2.0 (the "License"); you may not
+# use this file except in compliance with the License. You may obtain a copy of
+# the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+# WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+# License for the specific language governing permissions and limitations under
+# the License.
+
+"""Sample gsutil script for Cassandra data backup."""
+
+from datetime import datetime
+from socket import gethostbyname
+from socket import gethostname
+from subprocess import call
+from yaml import safe_load  # Requires the PyYaml module.
+
+
+# Prepare variables for constructing bucket path.
+# Be mindful of the naming guidelines.
+# (<a href="https://developers.google.com/storage/docs/bucketnaming">https://developers.google.com/storage/docs/bucketnaming</a>)
+
+# An existing bucket in Google Cloud Storage that you intend to store your data too.
+COMPANY_ROOT = 'gs://my_company_bucket/'  # Use your own bucket here
+
+# The following naming method gives each host a separate folder in Google Cloud Storage
+# which itself contains a folder for each backup performed on that host.
+hostname = gethostbyname(gethostname())  # Identify the host for backup.
+gs_host_path = '%sdrdata/cassandra/%s/' % (COMPANY_ROOT, hostname)
+time = str(datetime.now()).replace(' ', '_')  # Identify a particular backup.
+gs_backup_path = gs_host_path + time + '/'  # New path each time script is run.
+
+# Local path to where we will save the backup log file for this host.
+PATH_TO_LOGS = '/path/to/dr_logs/'
+call(['mkdir', '-p', PATH_TO_LOGS])  # -p creates directory if it doesn't exist
+BACKUP_LOG = PATH_TO_LOGS + 'backup.log'
+
+# Read the yaml file to capture location of many important directories.
+PATH_TO_YAML = '/etc/cassandra/cassandra.yaml'  # Use path to your cassandra.yaml file if different
+raw_yaml = open(PATH_TO_YAML)
+cass_yaml = safe_load(raw_yaml)
+
+# Helper functions.
+def SingleFileBackup(file_path):
+  """Backup a single file to root of current Google Cloud Storage backup path.
+
+  Args:
+    file_path: Local path to the file we are backing up.
+  """
+  call(['gsutil', 'cp', file_path, gs_backup_path])
+
+
+def RecursiveDirectoryBackup(directory_path):
+  """Backup a directory and all of its contents to Google Cloud Storage.
+
+  Args:
+    directory_path: Local path to directory we are backing up.
+  """
+  call(['gsutil', '-m', 'cp', '-R', directory_path, gs_backup_path])
+
+
+# Actual backup procedures begin here.
+# Remove any old snapshots to minimize diskspace usage both locally and in Google Cloud Storage.
+call(['nodetool', 'clearsnapshot'])
+
+# Backup the cassandra.yaml file.
+SingleFileBackup(PATH_TO_YAML)
+
+# Backup the log4j properties file.
+PATH_TO_LOG4J = '/etc/cassandra/log4j-server.properties'  # Use path to your file if different
+SingleFileBackup(PATH_TO_LOG4J)
+
+# Backup every Cassandra data directory recursively.
+dirs = cass_yaml['data_file_directories']  # creates an array of directory paths
+for data_directory in dirs:
+  RecursiveDirectoryBackup(data_directory)
+
+# Backup Cassandra commit logs.
+RecursiveDirectoryBackup(cass_yaml['commitlog_directory'])
+
+# Backup Cassandra saved caches.
+RecursiveDirectoryBackup(cass_yaml['saved_caches_directory'])
+
+# Backup Cassandra system logs.
+SYS_LOG = '/path/to/log'  # from log4j-server.properties file
+RecursiveDirectoryBackup(SYS_LOG)
+
+# Save details about this backup to local backup log.
+with open(BACKUP_LOG, 'a') as f:
+  f.write(gs_backup_path + '\n')
+
+# Copy local log to Google Cloud Storage host path. This overwrites previous log for this host.
+call(['gsutil', 'cp', BACKUP_LOG, gs_host_path])
+
+# Perform local Cassandra backup by taking a new snapshot.
+call(['nodetool', 'snapshot'])
+</pre>
+
+<figure>
+  <figcaption>cassandra_dr_backup_script.py</figcaption>
+</figure>
+
+  <a name="ccj"></a>
+  <h2>Creating a Cron Job</h2>
+  <p>Now that you have a script that works for you, lets create a job! This tutorial creates a cron job using <a href="http://crontab.org/crontab.1.html">crontab</a>, however, you can use any scheduling tool that you are most comfortable with. Our goal is to create a job that runs your script at predetermined intervals. Use the cron job below as a guide.</p>
+  <p>The following cron job can be created in Linux/Mac environments by issuing &ldquo;crontab -e&rdquo; on the command line. It is scheduled to run daily at 1:30AM system time:</p>
+
+<pre>
+30 1 * * * /path_to_dr_scripts/cassandra_dr_backup_script.py
+</pre>
+
+  <p>Be certain that the cron job is  configured to be run by a user that has access to the data and permission to start/stop services!</p>
+
+  <a name="wrs"></a>
+  <h2>Writing the Recovery Script</h2>
+  <p>It makes more sense to use locally sourced recovery methods when you simply want to restore a few column families. But when those locally sourced recovery files are gone, as in the case where you are rebuilding from some real calamity, you will be happy that you saved your data and a copy of your recovery script in Google Cloud Storage. The recovery script is very similar to the backup script, except that you are copying in the opposite direction. Keep in mind that when restoring a multi-node cluster, it is important to bring the node(s) designated as &ldquo;seeds&rdquo; in cassandra.yaml online before your other nodes.</p>
+  <p>A few steps to take during the restoration process after you&rsquo;ve installed Cassandra:</p>
+
+  <ol>
+    <li>Download the restoration script for the host you want to recover</li>
+    <li>Shutdown Cassandra (this step is incorporated in the sample script presented below)</li>
+    <li>Run your script</li>
+    <li>Update any configuration files not automatically restored by your script</li>
+    <li>Restart Cassandra nodes in the proper order</li>
+  </ol>
+
+  <p>Use the following script as a guideline:</p>
+
+
+<pre>
+#! /usr/bin/python
+
+# Copyright (c) 2013 Google Inc. All Rights Reserved.
+#
+# Licensed under the Apache License, Version 2.0 (the "License"); you may not
+# use this file except in compliance with the License. You may obtain a copy of
+# the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+# WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+# License for the specific language governing permissions and limitations under
+# the License.
+
+"""Sample gsutil script for Cassandra data recovery."""
+
+from os import path
+from socket import gethostbyname
+from socket import gethostname
+import subprocess
+from subprocess import call
+from yaml import safe_load  # Requires the PyYaml module.
+
+
+# Stop Cassandra if running.
+call(['service', 'cassandra', 'stop'])
+
+COMPANY_ROOT = 'gs://my_company_bucket/'  # Identical to the backup bucket
+hostname = gethostbyname(gethostname())
+gs_host_path = '%sdrdata/cassandra/%s/' % (COMPANY_ROOT, hostname)
+gs_host_log = gs_host_path + 'backup.log'
+
+# Download log from gs to your local filesystem.
+LOCAL_LOG_DIR = '/path/to/dr_logs/'
+call(['mkdir', '-p', LOCAL_LOG_DIR])
+LOCAL_LOG = LOCAL_LOG_DIR + 'backup.log'
+call(['gsutil', 'cp', gs_host_log, LOCAL_LOG])
+
+# Get last entry from log. This will contain the most recent backup.
+proc = subprocess.Popen(['tail', '-n', '1', LOCAL_LOG], stdout=subprocess.PIPE)
+gs_last_backup = proc.communicate()[0].replace('\n', '')
+
+# Restore and read the yaml file.
+gs_yaml = gs_last_backup + 'cassandra.yaml'
+LOCAL_YAML = '/etc/cassandra/cassandra.yaml' # Use path to your cassandra.yaml file if different
+call(['gsutil', 'cp', gs_yaml, LOCAL_YAML])  # cassandra.yaml file restored
+raw_yaml = open(LOCAL_YAML)
+cass_yaml = safe_load(raw_yaml)
+
+# Restore the log4j properties file.
+gs_log4j = gs_last_backup + 'log4j-server.properties'
+LOCAL_LOG4J = '/etc/cassandra/log4j-server.properties'  # Use path to your file if different
+call(['gsutil', 'cp', gs_log4j, LOCAL_LOG4J])  # log4j restored
+
+
+# Helper function.
+def RestoreDirectory(directory_path):
+  """Restores local filesystem directory from data backed-up into Google Cloud Storage.
+
+  If directory_path does not already exist locally,  it is created.
+
+  By splitting the path we are able to separate the target directory
+  (index 1) from its local path (index 0). This allows us to construct the
+  correct Google Cloud Storage and local paths to use with gsutil.
+
+  Finally, we assign ownership of the newly restored directory to Cassandra so
+  that the program can properly access it.
+
+  Args:
+    directory_path: the path to the directory we wish to restore
+  """
+  call(['mkdir', '-p', directory_path])
+  split_path = path.split(directory_path)
+  gs_path = gs_last_backup + split_path[1]
+  call(['gsutil', '-m', 'cp', '-R', gs_path, split_path[0]])
+  call(['chown', '-R', 'cassandra', directory_path])  # give Cassandra ownership
+
+
+# Restore each Cassandra data directory.
+dirs = cass_yaml['data_file_directories']  # creates an array of directory paths
+for data_directory in dirs:
+  RestoreDirectory(data_directory)
+
+# Restore Cassandra commit logs.
+RestoreDirectory(cass_yaml['commitlog_directory'])
+
+# Restore Cassandra saved caches.
+RestoreDirectory(cass_yaml['saved_caches_directory'])
+
+# Restore Cassandra system logs.
+SYS_LOG = '/path/to/log'  # from log4j-server.properties file
+RestoreDirectory(SYS_LOG)
+
+# Restart Cassandra.
+call(['service', 'cassandra', 'start'])
+
+</pre>
+
+<figure>
+  <figcaption>cassandra_dr_recovery_script.py</figcaption>
+</figure>
+
+
+  <a name="fc"></a>
+  <h2>Further Considerations</h2>
+  <p>This tutorial presented you with a high level overview and provided templates for backing up and recovering data. However it is worth mentioning a few more things that you should consider.</p>
+
+  <h4>Best Practices</h4>
+  <p>When working with large amounts of data, there may be instances where your files do not fully upload during the initial attempt. Even though gsutil will automatically retry up to six times before giving up, it is advisable to create another cron job that runs in 30 minute intervals checking for failed upload attempts and retrying them. Please review the <a href="https://developers.google.com/storage/docs/gsutil/addlhelp/ScriptingProductionTransfers">documentation</a> found on the Google Developers site for more guidance and best practices for scripting production transfers with gsutil.</p>
+  <h4>Durable Reduced Availability</h4>
+  <p>You may wish to investigate whether <a href="https://developers.google.com/storage/docs/durable-reduced-availability">Durable Reduced Availability Storage</a> is a viable option for your backup needs. This offering enables you to store data at a lower cost, but with the tradeoff of lower availability than standard Google Cloud Storage.</p>
+
+  <h4>Know Your Environment</h4>
+  <p>The scripts used in this tutorial were written on a Linux system, with Cassandra installed as a service. Some of the commands will need to be changed to accommodate different OSes and Cassandra installations.</p>
+
+</div>
+ <!-- /maia-main -->
+
+    </div>
+    <div class="maia-col-3">
+      <br>
+      <img src="//www.google.com/images/icons/product/feedback-16.png" class="g-app-icon">
+      <a href="javascript:void(0);" class="google-feedback">Feedback on this document</a>
+      <br><br>
+      
+
+
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+</script>
+<script type="text/javascript" src="//www.gstatic.com/feedback/api.js"></script>
+<script>
+  $('body').delegate('.google-feedback', 'click', function() {
+      userfeedback.api.startFeedback({'productId': '94614'});
+  });
+</script>
+
+  <!-- Scripts to include both on Goro + Devsite -->
+  <script type="text/javascript">
+   window.___gcfg = {
+     lang: ''
+   };
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+  </script>
+
+  <!-- GTM implementation -->
+  
+
+
+
+
+
+
+  <!-- Start dataLayer -->
+    <script>
+      dataLayer = [{
+        'country': 'us',
+        'region': 'noram',
+        'language': 'en'
+      }];
+    </script>
+  <!-- End dataLayer -->
+  
+  <!-- Start Google Tag Manager -->
+  <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5CVQBG"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-5CVQBG');</script>
+  <!-- End Google Tag Manager -->
+
+
+  <!-- Global JS scripts to load; path will depend on whether we're on devsite or Goro -->
+  
+
+  
+    
+    <script src="/js/base.min.js"></script>
+    
+  
+
+  
+    <!-- Retina loader; Do not load if partners page because we need to wait until the Angular app runs -->
+    
+      <script>new lfl.system.RetinaLoader();</script>
+    
+
+    <!-- Secondary right-side scroll-nav -->
+    <script>new lfl.ui.ScrollNav({});</script>
+  
+
+
+
+  </body>
+</html>

@@ -1,0 +1,315 @@
+<html devsite>
+  <head>
+    
+    <title>High Availability LAMP Stack on Google Compute Engine</title>
+    <meta name="hide_page_heading" value="true" />
+    <meta name="full_width" value="true" />
+    <meta name="top_category" value="developers" />
+    <meta name="subcategory" value="articles" />
+    <meta name="viewport" content="initial-scale=1, minimum-scale=1, width=device-width">
+    <link href="//fonts.googleapis.com/css?family=Open+Sans:400italic,300,400,600,700" rel="stylesheet">
+
+    <link href="/css/default.css" rel="stylesheet">
+
+    <!--[if lt IE 9]>
+    <link rel="stylesheet" media="screen" href='/c/cp-ie.css'>
+    <![endif]-->
+    <script src="/js/floodlight.js"></script>
+  </head>
+  <body>
+
+
+
+
+
+
+
+
+<div id="maia-main" class="cp-article">
+  <div class="maia-cols">
+    <div class="maia-col-9">
+
+      <div>
+        <div style="float:right"><div class="g-plusone"></div></div>
+        <h1 class="title">High Availability LAMP Stack on Google Compute Engine</h1>
+      </div>
+
+      
+<div class="cp-article-tutorial">
+
+  <h2>Overview</h2>
+  <p>This tutorial details how to set up a high availability LAMP stack application running in multiple availability zones using a provided sample application. This sample application is used to create HAProxy load balancers, Apache web servers, and a MySQL database from a specified configuration file. Additionally, the tutorial shows how to configure MySQL master-slave replication and demonstrates one option for moving the master database around maintenance windows.</p>
+
+  <p class="special">
+    The content in this paper is deprecated and does not reflect the latest Google Cloud Platform technology. Please refer to <a href="https://cloud.google.com/">https://cloud.google.com/</a> for the latest papers, technical articles, and sample applications.
+  </p>
+
+
+  <p>The three main components of the tutorial are as follows:</p>
+  <p>Part 1: Setting up a high availability LAMP stack in two zones with MySQL master-slave configuration</p>
+  <p>Part 2: Adding an additional new zone to the web application and backing up MySQL database</p>
+  <p>Part 3: Configuring new MySQL master and safely removing all instances in the previous MySQL master zone   </p>
+
+  <h2>Disclaimer</h2>
+  <p>The sample LAMP stack tool is not an official Google product. It is a sample application provided for reference and is intended to guide you through this tutorial. Unforeseen errors might occur while performing operations with this tool. It is highly recommended to use the Google Cloud Console to verify the results of operations and the state of all instances.</p>
+  <p></p>
+
+  <h2>Prerequisites / Getting Started</h2>
+
+  <h3>Download the Sample Tool</h3>
+  <p><a href="https://github.com/GoogleCloudPlatform/solutions-high-availability-lamp-stack-google-compute-engine">Download</a> the &ldquo;LAMP Stack on Compute Engine&rdquo; sample tool, unzip the package, and open the extracted folder. The tool in the package uses Python 2.7 and shell scripts, and requires a UNIX-based system such as Linux or Mac OS X.</p>
+
+  <h3>Create Google Cloud Platform Project</h3>
+  <p>You must have a Google Account and a project with <a href="https://developers.google.com/compute/docs/signup">Google Compute Engine</a>, <a href="https://developers.google.com/storage/docs/signup">Google Cloud Storage</a>, and billing enabled.  The following are instructions for <a href="https://developers.google.com/compute/docs/signup">getting started</a> on Compute Engine:</p>
+
+  <h3>Install and Authenticate Google Cloud SDK</h3>
+  <p>The <a href="https://developers.google.com/compute/docs/gcutil/">Google Cloud SDK</a> contains the command line tools and libraries for creating and managing resources. The LAMP stack tool uses <span class="code">gcutil</span> for managing Compute Engine resources and gsutil for accessing Google Cloud Storage.</p>
+  <p>To run the LAMP stack tool, <span class="code">gcutil</span> must have its default project set to the Google Compute Engine project being used for this tutorial. Set the default project using the following command: </p>
+
+<pre>
+$ gcutil getproject --project=&lt;project-id&gt; --cache_flag_values
+</pre>
+
+  <p>Please refer to the <a href="https://developers.google.com/compute/docs/gcutil/">gcutil startup guide</a> for more information.</p>
+
+  <h3>Install and Authorize Client API</h3>
+  <p>The LAMP tool utilizes the <a href="https://developers.google.com/api-client-library/python/start/installation">Google APIs Client Library for Python</a> to access Google Cloud Storage and Compute Engine APIs. It provides a simple, flexible, and powerful library for accessing Google APIs.</p>
+  <p>Once the Client Library is <a href="https://developers.google.com/api-client-library/python/start/installation">installed</a>, it must be authorized to access the project used for this tutorial. Open the <a href="https://code.google.com/apis/console">APIs console</a> for the project and select the &ldquo;API Access&rdquo; option in the left hand menu. Create a new Client ID For an Installed Application of type "Other" in order to obtain a Client Secret for access.  The Client Secret and Client ID must be copied into a file named client_secrets.json in the root LAMP tool directory. Copy and modify the provided client_secrets_template.json file or follow the detailed <a href="https://developers.google.com/compute/docs/api/python_guide#authorization">step-by-step instructions</a> for creating a client_secrets.json file.</p>
+
+  <h2>Part 1: Setting Up a High Availability LAMP Stack</h2>
+  <p>The initial configuration contains eight Compute Engine instances distributed over two zones. Each zone contains a database server, two web servers, and a load balancer as shown in Figure 1. The architecture represents a basic implementation of a high availability web application and assumes traffic is distributed between the zones with an external DNS service. The following steps walk through using the LAMP stack tool to create the LAMP stack from a custom configuration file.</p>
+
+  <figure>
+    <img src="../images/articles/high-avail-lamp-stack-on-gce/stack-configuration.png">
+    <figcaption>Figure 1: Initial high availability LAMP stack configuration</figcaption>
+  </figure>
+
+  <h3>Step 1: Create a Configuration File for the LAMP Stack Tool</h3>
+  <p>Start by making a copy of the config_template.json file, name it config.json, and open it for modifications in an editor. This configuration file defines the setup of the LAMP stack across multiple zones, including instance names and functionality.  </p>
+  <p>In the "settings" section, update the following parameters:</p>
+  <ul>
+      <li>"project_name": The Project ID of the Google Cloud Platform project.</li>
+      <li>"network_name": A project unique <a href="https://developers.google.com/compute/docs/networking#networks">network</a> name that is associated with all instances created by the LAMP stack tool.</li>
+      <li>"gs_bucket_name": A unique bucket name that is used for storing all files required by the LAMP stack tool and instances. The bucket name must be unique among all Cloud Storage buckets. An existing bucket associated with the project can be used but data can be overwritten by the LAMP stack tool.</li>
+      <li>&ldquo;gce_user_name&rdquo;: The user associated with your developer account. For example, &ldquo;gceusername&rdquo; is the username for the account <a href="mailto:gceusername@gmail.com">gceusername@gmail.com</a>.</li>
+  </ul>
+  <p>Do not use hyphens (-) in any database names in the settings as it prevents correct database initialization. Any information in the settings section is visible to anyone who has access to the project. For a production implementation, additional steps are required to secure the database usernames and passwords.</p>
+  <p>In the "zones" section, update the values with the preferred <a href="https://developers.google.com/compute/docs/zones">Compute Engine zones</a>. The three zones should be in the same region or geographical area in order to decrease latency when web servers are accessing the database. This tutorial can be completed with two zones if three zones are not available in the prefered region.</p>
+  <p>Finally, if the project contains running Compute Engine instances, verify that the instance names do not collide. If multiple users are running the LAMP stack tool in the same project, change the instances&rsquo; names in the "instances" section and the "dependencies&rdquo; section to a unique value such as &ldquo;myusername-lamp-a1&rdquo;.</p>
+
+  <h3>Step 2: Upload Shared Files to Google Cloud Storage</h3>
+  <p>Open a terminal window and run the LAMP stack tool for the first time with the following parameters.</p>
+
+<pre>
+$ python lamp_stack.py -a upload
+</pre>
+
+  <p>This command creates a Google Cloud Storage bucket and uploads script files that need to be deployed on the Google Compute Engine instances. When running the LAMP stack tool for the first time, the authorization process is triggered and the credentials are saved. If the command fails with Python import errors for GceApi, verify that the Python Client Library is installed correctly. One troubleshooting trick is to set the PYTHONPATH to an existing client library, if there are unexpected issues installing the library. A suitable, existing library install is provided with the <span class="code">gsutil</span> tool. For example, Bash users can update their PYTHONPATH to use the gsutil Google API client by executing &ldquo;export PYTHONPATH=~/bin/gsutil/third_party/google-api-python-client".</p>
+
+  <h3>Step 3: Create Network and Firewall Rules</h3>
+  <p>The following command creates a new network and opens the ports required for MySQL, web requests, and SSH access.</p>
+
+<pre>
+$ python lamp_stack.py -a addnetwork
+</pre>
+
+  <h3>Step 4: Start Zone A and Zone B</h3>
+  <p>The load balancer, web servers, and MySQL database in a zone are started and configured with a single command.</p>
+
+<pre>
+$ python lamp_stack.py -a start -z zone-a
+$ python lamp_stack.py -a start -z zone-b
+</pre>
+
+  <h3>Step 5: Test Sample Web Application</h3>
+  <p>Each web server runs a simple web application that is used to verify the load balancer, web servers, and MySQL database are correctly configured and functional. Use the "status" action to check the state of the Compute Engine instances and access the sample web application. One web application is opened in a browser for each zone in order to verify each zone has a consistent view of the database.</p>
+
+<pre>
+$ python lamp_stack.py -a status
+</pre>
+
+  <p>If the browser attempts to access the web applications before they have completely started, a timeout error occurs. Once the web application appears, the page displays the web server instance name, zone-local MySQL information, and the master MySQL details. The recent page load requests are listed along with the total count. Each page refresh adds two new request records and the values should be identical across all open browser windows. If the MySQL information contains &ldquo;Error 1044: Access denied for user&rdquo;, verify that the databases are created correctly and the names do not contain any special characters.</p>
+
+  <h3>Step 6: Check MySQL Replication Status</h3>
+  <p>The command below is used to check the status of databases replication.</p>
+
+<pre>
+$ python lamp_stack.py -a dbstatus
+</pre>
+
+  <p>Once the database server queries complete, status information from the master and slave servers is displayed. As the third zone has not been created, one slave server reports not available and the other slave reports &ldquo;SLAVE REPLICATED OK&rdquo;. If replication fails, which can occur if MySQL drops a connection after a period of DB inactivity, the connections can be refreshed by running the following command.</p>
+
+<pre>
+$ python lamp_stack.py -a dbrefresh
+</pre>
+
+  <h2>Part 2: Adding an Additional New Zone and Database Backup</h2>
+  <p>Although the current web application is distributed across two zones, additional zones are recommended to maintain high availability during maintenance windows and increase redundancy. The architecture presented in Figure 2 details the additional region that is added. Since all instances in a project share a project private network, no additional work is required to configure instance networking across regions.</p>
+
+  <figure>
+    <img src="../images/articles/high-avail-lamp-stack-on-gce/stack-configuration-2.png">
+    <figcaption>Figure 2:  High availability LAMP stack configuration</figcaption>
+  </figure>
+
+  <p>The following sections detail how additional zones are added:</p>
+
+  <h3>Step 1: Create a New Zone</h3>
+  <p>The third zone is predefined in the config.json file and can be started with one command.</p>
+
+<pre>
+$ python lamp_stack.py -a start -z zone-c
+</pre>
+
+  <p>After the command has completed, execute the "status" action to open the sample web application and test all three zones. The "dbstatus" action can also be used to verify the database slaves are reporting &ldquo;SLAVE REPLICATED OK&rdquo;.  </p>
+  <p>Congratulations, the complete high availability LAMP stack should now be running on Compute Engine in multiple regions!</p>
+
+  <h3>Step 2: Create a Database Backup</h3>
+  <p>Although the final implementation is a high availability application, regularly creating database backups is critical for disaster recovery. The following command creates a dumpfile of the MySQL database but it blocks all writes until the process has completed:</p>
+
+<pre>
+$ python lamp_stack.py -a dbimage
+</pre>
+
+  <p>If the database is relatively large, the dumpfile can also be used to reduce the replication time when creating a new slave. The database dumpfile is uploaded to Cloud Storage and is visible in the LAMP stack tool bucket.</p>
+
+<pre>
+$ gsutil ls -la gs://&lt;your-bucket-name&gt;
+</pre>
+
+  <p>A files named &lt;your-database-name&gt;.sql and &ldquo;master_status.txt&rdquo; should be present in the bucket with a recent timestamp.</p>
+  <p>All MySQL Compute Engine instances in the sample application use Ephemeral Disk, which is permanently lost when an instance terminates. For production implementations, it is highly recommended to use Persistent Disk to prevent data loss if a Compute Engine instance terminates.</p>
+
+  <h2>Part 3: Promoting a New MySQL Server to Master and Removing Zone</h2>
+  <p>The sample application is currently running in three zones, and if one of the zones is approaching a maintenance window, the instances should be cleanly shut down before the maintenance window. If the MySQL master server is located in the maintenance window zone, a new master should be elected before it is terminated.  </p>
+
+  <figure>
+    <img src="../images/articles/high-avail-lamp-stack-on-gce/maintenance-window.png">
+    <figcaption>Figure 3:  High availability LAMP stack during maintenance window</figcaption>
+  </figure>
+
+  <p>The following steps walk through a simulation of a maintenance window in the master database zone (the modified configuration is shown in Figure 3): </p>
+
+  <h3>Step 1: Nominate New MySQL Master and Redirect Writes</h3>
+  <p>All web servers read from their zone-local MySQL database and write to the master database. The nomination process updates the address of the writable MySQL server for all zones. All new write requests are forwarded to the new server while the old master serves any existing requests. The following command modifies the original config.json file by changing the mysql instance configurations.</p>
+
+<pre>
+$ python lamp_stack.py -a dbnominate -t &lt;your mysql instance name&gt;
+</pre>
+
+  <p>If the error &ldquo;Could not get instance information is displayed&rdquo;, verify that the instance name in the command refers to a created instance. Once the command completes, web servers in slave zones do not reflect recent writes until the new master is promoted.</p>
+
+  <h3>Step 2: Wait for Completion of Replication from Old Master        </h3>
+  <p>Run "dbstatus" action until the replication status on all MySQL slave servers reports &ldquo;OK&rdquo;.</p>
+
+<pre>
+$ python lamp_stack.py -a dbstatus
+</pre>
+
+  <h3>Step 3: Promote New MySQL Master and Reconfigure Slaves</h3>
+  <p>The final step in setting up the new master is to reset the slave processes on all other instances to read from the master&rsquo;s binary log.</p>
+
+<pre>
+$ python lamp_stack.py -a dbpromote -t lamp-sql2
+</pre>
+
+  <p>After the operation completes, all web servers should be displaying the latest information and slaves should be reporting &ldquo;SLAVE REPLICATED OK&rdquo;. Since the database is reasonably small, the slaves should report successful replication within minutes. If the slaves do not replicate, verify that the gce_user_name in the configuration file does not contain a domain, such as &ldquo;@gmail.com,&rdquo; for example.</p>
+
+  <p>Step 4: Terminate Instances</p>
+  <p>When a maintenance window is about to occur in a zone, it is recommended to cleanly terminate the instances before they are automatically terminated.</p>
+
+<pre>
+$ python lamp_stack.py -a stop -z zone-a
+</pre>
+
+  <p>Congratulations, this final step completes the tutorial! You have successfully created a high availability LAMP stack and migrated the application around a simulated maintenance window. This sample can be used as a starting point for building applications on Compute Engine and integrating additional open source technologies.</p>
+
+  <p>If you are looking for additional information about implementing applications on Compute Engine, refer to the solutions paper <a href="building-high-availability-applications-on-google-compute-engine.html">Building High Availability Applications on Google Compute Engine</a>. The paper presents a sample application and details the best practices for migrating instances around maintenance windows.</p>
+
+</div>
+<!-- /maia-main -->
+
+    </div>
+    <div class="maia-col-3">
+      <br>
+      <img src="//www.google.com/images/icons/product/feedback-16.png" class="g-app-icon">
+      <a href="javascript:void(0);" class="google-feedback">Feedback on this document</a>
+      <br><br>
+      
+<hr><h4>Sample App</h4>
+<ul>
+<li><a href="https://github.com/GoogleCloudPlatform/solutions-high-availability-lamp-stack-google-compute-engine" target="github">LAMP Stack on Compute Engine</a> sample tool <img src="../images/ext-link-8px.png" height="8px" width="8px"></li>
+</ul>
+<hr>
+
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+</script>
+<script type="text/javascript" src="//www.gstatic.com/feedback/api.js"></script>
+<script>
+  $('body').delegate('.google-feedback', 'click', function() {
+      userfeedback.api.startFeedback({'productId': '94614'});
+  });
+</script>
+
+
+  <!-- is this feedback sticky needed?
+  <div class="feedback-sticky"><a href="javascript:void(0);">Feedback</a></div>
+  <script type="text/javascript" src="//www.gstatic.com/feedback/api.js"></script>
+  <script>
+    jQuery('body').delegate('.feedback-sticky', 'click', function() {
+      _gaq.push(['_trackEvent', 'Feedback', 'User Feedback: ' + location.pathname]);
+      userfeedback.api.startFeedback({'productId': '96209'});
+    });
+  </script>
+  -->
+
+  <!-- Scripts to include both on Goro + Devsite -->
+  <script type="text/javascript">
+   window.___gcfg = {
+     lang: ''
+   };
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+  </script>
+
+  <!-- GTM implementation -->
+  
+
+
+
+
+
+
+  <!-- Start dataLayer -->
+    <script>
+      dataLayer = [{
+        'country': 'us',
+        'region': 'noram',
+        'language': 'en'
+      }];
+    </script>
+  <!-- End dataLayer -->
+  
+  <!-- Start Google Tag Manager -->
+  <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5CVQBG"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-5CVQBG');</script>
+  <!-- End Google Tag Manager -->    
+
+
+  </body>
+</html>

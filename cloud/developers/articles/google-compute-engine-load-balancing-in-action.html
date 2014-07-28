@@ -1,0 +1,384 @@
+<html devsite>
+  <head>
+    <title>Web Apps Articles &amp; Tutorials &mdash; Google Cloud Platform</title>
+    <meta name="description" content="Read technical articles about web applications and solutions with Google Cloud Platform, including auto scaling and how to manage complex applications in the cloud." />
+    <meta name="hide_page_heading" value="true" />
+    <meta name="full_width" value="true" />
+    <meta name="top_category" value="developers" />
+    <meta name="subcategory" value="articles" />
+    <meta name="viewport" content="initial-scale=1, minimum-scale=1, width=device-width">
+    <link rel="apple-touch-icon" href="//cloud.google.com/_static/images/apple-touch-icon.png">
+    <link href="//fonts.googleapis.com/css?family=Open+Sans:400italic,300,400,600,700" rel="stylesheet">
+
+    <link href="/css/default.css" rel="stylesheet">
+
+    <!--[if lt IE 9]>
+    <link rel="stylesheet" media="screen" href='/c/cp-ie.css'>
+    <![endif]-->
+    <script src="/js/floodlight.js"></script>
+  </head>
+  <body>
+
+
+
+
+
+
+
+
+<div id="maia-main" class="cp-article">
+  <div class="maia-cols">
+    <div class="maia-col-9">
+      <div>
+        <div style="float:right">
+          <div class="g-plusone"></div>
+        </div>
+        <h1 class="title">Easy, No-Fuss, Cost-Effective: Google Compute Engine Load Balancing In Action</h1>
+      </div>
+      
+<div class="cp-article-tutorial">
+
+  <h4>How You Can Use Compute Engine Load Balancing to Unleash Your App&rsquo;s Potential</h4>
+
+  <h2>Introduction</h2>
+  <p>If you use Google products such as Search, AdWords, or Gmail, you will know that Google is committed to performance, scale, and robustness. Compute Engine Load Balancing is built on top of the same load balancing technology that is central to these products.</p>
+  <p>Compute Engine Load Balancing has the following advantages:</p>
+
+  <ul>
+    <li><span class="bld">Easy to set up and maintain</span> &ndash; Configure the load balancer via the command line interface or a programmatic RESTful API, then take load balancing off your mind, and let Google manage it</li>
+    <li><span class="bld">Load-balanced within a zone or across zones within a region</span> &ndash; Make your app robust by exposing one IP for VMs running in more than one zone</li>
+    <li><span class="bld">Stable performance from the start</span> &ndash; No pre-warming of the load balancing service is required</li>
+    <li><span class="bld">Able to route around unhealthy instances</span> &ndash; Configure your health checks and let Compute Engine Load Balancing take care of the rest</li>
+    <li><span class="bld">Enabled with &ldquo;lame-duck mode&rdquo;</span> &ndash; Easily upgrade your app without cutting off existing user connections, and be ready for maintenance windows: unhealthy backends will not receive new traffic, and existing connections are not interrupted</li>
+    <li><span class="bld">Affordable</span> &ndash; Save yourself not only the headache of maintaining load balancing, but also decrease your costs as well</li>
+  </ul>
+
+  <h2>Load Balancing on Compute Engine</h2>
+
+  <p>Load balancing is an essential component when scaling any service. There are various hardware and software load balancing options available. If you are running a service on Google Compute Engine, several of these options are open to you. The simplest approach, which does not require any software or hardware setup, is to use the Round-robin Domain Name System (DNS), a technique by which a single domain name is used to address multiple IP addresses. One significant drawback, however, is that clients, such as a web browser, may cache the DNS entry, and continue to send traffic to unhealthy servers.</p>
+
+  <p>Another approach is to use open source software such as HAProxy or Nginx. These open source projects may offer some additional features, but require both hardware and software setup and management.  This may result in increased installation, configuration, and upgrade costs in addition to the introduction of a single point of failure.</p>
+
+  <p>Compute Engine Load Balancing helps eliminate these drawbacks and requirements by offering load balancing as a distributed service that is seamlessly integrated with Google Cloud Platform.  Compute Engine Load Balancing runs as a service that is fully managed by Google. There is no need to run a load balancer on Compute Engine instances, and there is no need to worry about keeping load balancing up and running or routing around unhealthy backends. Compute Engine Load Balancing takes care of all of this.</p>
+
+  <p>Figure 1 illustrates the load balancing concepts in the context of Google&rsquo;s Compute Engine Load Balancing. Users will send requests to the app running on Compute Engine via Compute Engine Load Balancing, avoiding those instances that are unhealthy.</p>
+
+  <figure>
+    <img src="../images/articles/gce-load-balancing-in-action/load-balancing-concepts.png">
+    <figcaption>Figure 1: Compute Engine Load Balancing concepts. User requests are sent through Compute Engine Load Balancing and are spread among healthy backends.</figcaption>
+  </figure>
+
+  <h3>Benefits of Using Compute Engine Load Balancing</h3>
+
+  <h4>1. Easy to set up and maintain</h4>
+
+  <p>Configuring your app to use Compute Engine Load Balancing is easy and can be done either via command line or via the Cloud Console UI. Either way, you start by having a number of instances running application logic on Compute Engine. As an example, we set up four instances with Apache web server backends (&ldquo;www-0,&rdquo; &ldquo;www-1,&rdquo; &ldquo;www-2,&rdquo; and &ldquo;www-3&rdquo;). Load balancing was enabled on these four instances with the following three commands (where $ZONE0 and $ZONE1 are zones in your $REGION):</p>
+
+<pre>
+gcutil --project=&lt;your-project-id&gt; addhttphealthcheck basic-check
+
+gcutil --project=&lt;your-project-id&gt; addtargetpool www-pool --region=$REGION \
+  --instances=$ZONE0/instances/www-0,$ZONE0/instances/www-1,\
+  $ZONE1/instances/www-2,$ZONE1/instances/www-3 --health_checks="basic-check"
+
+gcutil --project=&lt;your-project-id&gt; addforwardingrule www-rule \
+  --region=$REGION --port_range=80 --target=www-pool
+</pre>
+
+  <p>Each forwarding rule will expose an external IP address, which you can find by executing the following command:
+
+<pre>
+gcutil --project=&lt;your-project-id&gt; listforwardingrules
+</pre>
+
+  <p>That&rsquo;s it! Clients will access the application with the externally facing IP and through Compute Engine Load Balancing. Setting up Compute Engine Load Balancing is as simple as that, and there is no need to maintain anything.</p>
+  <p>If you prefer a web interface, you can set up target pools, forwarding rules, and health checks with Google&rsquo;s Cloud Console as shown in figure 2.</p>
+
+  <figure>
+    <img src="../images/articles/gce-load-balancing-in-action/setting-up-2.png">
+    <figcaption>Figure 2: Setting up load balancing in the Cloud Console.</figcaption>
+  </figure>
+
+  <p>Both the command line and the UI allow users to set up more advanced features such as backup pools and session stickiness. For more information on setup options, please refer to the full <a href="https://developers.google.com/compute/docs/load-balancing/">documentation</a>.</p>
+
+  <h4>2. Load-balanced within a zone or across zones within a region</h4>
+
+  <p>Compute Engine Load Balancing spreads load roughly evenly between all instances that it balances. Figure 3 demonstrates how evenly Compute Engine Load Balancing spread 500,000 requests to the externally-facing IP exposed by the load balancer. For any real-world system, load spreading becomes increasingly necessary as the load increases.</p>
+
+  <figure>
+    <img src="../images/articles/gce-load-balancing-in-action/load-spread2.png">
+    <figcaption>Figure 3: Load spread for a total of 500,000 requests sent in 100 parallel threads.<sup><a href="#ftnt1" name="ftnt_ref1" id="ftnt_ref1">[1]</a></sup></figcaption>
+  </figure>
+
+  <h4>3. Stable performance from the start</h4>
+
+  <p>We now compare the average response time for querying backends directly to the response time for querying backends through Compute Engine Load Balancing.</p>
+
+  <table class="brdr-table">
+    <tbody>
+      <tr>
+        <td width="20%">
+          <p class="ital">Number of<br>requests</p>
+        </td>
+        <td width="20%">
+          <p class="ital">Average response time (in ms) for requests to one backend directly</p>
+        </td>
+        <td width="20%">
+          <p class="ital">Average response time (in ms) for requests through Compute Engine Load Balancing with <span class="bld">one</span> backend</p>
+        </td>
+        <td width="20%">
+          <p class="ital">Average response time (in ms) for requests through Compute Engine Load Balancing with <span class="bld">four</span> backends</p>
+        </td>
+        <td width="20%">
+          <p class="ital">Average response time (in ms) for requests through Compute Engine Load Balancing with <span class="bld">four</span> backends across <span class="bld">two</span> zones</p>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <p>1,000,000</p>
+        </td>
+        <td>
+          <p>100.9 (median: 100.0)</p>
+        </td>
+        <td>
+          <p>101.0 (median: 100.0)</p>
+        </td>
+        <td>
+          <p>98.89 (median: 98.00)</p>
+        </td>
+        <td>
+          <p>100.7 (median: 98.0)</p>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <p class="table-caption">Table 1: Response times for addressing a backend directly (100 parallel requests to a single instance) vs. through Compute Engine Load Balancing (100 parallel requests to one and four).<sup><a href="#ftnt2" name="ftnt_ref2" id="ftnt_ref2">[2]</a></sup></p>
+
+
+  <p>As table 1 shows, Compute Engine Load Balancing introduces no perceptible latency compared to the latency that exists when addressing a backend directly. Furthermore, it scales to more than one backend without introducing additional latency. Note that we took great care to ensure that the results were isolated as much as possible from outside factors that can influence the response time. Factors such as congestion on the originating system and network latency between the originating network and Google&rsquo;s network could significantly affect response times.</p>
+
+  <p>Compute Engine Load Balancing allows target pools to define a set of instances that span zones within a region. This is designed to make it easy to design robust systems. When one of the zones goes down, the load balancer will simply route around the instances in that zone, which at that point are considered unhealthy. In this section, we will take a look at the performance of the load balancer when instances are spread across zones. In our example, we have four instances, where two are in &ldquo;us-central1-a&rdquo; and two are in &ldquo;us-central1-b.&rdquo; The four instances are configured to be in the same target pool of a single forwarding rule. The rightmost column in table 1 shows how the average response time continues to be stable even when the load balancer spreads the responses among instances in two different zones.</p>
+
+  <p>Note that this stability across zones is also a very important feature for backup pools. Backup pools are designed to make an app more robust in the case of a partial or complete failure of a primary target pool, and they can be in a different zone from the primary pool. The stable response time shown above also implies that the user experience will not suffer when traffic needs to be sent to a backup pool of VMs.</p>
+
+  <p>Compute Engine Load Balancing shows stable performance right from the start. In this section, we again used 100 threads to send a total number of 1,000,000 requests. We show how the response time stays stable under this load in figure 4. The y-axis show the response time, and each dot on the graph represents a single request. Note how the response time is stable right from the beginning. Unlike many other solutions, with Compute Engine Load Balancing, there is no need to pre-warm the load balancer.</p>
+
+  <figure>
+    <img src="../images/articles/gce-load-balancing-in-action/response-time.png">
+    <figcaption>Figure 4: Response time for 1,000,000 requests (100 parallel threads) to four backends through Compute Engine Load Balancing.<sup><a href="#ftnt3" name="ftnt_ref3" id="ftnt_ref3">[3]</a></sup></figcaption>
+  </figure>
+
+  <h4>4. Able to route around unhealthy instances</h4>
+
+  <p>Compute Engine Load Balancing seamlessly routes around unhealthy instances. Using the health checks you configure, the load balancer detects any unhealthy backends and routes traffic to the remaining backends. Figure 5 shows the load spread across instances before and after an instance goes down.  ~500,000 requests were sent before and after backend &ldquo;www-0&rdquo; was taken out of rotation. Each data point in the graph represents the number of requests handled by one specific backend during a single minute. If the instance goes into &ldquo;lame-duck mode&rdquo; (described in more detail below), existing connections to that backend will still be handled until the backend is ready to be shut down, and no requests will time out.</p>
+  <p>While you focus on bringing your backend instances back to a healthy state, Google focuses on ensuring that the quality of your users&rsquo; experience is maintained.</p>
+
+  <figure>
+    <img src="../images/articles/gce-load-balancing-in-action/load-spread.png">
+    <figcaption>Figure 5: Load spread when Compute Engine Load Balancing is handling an instance that becomes unhealthy.<sup><a href="#ftnt4" name="ftnt_ref4" id="ftnt_ref4">[4]</a></sup></figcaption>
+  </figure>
+
+  <h4>5. Enabled with &ldquo;lame-duck mode&rdquo;</h4>
+
+  <p>Compute Engine Load Balancing supports &ldquo;lame-duck mode,&rdquo; which allows system administrators to take a VM out of the target pool while not interrupting the service. To take a VM out of rotation, configure it to respond negatively to health checks. New traffic will not be routed to that VM, and existing connections will not be interrupted. For the best user experience, the VM can then be monitored for existing connections before being shut down.</p>
+  <p>This feature is useful in various scenarios. One scenario where this feature is particularly useful is with application updates. When a new version of the application becomes available, VMs are often upgraded in a rolling fashion &ndash; one VM is taken out of rotation at a time, updated, and brought back into rotation. Many management tools such as <a href="http://www.opscode.com/chef/">Chef</a> and <a href="http://puppetlabs.com/">Puppet</a> can be configured to work this way.</p>
+  <p>Another use case where the &ldquo;lame-duck mode&rdquo; is useful is when there is a need to deal with maintenance windows effectively. As a maintenance window approaches, more VMs can be created (and added to the target pool) in a zone that will not go into a maintenance window. Those VMs that are about to be shut down can again be removed gracefully: if they respond to health check with &ldquo;unhealthy&rdquo; signals, existing connections will not be interrupted, but no new traffic will be sent to those VMs. The same concept also applies to cases where the application fails over to a backup target pool (because a sufficient portion of the VMs in the primary pool have become unhealthy). In that case, existing connections will be kept alive to VMs in the primary pool, while all new connections will be sent to the backup target pool.</p>
+  <p>The <a href="https://developers.google.com/compute/docs/load-balancing/">documentation</a> contains additional details about the &ldquo;lame-duck mode&rdquo;. For any system that sets up Compute Engine Load Balancing, enabling the &ldquo;lame-duck mode&rdquo; is highly recommended in order to  optimize the user experience.</p>
+
+  <h4>6. Affordable</h4>
+
+
+  <p>Compute Engine Load Balancing is very affordable. This can mean substantial cost savings when compared to running a set of VM instances for load balancing. For instance, if you run two instances on Compute Engine with load balancing software on n1-standard-2 instances (mid-tier general purpose instances, with one available for failover), you would currently pay $4029.60 per year for the instances alone, not counting network traffic costs. Compute Engine Load Balancing would be significantly more affordable &ndash; at the current pricing, Compute Engine Load Balancing would cost as little as $219 per year. This is about a 95% savings! Even if you choose to run smaller instances, your savings can be substantial (see table 2).</p>
+
+  <table class="brdr-table">
+    <tbody>
+      <tr>
+        <td width="20%">
+          &nbsp;
+        </td>
+        <td width="20%">
+          <p class="ital">Two f1-micro instances dedicated to load balancing software</p>
+        </td>
+        <td width="20%">
+          <p class="ital">Two g1-small instances dedicated to load balancing software</p>
+        </td>
+        <td width="20%">
+          <p class="ital">Two n1-standard-2 instances dedicated to load balancing software</p>
+        </td>
+        <td>
+          <p class="ital"><b>Compute Engine Load Balancing</b></p>
+        </td width="20%">
+      </tr>
+      <tr>
+        <td>
+          <p class="ital">Cost per year</p>
+        </td>
+        <td>
+          <p>$332.88</p>
+        </td>
+        <td>
+          <p>$946.08</p>
+        </td>
+        <td>
+          <p>$4029.60</p>
+        </td>
+        <td>
+          <p><b>$219</b></p>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <p class="table-caption">Table 2: Potential cost savings for using Compute Engine Load Balancing in a US region.<sup><a href="#ftnt5" name="ftnt_ref5" id="ftnt_ref5">[5]</a></sup></p>
+
+  <h2>Is Your App a Good Fit for Compute Engine Load Balancing?</h2>
+
+  <p>Any application that requires scaling to more than one instance can benefit from Compute Engine Load Balancing. We describe two scenarios here to guide you through your application architecture design:</p>
+
+  <h4>1. Web Application on Compute Engine with Logged-in Users</h4>
+
+  <p>The first common scenario is a web application with logged-in users. One example is an app where users can log on, author content, and share this content with other users. Other users may simply log on and consume the content that has been produced by others. Figure 6 shows a sketch of an architecture for a typical use case.</p>
+
+  <figure>
+    <img src="../images/articles/gce-load-balancing-in-action/web-apps.png">
+    <figcaption>Figure 6: Web application using Compute Engine Load Balancing.</figcaption>
+  </figure>
+
+  <p>Most web applications require that session information be stored. For our example, a user&rsquo;s current session information may be any authored content that is not yet saved. A commonly used and robust architecture is one that stores session information server-side in the following ways: </p>
+
+  <ul>
+    <li>Persistently in a database</li>
+    <li>Transiently in a high-speed cache for improved responsiveness</li>
+  </ul>
+
+  <p>In the default setting, requests sent through Compute Engine Load Balancing from the same client IP are not sticky to any backend and are, in fact, spread over all instances. Compute Engine Load Balancing can be configured to be sticky<sup><a href="#ftnt6" name="ftnt_ref6" id="ftnt_ref6">[6]</a></sup> to a particular backend from any given client IP. This can further improve performance, as session information will not have to be retrieved frequently. The &ldquo;lame-duck mode&rdquo; of Compute Engine Load Balancing allows for seamless, rolling upgrades of the application software by taking instances out of rotation. Future versions of Compute Engine Load Balancing will further strengthen this use case as we will continue to expand its capabilities. It will include such features as SSL termination at the load-balancer and Layer-7 load balancing.</p>
+
+  <h4>2. Intensive Processing on Compute Engine</h4>
+  <p>The second scenario is an application that performs long-running or intensive processing in response to user requests (see figure 7). In this scenario, each user request requires some processing on one or more Compute Engine instances. The processing could involve Optical Character Recognition (OCR), video transcoding, a MapReduce job, and more.</p>
+
+  <figure>
+    <img src="../images/articles/gce-load-balancing-in-action/backend-processing.png">
+    <figcaption>Figure 7: Backend processing application using Compute Engine Load Balancing.</figcaption>
+  </figure>
+
+  <p>Compute Engine Load Balancing lends itself particularly well to this example if the requests are of similar cost and duration. The backend VMs do not carry session state, but instead perform a one-off task. The load balancer can pick any backend VM to perform each of these tasks, and load balancing can effectively spread the workload among the backends.</p>
+
+  <h2>Conclusion</h2>
+  <p>In this paper we explained the advantages that load balancing can bring to applications, including how easy it is to set up and configure and that it shows consistent performance from the beginning. We also explained how Compute Engine Load Balancing provides reduced maintenance and reduced costs when compared with those of 3rd party load balancers. </p>
+  <p>The first version of Compute Engine Load Balancing is a good fit for many use cases, such as web applications and intensive processing as described earlier. But this is only the beginning. In future releases, we plan to include such features as SSL termination and Layer-7 load balancing. These features will bring you additional benefits such as flexibility in balancing techniques. You can then create a highly scalable, load-balanced web site with very little administrative overhead.</p>
+
+
+  <br>
+  <br>
+  <hr>
+  <p>
+      <a href="#ftnt_ref1" name="ftnt1" id="ftnt1">[1]</a> The results reported here are based on an experiment averaging over 500,000 requests. The experiment was done in a controlled testing environment set up within the Google network and is intended only to be an illustrative example.
+  </p>
+  <p>
+      <a href="#ftnt_ref2" name="ftnt2" id="ftnt2">[2]</a> The latencies reported here are based on an experiment averaging over 1,000,000 requests. The experiment was done in a controlled testing environment set up within the Google network and is intended only to be an illustrative example.
+  </p>
+  <p>
+      <a href="#ftnt_ref3" name="ftnt3" id="ftnt3">[3]</a> The latencies reported here are based on an experiment of 1,000,000 requests. The experiment was done in a controlled testing environment set up within the Google network and is intended only to be an illustrative example.
+  </p>
+  <p>
+      <a href="#ftnt_ref4" name="ftnt4" id="ftnt4">[4]</a> The results reported here are based on an experiment of 1,000,000 requests. The experiment was done in a controlled testing environment set up within the Google network and is intended only to be an illustrative example.
+  </p>
+  <p>
+      <a href="#ftnt_ref5" name="ftnt5" id="ftnt5">[5]</a> Please refer to the <a href="https://cloud.google.com/pricing/compute-engine">Compute Engine Pricing</a> page for the most up-to-date information both for Compute Engine Load Balancing and for Compute Engine instance charges. The estimate for Compute Engine Load Balancing includes hourly charges at the US rate as of November 2013. Bandwith charges will be additional.
+  </p>
+  <p>
+      <a href="#ftnt_ref6" name="ftnt6" id="ftnt6">[6]</a> Please see the <a href="https://developers.google.com/compute/docs/load-balancing/#sessionAffinity">documentation</a> for further details.
+  </p>
+
+</div>
+<!-- /maia-main -->
+
+    </div>
+    <div class="maia-col-3">
+      <br>
+      <img src="//www.google.com/images/icons/product/feedback-16.png" class="g-app-icon">
+      <a href="javascript:void(0);" class="google-feedback">Feedback on this document</a>
+      <br><br>
+      
+
+
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+</script>
+<script type="text/javascript" src="//www.gstatic.com/feedback/api.js"></script>
+<script>
+  $('body').delegate('.google-feedback', 'click', function() {
+      userfeedback.api.startFeedback({'productId': '94614'});
+  });
+</script>
+
+  <!-- Scripts to include both on Goro + Devsite -->
+  <script type="text/javascript">
+   window.___gcfg = {
+     lang: ''
+   };
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+  </script>
+
+  <!-- GTM implementation -->
+  
+
+
+
+
+
+
+  <!-- Start dataLayer -->
+    <script>
+      dataLayer = [{
+        'country': 'us',
+        'region': 'noram',
+        'language': 'en'
+      }];
+    </script>
+  <!-- End dataLayer -->
+  
+  <!-- Start Google Tag Manager -->
+  <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5CVQBG"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-5CVQBG');</script>
+  <!-- End Google Tag Manager -->
+
+
+  <!-- Global JS scripts to load; path will depend on whether we're on devsite or Goro -->
+  
+
+  
+    
+      <script src="/js/base.min.js"></script>
+    
+  
+
+  
+    <!-- Retina loader; Do not load if partners page because we need to wait until the Angular app runs -->
+    
+      <script>new lfl.system.RetinaLoader();</script>
+    
+    
+    <!-- Secondary right-side scroll-nav -->
+    <script>new lfl.ui.ScrollNav({});</script>
+  
+
+
+
+  </body>
+</html>

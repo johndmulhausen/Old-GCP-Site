@@ -1,0 +1,522 @@
+/* General */
+body.starterpack {
+  font: 300 16px/24px 'Open Sans', sans-serif;
+}
+
+.fw-wrap {
+  margin-left: -15px;
+  margin-right: -15px;
+  padding-left: 15px;
+  padding-right: 15px;
+  width: inherit;
+}
+
+.container {
+  clear: both;
+  margin: auto;
+  max-width: 978px;
+}
+
+.border-top {
+  border-top: 1px solid #ececec;
+  padding-top: 50px;
+}
+
+.starterpack {
+  clear: both;
+}
+
+@media (max-width: 767px) {
+  .starterpack {
+    margin-top: 0;
+  }
+}
+
+.starterpack section {
+  margin-bottom: 0;
+}
+
+.starterpack h1 {
+  color: #fff;
+  font: 400 45px/50px 'Open Sans', sans-serif;
+  letter-spacing: -1px;
+  margin-top: 0 !important;
+}
+
+@media (min-width: 767px) and (max-width : 900px) {
+  .starterpack h1 {
+    font-size: 34px !important;
+    line-height: 40px !important;
+  }
+}
+
+@media (max-width: 600px) {
+  .starterpack h1 {
+    font-size: 32px;
+    letter-spacing: 0;
+    line-height: 38px;
+  }
+}
+
+.starterpack h3 {
+  color: #4c4c4c;
+  font: 400 32px/38px 'Open Sans', sans-serif;
+  margin-top: 0;
+}
+
+.starterpack h5 {
+  color: #4c4c4c;
+  font: 600 16px/24px 'Open Sans', sans-serif;
+  margin-top: 0;
+}
+
+.starterpack h6 {
+  color: #4c4c4c;
+  font: 600 14px/16px 'Open Sans', sans-serif;
+  margin-bottom: 4px;
+  margin-top: 20px;
+}
+
+.starterpack p {
+  color: #4c4c4c;
+  font: 300 16px/24px 'Open Sans', sans-serif;
+}
+
+.starterpack a, .starterpack a:visited {
+  color: #245dc1;
+  font: 700 14px/18px 'Open Sans', sans-serif;
+}
+
+.starterpack p.link-p {
+  line-height: 18px !important;
+}
+
+.starterpack .button-lg {
+  background-color: #4285f4;
+  border-radius: 4px;
+  border: 0;
+  color: #fff !important;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 20px;
+  font-weight: 600;
+  height: 50px;
+  line-height: 50px !important;
+  margin-bottom: 8px;
+  margin-top: 8px;
+  text-align: center;
+  text-shadow: 0 -1px 0 rgba(0,0,0,.08);
+  width: 200px;
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
+}
+.starterpack .button-lg:hover {
+  background: #245dc1;
+  text-decoration: none;
+}
+
+/* ************** Hero ************** */
+#starterpack-hero {
+  background: #1d244c url(starterpack-img/hero-datacenter.jpg) no-repeat center top;
+  height: 300px;
+  padding-top: 55px;
+}
+
+@media (max-width: 600px) {
+  #starterpack-hero {
+    padding-bottom: 15px;
+    padding-top: 40px;
+  }
+}
+
+#starterpack-hero p {
+  color: #fff;
+}
+
+.starterpack-hero-cta {
+  margin-top: 20px;
+}
+
+.starterpack-hero-cta .button-lg {
+  float: left;
+}
+
+.starterpack-hero-cta p.sm-p {
+  float: left;
+  font-size: 14px;
+  margin-left: 20px;
+  width: 200px !important;
+}
+
+@media (max-width: 600px) {
+  .starterpack-hero-cta .button-lg {
+    float: none;
+  }
+
+  .starterpack-hero-cta p.sm-p {
+    float: none;
+    margin-left: 0;
+    margin-top: 0;
+  }
+}
+
+.starterpack-hero-cta p.sm-p a {
+  color: #ccc;
+  font-weight: 400;
+}
+
+/* ************** Learn to deploy ************** */
+#qav {
+  /* background: transparent url(starterpack-img/bg-gradient.png) repeat-x left bottom; */
+  padding-bottom: 30px;
+  padding-top: 60px;
+}
+
+#qav p {
+  max-width: 380px;
+  font-size: 13px;
+  margin-top: 14px;
+}
+
+@media (max-width: 767px) {
+  #qav p {
+    max-width: none;
+  }
+}
+
+.qav-vid-a {
+  display: inline-block;
+  max-width: inherit;
+  max-width: 100%;
+  width: auto !important; /*override the width below*/
+}
+
+.qav-video-img {
+  outline: none !important;
+}
+
+.qav-author {
+  display: inline-block;
+  margin-bottom: 25px;
+  margin-top: 25px;
+  width: 80%;
+}
+
+@media (max-width: 767px) {
+  .qav-author {
+    margin-bottom: 25px;
+    margin-top: 10px;
+  }
+}
+
+#qav-headshot {
+  float: left;
+  margin-right: 15px;
+}
+
+p.qav-author-name {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 0;
+}
+
+p.qav-author-title {
+  font: 300 italic 11px/14px 'Open Sans', sans-serif;
+  margin-top: 0;
+}
+
+/* ************** Get started ************** */
+#gs-app,
+#gs-compute {
+  padding-top: 60px;
+  padding-bottom: 30px;
+}
+
+#gs-app {
+  background: #f2f2f2 url(starterpack-img/bg-gradient.png) repeat-x left bottom;
+}
+
+#gs-compute {
+  background: #fff url(starterpack-img/bg-gradient.png) repeat-x left bottom;
+}
+
+.gs-copy-cell > h3,
+.gs-copy-cell > p {
+  max-width: 300px;
+}
+
+@media (max-width: 767px) {
+  .gs-copy-cell > h3,
+  .gs-copy-cell > p {
+    max-width: none;
+  }
+}
+
+.gs-feat-row {
+  clear: both;
+  display: block;
+}
+
+.gs-feat {
+  float: left;
+  margin-bottom: 12px;
+  overflow: hidden;
+  position: relative;
+  width: 46%;
+}
+
+.gs-feat.left {
+  margin-right: 4%;
+}
+
+.gs-feat.right {
+  margin-left: 4%;
+}
+
+.gs-feat-content p {
+  font-size: 13px;
+}
+
+/* Test */
+.gs-feat-row-test {
+  clear: both;
+  display: inline-block;
+}
+
+.header1 h2 {
+  outline: none;
+}
+.content1 {
+  display: block;
+
+}
+
+@media (max-width: 600px) {
+  .gs-feat {
+    float: none;
+    width: 100%;
+  }
+
+  .gs-feat.left {
+    margin-right: 0;
+  }
+
+  .gs-feat.right {
+    margin-left: 0;
+  }
+}
+
+.gs-feat img {
+  left: 0;
+  position: absolute;
+  top: 0;
+}
+
+.gs-feat .icon-open-gs-feat {
+  left: 80px;
+  position: absolute;
+  top: 55px;
+}
+
+.gs-feat-toggle {
+  height: 67px;
+  left: 80px;
+  position: absolute;
+  text-align: left;
+  top: 0;
+  vertical-align: middle;
+}
+
+.gs-feat-toggle-head {
+  cursor: pointer;
+  outline: none;
+}
+
+.gs-feat-toggle > a {
+  display: inline-block;
+  height: 100%;
+}
+
+.gs-feat-toggle > a:hover {
+  text-decoration: none;
+}
+
+
+/* ************** Connect with Community ************** */
+#sugcp {
+  /* background: #f2f2f2 url(starterpack-img/bg-gradient.png) repeat-x left bottom; */
+  /* margin-bottom: -25px; */
+  /* padding-top: 60px; */
+  padding-bottom: 55px;
+}
+
+@media (max-width: 767px) {
+  .sugcp-col {
+    margin-bottom: 50px !important;
+  }
+}
+
+.sugcp-col p {
+  font-size: 14px;
+  line-height: 20px;
+  max-width: 220px;
+}
+
+@media (max-width: 767px) {
+  .sugcp-col p {
+    max-width: none;
+  }
+}
+
+.sugcp-link {
+  display: block;
+  font-size: 12px !important;
+  font-weight: 300;
+  line-height: 18px !important;
+  margin-bottom: 10px;
+}
+
+p.sugcp-name {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 0;
+  margin-top: 0;
+}
+
+p.sugcp-title {
+  font: 300 italic 11px/14px 'Open Sans', sans-serif;
+  margin-bottom: 20px;
+  margin-top: 0;
+}
+
+
+/* ************** Get the code ************** */
+#gtc {
+  padding-top: 60px;
+  text-align: center;
+}
+
+#gtc .contact-a {
+  font-size: 16px;
+  font-weight: 400;
+}
+
+#gtc p.legal-note {
+  font-size: 11px;
+  line-height: 14px;
+  margin-bottom: 0;
+  margin-top: 80px;
+}
+
+
+
+/* Sprites */
+.icon {
+  background: transparent url(starterpack-img/starterpack-sprite.png) no-repeat;
+  display: inline-block;
+}
+
+.icon-gs {
+  height: 67px;
+  width: 67px;
+}
+.icon-gs-1 {
+  background-position: 0 0;
+}
+.icon-gs-2 {
+  background-position: 0 -80px;
+}
+.icon-gs-3 {
+  background-position: 0 -160px;
+}
+.icon-gs-4 {
+  background-position: 0 -240px;
+}
+.icon-gs-5 {
+  background-position: 0 -320px;
+}
+.icon-gs-6 {
+  background-position: 0 -400px;
+}
+.icon-gs-7 {
+  background-position: 0 -480px;
+}
+.icon-gs-8 {
+  background-position: 0 -560px;
+}
+.icon-gs-9 {
+  background-position: 0 -640px;
+}
+.icon-gs-10 {
+  background-position: 0 -720px;
+}
+.icon-gs-11 {
+  background-position: 0 -800px;
+}
+.icon-gs-12 {
+  background-position: 0 -880px;
+}
+.icon-gs-13 {
+  background-position: 0 -960px;
+}
+.icon-gs-14 {
+  background-position: 0 -1040px;
+}
+.icon-gs-15 {
+  background-position: 0 -1120px;
+}
+.icon-gs-16 {
+  background-position: 0 -1200px;
+}
+.icon-gs-17 {
+  background-position: 0 -1280px;
+}
+
+.icon-first-headshot {
+  background-position: 0 -1360px;
+}
+
+
+
+.icon-sugcp {
+  height: 144px;
+  width: 221px;
+}
+.icon-sugcp-1 {
+  background-position: 0 -1700px;
+}
+.icon-sugcp-2 {
+  background-position: 0 -1900px;
+}
+.icon-sugcp-3 {
+  background-position: 0 -2100px;
+}
+
+
+.icon-app-engine {
+  background-position: 0 -1440px;
+  height: 67px;
+  margin-bottom: 12px;
+  width: 88px;
+}
+
+.icon-compute-engine {
+  background-position: 0 -1520px;
+  height: 74px;
+  margin-bottom: 12px;
+  width: 70px;
+}
+
+
+.icon-open-gs-feat {
+  background-position: -82px -58px;
+  height: 16px;
+  width: 169px;
+}
+
+
+
+
+a.maia-media:after {
+  content: url(starterpack-img/video-play-icon.png);
+}

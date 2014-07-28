@@ -1,0 +1,1261 @@
+<html devsite>
+  <head>
+    
+    <title>Cloud Computing &amp; Cloud Hosting Services — Google Cloud Platform</title>
+    <meta name="description" content="Google Cloud Platform lets you build and host applications and websites, store data, and analyze data on Google&#39;s scalable infrastructure." />
+    <meta name="hide_page_heading" value="true" />
+    <meta name="full_width" value="true" />
+    <meta name="top_category" value="home" />
+    
+    <meta name="google-site-verification" content="8dOEM3Xenm6yaBc83y2WKgqQG0iHI7Ph6Rl_YLIZLQ8" />
+    <meta name="viewport" content="initial-scale=1, minimum-scale=1, width=device-width">
+    <link rel="apple-touch-icon" href="//cloud.google.com/_static/images/apple-touch-icon.png">
+    <link href="//fonts.googleapis.com/css?family=Open+Sans:400italic,300,400,600,700" rel="stylesheet">
+    
+    <link href="/css/default.css" rel="stylesheet">
+
+    <!--[if lt IE 9]>
+    <link rel="stylesheet" media="screen" href='/c/cp-ie.css'>
+    <![endif]-->
+
+    <!-- GSAP animation frameworks -->
+    <script src="//www.gstatic.com/external_hosted/gsap/TweenMax.min.js"></script>
+    <script src="//www.gstatic.com/external_hosted/gsap/TimelineMax.min.js"></script>
+    <script src="/js/floodlight.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+  </head>
+  <body>
+
+
+
+
+
+
+
+
+<div class="site-wrapper home">
+
+  <div class="maia-stage page-header primary scroll-section" data-section-label="Tools for modern applications">
+    <div class="maia-aux page-header-inner">
+      <div class="page-header-inner-inner">
+        <h1 class="headline"><span>Tools for modern applications</span></h1>
+        <p class="subheadline">Google Cloud Platform enables developers to build, test and deploy applications on Google’s highly-scalable and reliable infrastructure. Choose from computing, storage and application services for your web, mobile and backend solutions.</p>
+        <p class="cta"><a href="/console?getstarted=https://cloud.google.com" class="maia-button try-it cp-track" id="try-body" event="autotrack-data-g" data-g-event="Home" data-g-action="Try It Now" data-g-label="Home Canvas: Click">Try it now</a></p>
+      </div>
+    </div>
+  </div>
+
+  <div id="maia-main">
+
+      <!-- General Announcement Space (gnode's are misnamed, may want to fix at some point -->
+     <div id="cloud-platform-live-announcement" class="generic-section announcement-section">
+      <div class="maia-cols">
+        <div class="maia-col-7">
+          <h1 class="headline">
+            Did you know - Google Compute Engine can power any of your Linux Virtual Machines?
+          </h1>
+          <p>
+            <p>Want the most control and flexibility when building your application?  Use Google Compute Engine to boot a Linux VM in seconds and get started by SSHing into that machine directly from the browser. <a href="products/compute-engine">Learn more about Compute Engine</a> or <a href="https://console.developers.google.com/?getstarted=https://cloud.google.com&_ga=1.244515008.47819545.1406304957">try it today</a>.</p>
+          </p>
+        </div>
+        <div class="maia-col-5 ce-image">
+            <a href="products/compute-engine"><img src="images/products/landing/compute-engine.png" alt="Google Compute Engine" style="height:120px; width:auto;"/></a>
+        </div>
+      </div>
+    </div>
+
+   <!-- HGCPW section -->
+    <div id="hgcpw" class="generic-section" data-ng-controller="HgcpwController as ctrl">
+
+      <div class="maia-cols">
+        <div class="maia-col-7">
+          <h1 class="headline">
+            How Google Cloud Platform works
+          </h1>
+          <p>
+            Google Cloud Platform is set of modular cloud-based services that allow you to create anything from simple websites to complex applications.
+          </p>
+        </div>
+        <div class="maia-col-12">
+          
+          <div class="hgcpw maia-cols"
+               data-ng-class="{'highlight':ctrl.highlightActive}"
+               data-tabs
+               data-active-tab="ctrl.activeTab"
+               data-tab-classes="maia-col-4"
+               data-content-classes="maia-col-8"
+               data-ng-cloak>
+            
+              <div class="platform-tab all"
+                   data-pane
+                   data-title="All Cloud Platform products"
+                   data-tab-content="&lt;p&gt;Cloud Platform provides the building blocks so you can quickly develop everything from simple websites to complex applications. Explore how you can make Cloud Platform work for you.  &lt;/p&gt;">
+                <div data-animation-timeline="all"
+                     data-playing="ctrl.activeTab === 'All Cloud Platform products'">
+                  <div class="gcp-categories">
+                    
+                    <div class="gcp-category all-hosting-compute">
+                      <h3 class="gcp-category-label">Hosting + Compute</h3>
+                      <div class="gcp-product-container">
+                        <div class="gcp-product-inner-container">
+                          
+                          <div class="gcp-product app-engine"
+                               data-ng-class="{'active':ctrl.itemHighlighted('all-app-engine')}">
+                            <a href="products/app-engine"
+                               data-ng-mouseover="ctrl.activateItem({tooltipText:'Run your applications on a fully-managed Platform-as-a-Service (PaaS) using built-in services that make you more productive. Just download the SDK and start building immediately.', highlight:'all-app-engine'})"
+                               data-ng-mouseout="ctrl.deactivateItems()"
+                               data-product-animation
+                               data-slug="app-engine">
+                              <span class="gcp-anim-icon app-engine">
+  <span class="logo-shadow"><!--icon--></span>
+  <span class="logo-main"><!--icon--></span>
+  <span class="logo-circle"><!--icon--></span>
+  <span class="logo-inner"><!--icon--></span>
+  <span class="code"><!--icon--></span>
+</span>
+                              <p><em>App Engine</em></p>
+                            </a>
+                          </div>
+                          
+                          <div class="gcp-product compute-engine"
+                               data-ng-class="{'active':ctrl.itemHighlighted('all-compute-engine')}">
+                            <a href="products/compute-engine"
+                               data-ng-mouseover="ctrl.activateItem({tooltipText:'Run large-scale workloads on virtual machines hosted on Google\&#39;s infrastructure. Choose a VM that fits your needs and gain the performance of Google\&#39;s worldwide fiber network.', highlight:'all-compute-engine'})"
+                               data-ng-mouseout="ctrl.deactivateItems()"
+                               data-product-animation
+                               data-slug="compute-engine">
+                              <span class="gcp-anim-icon compute-engine">
+  <span class="logo-shadow"><!--icon--></span>
+  <span class="logo-line left one"><!--icon--></span>
+  <span class="logo-line left two"><!--icon--></span>
+  <span class="logo-line right one"><!--icon--></span>
+  <span class="logo-line right two"><!--icon--></span>
+  <span class="logo-line top one"><!--icon--></span>
+  <span class="logo-line top two"><!--icon--></span>
+  <span class="logo-line bottom one"><!--icon--></span>
+  <span class="logo-line bottom two"><!--icon--></span>
+  <span class="logo-main"><!--icon--></span>
+</span>
+                              <p><em>Compute Engine</em></p>
+                            </a>
+                          </div>
+                          
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div class="gcp-category all-storage">
+                      <h3 class="gcp-category-label">Storage</h3>
+                      <div class="gcp-product-container">
+                        <div class="gcp-product-inner-container">
+                          
+                          <div class="gcp-product cloud-storage"
+                               data-ng-class="{'active':ctrl.itemHighlighted('all-cloud-storage')}">
+                            <a href="products/cloud-storage"
+                               data-ng-mouseover="ctrl.activateItem({tooltipText:'Use a durable and highly available object storage service. With global edge-caching, your users have fast access to your app’s data from any location.', highlight:'all-cloud-storage'})"
+                               data-ng-mouseout="ctrl.deactivateItems()"
+                               data-product-animation
+                               data-slug="cloud-storage">
+                              <span class="gcp-anim-icon cloud-storage">
+  <span class="logo-shadow"><!--icon--></span>
+  <span class="logo-document"><!--icon--></span>
+  <span class="logo-main"><!--icon--></span>
+</span>
+                              <p><em>Cloud Storage</em></p>
+                            </a>
+                          </div>
+                          
+                          <div class="gcp-product cloud-datastore"
+                               data-ng-class="{'active':ctrl.itemHighlighted('all-cloud-datastore')}">
+                            <a href="products/cloud-datastore"
+                               data-ng-mouseover="ctrl.activateItem({tooltipText:'Use a managed, NoSQL, schemaless database for storing non-relational data. Cloud Datastore automatically scales as you need it and supports transactions as well as robust, SQL-like queries.', highlight:'all-cloud-datastore'})"
+                               data-ng-mouseout="ctrl.deactivateItems()"
+                               data-product-animation
+                               data-slug="cloud-datastore">
+                              <span class="gcp-anim-icon cloud-datastore">
+  <span class="logo-shadow"><!--icon--></span>
+  <span class="logo-main">
+    <span class="logo-square one"><!--icon--></span>
+    <span class="logo-square two"><!--icon--></span>
+    <span class="logo-square three"><!--icon--></span>
+    <span class="logo-square four"><!--icon--></span>
+    <span class="logo-square five"><!--icon--></span>
+    <span class="logo-square six"><!--icon--></span>
+  </span>
+</span>
+                              <p><em>Cloud Datastore</em></p>
+                            </a>
+                          </div>
+                          
+                          <div class="gcp-product cloud-sql"
+                               data-ng-class="{'active':ctrl.itemHighlighted('all-cloud-sql')}">
+                            <a href="products/cloud-sql"
+                               data-ng-mouseover="ctrl.activateItem({tooltipText:'Store and manage data using a fully-managed, relational MySQL database. Google handles replication, patch management and database management to ensure availability and performance.', highlight:'all-cloud-sql'})"
+                               data-ng-mouseout="ctrl.deactivateItems()"
+                               data-product-animation
+                               data-slug="cloud-sql">
+                              <span class="gcp-anim-icon cloud-sql">
+  <span class="logo-shadow"><!--icon--></span>
+  <span class="logo-main"><!--icon--></span>
+  <span class="s-1"><!--icon --></span>
+  <span class="s-2"><!--icon --></span>
+  <span class="s-3"><!--icon --></span>
+  <span class="s-4"><!--icon --></span>
+  <span class="s-5"><!--icon --></span>
+  <span class="s-6"><!--icon --></span>
+  <span class="s-7"><!--icon --></span>
+  <span class="s-8"><!--icon --></span>
+  <span class="s-9"><!--icon --></span>
+  <span class="s-10"><!--icon --></span>
+  <span class="s-11"><!--icon --></span>
+  <span class="q-1"><!--icon --></span>
+  <span class="q-2"><!--icon --></span>
+  <span class="q-3"><!--icon --></span>
+  <span class="q-4"><!--icon --></span>
+  <span class="q-5"><!--icon --></span>
+  <span class="q-6"><!--icon --></span>
+  <span class="q-7"><!--icon --></span>
+  <span class="q-8"><!--icon --></span>
+  <span class="q-9"><!--icon --></span>
+  <span class="q-10"><!--icon --></span>
+  <span class="q-11"><!--icon --></span>
+  <span class="q-12"><!--icon --></span>
+  <span class="q-13"><!--icon --></span>
+  <span class="l-1"><!--icon --></span>
+  <span class="l-2"><!--icon --></span>
+  <span class="l-3"><!--icon --></span>
+  <span class="l-4"><!--icon --></span>
+  <span class="l-5"><!--icon --></span>
+  <span class="l-6"><!--icon --></span>
+  <span class="l-7"><!--icon --></span>
+  <span class="drop-1"><!--icon --></span>
+  <span class="drop-2"><!--icon --></span>
+  <span class="drop-3"><!--icon --></span>
+  <span class="drop-4"><!--icon --></span>
+  <span class="drop-5"><!--icon --></span>
+  <span class="drop-6"><!--icon --></span>
+</span>
+                              <p><em>Cloud SQL</em></p>
+                            </a>
+                          </div>
+                          
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div class="gcp-category all-big-data">
+                      <h3 class="gcp-category-label">Big Data</h3>
+                      <div class="gcp-product-container">
+                        <div class="gcp-product-inner-container">
+                          
+                          <div class="gcp-product bigquery"
+                               data-ng-class="{'active':ctrl.itemHighlighted('all-bigquery')}">
+                            <a href="products/bigquery"
+                               data-ng-mouseover="ctrl.activateItem({tooltipText:'Analyze Big Data in the cloud with BigQuery. Run fast, SQL-like queries against multi-terabyte datasets in seconds. Scalable and easy to use, BigQuery gives you real-time insights about your data.', highlight:'all-bigquery'})"
+                               data-ng-mouseout="ctrl.deactivateItems()"
+                               data-product-animation
+                               data-slug="bigquery">
+                              <span class="gcp-anim-icon big-query">
+  <span class="logo-shadow"><!--icon--></span>
+  <span class="logo-main"><!--icon--></span>
+  <span class="logo-bar-wrapper">
+    <span class="logo-bar one"><!--icon--></span>
+    <span class="logo-bar two"><!--icon--></span>
+    <span class="logo-bar three"><!--icon--></span>
+  </span>
+</span>
+                              <p><em>BigQuery</em></p>
+                            </a>
+                          </div>
+                          
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div class="gcp-category all-services">
+                      <h3 class="gcp-category-label">Services</h3>
+                      <div class="gcp-product-container">
+                        <div class="gcp-product-inner-container">
+                          
+                          <div class="gcp-product cloud-endpoints"
+                               data-ng-class="{'active':ctrl.itemHighlighted('all-cloud-endpoints')}">
+                            <a href="products/cloud-endpoints"
+                               data-ng-mouseover="ctrl.activateItem({tooltipText:'Create RESTful services and make them accessible to iOS, Android and Javascript clients. Automatically generate client libraries to make wiring up the frontend easy. Built-in features include denial-of-service protection, OAuth 2.0 support and client key management. ', highlight:'all-cloud-endpoints'})"
+                               data-ng-mouseout="ctrl.deactivateItems()"
+                               data-product-animation
+                               data-slug="cloud-endpoints">
+                              <span class="gcp-anim-icon cloud-endpoints">
+  <span class="logo-shadow"><!--icon--></span>
+  <span class="logo-secondary"><!--icon--></span>
+  <span class="logo-main"><!--icon--></span>
+  <span class="logo-left-arrow"><!--icon--></span>
+  <span class="logo-right-arrow"><!--icon--></span>
+</span>
+                              <p><em>Cloud Endpoints</em></p>
+                            </a>
+                          </div>
+                          
+                          <div class="gcp-product translate-api"
+                               data-ng-class="{'active':ctrl.itemHighlighted('all-translate-api')}">
+                            <a href="products/translate-api"
+                               data-ng-mouseover="ctrl.activateItem({tooltipText:'Quickly and dynamically translate between thousands of available language pairs within your app, integrating with Google Translate.', highlight:'all-translate-api'})"
+                               data-ng-mouseout="ctrl.deactivateItems()"
+                               data-product-animation
+                               data-slug="translate-api">
+                              <span class="gcp-anim-icon translate-api">
+  <span class="logo-shadow"><!--icon--></span>
+  <span class="logo-from"><!--icon--></span>
+  <span class="logo-arrow"><!--icon--></span>
+  <span class="logo-to one"><!--icon--></span>
+  <span class="logo-to two"><!--icon--></span>
+</span>
+                              <p><em>Translate API</em></p>
+                            </a>
+                          </div>
+                          
+                          <div class="gcp-product prediction-api"
+                               data-ng-class="{'active':ctrl.itemHighlighted('all-prediction-api')}">
+                            <a href="products/prediction-api"
+                               data-ng-mouseover="ctrl.activateItem({tooltipText:'Use Google’s machine learning algorithms to analyze data and predict future outcomes using a familiar RESTful interface. ', highlight:'all-prediction-api'})"
+                               data-ng-mouseout="ctrl.deactivateItems()"
+                               data-product-animation
+                               data-slug="prediction-api">
+                              <span class="gcp-anim-icon prediction-api">
+  <span class="logo-shadow"><!--icon--></span>
+  <span class="logo-line one"><!--icon--></span>
+  <span class="logo-line two"><!--icon--></span>
+  <span class="logo-line three"><!--icon--></span>
+  <span class="logo-dot one"><!--icon--></span>
+  <span class="logo-dot two"><!--icon--></span>
+</span>
+                              <p><em>Prediction API</em></p>
+                            </a>
+                          </div>
+                          
+                        </div>
+                      </div>
+                    </div>
+                    
+                  </div>
+                  <div class="gcp-arrow-container">
+                    
+                  </div>
+                  <div class="tooltip" data-ng-class="{'active':ctrl.tooltipActive}">
+                    <p data-ng-bind="ctrl.tooltipText"></p>
+                  </div>
+                </div>
+              </div>
+            
+              <div class="platform-tab gaming"
+                   data-pane
+                   data-title="Gaming solutions"
+                   data-tab-content="&lt;p&gt;Google Cloud Platform makes it easy to build a massively scalable game, without having to worry about underlying infrastructure.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;solutions/gaming&quot;&gt;&lt;em&gt;Read more about gaming solutions&lt;/em&gt;&lt;/a&gt;&lt;/p&gt;">
+                <div data-animation-timeline="gaming"
+                     data-playing="ctrl.activeTab === 'Gaming solutions'">
+                  <div class="gcp-categories">
+                    
+                    <div class="gcp-category gaming-services">
+                      <h3 class="gcp-category-label">Services</h3>
+                      <div class="gcp-product-container">
+                        <div class="gcp-product-inner-container">
+                          
+                          <div class="gcp-product cloud-endpoints"
+                               data-ng-class="{'active':ctrl.itemHighlighted('gaming-cloud-endpoints')}">
+                            <a href="products/cloud-endpoints"
+                               data-ng-mouseover="ctrl.activateItem({tooltipText:'Create RESTful services and make them accessible to iOS, Android and Javascript clients. Automatically generate client libraries to make wiring up the frontend easy. Built-in features include denial-of-service protection, OAuth 2.0 support and client key management. ', highlight:'gaming-cloud-endpoints'})"
+                               data-ng-mouseout="ctrl.deactivateItems()"
+                               data-product-animation
+                               data-slug="cloud-endpoints">
+                              <span class="gcp-anim-icon cloud-endpoints">
+  <span class="logo-shadow"><!--icon--></span>
+  <span class="logo-secondary"><!--icon--></span>
+  <span class="logo-main"><!--icon--></span>
+  <span class="logo-left-arrow"><!--icon--></span>
+  <span class="logo-right-arrow"><!--icon--></span>
+</span>
+                              <p><em>Cloud Endpoints</em></p>
+                            </a>
+                          </div>
+                          
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div class="gcp-category gaming-hosting-compute">
+                      <h3 class="gcp-category-label">Hosting + Compute</h3>
+                      <div class="gcp-product-container">
+                        <div class="gcp-product-inner-container">
+                          
+                          <div class="gcp-product app-engine"
+                               data-ng-class="{'active':ctrl.itemHighlighted('gaming-app-engine')}">
+                            <a href="products/app-engine"
+                               data-ng-mouseover="ctrl.activateItem({tooltipText:'Run your applications on a fully-managed Platform-as-a-Service (PaaS) using built-in services that make you more productive. Just download the SDK and start building immediately.', highlight:'gaming-app-engine'})"
+                               data-ng-mouseout="ctrl.deactivateItems()"
+                               data-product-animation
+                               data-slug="app-engine">
+                              <span class="gcp-anim-icon app-engine">
+  <span class="logo-shadow"><!--icon--></span>
+  <span class="logo-main"><!--icon--></span>
+  <span class="logo-circle"><!--icon--></span>
+  <span class="logo-inner"><!--icon--></span>
+  <span class="code"><!--icon--></span>
+</span>
+                              <p><em>App Engine</em></p>
+                            </a>
+                          </div>
+                          
+                          <div class="gcp-product compute-engine"
+                               data-ng-class="{'active':ctrl.itemHighlighted('gaming-compute-engine')}">
+                            <a href="products/compute-engine"
+                               data-ng-mouseover="ctrl.activateItem({tooltipText:'Run large-scale workloads on virtual machines hosted on Google\&#39;s infrastructure. Choose a VM that fits your needs and gain the performance of Google\&#39;s worldwide fiber network.', highlight:'gaming-compute-engine'})"
+                               data-ng-mouseout="ctrl.deactivateItems()"
+                               data-product-animation
+                               data-slug="compute-engine">
+                              <span class="gcp-anim-icon compute-engine">
+  <span class="logo-shadow"><!--icon--></span>
+  <span class="logo-line left one"><!--icon--></span>
+  <span class="logo-line left two"><!--icon--></span>
+  <span class="logo-line right one"><!--icon--></span>
+  <span class="logo-line right two"><!--icon--></span>
+  <span class="logo-line top one"><!--icon--></span>
+  <span class="logo-line top two"><!--icon--></span>
+  <span class="logo-line bottom one"><!--icon--></span>
+  <span class="logo-line bottom two"><!--icon--></span>
+  <span class="logo-main"><!--icon--></span>
+</span>
+                              <p><em>Compute Engine</em></p>
+                            </a>
+                          </div>
+                          
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div class="gcp-category gaming-storage">
+                      <h3 class="gcp-category-label">Storage</h3>
+                      <div class="gcp-product-container">
+                        <div class="gcp-product-inner-container">
+                          
+                          <div class="gcp-product cloud-storage"
+                               data-ng-class="{'active':ctrl.itemHighlighted('gaming-cloud-storage')}">
+                            <a href="products/cloud-storage"
+                               data-ng-mouseover="ctrl.activateItem({tooltipText:'Use a durable and highly available object storage service. With global edge-caching, your users have fast access to your app’s data from any location.', highlight:'gaming-cloud-storage'})"
+                               data-ng-mouseout="ctrl.deactivateItems()"
+                               data-product-animation
+                               data-slug="cloud-storage">
+                              <span class="gcp-anim-icon cloud-storage">
+  <span class="logo-shadow"><!--icon--></span>
+  <span class="logo-document"><!--icon--></span>
+  <span class="logo-main"><!--icon--></span>
+</span>
+                              <p><em>Cloud Storage</em></p>
+                            </a>
+                          </div>
+                          
+                          <div class="gcp-product cloud-datastore"
+                               data-ng-class="{'active':ctrl.itemHighlighted('gaming-cloud-datastore')}">
+                            <a href="products/cloud-datastore"
+                               data-ng-mouseover="ctrl.activateItem({tooltipText:'Use a managed, NoSQL, schemaless database for storing non-relational data. Cloud Datastore automatically scales as you need it and supports transactions as well as robust, SQL-like queries.', highlight:'gaming-cloud-datastore'})"
+                               data-ng-mouseout="ctrl.deactivateItems()"
+                               data-product-animation
+                               data-slug="cloud-datastore">
+                              <span class="gcp-anim-icon cloud-datastore">
+  <span class="logo-shadow"><!--icon--></span>
+  <span class="logo-main">
+    <span class="logo-square one"><!--icon--></span>
+    <span class="logo-square two"><!--icon--></span>
+    <span class="logo-square three"><!--icon--></span>
+    <span class="logo-square four"><!--icon--></span>
+    <span class="logo-square five"><!--icon--></span>
+    <span class="logo-square six"><!--icon--></span>
+  </span>
+</span>
+                              <p><em>Cloud Datastore</em></p>
+                            </a>
+                          </div>
+                          
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div class="gcp-category gaming-big-data">
+                      <h3 class="gcp-category-label">Big Data</h3>
+                      <div class="gcp-product-container">
+                        <div class="gcp-product-inner-container">
+                          
+                          <div class="gcp-product bigquery"
+                               data-ng-class="{'active':ctrl.itemHighlighted('gaming-bigquery')}">
+                            <a href="products/bigquery"
+                               data-ng-mouseover="ctrl.activateItem({tooltipText:'Analyze Big Data in the cloud with BigQuery. Run fast, SQL-like queries against multi-terabyte datasets in seconds. Scalable and easy to use, BigQuery gives you real-time insights about your data.', highlight:'gaming-bigquery'})"
+                               data-ng-mouseout="ctrl.deactivateItems()"
+                               data-product-animation
+                               data-slug="bigquery">
+                              <span class="gcp-anim-icon big-query">
+  <span class="logo-shadow"><!--icon--></span>
+  <span class="logo-main"><!--icon--></span>
+  <span class="logo-bar-wrapper">
+    <span class="logo-bar one"><!--icon--></span>
+    <span class="logo-bar two"><!--icon--></span>
+    <span class="logo-bar three"><!--icon--></span>
+  </span>
+</span>
+                              <p><em>BigQuery</em></p>
+                            </a>
+                          </div>
+                          
+                        </div>
+                      </div>
+                    </div>
+                    
+                  </div>
+                  <div class="gcp-arrow-container">
+                    
+                      <div class="gcp-arrow arrow-1"
+                           data-ng-class="{'active':ctrl.itemHighlighted('gaming-arrow-1')}"
+                           data-ng-mouseenter="ctrl.activateItem({tooltipText:'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sapien diam, tincidunt tincidunt molestie at, placerat tempus justo. In vitae ligula gravida, egestas ante et, consectetur turpis. Nulla ut sollicitudin ligula, ac molestie libero.', highlight:'gaming-arrow-1 gaming-cloud-endpoints gaming-app-engine '})"
+                           data-ng-mouseleave="ctrl.deactivateItems()"
+                           data-arrow-animation
+                           data-slug="arrow-1">
+                        <span class="arrow-segment arrow-segment-1"><!--icon--></span>
+<span class="arrow-segment arrow-segment-2"><!--icon--></span>
+<span class="arrow-head"><!--icon--></span>
+                        <span class="arrow-label">1</span>
+                      </div>
+                    
+                      <div class="gcp-arrow arrow-2"
+                           data-ng-class="{'active':ctrl.itemHighlighted('gaming-arrow-2')}"
+                           data-ng-mouseenter="ctrl.activateItem({tooltipText:'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sapien diam, tincidunt tincidunt molestie at, placerat tempus justo. In vitae ligula gravida, egestas ante et, consectetur turpis. Nulla ut sollicitudin ligula, ac molestie libero.', highlight:'gaming-arrow-2 gaming-cloud-endpoints gaming-compute-engine '})"
+                           data-ng-mouseleave="ctrl.deactivateItems()"
+                           data-arrow-animation
+                           data-slug="arrow-2">
+                        <span class="arrow-segment arrow-segment-1"><!--icon--></span>
+<span class="arrow-segment arrow-segment-2"><!--icon--></span>
+<span class="arrow-head"><!--icon--></span>
+                        <span class="arrow-label">2</span>
+                      </div>
+                    
+                      <div class="gcp-arrow arrow-3"
+                           data-ng-class="{'active':ctrl.itemHighlighted('gaming-arrow-3')}"
+                           data-ng-mouseenter="ctrl.activateItem({tooltipText:'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sapien diam, tincidunt tincidunt molestie at, placerat tempus justo. In vitae ligula gravida, egestas ante et, consectetur turpis. Nulla ut sollicitudin ligula, ac molestie libero.', highlight:'gaming-arrow-3 gaming-app-engine gaming-cloud-storage gaming-cloud-datastore '})"
+                           data-ng-mouseleave="ctrl.deactivateItems()"
+                           data-arrow-animation
+                           data-slug="arrow-3">
+                        <span class="arrow-segment arrow-segment-1"><!--icon--></span>
+<span class="arrow-segment arrow-segment-2" data-group-anim-with-next="true"><!--icon--></span>
+<span class="arrow-segment arrow-segment-3"><!--icon--></span>
+<span class="arrow-head arrow-head-1"><!--icon--></span>
+<span class="arrow-head arrow-head-2"><!--icon--></span>
+                        <span class="arrow-label">3</span>
+                      </div>
+                    
+                      <div class="gcp-arrow arrow-4"
+                           data-ng-class="{'active':ctrl.itemHighlighted('gaming-arrow-4')}"
+                           data-ng-mouseenter="ctrl.activateItem({tooltipText:'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sapien diam, tincidunt tincidunt molestie at, placerat tempus justo. In vitae ligula gravida, egestas ante et, consectetur turpis. Nulla ut sollicitudin ligula, ac molestie libero.', highlight:'gaming-arrow-4 gaming-app-engine gaming-compute-engine '})"
+                           data-ng-mouseleave="ctrl.deactivateItems()"
+                           data-arrow-animation
+                           data-slug="arrow-4">
+                        <span class="arrow-segment arrow-segment-1"><!--icon--></span>
+<span class="arrow-segment arrow-segment-2"><!--icon--></span>
+<span class="arrow-segment arrow-segment-3"><!--icon--></span>
+<span class="arrow-head"><!--icon--></span>
+                        <span class="arrow-label">4</span>
+                      </div>
+                    
+                      <div class="gcp-arrow arrow-5"
+                           data-ng-class="{'active':ctrl.itemHighlighted('gaming-arrow-5')}"
+                           data-ng-mouseenter="ctrl.activateItem({tooltipText:'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sapien diam, tincidunt tincidunt molestie at, placerat tempus justo. In vitae ligula gravida, egestas ante et, consectetur turpis. Nulla ut sollicitudin ligula, ac molestie libero.', highlight:'gaming-arrow-5 gaming-compute-engine gaming-cloud-storage '})"
+                           data-ng-mouseleave="ctrl.deactivateItems()"
+                           data-arrow-animation
+                           data-slug="arrow-5">
+                        <span class="arrow-segment arrow-segment-1"><!--icon--></span>
+<span class="arrow-segment arrow-segment-2"><!--icon--></span>
+<span class="arrow-segment arrow-segment-3"><!--icon--></span>
+<span class="arrow-segment arrow-segment-4"><!--icon--></span>
+<span class="arrow-segment arrow-segment-5"><!--icon--></span>
+<span class="arrow-head"><!--icon--></span>
+                        <span class="arrow-label">5</span>
+                      </div>
+                    
+                      <div class="gcp-arrow arrow-6"
+                           data-ng-class="{'active':ctrl.itemHighlighted('gaming-arrow-6')}"
+                           data-ng-mouseenter="ctrl.activateItem({tooltipText:'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sapien diam, tincidunt tincidunt molestie at, placerat tempus justo. In vitae ligula gravida, egestas ante et, consectetur turpis. Nulla ut sollicitudin ligula, ac molestie libero.', highlight:'gaming-arrow-6 gaming-cloud-storage gaming-bigquery '})"
+                           data-ng-mouseleave="ctrl.deactivateItems()"
+                           data-arrow-animation
+                           data-slug="arrow-6">
+                        <span class="arrow-segment arrow-segment-1"><!--icon--></span>
+<span class="arrow-segment arrow-segment-2"><!--icon--></span>
+<span class="arrow-head"><!--icon--></span>
+                        <span class="arrow-label">6</span>
+                      </div>
+                    
+                  </div>
+                  <div class="tooltip" data-ng-class="{'active':ctrl.tooltipActive}">
+                    <p data-ng-bind="ctrl.tooltipText"></p>
+                  </div>
+                </div>
+              </div>
+            
+              <div class="platform-tab mobile"
+                   data-pane
+                   data-title="Mobile Applications"
+                   data-tab-content="&lt;p&gt;Build and host the backend for any mobile app. With an infrastructure that is managed automatically, you can focus on your app.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;solutions/mobile&quot;&gt;&lt;em&gt;Read more about mobile applications&lt;/em&gt;&lt;/a&gt;&lt;/p&gt;">
+                <div data-animation-timeline="mobile"
+                     data-playing="ctrl.activeTab === 'Mobile Applications'">
+                  <div class="gcp-categories">
+                    
+                    <div class="gcp-category mobile-services">
+                      <h3 class="gcp-category-label">Services</h3>
+                      <div class="gcp-product-container">
+                        <div class="gcp-product-inner-container">
+                          
+                          <div class="gcp-product cloud-endpoints"
+                               data-ng-class="{'active':ctrl.itemHighlighted('mobile-cloud-endpoints')}">
+                            <a href="products/cloud-endpoints"
+                               data-ng-mouseover="ctrl.activateItem({tooltipText:'Create RESTful services and make them accessible to iOS, Android and Javascript clients. Automatically generate client libraries to make wiring up the frontend easy. Built-in features include denial-of-service protection, OAuth 2.0 support and client key management. ', highlight:'mobile-cloud-endpoints'})"
+                               data-ng-mouseout="ctrl.deactivateItems()"
+                               data-product-animation
+                               data-slug="cloud-endpoints">
+                              <span class="gcp-anim-icon cloud-endpoints">
+  <span class="logo-shadow"><!--icon--></span>
+  <span class="logo-secondary"><!--icon--></span>
+  <span class="logo-main"><!--icon--></span>
+  <span class="logo-left-arrow"><!--icon--></span>
+  <span class="logo-right-arrow"><!--icon--></span>
+</span>
+                              <p><em>Cloud Endpoints</em></p>
+                            </a>
+                          </div>
+                          
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div class="gcp-category mobile-hosting-compute">
+                      <h3 class="gcp-category-label">Hosting + Compute</h3>
+                      <div class="gcp-product-container">
+                        <div class="gcp-product-inner-container">
+                          
+                          <div class="gcp-product app-engine"
+                               data-ng-class="{'active':ctrl.itemHighlighted('mobile-app-engine')}">
+                            <a href="products/app-engine"
+                               data-ng-mouseover="ctrl.activateItem({tooltipText:'Run your applications on a fully-managed Platform-as-a-Service (PaaS) using built-in services that make you more productive. Just download the SDK and start building immediately.', highlight:'mobile-app-engine'})"
+                               data-ng-mouseout="ctrl.deactivateItems()"
+                               data-product-animation
+                               data-slug="app-engine">
+                              <span class="gcp-anim-icon app-engine">
+  <span class="logo-shadow"><!--icon--></span>
+  <span class="logo-main"><!--icon--></span>
+  <span class="logo-circle"><!--icon--></span>
+  <span class="logo-inner"><!--icon--></span>
+  <span class="code"><!--icon--></span>
+</span>
+                              <p><em>App Engine</em></p>
+                            </a>
+                          </div>
+                          
+                          <div class="gcp-product compute-engine"
+                               data-ng-class="{'active':ctrl.itemHighlighted('mobile-compute-engine')}">
+                            <a href="products/compute-engine"
+                               data-ng-mouseover="ctrl.activateItem({tooltipText:'Run large-scale workloads on virtual machines hosted on Google\&#39;s infrastructure. Choose a VM that fits your needs and gain the performance of Google\&#39;s worldwide fiber network.', highlight:'mobile-compute-engine'})"
+                               data-ng-mouseout="ctrl.deactivateItems()"
+                               data-product-animation
+                               data-slug="compute-engine">
+                              <span class="gcp-anim-icon compute-engine">
+  <span class="logo-shadow"><!--icon--></span>
+  <span class="logo-line left one"><!--icon--></span>
+  <span class="logo-line left two"><!--icon--></span>
+  <span class="logo-line right one"><!--icon--></span>
+  <span class="logo-line right two"><!--icon--></span>
+  <span class="logo-line top one"><!--icon--></span>
+  <span class="logo-line top two"><!--icon--></span>
+  <span class="logo-line bottom one"><!--icon--></span>
+  <span class="logo-line bottom two"><!--icon--></span>
+  <span class="logo-main"><!--icon--></span>
+</span>
+                              <p><em>Compute Engine</em></p>
+                            </a>
+                          </div>
+                          
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div class="gcp-category mobile-storage">
+                      <h3 class="gcp-category-label">Storage</h3>
+                      <div class="gcp-product-container">
+                        <div class="gcp-product-inner-container">
+                          
+                          <div class="gcp-product cloud-storage"
+                               data-ng-class="{'active':ctrl.itemHighlighted('mobile-cloud-storage')}">
+                            <a href="products/cloud-storage"
+                               data-ng-mouseover="ctrl.activateItem({tooltipText:'Use a durable and highly available object storage service. With global edge-caching, your users have fast access to your app’s data from any location.', highlight:'mobile-cloud-storage'})"
+                               data-ng-mouseout="ctrl.deactivateItems()"
+                               data-product-animation
+                               data-slug="cloud-storage">
+                              <span class="gcp-anim-icon cloud-storage">
+  <span class="logo-shadow"><!--icon--></span>
+  <span class="logo-document"><!--icon--></span>
+  <span class="logo-main"><!--icon--></span>
+</span>
+                              <p><em>Cloud Storage</em></p>
+                            </a>
+                          </div>
+                          
+                          <div class="gcp-product cloud-datastore"
+                               data-ng-class="{'active':ctrl.itemHighlighted('mobile-cloud-datastore')}">
+                            <a href="products/cloud-datastore"
+                               data-ng-mouseover="ctrl.activateItem({tooltipText:'Use a managed, NoSQL, schemaless database for storing non-relational data. Cloud Datastore automatically scales as you need it and supports transactions as well as robust, SQL-like queries.', highlight:'mobile-cloud-datastore'})"
+                               data-ng-mouseout="ctrl.deactivateItems()"
+                               data-product-animation
+                               data-slug="cloud-datastore">
+                              <span class="gcp-anim-icon cloud-datastore">
+  <span class="logo-shadow"><!--icon--></span>
+  <span class="logo-main">
+    <span class="logo-square one"><!--icon--></span>
+    <span class="logo-square two"><!--icon--></span>
+    <span class="logo-square three"><!--icon--></span>
+    <span class="logo-square four"><!--icon--></span>
+    <span class="logo-square five"><!--icon--></span>
+    <span class="logo-square six"><!--icon--></span>
+  </span>
+</span>
+                              <p><em>Cloud Datastore</em></p>
+                            </a>
+                          </div>
+                          
+                        </div>
+                      </div>
+                    </div>
+                    
+                  </div>
+                  <div class="gcp-arrow-container">
+                    
+                      <div class="gcp-arrow arrow-1"
+                           data-ng-class="{'active':ctrl.itemHighlighted('mobile-arrow-1')}"
+                           data-ng-mouseenter="ctrl.activateItem({tooltipText:'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sapien diam, tincidunt tincidunt molestie at, placerat tempus justo. In vitae ligula gravida, egestas ante et, consectetur turpis. Nulla ut sollicitudin ligula, ac molestie libero.', highlight:'mobile-arrow-1 mobile-cloud-endpoints mobile-app-engine '})"
+                           data-ng-mouseleave="ctrl.deactivateItems()"
+                           data-arrow-animation
+                           data-slug="arrow-1">
+                        <span class="arrow-segment arrow-segment-1"><!--icon--></span>
+<span class="arrow-head"><!--icon--></span>
+                        <span class="arrow-label">1</span>
+                      </div>
+                    
+                      <div class="gcp-arrow arrow-2"
+                           data-ng-class="{'active':ctrl.itemHighlighted('mobile-arrow-2')}"
+                           data-ng-mouseenter="ctrl.activateItem({tooltipText:'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sapien diam, tincidunt tincidunt molestie at, placerat tempus justo. In vitae ligula gravida, egestas ante et, consectetur turpis. Nulla ut sollicitudin ligula, ac molestie libero.', highlight:'mobile-arrow-2 mobile-app-engine mobile-cloud-storage '})"
+                           data-ng-mouseleave="ctrl.deactivateItems()"
+                           data-arrow-animation
+                           data-slug="arrow-2">
+                        <span class="arrow-segment arrow-segment-1"><!--icon--></span>
+<span class="arrow-segment arrow-segment-2"><!--icon--></span>
+<span class="arrow-head"><!--icon--></span>
+                        <span class="arrow-label">2</span>
+                      </div>
+                    
+                      <div class="gcp-arrow arrow-3"
+                           data-ng-class="{'active':ctrl.itemHighlighted('mobile-arrow-3')}"
+                           data-ng-mouseenter="ctrl.activateItem({tooltipText:'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sapien diam, tincidunt tincidunt molestie at, placerat tempus justo. In vitae ligula gravida, egestas ante et, consectetur turpis. Nulla ut sollicitudin ligula, ac molestie libero.', highlight:'mobile-arrow-3 mobile-app-engine mobile-cloud-datastore '})"
+                           data-ng-mouseleave="ctrl.deactivateItems()"
+                           data-arrow-animation
+                           data-slug="arrow-3">
+                        <span class="arrow-segment arrow-segment-1"><!--icon--></span>
+<span class="arrow-segment arrow-segment-2"><!--icon--></span>
+<span class="arrow-head"><!--icon--></span>
+                        <span class="arrow-label">3</span>
+                      </div>
+                    
+                      <div class="gcp-arrow arrow-4"
+                           data-ng-class="{'active':ctrl.itemHighlighted('mobile-arrow-4')}"
+                           data-ng-mouseenter="ctrl.activateItem({tooltipText:'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sapien diam, tincidunt tincidunt molestie at, placerat tempus justo. In vitae ligula gravida, egestas ante et, consectetur turpis. Nulla ut sollicitudin ligula, ac molestie libero.', highlight:'mobile-arrow-4 mobile-app-engine mobile-compute-engine '})"
+                           data-ng-mouseleave="ctrl.deactivateItems()"
+                           data-arrow-animation
+                           data-slug="arrow-4">
+                        <span class="arrow-segment arrow-segment-1"><!--icon--></span>
+<span class="arrow-segment arrow-segment-2"><!--icon--></span>
+<span class="arrow-segment arrow-segment-3"><!--icon--></span>
+<span class="arrow-head"><!--icon--></span>
+                        <span class="arrow-label">4</span>
+                      </div>
+                    
+                  </div>
+                  <div class="tooltip" data-ng-class="{'active':ctrl.tooltipActive}">
+                    <p data-ng-bind="ctrl.tooltipText"></p>
+                  </div>
+                </div>
+              </div>
+            
+              <div class="platform-tab hadoop"
+                   data-pane
+                   data-title="Hadoop on Google Compute Engine"
+                   data-tab-content="&lt;p&gt;Experience the speed of the open-source Apache Hadoop on Google Compute Engine virtual machines. Increase job performance with per-minute billing and scale to thousands of cores to get the business insights you need fast.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;solutions/hadoop&quot;&gt;&lt;em&gt;Read more about Hadoop&lt;/em&gt;&lt;/a&gt;&lt;/p&gt;">
+                <div data-animation-timeline="hadoop"
+                     data-playing="ctrl.activeTab === 'Hadoop on Google Compute Engine'">
+                  <div class="gcp-categories">
+                    
+                    <div class="gcp-category hadoop-master">
+                      <h3 class="gcp-category-label">Master</h3>
+                      <div class="gcp-product-container">
+                        <div class="gcp-product-inner-container">
+                          
+                          <div class="gcp-product compute-engine"
+                               data-ng-class="{'active':ctrl.itemHighlighted('hadoop-compute-engine')}">
+                            <a href="products/compute-engine"
+                               data-ng-mouseover="ctrl.activateItem({tooltipText:'Run large-scale workloads on virtual machines hosted on Google\&#39;s infrastructure. Choose a VM that fits your needs and gain the performance of Google\&#39;s worldwide fiber network.', highlight:'hadoop-compute-engine'})"
+                               data-ng-mouseout="ctrl.deactivateItems()"
+                               data-product-animation
+                               data-slug="compute-engine">
+                              <span class="gcp-anim-icon compute-engine">
+  <span class="logo-shadow"><!--icon--></span>
+  <span class="logo-line left one"><!--icon--></span>
+  <span class="logo-line left two"><!--icon--></span>
+  <span class="logo-line right one"><!--icon--></span>
+  <span class="logo-line right two"><!--icon--></span>
+  <span class="logo-line top one"><!--icon--></span>
+  <span class="logo-line top two"><!--icon--></span>
+  <span class="logo-line bottom one"><!--icon--></span>
+  <span class="logo-line bottom two"><!--icon--></span>
+  <span class="logo-main"><!--icon--></span>
+</span>
+                              <p><em>Compute Engine</em></p>
+                            </a>
+                          </div>
+                          
+                          <div class="gcp-product cloud-storage"
+                               data-ng-class="{'active':ctrl.itemHighlighted('hadoop-cloud-storage')}">
+                            <a href="products/cloud-storage"
+                               data-ng-mouseover="ctrl.activateItem({tooltipText:'Use a durable and highly available object storage service. With global edge-caching, your users have fast access to your app’s data from any location.', highlight:'hadoop-cloud-storage'})"
+                               data-ng-mouseout="ctrl.deactivateItems()"
+                               data-product-animation
+                               data-slug="cloud-storage">
+                              <span class="gcp-anim-icon cloud-storage">
+  <span class="logo-shadow"><!--icon--></span>
+  <span class="logo-document"><!--icon--></span>
+  <span class="logo-main"><!--icon--></span>
+</span>
+                              <p><em>Cloud Storage</em></p>
+                            </a>
+                          </div>
+                          
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div class="gcp-category hadoop-workers">
+                      <h3 class="gcp-category-label">Workers</h3>
+                      <div class="gcp-product-container">
+                        <div class="gcp-product-inner-container">
+                          
+                          <div class="gcp-product compute-engine-workers"
+                               data-ng-class="{'active':ctrl.itemHighlighted('hadoop-compute-engine-workers')}">
+                            <a href="products/compute-engine"
+                               data-ng-mouseover="ctrl.activateItem({tooltipText:'The easiest, most reliable and most cost-effective way to use Hadoop on Google Cloud Platform is by using Google Cloud Storage as your default file system. The Google Cloud Storage connector for Hadoop lets you access data directly, without needing to first transfer it from Google Cloud Storage into HDFS. Additional benefits include interoperability with other Google services, automatic capacity scaling, high data availability, and more.', highlight:'hadoop-compute-engine-workers'})"
+                               data-ng-mouseout="ctrl.deactivateItems()"
+                               data-product-animation
+                               data-slug="compute-engine-workers">
+                              <div class="half one">
+<span class="gcp-anim-icon compute-engine">
+  <span class="logo-shadow"><!--icon--></span>
+  <span class="logo-line left one"><!--icon--></span>
+  <span class="logo-line left two"><!--icon--></span>
+  <span class="logo-line right one"><!--icon--></span>
+  <span class="logo-line right two"><!--icon--></span>
+  <span class="logo-line top one"><!--icon--></span>
+  <span class="logo-line top two"><!--icon--></span>
+  <span class="logo-line bottom one"><!--icon--></span>
+  <span class="logo-line bottom two"><!--icon--></span>
+  <span class="logo-main"><!--icon--></span>
+</span>
+<span class="gcp-anim-icon compute-engine">
+  <span class="logo-shadow"><!--icon--></span>
+  <span class="logo-line left one"><!--icon--></span>
+  <span class="logo-line left two"><!--icon--></span>
+  <span class="logo-line right one"><!--icon--></span>
+  <span class="logo-line right two"><!--icon--></span>
+  <span class="logo-line top one"><!--icon--></span>
+  <span class="logo-line top two"><!--icon--></span>
+  <span class="logo-line bottom one"><!--icon--></span>
+  <span class="logo-line bottom two"><!--icon--></span>
+  <span class="logo-main"><!--icon--></span>
+</span>
+</div>
+<div class="half two">
+<span class="gcp-anim-icon compute-engine">
+  <span class="logo-shadow"><!--icon--></span>
+  <span class="logo-line left one"><!--icon--></span>
+  <span class="logo-line left two"><!--icon--></span>
+  <span class="logo-line right one"><!--icon--></span>
+  <span class="logo-line right two"><!--icon--></span>
+  <span class="logo-line top one"><!--icon--></span>
+  <span class="logo-line top two"><!--icon--></span>
+  <span class="logo-line bottom one"><!--icon--></span>
+  <span class="logo-line bottom two"><!--icon--></span>
+  <span class="logo-main"><!--icon--></span>
+</span>
+<span class="gcp-anim-icon compute-engine">
+  <span class="logo-shadow"><!--icon--></span>
+  <span class="logo-line left one"><!--icon--></span>
+  <span class="logo-line left two"><!--icon--></span>
+  <span class="logo-line right one"><!--icon--></span>
+  <span class="logo-line right two"><!--icon--></span>
+  <span class="logo-line top one"><!--icon--></span>
+  <span class="logo-line top two"><!--icon--></span>
+  <span class="logo-line bottom one"><!--icon--></span>
+  <span class="logo-line bottom two"><!--icon--></span>
+  <span class="logo-main"><!--icon--></span>
+</span>
+</div>
+                              <p><em>Compute Engine</em></p>
+                            </a>
+                          </div>
+                          
+                        </div>
+                      </div>
+                    </div>
+                    
+                  </div>
+                  <div class="gcp-arrow-container">
+                    
+                      <div class="gcp-arrow arrow-1"
+                           data-ng-class="{'active':ctrl.itemHighlighted('hadoop-arrow-1')}"
+                           data-ng-mouseenter="ctrl.activateItem({tooltipText:'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sapien diam, tincidunt tincidunt molestie at, placerat tempus justo. In vitae ligula gravida, egestas ante et, consectetur turpis. Nulla ut sollicitudin ligula, ac molestie libero.', highlight:'hadoop-arrow-1 hadoop-cloud-storage hadoop-compute-engine '})"
+                           data-ng-mouseleave="ctrl.deactivateItems()"
+                           data-arrow-animation
+                           data-slug="arrow-1">
+                        <span class="arrow-segment arrow-segment-1"><!--icon--></span>
+<span class="arrow-head"><!--icon--></span>
+                        <span class="arrow-label">1</span>
+                      </div>
+                    
+                      <div class="gcp-arrow arrow-2"
+                           data-ng-class="{'active':ctrl.itemHighlighted('hadoop-arrow-2')}"
+                           data-ng-mouseenter="ctrl.activateItem({tooltipText:'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sapien diam, tincidunt tincidunt molestie at, placerat tempus justo. In vitae ligula gravida, egestas ante et, consectetur turpis. Nulla ut sollicitudin ligula, ac molestie libero.', highlight:'hadoop-arrow-2 hadoop-compute-engine hadoop-compute-engine-workers '})"
+                           data-ng-mouseleave="ctrl.deactivateItems()"
+                           data-arrow-animation
+                           data-slug="arrow-2">
+                        <span class="arrow-segment arrow-segment-1"><!--icon--></span>
+<span class="arrow-head"><!--icon--></span>
+                        <span class="arrow-label">2</span>
+                      </div>
+                    
+                  </div>
+                  <div class="tooltip" data-ng-class="{'active':ctrl.tooltipActive}">
+                    <p data-ng-bind="ctrl.tooltipText"></p>
+                  </div>
+                </div>
+              </div>
+            
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- End Announcement -->
+    <div id="applications" class="generic-section">
+      <div class="maia-cols">
+        <div class="maia-col-12">
+          <h1 class="headline"><em>Google Cloud Platform is used and trusted by over 4 million applications</em></h1>
+          <ul class="apps-list link-list">
+            <li><a href="http://gigaom.com/2013/05/07/snapchats-act-of-faith-in-building-on-google-compute-engine/" target="_blank" event="autotrack-data-g" data-g-event="Home" data-g-action="Case Study" data-g-label="Snapchat" rel="canonical"><img class="logo" src="images/home/customer-snapchat.png" alt="Snapchat" data-retina="44x52" /></a></li>
+            <li><a href="../files/KhanAcademy.pdf" event="autotrack-data-g" data-g-event="Home" data-g-action="Case Study" data-g-label="Khan Academy" rel="canonical"><img class="logo" src="images/home/customer-khanacademy.png" alt="Khan Academy" data-retina="211x49" style="margin-top: -24px;" /></a></li>
+            <li><a href="../files/Pulse.pdf" event="autotrack-data-g" data-g-event="Home" data-g-action="Case Study" data-g-label="Pulse" rel="canonical"><img class="logo" src="images/home/customer-pulse.png" alt="Pulse" data-retina="92x41" /></a></li>
+            <li><a href="../files/Rovio.pdf" event="autotrack-data-g" data-g-event="Home" data-g-action="Case Study" data-g-label="Rovio" rel="canonical"><img class="logo" src="images/home/customer-rovio.png" alt="Rovio" data-retina="37x58" /></a></li>
+            <li><a href="../files/Gigya.pdf" event="autotrack-data-g" data-g-event="Home" data-g-action="Case Study" data-g-label="Gigya" rel="canonical"><img class="logo" src="images/home/customer-gigya.png" alt="Gigya" data-retina="102x38" /></a></li>
+            <li><a href="../files/DNANexus.pdf" event="autotrack-data-g" data-g-event="Home" data-g-action="Case Study" data-g-label="DNA Nexus" rel="canonical"><img class="logo" src="images/home/customer-dnanexus.png" alt="DNA Nexus" data-retina="173x33" style="margin-top: -7px;" /></a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div id="advantages" class="generic-section scroll-section" data-section-label="Why Google">
+
+      <div class="header">
+        <div class="maia-cols">
+          <h2 class="headline maia-col-8">Why Google</h2>
+          <p class="subheadline maia-col-8"></p>
+        </div>
+      </div>
+
+      <div class="maia-cols">
+        <div class="inner-block maia-col-6">
+          <h3 class="headline"><img class="inline-icon" src="../images/home/icon-1.png" alt="Infrastructure" />Run on Google’s infrastructure</h3>
+          <p>Build on the same <a href="http://www.google.com/about/datacenters/" target="_blank">infrastructure</a> that allows Google to return billions of search results in milliseconds, serve 6 billion hours of YouTube video per month and provide storage for 425 million Gmail users.</p>
+          <a href="./why-google#infrastructure" class="read-more" event="autotrack-data-g" data-g-event="Home" data-g-action="Advantages Of Cloud Platform" data-g-label="Infrastructure">Find out more</a>
+        </div>
+        <div class="inner-block maia-col-6">
+          <h3 class="headline"><img class="inline-icon" src="../images/home/icon-2.png" alt="Focus" />Focus on your product</h3>
+          <p>Rapidly develop, deploy and iterate your applications without worrying about system administration. Google manages your application, database and storage servers so you don’t have to.</p>
+          <a href="./why-google#product" class="read-more" event="autotrack-data-g" data-g-event="Home" data-g-action="Advantages Of Cloud Platform" data-g-label="Product">Find out more</a>
+        </div>
+      </div>
+
+      <div class="maia-cols">
+        <div class="inner-block maia-col-6">
+          <h3 class="headline"><img class="inline-icon" src="../images/home/icon-3.png" alt="Mix" />Mix and match services</h3>
+          <p>Virtual machines. Managed platform. Blob storage. Block storage. NoSQL datastore. MySQL database. Big Data analytics. Google Cloud Platform has all the services your application architecture needs.</p>
+          <a href="./why-google#services" class="read-more" event="autotrack-data-g" data-g-event="Home" data-g-action="Advantages Of Cloud Platform" data-g-label="Services">Find out more</a>
+        </div>
+
+        <div class="inner-block maia-col-6">
+          <h3 class="headline"><img class="inline-icon" src="../images/home/icon-4.png" alt="Scale" />Scale to millions of users</h3>
+          <p>Applications hosted on Cloud Platform can automatically scale up to handle the most demanding Internet-scale workloads and scale down when traffic subsides. You pay only for what you use.</p>
+          <a href="./why-google#scalability" class="read-more" event="autotrack-data-g" data-g-event="Home" data-g-action="Advantages Of Cloud Platform" data-g-label="Scalability">Find out more</a>
+        </div>
+      </div>
+
+      <div class="maia-cols">
+        <div class="inner-block maia-col-6">
+          <h3 class="headline"><img class="inline-icon" src="../images/home/icon-5.png" alt="Performance" />Performance you can count on</h3>
+          <p>Every millisecond of latency matters. Google’s compute infrastructure gives you consistent CPU, memory and disk performance. Our network and edge cache serve responses rapidly to your users across the world.</p>
+          <a href="./why-google#performance" class="read-more" event="autotrack-data-g" data-g-event="Home" data-g-action="Advantages Of Cloud Platform" data-g-label="Performance">Find out more</a>
+        </div>
+        <div class="inner-block maia-col-6">
+          <h3 class="headline"><img class="inline-icon" src="../images/home/icon-6.png" alt="Support" />Get the support you need</h3>
+          <p>With our worldwide community of users, partner ecosystem and premium support packages, Google provides a full range of resources to help you get started and grow.</p>
+          <a href="./why-google#support" class="read-more" event="autotrack-data-g" data-g-event="Home" data-g-action="Advantages Of Cloud Platform" data-g-label="Support">Find out more</a>
+        </div>
+      </div>
+
+      <div class="maia-cols">
+        <div class="section-footer maia-col-12">
+          <a href="./why-google" class="bounce-link" event="autotrack-data-g" data-g-event="Home" data-g-action="Advantages Of Cloud Platform" data-g-label="View All Advantages">View all advantages</a>
+        </div>
+      </div>
+
+    </div>
+
+    <div id="customers" class="generic-section scroll-section" data-section-label="Our customers">
+
+      <div class="header">
+        <div class="maia-cols">
+          <h2 class="headline maia-col-8">Some of our customers</h2>
+          <p class="subheadline maia-col-8"><a href="customers" class="bounce-link" event="autotrack-data-g" data-g-event="Home" data-g-action="Customer Case Study" data-g-label="View All Case Studies">View all case studies</a></p>
+        </div>
+      </div>
+
+      <div class="customer-stories">
+        <div class="maia-cols">
+          <div class="inner-block maia-col-6">
+            <div class="maia-cols">
+              <div class="image-wrapper maia-col-4">
+                <img src="images/home/casestudy-snapchat.png" alt="SnapChat" data-retina="139x123" />
+              </div>
+              <div class="details maia-col-8">
+                <h3 class="headline">Snapchat</h3>
+                <p class="subheadline">“App Engine enabled us to focus on developing the application. We wouldn’t have gotten here without the ease of development that App Engine gave us.”</p>
+                <p><span class="case-study-author">Bobby Murphy</span><span class="case-study-role">CTO and co-Founder</span></p>
+                <a href="http://gigaom.com/2013/05/07/snapchats-act-of-faith-in-building-on-google-compute-engine/" class="read-more" target="_blank" event="autotrack-data-g" data-g-event="Home" data-g-action="Customer Case Study" data-g-label="Snapchat">Read Snapchat's story</a>
+              </div>
+            </div>
+          </div>
+          <div class="inner-block maia-col-6">
+            <div class="maia-cols">
+              <div class="image-wrapper maia-col-4">
+                <img src="images/home/casestudy-webfilings.png" alt="Webfilings" data-retina="139x123" />
+              </div>
+              <div class="details maia-col-8">
+                <h3 class="headline">Webfilings</h3>
+                <p class="subheadline">“Google App Engine has the breadth and the depth to grow with you. Every 6 months, it gets better. The Google App Engine team knows what you need to make a competitive application.”</p>
+                <p><span class="case-study-author">Brett Harper</span><span class="case-study-role">Director of Product Development</span></p>
+                <a href="../files/WebFilings.pdf" class="read-more" event="autotrack-data-g" data-g-event="Home" data-g-action="Customer Case Study" data-g-label="Web Filings">Read Webfilings' story</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="maia-cols">
+          <div class="inner-block maia-col-6">
+            <div class="maia-cols">
+              <div class="image-wrapper maia-col-4">
+                <img src="images/home/casestudy-khanacademy.png" alt="Khan Academy" data-retina="139x123" />
+              </div>
+              <div class="details maia-col-8">
+                <h3 class="headline">Khan Academy</h3>
+                <p class="subheadline">“If we didn’t have Google App Engine, we’d be spending a lot more time figuring out server setup and working on routers. Our ability to focus on the actual product is the benefit of Google App Engine.”</p>
+                <p><span class="case-study-author">Ben Kamens</span><span class="case-study-role">Lead Developer</span></p>
+                <a href="../files/KhanAcademy.pdf" class="read-more" event="autotrack-data-g" data-g-event="Home" data-g-action="Customer Case Study" data-g-label="Khan Academy">Read Khan Academy's story</a>
+              </div>
+            </div>
+          </div>
+          <div class="inner-block maia-col-6">
+            <div class="maia-cols">
+              <div class="image-wrapper maia-col-4">
+                <img src="images/home/casestudy-rovio.png" alt="Rovio" data-retina="139x123" />
+              </div>
+              <div class="details maia-col-8">
+                <h3 class="headline">Rovio</h3>
+                <p class="subheadline">“Google App Engine allows us to launch games very quickly with teams of one or two developers per game. Because Google manages all the servers, there is little required of us in terms of maintenance.”</p>
+                <p><span class="case-study-author">Stefan Hauk</span><span class="case-study-role">lead server developer for web games</span></p>
+                <a href="../files/Rovio.pdf" class="read-more" event="autotrack-data-g" data-g-event="Home" data-g-action="Customer Case Study" data-g-label="Rovio ">Read Rovio's story</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="maia-cols">
+          <div class="inner-block maia-col-6">
+            <div class="maia-cols">
+              <div class="image-wrapper maia-col-4">
+                <img src="images/home/casestudy-mag.png" alt="MAG Interactive" data-retina="139x123" />
+              </div>
+              <div class="details maia-col-8">
+                <h3 class="headline">MAG Interactive</h3>
+                <p class="subheadline">"Our rapid growth to 5M Ruzzle players in less than six months required a highly scalable server solution. Google App Engine transformed this huge challenge into a picnic."</p>
+                <p><span class="case-study-author">Roger Skagerwall</span><span class="case-study-role">CEO</span></p>
+
+                <a href="../files/MAG.pdf" class="read-more" event="autotrack-data-g" data-g-event="Home" data-g-action="Customer Case Study" data-g-label="Mag Interactive ">Read MAG Interactive's story</a>
+              </div>
+            </div>
+          </div>
+          <div class="inner-block maia-col-6">
+            <div class="maia-cols">
+              <div class="image-wrapper maia-col-4">
+                <img src="images/home/casestudy-interactions.png" alt="Interactions Marketing" data-retina="139x123" />
+              </div>
+              <div class="details maia-col-8">
+                <h3 class="headline">Interactions Marketing</h3>
+                <p class="subheadline">"We are always looking for ways to maximize return and minimize investment. BigQuery is the perfect combination. It’s an on-demand, scalable resource."</p>
+
+                <p><span class="case-study-author">Giovanni DeMeo</span><span class="case-study-role">Vice President of Global Marketing and Analytics</span></p>
+
+                <a href="../files/interactions_marketing.pdf" class="read-more" event="autotrack-data-g" data-g-event="Home" data-g-action="Customer Case Study" data-g-label="Interaction Marketing">Read Interactions Marketing's story</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="community" class="generic-section last scroll-section" data-section-label="Cloud Platform community">
+
+      <div class="header">
+        <div class="maia-cols">
+          <h2 class="headline maia-col-12">Engage with the Cloud Platform community</h2>
+          <p class="subheadline maia-col-12">Join the Google Cloud Platform developer community and learn how to get the most out of Google Cloud Platform</p>
+        </div>
+      </div>
+
+      <div id="feeds">
+        <div class="feeds-container maia-cols">
+          <!-- BlogSpot feeds -->
+          <div class="blogspot maia-col-8">
+
+            <div class="content">
+              <div>Follow us on Blogger</div>
+            </div>
+          </div>
+
+          <!-- YouTube feed -->
+          <div class="youtube maia-col-4">
+            <div class="content">
+              <div>Follow us on YouTube</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="maia-cols">
+
+        <div class="inner-block maia-col-6">
+          <h3 class="headline">Sign up for the Cloud Platform newsletter</h3>
+          <p class="subheadline">Stay updated on Google Cloud Platform and get the latest news, announcements, special offers and event information. You never know when it will come up at a dinner party. You can thank us later.</p>
+          <iframe class="cp-nsl-201308-ifrm" src="https://gcloudplatformemail.appspot.com/" frameborder="0"></iframe>
+        </div>
+
+        <div class="inner-block maia-col-6">
+          <h3 class="headline">Join the conversation on Stack Overflow</h3>
+          <p class="subheadline">Get your questions answered and share your knowledge with other developers.</p>
+          <ul class="link-list">
+            <li><a href="http://stackoverflow.com/questions/tagged/google-app-engine" class="link-out" target="_blank" event="autotrack-data-g" data-g-event="Home" data-g-action="Stack Overflow Conversation" data-g-label="App Engine">App Engine</a></li>
+            <li><a href="http://stackoverflow.com/questions/tagged/google-compute-engine" class="link-out" target="_blank" event="autotrack-data-g" data-g-event="Home" data-g-action="Stack Overflow Conversation" data-g-label="Compute Engine">Compute Engine</a></li>
+            <li><a href="http://stackoverflow.com/questions/tagged/google-cloud-sql" class="link-out" target="_blank" event="autotrack-data-g" data-g-event="Home" data-g-action="Stack Overflow Conversation" data-g-label="Cloud SQL">Cloud SQL</a></li>
+            <li><a href="http://stackoverflow.com/questions/tagged/google-bigquery" class="link-out" target="_blank" event="autotrack-data-g" data-g-event="Home" data-g-action="Stack Overflow Conversation" data-g-label="Big Query">BigQuery</a></li>
+            <li><a href="http://stackoverflow.com/questions/tagged/google-cloud-storage" class="link-out" target="_blank" event="autotrack-data-g" data-g-event="Home" data-g-action="Stack Overflow Conversation" data-g-label="Cloud Storage">Cloud Storage</a></li>
+            <li><a href="http://stackoverflow.com/questions/tagged/google-cloud-datastore" class="link-out" target="_blank" event="autotrack-data-g" data-g-event="Home" data-g-action="Stack Overflow Conversation" data-g-label="Cloud Datastore">Cloud Datastore</a></li>
+            <li><a href="http://stackoverflow.com/questions/tagged/google-prediction-api" class="link-out" target="_blank" event="autotrack-data-g" data-g-event="Home" data-g-action="Stack Overflow Conversation" data-g-label="Prediction API">Prediction API</a></li>
+            <li><a href="http://stackoverflow.com/questions/tagged/google-translate-api" class="link-out" target="_blank" event="autotrack-data-g" data-g-event="Home" data-g-action="Stack Overflow Conversation" data-g-label="Translate API">Translate API</a></li>
+            <li><a href="http://stackoverflow.com/questions/tagged/google-cloud-endpoints" class="link-out" target="_blank" event="autotrack-data-g" data-g-event="Home" data-g-action="Stack Overflow Conversation" data-g-label="Cloud Endpoints">Cloud Endpoints</a></li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+
+
+  <!-- is this feedback sticky needed?
+  <div class="feedback-sticky"><a href="javascript:void(0);">Feedback</a></div>
+  <script type="text/javascript" src="//www.gstatic.com/feedback/api.js"></script>
+  <script>
+    jQuery('body').delegate('.feedback-sticky', 'click', function() {
+      _gaq.push(['_trackEvent', 'Feedback', 'User Feedback: ' + location.pathname]);
+      userfeedback.api.startFeedback({'productId': '96209'});
+    });
+  </script>
+  -->
+
+  <!-- Scripts to include both on Goro + Devsite -->
+  <script type="text/javascript">
+   window.___gcfg = {
+     lang: ''
+   };
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+  </script>
+
+  <!-- GTM implementation -->
+  
+  <!-- Start dataLayer -->
+    <script>
+      dataLayer = [{
+        'country': '',
+        'region': '',
+        'language': 'en'
+      }];
+    </script>
+  <!-- End dataLayer -->
+  
+  <!-- Start Google Tag Manager -->
+  <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5CVQBG"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-5CVQBG');</script>
+  <!-- End Google Tag Manager -->    
+
+
+
+<!-- Global JS scripts to load; path will depend on whether we're on devsite or Goro -->
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular-sanitize.js"></script>
+
+
+
+  <script src="/js/base.min.js"></script>
+
+
+<!-- Secondary right-side scroll-nav -->
+<script>
+  new lfl.ui.ScrollNav({});
+</script>
+
+<script>new cloud.SocialFeeds(document.getElementById('feeds'));</script>
+
+
+
+  </body>
+</html>

@@ -1,0 +1,348 @@
+<html devsite>
+  <head>
+    <title>Web Apps Articles &amp; Tutorials</title>
+    <meta name="description" content="Read technical articles about web applications and solutions with Google Cloud Platform, including auto scaling and how to manage complex applications in the cloud." />
+    <meta name="hide_page_heading" value="true" />
+    <meta name="full_width" value="true" />
+    <meta name="top_category" value="developers" />
+    <meta name="subcategory" value="articles" />
+    <meta name="viewport" content="initial-scale=1, minimum-scale=1, width=device-width">
+    <link rel="apple-touch-icon" href="//cloud.google.com/_static/images/apple-touch-icon.png">
+    <link href="//fonts.googleapis.com/css?family=Open+Sans:400italic,300,400,600,700" rel="stylesheet">
+
+    <link href="/css/default.css" rel="stylesheet">
+
+    <!--[if lt IE 9]>
+    <link rel="stylesheet" media="screen" href='/c/cp-ie.css'>
+    <![endif]-->
+    <script src="/js/floodlight.js"></script>
+  </head>
+  <body>
+
+
+
+
+
+
+
+
+<div id="maia-main" class="cp-article">
+  <div class="maia-cols">
+    <div class="maia-col-9">
+      <div>
+        <div style="float:right">
+          <div class="g-plusone"></div>
+        </div>
+        <h1 class="title">AngularJS + Cloud Endpoints: A Recipe for Building Modern Web Applications</h1>
+      </div>
+      
+<div class="cp-article-tutorial">
+
+  <h2>Introduction</h2>
+  <p>Advances in client-side technologies are driving changes in the role of today&rsquo;s web application server. Android, iOS and purely browser-based clients are powerful computing platforms in their own right. Their success has led to a reevaluation of &lsquo;classic&rsquo; web applications. MVC frameworks, such as <a href="http://angularjs.org/">AngularJS</a>, have been developed that enable client-side developers to build powerful and compelling UIs.</p>
+  <p>AngularJS is a popular open source JavaScript client-side MVC framework supporting the rapid development of client-side applications. By implementing a majority of the MVC functionality at client-side, it reduces the complexity of the server and results in applications composed around well-defined APIs that should be more maintainable and applicable.</p>
+  <p>This paper provides best practices and guidance to web developers who are interested in AngularJS or other client-side MVC technologies and want to optimize their server backend for these technologies. You will learn how to leverage AngularJS with Google Cloud Platform and, in particular, <a href="https://developers.google.com/appengine/docs/java/endpoints/">Google Cloud Endpoints</a>, a technology that lets developers expose their backend APIs of Google App Engine applications through service-based API, instantly with simple annotations.</p>
+  <p>Google Cloud Endpoints makes it easy to build a server-side API and encapsulate the backend boilerplate logic. Incorporating the Google Cloud Endpoints JavaScript client library into AngularJS is so straightforward that you can write a single line of code to call server logic and a callback function to update model properties with the result. </p>
+  <p>The intended audience for this paper is Java developers with some experience with App Engine and a basic knowledge of JavaScript. Links to the AngularJS and Cloud Endpoint web sites with reference guides are provided in another section and troubleshooting tips are provided in the Appendix. If this is your first time writing Java applications for App Engine, the <a href="https://developers.google.com/appengine/docs/java/gettingstarted/introduction">Getting Started</a> pages on the App Engine site provides a good introduction.</p>
+
+  <h2>Challenge</h2>
+  <p>A recent and significant change in web application frameworks has been the shift from Model-View-Controller (MVC) on the server to the MVC on the client. Advancements in client-side technology are driving this change. The result, however, is the challenge of building elegant architect applications that span multiple devices hosted in the cloud.</p>
+  <p>Android, iOS and browser-based clients are rich development platforms and each is able to run a fully-fledged MVC framework. Developing the user interfaces (using MVC) on the client is a more natural architecture that better leverages client developers&rsquo; skills. The growing popularity of client-side MVC frameworks such as <a href="http://backbonejs.org/">Backbone.js</a> and AngularJS is representative of this shift to the client. These frameworks help reduce complexity and increase reuse in even the simplest of applications.</p>
+  <p>As the UI moves to the client, the server becomes simpler. Server-side developers need not worry about how to construct HTML pages using templates to generate the dynamic content. Rather, they can focus on implementing business logic and data persistence using technologies such as App Engine Datastore access and OAuth2 authentication and then use a framework to expose services to their applications&rsquo; clients.</p>
+  <p>The question that remains is how to design and implement these modern web applications. This next section provides some guidance for web application developers and architects wanting to learn how to incorporate browser-based clients into an existing service-based architecture.</p>
+
+  <h2>Overview: Client-side MVC + Google Cloud Endpoints</h2>
+  <p>Google Cloud Endpoints is the answer for this question: a feature of Google App Engine that provides a RPC framework:</p>
+
+  <figure>
+    <img src="../images/articles/angularjs-cloud-endpoints-recipe/cloud-endpoints.jpg">
+    <figcaption>Figure 1: Google Cloud Endpoints</figcaption>
+  </figure>
+
+  <p>The flow is described in more detail below.</p>
+
+  <p>Using Cloud Endpoints, developers expose the public methods of any class as a service endpoint with the addition of simple Java annotations. For example, imagine a simple guestbook application that has a single class &ldquo;GuestbookEndpointV1&rdquo; with two methods <span class="code">insert()</span> to add an entry new messages on the guestbook and <span class="code">list()</span> to list them. In order to expose the class as a service endpoint, put the @Api annotation on the class definition:</p>
+
+<pre>
+<span class="bld">@Api</span>(name = "guestbook")
+public class <span class="bld">GuestbookEndpointV1</span> {
+  ...
+}
+</pre>
+
+  <p>This code would be deployed on the Google App Engine server as shown in Figure 1 above. You will also need to put @ApiMethod annotations on any methods you want to publish to the client.</p>
+
+<pre>
+@<span class="bld">ApiMethod</span>(name = "messages.insert")
+public void <span class="bld">insert</span>(Message message) {
+  // store a Message on Datastore
+  Entity e = new Entity("<span class="bld">Message</span>");
+  e.setProperty("<span class="bld">createdAt</span>", message.getCreatedAt());
+  e.setProperty("<span class="bld">createdBy</span>", message.getCreatedBy());
+  e.setProperty("<span class="bld">content</span>", message.getContent());
+  datastore.put(e);
+}
+</pre>
+
+  <p>The <span class="code">insert()</span> method receives a Java object, message, and comes with properties like <span class="code">createdAt</span> (the creation timestamp), <span class="code">createdBy</span> (the owner of the message) and content. Then it creates a Datastore entity &ldquo;e&rdquo; with those property values and saves it onto Google App Engine Datastore.</p>
+  <p>These service endpoints are automatically exposed via REST API and you can use <a href="https://developers.google.com/apis-explorer/#p/">Google APIs Explorer</a> to view the service endpoints. It is also good to issue test requests to confirm the responses in JSON format. In the following screen, the <span class="code">guestbook.messages.insert</span> results directly from the annotations to the Java class.</p>
+
+  <figure>
+    <img src="../images/articles/angularjs-cloud-endpoints-recipe/api-explorer.png">
+    <figcaption>Figure 2: Testing your service endpoints with Google APIs Explorer</figcaption>
+  </figure>
+
+  <h2>
+    Combining AngularJS with Cloud Endpoints
+  </h2>
+  <p>The next step addresses the integration of Cloud Endpoints with client-side MVC frameworks such as <a href="http://angularjs.org/">AngularJS</a>. Such a system would have an architecture similar to the one described in Figure 4:</p>
+
+  <figure>
+    <img src="../images/articles/angularjs-cloud-endpoints-recipe/endpoints-architecture.png">
+    <figcaption>Figure 4: Client-side MVC and Service Endpoints Architecture</figcaption>
+  </figure>
+
+  <p>Although the integration between two technologies is straightforward, there are some pitfalls and caveats you should know about before starting your coding. So, let&rsquo;s take a closer look at the left side of the diagram above (Fig. 4) &ndash; the actual JavaScript code that integrates the client-side MVC with the endpoints shown in the right side of the diagram. As an example, let&rsquo;s consider creating an AngularJS-based web UI for the Guestbook service endpoint we have just defined. The following diagram is a screenshot of how the UI will appear:</p>
+
+  <figure>
+    <img src="../images/articles/angularjs-cloud-endpoints-recipe/guestbook-app.png">
+    <figcaption>Figure 3: Guestbook app with AngularJS + Cloud Endpoints</figcaption>
+  </figure>
+
+  <h3>Creating a View and Model</h3>
+  <p>The message form can be created using an ordinary AngularJS form that calls the controller&rsquo;s <span class="code">insert()</span> method. The form specifies two model properties, createdBy and content, as shown in the following script:</p>
+
+<pre>
+&lt;h2&gt;Guestbook&lt;/h2&gt;
+&lt;form <span class="bld">ng-submit</span>="<span class="bld">insert()</span>"&gt;
+  &lt;input type="text" <span class="bld">ng-model</span>="<span class="bld">createdBy</span>" size="50"&gt;&lt;br&gt;
+  &lt;input type="text" <span class="bld">ng-model</span>="<span class="bld">content</span>" size="50"&gt;&lt;br&gt;
+  &lt;input type="submit" class="btn" value="Post"&gt;
+&lt;/form&gt;
+</pre>
+
+  <p>The following code demonstrates how you can use an AngularJS iterator to iterate over the messages that will be returned to the client in response to a call to the &ldquo;list&rdquo; method on the endpoint:</p>
+
+<pre>
+&lt;ul&gt;
+  &lt;li <span class="bld">ng-repeat</span>="<span class="bld">message</span> in <span class="bld">messages</span>"&gt;
+  &#123;&#123;<span class="bld">message.createdAt</span>|date:'short'&#125;&#125; &#123;&#123;<span class="bld">message.createdBy</span>&#125;&#125;: &#123;&#123;<span class="bld">message.content</span>&#125;&#125;
+&lt;/ul&gt;
+</pre>
+
+  <h3>Creating a Controller</h3>
+  <p>The controller&rsquo;s <span class="code">insert</span> function (set to the <span class="code">$scope.insert</span> variable) corresponds to the <span class="code">insert</span> method of the endpoint we defined. It builds an object that contains the message content and <span class="code">createdAt/createdBy</span> properties copied from the model properties, and then calls the <span class="code">insert</span> method of the endpoint. This is demonstrated in the following JavaScript fragment:</p>
+
+<pre>
+function GuestbookCtrl($scope) {
+  $scope.<span class="bld">insert</span>= function() {
+    <span class="bld">message</span> = {
+      "createdAt" : new Date(),
+      "createdBy" : $scope.<span class="bld">createdBy</span>,
+      "content" : $scope.<span class="bld">content</span>
+    };
+  ...
+</pre>
+
+  <p>Next, you can send the object by passing it to the <span class="code">insert</span> function of the Cloud Endpoint client library. Remember, this is one of the two methods exposed as a Cloud Endpoint with the addition of annotations to the GuestbookEndpointV1 class.</p>
+
+<pre>
+gapi.client.guestbook.messages. <span class="bld">insert(message)</span>.execute();
+</pre>
+
+  <p>In the same way, you can call the service endpoint&rsquo;s <span class="code">list()</span> method to retrieve messages on the guestbook:</p>
+
+<pre>
+$scope.list = function() {
+  gapi.client.guestbook.messages.list().execute(function(<span class="bld">resp</span>) {
+    $scope.<span class="bld">messages</span> = <span class="bld">resp.items</span>;
+    $scope.<span class="bld">$apply()</span>;
+  });
+}
+</pre>
+
+  <p>Please note that the anonymous function passed as a callback to the <span class="code">execute()</span> method is called whenever it receives messages from the server,and these would be assigned to the model&rsquo;s messages property. You will need to call <span class="code">$apply()</span> to apply the model change to the UI, since the callback function is called from outside of the controller thread. Additionally, the Cloud Endpoints client library does not support the <a href="http://docs.angularjs.org/api/ng.$q">Promise</a> API of AngularJS for describing this kind of asynchronous processing.</p>
+  <p>A tricky aspect when integrating AngularJS with Cloud Endpoints is the initialization sequence. It&rsquo;s important to know the sequence in which the libraries will be loaded and initialized. If you do not pay attention to the sequence of loading required libraries and their initialization, you could create problems that will take a long time to debug. See the Appendix for further details.</p>
+  <p>It should be clear from the examples presented that AngularJS and Cloud Endpoints enable quite a straight forward design pattern that combines client-side MVC and server-side service endpoints. In fact, you will find that it is easier and simpler to use Cloud Endpoints for RPC than it is to implement the <a href="http://docs.angularjs.org/tutorial/step_05">XHR and Dependency Injection</a> in AngularJS for server communication. Cloud Endpoints also provides many other benefits including integrated OAuth2 security and multi-client platform support for Android and iOS using a shared, standardized client API.</p>
+
+  <h2>Conclusion</h2>
+  <p>To conclude, here is a summary of some of the key benefits of AngularJS + Cloud Endpoints that were presented in this paper:</p>
+  <ul>
+    <li>Cloud Endpoints makes it easy to expose a server-side API by adding annotations to classes and methods to generate client libraries supporting JavaScript.
+    </li>
+    <li>Cloud Endpoints encapsulate the plumbing for OAuth2 authentication, URI definition and request routing, JSON serialization, and RPC with graceful error handling and more. These tasks can be quite non-trivial when implementing them without Cloud Endpoints.
+    </li>
+    <li>The AngularJS JavaScript based client-side MVC framework supports the rapid development of client-side applications. Richuser experiences can be easily implemented by HTML5 and JavaScript. This eliminates the need for server-side HTML rendering.
+    </li>
+    <li>Incorporating the Cloud Endpoints JavaScript client library into AngularJS is so straight forward that you can write a single line of code to call server logic and a callback function to update model properties with the result.
+    </li>
+  </ul>
+
+  <h2>References</h2>
+  <p>Google App Engine, <a href="https://developers.google.com/appengine/">https://developers.google.com/appengine/</a></p>
+  <p>AngularJS, <a href="http://angularjs.org/">http://angularjs.org/</a></p>
+  <p>Cloud Endpoints, <a href="https://developers.google.com/appengine/docs/java/endpoints/">https://developers.google.com/appengine/docs/java/endpoints/</a></p>
+
+  <h2>Appendix: Tips on AngularJS + Cloud Endpoints Initialization</h2>
+
+  <h3>Tip #1: Be careful on the initialization sequence</h3>
+  <p>The guestbook app loads three different JS libraries in the following sequence:</p>
+  <ol>
+    <li>AngularJS
+    </li>
+    <li>The guestbook app
+    </li>
+    <li>Google API Client, which contains the Endpoints functionalities
+    </li>
+  </ol>
+  <p>To follow this sequence, the <span class="code">index.html</span> contains the following <span class="code">&lt;script&gt;</span> tags in the <span class="code">&lt;head&gt;</span> tag for loading each of the JS libraries:</p>
+
+<pre>
+&lt;script src="js/angular.min.js"&gt;&lt;/script&gt;
+&lt;script src="js/guestbook.js"&gt;&lt;/script&gt;
+&lt;script src="<a href="https://apis.google.com/js/client.js?onload=init">https://apis.google.com/js/client.js?onload=init</a>"&gt;&lt;/script&gt;
+</pre>
+
+  <p>Once loaded, the third library (Google API Client) calls the initialization function specified by its &lsquo;onload&rsquo; parameter. In this case, the <span class="code">init()</span> function is expected and invoked.</p>
+
+  <h3>Tip #2: Enter into the AngularJS world as quickly as possible</h3>
+  <p>In the initialization sequence, we use the two functions:</p>
+  <ul>
+      <li><span class="code">init()</span> function</li>
+      <li><span class="code">window.init()</span> function</li>
+  </ul>
+
+  <p>This <span class="code">init()</span> function is defined in <span class="code">guestbook.js</span> in the following way:</p>
+
+<pre>
+function init() {
+  window.init();
+}
+</pre>
+
+  <p>As you can see the code above, the function just calls <span class="code">window.init()</span> function (i.e. <span class="code">init()</span> function defined in the global window object) and does nothing else. The <span class="code">window.init()</span> is defined in the AngularJS controller as follows:</p>
+
+<pre>
+$window.init= function() {
+  $scope.$apply($scope.<span class="bld">load_guestbook_lib</span>);
+};
+</pre>
+
+  <p>In AngularJS, the global window object is accessed by &ldquo;$window&rdquo; notation which is a wrapper for it. It is <a href="http://docs-angularjs-org-dev.appspot.com/api/ng.$window">a best practice in AngularJS</a> not to access the window object directly to improve testability.</p>
+  <p>The reason why you would not want to execute the initialization in the first init() method is so you can put as much of the code as possible in the AngularJS world, such as controllers, services and directives. As a result, you can harness the full power of AngularJS and have all your unit tests, integrations tests,and so forth.</p>
+
+  <h3>Tip #3: Use a Flag to Indicate If the Backend is Ready</h3>
+  <p>Eventually, the <span class="code">$window.init()</span> is called and you can write any application initialization logic in this function. The primary objective here is to use Google API Client&rsquo;s onload parameter to invoke an initialization function defined inside theAngularJS controller so that AngularJS can execute all the initialization in a predictable sequence.In the guestbook script, <span class="code">$window.init()</span> calls the <span class="code">load_guestbook_lib()</span> function and is defined as follows.</p>
+
+<pre>
+$scope.load_guestbook_lib = function() {
+  gapi.client.load('guestbook', 'v1', function() {
+    $scope.<span class="bld">is_backend_ready</span> = true;
+    $scope.list();
+  }, '/_ah/api');
+};
+</pre>
+
+  <p>No RPC calls should be made until the backend is ready to serve them. The backend&rsquo;s &ldquo;readiness&rdquo; is indicated by property &ldquo;is_backend_ready&rdquo;. This property is set in the handler function call back after the guestbook&rsquo;s endpoints client library loads.To prevent the application logic from calling endpoints before the endpoints are ready, the Guestbook uses a flag named <span class="code">is_backend_ready</span> in the index.html file.</p>
+
+<pre>
+&lt;div ng-controller="GuestbookCtrl" class="container" <span class="bld">ng-show</span>="<span class="bld">is_backend_ready</span>"&gt;
+&hellip;. guestbook UI...
+&lt;/div&gt;
+</pre>
+
+  <p>By controlling the <span class="code">ng-show</span> attribute with the flag value, the Guestbook UI does not need to be shown until it is ready to make calls to the endpoints.</p>
+
+</div>
+<!-- /maia-main -->
+
+    </div>
+    <div class="maia-col-3">
+      <br>
+      <img src="//www.google.com/images/icons/product/feedback-16.png" class="g-app-icon">
+      <a href="javascript:void(0);" class="google-feedback">Feedback on this document</a>
+      <br><br>
+      
+
+
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+</script>
+<script type="text/javascript" src="//www.gstatic.com/feedback/api.js"></script>
+<script>
+  $('body').delegate('.google-feedback', 'click', function() {
+      userfeedback.api.startFeedback({'productId': '94614'});
+  });
+</script>
+
+  <!-- Scripts to include both on Goro + Devsite -->
+  <script type="text/javascript">
+   window.___gcfg = {
+     lang: ''
+   };
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+  </script>
+
+  <!-- GTM implementation -->
+  
+
+
+
+
+
+
+  <!-- Start dataLayer -->
+    <script>
+      dataLayer = [{
+        'country': 'us',
+        'region': 'noram',
+        'language': 'en'
+      }];
+    </script>
+  <!-- End dataLayer -->
+  
+  <!-- Start Google Tag Manager -->
+  <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5CVQBG"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-5CVQBG');</script>
+  <!-- End Google Tag Manager -->
+
+
+  <!-- Global JS scripts to load; path will depend on whether we're on devsite or Goro -->
+  
+
+  
+    
+    <script src="/js/base.min.js"></script>
+    
+  
+
+  
+    <!-- Retina loader; Do not load if partners page because we need to wait until the Angular app runs -->
+    
+      <script>new lfl.system.RetinaLoader();</script>
+    
+
+    <!-- Secondary right-side scroll-nav -->
+    <script>new lfl.ui.ScrollNav({});</script>
+  
+
+
+
+  </body>
+</html>

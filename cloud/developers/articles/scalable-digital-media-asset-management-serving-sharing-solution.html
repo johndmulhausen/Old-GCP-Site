@@ -1,0 +1,308 @@
+<html devsite>
+  <head>
+    <title>Web Apps Articles &amp; Tutorials</title>
+    <meta name="description" content="Read technical articles about web applications and solutions with Google Cloud Platform, including auto scaling and how to manage complex applications in the cloud." />
+    <meta name="hide_page_heading" value="true" />
+    <meta name="full_width" value="true" />
+    <meta name="top_category" value="developers" />
+    <meta name="subcategory" value="articles" />
+    <meta name="viewport" content="initial-scale=1, minimum-scale=1, width=device-width">
+    <link rel="apple-touch-icon" href="//cloud.google.com/_static/images/apple-touch-icon.png">
+    <link href="//fonts.googleapis.com/css?family=Open+Sans:400italic,300,400,600,700" rel="stylesheet">
+
+    <link href="/css/default.css" rel="stylesheet">
+
+    <!--[if lt IE 9]>
+    <link rel="stylesheet" media="screen" href='/c/cp-ie.css'>
+    <![endif]-->
+    <script src="/js/floodlight.js"></script>
+  </head>
+  <body>
+
+
+
+
+
+
+
+
+<div id="maia-main" class="cp-article">
+  <div class="maia-cols">
+    <div class="maia-col-9">
+      <div>
+        <div style="float:right">
+          <div class="g-plusone"></div>
+        </div>
+        <h1 class="title">Digital Media Asset Management And Sharing</h1>
+      </div>
+      
+      <h2>Introduction</h2>
+      <p>Digital media is one of the fastest growing areas on the internet. According to a market study by Informa Telecoms & Media conducted in 2012, the global online video market only, will reach $37 billion in 2017<sup><a href="#r-1" name="ref-1">1</a></sup>. Other common media types include images, music, and digital documents. One driving force for this phenomena growth is the popularity of feature rich mobile devices<sup><a href="#r-2" name="ref-2">2</a></sup>, equipped with higher resolution cameras, bigger screens, and faster data connections. This has led to a massive increase in media content production and consumption. Another driving force is the trend among many social networks to incorporate media sharing as a core feature in their systems<sup><a href="#r-2">2</a></sup>. Meanwhile, numerous startup companies are trying to build their own niche areas in this market.</p>
+      <p>This paper will use an example scenario to provide a technical deep-dive on how to use Google Cloud Platform to build a digital media asset management and sharing system.</p>
+      <h3>Example Scenario - Photofeed</h3>
+      <p>Photofeed, a fictitious start-up company, is interested in building a photo sharing application that allows users to upload and share photos with each other. This application also includes a social aspect and allows people to post comments about photos. Photofeed's product team believes that in order for them to be competitive in this space, users must be able to upload, view, and edit photos quickly, securely and with great user experiences. Additionally, they would like this application to easily scale as the number of users and photos increases. In order for these goals to be achieved, the system must also have an efficient pipeline for photo processing capabilities, such as resizing, cropping, and thumbnail generation. As the business grows, the system must allow the development team to rapidly introduce new features.</p>
+      <h3>Challenges In Building Scalable Digital Media Systems</h3>
+      <p>Building a scalable digital media system from scratch that supports a large number of users and stores huge amount of media content is not a trivial task. The following list provides an overview of the common technical challenges associated with building scalable digital media systems:</p>
+      <ul>
+        <li>Ingestion
+          <ul>
+            <li>The system must allow end users to quickly and securely upload media objects while still providing a compelling user experience.</li>
+            <li>Metadata of the media objects needs to be ingested and synchronized if media objects are modified or re-ingested.</li>
+            <li>The ingestion workflow that defines the communication among all involved components needs to be managed.</li>
+          </ul>
+        </li>
+        <li>Storage
+          <ul>
+            <li>Virtually unlimited storage for the media content and the storage must be reliable, globally accessible, and cost effective<sup><a href="#r-3" name="ref-3">3</a></sup>.</li>
+          </ul>
+        </li>
+        <li>Processing
+          <ul>
+            <li>Scalable computing resources are required for media processing, such as document format conversion, image processing, and media transcoding.</li>
+            <li>The media processing workflow needs to be managed.</li>
+          </ul>
+        </li>
+        <li>Serving
+          <ul>
+            <li>The system must allow end users to quickly and securely download media content while still providing a good user experience.</li>
+            <li>The serving workflow needs to be managed.</li>
+          </ul>
+        </li>
+        <li>Media Applications
+          <ul>
+            <li>The system supports the integration of media metadata with application specific domain data. It also allows for the development of scalable media applications, such as asset management, and content sharing, on top of this data.</li>
+          </ul>
+        </li>
+        <li>End User Experiences
+          <ul>
+            <li>The system provides compelling user experiences for multiple clients such as browsers, mobile devices, and desktop applications.</li>
+          </ul>
+        </li>
+      </ul>
+      <p>The solution presented in this paper demonstrates how the Google Cloud Platform is able to address each of the challenges described above. The proposed system architecture is generally applicable to any media type. The solution serves as a reference for software architects and software developers for building their own digital media systems on the Google Cloud Platform.</p>
+      <h2>Solution Overview</h2>
+      <p>Google App Engine, Google Cloud Storage, and Google Compute Engine are the three features of the Google Cloud Platform. As shown in Figure 1, all of these products work together to form the basis of this digital media asset management and sharing solution.</p>
+      <figure>
+        <img src="../images/articles/scalable-digital-media-1.png" alt="Key components of proposed solution" />
+        <figcaption>Figure 1. Key components of proposed Digital Media Asset Management and Sharing Solution</figcaption>
+      </figure>
+      <h3>Ingestion</h3>
+      <p>Both Google Cloud Storage and Google App Engine play a critical role in media content ingestion. During uploading, media content flows directly from the client, through the global Google network into the Google Cloud Storage. With its global reach, massive bandwidth, and integration with Google Cloud Storage, the Google network allows content to be ingested into the storage with low latency from almost anywhere. Google Cloud Storage supports two common uploading mechanisms: HTTP POST using <a href="https://developers.google.com/storage/docs/accesscontrol">signed URL</a> and <a href="https://developers.google.com/storage/docs/developer-guide">RESTful APIs</a>.</p>
+      <p>Google App Engine is designed to power scalable web applications that handle millions of users. Front end application for content ingestion can be developed on App Engine. The application is responsible for authentication, allowing only authorized users to upload content. Meanwhile, the application manages the ingestion workflow and coordinates with the clients to upload content to Google Cloud Storage. For browser clients, the application also implements the web user interface for content uploading. For mobile or desktop clients, the user interface resides in the client application while the App Engine application exposes its functionality as RESTful APIs using <a href="https://developers.google.com/appengine/docs/java/endpoints/overview">Google Cloud Endpoints</a>. The client side applications make calls to the APIs for authentication and for gaining access to Google Cloud Storage.</p>
+      <p>Another important role of the App Engine application is ingesting metadata and keeping it in sync with the media content. The metadata is stored along with the application data in the App Engine Datastore or in the Google Cloud SQL database. The decision about which storage option to choose from depends on the characteristics of your application. There are a few ways to synchronize metadata ingestion with media content ingestion, for example, (1) by using <a href="https://developers.google.com/appengine/docs/java/blobstore/overview ">Blobstore upload callback URL</a>, (2) by using the Cloud Storage Object Change Notification, or (3) simply by exposing appropriate APIs from the App Engine application using <a href="http://www.youtube.com/watch?v=NU_wNR_UUn4">Google Cloud Endpoints</a>.</p>
+      <h3>Storage</h3>
+      <p>Google Cloud Storage provides virtually unlimited storage for media content at low cost. The media data is replicated across data centers for redundancy. By leveraging the Google network, the content in Google Cloud Storage is globally accessible from Google App Engine, from Google Compute Engine, and from public internet outside the Google Cloud Platform.</p>
+      <p>Google Cloud Storage also provides a <a href="https://developers.google.com/storage/docs/durable-reduced-availability">Durable Reduced Availability (DRA)</a> storage option at an even lower cost. The tradeoff is lower availability compared to what standard Google Cloud Storage provides. The DRA option is useful for storing assets that are not always immediately required or can be regenerated. One example might be the output content from the media processing pipeline.</p>
+      <h3>Processing</h3>
+      <p>Google Compute Engine provides superior performance for batch computation. Media processing, such as document format conversion, transcoding, and image manipulation, is a perfect candidate for Compute Engine. In this case, Google Cloud Storage acts as both the input source and the output destination of the media processing pipeline.  Since Google Cloud Storage is well integrated with Google Compute Engine, such as automatic authentication via service account, it can be easily accessed from Compute Engine.</p>
+      <p>The media processing workflow is also managed by the App Engine application mentioned previously. After media content is uploaded  into storage, the App Engine application creates and inserts media processing tasks into <a href="https://developers.google.com/appengine/docs/java/taskqueue/">TaskQueue</a>. The enqueued tasks are pulled out by the media processing software running on Compute Engine using RESTful APIs and executed accordingly. The App Engine application can also maintain the processing status of the media content and the load information of virtual machines in order to autoscale the Compute Engine instances.</p>
+      <h3>Serving</h3>
+      <p>Google Cloud Storage leverages the Google network to allow media content to be served across the internet with low-latency and high-availability. The Google network automatically provides edge caching capability for public content, which can significantly lower the serving costs.</p>
+      <p>As is the case with ingestion, the Google App Engine application handles user authentication and authorization, and coordinates access to Google Cloud Storage from the clients. For browser clients, the App Engine application powers the web user interface for media content downloading. For mobile or desktop clients, the client-side applications implement the user interface and communicate with the App Engine application through APIs exposed using <a href="http://www.youtube.com/watch?v=NU_wNR_UUn4">Google Cloud Endpoints</a>.</p>
+      <h3>Media Applications</h3>
+      <p>Various media applications can be built with the availability of metadata and application data. Depending on the application domains, some common examples of media applications are asset management, content sharing, and social gaming. Google App Engine provides a scalable platform to build media applications. App Engine applications are easy to build, easy to maintain, and easy to scale as your traffic and data storage needs grow. This allows developers to focus on building their core business and bring new features to market quickly.</p>
+      <h3>User Experiences</h3>
+      <p>In this solution, the App Engine application plays a critical role in defining user experiences for the system. As mentioned earlier, for browser clients, the App Engine application implements the web user interface for ingestion, serving, and media applications. For mobile and desktop clients, the App Engine application exposes its functionality as APIs using <a href="http://www.youtube.com/watch?v=NU_wNR_UUn4">Google Cloud Endpoints</a>. The native user interface at the client side is powered by these APIs.</p>
+      <h2>Implementation Details</h2>
+      <p>The next section walks through the implementation details of the proposed digital media solution.  It begins with a list of key components of the system and ends with a detailed presentation of the three important workflows of the system: media ingestion flow, media processing flow, and media serving flow.</p>
+      <h3>System Components</h3>
+      <ul>
+        <li>Frontend and Media Applications Running on Google App Engine
+          <ul>
+            <li>Authenticates and authorizes users and coordinate access to Google Cloud Storage.</li>
+            <li>Implements the user interface for browser clients, and/or exposes APIs using <a href="http://www.youtube.com/watch?v=NU_wNR_UUn4">Google Cloud Endpoints</a> to mobile and desktop clients.</li>
+            <li>Plays the role of system controller and is responsible for managing workflows for media ingestion, serving, and processing.</li>
+            <li>Scalable media applications are powered by App Engine, with built-in load-balancing and auto-scaling.</li>
+          </ul>
+        </li>
+        <li>Google Datastore
+          <ul>
+            <li>Stores media content metadata and application data model.</li>
+          </ul>
+        </li>
+        <li>Google Cloud SQL
+          <ul>
+            <li>Stores media content metadata and application data model, as an alternative to Google Datastore.</li>
+          </ul>
+        </li>
+        <li>App Engine Task Queue
+          <ul>
+            <li>Integrates App Engine application with media processing software running on Google Compute Engine.</li>
+          </ul>
+        </li>
+        <li>Image Services
+          <ul>
+            <li>Provides dynamic image processing services for App Engine applications, such as thumbnail generation, resizing, and cropping.</li>
+          </ul>
+        </li>
+        <li>Google Cloud Storage
+          <ul>
+            <li>Provides scalable and highly available storage for media content. The storage can be accessed by using RESTful APIs and/or signed URLs.</li>
+            <li>Leverages Google network for the following advantages: (1) to allow for fast and secure content ingestion into and serving from the storage and (2) for edge caching capability for public content which lowers the serving costs.</li>
+          </ul>
+        </li>
+        <li>Media Processing Server
+          <ul>
+            <li>Executes media processing on Google Compute Engine.</li>
+          </ul>
+        </li>
+      </ul>
+      <h3>Media Ingestion Workflow and Media Processing Workflow</h3>
+      <p>The media ingestion workflow and the media processing workflow are often tied together. Both workflows are shown in the component communication diagram in Fig 2.</p>
+      <figure>
+        <img src="../images/articles/scalable-digital-media-2.png" alt="Media Ingestion and Media Processing Workflows" />
+        <figcaption>Figure 2. Media Ingestion and Media Processing Workflows</figcaption>
+      </figure>
+      <ol>
+        <li>The client accesses the Google App Engine application to start an upload. Depending on the type of clients, this request can be: (1) a simple HTTP request from the browser or (2) a call to an endpoint implemented by the App Engine application from a mobile or desktop application, such as a batch uploader. The App Engine application is responsible for authenticating the client/user and coordinate the Cloud Storage access.</li>
+        <li>If the client is a web browser, the application can generate a signed upload URL to the Cloud Storage embedded in an HTTP POST form. Otherwise, if the client is a mobile or desktop application, the web application returns Cloud Storage access information as an endpoint call response.</li>
+        <li>Regardless of the client, media files are uploaded to Google Cloud Storage directly by using either the web form or the Cloud Storage RESTful APIs.</li>
+        <li>Google Cloud Storage returns a response back to the client. Depending on the uploading mechanism used in Step 3, the response can either be an <a href="https://developers.google.com/storage/docs/reference-methods#postobject">HTTP response</a> for form-based upload or a <a href="https://developers.google.com/storage/docs/reference-methods#putobject">RESTful API response</a>.</li>
+        <li>If the upload succeeds, the media metadata needs to be pushed into the App Engine application. There are a few different ways to streamline the process:
+          <ol>
+            <li>For browser clients using an upload form, a callback URL can be specified inside the upload URL. Based on the response, the browser can be redirected to this URL with limited metadata information embedded in the callback URL.</li>
+            <li>Google Cloud Storage can notify the App Engine application upon upload success using a Cloud Storage feature called Object Change Notification<sup>[<a href="#fn-1" name="ref-4">1</a>]</sup>. The notification contains metadata of the media object being uploaded.</li>
+            <li>Based on the content upload response from the Cloud Storage, clients can also call the App Engine application Google Cloud Endpoints directly to upload any metadata.</li>
+          </ol>
+        </li>
+        <li>App Engine application stores the metadata in a persistent store. There are two options for the data stores depending on the application setup: (1) App Engine NoSQL Datastore, or (2) Google Cloud SQL.</li>
+        <li>If  media processing is required, the App Engine application can create a task on the task queue in order to start the media processing workflow. It is also possible for the App Engine application to spin up or bring down virtual machines based on the workload on demand.</li>
+        <li>The media processing software, running on Google Compute Engine, pulls the task from the queue and executes the required procedures.</li>
+        <li>The media processing software reads the media content from Cloud Storage, processes it, and stores the output back to Cloud Storage.</li>
+      </ol>
+      <h3>Media Serving And Download Workflow</h3>
+      <p>Figure 3 describes the media serving and download workflow and is accompanied by a list of detailed descriptions.</p>
+      <figure>
+        <img src="../images/articles/scalable-digital-media-3.png" alt="Media Serving and Download Flow" />
+        <figcaption>Figure 3. Media Serving and Download Flow</figcaption>
+      </figure>
+      <ol>
+        <li>The clients start the media download by contacting the App Engine application which authenticates and authorizes the clients and also allows for browsing and searching of specific media content. This can either be accomplished by presenting a web user interface for browser client or via a RESTful API provided by the App Engine application using Google Cloud Endpoints.</li>
+        <li>Based on the media metadata and application data in Datastore or Cloud SQL, the App Engine application can check the content sharing rules defined in the application, and look up access information for the content stored in Google Cloud Storage.</li>
+        <li>For content to be securely downloaded from Google Cloud Storage, the App Engine application can generate a signed URL or provide OAuth access token, along with the Cloud Storage bucket and object names to the client. For browsers, the information is embedded in the web user interface. For mobile and desktop clients, the information is returned in the response of the RESTful API mentioned in Step 1.</li>
+        <li>The clients make a request to the Google Cloud Storage to download the content by sending out HTTP or by calling the RESTful API. Google Cloud Storage can leverage the <a href="https://developers.google.com/storage/docs/developer-guide">caching capability</a> of the Google network for public content. If the content is available in the cache, content is returned from the cache. Otherwise, the following occurs:
+          <ol>
+            <li>The content is retrieved from the Google Cloud Storage and the cache is filled.</li>
+            <li>App Engine application allows the content retrieved from Cloud Storage to be proxied through the App Engine <a href="https://developers.google.com/appengine/docs/java/images/overview">Image Services</a> for “on the fly” resizing and cropping images.
+</li>
+          </ol>
+        </li>
+        <li>The media content is served to the client.</li>
+      </ol>
+      <h3>Implementation Considerations</h3>
+      <ul>
+        <li>The metadata for the media content can be stored along with the application data, either in Google App Engine Datastore or in Google Cloud SQL. The choice depends on the size of the data, the characteristics of the overall data model, and the developer team's expertise. For example, you may want to choose Cloud SQL if you have highly relational data. Alternatively, you may want to choose Datastore if you are scaling denormalized data to a massive data set. The trade-off between the two options is well discussed in the Google IO 2012 session, <a href="http://www.youtube.com/watch?v=rRoy6I4gKWU">SQL vs NoSQL: Battle of the Backends</a>.</li>
+        <li>The provided solution uses Google Compute Engine for media processing. Compute Engine allows running custom software and packages on supported operating systems. The platform is suitable for general purpose media processing. Alternatively, for simple image and photo manipulations, Google App Engine provides an Image Service that can perform image processing on the fly.</li>
+      </ul>
+      <h2>Sample Application</h2>
+      <p>A sample photo sharing application<sup><a href="#r-4" name="ref-5">4</a></sup> has been developed to demonstrate how a media asset management and sharing solution, like the one described earlier in the scenario, can be implemented. The photo sharing application allows a user to upload and make them available for other users to view. A user can also post comments for uploaded photos. The following list details the key elements of this use case scenario:</p>
+      <ul>
+        <li>A user is required to login with a valid Google account to use the application.</li>
+        <li>A user uploads a photo and a description from a local disk.</li>
+        <li>All photos uploaded into the photo sharing application are displayed in chronological order.</li>
+        <li>The user adds comments, visible to all users, to any photo.</li>
+        <li>When a photo is displayed, the image can be resized and cropped to fit into the user interface.</li>
+      </ul>
+      <p>Detailed documentation of the requirements and design is provided <a href="https://developers.google.com/cloud/samples/">here</a>. The source code is hosted under <a href="https://github.com/GoogleCloudPlatform/solutions-photo-sharing-demo-java">Github</a>.</p>
+      <h2>Conclusion</h2>
+      <p>The Google Cloud Platform enables developers to quickly build a digital media asset management and sharing solution that scales to millions of users and petabytes of data. The solution presented in this paper combines the power of  Google App Engine, Google Compute Engine, and Google Cloud Storage to solve the technical challenges presented by digital media systems. </p>
+      <br>
+      <h2>Notes</h2>
+      <p id="fn-1"><sup>[<a href="#ref-4">1</a>]</sup> The Object Change Notification is currently still a feature under the Trusted Tester program.</p>
+      <h2>References</h2>
+      <p id="r-1"><sup><a href="#ref-1">1</a></sup> <a href="https://commerce.informatm.com/reports/ott-video-revenue-forecasts.html">OTT Video Revenue Forecasts</a>, 2011-2017, by Informa Telecoms & Media, November 2012.</p>
+      <p id="r-2"><sup><a href="#ref-2">2</a></sup> <a href="http://www.kajashi.com/?q=content/key-trends-and-takeaways-digital-media-market ">Key trends and Takeaways in Digital Media Market</a>, by Abhay Paliwal, March 2012.</p>
+      <p id="r-3"><sup><a href="#ref-3">3</a></sup> <a href="http://www.datacenterknowledge.com/archives/2012/07/02/gartner-consumers-will-store-more-in-the-cloud/">Garnter: Consumers Will Drive Huge Growth for Cloud Storage</a>, by Colleen Miller, July 2012.</p>
+      <p id="r-4"><sup><a href="#ref-5">4</a></sup> <a href="https://github.com/GoogleCloudPlatform/solutions-photo-sharing-demo-java">Photo Sharing Sample Application</a>, by Michael Tang, Oct, 2012.</p>
+
+    </div>
+    <div class="maia-col-3">
+      <br>
+      <img src="//www.google.com/images/icons/product/feedback-16.png" class="g-app-icon">
+      <a href="javascript:void(0);" class="google-feedback">Feedback on this document</a>
+      <br><br>
+      
+      <img src="//www.google.com/images/icons/thirdparty/pdf-16.png" class="g-app-icon">
+      <a href="../../../files/articles/google-cloud_technical-article_digital-media-asset-management.pdf" class="cp-pdf" onclick="javascript: _gaq.push(['_trackPageview', '../../../files/articles/google-cloud_technical-article_digital-media-asset-management.pdf']);">Download PDF</a>
+
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+</script>
+<script type="text/javascript" src="//www.gstatic.com/feedback/api.js"></script>
+<script>
+  $('body').delegate('.google-feedback', 'click', function() {
+      userfeedback.api.startFeedback({'productId': '94614'});
+  });
+</script>
+
+  <!-- Scripts to include both on Goro + Devsite -->
+  <script type="text/javascript">
+   window.___gcfg = {
+     lang: ''
+   };
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+  </script>
+
+  <!-- GTM implementation -->
+  
+
+
+
+
+
+
+  <!-- Start dataLayer -->
+    <script>
+      dataLayer = [{
+        'country': 'us',
+        'region': 'noram',
+        'language': 'en'
+      }];
+    </script>
+  <!-- End dataLayer -->
+  
+  <!-- Start Google Tag Manager -->
+  <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5CVQBG"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-5CVQBG');</script>
+  <!-- End Google Tag Manager -->
+
+
+  <!-- Global JS scripts to load; path will depend on whether we're on devsite or Goro -->
+  
+
+  
+    
+    <script src="/js/base.min.js"></script>
+    
+  
+
+  
+    <!-- Retina loader; Do not load if partners page because we need to wait until the Angular app runs -->
+    
+      <script>new lfl.system.RetinaLoader();</script>
+    
+
+    <!-- Secondary right-side scroll-nav -->
+    <script>new lfl.ui.ScrollNav({});</script>
+  
+
+
+
+  </body>
+</html>

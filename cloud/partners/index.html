@@ -1,0 +1,224 @@
+<html devsite>
+  <head>
+    
+    <title>Technology &amp; Service Partners</title>
+    <meta name="description" content="Whether you&#39;re looking to become a trusted partner or searching for consultative assistance, find Technology and Service Partners with Google Cloud Platform." />
+    <meta name="hide_page_heading" value="true" />
+    <meta name="full_width" value="true" />
+    <meta name="top_category" value="partners" />
+    
+    <meta name="google-site-verification" content="8dOEM3Xenm6yaBc83y2WKgqQG0iHI7Ph6Rl_YLIZLQ8" />
+    <meta name="viewport" content="initial-scale=1, minimum-scale=1, width=device-width">
+    <link rel="apple-touch-icon" href="//cloud.google.com/_static/images/apple-touch-icon.png">
+    <link href="//fonts.googleapis.com/css?family=Open+Sans:400italic,300,400,600,700" rel="stylesheet">
+    
+    <link href="/css/default.css" rel="stylesheet">
+
+    <!--[if lt IE 9]>
+    <link rel="stylesheet" media="screen" href='/c/cp-ie.css'>
+    <![endif]-->
+
+    <!-- GSAP animation frameworks -->
+    <script src="//www.gstatic.com/external_hosted/gsap/TweenMax.min.js"></script>
+    <script src="//www.gstatic.com/external_hosted/gsap/TimelineMax.min.js"></script>
+    <script src="/js/floodlight.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+  </head>
+  <body>
+
+
+
+
+
+
+
+
+<div class="site-wrapper partners-landing">
+  <div class="maia-stage page-header secondary">
+    <div class="maia-aux page-header-inner">
+      <div class="page-header-inner-inner">
+        <h1 class="headline">
+          Google Cloud Platform Partner Program
+        </h1>
+        <p class="subheadline">
+          The Google Cloud Platform Partner Program provides a rich set of training, technical, support, marketing, and sales resources for technology and services partners to help you build successful businesses that leverage our Cloud Platform offerings.
+        </p>
+      </div>
+    </div>
+  </div>
+  <div id="maia-main">
+    <div id="cloud-partners" class="generic-section" data-ng-controller="CloudPartnersController as ctrl">
+      <div class="maia-cols">
+
+        <div class="tech-partners maia-col-6">
+          <div class="inner-partner-col">
+           <div class="partner-header">
+            <h1 class="headline">
+              Technology Partners
+            </h1>
+            <p class="partners-paragraph">
+              Technology Partners provide tools which integrate with our platform to extend its reach and functionality or use one of our services as a foundation for their products.
+            </p>
+            <p class="partners-link">
+              <a class="partners-link-label bounce-link" href="../partners/technology-partners" event="autotrack-data-g" data-g-event="Partners" data-g-action="Technology Partners" data-g-label="Find A Technology Partner">Find a technology partner</a>
+            </p>
+          </div>
+
+          <div class="featured-partners">
+            <h2 class="featured-partner-header">
+              Featured technology partners
+            </h2>
+            <ul class="partners">
+              <li class="partner" data-ng-repeat="partner in ctrl.partners | deepFilter:[{field: 'partnerType', value: 'Tech', active: true}] | limitTo:5">
+                <div class="partner-container maia-cols">
+                  <div class="image-wrapper maia-col-3">
+                    <img class="partner-logo" data-ng-src="{[partner.logo]}">
+                  </div>
+                  <div class="maia-col-9">
+                    <h4 class="partner-name"><span data-ng-bind="partner.name"></span></h4>
+                    <p><span data-ng-bind="partner.description"></span></p>
+                  </div>
+                </div>
+              </li>
+            </ul>
+            <div data-ng-show="!ctrl.partners.length && !ctrl.ready" class="ajax-loader">
+              <img src="../images/google-spinner.gif">
+              <span>Loading...</span>
+            </div>
+          </div>
+
+          <div class="become-a-partner">
+            <h1 class="headline">
+              Become a Technology Partner
+            </h1>
+            <p>
+              Technology partners provide products and tools that integrate with our platform that extend its reach and functionality, or use one of our Cloud services as a foundation for their products.
+            </p>
+            <a class="apply-button maia-button maia-button-secondary" href="https://cloud-partners-program.appspot.com/registration/technology" target="_blank" id="apply-button">
+              Apply to be a technology partner
+            </a>
+          </div>
+         </div>
+        </div>
+
+        <div class="service-partners maia-col-6">
+
+          <div class="partner-header">
+            <h1 class="headline">
+              Service Partners
+            </h1>
+            <p class="partners-paragraph">
+              Service Partners provide consulting and implementation services on various Google Cloud Platform products. You can use their knowledge and expertise to develop applications for a variety of use cases.
+            </p>
+            <p class="partners-link">
+              <a class="partners-link-label bounce-link" href="../partners/service-partners" event="autotrack-data-g" data-g-event="Partners" data-g-action="Service Partners" data-g-label="Find A Service Partner">Find a service partner</a>
+            </p>
+          </div>
+
+          <div class="featured-partners">
+            <h2 class="featured-partner-header">
+              Featured service partners
+            </h2>
+            <ul class="partners-list">
+              <li class="partner" data-ng-repeat="partner in ctrl.partners | deepFilter:[{field: 'partnerType', value: 'Service', active: true}] | limitTo:5">
+              <div class="partner-container maia-cols">
+                <div class="image-wrapper maia-col-3">
+                  <img class="partner-logo" data-ng-src="{[partner.logo]}">
+                </div>
+                <div class="maia-col-9">
+                  <h4 class="partner-name"><span data-ng-bind="partner.name"></span></h4>
+                  <p><span data-ng-bind="partner.description"></span></p>
+                </div>
+              </div>
+              </li>
+            </ul>
+            <div data-ng-show="!ctrl.partners.length && !ctrl.ready" class="ajax-loader">
+              <img src="../images/google-spinner.gif">
+              <span>Loading...</span>
+            </div>
+          </div>
+
+          <div class="become-a-partner">
+            <h1 class="headline">
+              Become a Service Partner
+            </h1>
+            <p>
+              Service partners provide products and tools that integrate with our platform that extend its reach and functionality, or use one of our Cloud services as a foundation for their products.
+            </p>
+            <a class="apply-button maia-button maia-button-secondary" href="https://cloud-partners-program.appspot.com/registration/services" target="_blank" id="apply-button">
+              Apply to be a service partner
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+  <!-- is this feedback sticky needed?
+  <div class="feedback-sticky"><a href="javascript:void(0);">Feedback</a></div>
+  <script type="text/javascript" src="//www.gstatic.com/feedback/api.js"></script>
+  <script>
+    jQuery('body').delegate('.feedback-sticky', 'click', function() {
+      _gaq.push(['_trackEvent', 'Feedback', 'User Feedback: ' + location.pathname]);
+      userfeedback.api.startFeedback({'productId': '96209'});
+    });
+  </script>
+  -->
+
+  <!-- Scripts to include both on Goro + Devsite -->
+  <script type="text/javascript">
+   window.___gcfg = {
+     lang: ''
+   };
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+  </script>
+
+  <!-- GTM implementation -->
+  
+  <!-- Start dataLayer -->
+    <script>
+      dataLayer = [{
+        'country': '',
+        'region': '',
+        'language': 'en'
+      }];
+    </script>
+  <!-- End dataLayer -->
+  
+  <!-- Start Google Tag Manager -->
+  <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5CVQBG"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-5CVQBG');</script>
+  <!-- End Google Tag Manager -->    
+
+
+<!-- Global JS scripts to load; path will depend on whether we're on devsite or Goro -->
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular-sanitize.js"></script>
+
+
+
+  <script src="/js/base.min.js"></script>
+
+
+<!-- Secondary right-side scroll-nav -->
+<script>
+  new lfl.ui.ScrollNav({});
+</script>
+
+
+
+  </body>
+</html>
