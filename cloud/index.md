@@ -1,5 +1,5 @@
 ---
-layout: cloud.test
+layout: cloud/test
 title: Test page
 ---
 Whoopee!
