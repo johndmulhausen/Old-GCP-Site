@@ -16,5 +16,3 @@ $( document ).ready(function() {
   });
 }
 </script>
-
-<pre id="out"></pre>
