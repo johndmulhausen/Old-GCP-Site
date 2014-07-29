@@ -136,15 +136,15 @@
 <p>Con el siguiente conjunto de ejemplos queremos mostrar cómo seleccionar un tamaño de disco persistente en función de los requisitos de rendimiento.</p>
 <h4><a name="h.oiyyop5msnju" id="h.oiyyop5msnju"></a>Ejemplo 1</h4>
 <p>Pongamos por caso que tengas una instalación de base de datos (E/S aleatorias pequeñas) que necesite una velocidad máxima de operaciones de escritura aleatorias de 300 IOPS:</p>
-<img src="../images/articles/ced-price-performance-and-persistence/formula-00.png" alt="">
+<img src="/cloud/images/articles/ced-price-performance-and-persistence/formula-00.png" alt="">
 <p>Comprarías un disco persistente de al menos 200 GB.</p>
 <h4><a name="h.7p3k6pqwxxss" id="h.7p3k6pqwxxss"></a>Ejemplo 2</h4>
 <p>Pongamos por caso que tengas una instalación de base de datos (E/S aleatorias pequeñas) que necesite una velocidad máxima de operaciones de lectura aleatorias de 450 IOPS:</p>
-<img src="../images/articles/ced-price-performance-and-persistence/formula-01.png" alt="">
+<img src="/cloud/images/articles/ced-price-performance-and-persistence/formula-01.png" alt="">
 <p>Comprarías un disco persistente de al menos 1.500 GB.</p>
 <h4><a name="h.d8in6cl5deyd" id="h.d8in6cl5deyd"></a>Ejemplo 3</h4>
 <p>Pongamos por caso que tengas una instalación de base de datos (operaciones de escritura pequeñas) que necesite una velocidad máxima de operaciones de escritura aleatorias de 4.800 IOPS:</p>
-<img src="../images/articles/ced-price-performance-and-persistence/formula-02.png" alt="">
+<img src="/cloud/images/articles/ced-price-performance-and-persistence/formula-02.png" alt="">
 <p>Necesitarías discos persistentes por un total de al menos 3.200 GB. Ten en cuenta que el rendimiento máximo de una sola instancia de Compute Engine es de 1.800 IOPS (1 o 2 núcleos) o de 2.400 IOPS (4 u 8 núcleos). Después podrías fragmentar tus datos en:</p>
 <ul>
 <li>tres instancias de 1 o de 2 núcleos, cada una con un disco persistente de al menos 1.033 GB, o</li>

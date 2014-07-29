@@ -10,12 +10,12 @@
     <link rel="apple-touch-icon" href="//cloud.google.com/_static/images/apple-touch-icon.png">
     <link href="//fonts.googleapis.com/css?family=Open+Sans:400italic,300,400,600,700" rel="stylesheet">
 
-    <link href="/css/default.css" rel="stylesheet">
+    <link href="/cloud/css/default.css" rel="stylesheet">
 
     <!--[if lt IE 9]>
     <link rel="stylesheet" media="screen" href='/c/cp-ie.css'>
     <![endif]-->
-    <script src="/js/floodlight.js"></script>
+    <script src="/cloud/js/floodlight.js"></script>
   </head>
   <body>
 
@@ -92,7 +92,7 @@
   <p>The following architecture diagram illustrates the components in the solution</p>
 
   <figure>
-    <img src="../images/articles/managing-complex-applications-in-the-cloud/sharing-community.png">
+    <img src="/cloud/images/articles/managing-complex-applications-in-the-cloud/sharing-community.png">
     <figcaption>Figure 1: Video Sharing Community Sample</figcaption>
   </figure>
 
@@ -236,7 +236,7 @@
   <p></p>
 
   <figure>
-    <img src="../images/articles/managing-complex-applications-in-the-cloud/video-sharing.png">
+    <img src="/cloud/images/articles/managing-complex-applications-in-the-cloud/video-sharing.png">
     <figcaption>Figure 2: Website for Video Sharing</figcaption>
   </figure>
 
@@ -246,7 +246,7 @@
   <p>For our environment, we utilize a combination of App Engine and Compute Engine to spin up a scalable video transcoding service on demand. Utilizing an orchestration engine written in Python on App Engine, we control Compute Engine instance behavior using the available JSON API and coordinated transcoding activity using Task Queues. The setup allows us to dynamically allocate capacity in response to demand and existing load. In addition, a periodic script checks the load in the environment and reduces capacity when it was no longer needed. This provides a strong economic benefit given the recent change to sub-hour billing on Compute Engine. Task Queues provide a way to accept, buffer and distribute requests across the video transcoding instances.</p>
 
   <figure>
-    <img src="../images/articles/managing-complex-applications-in-the-cloud/transcoding-pipeline.png">
+    <img src="/cloud/images/articles/managing-complex-applications-in-the-cloud/transcoding-pipeline.png">
     <figcaption>Figure 3: Video Transcoding Pipeline</figcaption>
   </figure>
 
@@ -256,7 +256,7 @@
   <p>The mobile video application was written on Android utilizing the generated Cloud Endpoints libraries to quickly integrate the authentication and upload of videos. Additionally, videos are uploaded directly to Cloud Storage to avoid any additional latency or processing on the App Engine API Server. Authentication is handled seamlessly through Cloud Endpoints and permission is delegated to the Cloud Storage bucket for storing  video content. Permission delegation is an option on the bucket allowing users of the application to directly upload files. The combination of simplified authentication and API generation allowed for the rapid development of a complete mobile media solution.</p>
 
   <figure>
-    <img src="../images/articles/managing-complex-applications-in-the-cloud/mobile-deployment-architecture.png">
+    <img src="/cloud/images/articles/managing-complex-applications-in-the-cloud/mobile-deployment-architecture.png">
     <figcaption>Figure 4: Mobile Deployment Architecture</figcaption>
   </figure>
 
@@ -265,7 +265,7 @@
   <p>To process the expected volume of comments on our video application, we opted to use a Hadoop installation running on Compute Engine. Again, the Compute Engine API makes it easy to launch a Hadoop cluster of varying sizes for processing data. In our case, we are pulling comment data from the Cloud Datastore associated with our application and making a simple sentiment calculation for comments associated with a video. The Cloud Datastore data is automatically shared between the App Engine and the Compute Engine instances belonging to the same project. The end result of computing negative or positive total sentiment is written back to a Datastore entity associated with the video.</p>
 
   <figure>
-    <img src="../images/articles/managing-complex-applications-in-the-cloud/hadoop-deployment-architecture.png">
+    <img src="/cloud/images/articles/managing-complex-applications-in-the-cloud/hadoop-deployment-architecture.png">
     <figcaption>Figure 4: Hadoop Deployment Architecture</figcaption>
   </figure>
 
@@ -408,7 +408,7 @@
 
   
     
-    <script src="/js/base.min.js"></script>
+    <script src="/cloud/js/base.min.js"></script>
     
   
 

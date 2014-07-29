@@ -56,7 +56,7 @@
 <p>In diesem Artikel wird die Einrichtung eines JMeter-Serverclusters auf Compute Engine-Instanzen dargestellt. Wenn Sie den JMeter-Servercluster auf virtuellen Maschinen einrichten, die von Compute Engine bereitgestellt werden, müssen Sie sich nicht um die Wartung physischer Server kümmern und sind bezüglich der Anzahl von Instanzen flexibel, die Sie für Lasttests starten. JMeter ist ein generisches Framework und die Zielsysteme der Lasttests können sich an einem beliebigen Ort befinden, auf den der JMeter-Cluster zugreifen kann. Dabei kann es sich um eine Google App Engine-Anwendung oder ein beliebiges anderes Programm handeln, das auf Compute Engine, standortgebundenen Servern oder einer anderen Cloudpattform residiert. Auf die tatsächliche Leistung können sich viele Faktoren auswirken, insbesondere die Netzwerkleistung. Für eine präzise Leistungsmessung wird ein isoliertes System benötigt. Dieses System wird demzufolge nicht als Leistungstestumgebung betrachtet.</p>
 <h3>JMeter</h3>
 <p>JMeter läuft unter Windows, Mac und Linux. Das Programm unterstützt verschiedene Testprotokolle und stellt eine visuelle Benutzeroberfläche für die Konfiguration der Lasttests bereit. Abbildung&nbsp;1 zeigt einen Screenshot der JMeter-Benutzeroberfläche:</p>
-<figure><img src="../images/articles/config-ssh-port-forw-tut/jmeter-ui.png" alt="">
+<figure><img src="/cloud/images/articles/config-ssh-port-forw-tut/jmeter-ui.png" alt="">
 <figcaption>Abbildung 1. Screenshot der JMeter-Benutzeroberfläche</figcaption>
 </figure>
 <p>JMeter unterstützt verteilte Tests, bei denen das Lasttestsystem aus folgenden Komponenten besteht:</p>
@@ -67,12 +67,12 @@
 <p>Beim JMeter-Client handelt es sich um die Workstation, auf der die JMeter-Benutzeroberfläche ausgeführt wird. Die JMeter-Server können an einem anderen Ort residieren, und zwar auf Remoteservern (Abb.&nbsp;2). Die Konfiguration kann unterschiedliche Servertypen umfassen. Sie können zum Beispiel einen Mac als JMeter-Client einrichten und Linux-Server als JMeter-Server.</p>
 <p>Obwohl JMeter HTTP-Anfragen simuliert, bei denen jeder JMeter-Serverthread als HTTP-Client fungiert, rendert JMeter die Seite nicht und führt auch JavaScript nicht aus. Aus diesem Grund werden eingebettete Dateien, zum Beispiel per Ajax heruntergeladene Bilder oder Daten, nicht automatisch heruntergeladen.</p>
 <p>Für die Simulation einer tatsächlichen Lastsituation ist das Testszenario sorgfältig so zu konzipieren, dass das System das Verhalten der tatsächlichen Nutzer möglichst genau nachahmen kann.</p>
-<figure><img src="../images/articles/config-ssh-port-forw-tut/load-testing.jpg" alt="">
+<figure><img src="/cloud/images/articles/config-ssh-port-forw-tut/load-testing.jpg" alt="">
 <figcaption>Abbildung 2. Verwendung von JMeter für Lasttests</figcaption>
 </figure>
 <p>Listen Sie für eine verteilte JMeter-Konfiguration zunächst alle JMeter-Server in der Konfigurationsdatei des JMeter-Clients (Eintrag <span class="code">remote_hosts</span> in bin/jmeter.properties) auf. Nutzen Sie <span class="code">remote start all</span> anstelle von <span class="code">start</span>, um die Tests zu starten. Bei Verwendung des Befehls <span class="code">remote start all</span> stellt der JMeter-Client eine Verbindung zu allen aufgelisteten JMeter-Remoteservern her, um die Ausführung der Tests zu starten und alle Ergebnisse zu empfangen.</p>
 <p>Während der Lasttests werden Ergebnisse von allen Servern im JMeter-Cluster an den Client gesendet. Die Ergebnisse werden konsolidiert und auf dem Bildschirm des JMeter-Clients angezeigt (Abb.&nbsp;3).</p>
-<figure><img src="../images/articles/config-ssh-port-forw-tut/apache-jmeter.png" alt="">
+<figure><img src="/cloud/images/articles/config-ssh-port-forw-tut/apache-jmeter.png" alt="">
 <figcaption>Abbildung 3. Screenshot der konsolidierten Lasttestergebnisse auf dem JMeter-Client</figcaption>
 </figure>
 <p>Beachten Sie, dass JMeter zusätzlich zum dargestellten Handler über andere Typen von Ergebnis-Handlern verfügt.</p>
@@ -81,17 +81,17 @@
 <p>Im verbleibenden Teil des Artikels wird die Konfiguration von JMeter-Servern in Compute Engine erläutert. Im Rahmen dieser Beschreibung gehen wir von der Einrichtung mehrerer JMeter-Server auf Compute Engine-Linux-Instanzen und der Ausführung des JMeter-Clients auf einem Mac aus.</p>
 <h3>Verbindungen zwischen JMeter-Client und JMeter-Servern</h3>
 <p>Wenn der JMeter-Client den Test remote startet, wird die Kommunikation zwischen dem JMeter-Client und dem JMeter-Server über die JMeter-Verbindung und Remote Method Invocation (RMI) hergestellt. Die JMeter-Verbindung wird stets vom JMeter-Client initiiert. Die TCP-Verbindung für RMI wird andererseits in beiden Richtungen gestartet. Insgesamt werden so drei Verbindungen hergestellt (Abb.&nbsp;4).</p>
-<figure><img src="../images/articles/config-ssh-port-forw-tut/jmeter-connections.png" alt="">
+<figure><img src="/cloud/images/articles/config-ssh-port-forw-tut/jmeter-connections.png" alt="">
 <figcaption>Abbildung 4. Verbindungen zwischen JMeter-Client und JMeter-Server</figcaption>
 </figure>
 <p>Wenn der JMeter-Client mithilfe von 1:N NAT (Network Address Translation) hinter einer Firewall ausgeführt und mit JMeter-Servern in Compute Engine verbunden wird, die sich auch hinter einer Firewall befinden, kann sich die Konfiguration der Verbindungen als schwierig erweisen.</p>
 <p>Compute Engines nutzt 1:1 NAT für die externen IP-Adressen. Jede Compute Engine-Instanz verwendet ihre interne private IP-Adresse als eigene IP-Adresse. This, then, prevents the JMeter remote server from being able to connect to the JMeter client because the client is behind a firewall and has no public address. Andererseits kann der Client keine Verbindung mit dem Remoteserver herstellen, weil der Server seine interne private IP-Adresse als öffentliche Adresse ausgibt (Abb.&nbsp;5).</p>
-<figure><img src="../images/articles/config-ssh-port-forw-tut/firewalls.jpg" alt="">
+<figure><img src="/cloud/images/articles/config-ssh-port-forw-tut/firewalls.jpg" alt="">
 <figcaption>Abbildung 5. Firewalls erschweren die Kommunikation zwischen JMeter-Client und JMeter-Servern</figcaption>
 </figure>
 <h3>Verfahren zur SSH-Portweiterleitung</h3>
 <p>Secure Shell (SSH) verfügt über eine Funktionalität namens SSH-Portweiterleitung oder SSH-Tunneling, bei der eine Verbindung an einen anderen Port weitergeleitet wird, über den die eigentliche Kommunikation der SSH-Verbindung erfolgt. Die Portweiterleitung kann entweder auf der SSH-Clientseite oder der SSH-Serverseite durchgeführt werden. Mithilfe der Portweiterleitung können Sie Ports einrichten, die die Verbindung von JMeter-Client und -Server ermöglichen.</p>
-<figure><img src="../images/articles/config-ssh-port-forw-tut/forw-connections.jpg" alt="">
+<figure><img src="/cloud/images/articles/config-ssh-port-forw-tut/forw-connections.jpg" alt="">
 <figcaption>Abbildung 6. Weiterleitung von Verbindungen an ein anderen Port</figcaption>
 </figure>
 <p>Beachten Sie, dass sich "A" und "B" in Abbildung&nbsp;6 auf Portnummern beziehen.</p>
@@ -111,7 +111,7 @@ ssh -R  B:127.0.0.1: A &lt;username&gt;@&lt;server&gt;
 <li>Port 25000 für RMI vom Server zum Client</li>
 <li>Port 26000 für RMI vom Client zum Server</li>
 </ul>
-<figure><img src="../images/articles/config-ssh-port-forw-tut/forw-config.png" alt="">
+<figure><img src="/cloud/images/articles/config-ssh-port-forw-tut/forw-config.png" alt="">
 <figcaption>Abbildung 7. Beispiel einer Konfiguration zur Portweiterleitung mit drei Verbindungen</figcaption>
 </figure>
 <p>Mit dem folgenden Befehl wird die Weiterleitung für 3&nbsp;Ports eingerichtet.</p>

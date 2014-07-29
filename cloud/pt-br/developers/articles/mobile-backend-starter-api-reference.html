@@ -91,12 +91,12 @@
 </ul>
 </li>
 </ul>
-<figure><img src="../images/articles/mobile-backend-starter-baas-paas/securitymodel.png" alt="">
+<figure><img src="/cloud/images/articles/mobile-backend-starter-baas-paas/securitymodel.png" alt="">
 <figcaption>Figura 1: diagrama de classes da Cloud Backend API</figcaption>
 </figure>
 <h2><a name="dawcb" id="dawcb"></a>(A) Acesso ao armazenamento de dados com a Cloud Backend API</h2>
 <p>A função principal da Cloud Backend API é tornar um subconjunto de recursos do <a href="https://developers.google.com/appengine/docs/java/datastore/overview">armazenamento de dados do App Engine</a> diretamente acessíveis pelos clientes. Não é necessário escrever códigos do lado do servidor para executar operações de criação, leitura, atualização e exclusão (CRUD, na sigla em inglês) e consultas no armazenamento de dados.</p>
-<figure><img src="../images/articles/mobile-backend-starter-baas-paas/api-classes.png" alt="">
+<figure><img src="/cloud/images/articles/mobile-backend-starter-baas-paas/api-classes.png" alt="">
 <figcaption>Figura 2: classes da Cloud Backend API</figcaption>
 </figure>
 <h3><a name="pdice" id="pdice"></a>Inserção de dados na CloudEntity</h3>
@@ -477,7 +477,7 @@ public void <span class="bld">onBroadcastMessageReceived</span>(List&lt;CloudEnt
 }
 </pre>
 <p>O exemplo acima recupera a mensagem de propriedades e a <span class="bld">duração</span> da mensagem para exibir uma notificação do sistema com a mensagem pelo tempo determinado pela duração. É possível testar isso na seção "Enviar mensagem de nuvem" da página de configurações "Mobile Backend" no Console de administradores.</p>
-<p><img src="../images/articles/mobile-backend-starter-baas-paas/messaging.png" alt=""></p>
+<p><img src="/cloud/images/articles/mobile-backend-starter-baas-paas/messaging.png" alt=""></p>
 <p>Abra o aplicativo Guestbook e clique em <span class="bld">"Enviar"</span>. Em seguida, você vê a mensagem como uma notificação do sistema no aplicativo.</p>
 <p>A transmissão é apenas outra mensagem de nuvem com o <span class="code">topicId <span class="bld">_broadcast</span></span>. A classe <span class="code">CloudBackendActivity</span> se inscreve automaticamente no <span class="code">topicId</span> para receber todas as mensagens enviadas para o <span class="code">topicId</span>.</p>
 <p>Use o método <span class="code">createBroadcastMessage()</span> do back-end dentro de Activity para criar uma mensagem de transmissão. Em seguida, chame o método <span class="code">sendCloudMessage()</span> do back-end com a mensagem.</p>
@@ -501,7 +501,7 @@ cb.<span class="bld">sendCloudMessage(ce)</span>;
 <li><span class="bld">Aberto</span>: todas as solicitações não autenticadas serão permitidas</li>
 <li><span class="bld">Protegido por IDs do cliente</span>: apenas as chamadas autenticadas com o ID do cliente e com a Conta do Google são permitidas</li>
 </ul>
-<img src="../images/articles/mobile-backend-starter-baas-paas/authentication.png" alt="">
+<img src="/cloud/images/articles/mobile-backend-starter-baas-paas/authentication.png" alt="">
 <p>Use o modo "Aberto" apenas para desenvolvimento. Não deixe essa configuração por muito tempo, pois ela permite chamadas não autenticadas. Qualquer pessoa que saiba o ID do projeto pode realizar uma chamada no back-end. Não use o modo "Aberto" na produção.</p>
 <p>O modo "Protegido por IDs do cliente" é o melhor para ser usado na produção. Ele permite apenas chamadas autenticadas associadas com o seguinte:</p>
 <ul>
@@ -620,7 +620,7 @@ protected void <span class="bld">onPostCreate()</span> {
 <h4>Mais informações</h4>
 <ul>
 <li><a href="mobile-backend-starter.html">Visão geral</a></li>
-<li><a href="http://developers.google.com/cloud/samples/mbs/" target="popout">Primeiros passos<img src="../images/ext-link-8px.png" height="8px" width="8px" alt=""></a></li>
+<li><a href="http://developers.google.com/cloud/samples/mbs/" target="popout">Primeiros passos<img src="/cloud/images/ext-link-8px.png" height="8px" width="8px" alt=""></a></li>
 </ul>
 <hr></div>
 </div>

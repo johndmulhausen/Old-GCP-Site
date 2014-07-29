@@ -91,12 +91,12 @@
 </ul>
 </li>
 </ul>
-<figure><img src="../images/articles/mobile-backend-starter-baas-paas/securitymodel.png" alt="">
+<figure><img src="/cloud/images/articles/mobile-backend-starter-baas-paas/securitymodel.png" alt="">
 <figcaption>Figure&nbsp;1&nbsp;: Diagramme de classes de l'API Cloud&nbsp;Backend</figcaption>
 </figure>
 <h2><a name="dawcb" id="dawcb"></a>(A) Accès au magasin de données avec l'API Cloud&nbsp;Backend</h2>
 <p>La principale fonction de l'API Cloud&nbsp;Backend est de faire en sorte qu'un sous-ensemble des fonctionnalités du magasin de données <a href="https://developers.google.com/appengine/docs/java/datastore/overview">App&nbsp;Engine&nbsp;Datastore</a> soit directement accessible à partir des clients. Il n'est pas nécessaire de rédiger du code côté serveur pour exécuter des requêtes et des opérations de création, de lecture, de mise à jour et de suppression (CRUD, Create, Read, Update, Delete) sur le magasin de données.</p>
-<figure><img src="../images/articles/mobile-backend-starter-baas-paas/api-classes.png" alt="">
+<figure><img src="/cloud/images/articles/mobile-backend-starter-baas-paas/api-classes.png" alt="">
 <figcaption>Figure&nbsp;2&nbsp;: Classes de l'API Cloud&nbsp;Backend</figcaption>
 </figure>
 <h3><a name="pdice" id="pdice"></a>Insertion de données dans CloudEntity</h3>
@@ -477,7 +477,7 @@ public void <span class="bld">onBroadcastMessageReceived</span>(List&lt;CloudEnt
 }
 </pre>
 <p>L'exemple de code ci-dessus récupère les propriétés "message" et <span class="bld">duration</span> du message afin d'afficher un Toast avec un message relatif à la durée. Vous pouvez tester ce code dans la section "Envoyer le message cloud" de la page des paramètres de "Mobile&nbsp;Backend" sur la console d'administration.</p>
-<p><img src="../images/articles/mobile-backend-starter-baas-paas/messaging.png" alt=""></p>
+<p><img src="/cloud/images/articles/mobile-backend-starter-baas-paas/messaging.png" alt=""></p>
 <p>Lancez l'application Guestbook et cliquez ensuite sur <span class="bld">Envoyer</span>. Le message s'affiche alors sous la forme d'un Toast dans l'application.</p>
 <p>La diffusion est simplement un autre message cloud qui comporte la chaîne <span class="code">topicId <span class="bld">_broadcast</span></span>. La classe <span class="code">CloudBackendActivity</span> s'abonne automatiquement à <span class="code">topicId</span> afin de recevoir les messages qui lui sont adressés.</p>
 <p>Utilisez la méthode <span class="code">createBroadcastMessage()</span> du backend à l'intérieur de la classe Activity pour créer un message de diffusion. Appelez ensuite la méthode <span class="code">sendCloudMessage()</span> du backend avec le message.</p>
@@ -501,7 +501,7 @@ cb.<span class="bld">sendCloudMessage(ce)</span>;
 <li><span class="bld">Ouvert</span>&nbsp;: toutes les demandes authentifiées sont autorisées.</li>
 <li><span class="bld">Sécurisé par des identifiants de client</span>&nbsp;: seuls les appels authentifiés avec l'identifiant de client et le compte Google sont autorisés.</li>
 </ul>
-<img src="../images/articles/mobile-backend-starter-baas-paas/authentication.png" alt="">
+<img src="/cloud/images/articles/mobile-backend-starter-baas-paas/authentication.png" alt="">
 <p>N'utilisez le mode "Ouvert" qu'à des fins de développement. Ne le laissez pas ouvert pendant une longue période, car il autorise les appels non&nbsp;authentifiés. Toute personne connaissant l'identifiant de projet peut effectuer un appel sur le backend. N'utilisez pas le mode "Ouvert" en production.</p>
 <p>"Sécurisé par des identifiants de client" est le mode idéal pour la production. Il autorise uniquement les appels authentifiés associés aux deux éléments suivants&nbsp;:</p>
 <ul>
@@ -620,7 +620,7 @@ protected void <span class="bld">onPostCreate()</span> {
 <h4>Plus d'infos</h4>
 <ul>
 <li><a href="mobile-backend-starter.html">Présentation</a></li>
-<li><a href="http://developers.google.com/cloud/samples/mbs/" target="popout">Premiers pas <img src="../images/ext-link-8px.png" height="8px" width="8px" alt=""></a></li>
+<li><a href="http://developers.google.com/cloud/samples/mbs/" target="popout">Premiers pas <img src="/cloud/images/ext-link-8px.png" height="8px" width="8px" alt=""></a></li>
 </ul>
 <hr></div>
 </div>

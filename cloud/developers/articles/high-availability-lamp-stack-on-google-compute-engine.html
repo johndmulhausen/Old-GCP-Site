@@ -9,12 +9,12 @@
     <meta name="viewport" content="initial-scale=1, minimum-scale=1, width=device-width">
     <link href="//fonts.googleapis.com/css?family=Open+Sans:400italic,300,400,600,700" rel="stylesheet">
 
-    <link href="/css/default.css" rel="stylesheet">
+    <link href="/cloud/css/default.css" rel="stylesheet">
 
     <!--[if lt IE 9]>
     <link rel="stylesheet" media="screen" href='/c/cp-ie.css'>
     <![endif]-->
-    <script src="/js/floodlight.js"></script>
+    <script src="/cloud/js/floodlight.js"></script>
   </head>
   <body>
 
@@ -80,7 +80,7 @@ $ gcutil getproject --project=&lt;project-id&gt; --cache_flag_values
   <p>The initial configuration contains eight Compute Engine instances distributed over two zones. Each zone contains a database server, two web servers, and a load balancer as shown in Figure 1. The architecture represents a basic implementation of a high availability web application and assumes traffic is distributed between the zones with an external DNS service. The following steps walk through using the LAMP stack tool to create the LAMP stack from a custom configuration file.</p>
 
   <figure>
-    <img src="../images/articles/high-avail-lamp-stack-on-gce/stack-configuration.png">
+    <img src="/cloud/images/articles/high-avail-lamp-stack-on-gce/stack-configuration.png">
     <figcaption>Figure 1: Initial high availability LAMP stack configuration</figcaption>
   </figure>
 
@@ -147,7 +147,7 @@ $ python lamp_stack.py -a dbrefresh
   <p>Although the current web application is distributed across two zones, additional zones are recommended to maintain high availability during maintenance windows and increase redundancy. The architecture presented in Figure 2 details the additional region that is added. Since all instances in a project share a project private network, no additional work is required to configure instance networking across regions.</p>
 
   <figure>
-    <img src="../images/articles/high-avail-lamp-stack-on-gce/stack-configuration-2.png">
+    <img src="/cloud/images/articles/high-avail-lamp-stack-on-gce/stack-configuration-2.png">
     <figcaption>Figure 2:  High availability LAMP stack configuration</figcaption>
   </figure>
 
@@ -183,7 +183,7 @@ $ gsutil ls -la gs://&lt;your-bucket-name&gt;
   <p>The sample application is currently running in three zones, and if one of the zones is approaching a maintenance window, the instances should be cleanly shut down before the maintenance window. If the MySQL master server is located in the maintenance window zone, a new master should be elected before it is terminated.  </p>
 
   <figure>
-    <img src="../images/articles/high-avail-lamp-stack-on-gce/maintenance-window.png">
+    <img src="/cloud/images/articles/high-avail-lamp-stack-on-gce/maintenance-window.png">
     <figcaption>Figure 3:  High availability LAMP stack during maintenance window</figcaption>
   </figure>
 
@@ -237,7 +237,7 @@ $ python lamp_stack.py -a stop -z zone-a
       
 <hr><h4>Sample App</h4>
 <ul>
-<li><a href="https://github.com/GoogleCloudPlatform/solutions-high-availability-lamp-stack-google-compute-engine" target="github">LAMP Stack on Compute Engine</a> sample tool <img src="../images/ext-link-8px.png" height="8px" width="8px"></li>
+<li><a href="https://github.com/GoogleCloudPlatform/solutions-high-availability-lamp-stack-google-compute-engine" target="github">LAMP Stack on Compute Engine</a> sample tool <img src="/cloud/images/ext-link-8px.png" height="8px" width="8px"></li>
 </ul>
 <hr>
 

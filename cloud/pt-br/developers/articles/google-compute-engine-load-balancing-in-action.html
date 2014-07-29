@@ -44,7 +44,7 @@
 <p>Outra abordagem é a utilização de software de código aberto, como HAProxy ou Nginx. Esses projetos de código aberto podem oferecer alguns recursos adicionais, mas requerem configuração de hardware e software, além de gerenciamento. Isso pode resultar em um aumento de custos de instalação, configuração e atualização, além da introdução de um único ponto de falha.</p>
 <p>O Balanceamento de carga do Compute Engine ajuda a eliminar essas desvantagens e exigências, oferecendo balanceamento de carga como um serviço distribuído que está perfeitamente integrado ao Google Cloud Platform. O Balanceamento de carga do Compute Engine é executado como um serviço totalmente gerenciado pelo Google. Não há necessidade de executar um balanceador de carga em instâncias do Compute Engine, nem de se preocupar em manter o balanceamento de carga em funcionamento ou roteando back-ends não íntegros. O Balanceamento de carga do Compute Engine cuida de tudo isso.</p>
 <p>A figura 1 ilustra os conceitos de balanceamento de carga no contexto do Balanceamento de carga do Compute Engine do Google Os usuários enviam solicitações para o aplicativo em execução no Compute Engine por meio do Balanceamento de carga do Compute Engine, evitando as instâncias não íntegras.</p>
-<figure><img src="../images/articles/gce-load-balancing-in-action/load-balancing-concepts.png" alt="">
+<figure><img src="/cloud/images/articles/gce-load-balancing-in-action/load-balancing-concepts.png" alt="">
 <figcaption>Figura 1: conceitos do Balanceamento de carga do Compute Engine. As solicitações de usuário são enviadas por meio do Balanceamento de carga do Compute Engine e espalhadas entre back-ends íntegros.</figcaption>
 </figure>
 <h3>Benefícios do uso do Balanceamento de carga do Compute Engine</h3>
@@ -66,13 +66,13 @@ gcutil --project=&lt;your-project-id&gt; listforwardingrules
 </pre>
 <p>Pronto. Os clientes acessarão o aplicativo com o IP externo e pelo Balanceamento de carga do Compute Engine. Configurar o Balanceamento de carga do Compute Engine é simples assim e não há necessidade de manter qualquer coisa.</p>
 <p>Se você preferir uma interface da Web, poderá configurar pools de destino, regras de encaminhamento e verificações de integridade com o Cloud Console do Google, como mostrado na figura 2.</p>
-<figure><img src="../images/articles/gce-load-balancing-in-action/setting-up-2.png" alt="">
+<figure><img src="/cloud/images/articles/gce-load-balancing-in-action/setting-up-2.png" alt="">
 <figcaption>Figura 2: configuração do balanceamento de carga no Cloud Console</figcaption>
 </figure>
 <p>Tanto a linha de comando como a interface do usuário permitem que os usuários configurem recursos mais avançados, como pools de backup e adesão de sessão. Para encontrar mais informações sobre as opções de configuração, consulte a <a href="https://developers.google.com/compute/docs/load-balancing/">documentação</a> completa.</p>
 <h4>2. Carga balanceada dentro de uma zona ou em várias zonas dentro de uma região</h4>
 <p>O Balanceamento de carga do Compute Engine espalha carga aproximadamente igual entre todas as instâncias que ele equilibra. A Figura 3 demonstra como o Balancamento de carga do Compute Engine espalha uniformemente 500.000 solicitações de IP externo expostos pelo balanceador de carga. Para qualquer sistema do mundo real, a propagação de carga se torna cada vez mais necessária conforme a carga aumenta.</p>
-<figure><img src="../images/articles/gce-load-balancing-in-action/load-spread2.png" alt="">
+<figure><img src="/cloud/images/articles/gce-load-balancing-in-action/load-spread2.png" alt="">
 <figcaption>Figura 3: propagação de carga para um total de 500.000 solicitações enviadas em 100 threads paralelos. <sup><a href="#ftnt1" name="ftnt_ref1" id="ftnt_ref1">[1]</a></sup></figcaption>
 </figure>
 <h4>3. Desempenho estável desde o início</h4>
@@ -121,13 +121,13 @@ solicitações</p>
 <p>O Balanceamento de carga do Compute Engine permite que pools de destino definam um conjunto de instâncias que abrangem zonas dentro de uma região. Isso é projetado para facilitar o desenvolvimento de sistemas robustos. Quando uma das zonas fica inativa, o balanceador de carga simplesmente roteia as instâncias dessa zona, que nesse ponto são consideradas não íntegras. Nesta seção, analisaremos o desempenho do balanceador de carga quando as instâncias estão espalhadas por zonas. No nosso exemplo, temos quatro instãncias, em que duas estão em "us-central1-a" e duas estão em "us-central1-b". As quatro instâncias estão configuradas para estar no mesmo pool de destino de uma única regra de encaminhamento. A coluna mais à direita na tabela 1 mostra como o tempo médio de resposta continua sendo estável mesmo quando o balanceador de carga espalha as respostas entre as instâncias em duas zonas diferentes.</p>
 <p>Essa estabilidade entre zonas também é uma característica muito importante para pools de backup. Pools de backup são projetados para tornar um aplicativo mais robusto em caso de falha parcial ou total de um pool de destino primário e podem estar em uma zona diferente do pool primário. O tempo de resposta estável mostrado acima também implica que a experiência do usuário não será afetada quando o tráfego precisar ser enviado a um pool de backup de máquinas virtuais.</p>
 <p>O Balanceamento de carga do Compute mostra desempenho estável desde o início. Nesta seção, usamos novamente 100 threads para enviar um total de 1.000.000 solicitações. Mostramos como o tempo de resposta permanece estável sob essa carga na figura 4. O eixo y mostra o tempo de resposta e cada ponto no gráfico representa uma única solicitação. Observe como o tempo de resposta é estável desde o início. Ao contrário de muitas outras soluções, com o Balanceamento de carga do Compute Engine não há necessidade de pré-aquecer o balanceador de carga.</p>
-<figure><img src="../images/articles/gce-load-balancing-in-action/response-time.png" alt="">
+<figure><img src="/cloud/images/articles/gce-load-balancing-in-action/response-time.png" alt="">
 <figcaption>Figura 4: tempo de resposta para 1.000.000 de solicitações (100 threads paralelos) para quatro back-ends por meio do Balanceamento de carga do Compute Engine.<sup><a href="#ftnt3" name="ftnt_ref3" id="ftnt_ref3">[3]</a></sup></figcaption>
 </figure>
 <h4>4. Capaz rotear instâncias não íntegras</h4>
 <p>O Balanceamento de carga do Compute Engine roteia perfeitamente instâncias não íntegras. Com as verificações de integridade configuradas, o balanceador de carga detecta back-ends não íntegros e roteia tráfego para os back-ends restantes. A Figura 5 mostra a propagação de carga entre as instâncias, antes e depois de uma instância ficar inativa. Cerca de 500 mil solicitações foram enviadas antes e depois que o back-end "www-0" foi retirado de rotação. Cada ponto de dados no gráfico representa o número de solicitações tratadas por um back-end específico durante um minuto. Se a instância entrar no "modo lame-duck", descrito em mais detalhes abaixo, as conexões existentes para aquele back-end ainda serão tratadas até o back-end estar pronto para ser encerrado e nenhuma solicitação expirará.</p>
 <p>Enquanto você se concentra em trazer suas instâncias de back-end de volta a um estado íntegro, o Google se concentra em garantir que a qualidade da experiência dos usuários seja mantida.</p>
-<figure><img src="../images/articles/gce-load-balancing-in-action/load-spread.png" alt="">
+<figure><img src="/cloud/images/articles/gce-load-balancing-in-action/load-spread.png" alt="">
 <figcaption>Figura 5: propagação de carga quando o Balanceamento de carga do Compute Engine está lidando com uma instância que se torna não íntegra.<sup><a href="#ftnt4" name="ftnt_ref4" id="ftnt_ref4">[4]</a></sup></figcaption>
 </figure>
 <h4>5. Habilitado com “modo lame-duck”</h4>
@@ -178,7 +178,7 @@ solicitações</p>
 <p>Qualquer aplicativo que necessite de escalonamento para mais de uma instância pode se beneficiar do Balanceamento de carga do Compute Engine. Descrevemos dois cenários aqui para guiar você pelo seu projeto de arquitetura do aplicativo:</p>
 <h4>1. Aplicativo da Web no Compute Engine com usuários conectados</h4>
 <p>O primeiro cenário comum é um aplicativo da Web com usuários conectados. Um exemplo é um aplicativo em que os usuários podem fazer login, criar conteúdo e compartilhar esse conteúdo com outros usuários. Outros usuários podem simplesmente fazer o login e consumir o conteúdo que foi produzido por outros. A figura 6 mostra o esboço de uma arquitetura para um caso de uso típico.</p>
-<figure><img src="../images/articles/gce-load-balancing-in-action/web-apps.png" alt="">
+<figure><img src="/cloud/images/articles/gce-load-balancing-in-action/web-apps.png" alt="">
 <figcaption>Figura 6: aplicativo da Web usando o Balanceamento de carga do Compute Engine.</figcaption>
 </figure>
 <p>A maioria dos aplicativos da Web exige o armazenamento das informações da sessão. Para nosso exemplo, as informações da sessão atual de um usuário podem ser qualquer conteúdo criado que ainda não está salvo. A arquitetura robusta e comumente usada é aquela que armazena informações da sessão do lado do servidor destas formas:</p>
@@ -189,7 +189,7 @@ solicitações</p>
 <p>Na configuração padrão, as solicitações enviadas pelo Balanceamento de carga do Compute Engine a partir do mesmo IP do cliente não são vinculadas a nenhum back-end e são, de fato, espalhadas por todas as instâncias. É possível configurar o Balanceamento de carga do Compute Engine para ser vinculado<sup><a href="#ftnt6" name="ftnt_ref6" id="ftnt_ref6">[6]</a></sup> a um back-end específico de um determinado IP de cliente. Isso pode melhorar ainda mais o desempenho, pois não será preciso recuperar as informações da sessão frequentemente. O “modo lame-duck” do Balanceamento de carga do Compute Engine permite atualizações progressivas do software do aplicativo retirando instâncias da rotação. Futuras versões do Balanceamento de carga do Compute Engine reforçarão ainda mais esse caso de uso, ao passo que continuaremos a expandir suas capacidades. Elas incluirão recursos como terminação SSL no balanceador de carga e balanceamento de carga no Layer-7.</p>
 <h4>2. Processamento Intensivo no Compute Engine</h4>
 <p>O segundo cenário é um aplicativo que realiza longa execução ou processamento intensivo em resposta às solicitações dos usuários (ver figura 7). Nesse cenário, cada solicitação do usuário requer algum processamento em uma ou mais instâncias do Compute Engine. O processamento pode envolver reconhecimento Reconhecimento óptico de caracteres (OCR, na sigla em inglês), transcodificação de vídeo, uma tarefa de MapReduce e muito mais.</p>
-<figure><img src="../images/articles/gce-load-balancing-in-action/backend-processing.png" alt="">
+<figure><img src="/cloud/images/articles/gce-load-balancing-in-action/backend-processing.png" alt="">
 <figcaption>Figura 7: aplicativo de processamento de back-end usando&nbsp;o Balanceamento de carga do Compute Engine.</figcaption>
 </figure>
 <p>O Balanceamento de carga do Compute Engine se encaixará muito bem nesse exemplo se as solicitações tiverem custo e duração parecidos. As máquina virtuais de back-end não carregam o estado da sessão, já que executam uma tarefa única. O balanceador de carga pode escolher qualquer máquina virtual de back-end para realizar cada uma dessas tarefas e o balanceamento de carga pode efetivamente espalhar a carga de trabalho entre os back-ends.</p>

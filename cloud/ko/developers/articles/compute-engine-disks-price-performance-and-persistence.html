@@ -136,15 +136,15 @@
 <p>다음 몇 가지 예는 성능 요구사항을 기준으로 영구 디스크 크기를 선택하는 방법을 보여줍니다.</p>
 <h4><a name="h.oiyyop5msnju" id="h.oiyyop5msnju"></a>예 1</h4>
 <p>최대 300IOPs의 임의 쓰기 속도가 필요한 데이터베이스를 설치(소량 임의 IO)하는 경우:</p>
-<img src="../images/articles/ced-price-performance-and-persistence/formula-00.png" alt="">
+<img src="/cloud/images/articles/ced-price-performance-and-persistence/formula-00.png" alt="">
 <p>따라서 최소 200GB의 영구 디스크를 구입해야 합니다.</p>
 <h4><a name="h.7p3k6pqwxxss" id="h.7p3k6pqwxxss"></a>예 2</h4>
 <p>최대 450IOPs의 임의 읽기 속도가 필요한 데이터베이스를 설치(소량 임의 IO)하는 경우:</p>
-<img src="../images/articles/ced-price-performance-and-persistence/formula-01.png" alt="">
+<img src="/cloud/images/articles/ced-price-performance-and-persistence/formula-01.png" alt="">
 <p>최소 1500GB의 영구 디스크를 구입해야 합니다.</p>
 <h4><a name="h.d8in6cl5deyd" id="h.d8in6cl5deyd"></a>예 3</h4>
 <p>데이터베이스 설치 시(소량 쓰기) 4800IOPs의 최대 임의 쓰기 속도가 필요한 경우</p>
-<img src="../images/articles/ced-price-performance-and-persistence/formula-02.png" alt="">
+<img src="/cloud/images/articles/ced-price-performance-and-persistence/formula-02.png" alt="">
 <p>최소 3200GB의 영구 디스크를 구입해야 합니다. 단일 Compute Engine 인스턴스의 최대 성능은 1800IOPs(싱글코어 또는 듀얼코어) 또는 2400IOPs(쿼드코어 또는 옥타코어)입니다. 그러면 다음과 같이 데이터를 분할할 수 있습니다.</p>
 <ul>
 <li>싱글코어 또는 듀얼코어 인스턴스 3개(각각 최소 1033GB의 영구 디스크 포함) 또는</li>

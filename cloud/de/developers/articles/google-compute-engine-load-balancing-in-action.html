@@ -44,7 +44,7 @@
 <p>Ein anderer Ansatz besteht in der Verwendung von Open-Source-Software wie HAProxy oder Nginx. Diese Open-Source-Projekte bieten eventuell zusätzliche Funktionen, erfordern aber die Konfiguration und Verwaltung von Hardware und Software. Dies könnte zusätzlich zur Einrichtung eines Single Point of Failure zu erhöhten Kosten für Installation, Konfiguration und Upgrades führen.</p>
 <p>Mit dem Compute Engine-Lastenausgleich lassen sich diese Nachteile und Anforderungen vermeiden, weil die Funktion als verteilter Dienst bereitgestellt wird, der nahtlos in die Google Cloud Platform integriert ist. Der Compute Engine-Lastenausgleich wird als vollständig von Google verwalteter Dienst ausgeführt. Es ist nicht erforderlich, ein Lastenausgleichsmodul auf Compute Engine-Instanzen auszuführen, und Sie müssen sich nicht um die Aufrechterhaltung des Lastenausgleichs oder um die Umgehung nicht intakter Back-Ends kümmern. Dies übernimmt der Compute Engine-Lastenausgleich.</p>
 <p>Abbildung&nbsp;1 veranschaulicht die Konzepte für den Lastenausgleich, die beim Google Compute Engine-Lastenausgleich angewendet werden. Die Nutzer senden per Compute Engine-Lastenausgleich Anfragen an die Anwendung, die in Compute Engine ausgeführt wird, und vermeiden damit nicht intakte Instanzen.</p>
-<figure><img src="../images/articles/gce-load-balancing-in-action/load-balancing-concepts.png" alt="">
+<figure><img src="/cloud/images/articles/gce-load-balancing-in-action/load-balancing-concepts.png" alt="">
 <figcaption>Abbildung 1: Konzepte des Compute Engine-Lastenausgleichs. Nutzeranfragen werden über den Compute Engine-Lastenausgleich gesendet und auf intakte Back-Ends verteilt.</figcaption>
 </figure>
 <h3>Vorteile der Verwendung des Compute Engine-Lastenausgleichs</h3>
@@ -66,13 +66,13 @@ gcutil --project=&lt;your-project-id&gt; listforwardingrules
 </pre>
 <p>Das war's auch schon! Die Clients greifen über die ausgegebene IP-Adresse und per Compute Engine-Lastenausgleich auf die Anwendung zu. Es ist wirklich so einfach, den Compute Engine-Lastenausgleich einzurichten, und es fällt kein Wartungsaufwand an.</p>
 <p>Wenn Sie eine Webbenutzeroberfläche vorziehen, können Sie mit der Google Cloud Console Zielpools, Weiterleitungsregeln und Statusprüfungen einrichten, wie in Abbildung&nbsp;2 gezeigt.</p>
-<figure><img src="../images/articles/gce-load-balancing-in-action/setting-up-2.png" alt="">
+<figure><img src="/cloud/images/articles/gce-load-balancing-in-action/setting-up-2.png" alt="">
 <figcaption>Abbildung 2: Lastenausgleich in der Cloud Console einrichten</figcaption>
 </figure>
 <p>Die Nutzer können sowohl über die Befehlszeile als auch in der Benutzeroberfläche weiterentwickelte Funktionen wie Sicherungspools und Sitzungstreue einrichten. <a href="https://developers.google.com/compute/docs/load-balancing/">Weitere Informationen über die Konfigurationsoptionen finden Sie in der vollständigen Dokumentation</a>.</p>
 <h4>2. Lastenausgleich innerhalb einer Zone oder in mehreren Zonen innerhalb einer Region</h4>
 <p>Mit dem Compute Engine-Lastenausgleich wird die Last grob gleichmäßig auf alle entsprechend konfigurierten Instanzen verteilt. Abbildung&nbsp;3 zeigt, wie gleichmäßig mit dem Compute Engine-Lastenausgleich 500.000&nbsp;Anfragen an die ausgegebene, vom Lastenausgleichsmodul freigegebene IP-Adresse verteilt wurden. Bei jedem Realweltsystem wird die Lastverteilung mit zunehmender Last immer notwendiger.</p>
-<figure><img src="../images/articles/gce-load-balancing-in-action/load-spread2.png" alt="">
+<figure><img src="/cloud/images/articles/gce-load-balancing-in-action/load-spread2.png" alt="">
 <figcaption>Abbildung 3: Lastverteilung für insgesamt 500.000&nbsp;Anfragen, die in 100 parallelen Threads gesendet wurden<sup><a href="#ftnt1" name="ftnt_ref1" id="ftnt_ref1">[1]</a></sup></figcaption>
 </figure>
 <h4>3. Stabile Leistung von Anfang an</h4>
@@ -121,13 +121,13 @@ Anfragen</p>
 <p>Beim Compute Engine-Lastenausgleich kann mit Zielpools eine Gruppe von Instanzen definiert werden, die Zonen innerhalb einer Region umfassen. Der Lastenausgleich ist für die einfache Konzeption robuster Systeme ausgelegt. Wenn eine der Zonen ausfällt, umgeht das Lastenausgleichsmodul einfach die Instanzen in dieser Zone, die zu diesem Zeitpunkt als nicht intakt betrachtet werden. In diesem Abschnitt werfen wir einen Blick auf die Leistung des Lastenausgleichsmoduls, wenn Instanzen über mehrere Zonen verteilt sind. In unserem Beispiel sind dies vier Instanzen: zwei in "us-central1-a" und zwei in "us-central1-b". Die vier Instanzen sind für die Aufnahme in denselben Zielpool einer einzelnen Weiterleitungsregel konfiguriert. In der Spalte ganz rechts in Tabelle&nbsp;1 können Sie sehen, wie die durchschnittliche Antwortzeit stabil bleibt, auch wenn das Lastenausgleichsmodul die Antworten auf Instanzen in zwei verschiedenen Zonen verteilt.</p>
 <p>Beachten Sie, dass diese Stabilität zwischen den Zonen auch ein wichtiges Merkmal für Sicherungspools ist. Sicherungspools sind darauf ausgelegt, eine Anwendung bei einem teilweisen oder vollständigen Ausfall eines primären Zielpools robuster zu machen. Sie können sich in einer anderen Zone als der primäre Pool befinden. Die oben dargestellte stabile Antwortzeit impliziert auch, dass die Nutzererfahrung nicht beeinträchtigt ist, wenn Traffic an einen Sicherungspool aus VMs gesendet werden muss.</p>
 <p>Der Compute Engine-Lastenausgleich bietet von Beginn an eine stabile Leistung. In diesem Abschnitt haben wir erneut 100&nbsp;Threads zum Senden von insgesamt 1.000.000&nbsp;Anfragen verwendet. In Abbildung&nbsp;4 sehen Sie, dass die Antwortzeit unter dieser Last stabil bleibt. Die y-Achse bildet die Antwortzeit ab und jeder Punkt im Diagramm stellt eine einzelne Anfrage dar. Beachten Sie, dass die Antwortzeit von Beginn an stabil ist. Im Gegensatz zu vielen anderen Lösungen ist es beim Compute Engine-Lastenausgleich nicht nötig, das Lastenausgleichsmodul erst hochzufahren.</p>
-<figure><img src="../images/articles/gce-load-balancing-in-action/response-time.png" alt="">
+<figure><img src="/cloud/images/articles/gce-load-balancing-in-action/response-time.png" alt="">
 <figcaption>Abbildung 4: Antwortzeit für 1.000.000&nbsp;Anfragen (100 parallele Threads) an vier Back-Ends über Compute Engine-Lastenausgleich<sup><a href="#ftnt3" name="ftnt_ref3" id="ftnt_ref3">[3]</a></sup></figcaption>
 </figure>
 <h4>4. Fähigkeit, nicht intakte Instanzen zu umgehen</h4>
 <p>Der Compute Engine-Lastenausgleich umgeht nicht intakte Instanzen übergangslos. Anhand der von Ihnen konfigurierten Statusprüfungen erkennt das Lastenausgleichsmodul sämtliche nicht intakten Back-Ends und leitet den Traffic auf die übrigen Back-Ends um. Abbildung&nbsp;5 zeigt die Lastverteilung auf die Instanzen vor und nach dem Ausfall einer Instanz. Sowohl vor als auch nach der Herausnahme von Back-End "www-0" aus der Rotation wurden circa 500.000&nbsp;Anfragen gesendet. Jeder Datenpunkt im Diagramm repräsentiert die Anzahl der Anfragen, die während einer Minute von einem bestimmten Back-End verarbeitet wurden. Wenn die Instanz in den Lame-Duck-Modus schaltet (wird weiter unten näher beschrieben), werden bestehende Verbindungen zu diesem Back-End weiter abgearbeitet, bis das Back-End zum Herunterfahren bereit ist, und es kommt nicht zu Zeitüberschreitungen bei Anfragen.</p>
 <p>Während Sie sich darauf konzentrieren, Ihre Back-End-Instanzen wieder in einen intakten Zustand zu versetzen, konzentriert sich Google darauf, die Qualität der Nutzererfahrung aufrechtzuerhalten.</p>
-<figure><img src="../images/articles/gce-load-balancing-in-action/load-spread.png" alt="">
+<figure><img src="/cloud/images/articles/gce-load-balancing-in-action/load-spread.png" alt="">
 <figcaption>Abbildung 5: Lastverteilung, wenn der Compute Engine-Lastenausgleich eine Instanz verwaltet, die nicht intakt bleibt<sup><a href="#ftnt4" name="ftnt_ref4" id="ftnt_ref4">[4]</a></sup></figcaption>
 </figure>
 <h4>5. Lame-Duck-Modus</h4>
@@ -178,7 +178,7 @@ Anfragen</p>
 <p>Jede Anwendung, die eine Skalierung auf mehr als eine Instanz benötigt, kann vom Compute Engine-Lastenausgleich profitieren. Wir beschreiben hier zwei Szenarien, die Sie durch die Konzeption der Architektur Ihrer Anwendung führen:</p>
 <h4>1. Webanwendung in Compute Engine mit angemeldeten Nutzern</h4>
 <p>Das erste häufige Szenario betrifft eine Webanwendung mit angemeldeten Nutzern. Ein Beispiel wäre eine Anwendung, bei der sich Nutzer anmelden, Inhalte kreieren und diese Inhalte mit anderen Nutzern teilen können. Andere Nutzer können sich einfach anmelden und die Inhalte nutzen, die von anderen erstellt wurden. In Abbildung&nbsp;6 sehen Sie das Diagramm der Architektur für einen typischen Anwendungsfall.</p>
-<figure><img src="../images/articles/gce-load-balancing-in-action/web-apps.png" alt="">
+<figure><img src="/cloud/images/articles/gce-load-balancing-in-action/web-apps.png" alt="">
 <figcaption>Abbildung 6: Webanwendung mit Compute Engine-Lastenausgleich</figcaption>
 </figure>
 <p>Die meisten Webanwendungen erfordern, dass Sitzungsdaten gespeichert werden. Bei den Sitzungsdaten eines Nutzers kann es sich zum Beispiel um erstellte Inhalte handeln, die noch nicht gespeichert wurden. In einer häufig genutzten, robusten Architektur werden die Sitzungsdaten auf folgende Arten serverseitig gespeichert:</p>
@@ -189,7 +189,7 @@ Anfragen</p>
 <p>In der Standardeinstellung sind Anfragen, die über den Compute Engine-Lastenausgleich von derselben Client-IP-Adresse gesendet werden, nicht fest mit einem Back-End verknüpft und werden über alle Instanzen verteilt. Der Compute Engine-Lastenausgleich kann so konfiguriert werden, dass er mit einem bestimmten Back-End ausgehend von einer vorgegebenen Client-IP fest verknüpft ist<sup><a href="#ftnt6" name="ftnt_ref6" id="ftnt_ref6">[6]</a></sup>. Auf diese Weise kann die Leistung noch weiter erhöht werden, da die Sitzungsdaten nicht häufig abgerufen werden müssen. Der Lame-Duck-Modus des Compute Engine-Lastenausgleichs ermöglicht übergangslose, zyklische Upgrades der Anwendungssoftware, indem Instanzen aus der Rotation herausgenommen werden. Dieser Anwendungsfall wird über zukünftige Versionen des Compute Engine-Lastenausgleichs weiter optimiert, da wir die Funktionalität noch erweitern werden. Dazu gehören Funktionen wie die SSL-Terminierung im Lastenausgleichsmodul und der Layer-7-Lastenausgleich.</p>
 <h4>2. Intensive Verarbeitung in Compute Engine</h4>
 <p>Beim zweiten Szenario handelt es sich um eine Anwendung, die Nutzeranfragen lange oder intensiv verarbeitet (siehe Abbildung&nbsp;7). Bei diesem Szenario erfordert jede Nutzeranfrage einen gewissen Verarbeitungsaufwand auf einer oder mehreren Compute Engine-Instanzen. Die Verarbeitung kann OCR (Optical Character Recognition), Videotranskodierung, einen MapReduce-Auftrag und anderes umfassen.</p>
-<figure><img src="../images/articles/gce-load-balancing-in-action/backend-processing.png" alt="">
+<figure><img src="/cloud/images/articles/gce-load-balancing-in-action/backend-processing.png" alt="">
 <figcaption>Abbildung 7: Verarbeitungsanwendung im Back-End mit Compute Engine-Lastenausgleich</figcaption>
 </figure>
 <p>Der Compute Engine-Lastenausgleich eignet sich besonders gut für dieses Szenario, wenn die Anfragen ähnlich viel kosten und von ähnlicher Dauer sind. Die Back-End-VMs besitzen keinen Sitzungsstatus, sondern führen stattdessen eine einmalige Aufgabe aus. Das Lastenausgleichsmodul kann jede Back-End-VM für die Durchführung dieser Aufgaben auswählen und die Last unter den Back-Ends effektiv verteilen.</p>

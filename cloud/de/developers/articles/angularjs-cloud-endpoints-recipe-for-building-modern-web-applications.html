@@ -40,7 +40,7 @@
 <p>Wie werden nun diese modernen Webanwendungen konzipiert und implementiert? Der folgende Abschnitt stellt eine Orientierungshilfe für Entwickler und Architekten von Webanwendungen dar, die erfahren möchten, wie man browserbasierte Clients in eine bestehende dienstbasierte Architektur einbindet.</p>
 <h2>Übersicht: MVC auf Clientseite und Google Cloud Endpoints</h2>
 <p>Die Antwort heißt Google Cloud Endpoints, ein Funktionsmerkmal von Google App Engine, das ein RPC-Framework bereitstellt:</p>
-<figure><img src="../images/articles/angularjs-cloud-endpoints-recipe/cloud-endpoints.jpg" alt="">
+<figure><img src="/cloud/images/articles/angularjs-cloud-endpoints-recipe/cloud-endpoints.jpg" alt="">
 <figcaption>Abbildung 1: Google Cloud Endpoints</figcaption>
 </figure>
 <p>Der Ablauf wird unten näher beschrieben.</p>
@@ -65,16 +65,16 @@ public void <span class="bld">insert</span>(Message message) {
 </pre>
 <p>Die Methode <span class="code">insert()</span> empfängt ein Java-Objekt, die Nachricht, und weist Eigenschaften wie <span class="code">createdAt</span> (Zeitstempel der Erstellung), <span class="code">createdBy</span> (Eigentümer der Nachricht) sowie Inhalte auf. Anschließend erstellt sie eine Datenspeicher-Entität "e" mit diesen Eigenschaftswerten und speichert die Entität im Google App Engine-Datenspeicher.</p>
 <p>Die Dienst-Endpunkte werden automatisch über die REST API freigeschaltet und Sie können den <a href="https://developers.google.com/apis-explorer/#p/">Google APIs Explorer</a> zur Ansicht der Dienst-Endpunkte verwenden. Es empfiehlt sich auch, Testanfragen auszugeben, um die Antworten im JSON-Format zu überprüfen. Im folgenden Bildschirm resultiert <span class="code">guestbook.messages.insert</span> direkt aus den Annotationen der Java-Klasse.</p>
-<figure><img src="../images/articles/angularjs-cloud-endpoints-recipe/api-explorer.png" alt="">
+<figure><img src="/cloud/images/articles/angularjs-cloud-endpoints-recipe/api-explorer.png" alt="">
 <figcaption>Abbildung 2: Dienst-Endpunkte mit Google APIs Explorer testen</figcaption>
 </figure>
 <h2>AngularJS mit Cloud Endpoints kombinieren</h2>
 <p>Der nächste Schritt beinhaltet die Integration von Cloud Endpoints mit clientseitigen MVC-Frameworks wie <a href="http://angularjs.org/">AngularJS</a>. Ein solches System hätte eine Architektur, wie sie in Abbildung&nbsp;4 dargestellt ist:</p>
-<figure><img src="../images/articles/angularjs-cloud-endpoints-recipe/endpoints-architecture.png" alt="">
+<figure><img src="/cloud/images/articles/angularjs-cloud-endpoints-recipe/endpoints-architecture.png" alt="">
 <figcaption>Abbildung 4: MVC auf Clientseite und Architektur der Dienst-Endpunkte</figcaption>
 </figure>
 <p>Obwohl die Integration dieser beiden Technologien eine einfache Angelegenheit ist, gibt es einige Gefahren und Vorsichtsmaßnahmen, die Sie vor der Codierung kennen sollten. Wir wollen uns nun die linke Seite der obigen Veranschaulichung (Abb.&nbsp;4) näher ansehen. Dies ist der eigentliche JavaScript-Code, mit dem der clientseitige MVC mit den Endpunkten integriert wird, die auf der rechten Seite dargestellt sind. Als Beispiel betrachten wir die Erstellung einer auf AngularJS basierenden Web-Benutzeroberfläche für den Dienst-Endpunkt des Gästebuchs, den wir soeben definiert haben. Der folgende Screenshot zeigt die Benutzeroberfläche:</p>
-<figure><img src="../images/articles/angularjs-cloud-endpoints-recipe/guestbook-app.png" alt="">
+<figure><img src="/cloud/images/articles/angularjs-cloud-endpoints-recipe/guestbook-app.png" alt="">
 <figcaption>Abbildung 3: Gästebuch-App mit AngularJS und Cloud Endpoints</figcaption>
 </figure>
 <h3>Ansicht und Modell erstellen</h3>

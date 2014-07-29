@@ -40,7 +40,7 @@
 <p>A questão que permanece é como projetar e implementar esses aplicativos da Web modernos. A próxima seção oferece algumas orientações para os desenvolvedores e arquitetos de aplicativos da Web que desejam aprender como incorporar clientes baseados em navegador em uma arquitetura baseada em serviço existente.</p>
 <h2>Visão geral: MVC do lado do cliente + Google Cloud Endpoints</h2>
 <p>Google Cloud Endpoints é a resposta para esta questão: um recurso do Google App Engine que oferece uma estrutura RPC:</p>
-<figure><img src="../images/articles/angularjs-cloud-endpoints-recipe/cloud-endpoints.jpg" alt="">
+<figure><img src="/cloud/images/articles/angularjs-cloud-endpoints-recipe/cloud-endpoints.jpg" alt="">
 <figcaption>Figura 1: Google Cloud Endpoints</figcaption>
 </figure>
 <p>O fluxo está descrito em mais detalhes abaixo.</p>
@@ -65,16 +65,16 @@ public void <span class="bld">insert</span>(Message message) {
 </pre>
 <p>O método <span class="code">insert()</span> recebe um objeto Java, uma mensagem, e vem com propriedades como <span class="code">createdAt</span> (timestamp da criação), <span class="code">createdBy</span> (o proprietário da mensagem) e conteúdo. Em seguida, cria uma entidade de armazenamento de dados "e" com esses valores de propriedade e a salva no armazenamento de dados do Google App Engine.</p>
 <p>Estes terminais de serviço são automaticamente expostos via REST API e é possível usar <a href="https://developers.google.com/apis-explorer/#p/">Google APIs Explorer</a> para exibir os pontos de extremidade do serviço. Também é bom emitir solicitações de teste para confirmar as respostas em formato JSON. Na tela seguinte, o <span class="code">guestbook.messages.insert</span> resulta diretamente das anotações na classe Java.</p>
-<figure><img src="../images/articles/angularjs-cloud-endpoints-recipe/api-explorer.png" alt="">
+<figure><img src="/cloud/images/articles/angularjs-cloud-endpoints-recipe/api-explorer.png" alt="">
 <figcaption>Figura 2: teste dos seus pontos de extremidade do serviço com Google APIs Explorer</figcaption>
 </figure>
 <h2>Combinação de AngularJS com Cloud Endpoints</h2>
 <p>A próxima etapa aborda a integração do Cloud Endpoints com estruturas MVC do lado do cliente, como o <a href="http://angularjs.org/">AngularJS</a>. Esse sistema tem uma arquitetura semelhante à descrita na Figura 4:</p>
-<figure><img src="../images/articles/angularjs-cloud-endpoints-recipe/endpoints-architecture.png" alt="">
+<figure><img src="/cloud/images/articles/angularjs-cloud-endpoints-recipe/endpoints-architecture.png" alt="">
 <figcaption>Figura 4: MVC&nbsp;do lado do cliente e arquitetura de pontos de extremidade do serviço</figcaption>
 </figure>
 <p>A integração entre duas tecnologias é simples, mas existem algumas armadilhas e advertências que você deve conhecer antes de iniciar sua codificação. Sendo assim, vamos dar uma olhada no lado esquerdo do diagrama acima (Fig. 4): o código JavaScript real que integra o&nbsp;MVC do lado do cliente com os pontos de extremidade mostrados no lado direito do diagrama. Como exemplo, vamos considerar a criação de uma IU da Web baseada em AngularJS para o ponto de extremidade do serviço Guestbook, que acabamos de definir. Este diagrama é uma captura de tela de como a IU será exibida:</p>
-<figure><img src="../images/articles/angularjs-cloud-endpoints-recipe/guestbook-app.png" alt="">
+<figure><img src="/cloud/images/articles/angularjs-cloud-endpoints-recipe/guestbook-app.png" alt="">
 <figcaption>Figura 3: aplicativo Guestbook com AngularJS + Cloud Endpoints</figcaption>
 </figure>
 <h3>Criação de uma visualização e um modelo</h3>

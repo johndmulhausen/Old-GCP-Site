@@ -9,12 +9,12 @@
     <meta name="viewport" content="initial-scale=1, minimum-scale=1, width=device-width">
     <link href="//fonts.googleapis.com/css?family=Open+Sans:400italic,300,400,600,700" rel="stylesheet">
 
-    <link href="/css/default.css" rel="stylesheet">
+    <link href="/cloud/css/default.css" rel="stylesheet">
 
     <!--[if lt IE 9]>
     <link rel="stylesheet" media="screen" href='/c/cp-ie.css'>
     <![endif]-->
-    <script src="/js/floodlight.js"></script>
+    <script src="/cloud/js/floodlight.js"></script>
   </head>
   <body>
 
@@ -89,7 +89,7 @@
   <h2><a name="h.uqaerl3hr1ju" id="h.uqaerl3hr1ju"></a>Understanding the Organization of the Application</h2>
   <p>After downloading and installing the zip file containing the skeletal application, you will now explore the source code.</p>
   <p>[ <a href="#h.ny1hfzenntp4">Go to Python steps</a> ]</p>
-  <h3><a name="h.cyxbi9xyo2rn" id="h.cyxbi9xyo2rn"></a><img src="../images/articles/app-engine-start-building-and-managing-your-application/arrow-green.png">Java -- Explore the Application</h3>
+  <h3><a name="h.cyxbi9xyo2rn" id="h.cyxbi9xyo2rn"></a><img src="/cloud/images/articles/app-engine-start-building-and-managing-your-application/arrow-green.png">Java -- Explore the Application</h3>
   <p>The Java version of the application uses both <a href="http://en.wikipedia.org/wiki/Servlets">servlets</a> and <a href="http://en.wikipedia.org/wiki/JavaServer_Pages">JSPs</a>. You will use Eclipse to explore the code.</p>
   <p>JSPs are servlets defined using static content (such as HTML) mixed with Java code. JSP lets you put Java inside HTML pages. Using JSP, a page can switch back and forth between HTML and Java. JSP is not specific to App Engine, and this tutorial does not attempt to teach it or explain its syntax. There are many books and websites that teach JSP. However, just to get you started, we provide a <a href="https://docs.google.com/a/google.com/document/d/1WRFkLpg09aXx_ftYv8UnmUOeTLPUiZiSTXSefbNU9kg/edit#">JSP Quick Reference</a> that summarizes the syntax that is used in this tutorial.</p>
   <p>You can read more about using JSPs with App Engine in the developer documentation:</p>
@@ -144,7 +144,7 @@
 
   <p>The project  also contains a folder more_JSPs that contains additional JSPS that you will move into the main war file as needed as you work through the exercises.</p>
 
-  <h3><a name="h.ny1hfzenntp4" id="h.ny1hfzenntp4"></a><img src="../images/articles/app-engine-start-building-and-managing-your-application/arrow-blue.png">Python -- Explore the Application</h3>
+  <h3><a name="h.ny1hfzenntp4" id="h.ny1hfzenntp4"></a><img src="/cloud/images/articles/app-engine-start-building-and-managing-your-application/arrow-blue.png">Python -- Explore the Application</h3>
 
   <p>The Python version of the application uses the Jinja2 templating language. Jinja2 is modelled after Django&rsquo;s templates.  Jinja2 is not specific to App Engine, and this tutorial does not attempt to teach Jinja2 or explain its syntax. For information, see the <a href="http://jinja.pocoo.org/docs/">Jinja2 website</a>.</p>
 
@@ -234,7 +234,7 @@ etc...
   <p>Before deploying the application, you need to configure it in web.xml (Java) or app.yaml (<a href="#h.4wsj7fmw1dum">Python</a>).</p>
   <p>[ <a href="#h.4wsj7fmw1dum">Go to Python steps</a> ]</p>
 
-  <h3><a name="h.yi0inxlapum4" id="h.yi0inxlapum4"></a><img src="../images/articles/app-engine-start-building-and-managing-your-application/arrow-green.png">Java: Configure the Servlets and JSPs</h3>
+  <h3><a name="h.yi0inxlapum4" id="h.yi0inxlapum4"></a><img src="/cloud/images/articles/app-engine-start-building-and-managing-your-application/arrow-green.png">Java: Configure the Servlets and JSPs</h3>
   <p>You can configure servlets and JSPs in web.xml, to specify which class or file implements each servlet or JSP and to map them to a URL. You can also configure them to control who can access them, but you will do that in the next exercise.</p>
   <p><span class="bld indnt">Note:</span> You will not be able to run your application on localhost or deploy it to App Engine until you have fixed the web.xml configuration file.</p>
   <p><span class="bld">1.</span> Edit war &gt; WEB-INF &gt; web.xml.<br>
@@ -306,7 +306,7 @@ etc...
 &lt;/welcome-file-list&gt;
 </pre>
 
-  <h3><a name="h.4wsj7fmw1dum" id="h.4wsj7fmw1dum"></a><img src="../images/articles/app-engine-start-building-and-managing-your-application/arrow-blue.png">Python: Configure the handlers for the pages</h3>
+  <h3><a name="h.4wsj7fmw1dum" id="h.4wsj7fmw1dum"></a><img src="/cloud/images/articles/app-engine-start-building-and-managing-your-application/arrow-blue.png">Python: Configure the handlers for the pages</h3>
   <p><span class="bld">1.</span> Edit main.py</p>
   <p><span class="bld">2.</span> Configure the pages in the application.</p>
   <p>The code snippet below, app = webapp2.WSGIApplication(...), shows how App Engine associates a web page&rsquo;s URI  with the Python class, (the handler), that will process the page.</p>
@@ -393,7 +393,7 @@ app = webapp2.WSGIApplication([
   <h2><a name="h.aqnxab4u87tx" id="h.aqnxab4u87tx"></a>Use the Admin Console to Monitor your Application</h2>
   <p>Now that you have deployed your application in production, this is a good opportunity to start learning your way around the Admin Console.</p>
 
-  <h3><a name="h.eh5fy96mnagn" id="h.eh5fy96mnagn"></a><img height="12" src="../images/articles/app-engine-start-building-and-managing-your-application/arrow-grey.png" width="40">View Charts</h3>
+  <h3><a name="h.eh5fy96mnagn" id="h.eh5fy96mnagn"></a><img height="12" src="/cloud/images/articles/app-engine-start-building-and-managing-your-application/arrow-grey.png" width="40">View Charts</h3>
 
   <ol>
       <li>Open the Admin Console for your application by going to <a href="https://appengine.google.com/">https://appengine.google.com/</a> and selecting your application.<br>
@@ -409,14 +409,14 @@ app = webapp2.WSGIApplication([
       <li>Refresh the page, then scroll down to the section &ldquo;Current Load.&rdquo; You can see the statistics for each of the pages.</li>
   </ol>
 
-  <h3><a name="h.807w1lo9bziy" id="h.807w1lo9bziy"></a><img src="../images/articles/app-engine-start-building-and-managing-your-application/arrow-grey.png">View Logs</h3>
+  <h3><a name="h.807w1lo9bziy" id="h.807w1lo9bziy"></a><img src="/cloud/images/articles/app-engine-start-building-and-managing-your-application/arrow-grey.png">View Logs</h3>
   <ol class="c18 lst-kix_ee6i3izacuex-0 start" start="1">
       <li>In the Admin Console, In the Main section, go to the Logs pages, and review the logs.<br>
           Every request to the application is recorded in the logs.</li>
       <li>In the deployed Conference Central application, go to any of the pages.</li>
       <li>Back in the logs, confirm your request was recorded.</li>
   </ol>
-  <h3><a name="h.tovtggl67hdz" id="h.tovtggl67hdz"></a><img src="../images/articles/app-engine-start-building-and-managing-your-application/arrow-grey.png">View quotas and billing settings</h3>
+  <h3><a name="h.tovtggl67hdz" id="h.tovtggl67hdz"></a><img src="/cloud/images/articles/app-engine-start-building-and-managing-your-application/arrow-grey.png">View quotas and billing settings</h3>
   <ol>
       <li>In the Admin Console, in the Main section in the left hand navigation panel, select <span class="bld">Quota Details</span>. Scroll down the page to see all the things that have a daily quota.</li>
       <li>In the <span class="bld">Billing</span> (or <span class="bld">Resources</span>) section in the left hand navigation panel, select Billing Settings (or Billing Status).</li>
@@ -425,7 +425,7 @@ app = webapp2.WSGIApplication([
       <li>There is no need to enable billing.</li>
   </ol>
 
-  <h3><a name="h.2q8ulehm673z" id="h.2q8ulehm673z"></a><img src="../images/articles/app-engine-start-building-and-managing-your-application/arrow-grey.png">View application settings</h3>
+  <h3><a name="h.2q8ulehm673z" id="h.2q8ulehm673z"></a><img src="/cloud/images/articles/app-engine-start-building-and-managing-your-application/arrow-grey.png">View application settings</h3>
   <ol>
       <li>In the Admin Console, in the Administration section in the left hand navigation panel, select Application Settings.</li>
       <li>Scroll down the page to see the settings that you can change. Notice that you can delete or duplicate your application on this page.</li>

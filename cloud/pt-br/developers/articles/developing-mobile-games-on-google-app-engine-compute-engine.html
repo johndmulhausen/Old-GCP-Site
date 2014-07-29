@@ -68,7 +68,7 @@
 <p>A criação do seu jogo para dispositivos móveis no Google Cloud Platform pode ajudá-lo a atender a esses requisitos.</p>
 <h1>Arquitetura de soluções de jogos para dispositivos móveis</h1>
 <p>Este diagrama (Fig. 1) ilustra a arquitetura de alto nível de jogos para dispositivos móveis no Google Cloud Platform:</p>
-<figure><img src="../images/articles/developing-mobile-games-on-gcp/architecture-diag.jpg" alt="">
+<figure><img src="/cloud/images/articles/developing-mobile-games-on-gcp/architecture-diag.jpg" alt="">
 <figcaption>Figura 1. Diagrama da arquitetura da solução de jogos para dispositivos móveis proposta</figcaption>
 </figure>
 <h3>Visão geral detalhada</h3>
@@ -108,19 +108,19 @@
 <p>A arquitetura discutida neste artigo pode ser aplicada a muitos jogos para dispositivos móveis. O cenário de exemplo apresentado a seguir é usado principalmente para deixar o design mais específico. A maioria das opções de design discutidas também é relevante para outros jogos para dispositivos móveis.</p>
 <h3>Griddler: jogo de charadas com modo multijogador para dispositivos móveis</h3>
 <p>Imagine que você deseja criar um jogo de charadas ou trivialidades com modo multijogador para dispositivos móveis chamado Griddler. Dois ou mais jogadores competem para resolver o máximo de charadas possível em um período de tempo específico. Essa competição será chamada de partida. Todos os jogadores em uma partida visualizam a mesma grade de letras. Por exemplo, uma como esta:</p>
-<figure><img src="../images/articles/developing-mobile-games-on-gcp/griddler.png" height="195" width="196" alt="">
+<figure><img src="/cloud/images/articles/developing-mobile-games-on-gcp/griddler.png" height="195" width="196" alt="">
 <figcaption>Figura 2. Captura de tela do Griddler</figcaption>
 </figure>
 <p>Todos os jogadores são desafiados com a mesma série de charadas de uma grade específica. Por exemplo, a primeira charada pode ser:</p>
-<figure><img src="../images/articles/developing-mobile-games-on-gcp/sample-q.png" height="396" width="222" alt="">
+<figure><img src="/cloud/images/articles/developing-mobile-games-on-gcp/sample-q.png" height="396" width="222" alt="">
 <figcaption>Figura 3. Pergunta de exemplo no Griddler</figcaption>
 </figure>
 <p>Todos os jogadores precisam descobrir as respostas e realizar um gesto de toque para formar a palavra correta usando as letras adjacentes na grade, como mostrado na Figura 4.</p>
-<figure><img src="../images/articles/developing-mobile-games-on-gcp/answ-entry-griddler.png" height="396" width="222" alt="">
+<figure><img src="/cloud/images/articles/developing-mobile-games-on-gcp/answ-entry-griddler.png" height="396" width="222" alt="">
 <figcaption>Figura 4. Entrada da resposta no Griddler</figcaption>
 </figure>
 <p>Quando um jogador descobre a palavra correta ou decide pular uma determinada charada, ele é desafiado com outra charada para a mesma grade, como mostrado na Figura 5.</p>
-<figure><img src="../images/articles/developing-mobile-games-on-gcp/riddle-griddler.png" height="396" width="222" alt="">
+<figure><img src="/cloud/images/articles/developing-mobile-games-on-gcp/riddle-griddler.png" height="396" width="222" alt="">
 <figcaption>Figura 5. Outra charada de exemplo no Griddler</figcaption>
 </figure>
 <p>Os clientes do jogo recuperam a definição do tabuleiro do back-end de jogos para dispositivos móveis no início de cada partida. Dessa forma, é possível adicionar novos tabuleiros e charadas sem que seja necessário atualizar os aplicativos clientes. A sequência de charadas de um determinado tabuleiro pode ser aleatória ou fixa. A definição do tabuleiro recuperada inclui as charadas para ele e o tempo estabelecido para uma determinada partida. Quando o tempo estabelecido chega ao fim, o jogador que resolveu mais charadas vence. No caso de empate, o jogador que resolveu as charadas mais rápido vence.</p>
@@ -165,7 +165,7 @@ InvitationResult invitationResult = gameBackend.sendInvitation(
 gameId, playerId)).execute();
 </pre>
 <p>Normalmente, é preciso executar essa chamada de maneira assíncrona para evitar o bloqueio das chamadas de rede no thread de IU (interface de usuário).</p>
-<figure><img src="../images/articles/developing-mobile-games-on-gcp/communication.png" height="341" width="579" alt="">
+<figure><img src="/cloud/images/articles/developing-mobile-games-on-gcp/communication.png" height="341" width="579" alt="">
 <figcaption>Figura 6. Comunicação entre o cliente do jogo para dispositivos móveis e o back-end do jogo</figcaption>
 </figure>
 <a name="storedata" id="storedata"></a>
@@ -175,11 +175,11 @@ gameId, playerId)).execute();
 <p>Os outros tipos de dados que precisam ser armazenados fora dos dispositivos do cliente são entidades e propriedades específicas. Essas propriedades e entidades podem incluir informações sobre o nível mais alto concluído em um jogo para dispositivos móveis e outras informações sobre os jogadores, como apelidos, registro do dispositivo dos jogadores para notificações push, registros das compras no jogo e outros dados específicos do jogo.</p>
 <p>As propriedades dessas entidades também podem incluir uma referência a objetos armazenados no Google Cloud Storage, como o nome do objeto e, opcionalmente, um URL ou nome de intervalo.</p>
 <p>Com o back-end para dispositivos móveis hospedado no Google App Engine, o <a href="https://developers.google.com/datastore/">Cloud Datastore</a> é o local recomendado para o armazenamento dessas entidades. Ele oferece um armazenamento de dados de objetos NoSQL,<sup><a href="#ftnt6" name="ftnt_ref6" id="ftnt_ref6">[6]</a></sup> altamente escalável e sem esquema, com transações atômicas e um mecanismo de consulta.</p>
-<figure><img src="../images/articles/developing-mobile-games-on-gcp/storing-data.jpg" height="350" width="305" alt="">
+<figure><img src="/cloud/images/articles/developing-mobile-games-on-gcp/storing-data.jpg" height="350" width="305" alt="">
 <figcaption>Figura 7. Armazenamento de dados</figcaption>
 </figure>
 <p>No Griddler, por exemplo, as entidades chave são:</p>
-<figure><img src="../images/articles/developing-mobile-games-on-gcp/key-entities.jpg" alt="">
+<figure><img src="/cloud/images/articles/developing-mobile-games-on-gcp/key-entities.jpg" alt="">
 <figcaption>Figura 8. Entidades chave usadas no Griddler</figcaption>
 </figure>
 <ul>
@@ -198,7 +198,7 @@ gameId, playerId)).execute();
 <p>Quando a carga aumenta, o back-end de jogos para dispositivos móveis pode ser composto por milhares de instâncias individuais que lidam com as solicitações. Se os clientes de jogos para dispositivos móveis estiverem realizando solicitações frequentes para o back-end para recuperar os mesmos dados, é possível otimizar o acesso aos dados para evitar recuperar os dados do armazenamento persistente para todas as solicitações.</p>
 <p>Um back-end executado no Google App Engine pode usar um serviço distribuído de cache de dados na memória chamado <a href="http://developers.google.com/appengine/docs/java/memcache/">Memcache</a> para armazenar e recuperar os dados acessados com frequência (Fig. 9). O uso do Memcache não apenas permite que o back-end de jogos para dispositivos móveis apresente um desempenho melhor e seja melhor escalonado, mas também reduz o custo de acessar o Armazenamento de dados do App Engine, pois o aplicativo enviará menos solicitações para ele.</p>
 <p>Por exemplo, podem haver milhões de jogadores jogando Griddler ao mesmo tempo e, potencialmente, haver até centenas de milhares de jogadores resolvendo charadas do mesmo tabuleiro (grade de letras) simultaneamente. Em vez de sempre recuperar as definições do Tabuleiro, faz sentido armazená-las em cache.</p>
-<figure><img src="../images/articles/developing-mobile-games-on-gcp/optimizing-data.jpg" height="421" width="352" alt="">
+<figure><img src="/cloud/images/articles/developing-mobile-games-on-gcp/optimizing-data.jpg" height="421" width="352" alt="">
 <figcaption>Figura 9. Otimização do acesso aos dados com o Memcache</figcaption>
 </figure>
 <h3>Processamento assíncrono com filas de tarefas</h3>
@@ -216,7 +216,7 @@ gameId, playerId)).execute();
 <li><a href="http://developer.android.com/google/gcm/index.html">Google Cloud Messaging</a> para Android (GCM): um serviço do Google com o qual é possível enviar dados para usuários que tenham seu aplicativo cliente de jogo para dispositivos móveis instalado nos dispositivos com Android deles. Se você usar o Eclipse, o esqueleto de código poderá ser gerado pelo <a href="http://developers.google.com/eclipse/">Plug-in do Google para o Eclipse.</a></li>
 <li>Sockets API<sup><a href="#ftnt7" name="ftnt_ref7" id="ftnt_ref7">[7]</a></sup> para enviar notificações push usando o Serviço de Notificação Push da Apple® para os usuários do iOS. Para começar, leia o artigo sobre <a href="https://cloud.google.com/resources/articles/ios-push-notifications">Osquestração de notificações push para iOS no Google Cloud Platform</a> e revise o <a href="https://github.com/GoogleCloudPlatform/solutions-ios-push-notification-sample-backend-java">código de exemplo publicado no Github.</a></li>
 </ul>
-<figure><img src="../images/articles/developing-mobile-games-on-gcp/push-notification.png" height="438" width="457" alt="">
+<figure><img src="/cloud/images/articles/developing-mobile-games-on-gcp/push-notification.png" height="438" width="457" alt="">
 <figcaption>Figura 10. Notificação push</figcaption>
 </figure>
 <a name="sapi" id="sapi"></a>
@@ -226,7 +226,7 @@ gameId, playerId)).execute();
 <p>Por exemplo, o Griddler poderia ser expandido para incluir alguma dica visual para uma determinada charada. Poderia também permitir que os usuários fizessem upload de imagens representativas dos seus avatares.</p>
 <p>Se for possível preparar essas imagens em resoluções e formatos otimizados para seus clientes de jogo para dispositivos móveis, então será possível fazer upload delas para o <a href="http://developers.google.com/storage/docs/getting-started">Google Cloud Storage</a> e fornecer URLs diretos para essas imagens aos clientes. Essa abordagem pode ser muito bem escalonada, uma vez que permite que os clientes para dispositivos móveis recuperem as imagens diretamente do armazenamento em nuvem escalável, sem envolver o código do back-end para dispositivos móveis.</p>
 <p>Em alguns casos, é possível manipular e processar imagens, além de armazená-las. Por exemplo, forneça as imagens em tamanhos ajustados dinamicamente de acordo com a resolução dos dispositivos do cliente. Nesses casos, use o <a href="https://developers.google.com/appengine/docs/java/images/">Serviço de imagens</a> do Google App Engine para redimensionar, girar, virar e cortar imagens, assim como melhorar fotografias usando um algoritmo pré-definido. É possível realizar essas operações em imagens do Google Cloud Storage, além de outras fontes. As imagens modificadas podem ser fornecidas aos clientes diretamente da infraestrutura dinâmica de fornecimento de imagens disponibilizada pelo Google, sem envolver o código do back-end de jogos para dispositivos móveis. O código é responsável apenas por usar a Images Service API para receber o URL correto da imagem e por fornecer esse URL aos clientes de jogos para dispositivos móveis.</p>
-<figure><img src="../images/articles/developing-mobile-games-on-gcp/serving-processing-imgs.jpg" height="373" width="467" alt="">
+<figure><img src="/cloud/images/articles/developing-mobile-games-on-gcp/serving-processing-imgs.jpg" height="373" width="467" alt="">
 <figcaption>Figura 11. Fornecimento e processamento de imagens</figcaption>
 </figure>
 <a name="scheduled" id="scheduled"></a>
@@ -234,7 +234,7 @@ gameId, playerId)).execute();
 <p>Além de processar solicitações dos clientes de jogo para dispositivos móveis de maneira síncrona por meio do Google Cloud Endpoints e de maneira assíncrona usando as filas de tarefas, o código do back-end de jogos para dispositivos móveis pode precisar realizar processamentos em vários intervalos regulares ou semirregulares. Por exemplo, você deseja que o back-end de jogos para dispositivos móveis envie notificações push aos jogadores que não usam seu jogo há um determinado número de dias e incentivá-los a jogar novamente e deseja realizar esse processamento em momentos específicos do dia.</p>
 <p>O back-end de jogos para dispositivos móveis também poderia atualizar alguns dados armazenados em cache no Memcache a cada cinco minutos ou atualizar as estatísticas dos principais jogadores a cada 15 minutos.</p>
 <p>Com o código do back-end de jogos para dispositivos móveis executado no Google App Engine, é fácil configurar essas tarefas agendadas usando o <a href="http://developers.google.com/appengine/docs/java/config/cron">Cron Service</a>. É possível configurá-lo para invocar determinados URLs no back-end para dispositivos móveis nos intervalos solicitados ou momentos específicos.</p>
-<figure><img src="../images/articles/developing-mobile-games-on-gcp/scheduled-jobs.jpg" height="282" width="412" alt="">
+<figure><img src="/cloud/images/articles/developing-mobile-games-on-gcp/scheduled-jobs.jpg" height="282" width="412" alt="">
 <figcaption>Figura 12. Tarefas agendadas com o Cron Service</figcaption>
 </figure>
 <h2>Serviços relacionados a jogos do Google Play</h2>
@@ -265,9 +265,9 @@ gameId, playerId)).execute();
 <h4>Aplicativos de exemplo</h4>
 <ul>
 <li>Jogo Griddler com modo multijogador para dispositivos móveis<br>
-<a href="https://github.com/GoogleCloudPlatform/solutions-griddler-sample-backend-java" target="popout">[Back-end em Java]</a> <a href="https://github.com/GoogleCloudPlatform/solutions-griddler-sample-android-client" target="popout">[Cliente Android]</a> <a href="https://github.com/GoogleCloudPlatform/solutions-griddler-sample-iOS-client" target="popout">[Cliente iOS]</a> <img src="../images/ext-link-8px.png" height="8px" width="8px" alt=""></li>
+<a href="https://github.com/GoogleCloudPlatform/solutions-griddler-sample-backend-java" target="popout">[Back-end em Java]</a> <a href="https://github.com/GoogleCloudPlatform/solutions-griddler-sample-android-client" target="popout">[Cliente Android]</a> <a href="https://github.com/GoogleCloudPlatform/solutions-griddler-sample-iOS-client" target="popout">[Cliente iOS]</a> <img src="/cloud/images/ext-link-8px.png" height="8px" width="8px" alt=""></li>
 <li>Jogo Cloud Adventure para Android baseado em texto<br>
-<a href="https://github.com/GoogleCloudPlatform/solutions-cloud-adventure-sample-backend-java" target="popout">[Back-end em Java]</a> <a href="https://github.com/GoogleCloudPlatform/solutions-cloud-adventure-sample-android-client" target="popout">[Cliente Android]</a> <img src="../images/ext-link-8px.png" height="8px" width="8px" alt=""></li>
+<a href="https://github.com/GoogleCloudPlatform/solutions-cloud-adventure-sample-backend-java" target="popout">[Back-end em Java]</a> <a href="https://github.com/GoogleCloudPlatform/solutions-cloud-adventure-sample-android-client" target="popout">[Cliente Android]</a> <img src="/cloud/images/ext-link-8px.png" height="8px" width="8px" alt=""></li>
 </ul>
 <hr></div>
 </div>

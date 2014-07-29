@@ -9,12 +9,12 @@
     <meta name="viewport" content="initial-scale=1, minimum-scale=1, width=device-width">
     <link href="//fonts.googleapis.com/css?family=Open+Sans:400italic,300,400,600,700" rel="stylesheet">
 
-    <link href="/css/default.css" rel="stylesheet">
+    <link href="/cloud/css/default.css" rel="stylesheet">
 
     <!--[if lt IE 9]>
     <link rel="stylesheet" media="screen" href='/c/cp-ie.css'>
     <![endif]-->
-    <script src="/js/floodlight.js"></script>
+    <script src="/cloud/js/floodlight.js"></script>
   </head>
   <body>
 
@@ -46,7 +46,7 @@
 	<p>The following figure shows the main components of such application. Notice that the example in this tutorial only applies to the Android platform.</p>
 
 	<figure>
-		<img src="../images/articles/app-engine-backend-tutorial/cloud-endpoints.jpg">
+		<img src="/cloud/images/articles/app-engine-backend-tutorial/cloud-endpoints.jpg">
 		<figcaption>Figure 1 Mobile Assistant Components</figcaption>
 	</figure>
 
@@ -125,7 +125,7 @@
 	</ol>
 
 	<figure>
-		<img src="../images/articles/app-engine-backend-tutorial/new-android-app.png">
+		<img src="/cloud/images/articles/app-engine-backend-tutorial/new-android-app.png">
 		<figcaption>Figure 2 Android Application wizard</figcaption>
 	</figure>
 
@@ -179,7 +179,7 @@
 		<li value="6">Create the <span class="ital">CheckInEndpoint.java</span> class and related client library by following the steps described in: <a href="#ecdp">Entity Class Design Pattern</a>. The following figure shows the entry for the client library in the <span class="ital">MobileAssistant</span> client project.<br>
 
 			<figure>
-				<img src="../images/articles/app-engine-backend-tutorial/source-view.png">
+				<img src="/cloud/images/articles/app-engine-backend-tutorial/source-view.png">
 				<figcaption>Figure 3 CheckIn Endpoint Client Library</figcaption>
 			</figure>
 		</li>
@@ -238,7 +238,7 @@ endpoint.checkInEndpoint().insertCheckIn(checkin).execute();
 		<li>In the <span class="bld">Package Explorer</span>, in the <span class="ital">MobileAssistant</span> project, expand the <span class="ital">CloudEndPointUtils.java</span> class.</li>
 		<li>In the editor, open the <span class="ital">CloudEndPointUtils</span> and set LOCAL_ANDROID_RUN = true as shown next.<br>
 			<figure>
-				<img src="../images/articles/app-engine-backend-tutorial/cloud-endpoints-utils.png">
+				<img src="/cloud/images/articles/app-engine-backend-tutorial/cloud-endpoints-utils.png">
 			</figure>
 			<p>This indicates that the <span class="ital">MobileAssistant</span> client application connects to the local d evelopment server.</p>
 		</li>
@@ -257,13 +257,13 @@ endpoint.checkInEndpoint().insertCheckIn(checkin).execute();
 		</li>
 		<li>In the browser of your development server, enter the following URL <a href="http://localhost:8888/_ah/admin">http://localhost:8888/_ah/admin</a>. You will get a display similar to the following:<br>
 			<figure>
-				<img src="../images/articles/app-engine-backend-tutorial/no-app-id-console3.png">
+				<img src="/cloud/images/articles/app-engine-backend-tutorial/no-app-id-console3.png">
 				<figcaption>Figure 4 Datastore viewer</figcaption>
 			</figure>
 		</li>
 		<li>Click <span class="bld">List Entities</span>. This displays the <span class="ital">CheckIn</span> entity instance that contains the fictitious store ID. You should look for an entity with <span class="ital">placeid = StoreNo123</span>, as shown in the following figure. T his proves that the client communicates with the backend.<br>
 			<figure>
-				<img src="../images/articles/app-engine-backend-tutorial/no-app-id-console4.png">
+				<img src="/cloud/images/articles/app-engine-backend-tutorial/no-app-id-console4.png">
 				<figcaption>Figure 5 CheckIn entity list</figcaption>
 			</figure>
 			<p>With this, you have completed the preliminary steps in creating the mobile a pplication infrastructure.</p>
@@ -416,7 +416,7 @@ nobody@nowhere.com
 		<li>In the Package Explorer, in debug mode, first start the <span class="ital">MobileAssistant-AppEngine</span> as a Web application then the <span class="ital">MobileAssistant-AppEngine</span> as an Android application, as you did when testing the CheckIn class.</li>
 		<li>Unlock the emulator to display the places information, as shown next.<br>
 			<figure>
-				<img src="../images/articles/app-engine-backend-tutorial/mobile-assistant-sm.jpg">
+				<img src="/cloud/images/articles/app-engine-backend-tutorial/mobile-assistant-sm.jpg">
 				<figcaption>Figure 6 Android Emulator Display Store Information</figcaption>
 			</figure>
 		</li>
@@ -463,7 +463,7 @@ nobody@nowhere.com
 		<li>Run the client (emulator). Refer to similar steps you followed in the previous section.</li>
 		<li>Unlock the emulator (click on the lock icon and drag it to the right, outside the emulator image). This displays the UI and places information, as shown next. Notice that the buttons are not functional.
 			<figure>
-				<img src="../images/articles/app-engine-backend-tutorial/mobile-assistant2.png">
+				<img src="/cloud/images/articles/app-engine-backend-tutorial/mobile-assistant2.png">
 				<figcaption>Figure 7 Android Emulator UI and Places</figcaption>
 			</figure>
 		</li>
@@ -640,14 +640,14 @@ return result;
 		<li>
 			Select <span class="bld">Offer</span> in the drop-down list as shown in the next figure.
 			<figure>
-				<img src="../images/articles/app-engine-backend-tutorial/no-app-id-console2.png">
+				<img src="/cloud/images/articles/app-engine-backend-tutorial/no-app-id-console2.png">
 				<figcaption>Figure 8 Offer entity class</figcaption>
 			</figure>
 		</li>
 		<li>
 			Click <span class="bld">List Entities</span>. This displays the offers information you uploaded, as shown in the following figure. This assures that the test data has been uploaded in the datastore.<br>
 			<figure>
-				<img src="../images/articles/app-engine-backend-tutorial/no-app-id-console.png">
+				<img src="/cloud/images/articles/app-engine-backend-tutorial/no-app-id-console.png">
 				<figcaption>Figure 9 Offers information</figcaption>
 			</figure>
 		</li>
@@ -661,7 +661,7 @@ return result;
 		<li>
 			Click on any store location. You should get the display of the offers and recommendations as shown in the next figure. Notice that at this stage of the implementation the information is the same for each store.
 			<figure>
-				<img src="../images/articles/app-engine-backend-tutorial/mobile-assis.png">
+				<img src="/cloud/images/articles/app-engine-backend-tutorial/mobile-assis.png">
 				<figcaption>Figure 10 Android Emulator Offers and Recommendations</figcaption>
 			</figure>
 		</li>

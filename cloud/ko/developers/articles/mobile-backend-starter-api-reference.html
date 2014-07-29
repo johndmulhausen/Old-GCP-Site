@@ -91,12 +91,12 @@
 </ul>
 </li>
 </ul>
-<figure><img src="../images/articles/mobile-backend-starter-baas-paas/securitymodel.png" alt="">
+<figure><img src="/cloud/images/articles/mobile-backend-starter-baas-paas/securitymodel.png" alt="">
 <figcaption>그림 1: Cloud Backend API의 클래스 다이어그램</figcaption>
 </figure>
 <h2><a name="dawcb" id="dawcb"></a>(A) Cloud Backend API로 Datastore 액세스</h2>
 <p>Cloud Backend API의 핵심 기능은 클라이언트에서 바로 액세스할 수 있는 <a href="https://developers.google.com/appengine/docs/java/datastore/overview">App Engine Datastore</a> 기능의 하위 집합을 만드는 것입니다. 따라서 Datastore에서 CRUD(Create, Read, Update, Delete - 생성, 읽기, 업데이트 및 삭제) 작업 및 쿼리를 실행하기 위해 서버 측 코드를 작성하지 않아도 됩니다.</p>
-<figure><img src="../images/articles/mobile-backend-starter-baas-paas/api-classes.png" alt="">
+<figure><img src="/cloud/images/articles/mobile-backend-starter-baas-paas/api-classes.png" alt="">
 <figcaption>그림 2: Cloud Backend API 클래스</figcaption>
 </figure>
 <h3><a name="pdice" id="pdice"></a>CloudEntity에 데이터 입력</h3>
@@ -477,7 +477,7 @@ public void <span class="bld">onBroadcastMessageReceived</span>(List&lt;CloudEnt
 }
 </pre>
 <p>위의 예제는 브로드캐스팅 메시지에서 속성 메시지와 <span class="bld">기간</span>을 가져와 기간을 나타내는 메시지가 함께 토스트를 표시합니다. 'Admin Console'(관리콘솔)의 'Mobile Backend'(모바일 백엔드) 설정 페이지에 있는 'Send Cloud Message'(클라우드 메시지 전송) 섹션에서 이를 테스트할 수 있습니다.</p>
-<p><img src="../images/articles/mobile-backend-starter-baas-paas/messaging.png" alt=""></p>
+<p><img src="/cloud/images/articles/mobile-backend-starter-baas-paas/messaging.png" alt=""></p>
 <p>방명록 앱을 실행하고 <span class="bld">Send</span>(전송)을 클릭합니다. 그러면 앱에서 메시지를 토스트로 확인할 수 있습니다.</p>
 <p>브로드캐스팅이란 <span class="code">topicId <span class="bld">_broadcast</span></span>가 있는 또 다른 클라우드 메시지에 불과합니다. <span class="code">CloudBackendActivity</span> 클래스는 자동으로 <span class="code">topicId</span>를 수신하여 <span class="code">topicId</span>로 전송된 모든 메시지를 받습니다.</p>
 <p>액티비티 내부에서 백엔드의 <span class="code">createBroadcastMessage()</span> 메소드를 사용하여 브로드캐스팅 메시지를 생성합니다. 이어서 백엔드 <span class="code">sendCloudMessage()</span> 메소드를 메시지와 함께 호출합니다.</p>
@@ -501,7 +501,7 @@ cb.<span class="bld">sendCloudMessage(ce)</span>;
 <li><span class="bld">Open</span>(열림) — 인증되지 않은 모든 요청이 허용됨</li>
 <li><span class="bld">Secured by client IDs</span>(클라이언트 ID로 보안 설정됨) — 클라이언트 ID 및 Google 계정으로 인증된 호출만 허용됨</li>
 </ul>
-<img src="../images/articles/mobile-backend-starter-baas-paas/authentication.png" alt="">
+<img src="/cloud/images/articles/mobile-backend-starter-baas-paas/authentication.png" alt="">
 <p>'열림' 모드는 개발 시에만 사용해야 하며, 인증되지 않은 호출이 허용되므로 장시간 열어 두면 안 됩니다. 프로젝트 ID를 알고 있는 모든 사용자가 백엔드에서 호출할 수 있습니다. 제작 시에는 '열림' 모드를 사용하지 마세요.</p>
 <p>제작 시에는 '클라이언트 ID로 보안 설정됨' 모드를 사용하는 것이 가장 좋습니다. 이 모드를 사용하면 다음 두 가지로 인증된 호출만 허용합니다.</p>
 <ul>
@@ -620,7 +620,7 @@ protected void <span class="bld">onPostCreate()</span> {
 <h4>추가 정보</h4>
 <ul>
 <li><a href="mobile-backend-starter.html">개요</a></li>
-<li><a href="http://developers.google.com/cloud/samples/mbs/" target="popout">시작하기 <img src="../images/ext-link-8px.png" height="8px" width="8px" alt=""></a></li>
+<li><a href="http://developers.google.com/cloud/samples/mbs/" target="popout">시작하기 <img src="/cloud/images/ext-link-8px.png" height="8px" width="8px" alt=""></a></li>
 </ul>
 <hr></div>
 </div>

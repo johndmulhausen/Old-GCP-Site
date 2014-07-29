@@ -10,12 +10,12 @@
     <link rel="apple-touch-icon" href="//cloud.google.com/_static/images/apple-touch-icon.png">
     <link href="//fonts.googleapis.com/css?family=Open+Sans:400italic,300,400,600,700" rel="stylesheet">
 
-    <link href="/css/default.css" rel="stylesheet">
+    <link href="/cloud/css/default.css" rel="stylesheet">
 
     <!--[if lt IE 9]>
     <link rel="stylesheet" media="screen" href='/c/cp-ie.css'>
     <![endif]-->
-    <script src="/js/floodlight.js"></script>
+    <script src="/cloud/js/floodlight.js"></script>
   </head>
   <body>
 
@@ -76,7 +76,7 @@
   <p>JMeter runs on Windows, Mac and Linux. It supports various protocols for testing and provides a visual UI (User Interface) for configuring the load tests. See Figure 1 for a screenshot of the JMeter UI:</p>
 
   <figure>
-		<img src="../images/articles/config-ssh-port-forw-tut/jmeter-ui.png">
+		<img src="/cloud/images/articles/config-ssh-port-forw-tut/jmeter-ui.png">
 		<figcaption>Figure 1. Screenshot of the JMeter UI</figcaption>
 	</figure>
 
@@ -90,7 +90,7 @@
   <p> In order to simulate an actual load situation, the test scenario must be carefully built in such a way that the system can mimic the behavior of actual users as closely as possible.</p>
 
   <figure>
-		<img src="../images/articles/config-ssh-port-forw-tut/load-testing.jpg">
+		<img src="/cloud/images/articles/config-ssh-port-forw-tut/load-testing.jpg">
 		<figcaption>Figure 2. Using JMeter for load testing</figcaption>
 	</figure>
 
@@ -99,7 +99,7 @@
   <p>During the load test, results from all servers in the JMeter cluster are sent to the client. Results are consolidated and displayed on the JMeter client screen (Fig. 3). </p>
 
   <figure>
-		<img src="../images/articles/config-ssh-port-forw-tut/apache-jmeter.png">
+		<img src="/cloud/images/articles/config-ssh-port-forw-tut/apache-jmeter.png">
 		<figcaption>Figure 3. Screenshot of consolidated load testing results on the JMeter Client</figcaption>
 	</figure>
 
@@ -113,7 +113,7 @@
   <p>When the JMeter client remotely starts the test, communication between the JMeter client and the JMeter server is established via the JMeter connection and the Remote Method Invocation (RMI). The JMeter connection is always initiated by the JMeter client. The TCP connection for RMI, on the other hand,  is started in both directions. This results in the creation of a total of three connections (Fig. 4).</p>
 
   <figure>
-		<img src="../images/articles/config-ssh-port-forw-tut/jmeter-connections.png">
+		<img src="/cloud/images/articles/config-ssh-port-forw-tut/jmeter-connections.png">
 		<figcaption>Figure 4. Connections between the JMeter Client and the JMeter Server</figcaption>
 	</figure>
 
@@ -121,7 +121,7 @@
   <p>Compute Engines uses 1:1 NAT for its external IP address. Each Compute Engine instance uses  its internal private IP address as its IP address. This, then, prevents the  JMeter remote server from being able to connect to the JMeter client because the client is behind a firewall and has no public address. The client, on the other hand, cannot connect to the remote server because the server reports its internal private IP address as its public address (Fig. 5).
 
   <figure>
-		<img src="../images/articles/config-ssh-port-forw-tut/firewalls.jpg">
+		<img src="/cloud/images/articles/config-ssh-port-forw-tut/firewalls.jpg">
 		<figcaption>Figure 5. Firewalls pose communication challenge between the JMeter client and JMeter servers</figcaption>
 	</figure>
 
@@ -129,7 +129,7 @@
   <p>Secure Shell (SSH) has a functionality called SSH port forwarding (or SSH tunneling), where a connection is forwarded to a different port where the actual communication is made on the SSH connection. The port forwarding can be done either on the SSH client or the SSH server side. With port forwarding, you can set up ports that allow the JMeter client and server to connect to each other.</p>
 
   <figure>
-		<img src="../images/articles/config-ssh-port-forw-tut/forw-connections.jpg">
+		<img src="/cloud/images/articles/config-ssh-port-forw-tut/forw-connections.jpg">
 		<figcaption>Figure 6. Forwarding connections to a different port</figcaption>
 	</figure>
 
@@ -157,7 +157,7 @@ ssh -R  B:127.0.0.1: A &lt;username&gt;@&lt;server&gt;
   </ul>
 
   <figure>
-		<img src="../images/articles/config-ssh-port-forw-tut/forw-config.png">
+		<img src="/cloud/images/articles/config-ssh-port-forw-tut/forw-config.png">
 		<figcaption>Figure 7. An example of a port forwarding configuration for three connections</figcaption>
 	</figure>
 
@@ -447,7 +447,7 @@ mode=Statistical
 
   
     
-    <script src="/js/base.min.js"></script>
+    <script src="/cloud/js/base.min.js"></script>
     
   
 

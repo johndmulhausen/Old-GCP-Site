@@ -10,12 +10,12 @@
     <link rel="apple-touch-icon" href="//cloud.google.com/_static/images/apple-touch-icon.png">
     <link href="//fonts.googleapis.com/css?family=Open+Sans:400italic,300,400,600,700" rel="stylesheet">
 
-    <link href="/css/default.css" rel="stylesheet">
+    <link href="/cloud/css/default.css" rel="stylesheet">
 
     <!--[if lt IE 9]>
     <link rel="stylesheet" media="screen" href='/c/cp-ie.css'>
     <![endif]-->
-    <script src="/js/floodlight.js"></script>
+    <script src="/cloud/js/floodlight.js"></script>
   </head>
   <body>
 
@@ -54,7 +54,7 @@
   <p>In WWM, players specify a web site and a 3D maze is generated from the visual layout of the web page. The player uses an Android/iOS device as a game controller to roll a ball on the maze by tilting the device.</p>
 
   <figure>
-    <img src="../images/articles/real-time-gaming-with-node-js-websocket-on-gcp/world-wide-maze.png">
+    <img src="/cloud/images/articles/real-time-gaming-with-node-js-websocket-on-gcp/world-wide-maze.png">
     <figcaption>Figure 1: World Wide Maze: Real-time 3D maze game playable with Chrome and mobile devices</figcaption>
   </figure>
 
@@ -62,7 +62,7 @@
   <p>When it was released, WWM was featured in many major online media outlets<sup><a href="#ftnt2" name="ftnt_ref2" id="ftnt_ref2">[2]</a></sup> and attracted a large increase in users. This resulted in a huge spike of traffic (as shown in Figure 2) with 6,600 simultaneous users across the world, 7,000 page views per minutes, and 1,000 requests per second. As the system was designed to utilize the massive scalability of Google Cloud Platform, it handled the large traffic spike by smoothly scaling out the Compute Engine and App Engine instances.</p>
 
   <figure>
-    <img src="../images/articles/real-time-gaming-with-node-js-websocket-on-gcp/traffic-analysis.png">
+    <img src="/cloud/images/articles/real-time-gaming-with-node-js-websocket-on-gcp/traffic-analysis.png">
     <figcaption>Figure 2: Google Analytics Report for WWM Traffic Analysis</figcaption>
   </figure>
 
@@ -80,7 +80,7 @@
   <p>The architecture of the World Wide Maze utilizes many components of the Google Cloud Platform as highlighted in Figure 3:</p>
 
   <figure>
-    <img src="../images/articles/real-time-gaming-with-node-js-websocket-on-gcp/client-server.png">
+    <img src="/cloud/images/articles/real-time-gaming-with-node-js-websocket-on-gcp/client-server.png">
     <figcaption>Figure 3: Client and server components of World Wide Maze</figcaption>
   </figure>
 
@@ -127,14 +127,14 @@
   <p>App Engine is used for the Web Frontends and connects Game Screens with available Compute Engine instances. App Engine takes HTTP requests, serves static files to the clients, and dispatches each game session to available WebSocket Servers.</p>
 
   <figure>
-    <img src="../images/articles/real-time-gaming-with-node-js-websocket-on-gcp/ae-web-frontend.png">
+    <img src="/cloud/images/articles/real-time-gaming-with-node-js-websocket-on-gcp/ae-web-frontend.png">
     <figcaption>Figure 4: Using App Engine for Web Frontend</figcaption>
   </figure>
 
   <p>The biggest advantages of App Engine are its automatic scalability and availability. App Engine applications must follow the design guidelines related to each <a href="https://developers.google.com/appengine/docs/whatisgoogleappengine">unique App Engine runtime environment</a> and various <a href="https://developers.google.com/appengine/docs/java/apis">App Engine service</a> <a href="https://developers.google.com/appengine/docs/java/apis">APIs</a>. The runtime and APIs are carefully designed to abstract datacenters as one massive parallel computer that powers your application and isolates it from single machine failures. As a result of these powerful features, developers can access a platform that is highly tolerant to events such as huge traffic spikes, rapid change in the number of users and services, and datacenter-wide downtime.</p>
 
   <figure>
-    <img src="../images/articles/real-time-gaming-with-node-js-websocket-on-gcp/traffic-peak.png">
+    <img src="/cloud/images/articles/real-time-gaming-with-node-js-websocket-on-gcp/traffic-peak.png">
     <figcaption>Figure 5: Traffic peak on WWM&rsquo;s App Engine admin console</figcaption>
   </figure>
 
@@ -144,7 +144,7 @@
   <p>Initially, the developers were considering using only App Engine to implement the whole game service, and evaluating <a href="https://developers.google.com/appengine/docs/java/channel/">Channel API</a> and <a href="https://developers.google.com/appengine/docs/java/sockets/">Socket API</a> of App Engine if they are capable of supporting the real-time communication requirements. But they found those APIs are not suited for implementing the bi-directional connection for WWM that can transmit messages less than 200 ms. So they decided to combine App Engine with Compute Engine to implement the connection with  WebSocket Servers.</p>
 
   <figure>
-    <img src="../images/articles/real-time-gaming-with-node-js-websocket-on-gcp/webSocket-server.png">
+    <img src="/cloud/images/articles/real-time-gaming-with-node-js-websocket-on-gcp/webSocket-server.png">
     <figcaption>Figure 6: Using Compute Engine for WebSocket Server</figcaption>
   </figure>
 
@@ -154,14 +154,14 @@
   <p>Another interesting feature of WWM is that any website can be turned into a playable stage by using an on-demand rendering system.</p>
 
   <figure>
-    <img src="../images/articles/real-time-gaming-with-node-js-websocket-on-gcp/storage-builder.png">
+    <img src="/cloud/images/articles/real-time-gaming-with-node-js-websocket-on-gcp/storage-builder.png">
     <figcaption>Figure 7: Using Compute Engine for Stage Builder</figcaption>
   </figure>
 
   <p>Stage generation is completed by the Stage Builder, which runs on Compute Engine. Figure 5 shows how the stage generation process works:</p>
 
   <figure>
-    <img src="../images/articles/real-time-gaming-with-node-js-websocket-on-gcp/generation-process.png">
+    <img src="/cloud/images/articles/real-time-gaming-with-node-js-websocket-on-gcp/generation-process.png">
     <figcaption>Figure 8: Stage generation process</figcaption>
   </figure>
 
@@ -184,7 +184,7 @@
   <p>The following figure depicts the measurements resulting from load testing the Stage Builder, where 36 virtual clients continually sent rendering requests to a single instance. The average turnaround time for each stage building request was about 12 sec.
 
   <figure>
-    <img src="../images/articles/real-time-gaming-with-node-js-websocket-on-gcp/load-testing.png">
+    <img src="/cloud/images/articles/real-time-gaming-with-node-js-websocket-on-gcp/load-testing.png">
     <figcaption>Figure 9: Load Testing result of Stage Builder (CPU usage)</figcaption>
   </figure>
 
@@ -306,7 +306,7 @@
 
   
     
-    <script src="/js/base.min.js"></script>
+    <script src="/cloud/js/base.min.js"></script>
     
   
 

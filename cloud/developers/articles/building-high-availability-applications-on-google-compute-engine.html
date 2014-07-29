@@ -9,7 +9,7 @@
     <meta name="viewport" content="initial-scale=1, minimum-scale=1, width=device-width">
     <link href="//fonts.googleapis.com/css?family=Open+Sans:400italic,300,400,600,700" rel="stylesheet">
 
-    <link href="/css/default.css" rel="stylesheet">
+    <link href="/cloud/css/default.css" rel="stylesheet">
 
     <!--[if lt IE 9]>
     <link rel="stylesheet" media="screen" href='/c/cp-ie.css'>
@@ -52,7 +52,7 @@
   <p>Although there are almost countless ways to build distributed systems on Compute Engine, this paper focuses on a common web application example. The general pattern, in which most of the servers are stateless and the persistent data is replicated, is common among many types of distributed systems. Additionally, load balancing is used to distribute the requests among a pool of stateless servers. The following figure highlights the core components of the web application architecture and one potential multizone implementation.</p>
 
   <figure>
-    <img src="../images/articles/building-high-availability-applications-on-gce/web-overview.jpg">
+    <img src="/cloud/images/articles/building-high-availability-applications-on-gce/web-overview.jpg">
     <figcaption>Figure 1: Web application example overview</figcaption>
   </figure>
 
@@ -73,7 +73,7 @@
   <p>The load balancer can be viewed as a high-throughput component with no business logic.  Although this section details configuring and migrating a load balancer, most steps are common to migrating any system between instances. The load balancer instance is responsible for distributing the requests sent to its IP address. Figure 2 highlights the key implementation components and the process for migrating between zones.</p>
 
   <figure>
-    <img src="../images/articles/building-high-availability-applications-on-gce/load-balancer-config.jpg">
+    <img src="/cloud/images/articles/building-high-availability-applications-on-gce/load-balancer-config.jpg">
     <figcaption>Figure 2: Load balancer configuration and migration</figcaption>
   </figure>
 
@@ -101,7 +101,7 @@
   <p>The web server component is generally stateless and contains the core business logic for handling requests from load balancers and other web servers. To satisfy incoming requests, the web servers typically connect to a database that maintains the stateful system data. To migrate web servers to a new zone, the web servers must be created and registered with the required components to start successfully serving traffic. The following figure presents the overall architecture and highlights the core web server components used in the example application:</p>
 
   <figure>
-    <img src="../images/articles/building-high-availability-applications-on-gce/web-server-config.jpg">
+    <img src="/cloud/images/articles/building-high-availability-applications-on-gce/web-server-config.jpg">
     <figcaption>Figure 3: Web server configuration and migration</figcaption>
   </figure>
 
@@ -131,7 +131,7 @@
   <p>Database servers are among the most complex components to migrate between zones. They are critical because they maintain the majority of an application's state while serving a large number of requests. Although newer distributed database technology has improved the process of moving between zones, significant planning, automation, and testing is required to successfully create a new collection of database servers. The following figure gives an overview of the components involved in migrating a database server between zones.</p>
 
   <figure>
-    <img src="../images/articles/building-high-availability-applications-on-gce/database-config.jpg">
+    <img src="/cloud/images/articles/building-high-availability-applications-on-gce/database-config.jpg">
     <figcaption>Figure 4: Database configuration and migration</figcaption>
   </figure>
 

@@ -136,15 +136,15 @@
 <p>次の一連の例では、パフォーマンスの要件に応じた永続ディスク サイズの選択方法を示します。</p>
 <h4><a name="h.oiyyop5msnju" id="h.oiyyop5msnju"></a>例 1</h4>
 <p>データベースのインストール環境（小規模なランダム IO）で、ランダムな書き込みの最大レートとして 300 IOPS が必要だとします:</p>
-<img src="../images/articles/ced-price-performance-and-persistence/formula-00.png" alt="">
+<img src="/cloud/images/articles/ced-price-performance-and-persistence/formula-00.png" alt="">
 <p>したがって、200 GB 以上の永続ディスクを購入します。</p>
 <h4><a name="h.7p3k6pqwxxss" id="h.7p3k6pqwxxss"></a>例 2</h4>
 <p>データベースのインストール環境（小規模なランダム IO）で、ランダムな読み取りの最大レートとして 450 IOPS が必要だとします:</p>
-<img src="../images/articles/ced-price-performance-and-persistence/formula-01.png" alt="">
+<img src="/cloud/images/articles/ced-price-performance-and-persistence/formula-01.png" alt="">
 <p>したがって、1,500 GB 以上の永続ディスクを購入します。</p>
 <h4><a name="h.d8in6cl5deyd" id="h.d8in6cl5deyd"></a>例 3</h4>
 <p>データベースのインストール環境（小規模な書き込み）で、ランダムな書き込みの最大レートとして 4,800 IOPs が必要だとします:</p>
-<img src="../images/articles/ced-price-performance-and-persistence/formula-02.png" alt="">
+<img src="/cloud/images/articles/ced-price-performance-and-persistence/formula-02.png" alt="">
 <p>合計で 3,200 GB 以上の永続ディスクが必要です。Compute Engine の単一インスタンスの最大パフォーマンスは 1,800 IOPs（1 コアまたは 2 コア）または 2,400 IOPs（4 コアまたは 8 コア）です。この場合データを次のように分割できます:</p>
 <ul>
 <li>1 コアまたは 2 コアのインスタンス 3 つで、それぞれ 1,033 GB 以上の永続ディスク、または</li>

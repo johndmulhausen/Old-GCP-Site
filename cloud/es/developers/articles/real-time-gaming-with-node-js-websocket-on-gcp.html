@@ -39,12 +39,12 @@
 <h3><a name="h.wciq2otu8ut" id="h.wciq2otu8ut"></a>Chrome Experiments: World Wide Maze</h3>
 <p><a href="http://www.chromeexperiments.com/">Chrome Experiments</a> es un sitio web creado por Google para mostrar las aplicaciones web creativas que se han creado con las tecnologías HTML5 más recientes. Una de esas aplicaciones web es un juego de laberintos en 3D interactivo llamado <a href="http://www.chromeexperiments.com/detail/world-wide-maze/">World Wide Maze</a> (WWM), desarrollado por el equipo de Chrome en cooperación con colaboradores externos.<sup><a href="#ftnt1" name="ftnt_ref1" id="ftnt_ref1">[1]</a></sup></p>
 <p>En WWM, los jugadores especifican un sitio web y se genera un laberinto en 3D a partir del diseño visual de la página web. El jugador utiliza un dispositivo Android o iOS como controlador para el juego en el que la finalidad es inclinar el dispositivo para hacer rodar una bola por el laberinto.</p>
-<figure><img src="../images/articles/real-time-gaming-with-node-js-websocket-on-gcp/world-wide-maze.png" alt="">
+<figure><img src="/cloud/images/articles/real-time-gaming-with-node-js-websocket-on-gcp/world-wide-maze.png" alt="">
 <figcaption>Figura 1. World Wide Maze, juego de laberintos en 3D en tiempo real para jugar con Chrome y dispositivos móviles</figcaption>
 </figure>
 <p>Una de las características únicas de WWM es que todas las interacciones en tiempo real las organiza Google Cloud Platform, en concreto, <a href="https://cloud.google.com/products/compute-engine">Google Compute Engine</a> y <a href="https://cloud.google.com/products/">Google App Engine</a>. Para crear una experiencia de juego eficiente, la baja latencia entre la entrada del controlador y la pantalla de juego es un requisito clave.</p>
 <p>Cuando se publicó, WWM apareció en muchos de los principales medios de comunicación online<sup><a href="#ftnt2" name="ftnt_ref2" id="ftnt_ref2">[2]</a></sup> y atrajo a un gran aumento de usuarios. Esto dio lugar a un gran aumento en el tráfico (como se muestra en la figura 2), con 6.600 usuarios simultáneos en todo el mundo, 7.000 páginas vistas por minuto y 1.000 solicitudes por segundo. Como el sistema se había diseñado para utilizar la enorme escalabilidad de Google Cloud Platform, el gran aumento en el tráfico se gestionó mediante una escala progresiva de las instancias del Compute Engine y de App Engine.</p>
-<figure><img src="../images/articles/real-time-gaming-with-node-js-websocket-on-gcp/traffic-analysis.png" alt="">
+<figure><img src="/cloud/images/articles/real-time-gaming-with-node-js-websocket-on-gcp/traffic-analysis.png" alt="">
 <figcaption>Figura 2. Informe de Google Analytics para el análisis del tráfico de WWM</figcaption>
 </figure>
 <p>Uno de los mayores retos al crear un juego en tiempo real es poder gestionar las conexiones persistentes entre los clientes y los servidores. En WWM, la comunicación del controlador y de la pantalla de juego en tiempo real se tiene que gestionar en un plazo de 200 ms. Esta comunicación en tiempo real incluye:</p>
@@ -57,7 +57,7 @@
 <h2><a name="h.hxaxg4tq3bcq" id="h.hxaxg4tq3bcq"></a>Información general sobre la arquitectura</h2>
 <h3><a name="h.50ijektnspqp" id="h.50ijektnspqp"></a>Organización de instancias de Google Compute Engine con Google App Engine</h3>
 <p>La arquitectura de World Wide Maze utiliza muchos componentes de Google Cloud Platform, tal como se destaca en la figura 3:</p>
-<figure><img src="../images/articles/real-time-gaming-with-node-js-websocket-on-gcp/client-server.png" alt="">
+<figure><img src="/cloud/images/articles/real-time-gaming-with-node-js-websocket-on-gcp/client-server.png" alt="">
 <figcaption>Figura 3. Componentes de cliente y de servidor de World Wide Maze</figcaption>
 </figure>
 <ol>
@@ -94,27 +94,27 @@
 <p>Uno de los aspectos interesantes de la arquitectura es cómo se combinan los puntos fuertes de App Engine y de Compute Engine para crear una solución escalable para juegos en tiempo real. Es importante entender las diversas consideraciones de diseño que se deben llevar a cabo para cada plataforma a fin de "colocar a la persona adecuada en la tarea correcta" al diseñar la arquitectura.</p>
 <h3><a name="h.niw6sokgh88z" id="h.niw6sokgh88z"></a>Uso de Google App Engine para interfaces web</h3>
 <p>App Engine se utiliza para las interfaces web y conecta las pantallas de juego a las instancias disponibles de Compute Engine. App Engine recibe solicitudes HTTP, publica archivos estáticos para los clientes y envía cada sesión de juego a servidores disponibles de WebSocket.</p>
-<figure><img src="../images/articles/real-time-gaming-with-node-js-websocket-on-gcp/ae-web-frontend.png" alt="">
+<figure><img src="/cloud/images/articles/real-time-gaming-with-node-js-websocket-on-gcp/ae-web-frontend.png" alt="">
 <figcaption>Figura 4. Uso de App Engine para interfaces web</figcaption>
 </figure>
 <p>Las mayores ventajas de App Engine son su escalabilidad automática y su disponibilidad. Las aplicaciones de App Engine deben seguir las directrices de diseño relacionadas con cada <a href="https://developers.google.com/appengine/docs/whatisgoogleappengine">entorno único de tiempo de ejecución de App Engine</a> y con varias <a href="https://developers.google.com/appengine/docs/java/apis">API</a> del <a href="https://developers.google.com/appengine/docs/java/apis">servicio de App Engine</a>. El momento de ejecución y las API están diseñados cuidadosamente para sintetizar centros de datos en un equipo paralelo enorme que permita poner en funcionamiento tu aplicación y que la aísle de los fallos de equipos únicos. Gracias a estas características de gran eficiencia, los desarrolladores pueden acceder a una plataforma que proporciona una tolerancia alta a eventos como picos enormes en el tráfico, el cambio rápido en el número de usuarios y de servicios, y el tiempo de inactividad de todo un centro de datos.</p>
-<figure><img src="../images/articles/real-time-gaming-with-node-js-websocket-on-gcp/traffic-peak.png" alt="">
+<figure><img src="/cloud/images/articles/real-time-gaming-with-node-js-websocket-on-gcp/traffic-peak.png" alt="">
 <figcaption>Figura 5. Pico de tráfico en la Consola de administración de App Engine para WWM</figcaption>
 </figure>
 <p>Como WWM utilizaba App Engine como distribuidor de la carga, fue capaz de gestionar el tráfico máximo, que alcanzó las 1.000 solicitudes por segundo, tal como se muestra en la figura 5. Esto fue posible mediante el uso de las características de escala automática de App Engine para enviar sin sobresaltos las sesiones de juego en tiempo real a las instancias de Compute Engine.</p>
 <h3><a name="h.3jrjcfu0g87k" id="h.3jrjcfu0g87k"></a>Uso de Compute Engine para el servidor de WebSocket</h3>
 <p>En un principio, los desarrolladores se plantearon utilizar únicamente App Engine para implementar todo el servicio de juego y evaluar la <a href="https://developers.google.com/appengine/docs/java/channel/">API de canal</a> y la <a href="https://developers.google.com/appengine/docs/java/sockets/">API de socket</a> de App Engine si lograban cumplir los requisitos de comunicación en tiempo real. Sin embargo, se encontraron con que esas API no eran adecuadas para implementar la conexión bidireccional para WWM, que puede transmitir mensajes en menos de 200 ms. Por eso decidieron combinar App Engine con Compute Engine para implementar la conexión con los servidores de WebSocket.</p>
-<figure><img src="../images/articles/real-time-gaming-with-node-js-websocket-on-gcp/webSocket-server.png" alt="">
+<figure><img src="/cloud/images/articles/real-time-gaming-with-node-js-websocket-on-gcp/webSocket-server.png" alt="">
 <figcaption>Figura 6. Uso de Compute Engine para el servidor de WebSocket</figcaption>
 </figure>
 <p>Para implementar el servidor de WebSocket, se ejecutan Node.js y Socket.IO en las instancias de Compute Engine. <a href="http://nodejs.org/">Node.js</a> es una popular plataforma de momento de ejecución de JavaScript que cuenta con un modelo de E/S que no hace bloqueos y que está basado en eventos. Este modelo está diseñado para las aplicaciones en tiempo real. <a href="http://socket.io/">Socket.IO</a> es una popular biblioteca para Node.js que proporciona un transporte en tiempo real entre el navegador web y el servidor de Node.js. Es compatible con varios protocolos y métodos de transporte en tiempo real, por ejemplo, WebSocket, socket Flash, <a href="http://en.wikipedia.org/wiki/Comet_(programming)">Comet</a> y encuestas. De manera predeterminada, Socket.IO intenta conectarse al protocolo de WebSocket para un mejor rendimiento. Si detecta que el protocolo no está disponible en la red en cuestión, recurre a otros protocolos e intenta establecer una conexión en tiempo real que pueda tener un mayor rendimiento.</p>
 <h3><a name="h.85altn8fe0xj" id="h.85altn8fe0xj"></a>Uso de Compute Engine para el creador de escenarios</h3>
 <p>Otra característica interesante de WWM es que, si se usa un sistema de visualización a petición, cualquier sitio web puede convertirse en un escenario de juego.</p>
-<figure><img src="../images/articles/real-time-gaming-with-node-js-websocket-on-gcp/storage-builder.png" alt="">
+<figure><img src="/cloud/images/articles/real-time-gaming-with-node-js-websocket-on-gcp/storage-builder.png" alt="">
 <figcaption>Figura 7. Uso de Compute Engine para el creador de escenarios</figcaption>
 </figure>
 <p>La generación de escenarios la completa el generador de escenarios, que se ejecuta en Compute Engine. En la figura se 5 muestra cómo funciona el proceso de generación de escenarios:</p>
-<figure><img src="../images/articles/real-time-gaming-with-node-js-websocket-on-gcp/generation-process.png" alt="">
+<figure><img src="/cloud/images/articles/real-time-gaming-with-node-js-websocket-on-gcp/generation-process.png" alt="">
 <figcaption>Figura 8. Proceso de generación de escenarios</figcaption>
 </figure>
 <p>Estos son los pasos para generar escenarios:</p>
@@ -132,7 +132,7 @@
 <h3><a name="h.c1dbzf1ae2u5" id="h.c1dbzf1ae2u5"></a>Prueba de la carga de World Wide Maze</h3>
 <p>Para determinar la escalabilidad del creador de escenarios, los desarrolladores llevaron a cabo una completa prueba de la carga en la agrupación de instancias del creador de escenarios. El creador de escenarios se encarga de crear niveles de juego con PhantomJS y consume mucha CPU. El límite superior de frecuencia de los escenarios que una sola instancia puede crear se determina en función de la prueba de la carga.</p>
 <p>En la siguiente figura se muestran las medidas resultantes de las pruebas de la carga llevadas a cabo en el creador de escenarios, donde 36 clientes virtuales envían sin cesar solicitudes de visualización a una sola instancia. El tiempo medio de respuesta para cada solicitud de creación de un escenario fue de unos 12 segundos.</p>
-<figure><img src="../images/articles/real-time-gaming-with-node-js-websocket-on-gcp/load-testing.png" alt="">
+<figure><img src="/cloud/images/articles/real-time-gaming-with-node-js-websocket-on-gcp/load-testing.png" alt="">
 <figcaption>Figura 9. Resultado de las pruebas de la carga en el creador de escenarios (uso de la CPU)</figcaption>
 </figure>
 <p>Los límites de los servidores de WebSocket se determinaron mediante pruebas de la carga. Las pruebas confirmaron que los servidores pueden gestionar 360 conexiones de WebSocket con una latencia media de 175 ms.</p>

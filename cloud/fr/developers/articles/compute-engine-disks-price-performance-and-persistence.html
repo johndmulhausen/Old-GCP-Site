@@ -136,15 +136,15 @@
 <p>Les exemples ci-dessous illustrent la sélection d'une taille de disque persistant sur la base des besoins en termes de performances.</p>
 <h4><a name="h.oiyyop5msnju" id="h.oiyyop5msnju"></a>Exemple&nbsp;1</h4>
 <p>Supposons que vous possédiez une installation de base de données (E/S aléatoires de petite taille) qui nécessite une vitesse d'écriture aléatoire maximale de 300&nbsp;IOPS&nbsp;:</p>
-<img src="../images/articles/ced-price-performance-and-persistence/formula-00.png" alt="">
+<img src="/cloud/images/articles/ced-price-performance-and-persistence/formula-00.png" alt="">
 <p>Vous allez donc acheter un disque persistant d'au moins 200&nbsp;Go.</p>
 <h4><a name="h.7p3k6pqwxxss" id="h.7p3k6pqwxxss"></a>Exemple&nbsp;2</h4>
 <p>Supposons que vous possédiez une installation de base de données (E/S aléatoires de petite taille) qui nécessite une vitesse de lecture aléatoire maximale de 450&nbsp;IOPS&nbsp;:</p>
-<img src="../images/articles/ced-price-performance-and-persistence/formula-01.png" alt="">
+<img src="/cloud/images/articles/ced-price-performance-and-persistence/formula-01.png" alt="">
 <p>Vous allez donc acheter un disque persistant d'au moins 1&nbsp;500&nbsp;Go.</p>
 <h4><a name="h.d8in6cl5deyd" id="h.d8in6cl5deyd"></a>Exemple&nbsp;3</h4>
 <p>Supposons que vous possédiez une installation de base de données (petites opérations d'écriture) qui nécessite une vitesse d'écriture aléatoire maximale de 4&nbsp;800&nbsp;IOPs&nbsp;:</p>
-<img src="../images/articles/ced-price-performance-and-persistence/formula-02.png" alt="">
+<img src="/cloud/images/articles/ced-price-performance-and-persistence/formula-02.png" alt="">
 <p>Vous aurez besoin de disques persistants d'une taille cumulée d'au moins 3&nbsp;200&nbsp;Go. Notez que les performances maximales pour une seule instance Compute&nbsp;Engine est soit de 1&nbsp;800&nbsp;IOPs (1 ou 2&nbsp;cœurs) soit de 2&nbsp;400&nbsp;IOPs (4 ou 8&nbsp;cœurs). Vous pourrez alors partager vos données sur&nbsp;:</p>
 <ul>
 <li>trois instances de 1 ou 2&nbsp;cœurs ayant chacune un disque persistant d'au moins 1&nbsp;033&nbsp;Go, ou</li>

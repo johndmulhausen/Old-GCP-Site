@@ -10,12 +10,12 @@
     <link rel="apple-touch-icon" href="//cloud.google.com/_static/images/apple-touch-icon.png">
     <link href="//fonts.googleapis.com/css?family=Open+Sans:400italic,300,400,600,700" rel="stylesheet">
 
-    <link href="/css/default.css" rel="stylesheet">
+    <link href="/cloud/css/default.css" rel="stylesheet">
 
     <!--[if lt IE 9]>
     <link rel="stylesheet" media="screen" href='/c/cp-ie.css'>
     <![endif]-->
-    <script src="/js/floodlight.js"></script>
+    <script src="/cloud/js/floodlight.js"></script>
     <a href="https://plus.google.com/117105793163182226623" rel="publisher" class="hide">Google+</a>
   </head>
   <body>
@@ -46,14 +46,14 @@
   every large gaming service: <strong>Ranking</strong>.</p>
 
   <figure>
-  <img src="../images/articles/fast-ranking/image10.jpg">
+  <img src="/cloud/images/articles/fast-ranking/image10.jpg">
   <figcaption>Figure 1: Tomoaki Suzuki, App Engine lead engineer at Applibot, Inc.</figcaption>
   </figure>
 
   <p><a href="http://www.applibot.co.jp/e/index.php">Applibot</a> is one of the major social application providers in Japan. The uniqueness of the company is their extensive knowledge and experience in building super-scalable social game services on <a href="https://cloud.google.com/products/app-engine">Google App Engine</a>, the Platform as a Service (PaaS) offering from Google. Leveraging the power of the platform, Applibot has been quite successful in capturing business opportunities in the social game market, not only in Japan, but also in the United States. Applibot can certainly attest to its success.  Legend of the Cryptids (Figure 2), one of their largest titles, hit #1 in the Apple AppStore North America gaming category in Oct 2012. The Legend series recorded 4.7 million downloads. Another title, Gang Road, hit #1 on the AppStore Japan total sales ranking in Dec 2012.</p>
 
   <figure>
-  <img src="../images/articles/fast-ranking/image03.png">
+  <img src="/cloud/images/articles/fast-ranking/image03.png">
   <figcaption>Figure 2: <a href="Figure 2: Legend of the Criptids, #1 ranked game in the Apple AppStore in Oct 2012.">Legend of the Criptids</a>, #1 ranked game in the Apple AppStore in Oct 2012.</figcaption>
   </figure>
 
@@ -70,7 +70,7 @@
   <h3><a name="howtorank"></a>How do you calculate a rank?</h3>
 
   <figure>
-  <img src="../images/articles/fast-ranking/image01.png">
+  <img src="/cloud/images/articles/fast-ranking/image01.png">
   <figcaption>Figure 3: Each player has a score. How do you calculate their rank?</figcaption>
   </figure>
 
@@ -83,7 +83,7 @@
   <p>Tomoaki initially implemented this approach, but it took a few seconds to get each response. This  was too slow, too expensive, and performed progressively worse as scale increased.</p>
 
   <figure>
-  <img src="../images/articles/fast-ranking/image02.png">
+  <img src="/cloud/images/articles/fast-ranking/image02.png">
   <figcaption>Figure 4: The easiest way: Scan all players.</figcaption>
   </figure>
 
@@ -119,7 +119,7 @@
   <p>As player-score pairs are created and updated with the <code>SetScore</code> method, the Code Jam ranking library  builds an N-ary tree<sup>1</sup>. For example, let’s consider a tertiary tree that can count the number of players with scores in the range from 0 to 80 (Figure 5). The library stores the root node, which holds three numbers, as one entity. Each number corresponds to the number of players with scores in the sub-ranges 0 - 26, 27 - 53 and 54 - 80, respectively. The root node has a child node for each range, holding in turn three values for  players in the sub-ranges of the sub-range. The hierarchy needs four levels to store the number of players for 81 different score values.</p>
 
   <figure>
-  <img src="../images/articles/fast-ranking/image05.png">
+  <img src="/cloud/images/articles/fast-ranking/image05.png">
   <figcaption>Figure 5: Getting the rank of a score in a tertiary tree.</figcaption>
   </figure>
 
@@ -169,7 +169,7 @@
   <p>But Kaz soon found another issue. As he continued running the test over several minutes, he saw the throughput of the pull queue fluctuate from time to time (Figure 6). Specifically when he kept adding requests to  the queue with 200 tasks per second for several minutes, the queue suddenly stopped passing  tasks to the backend, and the latency for each task increased dramatically.</p>
 
   <figure>
-  <img src="../images/articles/fast-ranking/image04.png" style="width: 100%;">
+  <img src="/cloud/images/articles/fast-ranking/image04.png" style="width: 100%;">
   <figcaption>Figure 6: Performance fluctuation of pull queue.</figcaption>
   </figure>
 
@@ -194,7 +194,7 @@
   <p>Figure 7 shows the load testing result of the final PoC implementation with Queue Sharding. It effectively minimizes the performance fluctuations in the queues and can sustain 300 updates per second over several hours. Under usual load, each update is applied to Datastore within a few seconds of receiving the request.</p>
 
   <figure>
-  <img src="../images/articles/fast-ranking/image11.png" style="width: 100%;">
+  <img src="/cloud/images/articles/fast-ranking/image11.png" style="width: 100%;">
   <figcaption>Figure 7: Performance Graph of the solution.</figcaption>
   </figure>
 
@@ -277,7 +277,7 @@
   <h4>Computing the rank for a given score</h4>
 
   <figure>
-  <img src="../images/articles/fast-ranking/image08.png">
+  <img src="/cloud/images/articles/fast-ranking/image08.png">
   <figcaption>Figure 8: Distribution of Scores in Buckets.</figcaption>
   </figure>
 
@@ -340,7 +340,7 @@ return rank + b.upper_rank - 1
   <p>The accuracy of the bucket method depends on how many buckets there are, the rank of the player, and the distribution of the scores. Figure 9 shows results from our study of the accuracy of the rank estimates with different numbers of buckets.</p>
 
   <figure>
-  <img src="../images/articles/fast-ranking/image07.png">
+  <img src="/cloud/images/articles/fast-ranking/image07.png">
   <figcaption>Figure 9: Variation of Accuracy with number of buckets.</figcaption>
   </figure>
 
@@ -351,7 +351,7 @@ return rank + b.upper_rank - 1
   <p>In the test above, the use of uniformly distributed random numbers, where the cumulative distribution function is linear, favors the use of linear interpolation within the bucket, but the interpolation within buckets works well for any dense distribution of scores. Figure 10 shows the estimated and actual rank for an approximately normal distribution of scores.</p>
 
   <figure>
-  <img src="../images/articles/fast-ranking/image00.png">
+  <img src="/cloud/images/articles/fast-ranking/image00.png">
   <figcaption>Figure 10: Estimated rank with normal distribution</figcaption>
   </figure>
 
@@ -429,7 +429,7 @@ return rank + b.upper_rank - 1
 
   
     
-    <script src="/js/base.min.js"></script>
+    <script src="/cloud/js/base.min.js"></script>
     
   
 

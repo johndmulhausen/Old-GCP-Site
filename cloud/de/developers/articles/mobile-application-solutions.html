@@ -85,7 +85,7 @@
 <li>Google Cloud Endpoints für die Kommunikation zwischen den Clients und dem Back-End über die REST API und mit optionaler OAuth2-Authentifizierung</li>
 <li>Ihr mobiler Back-End-Anwendungscode, der in Google App Engine ausgeführt wird und für die Übermittlung von Anfragen der Clients zuständig ist</li>
 </ol>
-<figure><img src="../images/articles/mobile-app-1.jpg" alt="Wesentliche Komponenten" class="f-80">
+<figure><img src="/cloud/images/articles/mobile-app-1.jpg" alt="Wesentliche Komponenten" class="f-80">
 <figcaption>Abbildung 1. Hauptkomponenten der vorgeschlagenen mobilen Lösungsarchitektur</figcaption>
 </figure>
 <h3>Daten speichern</h3>
@@ -100,13 +100,13 @@
 <p>Wenn Ihr mobiles Back-End in Google App Engine gehostet wird, würde sich als Speicherplatz für diese Art von Daten der <a href="https://developers.google.com/appengine/docs/java/datastore/">App Engine-Datenspeicher</a> anbieten. Er bietet einen schemalosen NoSQL-Objektdatenspeicher<sup>[<a href="#fn-4" name="ref-4" id="ref-4">4</a>]</sup> mit einer Abfrage-Engine und atomischen Transaktionen. Diese Entitäten werden häufig Ressourcen zugeordnet, die über die Google Cloud Endpoints API freigeschaltet werden. Bei Verwendung geeigneter <a href="https://developers.google.com/appengine/docs/java/datastore/jpa/overview-dn2#Class_and_Field_Annotations">Annotationen</a> können Sie mit dem Google-Plug-in für Eclipse ein Codegerüst für typische list/get/insert/update/remove-Operationen mithilfe des App Engine-Datenspeichers erzeugen.</p>
 </li>
 </ol>
-<figure><img src="../images/articles/mobile-app-2.png" alt="Daten speichern" class="f-60">
+<figure><img src="/cloud/images/articles/mobile-app-2.png" alt="Daten speichern" class="f-60">
 <figcaption>Abbildung 2. Daten speichern</figcaption>
 </figure>
 <h3>Datenzugriff mit Memcache optimieren</h3>
 <p>Wenn Ihre mobilen Clients häufige Anfragen an das Back-End zum Abruf derselben Daten stellen, wäre es nicht optimal, diese Daten bei jeder Anfrage aus dem persistenten Speicher abzurufen. Wenn Sie zum Beispiel eine mobile Anwendung mit Filmkritiken erstellen, ist es wahrscheinlich, dass die Nutzer Kritiken über eine Handvoll Filme abrufen, die derzeit in den Kinos laufen, und wesentlich seltener Kritiken für die übrigen Tausenden von Filmen, die das Back-End im persistenten Speicher vorhält.</p>
 <p>Ein Back-End, das in Google App Engine ausgeführt wird, kann einen verteilten speicherinternen Datencache-Dienst namens <a href="https://developers.google.com/appengine/docs/java/memcache/">Memcache</a> nutzen, um Daten, auf die häufig zugegriffen wird, zu speichern und abzurufen (Abb.&nbsp;3). Mit Memcache können Sie Ihre mobile Lösung nicht nur für höhere Leistung und bessere Skalierung konfigurieren, sondern auch die Kosten für den Zugriff auf den App Engine-Datenspeicher senken, da Ihre Anwendung weniger Anfragen an den Datenspeicher senden wird</p>
-<figure><img src="../images/articles/mobile-app-3.png" alt="Datenzugriff optimieren" class="f-60">
+<figure><img src="/cloud/images/articles/mobile-app-3.png" alt="Datenzugriff optimieren" class="f-60">
 <figcaption>Abbildung 3. Datenzugriff mit Memcache optimieren</figcaption>
 </figure>
 <h3>Asynchrone Verarbeitung mit Aufgabenwarteschlangen</h3>
@@ -115,7 +115,7 @@
 <p>Normalerweise würden Sie den Dienst "Task Queue" so konfigurieren, dass die Aufgaben in der Warteschlange (<a href="https://developers.google.com/appengine/docs/java/taskqueue/overview-push">Push-Modell</a>) als HTTP-Anfragen für eine ausgewählte URL an den Code gesendet werden, der in Google App Engine ausgeführt wird. Ihre Anwendung kann diese Anfragen dann mithilfe von normalen Webanfrage-Handlern verarbeiten. Im obigen Beispiel könnte der Anfragen-Handler die Aufgabendaten aus der HTTP-Anfrage abrufen, nach Max' Freunden suchen und dann die einzelnen Freunde benachrichtigen, indem eine Push-Benachrichtigung gesendet wird. Sie können vorgeben, dass die Aufgaben durch dieselben Google App Engine-Instanzen verarbeitet werden, die Anfragen von mobilen Clients verarbeiten, oder <a href="https://developers.google.com/appengine/docs/java/taskqueue/overview-push#Push_Queues_and_Backends">durch dedizierte Instanzen</a>.</p>
 <p>Alternativ können Sie mit Ihrem Code die <a href="https://developers.google.com/appengine/docs/java/taskqueue/overview-pull">Aufgaben aus den Warteschlangen abrufen</a>. Dies kann entweder mithilfe des mobilen Back-End-Codes erfolgen, der in Google App Engine ausgeführt wird, oder mit dem Code außerhalb von App Engine, der zur Verarbeitung von Aufgaben durch Google Compute Engine-Instanzen verwendet wird.</p>
 <p>In jedem Fall ist die Verarbeitung von Aufgaben der zweithäufigste Einsatzzweck von in Google App Engine ausgeführtem benutzerdefinierten Code neben der Verarbeitung von Anfragen aus mobilen Clients über Google Cloud Endpoints, die weiter oben erwähnt wurde.</p>
-<figure><img src="../images/articles/mobile-app-4.png" alt="Asynchrone Verarbeitung" class="f-60">
+<figure><img src="/cloud/images/articles/mobile-app-4.png" alt="Asynchrone Verarbeitung" class="f-60">
 <figcaption>Abbildung 4. Asynchrone Verarbeitung mit Aufgabenwarteschlangen</figcaption>
 </figure>
 <h3 id="push-notification">Push-Benachrichtigungen</h3>
@@ -126,7 +126,7 @@
 <li>Sockets API<sup><a href="#fn-5" name="ref-5" id="ref-5">[5]</a></sup> – zum Senden von Push-Benachrichtigungen mit dem Apple®-Push-Benachrichtigungsdienst an iOS-Nutzer</li>
 </ul>
 <p>Ein Beispiel dafür wäre das Senden von Push-Benachrichtigungen an die Nutzer Ihrer mobilen Lösung, wenn deren Freund in ein Restaurant eincheckt oder eine Bewertung postet (Abb.&nbsp;5).</p>
-<figure><img src="../images/articles/mobile-app-5.png" alt="Push Notification Service" class="f-80">
+<figure><img src="/cloud/images/articles/mobile-app-5.png" alt="Push Notification Service" class="f-80">
 <figcaption>Abbildung 5. Push-Benachrichtigungen</figcaption>
 </figure>
 <h3 id="serving-static-content">Statische Inhalte bereitstellen</h3>
@@ -135,20 +135,20 @@
 <p>Wenn Ihre mobile Lösung eine verwaltbare Anzahl von statischen Bildern beinhaltet, können Sie diese (häufig in mehreren Auflösungen) in ein Paket mit Ihren nativen Android- und iOS-Anwendungen aufnehmen. Dies gilt zum Beispiel für verschiedene Symbole, die zu Ihrer Anwendung gehören und zur Erstellung der Benutzeroberfläche Ihrer Clientanwendungen herangezogen werden.</p>
 <p>Eine andere Kategorie von Bildern sind Bilder, die nicht Teil Ihrer Anwendungen sind, sondern sich eher auf die Daten beziehen, die von Ihrer Anwendung verarbeitet werden, zum Beispiel Miniaturansichten von Filmen in Ihrer filmbezogenen Anwendung, Bilder von Produkten, die über Ihre Anwendung als Geschenk verteilt werden, oder Avatare in Ihrem Spiel bzw. Ihren sozialen Anwendungen. Sie können solche Bilder in für Ihre mobilen Clients optimierten Auflösungen und Formaten speichern, sie in <a href="https://developers.google.com/storage/docs/getting-started">Google Cloud Storage</a> hochladen und anschließend den mobilen Clients direkte URLs zu diesen Bildern liefern. Dieser Ansatz ermöglicht eine ausgezeichnete Skalierung, weil die mobilen Clients die Bilder direkt ohne Beteiligung des mobilen Back-End-Codes aus dem skalierbaren Cloudspeicher abrufen können.</p>
 <p>In manchen Fällen ist zusätzlich zur Speicherung eine Be- und Verarbeitung von Bildern wünschenswert. Vielleicht möchten Sie die Bilder je nach Auflösung der Clientgeräte in dynamisch angepassten Größen bereitstellen. In solchen Fällen können Sie den Google App Engine-<a href="https://developers.google.com/appengine/docs/java/images/">Bilderdienst</a> für Größenänderung, Drehung, Spiegelung und Zuschneiden von Bildern sowie zur Verbesserung von Fotos anhand eines vordefinierten Algorithmus verwenden. Diese Operationen können mit Bildern aus Google Cloud Storage und anderen Quellen durchgeführt werden. Die modifizierten Bilder können dann aus der dynamischen, von Google bereitgestellten Infrastruktur für die Übermittlung von Bildern direkt, ohne Beteiligung Ihres mobilen Back-End-Codes, an die Clients geliefert werden. Ihr Code hat nur die Aufgabe, die Images Service API für den Abruf der passenden Bild-URL einzusetzen, und diese URL an die mobilen Clients zu übermitteln.</p>
-<figure><img src="../images/articles/mobile-app-6.png" alt="Bilder bereitstellen und verarbeiten" class="f-80">
+<figure><img src="/cloud/images/articles/mobile-app-6.png" alt="Bilder bereitstellen und verarbeiten" class="f-80">
 <figcaption>Abbildung 6. Bilder bereitstellen und verarbeiten</figcaption>
 </figure>
 <h3>Volltextsuche und geografische Umgebungssuche (standortbasiert)</h3>
 <p>Wenn Sie den Nutzern die Volltextsuche in von Ihrer mobilen Lösung verwalteten strukturierten Daten ermöglichen wollen, können Sie die <a href="https://developers.google.com/appengine/docs/java/search/">Search API</a><sup>[<a href="#fn-6" class="ref-6">6</a>] von Google App Engine nutzen</sup>. Wenn Ihre Anwendung beispielsweise den Zugriff auf ein großes und dynamisches Inventar von Objekten vorsieht, profitieren die Nutzer möglicherweise davon, dass sie Objekte durch die teilweise Eingabe des Namens oder der Beschreibung eines Objekts finden können, auch wenn Sie eine komfortable Touch-Oberfläche mit Kategorisierung, Seitenverwaltung usw. bereitstellen.</p>
 <p>Für die Verwendung der Search API können Sie "Dokumente" mit suchbaren Daten erstellen und anschließend diese Dokumente in einen Index aufnehmen. Ihr mobiles Back-End kann dann Suchabfragen, einschließlich Volltextsuchabfragen, erstellen und diese auf die "Dokumente" im Index anwenden. Im obigen Beispiel könnte jedes Objekt im Inventar einem "Dokument" im Index mit Eigenschaften wie Name, Beschreibung usw. zugeordnet werden.</p>
 <p>Ihre mobile Lösung kann außerdem eine geografische Umgebungssuche durchführen, wenn Sie zum Beispiel eine Liste mit Geschäften in der Nähe abrufen möchten. Sie müssen sich jedoch nicht selbst mit der komplexen Erstellung einer solchen Funktionalität befassen, indem Sie einfach die Search API für die <a href="https://developers.google.com/appengine/docs/java/search/overview#Performing_Location-Based_Searches">geografische Umgebungssuche</a>[<sup><a href="#fn-7" class="ref-7">7</a>]</sup> nutzen. Der grundsätzliche Arbeitsablauf ähnelt sehr dem oben beschriebenen Prozess für die Volltextsuche. Fügen Sie einfach den geografischen Ort als eine der Dokumenteigenschaften hinzu und nehmen Sie dann die geografische Umgebungsbedingung in Ihre Suchabfragen auf.</p>
-<figure><img src="../images/articles/mobile-app-7.png" alt="Volltextsuche und geografische Umgebungssuche" class="f-60">
+<figure><img src="/cloud/images/articles/mobile-app-7.png" alt="Volltextsuche und geografische Umgebungssuche" class="f-60">
 <figcaption>Abbildung 7. Volltextsuche und geografische Umgebungssuche</figcaption>
 </figure>
 <h3>Benutzerdefinierte Wartung und andere geplante Aufträge</h3>
 <p>Neben der synchronen Verarbeitung von Anfragen der mobilen Clients über Google Cloud Endpoints und der asynchronen Nutzung der Aufgabenwarteschlangen hat Ihr Back-End-Code möglicherweise noch einige Verarbeitungsaufgaben, die in verschiedenen regelmäßigen oder halbregelmäßigen Intervallen durchzuführen sind. Vielleicht wünschen Sie zum Beispiel, dass Ihre mobile Lösung jeden Morgen Push-Benachrichtigungen mit einem passenden lokalen Angebot an die mobilen Nutzer sendet oder täglich bzw. mehrmals am Tag diverse anwendungsspezifische Wartungsaufträge durchführt. Vielleicht bietet Ihre Anwendung auch Premium-Abonnements an. Wenn die Abonnements dann ablaufen oder demnächst ablaufen, könnten Sie verschiedene entsprechende Verarbeitungsaufgaben anstoßen, zum Beispiel mithilfe der <a href="https://developers.google.com/appengine/docs/java/mail/">Mail API</a> eine E-Mail senden, Nutzerkonten deaktivieren usw. Vielleicht wünschen Sie auch, dass Ihr mobiles Back-End alle 10&nbsp;Minuten einige in Memcache zwischengespeicherte Daten oder jede Stunde die Statistiken der besten Spieler aktualisiert.</p>
 <p>Wenn Ihr mobiler Back-End-Code in Google App Engine ausgeführt wird, ist die Konfiguration solcher geplanten Aufträge mit dem <a href="https://developers.google.com/appengine/docs/java/config/cron">Cron-Dienst</a> problemlos möglich. Sie können den Dienst so einrichten, dass einige URLs in Ihrem mobilen Back-End zu den angeforderten Intervallen oder Zeiten aufgerufen werden.</p>
-<figure><img src="../images/articles/mobile-app-8.png" alt="Cron-Dienst" class="f-60">
+<figure><img src="/cloud/images/articles/mobile-app-8.png" alt="Cron-Dienst" class="f-60">
 <figcaption>Abbildung 8. Geplante Aufträge mit Cron-Dienst</figcaption>
 </figure>
 <h3>Anwendungsprotokolle speichern und analysieren</h3>
@@ -157,15 +157,15 @@
 <p>Wenn Sie Ihr komplettes mobiles Back-End unter Verwendung von Laufzeitumgebungen erstellen, die von Google App Engine<sup>[<a href="#fn-8" name="ref-8" id="ref-8">8</a>]</sup> unterstützt werden, müssen Sie sich nicht mit Infrastrukturaspekten wie automatischer Skalierung, Lastenausgleich, Ausfallsicherung usw. befassen. Es bestehen allerdings möglicherweise Anforderungen, die über die Ausführung in der App Engine-Sandbox nicht erfüllt werden können. So könnten Sie zum Beispiel im Rahmen der asynchronen Anfrageverarbeitung oder Batch-Verarbeitung die Nutzung von C/C++ Bibliotheken, benutzerdefinierten Binärdateien oder Perl-Programmen wünschen.</p>
 <p>In solchen Szenarien können Sie <a href="../../products/compute-engine">Google Compute Engine</a><sup>[<a href="#fn-9" name="ref-9" id="ref-9">9</a>]</sup> für die Ausführung der Teile Ihres mobilen Back-Ends verwenden, die sich nicht für das Hosting in Google App Engine eignen.</p>
 <p>Wenn in Compute Engine ausgeführter Code für die Batch-Verarbeitung oder asynchrone Anfrageverarbeitung verwendet wird<sup>[<a href="#fn-10" name="ref-10" id="ref-10">10</a>]</sup>, können mithilfe des in Google App Engine ausgeführten Codes Aufgaben in eine Pull-Warteschlange (oder mehrere Warteschlangen) gestellt werden. Mithilfe des in Google Compute Engine ausgeführten Codes können diese Aufgaben dann über die <a href="https://developers.google.com/appengine/docs/python/taskqueue/rest/">Task Queue REST API</a><sup>[<a href="#fn-11" name="ref-11" id="ref-11">11</a>]</sup> angefordert werden.</p>
-<figure><img src="../images/articles/mobile-app-9.png" alt="Code außerhalb der App Engine-Sandbox ausführen" class="f-90">
+<figure><img src="/cloud/images/articles/mobile-app-9.png" alt="Code außerhalb der App Engine-Sandbox ausführen" class="f-90">
 <figcaption>Abbildung 9. Code außerhalb der App Engine-Sandbox ausführen</figcaption>
 </figure>
 <h3>Andere relevante Dienste und APIs</h3>
 <p>Google bietet noch viele andere <a href="https://developers.google.com/mobile/">Dienste und APIs</a> für den Einsatz in mobilen Lösungen an. Dazu gehören: <a href="http://www.google.com/ads/admob/">AdMob</a>, <a href="https://developers.google.com/analytics/devguides/">Analytics</a> und verschiedene <a href="https://developers.google.com/maps/">Maps APIs</a> wie <a href="https://developers.google.com/places/">Places API</a>, <a href="https://developers.google.com/maps/documentation/android/">Android Maps</a> und <a href="https://developers.google.com/maps/documentation/ios/">iOS Maps</a> SDKs. Die Nutzung dieser Dienste und APIs wird im vorliegenden Dokument nicht behandelt.</p>
 <h2 id="architecture-diagram">Architekturdiagramm</h2>
 <p>Das folgende Architekturdiagramm (Abb.&nbsp;10) stellt die Komponenten der Lösung dar:</p>
-<figure><a href="../images/articles/mobile-app-10.png"><img src="../images/articles/mobile-app-10.png" alt="Architekturdiagramm" class="f-100"></a>
-<figcaption>Abbildung 10. Architekturdiagramm der vorgeschlagenen mobilen Lösung (<a href="../images/articles/mobile-app-10.png">Komplettansicht</a>)</figcaption>
+<figure><a href="/cloud/images/articles/mobile-app-10.png"><img src="/cloud/images/articles/mobile-app-10.png" alt="Architekturdiagramm" class="f-100"></a>
+<figcaption>Abbildung 10. Architekturdiagramm der vorgeschlagenen mobilen Lösung (<a href="/cloud/images/articles/mobile-app-10.png">Komplettansicht</a>)</figcaption>
 </figure>
 <h2>Fazit</h2>
 <p>Mithilfe der Google Cloud Platform können Sie problemlos ein Back-End für Ihre mobile Lösung erstellen. Sie müssen sich dabei nicht um Installationen und Infrastruktur kümmern. Ihre Lösung kann hoch skalierbar ausgelegt werden und die Voraussetzungen für die Erstellung überzeugender Anwendungen erfüllen. Unter anderem können Sie die integrierte Nutzerauthentifizierung nutzen, native Android- und iOS-Anwendungen unterstützen, Daten außerhalb von Mobilgeräten speichern, abrufen und verarbeiten sowie Push-Benachrichtigungen orchestrieren und die geografische Umgebungssuche verwenden.</p>
@@ -193,7 +193,7 @@
 <h4>Beispiel-App und Tutorial</h4>
 <ul>
 <li>Beispiel-App "Mobile Shopping Assistant" in Github<br>
-<a href="https://github.com/GoogleCloudPlatform/solutions-mobile-shopping-assistant-backend-java" target="popout">[Java-Back-End]</a> <a href="https://github.com/GoogleCloudPlatform/solutions-mobile-shopping-assistant-android-client" target="popout">[Android-Client]</a> <a href="https://github.com/GoogleCloudPlatform/solutions-mobile-shopping-assistant-ios-client" target="popout">[iOS-Client]</a> <img src="../images/ext-link-8px.png" height="8px" width="8px" alt=""></li>
+<a href="https://github.com/GoogleCloudPlatform/solutions-mobile-shopping-assistant-backend-java" target="popout">[Java-Back-End]</a> <a href="https://github.com/GoogleCloudPlatform/solutions-mobile-shopping-assistant-android-client" target="popout">[Android-Client]</a> <a href="https://github.com/GoogleCloudPlatform/solutions-mobile-shopping-assistant-ios-client" target="popout">[iOS-Client]</a> <img src="/cloud/images/ext-link-8px.png" height="8px" width="8px" alt=""></li>
 <li><a href="articles/how-to-build-mobile-app-with-app-engine-backend-tutorial">Anleitung</a></li>
 </ul>
 <hr></div>

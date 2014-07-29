@@ -10,12 +10,12 @@
     <link rel="apple-touch-icon" href="//cloud.google.com/_static/images/apple-touch-icon.png">
     <link href="//fonts.googleapis.com/css?family=Open+Sans:400italic,300,400,600,700" rel="stylesheet">
 
-    <link href="/css/default.css" rel="stylesheet">
+    <link href="/cloud/css/default.css" rel="stylesheet">
 
     <!--[if lt IE 9]>
     <link rel="stylesheet" media="screen" href='/c/cp-ie.css'>
     <![endif]-->
-    <script src="/js/floodlight.js"></script>
+    <script src="/cloud/js/floodlight.js"></script>
   </head>
   <body>
 
@@ -65,7 +65,7 @@
   <p>Figure 1 illustrates the concept of replication with eventual consistency. The diagram illustrates that although replicas are always available to read, some replicas may be inconsistent with the latest write on the originating node, at a particular moment in time. In the diagram, Node A is the originating node and nodes B and C are the replicas.</p>
 
   <figure>
-    <img src="../images/articles/balancing-strong-and-eventual-consistency-with-gcd/eventual-consistency.png">
+    <img src="/cloud/images/articles/balancing-strong-and-eventual-consistency-with-gcd/eventual-consistency.png">
     <figcaption>Figure 1: Conceptual Depiction of Replication with Eventual Consistency</figcaption>
   </figure>
 
@@ -73,7 +73,7 @@
   <p>A conceptual view of the deployment topology and replication process with strong consistency is shown in Figure 2. In this diagram, you can see how replicas always have values consistent with the originating node, but are not accessible until the update finishes.</p>
 
   <figure>
-    <img src="../images/articles/balancing-strong-and-eventual-consistency-with-gcd/strong-consistency.png">
+    <img src="/cloud/images/articles/balancing-strong-and-eventual-consistency-with-gcd/strong-consistency.png">
     <figcaption>Figure 2: Conceptual Depiction of Replication with Strong Consistency</figcaption>
   </figure>
 
@@ -175,7 +175,7 @@
   <p>An entity group is a hierarchy formed by a root entity and its children or successors.<sup><a href="#ftnt1" name="ftnt_ref1" id="ftnt_ref1">[1]</a></sup> To create an entity group, a developer specifies an ancestor path, which is, essentially, a series of parent keys prefixing the child key. The concept of entity group is illustrated in Figure 3. In this case, the root entity with the key &ldquo;ateam&rdquo; has two children with the keys &ldquo;ateam/098745&rdquo; and &ldquo;ateam/098746&rdquo;.</p>
 
   <figure>
-    <img src="../images/articles/balancing-strong-and-eventual-consistency-with-gcd/croup-concept.png">
+    <img src="/cloud/images/articles/balancing-strong-and-eventual-consistency-with-gcd/croup-concept.png">
     <figcaption>Figure 3: Schematic View of Entity Group Concept</figcaption>
   </figure>
 
@@ -453,7 +453,7 @@ p3 = Person(key_name='PaV9fsXCdra7zCMkt7UX3THvFmu6xsUd')
 
   
     
-    <script src="/js/base.min.js"></script>
+    <script src="/cloud/js/base.min.js"></script>
     
   
 

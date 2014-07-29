@@ -10,12 +10,12 @@
     <link rel="apple-touch-icon" href="//cloud.google.com/_static/images/apple-touch-icon.png">
     <link href="//fonts.googleapis.com/css?family=Open+Sans:400italic,300,400,600,700" rel="stylesheet">
 
-    <link href="/css/default.css" rel="stylesheet">
+    <link href="/cloud/css/default.css" rel="stylesheet">
 
     <!--[if lt IE 9]>
     <link rel="stylesheet" media="screen" href='/c/cp-ie.css'>
     <![endif]-->
-    <script src="/js/floodlight.js"></script>
+    <script src="/cloud/js/floodlight.js"></script>
   </head>
   <body>
 
@@ -114,7 +114,7 @@
   </ul>
 
   <figure>
-    <img src="../images/articles/mobile-backend-starter-baas-paas/securitymodel.png">
+    <img src="/cloud/images/articles/mobile-backend-starter-baas-paas/securitymodel.png">
     <figcaption>Figure 1: Class diagram of Cloud Backend API</figcaption>
   </figure>
 
@@ -122,7 +122,7 @@
   <p>The core function of the Cloud Backend API is to make a subset of <a href="https://developers.google.com/appengine/docs/java/datastore/overview">App Engine Datastore</a> features directly accessible from the clients. You do not have to write server-side code to execute create, read, update and delete (CRUD) operations and queries on Datastore.</p>
 
   <figure>
-    <img src="../images/articles/mobile-backend-starter-baas-paas/api-classes.png">
+    <img src="/cloud/images/articles/mobile-backend-starter-baas-paas/api-classes.png">
     <figcaption>Figure 2: Cloud Backend API classes</figcaption>
   </figure>
 
@@ -757,7 +757,7 @@ public void <span class="bld">onBroadcastMessageReceived</span>(List&lt;CloudEnt
 
   <p>The example above retrieves the properties message and <span class="bld">duration</span> from the message to show a Toast with the message for the duration. You can test this in the &ldquo;Send Cloud Message&rdquo; section of the  &ldquo;Mobile Backend&rdquo; settings page on Admin Console.</p>
 
-  <p><img src="../images/articles/mobile-backend-starter-baas-paas/messaging.png"></p>
+  <p><img src="/cloud/images/articles/mobile-backend-starter-baas-paas/messaging.png"></p>
   <p>Launch the Guestbook app and click <span class="bld">Send</span>. You then see the message as a Toast on the app.</p>
   <p>The broadcasting is just another Cloud Message that has <span class="code">topicId <span class="bld">_broadcast</span></span>. The <span class="code">CloudBackendActivity</span> class automatically subscribes to the <span class="code">topicId</span> to receive any messages sent to the <span class="code">topicId</span>.</p>
   <p>Use the backend&rsquo;s <span class="code">createBroadcastMessage()</span> method inside Activity to create a broadcast message. Then call the backend <span class="code">sendCloudMessage()</span> method with the message.</p>
@@ -790,7 +790,7 @@ cb.<span class="bld">sendCloudMessage(ce)</span>;
     <li><span class="bld">Secured by client IDs</span> &mdash; Only authenticated calls with Client ID and Google Account are allowed</li>
   </ul>
 
-  <img src="../images/articles/mobile-backend-starter-baas-paas/authentication.png">
+  <img src="/cloud/images/articles/mobile-backend-starter-baas-paas/authentication.png">
 
   <p>Use the &ldquo;Open&rdquo; mode only for development. Do not leave it open for a long time, because it allows unauthenticated calls. Anyone who knows the Project ID can make a call on the backend. Do not use &ldquo;Open&rdquo; mode in a production.</p>
 
@@ -982,7 +982,7 @@ protected void <span class="bld">onPostCreate()</span> {
 <ul>
 <li><a href="mobile-backend-starter.html">Overview</a></li>
 <li><a href="http://developers.google.com/cloud/samples/mbs/" target="popout">Get Started
-<img src="../images/ext-link-8px.png" height="8px" width="8px"></a></a></li>
+<img src="/cloud/images/ext-link-8px.png" height="8px" width="8px"></a></a></li>
 </ul>
 <hr>
 
@@ -1051,7 +1051,7 @@ protected void <span class="bld">onPostCreate()</span> {
 
   
     
-      <script src="/js/base.min.js"></script>
+      <script src="/cloud/js/base.min.js"></script>
     
   
 

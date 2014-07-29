@@ -42,7 +42,7 @@
 <li>Les DataNodes utilisent des <a href="https://developers.google.com/compute/docs/disks">disques persistants</a> pour HDFS. Ces disques offrent une longévité supérieure à la durée de vie d'une instance. Cela donne aux administrateurs la possibilité de réduire le facteur de réplication HDFS, tout en veillant à ce qu'aucune donnée ne soit perdue en cas d'indisponibilité d'une zone.</li>
 <li>Ce scénario fait usage du principe de <a href="http://hadoop.apache.org/docs/stable/cluster_setup.html#Hadoop+Rack+Awareness">Rack&nbsp;Awareness HDFS</a> pour permettre au cluster de continuer à fonctionner pendant que les groupes de DataNodes sont mis hors service. Le fait que le NameNode HDFS <a href="https://issues.apache.org/jira/secure/attachment/12345251/Rack_aware_HDFS_proposal.pdf">organise</a> les répliques de bloc sur des racks distincts constitue un bon moyen de vous assurer que les données seront copiées sur les zones au cours de ce processus. Un rack est simulé sous la forme d'une collection de DataNodes exécutés dans une même zone. Deux racks sont configurés par zone.</li>
 </ol>
-<figure><img src="../images/articles/managing-hadoop-clusters-on-gce/minimizing-unavailability.png" alt="">
+<figure><img src="/cloud/images/articles/managing-hadoop-clusters-on-gce/minimizing-unavailability.png" alt="">
 <figcaption>Figure&nbsp;1&nbsp;: Réduction de l'indisponibilité lors d'une migration de zone</figcaption>
 </figure>
 <h5>Méthode</h5>
@@ -82,7 +82,7 @@ Les nouveaux DataNodes doivent s'identifier avec une paire de nouveaux identifia
 </ol>
 <h4>Scénario&nbsp;2&nbsp;: simplifier la gestion</h4>
 <p>Ce scénario explique comment effectuer une migration avec une seule commande, simplifiant ainsi les opérations de migration. En revanche, cela peut se traduire par des périodes d'indisponibilité plus longues du cluster. Ce processus est pratiquement identique à la migration automatique des instances NameNode et JobTracker, comme il est décrit dans le scénario précédent. La commande <span class="code">gcutil moveinstances</span> fait migrer l'ensemble du cluster entre les zones.</p>
-<figure><img src="../images/articles/managing-hadoop-clusters-on-gce/simplifying-management.png" alt="">
+<figure><img src="/cloud/images/articles/managing-hadoop-clusters-on-gce/simplifying-management.png" alt="">
 <figcaption>Figure&nbsp;2&nbsp;: Gestion simplifiée pour une migration de zone</figcaption>
 </figure>
 <h5>Méthode</h5>
@@ -98,7 +98,7 @@ Les nouveaux DataNodes doivent s'identifier avec une paire de nouveaux identifia
 <ol>
 <li>Aucune perte des disques n'est à craindre si la zone dans laquelle ils se trouvent connaît une défaillance. Ils resteront toutefois indisponibles jusqu'à ce que la zone soit restaurée. La création d'instantanés est une technique qui permet d'accélérer la reconstitution du cluster.</li>
 </ol>
-<figure><img src="../images/articles/managing-hadoop-clusters-on-gce/persistent-disks.png" alt="">
+<figure><img src="/cloud/images/articles/managing-hadoop-clusters-on-gce/persistent-disks.png" alt="">
 <figcaption>Figure&nbsp;3&nbsp;: Disques persistants en vue d'une reprise après sinistre</figcaption>
 </figure>
 <h5>Méthode</h5>
@@ -117,7 +117,7 @@ Les nouveaux DataNodes doivent s'identifier avec une paire de nouveaux identifia
 <li>Certaines distributions fournissent des fonctionnalités à haute disponibilité pour le NameNode et le JobTracker. Pour en savoir plus sur leur déploiement, consultez la section "Haute disponibilité" dans la suite de ce document.</li>
 <li>D'autres techniques, telles que rsync, NFS ou d'autres systèmes de fichiers distribués, peuvent être utilisées pour synchroniser des répertoires de NameNode.<sup><a href="#ftnt11" name="ftnt_ref11" id="ftnt_ref11">[11]</a></sup></li>
 </ol>
-<figure><img src="../images/articles/managing-hadoop-clusters-on-gce/multi-zone-cluster.png" alt="">
+<figure><img src="/cloud/images/articles/managing-hadoop-clusters-on-gce/multi-zone-cluster.png" alt="">
 <figcaption>Figure&nbsp;4&nbsp;: Cluster multizone pour la reprise après sinistre</figcaption>
 </figure>
 <h5>Méthode</h5>
@@ -138,7 +138,7 @@ Les nouveaux DataNodes doivent s'identifier avec une paire de nouveaux identifia
 <p>Actuellement, ZooKeeper résout les noms DNS <a href="https://issues.apache.org/jira/browse/ZOOKEEPER-338">une seule fois</a> lors du démarrage. Cela évite le remplacement d'une instance membre sans redémarrer les autres membres de l'ensemble. Compte tenu du comportement du DNS Google&nbsp;Compute&nbsp;Engine décrit précédemment, il convient de noter que lors du redémarrage ou du remplacement d'un nœud qui exécute ZooKeeper, tous les autres services ZooKeeper doivent être redémarrés. Dans le cas contraire, l'ensemble actuel se verra amputé d'un membre et la nouvelle instance exécutera ce qui équivaut à une instance ZooKeeper orpheline.</p>
 <h4>Couverture de plusieurs zones</h4>
 <p>La haute disponibilité peut également être considérée comme la capacité de tolérance du cluster par rapport à une défaillance de zone. Cela peut s'appliquer aux scénarios dans lesquels l'interruption de pipelines ou de tâches de longue durée peut s'avérer préjudiciable et/ou occasionner des coûts importants. Prenez en compte le scénario dans lequel la maintenance de la zone&nbsp;A est prévue avant celle de la <span class="code">zone&nbsp;B</span>. Compte tenu de cette information, il est possible de créer un cluster couvrant les deux zones, de telle sorte qu'il puisse continuer à fonctionner si l'une d'elles connaît une défaillance.</p>
-<figure><img src="../images/articles/managing-hadoop-clusters-on-gce/straddling-multiple-zones.png" alt="">
+<figure><img src="/cloud/images/articles/managing-hadoop-clusters-on-gce/straddling-multiple-zones.png" alt="">
 <figcaption>Figure&nbsp;5&nbsp;: Couverture de plusieurs zones pour offrir une haute disponibilité</figcaption>
 </figure>
 <ol>
