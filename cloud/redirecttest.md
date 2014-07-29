@@ -14,5 +14,5 @@ $( document ).ready(function() {
       console.log(document.getElementById("out").innerHTML = errors.join("<br>"));
     }
   });
-}
+});
 </script>
