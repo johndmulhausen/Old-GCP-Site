@@ -89,13 +89,13 @@ function googleTranslateElementInit() {
           <div class="body" role="main" id="gc-content">
           <h1>Redirect tester</h1>
           <div id="mainContent">
-          <script type="text/javascript" src="../js/yaml.js"></script>
+          <script type="text/javascript" src="https://javascript-yaml-parser.googlecode.com/svn/trunk/src/yaml.js"></script>
 
 <script language="javascript">
 $( document ).ready(function() {
   YAML.fromURL("../redirects.yaml",function(data){
     var errors = YAML.getErrors();
-    console.log($(location).attr('href');)
+    console.log($(location).attr('href'))
     if (errors.length == 0) {
       console.log("Done! Took " + YAML.getProcessingTime() + " miliseconds. data.redirects.length=" + data.redirects.length );
       console.log(data);
