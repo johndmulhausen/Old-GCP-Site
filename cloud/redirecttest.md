@@ -11,7 +11,7 @@ $( document ).ready(function() {
     if (errors.length == 0) {
       console.log("Done! Took " + YAML.getProcessingTime() + " miliseconds. data.redirects.length=" + data.redirects.length );
       console.log(data);
-      for(i=0;i<data.redirects.length)
+      for(i=0;i<data.redirects.length;i++)
       {
         if(data.redirects[i].from && data.redirects[i].to) {
           console.log("data.redirects[i].from=" + data.redirects[i].from + ", data.redirects[i].to=" + data.redirects[i].to);
