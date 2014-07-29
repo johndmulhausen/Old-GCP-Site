@@ -13,7 +13,9 @@ $( document ).ready(function() {
       console.log(data);
       for(var redirect in data.redirects)
       {
-        console.log("redirect.length=" + redirect.length);
+        if(redirect.from && redirect.to) {
+          console.log("redirect.from=" + redirect.from + ", redirect.to=" + redirect.to);
+        }
         //document.write(redirect.from + "=" redirect.to)
       }
     } else {
