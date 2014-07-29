@@ -38,5 +38,5 @@ exclude:
   - changelog.md
   - "*.Rmd"
   - "*.yml"
-  - ".gitignore"
+  - .gitignore
   - vendor
