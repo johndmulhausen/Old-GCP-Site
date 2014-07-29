@@ -8,7 +8,12 @@ Testing 1, 2
 <script language="javascript">
 $( document ).ready(function() {
   YAML.fromURL("../redirects.yaml",function(string){
-    document.write(string);
+    var errors = YAML.getErrors();
+    if(errors.length == 0)
+      document.getElementById("out").innerHTML = "Done! Took " + YAML.getProcessingTime() + " miliseconds.";
+    else {
+      document.getElementById("out").innerHTML = errors.join("<br>");
+    }
   });
 }
 </script>
