@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html devsite="">
+<head>
+<title>Web Apps Articles &amp; Tutorials — Google Cloud Platform</title>
+<meta name="description" content="Read technical articles about web applications and solutions with Google Cloud Platform, including auto scaling and how to manage complex applications in the cloud.">
+<meta name="hide_page_heading" value="true">
+<meta name="full_width" value="true">
+<meta name="top_category" value="developers">
+<meta name="subcategory" value="articles">
+<meta name="viewport" content="initial-scale=1, minimum-scale=1, width=device-width">
+<link rel="apple-touch-icon" href="//cloud.google.com/_static/images/apple-touch-icon.png">
+<link href="//fonts.googleapis.com/css?family=Open+Sans:400italic,300,400,600,700" rel="stylesheet">
+<link href="/css/default.css" rel="stylesheet"><!--[if lt IE 9]>
+    <link rel="stylesheet" media="screen" href='/c/cp-ie.css'>
+    <![endif]-->
+<script src="/js/floodlight.js">
+</script>
+</head>
+<body>
+<div id="maia-main" class="cp-article">
+<div class="maia-cols">
+<div class="maia-col-9">
+<div>
+<div style="float:right">
+<div class="g-plusone"></div>
+</div>
+<h1 class="title">Prácticas recomendadas para Memcache de App Engine</h1>
+</div>
+<div class="cp-article-tutorial">
+<h2>Para la seguridad de subprocesos, para el rendimiento y para la migración de código</h2>
+<p>En este artículo se describen algunas prácticas recomendadas para el uso de la característica Memcache de Google App Engine. Los principales temas que trataremos son la simultaneidad, el rendimiento y la migración. Los desarrolladores que utilicen Memcache sacarán provecho de ser conscientes de las trampas y de las consideraciones para escribir código más robusto.</p>
+<h2>Presentación</h2>
+<p>Memcache es una característica de App Engine que proporciona el almacenamiento temporal en memoria. Se suministra sobre todo como una caché para recuperar rápidamente datos guardados en algún tipo de almacenamiento persistente, como Google Cloud Datastore. Entre los casos de uso ideales para Memcache se incluyen el almacenamiento de datos publicados en la memoria caché, como, por ejemplo, blogs, feeds de noticias y otros contenidos que se leen pero no se modifican. Los datos almacenados en Memcache se pueden desalojar en cualquier momento, por lo que las aplicaciones se deben estructurar de modo que no dependan de la presencia de entradas. Memcache puede gestionar solicitudes simultáneas a varios clientes remotos que accedan a los mismos datos. Por esta razón, se debe tener presente la uniformidad de los datos. Las estadísticas de Memcache, incluida la frecuencia de aciertos, se muestran en la consola de App Engine y pueden ayudar a optimizar el rendimiento.</p>
+<p>Hay dos clases de servicio de Memcache, <a href="https://developers.google.com/appengine/docs/adminconsole/memcache?hl=en">el compartido y el dedicado</a>. El servicio compartido de Memcache es un servicio sin costes, de buena voluntad, y los datos almacenados en este servicio se pueden ver desalojados en cualquier momento. El servicio dedicado de Memcache es un servicio de pago que te permite reservar memoria para una aplicación. Esto proporciona a los desarrolladores un nivel de servicio más previsible. Sin embargo, todavía es posible que algunos datos se vean desalojados si hay que almacenar más datos de los que caben en el espacio reservado de Memcache, ya que cuando la caché está llena se desalojan las claves. Además, los datos se pueden ver desalojados si el servicio de Memcache se reinicia durante el mantenimiento planificado o no planificado. Las firmas de la API y el uso son idénticos tanto para el servicio compartido de Memcache como para el dedicado. La diferencia de uso radica en un cambio de configuración de la Consola de administración de App Engine. El servicio dedicado de Memcache permite que se asigne una cantidad específica de memoria a la aplicación.</p>
+<h3>Suposiciones</h3>
+<p>En este artículo se da por supuesto que los lectores tienen conocimientos básicos de App Engine, incluido de programación en uno de los lenguajes compatibles: Python, Java, Go o PHP. Los ejemplos del documento se proporcionan en Python. Los enlaces a los documentos que presentan la API de Python para Memcache en otros lenguajes compatibles se proporcionan en la sección <a href="#h.hcpwxlh68lnh">Recursos adicionales</a>.</p>
+<h2>Contenido</h2>
+<p><a href="#h.jwc0hny6a890">Complejidad y simultaneidad del código</a><br>
+<a class="indnt" href="#h.fwyqb8g2zy0t">Información general</a><br>
+<a class="indnt" href="#h.wi5fzzzah4gw">Detalles/debate</a><br>
+<a class="indnt" href="#h.sg7rpjnv4o06">Recomendaciones</a><br>
+<a href="#h.uz3c4sf9ikok">Serialización y migración de datos</a><br>
+<a class="indnt" href="#h.gwwz72j6awlr">Información general</a><br>
+<a class="indnt" href="#h.d9xvsqr5m6ay">Detalles/debate</a><br>
+<a class="indnt" href="#h.byozlhots0jm">Recomendaciones</a><br>
+<a class="indnt" href="#h.qqajkpqh73lf">Ejemplo</a><br>
+<a href="#h.s2hkym9v8ah7">Otras prácticas recomendadas</a><br>
+<a class="indnt" href="#h.wienob6xccso">Gestión de fallos de la API de Memcache con agilidad</a><br>
+<a class="indnt" href="#h.oh5pu6mleh70">Uso de funciones por lotes cuando sea posible</a><br>
+<a class="indnt" href="#h.dvl6r64mnvyr">Distribución de la carga en el espacio de claves</a><br>
+<a href="#h.4w4l8tnb9s7a">Recursos adicionales</a></p>
+<h2><a name="h.jwc0hny6a890" id="h.jwc0hny6a890"></a>Complejidad y simultaneidad del código</h2>
+<h3><a name="h.fwyqb8g2zy0t" id="h.fwyqb8g2zy0t"></a>Información general</h3>
+<p>Es muy útil aprovechar Memcache para almacenar en la memoria caché datos persistidos y colocarlos en el almacén de datos o en Cloud SQL. Sin embargo, en algunos casos puede ser difícil escribir código para mantener Memcache sincronizado con los datos de aplicaciones que se escriben y se modifican en un almacén de datos persistente. En esta sección recopilamos algunas prácticas recomendadas obtenidas de la experiencia al lidiar con la complejidad de código para evitar posibles dificultades en el acceso simultáneo:</p>
+<ul class="c26 lst-kix_v1ggjnnvcueh-0 start">
+<li>Es más fácil usar Memcache si los datos son solo de lectura, ya que no hay riesgo de incoherencias entre Memcache y el almacén de datos.</li>
+<li>Si utilizas Memcache para datos que se leen y se modifican, utiliza la API NDB de Python. Esta es una buena práctica porque el código de plataforma de la API NDB gestiona con aplomo la coordinación del acceso simultáneo y las condiciones de error. Como resultado, se simplificará el código de tu aplicación.</li>
+</ul>
+<h3><a name="h.wi5fzzzah4gw" id="h.wi5fzzzah4gw"></a>Detalles/debate</h3>
+<p>Los datos de solo lectura son perfectos para almacenarlos en Memcache. Entre los casos de uso de ejemplo de esta situación se incluyen la publicación de blogs, de feeds de noticias y de otros datos publicados que se leen pero no se modifican.</p>
+<p>Memcache es un servicio de caché global que varias instancias de frontend y varias solicitudes comparten. Hace falta controlar la simultaneidad cuando la lógica de la aplicación requiere que la lectura sea coherente en el caso de los datos compartidos que varios clientes actualizan. Las fuentes de datos transaccionales, tales como las bases de datos relacionales o Google Cloud Datastore, coordinan el acceso simultáneo de varios clientes. Sin embargo, Memcache no es transaccional. Es muy importante tener en cuenta esta precisión al utilizar Memcache. Existe la posibilidad de que dos clientes lean los mismos datos en Memcache a la vez y los modifiquen simultáneamente. Como resultado, los datos almacenados podrían ser incorrectos. Por el contrario, si la lógica de la aplicación no requiere coherencia de lectura para los datos compartidos, no hay necesidad de tener un código especial para coordinar las solicitudes simultáneas. Un ejemplo de esto es la actualización de la marca de tiempo para acceder a un documento. Si dos clientes intentan actualizar la fecha del último acceso a la vez, prevalece el último que haga la actualización. Este es un resultado previsto.</p>
+<p>Un método para resolver el acceso simultáneo a los datos compartidos dentro del contexto de un entorno de ejecución local sencillo es sincronizar los subprocesos de forma que solo se pueda ejecutar uno a la vez dentro de una sección importante. Con App Engine, en el contexto del código que se ejecuta en varias instancias, la función de "comparar y establecer" (<span class="code">Client.cas()</span>) se puede utilizar para coordinar el acceso simultáneo. Sin embargo, la desventaja de este tipo de función es que, si falla, la aplicación tiene que estar preparada para gestionar el error y volver a intentarlo.</p>
+<p>Puede ser difícil detectar los problemas de simultaneidad, ya que no suelen aparecer hasta que la aplicación recibe la carga de muchos usuarios.</p>
+<h3><a name="h.sg7rpjnv4o06" id="h.sg7rpjnv4o06"></a>Recomendaciones</h3>
+<p>Las funciones <span class="code">incr()</span> y <span class="code">decr()</span> se proporcionan para la ejecución atómica de las operaciones de incremento y de decremento. Utiliza las funciones atómicas de Memcache cuando sea posible, incluidas <span class="code">incr()</span> y <span class="code">decr()</span> y utiliza la función <span class="code">cas()</span> para coordinar el acceso simultáneo. Utiliza la API NDB de Python si la aplicación utiliza Memcache como una forma de optimizar la lectura y la modificación en Google Cloud Datastore.</p>
+<h2><a name="h.uz3c4sf9ikok" id="h.uz3c4sf9ikok"></a>Serialización y migración de datos</h2>
+<h3><a name="h.gwwz72j6awlr" id="h.gwwz72j6awlr"></a>Información general</h3>
+<p>App Engine se suministra con las herramientas necesarias para implementar sin problemas las actualizaciones en la aplicación sin que haya momentos de inactividad ni errores. Sin embargo, sigue siendo necesario planificar cuidadosamente la migración.</p>
+<p>La característica Memcache de App Engine incluye librerías específicas de cada lenguaje, y cada una tiene su personalidad similar pero algo diferente. En muchos casos, las bibliotecas de Memcache se encargan de la serialización de datos con transparencia. Python se utiliza en este artículo para ilustrar los argumentos sobre Memcache. Sin embargo, Python solo es uno de los cuatro lenguajes compatibles con App Engine. Las API de Memcache para los diferentes lenguajes compatibles son similares pero tienen ciertas diferencias. La serialización específica de cada lenguaje, tales como <a href="http://docs.python.org/2/library/pickle.html">pickle</a> (encurtir) en Python, se utiliza para serializar objetos de la mayoría de clases de Python. En Java, se proporciona una implementación de la API JCache, que gestiona los valores de datos como matrices de bytes. Por lo tanto, los desarrolladores de aplicaciones Java son los encargados de codificar la serialización y la deserialización de objetos en el nivel de la aplicación. Por el contrario, en otros casos se utiliza la serialización independiente del lenguaje con búfer de protocolo. En concreto, el búfer de protocolo se utiliza para las clases que abarcan db.Model en Python.</p>
+<p>Si se cambian las versiones de los objetos almacenados o si se actualizan a una nueva versión de la API, puede que se generen errores en función de cómo se gestione la deserialización. El código de la aplicación debe estar preparado para gestionar errores con agilidad para proporcionar a los usuarios una experiencia sin fisuras cuando el nuevo código se ponga en marcha.</p>
+<h3><a name="h.d9xvsqr5m6ay" id="h.d9xvsqr5m6ay"></a>Detalles/debate</h3>
+<p>Cuando se ponga en marcha nuevo código, la deserialización de los diferentes formatos serializados de objetos antiguos se debe poner a prueba. App Engine se publicó por primera vez con Python 2.5 y se actualizado después a 2.7. Los errores que se producían en la serialización de objetos de Python, llamada "pickling" (encurtir), eran una fuente de problemas de migración para las aplicaciones que no habían puesto a prueba esta característica. Los objetos de Python 2.5 se almacenaron como objetos encurtidos de Python, el código se actualizó a Python 2.7 y los objetos se recuperaron de Memcache. Sin embargo, los objetos de Python 2.5 no se podían desencurtir mediante el tiempo de ejecución de Python 2.7 en App Engine, lo cual generaba errores. Una fuente de debate frecuente en los foros es la forma de evitar excepciones como esta.</p>
+<p>Además de la migración de una versión de Python a la siguiente, también pueden ocurrir problemas similares con la serialización en otros lenguajes. Y lo mismo puede ocurrir al migrar datos de una versión a otra del código de la aplicación. Es necesario hacer pruebas siempre que se hagan cambios en las clases en las que los objetos se serializan con una estructura anterior.</p>
+<p>Hay cuatro formas de evitar problemas como este: 1) hacer cambios compatibles a los objetos, 2) gestionar correctamente los errores, 3) vaciar la caché antes de implementar código nuevo o 4) utilizar espacios de nombres para aislar datos de un modo parecido a la arquitectura multicliente.</p>
+<p>Si la aplicación utiliza módulos desarrollados con varios lenguajes, utiliza claves de cadena simples de 250 bytes como mucho para evitar incompatibilidades al buscar entidades en Memcache por claves.</p>
+<h3><a name="h.byozlhots0jm" id="h.byozlhots0jm"></a>Recomendaciones</h3>
+<p>Haz cambios compatibles en las estructuras de objetos, gestiona los errores con agilidad al leer objetos de Memcache y vacía Memcache cuando implementes código nuevo con cambios importantes.</p>
+<h3><a name="h.qqajkpqh73lf" id="h.qqajkpqh73lf"></a>Ejemplo</h3>
+<p>En este ejemplo se muestran los problemas que pueden surgir al migrar código en el que se almacenan objetos en Memcache. El código siguiente define la clase de persona y la función get_or_add_person para obtener o para añadir una persona con el nombre proporcionado a Memcache.</p>
+<pre>
+<span style="color:#245dc1">class</span> Person(db.Model):
+  name = db.StringProperty(required=True)
+
+<span style="color:#245dc1">def</span> get_or_add_person(name):
+  person = memcache.get(name)
+  <span style="color:#245dc1">if</span> person <span style="color:#245dc1">is</span> None:
+    person = Person(name = name)
+    memcache.add(name, person)
+  <span style="color:#245dc1">else</span>:
+    logging.info('Found in cache: ' + name)
+  <span style="color:#245dc1">return</span> person
+</pre>
+<p>Después de ejecutar este código en producción durante un tiempo, se añade el nuevo campo userid para la clase de persona. El código siguiente muestra los cambios realizados:</p>
+<pre>
+<span style="color:#245dc1">class</span> Person(db.Model):
+  name = db.StringProperty(required=True)
+  userid = db.StringProperty(required=True)
+<span style="color:#245dc1">def</span> get_or_add_person(name, userid):
+  person = memcache.get(name)
+  <span style="color:#245dc1">if</span> person <span style="color:#245dc1">is</span> None:
+    person = Person(name = name, userid = userid)
+    memcache.add(name, person)
+  <span style="color:#245dc1">else</span>:
+    logging.info('Found in cache: ' + name + ', userid: ' + person.userid)
+  <span style="color:#245dc1">return</span> person
+</pre>
+<p>El problema creado con la actualización es que los objetos con el esquema anterior se almacenaron en Memcache y no son compatibles con la nueva estructura del objeto que tiene un campo <span class="code">userid</span> obligatorio. Cuando se puso a prueba, el servicio de Memcache deserializó correctamente los objetos <span class="code">Person</span> con la estructura anterior. Es sorprendente que los objetos antiguos puedan deserializarse correctamente, porque el nuevo campo <span class="code">userid</span> es obligatorio. En general, no te bases en este tipo de comportamiento cuando migres código sin hacer pruebas. Sin embargo, la declaración de registro produjo un problema que, a su vez, generó un error al hacer referencia al campo <span class="code">person.userid</span>. Después de vaciar Memcache de la consola, no se generaron más errores.</p>
+<p>Java es algo diferente, pero se aplica el mismo principio. Una práctica recomendada en la serialización de Java es utilizar un valor de <span class="code">serialVersionUID</span> en el objeto serializado. Esto proporciona a los programadores de aplicaciones un error limpio al deserializar un formato anterior y ofrece la oportunidad de personalizar la deserialización.</p>
+<h2><a name="h.s2hkym9v8ah7" id="h.s2hkym9v8ah7"></a>Otras prácticas recomendadas</h2>
+<p>En esta sección se analizan varias prácticas recomendadas más.</p>
+<h3><a name="h.wienob6xccso" id="h.wienob6xccso"></a>Gestión de fallos de la API de Memcache con agilidad</h3>
+<p>Los errores de Memcache se deben gestionar adecuadamente para que el funcionamiento del código siga siendo correcto. Si bien la aplicación puede recurrir a los datos almacenados en Google Cloud Datastore cuando no se encuentre datos, debe asegurarse de que los valores almacenados en Memcache sean correctos. Si no se actualiza correctamente Memcache, los datos se pueden quedar obsoletos y, si se leen más adelante, el comportamiento del programa podría no ser correcto. El siguiente fragmento de código muestra este concepto:</p>
+<pre>
+<span style="color:#245dc1">if</span> not memcache.set('counter', value):
+  handle_memcache_error('Memcache set failed')
+</pre>
+<p>El método <span class="code">set()</span> ofrece el valor "False" si se produce un error al añadir o al definir datos en Memcache. Si el valor no se puede definir, la aplicación podría volver a intentar definirlo, borrar los datos de Memcache, vaciar Memcache o provocar una excepción. Puede que el método más ágil sea intentarlo de nuevo, pero dependerá de cada caso concreto. En muchos casos, definir y volver a intentarlo no son la semántica que se debe utilizar. A continuación te ofrecemos pseudocódigo sencillo para una secuencia de escritura más robusta que sincronice Memcache con un almacén persistente:</p>
+<ol class="code">
+<li>memcache.delete(key, seconds) # borra la caché.</li>
+<li>write-to-persistent.</li>
+<li># no intentes poner un nuevo valor en la caché, lo pondrá el primer lector.</li>
+</ol>
+<p>A continuación se muestra pseudocódigo para una secuencia de lectura sencilla.</p>
+<ol class="code">
+<li>v= memcache.get(key)</li>
+<li>if v is None:</li>
+<li style="padding-left:20px;">v = read-from-persistent</li>
+<li style="padding-left:20px;">memcache.add(v)</li>
+<li>return v</li>
+</ol>
+<p>Ten en cuenta que, para evitar el riesgo de que algún dato obsoleto se quede en la caché, <span class="code">memcache.set()</span> no se utiliza en ninguna secuencia. Sin embargo, este código corre el riesgo de incluir una condición de carrera. Si un segundo cliente lee datos cuando el primer cliente se encuentra entre <span class="code">memcache.delete()</span> y la finalización de <span class="code">write-to-persist</span>, puede que el segundo cliente obtenga el valor anterior del almacén persistente y que se vuelva a almacenar en la caché. El segundo argumento de <span class="code">memcache.delete()</span>, también conocido como "duración de bloqueo", se ha sido añadido aquí para reducir el riesgo de que se produzca esta condición de carrera. En conclusión, al intentar sincronizar Memcache y el almacén de datos, lo mejor es utilizar una biblioteca como NDB, ya que hace falta gestionar con firmeza los casos extremos para mantener los datos sincronizados.</p>
+<h3><a name="h.oh5pu6mleh70" id="h.oh5pu6mleh70"></a>Uso de funciones por lotes cuando sea posible</h3>
+<p>El uso de funciones por lotes es ideal para obtener varios valores relacionados. Estas funciones evitan que se obtengan valores incoherentes y proporcionan un rendimiento más rápido. El siguiente fragmento de código es un ejemplo de cómo se pueden utilizar las funciones por lotes:</p>
+<pre>
+values = {'comment': 'I did not ... ', 'comment_by': 'Bill Holiday'}
+<span style="color:#245dc1">if</span> not memcache.set_multi(values):
+  handle_memcache_error('Unable to set Memcache values')
+tvalues = memcache.get_multi(('comment', 'comment_by'))
+</pre>
+<p>El fragmento de código muestra cómo establecer varios valores con la función <span class="code">set_multi()</span> y cómo obtener varios valores con la función <span class="code">get_multi()</span>. Ten en cuenta que, al establecer varios valores, si dos valores están intrínsecamente relacionados, es posible que sea mejor almacenarlos como un solo valor.</p>
+<h3><a name="h.dvl6r64mnvyr" id="h.dvl6r64mnvyr"></a>Distribución de la carga en el espacio de claves</h3>
+<p>El servicio dedicado de Memcache puede gestionar hasta 10.000 operaciones por segundo por gigabyte. (Consulta la <a href="https://developers.google.com/appengine/docs/adminconsole/memcache?hl=en">documentación sobre Memcache</a> para obtener los detalles del servicio dedicado de Memcache y sus limitaciones). Los desarrolladores deben ser conscientes de esta limitación para las aplicaciones de App Engine que gestionen grandes cantidades de solicitudes. La limitación de 10.000 operaciones por segundo puede ser lo suficientemente amplia como para procesar varios cientos de solicitudes HTTP por segundo, pero algunas aplicaciones tienen un patrón de distribución asimétrico para el uso de claves. Por ejemplo, el 80 por ciento de las llamadas de acceso de Memcache pueden concentrarse en solo 20 claves. Esto puede ser un problema si las claves se concentran en servidores concretos debido a una mala distribución de nombres de clave y puede provocar errores y retrasos en el rendimiento.</p>
+<p>Para evitar retrasos en el rendimiento, los desarrolladores pueden ampliar el acceso a datos a varias claves y recopilar los datos después de que se lean. Por ejemplo, al escribir en un contador muchas veces, amplíalo a varias claves y luego sumar los valores después de que el contador se lea desde Memcache. El lector de Memcache que hay en la Consola de administración pasa a tener una lista de las claves principales, que puede ser útil para identificar los cuellos de botella. Un buen baremo general es que la suma de los porcentajes indicados para las 10 teclas principales deberá ser igual a menos del 5% del tráfico total.</p>
+<p>La velocidad de operaciones en Memcache varía según el tamaño del elemento, más o menos según lo que se indica en la tabla de la <a href="https://developers.google.com/appengine/docs/adminconsole/memcache">página de documentación sobre Memcache</a>. La velocidad máxima de operaciones por segundo cae rápidamente en el caso de los tamaños de entrada más grandes. La solución es fragmentar los valores de gran tamaño en varios elementos o comprimir los valores grandes.</p>
+<h2><a name="h.4w4l8tnb9s7a" id="h.4w4l8tnb9s7a"></a>Recursos adicionales</h2>
+<p>Los enlaces siguientes hacen referencia a recursos adicionales que también pueden ser útiles:</p>
+<ul>
+<li><a href="https://developers.google.com/appengine/docs/adminconsole/memcache">Consola de administración de Google App Engine: Memcache</a></li>
+<li><a href="https://developers.google.com/appengine/docs/python/memcache/">API Python de Memcache</a></li>
+<li><a href="https://developers.google.com/appengine/docs/java/memcache/">API Java de Memcache</a></li>
+<li><a href="https://developers.google.com/appengine/docs/go/memcache/">API Go de Memcache</a></li>
+<li><a href="https://developers.google.com/appengine/docs/php/memcache/">API PHP de Memcache</a></li>
+<li><a href="http://www.youtube.com/watch?feature=player_embedded&amp;v=TGl81wr8lz8">Vídeo de presentación de los conceptos básicos de Memcache</a></li>
+<li><a href="https://developers.google.com/appengine/articles/scaling/memcache">Memcache efectiva</a></li>
+<li><a href="https://developers.google.com/appengine/articles/scaling/overview">Prácticas recomendadas para escribir aplicaciones escalables (serie)</a></li>
+<li><a href="http://neopythonic.blogspot.com/2011/08/compare-and-set-in-memcache.html">Característica de comparación y definición en Memcache</a></li>
+<li><a href="https://developers.google.com/appengine/docs/python/python25/migrate27">Migración a Python 2.7</a></li>
+<li><a href="https://developers.google.com/appengine/docs/python/ndb/">NDB de Python</a></li>
+<li><a href="https://code.google.com/p/protobuf/">Búfer de protocolo</a></li>
+<li><a href="https://code.google.com/p/memcached/wiki/NewStart">Wiki Memcached</a></li>
+</ul>
+</div>
+<!-- /maia-main --></div>
+<div class="maia-col-3"><br>
+<img src="//www.google.com/images/icons/product/feedback-16.png" class="g-app-icon" alt=""> <a href="javascript:void(0);" class="google-feedback">Comentarios sobre este documento</a><br>
+<br></div>
+</div>
+</div>
+<script>
+(function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+</script><script src="//www.gstatic.com/feedback/api.js">
+</script><script>
+$('body').delegate('.google-feedback', 'click', function() {
+      userfeedback.api.startFeedback({'productId': '94614'});
+  });
+</script><!-- Scripts to include both on Goro + Devsite --><script>
+window.___gcfg = {
+     lang: ''
+   };
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+</script><!-- GTM implementation --><!-- Start dataLayer --><script>
+dataLayer = [{
+        'country': 'es',
+        'region': 'emea',
+        'language': 'es'
+      }];
+</script><!-- End dataLayer --><!-- Start Google Tag Manager --><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5CVQBG" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript> <script>
+(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-5CVQBG');
+</script><!-- End Google Tag Manager --><!-- Global JS scripts to load; path will depend on whether we're on devsite or Goro --><script src="/js/base.min.js">
+</script><!-- Retina loader; Do not load if partners page because we need to wait until the Angular app runs --><script>
+new lfl.system.RetinaLoader();
+</script><!-- Secondary right-side scroll-nav --><script>
+new lfl.ui.ScrollNav({});
+</script>
+</body>
+</html>

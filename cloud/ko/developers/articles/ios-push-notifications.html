@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html devsite="">
+<head>
+<title>Mobile Articles &amp; Mobile Development Guides — Google Cloud Platform</title>
+<meta name="description" content="Read technical articles on mobile solutions with Google Cloud Platform. Mobile specific articles cover application development, mobile backend and mobile gaming.">
+<meta name="hide_page_heading" value="true">
+<meta name="full_width" value="true">
+<meta name="top_category" value="developers">
+<meta name="subcategory" value="articles">
+<meta name="viewport" content="initial-scale=1, minimum-scale=1, width=device-width">
+<link rel="apple-touch-icon" href="//cloud.google.com/_static/images/apple-touch-icon.png">
+<link href="//fonts.googleapis.com/css?family=Open+Sans:400italic,300,400,600,700" rel="stylesheet">
+<link href="/css/default.css" rel="stylesheet"><!--[if lt IE 9]>
+    <link rel="stylesheet" media="screen" href='/c/cp-ie.css'>
+    <![endif]-->
+<script src="/js/floodlight.js">
+</script>
+</head>
+<body>
+<div id="maia-main" class="cp-article">
+<div class="maia-cols">
+<div class="maia-col-9">
+<div>
+<div style="float:right">
+<div class="g-plusone"></div>
+</div>
+<h1 class="title">Google Cloud Platform에서 iOS 푸시 알림 관리</h1>
+</div>
+<h2><a name="h.wntts6bhyclb" id="h.wntts6bhyclb"></a> 소개</h2>
+<p>최근에 스마트폰이나 태블릿을 사용해 보았다면 푸시 알림 기능을 접해 본 적이 있을 것입니다. 푸시 알림은 휴대전화에서 제공하는 작은 핑입니다. 이는 새로운 소셜 네트워크 메시지를 받거나, 최신 게임에서 친구가 내 플레이를 기다리거나, 좋아하는 밴드가 내 도시에서 콘서트를 연다고 발표했다는 것을 알려주는 역할을 합니다. 개발자의 입장에서 푸시 알림은 앱을 열었는지 또는 현재 휴대전화를 사용 중인지에 관계없이, 사용자와 언제든지 실시간으로 만날 수 있는 새로운 차원의 기능을 제공해 줍니다. 간단히 말해 푸시 알림은 더 많은 참여를 유도하는 모바일 솔루션을 개발하기 위한 중요한 메커니즘이라고 할 수 있습니다.</p>
+<p>Android 기기를 타겟팅하는 경우 GPE(Eclipse용 Google 플러그인)을 사용하여 작업을 쉽게 시작할 수 있습니다. GPE를 사용하면 <a href="https://developers.google.com/eclipse/docs/endpoints-androidconnected-gae">App Engine에 연결된 Android 프로젝트</a>를 생성할 수 있습니다. 이 프로젝트는 <a href="http://developer.android.com/google/gcm/index.html">Google App Engine</a>에서 실행되는 모바일 백엔드에서 <a href="https://developers.google.com/appengine/">Android용 Google Cloud Messaging</a>을 사용하여 푸시 알림을 전송하는 데 필요한 기본 로직을 제공합니다.</p>
+<p>또한 Google Cloud Platform은 iOS 기기에 푸시 알림을 전송하는 데에도 사용할 수 있습니다. 단, APN(Apple® Push Notification) 서비스를 사용하여 iOS 기기에 푸시 알림을 전송하려면 다른 접근 방식이 필요합니다. 주된 이유는 APN 프로토콜이 영구 소켓을 기반으로 하고 있고, 발신자가 설정 및 해제되는 연결의 수를 제한해야 하기 때문입니다. 이는 일반적으로 발신자가 각 발신 요청에 대해 단순히 별개의 연결을 구축할 수 없으며, 대신 구축된 연결을 재사용하거나 연결 풀링을 사용해야 한다는 것을 의미합니다.<br>
+<br>
+이 문서 및 함께 제공되는 샘플에서는 Google App Engine을 통해 iOS 푸시 알림을 관리하는 데 사용할 수 있는 설계를 제시하고 있습니다.</p>
+<a href="#" name="id.7b97dafwkyjt" id="id.7b97dafwkyjt"></a>
+<h2><a name="h.8eyqfg1ru295" id="h.8eyqfg1ru295"></a> 요구사항</h2>
+<p>iOS 푸시 알림을 모바일 애플리케이션의 일부로 관리하기 위한 일반적인 기능 요구사항은 다음과 같습니다.</p>
+<ol>
+<li>APN과 통신할 수 있어야 하며 비활성 기기 토큰을 위한 주기적인 풀링을 비롯하여 푸시 알림 프로토콜 사양을 준수해야 합니다.</li>
+<li>개별 iOS 기기에 푸시 알림을 전송할 수 있어야 합니다. 예를 들어 모바일 게임의 한 플레이어가 같이 플레이할 친구에게 도전하는 경우가 있습니다.</li>
+<li>소수의 iOS 기기에 푸시 알림을 전송할 수 있어야 합니다. 예를 들어 모바일 앱에서 특정 사용자의 모든 친구에게 사용자가 식당에 체크인했거나 사진을 업로드하는 경우와 같은 중요한 이벤트를 알릴 수 있어야 합니다.</li>
+<li>특정 기준을 충족하는 사용자의 등록된 모든 iOS 기기에 푸시 알림을 전송할 수 있어야 합니다. 예를 들어 모든 은행 카드 고객에게 새 프로모션에 대해 알리는 경우가 있습니다.</li>
+</ol>
+<p>성공적인 모바일 애플리케이션을 개발하려면 다음과 같은 기능 이외의 요구사항 또한 고려해야 합니다.</p>
+<ol>
+<li>확장성: 모바일 애플리케이션에서 특정 알림을 하나의 기기에만 전송하고 있다고 하더라도, 대량의 알림을 보내야 하는 상황이 단기간 사이에 발생할 수 있습니다.</li>
+<li>가용성: 모바일 애플리케이션은 필요하면 언제든지 푸시 알림을 전송할 수 있어야 합니다.</li>
+<li>신뢰성: APN을 사용한다고 해서 허용한 알림이 대상 기기로 전달되는 것이 보장되지는 않지만 신뢰성을 최대한 확보하는 것은 중요합니다. 예를 들어 모바일 솔루션에서 푸시 알림을 전송하기로 결정할 경우 이 알림은 확실하게 APN에 전달되어야 합니다. 또한 사용자가 중복된 푸시 알림을 수신할 경우 사용자 경험에 부정적인 영향을 미치게 되므로 중복을 최대한 방지해야 합니다.</li>
+</ol>
+<p>Google Cloud Platform에서 모바일 백엔드를 실행하면 이러한 기능 및 기능 이외 요구사항을 충족할 수 있습니다.</p>
+<h2><a name="h.vqkkrwp3v35v" id="h.vqkkrwp3v35v"></a> 범위</h2>
+<p>이 문서는 모바일 솔루션의 일부로 iOS 푸시 알림을 관리하는 방법에 대해 설명합니다. 이 문서에서는 개발자가 APN 프로토콜에 익숙하며 APN과 직접 통신하여 iOS 푸시 알림을 전송하려고 한다는 가정하고 있습니다.</p>
+<p>APN과 통신하려면 TCP 소켓 연결을 열고 이를 유지관리해야 합니다. Google Cloud Platform에서 코드를 실행할 때 Google Compute Engine<sup><a href="#ftnt1" name="ftnt_ref1" id="ftnt_ref1">[1]</a></sup> 또는 Google App Engine에서 <a href="https://developers.google.com/appengine/docs/java/sockets/overview">Sockets API</a><sup><a href="#ftnt2" name="ftnt_ref2" id="ftnt_ref2">[2]</a></sup>를 사용하면 이러한 목적을 달성할 수 있습니다.</p>
+<p>모바일 솔루션 백엔드를 오직 Google Compute Engine에서만 제작해야 하는 이유가 있지 않은 이상, 이 문서의 솔루션에서 제시하는 것처럼 모바일 백엔드 제작에 Google App Engine을 사용하면 많은 혜택을 누릴 수 있습니다. 이러한 혜택에는 높은 가용성, 프론트엔드 인스턴스의 자동 확장성, 부하 분산, 손쉬운 배포 및 관리되는 인프라에서 백엔드 실행에서 오는 기타 장점을 들 수 있습니다.</p>
+<h2><a name="h.gwppgtaaj6k3" id="h.gwppgtaaj6k3"></a> 높은 수준의 개요</h2>
+<p>완전한 솔루션의 핵심 구성요소는 모바일 클라이언트, 모바일 백엔드 및 이 둘 간의 통신 채널입니다. 푸시 알림의 실질적인 전달은 APN을 사용하여 이루어집니다.</p>
+<p>모바일 클라이언트란 iOS 푸시 알림을 사용하는 iOS 기본 애플리케이션과, 이 애플리케이션이 설치된 iOS 기기를 의미합니다.</p>
+<p>모바일 앱은 <a href="https://developers.google.com/appengine/docs/java/endpoints/overview">Google Cloud Endpoints</a><sup><a href="#ftnt3" name="ftnt_ref3" id="ftnt_ref3">[3]</a></sup>를 통해 모바일 백엔드와 통신합니다. 이 통신에는 기기 토큰 등록뿐만 아니라 푸시 알림을 간접적으로 실행하는 앱 특정 API가 포함됩니다.</p>
+<p>모바일 백엔드는 Google App Engine에서 실행되며 토큰 등록에는 Google Cloud <a href="https://developers.google.com/datastore/">Datastore</a>를, iOS 기기에 실제로 알림을 전달하는 역할을 하는 APN에 푸시 알림을 전송하는 데에는 Sockets API를 사용합니다.</p>
+<p>또한 모바일 백엔드는 다음 섹션에서 설명하는 것처럼, <a href="https://developers.google.com/appengine/docs/java/taskqueue/">작업 대기열</a>과 <a href="https://developers.google.com/appengine/docs/java/config/cron">예약된 작업</a>을 사용하여 푸시 알림을 관리합니다.</p>
+<h2><a name="h.uyvftaxn4mxf" id="h.uyvftaxn4mxf"></a> 아키텍처 다이어그램</h2>
+<p>이 솔루션의 높은 수준의 아키텍처는 그림 1에 묘사되어 있습니다.</p>
+<figure><img height="408" src="ios-push-notifications/image00.jpg" width="640" alt="">
+<figcaption>그림 1: 솔루션의 높은 수준의 아키텍처</figcaption>
+</figure>
+<h2><a name="h.imutx75y3zex" id="h.imutx75y3zex"></a> 솔루션 설계</h2>
+<p>모바일 백엔드에는 다음과 같은 몇 가지 구성요소가 있습니다.</p>
+<ul>
+<li><strong>기기 등록 엔드포인트</strong>는 기기 토큰 목록의 저장 및 관리하는 역할을&nbsp;합니다. 기기 토큰 목록은 개발자의 기본 클라이언트 애플리케이션이 설치되었고 사용자가 개발자의 앱이 자신의 기기에서 푸시 알림을 사용하도록 동의한 기기의 목록으로 매핑합니다.</li>
+<li><strong>푸시 알림 관리자</strong>는 모바일 백엔드의 다른 부분인 내부 API를 제공하며, 다양한 푸시 알림을 전송하라는 요청을 호출할 수 있습니다.</li>
+<li><strong>알림 전달 작업자</strong>는 TCP 소켓 연결로 APN과 통신하여 푸시 알림을 전송하는 역할을 합니다.</li>
+<li><strong>푸시 피드백 처리 핸들러</strong>는 APN과 통신하여 비활성 상태이거나 잘못된 기기 토큰 목록을 가져오는 역할을 합니다.</li>
+<li><strong>기기 토큰 정리 핸들러</strong>는 잘못되었거나 비활성 상태인 토큰을 제거하여 기기 토큰 목록을 업데이트합니다.</li>
+<li><strong>푸시 사전 처리 핸들러</strong>는 특정 푸시 알림을 수신해야 하는 대상 기기 토큰 목록을 가져옵니다. 예를 들어 식당에 체크인한 Joe의 친구가 사용하는 기기 토큰 목록이 이에 해당합니다.</li>
+</ul>
+<p>이러한 구성요소는 그림 2의 다이어그램에 묘사되어 있습니다.</p>
+<figure><img height="518" src="ios-push-notifications/image04.jpg" width="679" alt="">
+<figcaption>그림 2: 솔루션의 핵심 구성요소</figcaption>
+</figure>
+<p>푸시 알림을 관리하기 위해 이 솔루션에서는 알림 전송 대기열(<a href="https://developers.google.com/appengine/docs/java/taskqueue/overview-pull">가져오기 대기열</a>)과 사전 처리 대기열(<a href="https://developers.google.com/appengine/docs/java/taskqueue/overview-push">내보내기 대기열</a>)뿐만 아니라 기기 정리 대기열(또 다른 푸 대기열)을 사용합니다.</p>
+<p>이러한 대기열(푸시 알림 관리자, 알림 전달 작업자 및 푸시 사전 처리 핸들러) 간의 상호작용은 그림 3의 다이어그램에 묘사되어 있습니다.</p>
+<figure><img height="553" src="ios-push-notifications/image03.jpg" width="473" alt="">
+<figcaption>그림 3: 솔루션 구현 세부정보</figcaption>
+</figure>
+<h3><a name="h.8ivv3v632vy4" id="h.8ivv3v632vy4"></a>iOS 클라이언트</h3>
+<p>기본 애플리케이션에서 iOS 푸시 알림을 사용 설정하려면 Apple의 안내를 따라야 합니다. 특히 자신의 애플리케이션 번들에 해당하는 APN 인증서를 얻어야 하며, 클라이언트 애플리케이션을 푸시 알림에 등록해야 합니다. 예를 들어 애플리케이션을 실행하는 동안 <code>didFinishLaunchingWithOptions(),</code> 내에서 <code>registerForRemoteNotificationTypes()</code>를 호출하여 이를 수행할 수 있습니다.</p>
+<p><code>다음 섹션</code>에서 설명하는 것처럼, iOS 애플리케이션은 <sup>didRegisterForRemoteNotificationsWithDeviceToken()<a href="#ftnt4" name="ftnt_ref4" id="ftnt_ref4">을 구현하고 가져온 기기 토큰</a></sup>[4]<a href="#id.6hycc246fjk6"></a>을 모바일 백엔드에 전달할 수 있어야 합니다. 또한 <code>didReceiveRemoteNotification()</code>을 구현하여 수신한 푸시 알림을 처리할 수도 있습니다.</p>
+<p>APN 푸시 알림 메커니즘은 실제 iOS 기기를 필요로 하며 에뮬레이터에서는 작동하지 않는다는 점에 유의해 주세요.</p>
+<p>푸시 알림을 사용하는 iOS 클라이언트 애플리케이션 개발에 대한 자세한 내용은 이 문서의 범위에 포함되지 않습니다.</p>
+<a href="#" name="id.6hycc246fjk6" id="id.6hycc246fjk6"></a>
+<h3>모바일 백엔드에 기기 토큰 전달</h3>
+<p>앞서 설명한 것처럼, iOS 기본 애플리케이션은 모바일 백엔드에 기기 토큰을 전달해야 합니다.</p>
+<p>이를 수행하는 간단한 방법은 <a href="https://developers.google.com/appengine/docs/java/endpoints/overview">Google Cloud Endpoints</a>를 사용하여 백엔드에서 REST API를 노출하는 것입니다. 그러면 <a href="https://developers.google.com/appengine/docs/java/endpoints/consume_ios">도구</a>를 사용하여 iOS 클라이언트 라이브러리를 생성하고 OAuth2 기반 인증 및 Google 계정을 사용하여 호출을 인증할 수 있습니다.</p>
+<figure><img height="246" src="ios-push-notifications/image05.jpg" width="625" alt="">
+<figcaption>그림 4: Google Cloud Endpoints를 사용하여 백엔드에서 REST API를 노출</figcaption>
+</figure>
+<p>하지만 클라이언트 애플리케이션이 다른 접근 방식을 사용하여 이미 모바일 백엔드와 통신하고 있는 경우, 기존 접근 방식을 확장하여 클라이언트 애플리케이션이 기기 토큰을 전달하도록 할 수 있습니다. 이 통신이 인증되었으며 백엔드에서 애플리케이션 클라이언트로부터 수신된 요청을 인증하는지 확인해야 합니다.</p>
+<h3>기기 토큰 저장 및 관리</h3>
+<p>사용자가 앱을 제거하기로 결정하면 클라이언트 애플리케이션이 호출되지 않으므로 APN 사양에 따라 활성 기기 토큰 목록을 관리해야 합니다. 특히 모바일 백엔드에서는 비활성 상태이거나 잘못된 기기 토큰 목록을 정기적으로 가져오고 이러한 토큰을 사용하여 푸시 알림 전송을 즉시 중지해야 합니다. 이를 구현하는 방법에 대한 자세한 내용은 <a href="#id.irb04jy25lno">'기기 토큰 관리' 섹션</a>을 <a href="#id.irb04jy25lno"></a>참조하세요. 이를 위해 모바일 백엔드는 기기 토큰뿐만 아니라, 비활성 토큰을 더 잘 처리할 수 있도록 토큰이 수신된 시점의 타임스탬프 또한 저장해야 합니다.</p>
+<p>또한 모바일 솔루션에서 모든 사용자에게 동일한 푸시 알림만 전송하지 않는 이상, 특정 알림을 특정 사용자에게 타겟팅할 수 있는 기기 토큰을 사용하는 것이 좋습니다. 이렇게 하는 방법 중 하나는 user_id를 기기 토큰과 함께 저장하는 것입니다.</p>
+<p>기기 토큰 및 관련 정보를 저장하는 데 가장 좋은 방법은 Datastore를 사용하는 것입니다. 하지만 모바일 솔루션에서 이미 Cloud SQL을 사용하는 경우 Datastore가 대신 Cloud SQL에 기기 토큰을 저장할 수도 있습니다<sup><a href="#ftnt5" name="ftnt_ref5" id="ftnt_ref5">[5]</a></sup>.</p>
+<figure><img height="331" src="ios-push-notifications/image01.jpg" width="338" alt="">
+<figcaption>그림 5: Datastore를 사용하여 기기 토큰을 저장</figcaption>
+</figure>
+<h2><a name="h.q9c7r5sxdlz2" id="h.q9c7r5sxdlz2"></a> 푸시 알림 요청 실행</h2>
+<p>모바일 솔루션에서 푸시 알림 요청을 실행하는 데 다른 접근 방식을 사용할 수도 있습니다.</p>
+<ol>
+<li>모바일 클라이언트 애플리케이션에 의해 시작된 요청<br>
+<br>
+이 요청은 일반적으로 사용자 동작에 의해 실행됩니다. 예를 들어 모바일 게임의 한 플레이어가 같이 플레이할 친구에게 도전하는 경우, 푸시 알림을 사용하여 다른 플레이어에게 이 도전 요청에 대한 알림을 전송할 수 있습니다.<br>
+<br>
+보통 모바일 백엔드에서는 구체적으로 푸시 알림을 전송하는 용도로만 모바일 클라이언트 애플리케이션이 사용할 수 있는 명시적인 API를 제공하는 대신, 클라이언트 애플리케이션이 백엔드에서 처리되어야 하는 작업의 일부를 시작하기 위해 호출하는 API를 노출합니다. 예를 들어 이 API에는 <code>ChallengeFriend</code> 메소드가 포함될 수 있으며, 푸시 알림 요청 시작은 클라이언트가 이 API를 호출할 때 모바일 백엔드에서 수행하는 몇 가지 작업 중 하나입니다.<br>
+<br>
+또 다른 예로는 모바일 사용자가 식당에 체크인하거나 사진을 업로드할 때 사용자의 친구들에게 이 이벤트에 대한 알림을 전송하기 위해 푸시 알림을 사용하는 경우가 있습니다. 앞의 예와 마찬가지로, 여기서 모바일 백엔드에 의해 노출된 API는 <code>CheckIntoPlace</code>나 <code>UploadPhoto</code>와 같은 전체 작업에 맞게 맞춤설정됩니다. 이러한 작업의 백엔드 구현에는 푸시 알림을 전송하는 것이 포함됩니다.<br>
+<br></li>
+<li>모바일 애플리케이션 백엔드에 의해 시작되는 요청<br>
+<br>
+이에 대한 예로는 모바일 솔루션의 관리자 웹 인터페이스가 있습니다. 이 인터페이스에서는 관리자가 모든 사용자에게 새 게임 레벨을 이용할 수 있게 된 것을 알리는 푸시 알림을 전송할 수 있습니다. 또 다른 예로는 사용자가 사용할 수 있는 새로운 쿠폰에 대한 푸시 알림을 매일 아침에 전송하는 경우가 있습니다.</li>
+</ol>
+<p>제안된 설계에서 푸시 알림을 전송하는 모든 요청은 모바일 백엔드에 의해 제어되고 푸시 알림 관리자라는 이름의 구성요소에 의해 캡슐화됩니다.</p>
+<h2><a name="h.ji7ke78lxqo7" id="h.ji7ke78lxqo7"></a> 푸시 알림 관리자</h2>
+<p>푸시 알림 관리자의 역할은 모바일 백엔드의 다른 구성요소에서 푸시 알림 요청을 실행하는 데 사용할 수 있는 내부 API를 제공하는 것입니다. 앞서 언급한 <a href="#id.7b97dafwkyjt">요구사항</a>에 따라 이 API는 다음과 같은 시나리오를 처리합니다.</p>
+<ol>
+<li><a href="#" name="id.mpqb4ttxlxec" id="id.mpqb4ttxlxec"></a>하나의 iOS 기기에 푸시 알림을 전송합니다. 앞선 예에서 모바일 게임의 한 플레이어가 같이 플레이할 친구에게 도전하는 경우가 이에 해당합니다. <a href="#" name="id.desexnl07y7s" id="id.desexnl07y7s"></a></li>
+<li>소수의 iOS 기기에 푸시 알림을 전송합니다. 예를 들어 모바일 솔루션에서 특정 사용자의 모든 친구에게 사용자가 식당에 체크인했거나 사진을 업로드하는 것과 같이<a href="#" name="id.bz6o29177e7j" id="id.bz6o29177e7j"></a> 중요한 이벤트를 알리는 경우가 있습니다.</li>
+<li>다수의 iOS 기기, 즉 등록된 모든 기기 또는 특정 기준을 충족하는 사용자의 등록된 기기에 푸시 알림을 전송합니다. 이에 대한 한 가지 예로는 특정 유형의 카드를 보유하고 있는 모든 은행 고객에게 이용 가능한 새 프로모션에 대해 알리는 경우가 있습니다. 또 다른 예로는 모바일 게임의 모든 사용자에게 새 게임 레벨을 이용할 수 있게 된 것을 알리는 경우가 있습니다.</li>
+</ol>
+<p>더욱 강력하고 응답이 빠른 애플리케이션을 제작하려면 푸시 알림이 전송될 때까지 이러한 내부 API에서 스레드를 차단해서는 안 됩니다. 대신 푸시 알림 전송 요청이 유지되기 즉시 호출이 반환되어야 하며, 나머지 처리는 비동기식으로 수행되어야 합니다.</p>
+<p>이 문서에서 다룬 설계에서 이러한 요청은 작업 대기열에서 작업으로 유지됩니다. 이 패턴은 이어지는 섹션에 설명되어 있으며 함께 제공된 샘플 앱에도 구현되어 있습니다.</p>
+<h2><a name="h.3mbjx0kzqv4f" id="h.3mbjx0kzqv4f"></a> 작업 대기열 사용법</h2>
+<p>푸시 알림 요청에는 다음 두 가지 작업 대기열이 사용됩니다.</p>
+<a href="#" name="21e8688b3421d8b0326b1b25b8e3f06c13f98433" id="21e8688b3421d8b0326b1b25b8e3f06c13f98433"></a> <a href="#" name="0" id="0"></a>
+<table cellpadding="0" cellspacing="0">
+<tbody>
+<tr>
+<th>
+<p>대기열 이름</p>
+</th>
+<th>
+<p>대기열 유형</p>
+</th>
+<th>
+<p>설명</p>
+</th>
+</tr>
+<tr>
+<td>
+<p>알림 전달 대기열</p>
+</td>
+<td>
+<p>가져오기</p>
+</td>
+<td>
+<p>전송 준비가 완료된 푸시 알림 요청을 나타내는 작업에 사용됩니다. 다시 말해, 모든 필수 데이터가 포함되어 있습니다. 시나리오 <a href="#id.mpqb4ttxlxec">1</a>과 <a href="#id.desexnl07y7s">2</a>를 참조하세요.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>푸시 사전 처리 대기열</p>
+</td>
+<td>
+<p>푸시</p>
+</td>
+<td>
+<p>추가 사전 처리가 필요한 작업에 사용됩니다. 시나리오 <a href="#id.bz6o29177e7j">3</a>을 참조하세요.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3><a name="h.22arhi37cwlt" id="h.22arhi37cwlt"></a> 하나의 기기에 푸시 알림 전송</h3>
+<p>이 시나리오에서는 유지되고 있는 작업에 대상 사용자의 기기 토큰 및 요청된 푸시 알림에 대한 모든 세부정보(예: 알림 유형과 경고 텍스트)가 작업에 포함되며, 작업은 알림 전달 대기열에 추가됩니다.</p>
+<h3><a name="h.febpvyyl81ru" id="h.febpvyyl81ru"></a> 소수의 기기에 알림을 푸시</h3>
+<p>이 시나리오에서는 유지되고 있는 작업에 대상 기기 토큰 및 요청된 푸시 알림에 대한 모든 세부정보가 포함되며, 작업은 알림 전달 대기열에 추가됩니다. 다시 말해, 시스템에서 기기 목록에 대한 푸시 알림 요청을 하나씩 개별적으로 유지합니다. 이는 기기별로 개별 요청 목록을 유지하는 것보다 확장성과 신뢰성이 더 뛰어납니다.</p>
+<p>이 접근 방식은 다음 두 가지 요구사항이 모두 충족되는 경우에 사용할 수 있습니다.</p>
+<ul>
+<li>기기 토큰 목록 너무 크지 않아야 합니다. 직렬화된 목록 및 요청된 푸시 알림에 대한 정보는 <a href="https://developers.google.com/appengine/docs/java/taskqueue/overview-pull#Quotas_and_Limits_for_Pull_Queues">문서화된 작업 크기 제한값</a>을 초과해서는 안 됩니다.</li>
+<li>모바일 백엔드에서 대상 기기 목록을 충분히 빠르게 가져올 수 있어야 합니다<sup><a href="#ftnt6" name="ftnt_ref6" id="ftnt_ref6">[6]</a></sup>. 대상 기기 목록을 가져오는 작업은 클라이언트의 요청을 처리하는 동안 완료되어야 합니다.</li>
+</ul>
+<p>충족할 수 없는 경우 이 시나리오를 다음 시나리오의 단순화된 버전으로 생각할 수 있습니다.</p>
+<h3><a name="h.nnvl48zfeypg" id="h.nnvl48zfeypg"></a> 사전 처리가 필요한 푸시 알림 요청</h3>
+<p>이 시나리오에서는 대상 기기 목록이 하나의 작업으로 처리하기에 너무 크거나, 이 목록을 충분히 빠르게 가져올 수 없는 경우를 다룹니다. 이 경우 유지되고 있는 작업에는 요청된 푸시 알림에 대한 세부정보 및 대상 기기 토큰을 간접적으로 지정하는 일부 메타데이터만 포함됩니다. 하지만 실제 대상 기기 토큰 목록은 작업 페이로드에 포함되지 않습니다. 다시 말해, 대기열에 추가된 작업에는 사전 처리 단계가 필요하며, 이 동안 메타데이터가 대상 기기 토큰 목록을 가져오는 데 사용됩니다. 이어지는 <a href="#id.g7ueayegc7ih">섹션</a>에서 설명하는 것처럼, 이 단계에는 보통 페이징이 포함됩니다. 이러한 작업은 푸시 사전 처리 대기열에 추가됩니다.</p>
+<h3>신뢰성 높이기</h3>
+<p>더 높은 수준의 서비스 신뢰성을 달성하려면 시간 범위 내에서 <a href="https://developers.google.com/appengine/docs/java/taskqueue/overview#Task_Names">동일한 이름의 작업</a>이 두 번 이상 삽입되는 것을 방지하는 '작업 대기열' 메커니즘의 장점을 활용해야 합니다. 이렇게 하려면 작업의 이름을 명시적으로 지정해야 하며, 이 이름은 푸시 알림을 전송하도록 하는 이벤트에서 가져올 수 있습니다. 예를 들어 작업 이름에는 게임 플레이어의 ID, 초대한 친구의 ID 및 게임 도전 요청을 위한 추가 식별자(예: 이 요청의 ID나 5분 단위의 타임스탬프)가 포함될 수 있습니다. 그러면 클라이언트에서 요청을 다시 전송한 경우처럼, 요청이 다시 처리되면 백엔드에서 이전에 사용한 이름으로 작업을 대기열에 추가하려고 시도합니다. 이로 인해 구체적인 예외가 발생하고, 백엔드는 이 요청을 무시하고 중복된 푸시 알림을 전송하지 않습니다.</p>
+<a href="#" name="id.g7ueayegc7ih" id="id.g7ueayegc7ih"></a>
+<h2><a name="h.8c35ekdreh7p" id="h.8c35ekdreh7p"></a> 대상 기기 토큰 목록 가져오기</h2>
+<p>이 솔루션은 <a href="https://developers.google.com/appengine/docs/python/datastore/queries#Query_Cursors">쿼리 커서</a>, 푸시 및 가져오기 작업 대기열, 그리고 트랜잭션의 조합을 사용하여 대상 기기 토큰 목록의 사전 처리 및 가져오기를 신뢰할 수 있는 방식으로 처리합니다.</p>
+<figure><img height="568" src="ios-push-notifications/image02.jpg" width="486" alt="">
+<figcaption>그림 6: 대상 기기 토큰 목록 가져오기</figcaption>
+</figure>
+<p>푸시 사전 처리 핸들러에서 첫 사전 처리 작업을 수신하면 작업 페이로드의 메타데이터를 사용하여 Datastore 쿼리를 생성합니다. 그런 다음 일치하는 기기 토큰의 배치와 함께 커서 정보를 가져와 이후에 다음 배치를 가져올 수 있도록 합니다. 다음으로 트랜잭션처럼 (1) 작업을 알림 전달 대기열에 추가하여 가져온 기기 토큰의 배치에 푸시 알림을 전송하고, (2) 연속 사전 처리 작업(이 섹션의 뒷부분에서 설명)을 푸시 사전 처리 대기열에 추가합니다.</p>
+<p>트랜잭션이 커밋되면 푸시 사전 처리 핸들러는 원래 사전 처리 작업의 처리를 완료합니다. 그러면 이 작업은 처리된 것으로 다룰 수 있게 됩니다. 트랜잭션이 실패하면 이 트랜잭션은 롤백되며 새 작업이 대기열에 추가되지 않습니다. 이 경우 푸시 사전 처리 핸들러는 오류를 반환하며 App Engine 작업 대기열은 원래 사전 처리 작업을 다시 시도합니다. App Engine에서 실패한 작업을 다시 시도하는 방식을 대기열별로 <a href="https://developers.google.com/appengine/docs/java/config/queue#Configuring_Retry_Attempts_for_Failed_Tasks">구성</a>할 수 있습니다.</p>
+<p>연속 사전 처리 작업은 첫 사전 처리 작업과 매우 유사하나, 인코딩된 커서 정보를 포함하고 있습니다. 푸시 사전 처리 핸들러에서 이러한 연속 작업을 수신하면 인코딩된 커서 정보를 가져와 결과 집합을 계속 페이징하는 Datastore 쿼리를 생성하는 데 사용합니다.</p>
+<h2><a name="h.id7e1l7qi36u" id="h.id7e1l7qi36u"></a> APN과 통신</h2>
+<h3><a name="h.ukkutndraosk" id="h.ukkutndraosk"></a> 푸시 알림 전송</h3>
+<p>여러 알림에서 APN과의 통신을 유지하고 연결을 반복적으로 설정 및 해제하는 것은 피하는 것이 좋습니다.</p>
+<p>모바일 백엔드가 Google App Engine에서 실행될 때 권장 통신 패턴을 만드는 가장 쉬운 방법은 App Engine <a href="https://developers.google.com/appengine/docs/java/backends/overview?hl=en">백엔드 인스턴스</a>, 그 중에서도 특히 <a href="https://developers.google.com/appengine/docs/java/config/backends#Types_of_Backends">상주 백엔드</a>에서 APN과 통신하는 것입니다. 상주 백엔드는 지속적으로 실행되므로 연결을 쉽게 유지관리할 수 있습니다.</p>
+<p>푸시 알림 전송에 사용하려는 각 백엔드 인스턴스는 작업자를 호스팅할 수 있습니다. 작업자는 반복적으로 작업하고 알림 전달 대기열에서 작업 배치를 임대하고, 이러한 작업에서 요청한 알림을 전송한 다음 이 작업을 삭제할 수 있습니다.</p>
+<p>APN에 푸시 알림을 전송하는 호출이 반환되면 결과에 특정 기기 토큰이 잘못되었거나 비활성 상태라는 것을 나타내는 표시기가 포함될 수 있습니다. 작업자는 이러한 기기 토큰의 각 배치에 정리 작업을 추가할 수 있습니다. 앞서 설명한 것처럼, 이러한 정리 작업은 비동기식으로 처리됩니다. <a href="#id.irb04jy25lno">'기기 토큰 관리' 섹션</a>을 참조하세요.</p>
+<p>단일 스레드가 포함된 단일 백엔드를 사용하는 푸시 알림의 처리량이 요구사항을 충족하기에 부족할 경우 작업자의 수를 늘리거나(하나의 백엔드 인스턴스에 여러 작업자를 호스팅하거나 여러 백엔드 인스턴스를 사용) 가져오기 대기열을 두 개 이상 사용하여 부하를 분할할 수 있습니다. 간단히 안내해 드리자면 대기열당 작업자를 최대 3~5개 사용하는 것이 좋습니다.</p>
+<h3><a name="h.jji4v2zg1m0c" id="h.jji4v2zg1m0c"></a> 피드백 서비스 쿼리하기</h3>
+<p>APN 프로토콜의 요구사항 중 하나는 피드백 서비스를 정기적으로 쿼리하여 비활성 기기 토큰 목록을 가져오는 것입니다. 이 설계에서는 <a href="https://developers.google.com/appengine/docs/java/config/cron?hl=en">App Engine 크론 서비스</a>에서 개발자가 지정한 일정(최소 하루 1회)에 따라 정기적으로 호출되도록 구성할 수 있는 푸시 피드백 처리 핸들러를 사용하여 가져오기를 수행할 수 있습니다. 이 핸들러는 비활성 기기 토큰 목록이 포함된 작업을 정리 대기열에 추가합니다.</p>
+<a href="#" name="id.irb04jy25lno" id="id.irb04jy25lno"></a>
+<h2><a name="h.4khvlm2pr4" id="h.4khvlm2pr4"></a> 기기 토큰 관리</h2>
+<p>비활성 및 잘못된 기기 토큰에 대한 정보가 포함된 작업은 기기 토큰 정리 핸들러에 의해 처리됩니다. 이 핸들러의 역할은 이러한 기기 토큰을 영구 저장소에서 삭제하는 것입니다.</p>
+<p>푸시 알림을 전송할 때 반환되는 잘못된 기기 토큰은 추가 확인 없이 삭제할 수 있습니다. 하지만 피드백 서비스에서 가져온 비활성 기기 토큰을 처리할 때에는 이전에 비활성 상태였던 토큰이 활성 토큰이 되고 모바일 백엔드에 다시 등록되는 상황을 고려해야 합니다. 이러한 상항을 처리하는 방법 중 하나는 피드백 서비스에서 가져온 정보에 포함된 타임스탬프를 이 기기 토큰에 대해 영구 저장소에 저장된 타임스탬프와 비교하는 것입니다. 영구 저장소의 타임스탬프가 더 최신인 경우 이는 기기 등록 정보가 피드백 서비스에서 가져온 정보보다 최신이라는 것을 나타냅니다. 이러한 기기 토큰은 삭제해서는 안 됩니다.</p>
+<h2><a name="h.xr0rr9xfo8sm" id="h.xr0rr9xfo8sm"></a> 샘플 애플리케이션</h2>
+<p>이 문서에서 제시한 설계를 구현한 샘플은 <a href="https://github.com/GoogleCloudPlatform/solutions-ios-push-notification-sample-backend-java">GitHub</a>에 게시되어 있습니다. 결제를 사용 설정한 상태에서 Google App Engine 계정에 샘플을 배포하여 여러 가지를 시도해 볼 수 있습니다. Google App Engine에서는 <a href="https://cloud.google.com/pricing/">할당량</a>에 따른 무료 등급을 제공합니다. 여기에는 상주 <a href="https://developers.google.com/appengine/kb/billing#free_quota_backends">백엔드 인스턴스</a>를 실행하기 위한 할당량이 포함됩니다. 또한 <a href="https://github.com/GoogleCloudPlatform/solutions-ios-push-notification-sample-ios-client">GitHub</a>에는 간단한 iOS 클라이언트 앱도 게시되어 있습니다.</p>
+<h2><a name="h.35wwcodr7yaf" id="h.35wwcodr7yaf"></a> 맺음말</h2>
+<p>Google App Engine에서 실행되는 모바일 백엔드는 타사 서비스 없이도, Android 및 iOS를 비롯한 다양한 모바일 플랫폼에서 푸시 알림을 관리할 수 있습니다.</p>
+<br>
+<hr>
+<br>
+<div>
+<p><a href="#ftnt_ref1" name="ftnt1" id="ftnt1">[1]</a> 2013년 6월 현재, Google Compute Engine은 공개 미리보기로 제공됩니다.</p>
+</div>
+<div>
+<p><a href="#ftnt_ref2" name="ftnt2" id="ftnt2">[2]</a> 2013년 6월 현재, Sockets API는 시험 기능으로 제공됩니다.</p>
+</div>
+<div>
+<p><a href="#ftnt_ref3" name="ftnt3" id="ftnt3">[3]</a> 2013년 6월 현재, Google Cloud Endpoints는 시험 기능으로 제공됩니다.</p>
+</div>
+<div>
+<p><a href="#ftnt_ref4" name="ftnt4" id="ftnt4">[4]</a> 기기 토큰은 클라이언트 애플리케이션 전용이며, 고유 기기 식별자와 다릅니다.</p>
+</div>
+<div>
+<p><a href="#ftnt_ref5" name="ftnt5" id="ftnt5">[5]</a> Datastore와 Cloud SQL 중 하나를 선택하는 것에 대한 자세한 내용은 이 <a href="https://developers.google.com/cloud-sql/faq#choice">FAQ</a>를 참조하세요.</p>
+</div>
+<div>
+<p><a href="#ftnt_ref6" name="ftnt6" id="ftnt6">[6]</a> '충분히 빠르게'라는 표현은 개별 환경에 따라 상대적일 수 있습니다. 클라이언트의 모든 요청을 x밀리초 또는 y초 내에 처리해야 한다는 자체적인 내부 표준이 있는 경우, 모든 대상 기기 목록을 '충분히 빠르게' 가져올 수 있는지를 결정하는 주요 요인으로 이 기준을 사용할 수 있습니다.</p>
+</div>
+</div>
+<div class="maia-col-3"><br>
+<img src="//www.google.com/images/icons/product/feedback-16.png" class="g-app-icon" alt=""> <a href="javascript:void(0);" class="google-feedback">이 문서에 대한 의견 보내기</a><br>
+<br></div>
+</div>
+</div>
+<script>
+(function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+</script><script src="//www.gstatic.com/feedback/api.js">
+</script><script>
+$('body').delegate('.google-feedback', 'click', function() {
+      userfeedback.api.startFeedback({'productId': '94614'});
+  });
+</script><!-- Scripts to include both on Goro + Devsite --><script>
+window.___gcfg = {
+     lang: ''
+   };
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+</script><!-- GTM implementation --><!-- Start dataLayer --><script>
+dataLayer = [{
+        'country': 'ko',
+        'region': 'japac',
+        'language': 'ko'
+      }];
+</script><!-- End dataLayer --><!-- Start Google Tag Manager --><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5CVQBG" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript> <script>
+(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-5CVQBG');
+</script><!-- End Google Tag Manager --><!-- Global JS scripts to load; path will depend on whether we're on devsite or Goro --><script src="/js/base.min.js">
+</script><!-- Retina loader; Do not load if partners page because we need to wait until the Angular app runs --><script>
+new lfl.system.RetinaLoader();
+</script><!-- Secondary right-side scroll-nav --><script>
+new lfl.ui.ScrollNav({});
+</script>
+</body>
+</html>

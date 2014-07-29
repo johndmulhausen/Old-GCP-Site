@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html devsite="">
+<head>
+<title>Mobile Articles &amp; Mobile Development Guides — Google Cloud Platform</title>
+<meta name="description" content="Read technical articles on mobile solutions with Google Cloud Platform. Mobile specific articles cover application development, mobile backend and mobile gaming.">
+<meta name="hide_page_heading" value="true">
+<meta name="full_width" value="true">
+<meta name="top_category" value="developers">
+<meta name="subcategory" value="articles">
+<meta name="viewport" content="initial-scale=1, minimum-scale=1, width=device-width">
+<link rel="apple-touch-icon" href="//cloud.google.com/_static/images/apple-touch-icon.png">
+<link href="//fonts.googleapis.com/css?family=Open+Sans:400italic,300,400,600,700" rel="stylesheet">
+<link href="/css/default.css" rel="stylesheet"><!--[if lt IE 9]>
+    <link rel="stylesheet" media="screen" href='/c/cp-ie.css'>
+    <![endif]-->
+<script src="/js/floodlight.js">
+</script>
+</head>
+<body>
+<div id="maia-main" class="cp-article">
+<div class="maia-cols">
+<div class="maia-col-9">
+<div>
+<div style="float:right">
+<div class="g-plusone"></div>
+</div>
+<h1 class="title">Ordonnancer les notifications push iOS sur Google&nbsp;Cloud&nbsp;Platform</h1>
+</div>
+<h2><a name="h.wntts6bhyclb" id="h.wntts6bhyclb"></a> Introduction</h2>
+<p>Si vous avez utilisé un smartphone ou une tablette récemment, nul doute que vous ayez été confronté à des notifications push. Il s'agit de petits "pings" émis par votre mobile pour vous informer de la réception d'un nouveau message issu d'un réseau social, pour vous indiquer que votre ami attend que vous jouiez votre tour dans un jeu en cours ou encore pour vous annoncer que votre groupe préféré donnera bientôt un concert dans votre ville. Avec les notifications push, en tant que développeur, vous bénéficiez d'une toute nouvelle façon de susciter l'intérêt de vos utilisateurs en temps réel et à tout moment, et ce, que votre application soit ouverte ou non sur leur mobile, et même s'ils ne tiennent pas celui-ci en main. Les notifications push constituent donc un mécanisme particulièrement utile pour créer des solutions pour mobile plus attrayantes.</p>
+<p>Lorsque vous ciblez des appareils Android, la mise en route est facile grâce au plug-in Google pour Eclipse (GPE, Google Plugin for Eclipse). GPE vous permet, en effet, de générer un <a href="https://developers.google.com/eclipse/docs/endpoints-androidconnected-gae">projet Android connecté à App&nbsp;Engine</a> qui fournit la logique de base pour envoyer des notifications push à l'aide de <a href="http://developer.android.com/google/gcm/index.html">Google&nbsp;Cloud&nbsp;Messaging pour Android</a> à partir d'un backend mobile exécuté sur <a href="https://developers.google.com/appengine/">Google&nbsp;App&nbsp;Engine</a>.</p>
+<p>Vous pouvez également utiliser Google&nbsp;Cloud&nbsp;Platform pour envoyer des notifications push sur des appareils iOS. Cependant, l'envoi de telles notifications à l'aide du service APNs (Apple® Push&nbsp;Notification&nbsp;service) exige une approche différente. Cela est principalement dû au fait que le service APNs est basé sur des sockets persistants, et que l'expéditeur doit limiter le nombre de connexions établies et désactivées. En règle générale, cela signifie que l'expéditeur ne peut pas établir de connexions distinctes pour chaque demande d'envoi, mais qu'il doit plutôt réutiliser les connexions établies ou faire appel au regroupement de connexions.<br>
+<br>
+Cet article, et l'exemple qui l'accompagne, présentent un modèle que vous pouvez utiliser pour ordonnancer les notifications push iOS à l'aide de Google&nbsp;App&nbsp;Engine.</p>
+<a href="#" name="id.7b97dafwkyjt" id="id.7b97dafwkyjt"></a>
+<h2><a name="h.8eyqfg1ru295" id="h.8eyqfg1ru295"></a> Conditions requises</h2>
+<p>S'agissant de l'ordonnancement des notifications push iOS dans le cadre de votre application mobile, les conditions requises types en termes de fonctionnalités sont les suivantes&nbsp;:</p>
+<ol>
+<li>Possibilité de communiquer avec le service APNs et de se conformer aux spécifications du protocole de notification push, y compris la recherche régulière de jetons d'appareil inactifs</li>
+<li>Envoi de notifications push vers un seul appareil iOS, par exemple lorsqu'une personne qui joue à votre jeu pour mobile défie un ami</li>
+<li>Envoi de notifications push vers un petit nombre d'appareils iOS, par exemple pour annoncer à tous les amis d'un utilisateur de votre application mobile un événement important, tel que le check-in de l'utilisateur dans un restaurant ou la mise en ligne d'une photo</li>
+<li>Envoi de notifications push sur tous les appareils iOS enregistrés qui répondent à certains critères, par exemple pour informer tous les titulaires d'une carte bancaire du lancement d'une nouvelle promotion</li>
+</ol>
+<p>Pour que les applications mobiles que vous développez rencontrent le succès escompté, il convient également de tenir compte des exigences qui n'ont pas trait aux fonctionnalités, comme celles citées ci-après&nbsp;:</p>
+<ol>
+<li>Évolutivité. Même si une notification donnée n'est envoyée via votre application mobile qu'à un seul appareil, il se peut que vous souhaitiez en envoyer un grand nombre sur une courte période.</li>
+<li>Disponibilité. Si une notification push doit être envoyée par votre application mobile, cette opération doit être possible à n'importe quel moment.</li>
+<li>Fiabilité. Bien que le service APNs ne garantisse pas que la notification acceptée soit remise à l'appareil cible, la fiabilité constitue un critère important. Par exemple, si une notification push doit être envoyée via votre solution pour mobile, elle doit être diffusée de manière fiable au service APNs. Il convient également d'éviter, dans la mesure du possible, l'envoi de notifications push en double, car cela a un impact négatif sur l'expérience utilisateur.</li>
+</ol>
+<p>Vous pouvez répondre à ces exigences, qu'il s'agisse de fonctionnalités ou autres, lorsque vous exécutez votre backend mobile sur Google&nbsp;Cloud&nbsp;Platform.</p>
+<h2><a name="h.vqkkrwp3v35v" id="h.vqkkrwp3v35v"></a> Champ d'application</h2>
+<p>Cet article décrit comment ordonnancer les notifications push iOS dans le cadre de votre solution pour mobile. Pour les besoins de l'article, nous partons du principe que vous connaissez le service APNs et que vous souhaitez envoyer des notifications push iOS en communiquant directement avec ce service.</p>
+<p>Pour communiquer avec le service APNs, l'ouverture et la gestion de connexions de socket&nbsp;TCP sont essentielles. Cela est possible lors de l'exécution de votre code sur Google&nbsp;Cloud&nbsp;Platform, soit depuis Google&nbsp;Compute&nbsp;Engine<sup><a href="#ftnt1" name="ftnt_ref1" id="ftnt_ref1">[1]</a></sup>, soit depuis Google&nbsp;App&nbsp;Engine à l'aide de l'<a href="https://developers.google.com/appengine/docs/java/sockets/overview">API&nbsp;Sockets</a><sup><a href="#ftnt2" name="ftnt_ref2" id="ftnt_ref2">[2]</a></sup>.</p>
+<p>À moins que vous n'ayez de bonnes raisons de développer intégralement votre solution pour mobile sur Google&nbsp;Compute&nbsp;Engine, l'utilisation de Google&nbsp;App&nbsp;Engine pour votre backend mobile présente de nombreux avantages, tel que cela est décrit dans cet article. Ces avantages incluent une disponibilité élevée, l'évolutivité automatique des instances de frontend, l'équilibrage des charges, la facilité de déploiement, sans oublier les avantages inhérents à l'exécution d'une solution sur une infrastructure gérée.</p>
+<h2><a name="h.gwppgtaaj6k3" id="h.gwppgtaaj6k3"></a> Vue d'ensemble</h2>
+<p>La solution complète se compose essentiellement du client mobile, du backend mobile et du canal de communication entre les deux. La diffusion proprement dite des notifications push est effectuée à l'aide du service APNs.</p>
+<p>Le client mobile se compose de votre application iOS native qui utilise des notifications push iOS, ainsi que d'un appareil iOS sur lequel cette application est installée.</p>
+<p>L'application mobile communique avec le backend mobile à l'aide de <a href="https://developers.google.com/appengine/docs/java/endpoints/overview">Google&nbsp;Cloud&nbsp;Endpoints</a><sup><a href="#ftnt3" name="ftnt_ref3" id="ftnt_ref3">[3]</a></sup>, notamment pour l'enregistrement des jetons d'appareil, ainsi que pour les API spécifiques à l'application qui déclenchent indirectement des notifications push.</p>
+<p>Le backend mobile s'exécute sur Google&nbsp;App&nbsp;Engine. Il utilise Google&nbsp;Cloud&nbsp;<a href="https://developers.google.com/datastore/">Datastore</a> pour l'enregistrement des jetons, ainsi que l'API Sockets pour envoyer des notifications au service APNs chargé de leur diffusion sur les appareils iOS.</p>
+<p>Le backend mobile utilise également les <a href="https://developers.google.com/appengine/docs/java/taskqueue/">files d'attente de tâches</a> et <a href="https://developers.google.com/appengine/docs/java/config/cron">tâches planifiées</a> pour ordonnancer les notifications push, comme indiqué dans les sections suivantes.</p>
+<h2><a name="h.uyvftaxn4mxf" id="h.uyvftaxn4mxf"></a> Schéma d'architecture</h2>
+<p>La figure&nbsp;1 illustre l'architecture de haut niveau de cette solution.</p>
+<figure><img height="408" src="ios-push-notifications/image00.jpg" width="640" alt="">
+<figcaption>Figure&nbsp;1&nbsp;: Architecture de haut niveau de la solution</figcaption>
+</figure>
+<h2><a name="h.imutx75y3zex" id="h.imutx75y3zex"></a> Conception de la solution</h2>
+<p>Le backend mobile comprend plusieurs composants&nbsp;:</p>
+<ul>
+<li><strong>Point de terminaison d'enregistrement de l'appareil</strong>&nbsp;: stocke et gère la liste des jetons d'appareil (mise en correspondance avec la liste des appareils sur lesquels est installée votre application cliente native et sur lesquels les utilisateurs ont autorisé votre application à utiliser des notifications push).</li>
+<li><strong>Gestionnaire de notifications push</strong>&nbsp;: fournit une API interne que les autres composants de votre backend mobile peuvent appeler afin de demander l'envoi de diverses notifications push.</li>
+<li><strong>Outil de diffusion des notifications</strong>&nbsp;: gère la communication avec le service APNs à l'aide de connexions de socket&nbsp;TCP en vue d'envoyer des notifications push.</li>
+<li><strong>Gestionnaire de traitement des commentaires push</strong>&nbsp;: gère la communication avec le service APNs afin de récupérer la liste des jetons d'appareil inactifs ou non&nbsp;valides.</li>
+<li><strong>Gestionnaire de suppression des jetons d'appareil</strong>&nbsp;: met à jour la liste des jetons d'appareil en supprimant ceux qui sont inactifs ou non&nbsp;valides.</li>
+<li><strong>Gestionnaire de prétraitement push</strong>&nbsp;: récupère la liste des jetons d'appareil cibles qui doivent recevoir une notification push donnée, par exemple la liste des jetons d'appareil utilisés par les amis de Jean qui ont fait leur check-in dans un restaurant.</li>
+</ul>
+<p>Ces composants sont représentés dans le schéma de la figure&nbsp;2.</p>
+<figure><img height="518" src="ios-push-notifications/image04.jpg" width="679" alt="">
+<figcaption>Figure&nbsp;2&nbsp;: Principaux composants de la solution</figcaption>
+</figure>
+<p>Pour ordonnancer les notifications push, cette solution fait appel à une file d'attente de diffusion des notifications (qui est une <a href="https://developers.google.com/appengine/docs/java/taskqueue/overview-pull">file d'attente de retrait</a>) et à une file d'attente de prétraitement (qui est une <a href="https://developers.google.com/appengine/docs/java/taskqueue/overview-push">file d'attente d'envoi</a>), ainsi qu'à une file d'attente de suppression d'appareils (qui est une autre file d'attente d'envoi).</p>
+<p>Les interactions entre ces différentes files d'attente, le gestionnaire de notifications push, l'outil de diffusion des notifications et le gestionnaire de prétraitement push sont illustrées dans le schéma de la figure&nbsp;3.</p>
+<figure><img height="553" src="ios-push-notifications/image03.jpg" width="473" alt="">
+<figcaption>Figure&nbsp;3&nbsp;: Détails de mise en œuvre de la solution</figcaption>
+</figure>
+<h3><a name="h.8ivv3v632vy4" id="h.8ivv3v632vy4"></a>Client&nbsp;iOS</h3>
+<p>Vous êtes invité à suivre les instructions d'Apple pour activer les notifications push iOS dans votre application native. Vous devez notamment obtenir un ou plusieurs certificats APNs spécifiques à votre package d'application. Votre application cliente doit être enregistrée pour recevoir des notifications push. Vous pouvez, par exemple, effectuer cet enregistrement lors du lancement de l'application à partir de la méthode <code>didFinishLaunchingWithOptions()</code> en appelant <code>registerForRemoteNotificationTypes()</code>.</p>
+<p>Vous devez également mettre en œuvre <code>didRegisterForRemoteNotificationsWithDeviceToken()</code> pour votre application iOS et transmettre le jeton d'appareil récupéré<sup><a href="#ftnt4" name="ftnt_ref4" id="ftnt_ref4">[4]</a></sup> à votre backend mobile, comme cela est décrit dans la <a href="#id.6hycc246fjk6">section suivante</a>. Vous pouvez également mettre en œuvre <code>didReceiveRemoteNotification()</code> pour traiter la notification push reçue.</p>
+<p>Notez que des appareils&nbsp;iOS physiques sont nécessaires dans le cadre du mécanisme des notifications push APNs. Les émulateurs ne fonctionnent donc pas.</p>
+<p>Le développement d'applications clientes iOS qui utilisent des notifications push n'est pas décrit de manière détaillée dans le présent article.</p>
+<a href="#" name="id.6hycc246fjk6" id="id.6hycc246fjk6"></a>
+<h3>Transmission du jeton d'appareil à votre backend mobile</h3>
+<p>Comme indiqué précédemment, votre application cliente iOS doit transmettre le jeton d'appareil à votre backend mobile.</p>
+<p>Pour ce faire, une méthode simple consiste à utiliser <a href="https://developers.google.com/appengine/docs/java/endpoints/overview">Google&nbsp;Cloud&nbsp;Endpoints</a> afin de présenter une API&nbsp;REST à partir du backend. Vous pouvez ensuite utiliser des <a href="https://developers.google.com/appengine/docs/java/endpoints/consume_ios">outils</a> pour générer une bibliothèque cliente iOS, et authentifier l'appel à l'aide du protocole OAuth2 et de comptes Google.</p>
+<figure><img height="246" src="ios-push-notifications/image05.jpg" width="625" alt="">
+<figcaption>Figure&nbsp;4&nbsp;: Utilisation de Google&nbsp;Cloud&nbsp;Endpoints pour présenter une API&nbsp;REST à partir du backend</figcaption>
+</figure>
+<p>Cependant, si votre application cliente applique une méthode différente pour communiquer avec votre backend mobile, vous pouvez simplement étendre le mécanisme en place afin de transmettre le jeton d'appareil. Assurez-vous que cette communication est authentifiée et que le backend a vérifié que la demande émanait bien de l'application cliente.</p>
+<h3>Stockage et gestion de jetons d'appareil</h3>
+<p>Votre application cliente n'est pas appelée lorsqu'un utilisateur décide de la désinstaller. Par conséquent, il vous appartient de gérer la liste des jetons d'appareil actifs en suivant les spécifications APNs. Votre backend mobile doit notamment récupérer la liste des jetons d'appareil inactifs ou non&nbsp;valides, et cesser, dans les plus brefs délais, d'envoyer des notifications push à l'aide de ces jetons (pour plus d'informations sur la mise en œuvre de ce processus, reportez-vous à la section <a href="#id.irb04jy25lno">Gestion des jetons d'appareil</a><a href="#id.irb04jy25lno"></a>). À cette fin, votre backend mobile doit donc stocker non seulement le jeton d'appareil, mais aussi l'horodatage de réception du jeton, de manière à mieux gérer les jetons inactifs.</p>
+<p>En outre, à moins que votre solution pour mobile n'envoie les mêmes notifications push à l'ensemble des utilisateurs, nous vous recommandons d'attribuer le jeton d'appareil de manière à pouvoir cibler des utilisateurs bien précis. Pour ce faire, vous pouvez, par exemple, stocker l'identifiant "user_id" avec le jeton d'appareil.</p>
+<p>Datastore constitue le candidat idéal pour stocker des jetons d'appareil et les informations associées. Cependant, si votre solution mobile utilise déjà Cloud&nbsp;SQL, vous pouvez choisir de stocker les jetons d'appareil à cet emplacement<sup><a href="#ftnt5" name="ftnt_ref5" id="ftnt_ref5">[5]</a></sup>.</p>
+<figure><img height="331" src="ios-push-notifications/image01.jpg" width="338" alt="">
+<figcaption>Figure&nbsp;5&nbsp;: Stockage de jetons d'appareil à l'aide de Datastore</figcaption>
+</figure>
+<h2><a name="h.q9c7r5sxdlz2" id="h.q9c7r5sxdlz2"></a> Déclenchement de demandes de notification push</h2>
+<p>D'autres méthodes peuvent être appliquées pour déclencher des demandes de notification push via votre solution pour mobile&nbsp;:</p>
+<ol>
+<li>Demandes déclenchées par votre application cliente pour mobile<br>
+<br>
+Ce type de demande est généralement déclenché par une action de l'utilisateur. Par exemple, lorsqu'un utilisateur de votre jeu défie un ami sur son mobile, une notification push peut être envoyée à ce dernier pour lui faire part de cette demande.<br>
+<br>
+En règle générale, un backend mobile présente une API que l'application cliente appelle pour déclencher la partie du processus qui doit se produire sur le backend, plutôt que de mettre une API explicite à la disposition de l'application cliente pour mobile, dédiée exclusivement à l'envoi de notifications push. L'API peut, par exemple, inclure une méthode <code>ChallengeFriend</code>. Le déclenchement de la demande de notification push constitue alors l'une des actions que votre backend mobile peut effectuer lorsque le client appelle l'API.<br>
+<br>
+Autre exemple&nbsp;: lorsqu'un mobinaute fait son check-in dans un restaurant ou met une photo en ligne, la notification push peut être utilisée pour en informer ses amis. Comme c'est le cas dans l'exemple précédent, l'API présentée par le backend mobile est adaptée à des opérations complètes, telles que <code>CheckIntoPlace</code> ou <code>UploadPhoto</code>. La mise en œuvre de ces opérations dans le backend comprend l'envoi de notifications push.<br>
+<br></li>
+<li>Demandes déclenchées par votre backend d'application mobile<br>
+<br>
+Il peut s'agir, par exemple, d'une interface Web d'administration qui permet à un administrateur d'envoyer une notification push à l'ensemble des utilisateurs pour leur annoncer la disponibilité d'un nouveau niveau de jeu. Autre exemple&nbsp;: l'envoi d'une notification push chaque matin, pour informer les utilisateurs de la disponibilité d'une nouvelle offre.</li>
+</ol>
+<p>Dans la conception proposée, toutes les demandes d'envoi de notifications push sont contrôlées par votre backend mobile et encapsulées par un composant nommé "Gestionnaire de notifications push".</p>
+<h2><a name="h.ji7ke78lxqo7" id="h.ji7ke78lxqo7"></a> Gestionnaire de notifications push</h2>
+<p>Le rôle de ce gestionnaire est de fournir une API interne que les autres composants de votre backend mobile peuvent utiliser pour déclencher des demandes de notifications push. Conformément aux <a href="#id.7b97dafwkyjt">conditions</a> exposées précédemment, cette API couvre les scénarios suivants&nbsp;:</p>
+<ol>
+<li>Envoi d'une <a href="#" name="id.mpqb4ttxlxec" id="id.mpqb4ttxlxec"></a>notification push vers un seul appareil&nbsp;iOS&nbsp;; par exemple, lorsqu'une personne qui joue à votre jeu pour mobile défie un ami.<a href="#" name="id.desexnl07y7s" id="id.desexnl07y7s"></a></li>
+<li>Envoi d'une notification push vers un petit nombre d'appareils iOS&nbsp;; par exemple,<a href="#" name="id.bz6o29177e7j" id="id.bz6o29177e7j"></a> pour annoncer à tous les amis d'un utilisateur de votre solution pour mobile un événement important, tel que le check-in de l'utilisateur dans un restaurant ou la mise en ligne d'une photo.</li>
+<li>Envoi de notifications push vers un grand nombre d'appareils iOS, qu'il s'agisse de tous les appareils enregistrés ou des appareils enregistrés pour des utilisateurs qui répondent à certains critères (par exemple, pour informer les titulaires d'une carte bancaire du lancement d'une nouvelle promotion). Des notifications de ce type peuvent également être utilisées pour informer tous les utilisateurs de votre jeu sur mobile de la disponibilité d'un nouveau niveau.</li>
+</ol>
+<p>Pour qu'il soit possible de développer des applications plus réactives et plus puissantes, cette API interne ne doit pas bloquer le fil tant que la notification push n'a pas été envoyée. Au contraire, l'appel doit être renvoyé dès que la demande d'envoi de la notification push est initiée. Le reste du processus doit se produire de manière asynchrone.</p>
+<p>Dans la conception présentée dans cet article, ces demandes persistent en tant que tâches dans la file d'attente de tâches. Ce modèle est décrit dans les sections suivantes. Il est également mis en œuvre dans l'exemple d'application fourni.</p>
+<h2><a name="h.3mbjx0kzqv4f" id="h.3mbjx0kzqv4f"></a> Utilisation de la file d'attente de tâches</h2>
+<p>Les deux files d'attente de tâches utilisées pour les demandes de notifications push sont les suivantes&nbsp;:</p>
+<a href="#" name="21e8688b3421d8b0326b1b25b8e3f06c13f98433" id="21e8688b3421d8b0326b1b25b8e3f06c13f98433"></a> <a href="#" name="0" id="0"></a>
+<table cellpadding="0" cellspacing="0">
+<tbody>
+<tr>
+<th>
+<p>Nom de la file d'attente</p>
+</th>
+<th>
+<p>Type de file d'attente</p>
+</th>
+<th>
+<p>Description</p>
+</th>
+</tr>
+<tr>
+<td>
+<p>File d'attente de diffusion des notifications</p>
+</td>
+<td>
+<p>Retrait</p>
+</td>
+<td>
+<p>Utilisée pour les tâches représentant des demandes de notifications push déjà envoyées. En d'autres termes, toutes les données requises sont incluses (voir les scénarios <a href="#id.mpqb4ttxlxec">1</a> et <a href="#id.desexnl07y7s">2</a>).</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>File d'attente de prétraitement push</p>
+</td>
+<td>
+<p>Envoi</p>
+</td>
+<td>
+<p>Utilisée pour les tâches qui nécessitent un prétraitement supplémentaire (voir le scénario <a href="#id.bz6o29177e7j">#3</a>).</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3><a name="h.22arhi37cwlt" id="h.22arhi37cwlt"></a> Notification push vers un seul appareil</h3>
+<p>Dans ce scénario, une tâche persistante comprend le jeton d'appareil de l'utilisateur cible et tous les détails relatifs à la notification push demandée, tels que le type de notification et le texte de l'alerte. La tâche est placée dans la file d'attente de diffusion des notifications.</p>
+<h3><a name="h.febpvyyl81ru" id="h.febpvyyl81ru"></a> Notification push vers un petit nombre d'appareils</h3>
+<p>Dans ce scénario, une tâche persistante comprend tous les détails relatifs à la notification push demandée, ainsi que la liste des jetons d'appareil cibles. La tâche est placée dans la file d'attente de diffusion des notifications. En d'autres termes, le système effectue une persistance atomique d'une seule demande de notification push vers une liste d'appareils. Cette opération peut se révéler plus évolutive et plus fiable que la persistance d'une liste de requêtes individuelles vers un seul appareil.</p>
+<p>Vous pouvez utiliser cette méthode pour autant que les deux conditions suivantes soient remplies&nbsp;:</p>
+<ul>
+<li>La liste des jetons d'appareil n'est pas trop importante, étant donné que la liste sérialisée et les informations relatives à la notification push demandée doivent respecter la <a href="https://developers.google.com/appengine/docs/java/taskqueue/overview-pull#Quotas_and_Limits_for_Pull_Queues">taille limite de la tâche documentée</a>.</li>
+<li>Votre backend mobile peut récupérer, suffisamment rapidement<sup><a href="#ftnt6" name="ftnt_ref6" id="ftnt_ref6">[6]</a></sup>, la liste des appareils cibles, de sorte que cette récupération puisse être effectuée pendant le traitement d'une demande émanant du client.</li>
+</ul>
+<p>Autrement, vous pouvez considérer ce scénario comme une version simplifiée du scénario suivant.</p>
+<h3><a name="h.nnvl48zfeypg" id="h.nnvl48zfeypg"></a> Demande de notification push nécessitant un prétraitement</h3>
+<p>Ce scénario concerne les situations suivantes&nbsp;: la liste des appareils cibles est trop volumineuse pour tenir dans une seule tâche ou la récupération de cette liste ne peut pas être effectuée suffisamment rapidement. Dans ce cas, la tâche persistante ne contient que des détails sur la notification push demandée et certaines métadonnées qui spécifient indirectement les jetons d'appareil cibles. Cependant, la liste réelle des jetons d'appareil cibles n'est pas incluse dans les données utiles de la tâche. En d'autres termes, l'élément placé en file d'attente est une tâche qui nécessite une étape de prétraitement au cours de laquelle les métadonnées seront utilisées pour récupérer la liste des jetons d'appareil cibles. En règle générale, un transfert de pages est nécessaire dans le cadre de cette étape, comme indiqué dans la <a href="#id.g7ueayegc7ih">section</a> suivante. Une tâche de ce type est placée dans la file d'attente de prétraitement push.</p>
+<h3>Amélioration de la fiabilité</h3>
+<p>Pour bénéficier d'un niveau de fiabilité accru, il est conseillé de tirer parti d'un mécanisme "Task&nbsp;Queue" qui empêche d'insérer plusieurs fois <a href="https://developers.google.com/appengine/docs/java/taskqueue/overview#Task_Names">une tâche portant le même nom</a> dans une tranche horaire donnée. Pour ce faire, vous devez spécifier explicitement le nom de la tâche. Vous pouvez déduire ce nom de l'événement à l'origine de la demande d'envoi de la notification push. Le nom de la tâche peut, par exemple, inclure l'identifiant du joueur, celui de l'ami invité et un autre pour la demande de défi, tel que l'identifiant de cette demande ou un horodatage avec une marge de cinq&nbsp;minutes. De cette manière, si la demande fait l'objet d'un nouveau traitement (c'est le cas, par exemple, lorsqu'elle est renvoyée par le client), votre backend va tenter de mettre en file d'attente une tâche portant un nom utilisé précédemment. Une exception spécifique sera alors émise, et votre backend pourra ignorer la demande et évitera d'envoyer des notifications push en double.</p>
+<a href="#" name="id.g7ueayegc7ih" id="id.g7ueayegc7ih"></a>
+<h2><a name="h.8c35ekdreh7p" id="h.8c35ekdreh7p"></a> Récupération de la liste des jetons d'appareil cibles</h2>
+<p>Cette solution associe divers composants (<a href="https://developers.google.com/appengine/docs/python/datastore/queries#Query_Cursors">requête de curseur</a>, files d'attente d'envoi et de retrait, et transactions) pour gérer le prétraitement et récupérer la liste des jetons d'appareil cibles de manière fiable.</p>
+<figure><img height="568" src="ios-push-notifications/image02.jpg" width="486" alt="">
+<figcaption>Figure&nbsp;6&nbsp;: Récupération d'une liste de jetons d'appareil cibles</figcaption>
+</figure>
+<p>Lorsque le gestionnaire de prétraitement push reçoit une tâche de prétraitement initiale, il utilise les métadonnées contenues dans les données utiles de la tâche pour créer une requête de magasin de données. Il récupère ensuite un lot de jetons d'appareil correspondants, ainsi que des informations de curseur, de sorte que le lot suivant puisse être récupéré ultérieurement. Par la suite, il (1) place une tâche dans la file d'attente de diffusion des notifications afin d'envoyer une notification push au lot de jetons d'appareil récupéré et (2) place une tâche de prétraitement en continu (décrite dans la suite de cette section) dans la file d'attente de prétraitement push. Notez que ces deux opérations sont effectuées de manière transactionnelle.</p>
+<p>Une fois la transaction validée, le gestionnaire de prétraitement push termine le traitement de la tâche de prétraitement d'origine, de sorte qu'elle puisse être considérée comme ayant été traitée. En cas d'échec de la transaction, elle est annulée et aucune autre tâche n'est placée en file d'attente. Dans ce cas, le gestionnaire de prétraitement push renvoie une erreur et l'API "Task&nbsp;Queue" d'App&nbsp;Engine effectue une nouvelle tentative d'exécution de la tâche de prétraitement d'origine. Vous pouvez <a href="https://developers.google.com/appengine/docs/java/config/queue#Configuring_Retry_Attempts_for_Failed_Tasks">configurer</a> la manière dont App&nbsp;Engine doit effectuer ces nouvelles tentatives pour chaque file d'attente séparément.</p>
+<p>Une tâche de prétraitement en continu présente de nombreuses similitudes avec une tâche de prétraitement initial, mais elle contient, en outre, des informations de curseur codées. Lorsque le gestionnaire de prétraitement push reçoit une tâche de ce type, il récupère les informations de curseur codées et les utilise pour créer une requête de magasin de données qui poursuit le transfert de pages sur l'ensemble de résultats.</p>
+<h2><a name="h.id7e1l7qi36u" id="h.id7e1l7qi36u"></a> Communication avec le service APNs</h2>
+<h3><a name="h.ukkutndraosk" id="h.ukkutndraosk"></a> Envoi de notifications push</h3>
+<p>Il est conseillé de maintenir ouvertes les connexions avec le service APNs sur plusieurs notifications. Établir et désactiver les connexions de manière répétée est une pratique déconseillée.</p>
+<p>La méthode la plus simple pour obtenir le schéma de communication recommandé lorsque le backend mobile s'exécute sur Google&nbsp;App&nbsp;Engine consiste à communiquer avec le service APNs, mais à partir d'une <a href="https://developers.google.com/appengine/docs/java/backends/overview?hl=en">instance de backend</a> App&nbsp;Engine (en particulier un <a href="https://developers.google.com/appengine/docs/java/config/backends#Types_of_Backends">backend résident</a>). Les backends de ce type s'exécutent en continu. De ce fait, le maintien des connexions peut être effectué plus facilement.</p>
+<p>Chaque instance de backend que vous souhaitez utiliser pour envoyer des notifications push peut héberger un worker. Le worker peut fonctionner dans une boucle et louer un lot de tâches de la file d'attente de diffusion des notifications, envoyer les notifications demandées dans ces tâches, puis supprimer ces dernières.</p>
+<p>Lors du renvoi d'un appel portant sur l'envoi de notifications push au service APNs, le résultat peut indiquer que des jetons d'appareil spécifiques sont inactifs ou non&nbsp;valides. Le worker peut alors placer une tâche de nettoyage en file d'attente pour chaque lot de jetons d'appareil de ce type. Cette tâche est ensuite traitée de manière asynchrone selon la méthode décrite (voir la section <a href="#id.irb04jy25lno">Gestion des jetons d'appareil</a>).</p>
+<p>S'il s'avère que le débit des notifications push obtenu à l'aide d'un seul backend et d'un seul fil est insuffisant pour répondre à vos besoins, vous pouvez facilement augmenter le nombre de workers (soit en hébergeant plusieurs workers sur une instance de backend, soit en utilisant plusieurs instances). Une autre solution consiste à répartir la charge en utilisant plusieurs files d'attente de retrait. À titre d'exemple, vous pouvez utiliser de trois à cinq workers par file d'attente. Notez toutefois qu'il ne s'agit là que d'une estimation très approximative.</p>
+<h3><a name="h.jji4v2zg1m0c" id="h.jji4v2zg1m0c"></a> Interrogation du service de commentaires</h3>
+<p>L'une des exigences du service APNs est d'interroger régulièrement le service de commentaires afin de récupérer la liste des jetons d'appareil inactifs. Dans le cas présent, cette opération est effectuée à l'aide du gestionnaire de traitement des commentaires push que vous pouvez configurer pour qu'il soit appelé par le <a href="https://developers.google.com/appengine/docs/java/config/cron?hl=en">service Cron d'App&nbsp;Engine</a> selon un calendrier que vous avez défini (au moins une fois par jour). Ce gestionnaire place dans une file d'attente de nettoyage une tâche contenant la liste des jetons d'appareil inactifs.</p>
+<a href="#" name="id.irb04jy25lno" id="id.irb04jy25lno"></a>
+<h2><a name="h.4khvlm2pr4" id="h.4khvlm2pr4"></a> Gestion des jetons d'appareil</h2>
+<p>Les tâches contenant des informations sur les jetons d'appareil inactifs et non&nbsp;valides sont traitées par le gestionnaire de suppression des jetons d'appareil, dont le rôle est précisément de supprimer ces jetons du magasin de persistance.</p>
+<p>Les jetons d'appareil non&nbsp;valides renvoyés lors de l'envoi d'une notification push peuvent être supprimés sans contrôles supplémentaires. Cependant, lors de la gestion des jetons d'appareil inactifs récupérés du service de commentaires, il convient de tenir compte des cas où un jeton précédemment inactif est réactivé et réenregistré auprès du backend mobile. Pour faire face à cette situation, une méthode consiste à comparer un horodatage, inclus avec les informations récupérées du service de commentaires, avec celui stocké pour ce jeton d'appareil dans le magasin de persistance. Si l'horodatage du magasin de persistance est plus récent, cela signifie que les informations d'enregistrement d'appareil sont plus récentes que celles récupérées du service de commentaires, et que ce jeton ne doit donc pas être supprimé.</p>
+<h2><a name="h.xr0rr9xfo8sm" id="h.xr0rr9xfo8sm"></a> Exemple d'application</h2>
+<p>Un exemple d'application de la conception présentée dans cet article est publié sur <a href="https://github.com/GoogleCloudPlatform/solutions-ios-push-notification-sample-backend-java">GitHub</a>. Vous pouvez le déployer sur votre compte Google&nbsp;App&nbsp;Engine en activant la facturation, puis l'utiliser pour vous exercer. Google&nbsp;App&nbsp;Engine offre une couche gratuite soumise à des <a href="https://cloud.google.com/pricing/">quotas</a>, dont un quota d'exécution des <a href="https://developers.google.com/appengine/kb/billing#free_quota_backends">instances de backend</a> résidentes. Une application cliente simple pour iOS est également publiée sur <a href="https://github.com/GoogleCloudPlatform/solutions-ios-push-notification-sample-ios-client">GitHub</a>.</p>
+<h2><a name="h.35wwcodr7yaf" id="h.35wwcodr7yaf"></a> Conclusion</h2>
+<p>Votre backend mobile exécuté sur Google&nbsp;App&nbsp;Engine peut planifier l'envoi de notifications push vers diverses plates-formes mobiles, dont Android et iOS, sans devoir utiliser de services tiers.</p>
+<br>
+<hr>
+<br>
+<div>
+<p><a href="#ftnt_ref1" name="ftnt1" id="ftnt1">[1]</a> Un aperçu de Google&nbsp;Compute&nbsp;Engine est disponible au public depuis le mois de juin&nbsp;2013.</p>
+</div>
+<div>
+<p><a href="#ftnt_ref2" name="ftnt2" id="ftnt2">[2]</a> Depuis le mois de juin&nbsp;2013, l'API&nbsp;Sockets est une fonctionnalité disponible à titre expérimental.</p>
+</div>
+<div>
+<p><a href="#ftnt_ref3" name="ftnt3" id="ftnt3">[3]</a> Depuis le mois de février&nbsp;2013, Google&nbsp;Cloud&nbsp;Endpoints est une fonctionnalité disponible à titre expérimental.</p>
+</div>
+<div>
+<p><a href="#ftnt_ref4" name="ftnt4" id="ftnt4">[4]</a> Le jeton d'appareil est spécifique à votre application cliente. Il est différent de l'identifiant unique d'appareil.</p>
+</div>
+<div>
+<p><a href="#ftnt_ref5" name="ftnt5" id="ftnt5">[5]</a> Si vous avez besoin d'informations supplémentaires pour choisir entre Datastore et Cloud&nbsp;SQL, consultez cette section de <a href="https://developers.google.com/cloud-sql/faq#choice">questions-réponses</a>.</p>
+</div>
+<div>
+<p><a href="#ftnt_ref6" name="ftnt6" id="ftnt6">[6]</a> Le sens de l'expression "suffisamment rapidement" utilisée ici dépend des circonstances. Si vous estimez, en interne, que le traitement des demandes en provenance du client doit être effectué en x&nbsp;millisecondes ou en y&nbsp;secondes, vous pouvez l'utiliser comme facteur clé pour déterminer si la récupération de la liste de tous les appareils cibles peut être réalisée "suffisamment rapidement".</p>
+</div>
+</div>
+<div class="maia-col-3"><br>
+<img src="//www.google.com/images/icons/product/feedback-16.png" class="g-app-icon" alt=""> <a href="javascript:void(0);" class="google-feedback">Commentaires sur ce document</a><br>
+<br></div>
+</div>
+</div>
+<script>
+(function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+</script><script src="//www.gstatic.com/feedback/api.js">
+</script><script>
+$('body').delegate('.google-feedback', 'click', function() {
+      userfeedback.api.startFeedback({'productId': '94614'});
+  });
+</script><!-- Scripts to include both on Goro + Devsite --><script>
+window.___gcfg = {
+     lang: ''
+   };
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+</script><!-- GTM implementation --><!-- Start dataLayer --><script>
+dataLayer = [{
+        'country': 'fr',
+        'region': 'emea',
+        'language': 'fr'
+      }];
+</script><!-- End dataLayer --><!-- Start Google Tag Manager --><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5CVQBG" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript> <script>
+(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-5CVQBG');
+</script><!-- End Google Tag Manager --><!-- Global JS scripts to load; path will depend on whether we're on devsite or Goro --><script src="/js/base.min.js">
+</script><!-- Retina loader; Do not load if partners page because we need to wait until the Angular app runs --><script>
+new lfl.system.RetinaLoader();
+</script><!-- Secondary right-side scroll-nav --><script>
+new lfl.ui.ScrollNav({});
+</script>
+</body>
+</html>

@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html devsite="">
+<head>
+<title>Support Sign Up — Google Cloud Platform</title>
+<meta name="description" content="Google Cloud Platform では、Google の拡張性に優れたインフラストラクチャでアプリケーションやウェブサイトのビルドとホスティング、データの保存、データの分析を行えます。">
+<meta name="hide_page_heading" value="true">
+<meta name="full_width" value="true">
+<meta name="top_category" value="support">
+<meta name="subcategory" value="support packages">
+<meta name="viewport" content="initial-scale=1, minimum-scale=1, width=device-width">
+<link rel="apple-touch-icon" href="//cloud.google.com/_static/images/apple-touch-icon.png">
+<link href="//fonts.googleapis.com/css?family=Open+Sans:400italic,300,400,600,700" rel="stylesheet">
+<link href="/css/default.css" rel="stylesheet"><!--[if lt IE 9]>
+    <link rel="stylesheet" media="screen" href='/c/cp-ie.css'>
+    <![endif]-->
+<script src="/js/floodlight.js">
+</script>
+</head>
+<body>
+<script>
+function validation(form) {
+
+
+  if(form.FirstName.value == '') {
+  form.FirstName.focus();
+  form.FirstName.style.borderColor="#D3152C";
+
+  return false;
+  }
+
+  if(form.LastName.value == '') {
+  form.LastName.focus();
+  form.LastName.style.borderColor="#D3152C";
+
+  return false;
+  }
+
+  if(form.Email.value == '') {
+  form.Email.focus();
+  form.Email.style.borderColor="#D3152C";
+
+  return false;
+  }
+
+  if(form.Phone.value == '') {
+  form.Phone.focus();
+  form.Phone.style.borderColor="#D3152C";
+
+  return false;
+  }
+
+  if(form.Company.value == '') {
+  form.Company.focus();
+  form.Company.style.borderColor="#D3152C";
+
+  return false;
+  }
+
+  if(form.Country.value == '') {
+  form.Country.focus();
+  form.Country.style.borderColor="#D3152C";
+
+  return false;
+  }
+
+  if(form.Country.value == 'US' || form.Country.value == 'CA') {
+    if(form.State.value == '') {
+      form.State.focus();
+      form.State.style.borderColor="#D3152C";
+
+      return false;
+    }
+  }
+
+  if(form.Industry.value == '') {
+  form.Industry.focus();
+  form.Industry.style.borderColor="#D3152C";
+
+  return false;
+  }
+
+  if(form.Plan.value == '') {
+  form.Plan.focus();
+  form.Plan.style.borderColor="#D3152C";
+
+  return false;
+  }
+
+  return true;
+  }
+</script>
+<div id="maia-main" class="cp-page cp-std cp-contact">
+<div class="cp-hero cp-cloud cp-wrap">
+<div class="cp-header">
+<h1>お問い合わせ</h1>
+<p>営業担当者へサポート パッケージについてお問い合わせができます。ご興味のあるサポート パッケージの種類をお知らせください。営業担当者からご連絡を差し上げます。</p>
+<p class="cp-sub">アスタリスク（<span class="cp-required">*</span>）の付いたフィールドは必ず入力してください。</p>
+</div>
+</div>
+<div class="cp-contact-form">
+<form enctype="application/x-www-form-urlencoded" method="post" action="http://app-g.marketo.com/index.php/leadCapture/save" name="cp-contact" onsubmit="return validation(this);" id="cp-contact"><input name="_mkt_trk" type="hidden" value=""> <input name="LeadSource" type="hidden" value="ウェブサイト"> <input name="Lead_Source_Descr__c" type="hidden" value="ウェブサイト: 営業担当者へのお問い合わせ - Cloud Platform"> <input name="Most_Recent_Lead_Source_Description__c" type="hidden" value="ウェブサイト: 営業担当者へのお問い合わせ - Cloud Platform"> <input id="utm_source__c" name="utm_source__c" type="hidden" value=""> <input id="utm_content__c" name="utm_content__c" type="hidden" value=""> <input id="utm_campaign__c" name="utm_campaign__c" type="hidden" value=""> <input id="utm_medium" name="utm_medium" type="hidden" value=""> <input id="utm_term" name="utm_term" type="hidden" value=""> <input type="hidden" name="lpId" value="-1"> <input type="hidden" name="subId" value="95"> <input type="hidden" name="munchkinId" value="248-TPC-286"> <input type="hidden" name="formid" value="1104"> <input name="_mkt_disp" type="hidden" value="戻る"> <input id="returnURL" name="returnURL" type="hidden" value="http://cloud.google.com/support/signup-thankyou"> <input id="retURL" name="retURL" type="hidden" value="http://cloud.google.com/support/signup-thankyou"> <input id="Number_of_Employees__c" name="Number_of_Employees__c" type="hidden" value="1"> <input id="Title" name="title" type="hidden" value="なし"> <input id="lead_type__c" name="lead_type__c" type="hidden" value="App Engine">
+<fieldset><label for="FirstName">名<span class="cp-required">*</span></label> <input id="FirstName" maxlength="40" name="FirstName" type="text" class="inputtext" size="80"></fieldset>
+<fieldset><label for="LastName">姓<span class="cp-required">*</span></label> <input id="LastName" maxlength="40" name="LastName" type="text" class="inputtext" size="80"></fieldset>
+<fieldset><label for="Email">メール<span class="cp-required">*</span></label> <input id="Email" maxlength="40" name="Email" type="text" class="inputtext" size="80"></fieldset>
+<fieldset><label for="Phone">電話<span class="cp-required">*</span></label> <input id="Phone" maxlength="40" name="Phone" type="text" class="inputtext" size="80"></fieldset>
+<fieldset><label for="Company">会社名<span class="cp-required">*</span></label> <input id="Company" maxlength="40" name="Company" type="text" class="inputtext" size="80"></fieldset>
+<fieldset><label for="Industry">業種<span class="cp-required">*</span></label><select id="Industry" name="Industry" title="業種">
+<option value="">お選びください</option>
+<option value="ビジネス サービス">ビジネス サービス</option>
+<option value="教育">教育</option>
+<option value="Energy, Chemicals &amp; Utilities">エネルギー、化学、公共事業</option>
+<option value="農業、林業、漁業">農業、林業、漁業</option>
+<option value="金融サービス">金融サービス</option>
+<option value="政府、官公庁、地方自治体">政府、官公庁、地方自治体</option>
+<option value="Health &amp; Social Care">ヘルス ケア、ソーシャル ケア</option>
+<option value="持ち株会社">持ち株会社</option>
+<option value="製造">製造</option>
+<option value="Media &amp; Entertainment">メディア/エンターテインメント</option>
+<option value="Mining &amp; Construction">鉱業、建設業</option>
+<option value="非営利団体">非営利団体</option>
+<option value="Retail &amp; Wholesale Trade">小売業、卸売業</option>
+<option value="テクノロジー">テクノロジー</option>
+<option value="Travel &amp; Transport">旅行、運輸</option>
+</select></fieldset>
+<div style="clear:both;"></div>
+<fieldset><label for="Country">国<span class="cp-required">*</span></label><select id="Country" name="Country" title="国">
+<option selected value="">お選びください</option>
+<option value="米国">米国</option>
+<option value="AF">アフガニスタン</option>
+<option value="AX">オーランド諸島</option>
+<option value="AL">アルバニア</option>
+<option value="DZ">アルジェリア</option>
+<option value="AS">米領サモア</option>
+<option value="AD">アンドラ</option>
+<option value="AO">アンゴラ</option>
+<option value="AI">アンギラ</option>
+<option value="AQ">南極</option>
+<option value="AG">アンティグア バーブーダ</option>
+<option value="AR">アルゼンチン</option>
+<option value="AM">アルメニア</option>
+<option value="AW">アルバ</option>
+<option value="AU">オーストラリア</option>
+<option value="AT">オーストリア</option>
+<option value="AZ">アゼルバイジャン</option>
+<option value="BS">バハマ</option>
+<option value="BH">バーレーン</option>
+<option value="BD">バングラデシュ</option>
+<option value="BB">バルバドス</option>
+<option value="BY">ベラルーシ</option>
+<option value="BE">ベルギー</option>
+<option value="BZ">ベリーズ</option>
+<option value="BJ">ベナン</option>
+<option value="BM">バミューダ</option>
+<option value="BT">ブータン</option>
+<option value="BO">ボリビア</option>
+<option value="BQ">ボネール、シント ユースタティウスおよびサバ</option>
+<option value="BA">ボスニア ヘルツェゴビナ</option>
+<option value="BW">ボツワナ</option>
+<option value="BV">ブーベ島</option>
+<option value="BR">ブラジル</option>
+<option value="IO">英領インド洋地域</option>
+<option value="BN">ブルネイ ダルサラーム</option>
+<option value="BG">ブルガリア</option>
+<option value="BF">ブルキナファソ</option>
+<option value="BI">ブルンジ</option>
+<option value="KH">カンボジア</option>
+<option value="CM">カメルーン</option>
+<option value="CA">カナダ</option>
+<option value="CV">カーボベルデ</option>
+<option value="KY">ケイマン諸島</option>
+<option value="CF">中央アフリカ共和国</option>
+<option value="TD">チャド</option>
+<option value="CL">チリ</option>
+<option value="CN">中国</option>
+<option value="CX">クリスマス島</option>
+<option value="CC">ココス（キーリング）諸島</option>
+<option value="CO">コロンビア</option>
+<option value="KM">コモロ</option>
+<option value="CG">コンゴ</option>
+<option value="CD">コンゴ民主共和国</option>
+<option value="CK">クック諸島</option>
+<option value="CR">コスタリカ</option>
+<option value="CI">コートジボワール</option>
+<option value="HR">クロアチア</option>
+<option value="CU">キューバ</option>
+<option value="CW">キュラソー</option>
+<option value="CY">キプロス</option>
+<option value="CZ">チェコ共和国</option>
+<option value="DK">デンマーク</option>
+<option value="DJ">ジブチ</option>
+<option value="DM">ドミニカ</option>
+<option value="DO">ドミニカ共和国</option>
+<option value="EC">エクアドル</option>
+<option value="EG">エジプト</option>
+<option value="SV">エルサルバドル</option>
+<option value="GQ">赤道ギニア</option>
+<option value="ER">エリトリア</option>
+<option value="EE">エストニア</option>
+<option value="ET">エチオピア</option>
+<option value="FK">フォークランド諸島（マルビナス）</option>
+<option value="FO">フェロー諸島</option>
+<option value="FJ">フィジー</option>
+<option value="FI">フィンランド</option>
+<option value="FR">フランス</option>
+<option value="GF">仏領ギアナ</option>
+<option value="PF">仏領ポリネシア</option>
+<option value="TF">仏領南部領</option>
+<option value="GA">ガボン</option>
+<option value="GM">ガンビア</option>
+<option value="GE">グルジア</option>
+<option value="DE">ドイツ</option>
+<option value="GH">ガーナ</option>
+<option value="GI">ジブラルタル</option>
+<option value="GR">ギリシャ</option>
+<option value="GL">グリーンランド</option>
+<option value="GD">グレナダ</option>
+<option value="GP">グアドループ</option>
+<option value="GU">グアム</option>
+<option value="GT">グアテマラ</option>
+<option value="GG">ガーンジー</option>
+<option value="GN">ギニア</option>
+<option value="GW">ギニアビサウ</option>
+<option value="GY">ガイアナ</option>
+<option value="HT">ハイチ</option>
+<option value="HM">ハード島およびマクドナルド諸島</option>
+<option value="VA">バチカン市国</option>
+<option value="HN">ホンジュラス</option>
+<option value="HK">香港</option>
+<option value="HU">ハンガリー</option>
+<option value="IS">アイスランド</option>
+<option value="IN">インド</option>
+<option value="ID">インドネシア</option>
+<option value="IR">イラン</option>
+<option value="IQ">イラク</option>
+<option value="IE">アイルランド</option>
+<option value="IM">マン島</option>
+<option value="IL">イスラエル</option>
+<option value="IT">イタリア</option>
+<option value="JM">ジャマイカ</option>
+<option value="JP">日本</option>
+<option value="JE">ジャージー</option>
+<option value="JO">ヨルダン</option>
+<option value="KZ">カザフスタン</option>
+<option value="KE">ケニア</option>
+<option value="KI">キリバス</option>
+<option value="KP">朝鮮民主主義人民共和国</option>
+<option value="KR">韓国</option>
+<option value="KW">クウェート</option>
+<option value="KG">キルギス</option>
+<option value="LA">ラオス</option>
+<option value="LV">ラトビア</option>
+<option value="LB">レバノン</option>
+<option value="LS">レソト</option>
+<option value="LR">リベリア</option>
+<option value="LY">リビア</option>
+<option value="LI">リヒテンシュタイン</option>
+<option value="LT">リトアニア</option>
+<option value="LU">ルクセンブルク</option>
+<option value="MO">マカオ</option>
+<option value="MK">マケドニア（旧ユーゴスラビア）</option>
+<option value="MG">マダガスカル</option>
+<option value="MW">マラウイ</option>
+<option value="MY">マレーシア</option>
+<option value="MV">モルディブ</option>
+<option value="ML">マリ</option>
+<option value="MT">マルタ</option>
+<option value="MH">マーシャル諸島</option>
+<option value="MQ">マルティニーク</option>
+<option value="MR">モーリタニア</option>
+<option value="MU">モーリシャス</option>
+<option value="YT">マヨット</option>
+<option value="MX">メキシコ</option>
+<option value="FM">ミクロネシア連邦</option>
+<option value="MD">モルドバ</option>
+<option value="MC">モナコ</option>
+<option value="MN">モンゴル</option>
+<option value="ME">モンテネグロ</option>
+<option value="MS">モンセラト</option>
+<option value="MA">モロッコ</option>
+<option value="MZ">モザンビーク</option>
+<option value="MM">ミャンマー</option>
+<option value="NA">ナミビア</option>
+<option value="NR">ナウル</option>
+<option value="NP">ネパール</option>
+<option value="NL">オランダ</option>
+<option value="NC">ニューカレドニア</option>
+<option value="NZ">ニュージーランド</option>
+<option value="NI">ニカラグア</option>
+<option value="NE">ニジェール</option>
+<option value="NG">ナイジェリア</option>
+<option value="NU">ニウエ</option>
+<option value="NF">ノーフォーク島</option>
+<option value="MP">北マリアナ諸島</option>
+<option value="NO">ノルウェー</option>
+<option value="OM">オマーン</option>
+<option value="PK">パキスタン</option>
+<option value="PW">パラオ</option>
+<option value="PS">パレスチナ自治区</option>
+<option value="PA">パナマ</option>
+<option value="PG">パプア ニューギニア</option>
+<option value="PY">パラグアイ</option>
+<option value="PE">ペルー</option>
+<option value="PH">フィリピン</option>
+<option value="PN">ピトケアン</option>
+<option value="PL">ポーランド</option>
+<option value="PT">ポルトガル</option>
+<option value="PR">プエルトリコ</option>
+<option value="QA">カタール</option>
+<option value="RE">レユニオン</option>
+<option value="RO">ルーマニア</option>
+<option value="RU">ロシア連邦</option>
+<option value="RW">ルワンダ</option>
+<option value="BL">サン バルテルミー</option>
+<option value="SH">セントヘレナ、アセンションおよびトリスタンダクーニャ</option>
+<option value="KN">セントクリストファー ネイビス</option>
+<option value="LC">セントルシア</option>
+<option value="MF">セント マーチン島（仏領）</option>
+<option value="PM">サンピエール島およびミクロン島</option>
+<option value="VC">セントビンセントおよびグレナディーン諸島</option>
+<option value="WS">サモア</option>
+<option value="SM">サンマリノ</option>
+<option value="ST">サントメ プリンシペ</option>
+<option value="SA">サウジアラビア</option>
+<option value="SN">セネガル</option>
+<option value="RS">セルビア</option>
+<option value="SC">セイシェル</option>
+<option value="SL">シエラレオネ</option>
+<option value="SG">シンガポール</option>
+<option value="SX">シント マールテン（オランダ領）</option>
+<option value="SK">スロバキア</option>
+<option value="SI">スロベニア</option>
+<option value="SB">ソロモン諸島</option>
+<option value="SO">ソマリア</option>
+<option value="ZA">南アフリカ</option>
+<option value="GS">南ジョージア諸島および南サンドウィッチ諸島</option>
+<option value="SS">南スーダン</option>
+<option value="ES">スペイン</option>
+<option value="LK">スリランカ</option>
+<option value="SD">スーダン</option>
+<option value="SR">スリナム</option>
+<option value="SJ">スバールバル諸島およびヤンマイエン島</option>
+<option value="SZ">スワジランド</option>
+<option value="SE">スウェーデン</option>
+<option value="CH">スイス</option>
+<option value="SY">シリア</option>
+<option value="TW">台湾</option>
+<option value="TJ">タジキスタン</option>
+<option value="TZ">タンザニア</option>
+<option value="TH">タイ</option>
+<option value="TL">東ティモール</option>
+<option value="TG">トーゴ</option>
+<option value="TK">トケラウ</option>
+<option value="TO">トンガ</option>
+<option value="TT">トリニダード トバゴ</option>
+<option value="TN">チュニジア</option>
+<option value="TR">トルコ</option>
+<option value="TM">トルクメニスタン</option>
+<option value="TC">タークス カイコス諸島</option>
+<option value="TV">ツバル</option>
+<option value="UG">ウガンダ</option>
+<option value="UA">ウクライナ</option>
+<option value="AE">アラブ首長国連邦</option>
+<option value="GB">英国</option>
+<option value="米国">米国</option>
+<option value="UM">アメリカ合衆国外諸島</option>
+<option value="UY">ウルグアイ</option>
+<option value="UZ">ウズベキスタン</option>
+<option value="VU">バヌアツ</option>
+<option value="VE">ベネズエラ</option>
+<option value="VN">ベトナム</option>
+<option value="VG">英領バージン諸島</option>
+<option value="VI">米領バージン諸島</option>
+<option value="WF">ウォリス フツナ諸島</option>
+<option value="EH">西サハラ</option>
+<option value="YE">イエメン</option>
+<option value="ZM">ザンビア</option>
+<option value="ZW">ジンバブエ</option>
+</select></fieldset>
+<fieldset><label for="Plan">サポート パッケージの種類<span class="cp-required">*</span></label><select id="Plan" name="Cloud_Platform_Support_Options__c" title="プラン">
+<option selected value="">お選びください</option>
+<option value="シルバー">シルバー サポート</option>
+<option value="ゴールド">ゴールド サポート</option>
+<option value="プラチナ">プラチナ サポート</option>
+<option value="わからない">わからない</option>
+</select></fieldset>
+<fieldset style="width:100%;"><label for="Plan description">どのようなサポートが必要ですか。</label>
+<textarea style="width:93%;" name="Additional_Information__c">
+</textarea></fieldset>
+<div class="clear-both">&nbsp;</div>
+<input class="maia-button" type="submit" name="submit"></form>
+</div>
+</div>
+<!-- /maia-main -->
+<script>
+$(document).ready(function() {
+
+  var states = {
+    "US": [
+            {
+                "name": "Alabama",
+                "abbreviation": "AL"
+            },
+            {
+                "name": "Alaska",
+                "abbreviation": "AK"
+            },
+            {
+                "name": "Arizona",
+                "abbreviation": "AZ"
+            },
+            {
+                "name": "Arkansas",
+                "abbreviation": "AR"
+            },
+            {
+                "name": "California",
+                "abbreviation": "CA"
+            },
+            {
+                "name": "Colorado",
+                "abbreviation": "CO"
+            },
+            {
+                "name": "Connecticut",
+                "abbreviation": "CT"
+            },
+            {
+                "name": "Delaware",
+                "abbreviation": "DE"
+            },
+            {
+                "name": "District Of Columbia",
+                "abbreviation": "DC"
+            },
+            {
+                "name": "Florida",
+                "abbreviation": "FL"
+            },
+            {
+                "name": "Georgia",
+                "abbreviation": "GA"
+            },
+            {
+                "name": "Hawaii",
+                "abbreviation": "HI"
+            },
+            {
+                "name": "Idaho",
+                "abbreviation": "ID"
+            },
+            {
+                "name": "Illinois",
+                "abbreviation": "IL"
+            },
+            {
+                "name": "Indiana",
+                "abbreviation": "IN"
+            },
+            {
+                "name": "Iowa",
+                "abbreviation": "IA"
+            },
+            {
+                "name": "Kansas",
+                "abbreviation": "KS"
+            },
+            {
+                "name": "Kentucky",
+                "abbreviation": "KY"
+            },
+            {
+                "name": "Louisiana",
+                "abbreviation": "LA"
+            },
+            {
+                "name": "Maine",
+                "abbreviation": "ME"
+            },
+            {
+                "name": "Maryland",
+                "abbreviation": "MD"
+            },
+            {
+                "name": "Massachusetts",
+                "abbreviation": "MA"
+            },
+            {
+                "name": "Michigan",
+                "abbreviation": "MI"
+            },
+            {
+                "name": "Minnesota",
+                "abbreviation": "MN"
+            },
+            {
+                "name": "Mississippi",
+                "abbreviation": "MS"
+            },
+            {
+                "name": "Missouri",
+                "abbreviation": "MO"
+            },
+            {
+                "name": "Montana",
+                "abbreviation": "MT"
+            },
+            {
+                "name": "Nebraska",
+                "abbreviation": "NE"
+            },
+            {
+                "name": "Nevada",
+                "abbreviation": "NV"
+            },
+            {
+                "name": "New Hampshire",
+                "abbreviation": "NH"
+            },
+            {
+                "name": "New Jersey",
+                "abbreviation": "NJ"
+            },
+            {
+                "name": "New Mexico",
+                "abbreviation": "NM"
+            },
+            {
+                "name": "New York",
+                "abbreviation": "NY"
+            },
+            {
+                "name": "North Carolina",
+                "abbreviation": "NC"
+            },
+            {
+                "name": "North Dakota",
+                "abbreviation": "ND"
+            },
+            {
+                "name": "Ohio",
+                "abbreviation": "OH"
+            },
+            {
+                "name": "Oklahoma",
+                "abbreviation": "OK"
+            },
+            {
+                "name": "Oregon",
+                "abbreviation": "OR"
+            },
+            {
+                "name": "Pennsylvania",
+                "abbreviation": "PA"
+            },
+            {
+                "name": "Puerto Rico",
+                "abbreviation": "PR"
+            },
+            {
+                "name": "Rhode Island",
+                "abbreviation": "RI"
+            },
+            {
+                "name": "South Carolina",
+                "abbreviation": "SC"
+            },
+            {
+                "name": "South Dakota",
+                "abbreviation": "SD"
+            },
+            {
+                "name": "Tennessee",
+                "abbreviation": "TN"
+            },
+            {
+                "name": "Texas",
+                "abbreviation": "TX"
+            },
+            {
+                "name": "Utah",
+                "abbreviation": "UT"
+            },
+            {
+                "name": "Vermont",
+                "abbreviation": "VT"
+            },
+            {
+                "name": "Virginia",
+                "abbreviation": "VA"
+            },
+            {
+                "name": "Washington",
+                "abbreviation": "WA"
+            },
+            {
+                "name": "West Virginia",
+                "abbreviation": "WV"
+            },
+            {
+                "name": "Wisconsin",
+                "abbreviation": "WI"
+            },
+            {
+                "name": "Wyoming",
+                "abbreviation": "WY"
+            }
+        ],
+    "CA": [
+            {
+              "name":"Alberta",
+              "abbreviation":"AB"
+            },
+            {
+              "name":"British Columbia",
+              "abbreviation":"BC"
+            },
+            {
+              "name":"Manitoba",
+              "abbreviation":"MB"
+            },
+            {
+              "name":"New Brunswick",
+              "abbreviation":"NB"
+            },
+            {
+              "name":"Newfoundland",
+              "abbreviation":"NL"
+            },
+            {
+              "name":"Northwest Territories",
+              "abbreviation":"NT"
+            },
+            {
+              "name":"Nova Scotia",
+              "abbreviation":"NS"
+            },
+            {
+              "name":"Nunavut",
+              "abbreviation":"NU"
+            },
+            {
+              "name":"Ontario",
+              "abbreviation":"ON"
+            },
+            {
+              "name":"Prince Edward Island",
+              "abbreviation":"PE"
+            },
+            {
+              "name":"Quebec",
+              "abbreviation":"QC"
+            },
+            {
+              "name":"Saskatchewan",
+              "abbreviation":"SK"
+            },
+            {
+              "name":"Yukon Territory",
+              "abbreviation":"YT"
+            }
+        ]
+  }
+
+  $('#Country').change(function() {
+    var country = $('#Country').val();
+    if (country != 'US' && country != 'CA') {
+      $('.state-required').addClass('hide');
+      $('#State').attr('disabled', 'disabled');
+      $('#State').empty();
+      $('#State').append('<option selected="" value="">Please select</option>');
+    } else {
+      $('.state-required').removeClass('hide');
+      $('#State').removeAttr('disabled');
+      $('#State').empty();
+      $('#State').append('<option selected="" value="">Please select</option>');
+
+      if (country == 'US') {
+        for (var i in states['US']) {
+          $('#State').append('<option value="'+states['US'][i]['abbreviation']+'">'+states['US'][i]['name']+'</option>');
+        }
+      } else if (country == 'CA') {
+        for (var i in states['CA']) {
+          $('#State').append('<option value="'+states['CA'][i]['abbreviation']+'">'+states['CA'][i]['name']+'</option>');
+        }
+      }
+    }
+
+  });
+});
+</script><!-- Scripts to include both on Goro + Devsite --><script>
+window.___gcfg = {
+     lang: ''
+   };
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+</script><!-- GTM implementation --><!-- Start dataLayer --><script>
+dataLayer = [{
+        'country': 'ja',
+        'region': 'japac',
+        'language': 'ja'
+      }];
+</script><!-- End dataLayer --><!-- Start Google Tag Manager --><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5CVQBG" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript> <script>
+(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-5CVQBG');
+</script><!-- End Google Tag Manager --><!-- Global JS scripts to load; path will depend on whether we're on devsite or Goro --><script src="/js/base.min.js">
+</script><!-- Retina loader; Do not load if partners page because we need to wait until the Angular app runs --><script>
+new lfl.system.RetinaLoader();
+</script><!-- Secondary right-side scroll-nav --><script>
+new lfl.ui.ScrollNav({});
+</script>
+</body>
+</html>
