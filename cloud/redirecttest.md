@@ -18,7 +18,7 @@ $( document ).ready(function() {
         } else {
           for(i=0;i<redirect.length;i++)
           {
-            console.log(i+"="+redirect[i])
+            console.log(redirect.toString())
           }
         }
         //document.write(redirect.from + "=" redirect.to)
