@@ -11,7 +11,7 @@ $( document ).ready(function() {
     if(errors.length == 0)
       console.log("Done! Took " + YAML.getProcessingTime() + " miliseconds.");
       console.log(string);
-    else {
+    } else {
       console.log(document.getElementById("out").innerHTML = errors.join("<br>"));
     }
   });
