@@ -2,7 +2,6 @@
 layout: cloud
 title: Redirect tester
 ---
-Testing 1, 2
 
 <script type="text/javascript" src="../js/yaml.js"></script>
 <script language="javascript">
@@ -17,3 +16,5 @@ $( document ).ready(function() {
   });
 }
 </script>
+
+<pre id="out"></pre>
