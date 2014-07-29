@@ -9,7 +9,7 @@
     <meta name="viewport" content="initial-scale=1, minimum-scale=1, width=device-width">
     <link href="//fonts.googleapis.com/css?family=Open+Sans:400italic,300,400,600,700" rel="stylesheet">
 
-    <link href="/css/default.css" rel="stylesheet">
+    <link href="/cloud/css/default.css" rel="stylesheet">
 
     <!--[if lt IE 9]>
     <link rel="stylesheet" media="screen" href='/c/cp-ie.css'>
@@ -106,7 +106,7 @@
 
 			<p>The solutions proposed in this paper are developed around a set of high-level functional areas common to most, if not all, bidders designed for deployment across availability zones in multiple geographic regions. This section provides an overview of these components and their implementation on Google Cloud Platform products and services.</p>
 
-			<p><img src="images/real-time-bidder-solution-for-google-cloud-platform_image_0.png"></p>
+			<p><img src="/cloud/images/real-time-bidder-solution-for-google-cloud-platform_image_0.png"></p>
 
 			<p class="center"><b>Figure 1 - Functional Components of a Real-Time Bidder</b></p>
 
@@ -182,7 +182,7 @@
 
 			<h4 class="gray italic">Reference Architecture</h4>
 
-				<p><img src="images/real-time-bidder-solution-for-google-cloud-platform_image_1.png"></p>
+				<p><img src="/cloud/images/real-time-bidder-solution-for-google-cloud-platform_image_1.png"></p>
 
 				<p class="center"><b>Figure 2 - Real-Time Bidder (Managed Database) Architecture on Google Cloud Platform </b></p>
 
@@ -192,7 +192,7 @@
 
 					<p>This solution also makes use of a distributing messaging system to broadcast relevant events across regions so that the data stores are synchronized and bid servers are kept up-to-date. Additional servers are used to proxy data between the core backend components and the managed database. These servers also enable communication to flow back into the messaging system from the App Engine application in case, for example, you might want to create a new campaign or to satisfy a client’s retargeting request.</p>
 
-					<p><img src="images/real-time-bidder-solution-for-google-cloud-platform_image_2.png"></p>
+					<p><img src="/cloud/images/real-time-bidder-solution-for-google-cloud-platform_image_2.png"></p>
 
 		  		<p class="center"><b>Figure 3 - Managed Database Solution Walkthrough</b></p>
 
@@ -247,7 +247,7 @@
 
 			<h4 class="gray italic">Reference Architecture</h4>
 
-			<p><img src="images/real-time-bidder-solution-for-google-cloud-platform_image_3.png"></p>
+			<p><img src="/cloud/images/real-time-bidder-solution-for-google-cloud-platform_image_3.png"></p>
 
 			<p class="center"><b>Figure 4 - Real-Time Bidder (Third-Party Database) Architecture on Google Cloud Platform </b></p>
 
@@ -277,7 +277,7 @@
 
 			<p>This solution presents an architecture that calls for two multi-region clusters, one for bid data (that was preloaded in the previous solution) and one for user data (that was kept in the key-value store in the previous solution). This approach affords partitioning of database I/O better correlated to usage. <a class="blue" href="http://vldb.org/pvldb/vol5/p1724_tilmannrabl_vldb2012.pdf" target="_blank" >This paper</a> may be helpful in providing some background on latency and throughput scalability characteristics of different third-party systems.</p>
 
-			<p><img src="images/real-time-bidder-solution-for-google-cloud-platform_image_4.png"></p>
+			<p><img src="/cloud/images/real-time-bidder-solution-for-google-cloud-platform_image_4.png"></p>
 
 			<p class="center"><b>Figure 5 - Third-Party Database Solution Walkthrough</b></p>
 
