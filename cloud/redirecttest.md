@@ -13,7 +13,7 @@ $( document ).ready(function() {
       console.log(data);
       for(var redirect in data.redirects)
       {
-        document.write(redirect.from + "=" redirect.to)
+        //document.write(redirect.from + "=" redirect.to)
       }
     } else {
       console.log(document.getElementById("out").innerHTML = errors.join("<br>"));
