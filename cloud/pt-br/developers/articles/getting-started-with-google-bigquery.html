@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html devsite="">
+<head>
+<title>Big Data Articles &amp; Tutorials — Google Cloud Platform</title>
+<meta name="description" content="Read about technical big data articles and solutions with Google Cloud Platform. Big data articles unpack BigQuery data analytics, Hadoop clusters and more.">
+<meta name="hide_page_heading" value="true">
+<meta name="full_width" value="true">
+<meta name="top_category" value="developers">
+<meta name="subcategory" value="articles">
+<meta name="viewport" content="initial-scale=1, minimum-scale=1, width=device-width">
+<link rel="apple-touch-icon" href="//cloud.google.com/_static/images/apple-touch-icon.png">
+<link href="//fonts.googleapis.com/css?family=Open+Sans:400italic,300,400,600,700" rel="stylesheet">
+<link href="/css/default.css" rel="stylesheet"><!--[if lt IE 9]>
+    <link rel="stylesheet" media="screen" href='/c/cp-ie.css'>
+    <![endif]-->
+<script src="/js/floodlight.js">
+</script>
+</head>
+<body>
+<div id="maia-main" class="cp-article">
+<div class="maia-cols">
+<div class="maia-col-9">
+<div>
+<div style="float:right">
+<div class="g-plusone"></div>
+</div>
+<h1 class="title">Primeiros passos com o Google BigQuery</h1>
+</div>
+<h2>Resumo executivo</h2>
+<p>Este documento destina-se a analistas de dados e profissionais de TI que desejam entender como usar o Google BigQuery no seu ambiente de TI atual. Ele fornece um conhecimento básico de como funciona, uma visão geral do processo completo de carregamento&nbsp;de dados no BigQuery para visualização e práticas de design que devem ser consideradas ao utilizar o BigQuery.</p>
+<p>O BigQuery é compatível com padrões e protocolos abertos, como linguagem de consulta semelhante a SQL e uma API baseada em REST. É compatível também com&nbsp;ferramentas tradicionais de Extração, Transformação e Carregamento (ETL, na sigla em inglês) para ingestão de dados e ferramentas de Inteligência Comercial (BI, na sigla em inglês) para visualização de dados, facilitando a integração do BigQuery no&nbsp;ambiente de TI existente de uma organização.</p>
+<h2>Panorama do Big Data</h2>
+<p>O panorama da análise de dados tem mudado rapidamente nos últimos anos. Cada vez mais organizações estão usando dados para orientar o processo de tomada de decisões. Ao mesmo tempo, o ritmo da geração de dados está acelerando radicalmente. Essa mudança para Big Data dentro das organizações é impulsionada por muitos fatores. Alguns fatores que influenciam essa tendência são:</p>
+<ol>
+<li>A diminuição radical nos custos de armazenamento, que permite às organizações coletar e utilizar grandes quantidades de dados de modo mais econômico do que nunca.</li>
+<li>Os avanços tecnológicos agora permitem a automatização da coleta de dados em cada ponto do processo, o que resultou na captura de conjuntos de dados muito maiores. A combinação de captura de conjuntos de dados tradicionais, por meio de processos como gerenciamento de pedidos, e processos automatizados impulsionados por tecnologias, como tags RFID, sensores, registros de máquinas, interações de dispositivo móvel, está estimulando um enorme crescimento de dados.</li>
+<li>Inovações em tecnologias de análise de dados tornaram possível a análise de conjuntos de dados em larga escala. Tecnologias desenvolvidas pelo Google, como MapReduce, BigTable e Dremel, estão começando a ser usadas no setor. Essas tecnologias permitem que a análise dos dados seja realizada em períodos históricos mais longos e em um nível muito mais granular. Isso, por sua vez, fornece novas percepções de negócios que não eram possíveis no passado.</li>
+</ol>
+<p>Essa mudança no panorama, no entanto, também apresenta um novo conjunto de desafios. Muitas empresas estão começando a enfrentar problemas como encontrar uma infraestrutura escalável e os recursos computacionais necessários para armazenamento, processamento e análise de grandes conjuntos de dados. A infraestrutura e os processos de TI tradicionais não são suficientes para o processamento e gerenciamento de grandes conjuntos de dados. Por exemplo, com a análise de Big Data, uma empresa geralmente requer muita experimentação antes de desenvolver percepções duráveis. Experiências com dados também significam que é difícil identificar o retorno sobre o investimento (ROI, na sigla em inglês) antecipadamente, o que torna difícil para as organizações de TI planejar a capacidade necessária para gerenciar grandes conjuntos de dados. Devido ao ritmo em que as condições de negócios mudam, os usuários de negócios desejam validar suas hipóteses rapidamente. O tradicional processo de Business Intelligence (BI)/Data Warehousing (DW), com seu longo ciclo de modelagem de dados, arquitetura de dados e planejamento de capacidade, não está satisfazendo suas necessidades.</p>
+<h2><a name="h.fqmgu7liax2h" id="h.fqmgu7liax2h"></a>Google BigQuery</h2>
+<p>O BigQuery é um serviço de análise de dados totalmente gerenciável oferecido na nuvem, que permite a análise de negócios ágil do ambiente atual de negócios em rápida evolução. Começar a usar o BigQuery não requer despesas de capital adicionais (CAPEX, na sigla em inglês) para comprar e configurar hardware ou software. O serviço BigQuery está prontamente disponível, com um Contrato de nível de serviço de tempo de disponibilidade maior ou igual a 99,9%<sup><a href="#ftnt1" name="ftnt_ref1" id="ftnt_ref1">[1]</a></sup>. Os recursos de armazenamento e computação são ajustados automaticamente de acordo com o tamanho dos dados e os requisitos de análise. O modelo "pague somente pelo que usar" <sup><a href="#ftnt2" name="ftnt_ref2" id="ftnt_ref2">[2]</a></sup>, o desempenho "incrivelmente rápido" <sup><a href="#ftnt3" name="ftnt_ref3" id="ftnt_ref3">[3]</a></sup>, uma conhecida linguagem familiar semelhante a SQL e a facilidade de aprovisionar dados no BigQuery sem a necessidade de uma arquitetura de dados complexa: tudo isso permite que as organizações executem rapidamente consultas ad-hoc, validem hipóteses e repitam a análise para entender os dados de uma maneira ágil e econômica. Os resultados da consulta são obtidos em segundos e não em horas.</p>
+<p>Como o custo e o tempo necessários para a configuração da infraestrutura de análise de dados não são mais barreiras, as equipes de negócios, juntamente com seus desenvolvedores, podem configurar e executar projetos de análise rapidamente. A velocidade resultante permite que a linha de equipes de negócios e diretores de marketing coloque rapidamente em execução soluções analíticas importantes que ajudam a aumentar a receita dos seus negócios.</p>
+<h3><a name="h.2rinulxarntz" id="h.2rinulxarntz"></a>BigQuery em ação</h3>
+<p>As empresas têm aproveitado os pontos fortes do BigQuery em custo, desempenho, escalabilidade e disponibilidade de funcionamento em uma ampla gama de casos de uso. Abaixo estão alguns exemplos que ilustram como o BigQuery tem sido utilizado de forma eficaz.</p>
+<p><b>Pesquisa de registros do Gmail</b> <sup><a href="#ftnt4" name="ftnt_ref4" id="ftnt_ref4">[4]</a></sup>: a equipe do Google Apps usa o alto desempenho do BigQuery para incrementar o recurso interativo "Pesquisa de registros do Gmail" no painel de controle do administrador. Eles decidiram usar o BigQuery devido à sua capacidade de analisar conjuntos de dados de vários terabytes com bilhões de cabeçalhos e oferecer resultados precisos em apenas alguns segundos. O recurso "Pesquisa de registros do Gmail" permite que o administrador do aplicativo de domínio responda a perguntas como:</p>
+<ol>
+<li>O que aconteceu com uma mensagem de entrada ou de saída?</li>
+<li>Uma mensagem foi enviada para meu domínio e marcada como spam?</li>
+<li>Que usuário enviou ou recebeu uma mensagem específica?</li>
+</ol>
+<p><b>Otimização das vendas de anúncios on-line no setor de férias</b>: a Crystalloids, uma empresa de análise com sede em Amsterdã, trabalhou com a Auto Camper Service International (ACSI), uma dos principais editoras de guias de acampamento da Europa, para melhorar as vendas de anúncios on-line. Usando o BigQuery, a equipe de vendas de anúncios da ACSI foi capaz de contrastar o número médio de pedidos de reserva entre os acampamentos que fizeram ou não propagandas, dada a mesma região e as mesmas características. Esses dados permitiram vender anúncios de forma mais eficaz.</p>
+<p><b>Gerenciamento de reservas e rotas em viagens</b> <sup><a href="#ftnt5" name="ftnt_ref5" id="ftnt_ref5">[5]</a></sup>: a redBus.in, uma agência de viagens on-line que introduziu a venda de bilhetes de ônibus pela Internet na Índia, escolheu o BigQuery para analisar dados de reservas e inventário do seu sistema de centenas de operadoras de ônibus que atendam a mais de 10.000 rotas. Eles foram capazes de analisar conjuntos de dados enormes de 2 terabytes em menos de 30 segundos e gastaram 80% menos do que gastariam em uma infraestrutura Hadoop <sup><a href="#ftnt6" name="ftnt_ref6" id="ftnt_ref6">[6]</a></sup>.</p>
+<h3><a name="h.mkp51z51i6ue" id="h.mkp51z51i6ue"></a>Como o BigQuery funciona</h3>
+<p>O BigQuery é baseado em Dremel <sup><a href="#ftnt7" name="ftnt_ref7" id="ftnt_ref7">[7]</a></sup>, uma tecnologia pioneira do Google, e muito usado dentro do Google. O BigQuery utiliza armazenamento colunar e árvores de execução de diversos níveis para alcançar um desempenho interativo para consultas em bancos de dados de vários terabytes. A implementação técnica é diferente daquela de um sistema de banco de dados relacional (RDBMS, na sigla em inglês) e das soluções tradicionais de armazenamento de dados. O BigQuery é compatível com inserções de dados, exclusão (eliminação de tabelas) e a capacidade de adicionar colunas ao esquema da tabela após os dados já estarem carregados. Ele não é compatível com atualizações diretas nos dados armazenados. Mesmo que atualizações diretas em nível de linha não sejam suportadas, muitos clientes podem realizar atualizações quebrando grandes conjuntos de dados em tabelas finalizadas e não finalizadas e substituindo as tabelas não finalizadas conforme necessário, de modo que a análise final reflita os resultados das atualizações de dados.</p>
+<p>A vantagem de desempenho do BigQuery vem da sua arquitetura de processamento paralelo. A consulta é processada por milhares de servidores em uma estrutura de árvore de execução de vários níveis, com os resultados finais agregados na raiz. O BigQuery armazena os dados em um formato de colunas, de modo que apenas os dados das colunas que estão sendo consultadas são lidos. Essa arquitetura tem ganhos significativos de desempenho de E/S sobre o modelo tradicional de banco de dados relacional/armazenamento de dados, pois não é lido todo o registro para cada consulta.</p>
+<h2><a name="h.mfg0xvd0va3d" id="h.mfg0xvd0va3d"></a>Criação de uma solução de Big Data no BigQuery: pipeline até análise</h2>
+<p>É fácil criar uma solução completa no BigQuery. Este artigo apresenta várias abordagens para processar e visualizar os dados. Inclui também recomendações de projeto para a utilização do BigQuery de forma eficaz.</p>
+<p>Os produtos do Google Cloud Platform usados nesta solução são:</p>
+<ol>
+<li><a href="https://cloud.google.com/products/big-query">BigQuery</a> para analisar dados de evento</li>
+<li><a href="https://cloud.google.com/products/cloud-storage">Google Cloud Storage</a> para armazenar dados de evento agregados (opcional)</li>
+<li><a href="https://cloud.google.com/products/index.html">Google App Engine</a> para executar a estrutura&nbsp;MapReduce do App Engine (opcional)</li>
+<li><a href="https://cloud.google.com/products/compute-engine">Google Compute Engine</a> para executar a estrutura Hadoop MapReduce (opcional)</li>
+</ol>
+<h3><a name="h.m0lzn3ypbfsm" id="h.m0lzn3ypbfsm"></a>Diagrama de arquitetura de referência</h3>
+<p>Este diagrama de arquitetura (Fig. 1) ilustra os principais componentes do pipeline (carregamento de dados para visualização) proposto neste artigo:</p>
+<p><img height="460" src="getting-started-with-google-bigquery/image03.png" width="676" alt="Componentes do pipeline até a análise do Big Data para o BigQuery"><br>
+Figura 1. Componentes do pipeline até a análise do Big Data para o BigQuery</p>
+<h3><a name="h.65ys2qd7plma" id="h.65ys2qd7plma"></a>Passo a passo do pipeline</h3>
+<p>Existem dois fluxos principais para a análise de dados, como representado na Figura 1:</p>
+<ol>
+<li>Pipeline de dados: transformação e carregamento de dados no BigQuery</li>
+<li>Visualização de dados: realização de análise de dados no BigQuery e visualização dos resultados</li>
+</ol>
+<h4><a name="h.w2l4th88blpf" id="h.w2l4th88blpf"></a>Pipeline de dados</h4>
+<p>O processo de carregamento de dados no BigQuery segue estas etapas:</p>
+<ol>
+<li>Extraia dados de origem do sistema de origem.</li>
+<li>Desnormalize os dados, pois o BigQuery tem melhor desempenho com menos JOINs (opcional).</li>
+<li>Transforme os dados no arquivo de valores separados por vírgulas (CSV, na sigla em inglês) <sup><a href="#ftnt8" name="ftnt_ref8" id="ftnt_ref8">[8]</a></sup> ou no arquivo Javascript Object Notation (JSON).</li>
+<li>Faça upload do arquivo CSV ou JSON no Google Cloud Storage. É possível fazer isso usando o utilitário de linha de comando gsutil do Google Cloud Storage. Algumas ferramentas de ETL de terceiros podem fazer upload diretamente no BigQuery.</li>
+<li>Carregue o arquivo CSV ou JSON do Google Cloud Storage no BigQuery usando o utilitário de linha de comando bq <sup><a href="#ftnt9" name="ftnt_ref9" id="ftnt_ref9">[9]</a></sup> ou BigQuery REST API.</li>
+</ol>
+<h5><a name="h.qn10gbavzisc" id="h.qn10gbavzisc"></a>Uso do Google Cloud Platform para pipeline de dados</h5>
+<p>O processo de uso do Google Cloud Platform para fazer upload de dados no BigQuery envolve o upload dos arquivos CSV ou JavaScript Object Notation (JSON) para o Google Cloud Storage antes de carregar os dados no BigQuery. O Cloud Storage e o BigQuery fornecem ferramentas de linha de comando de fácil utilização para fazer upload de dados. Como alternativa, também é possível utilizar a REST API para proporcionar uma integração programática no ambiente de computação atual.</p>
+<p>É possível executar ferramentas de ETL no Google Compute Engine para transformar os dados de origem em um formato pronto para ser importado para o BigQuery.</p>
+<p>A estrutura MapReduce do App Engine e o Hadoop em execução no Google Compute Engine são duas opções para a realização de ETL. O esboço a seguir sugere como um aplicativo do App Engine pode ser usado para orquestrar qualquer abordagem.</p>
+<ol>
+<li>Faça upload dos dados de origem para o Google Cloud Storage. Para isso, use a ferramenta de linha de comando gsutil ou a Cloud Storage REST API.<br></li>
+<li>O aplicativo do Google App Engine detecta automaticamente a presença desses arquivos. É possível implementar a detecção automática de algumas formas:
+<ol>
+<li>Use o serviço Cron do App Engine para consultar periodicamente o intervalo do Cloud Storage, usando a REST API para detectar objetos com upload recente.</li>
+<li>Use a Cloud Storage Bucket Change Notification AP.<br>
+É um modelo publicar/subscrever em que o Cloud Storage age como editor e o aplicativo age como assinante. Na inicialização do aplicativo, um método de retorno de chamada está registrado para receber mensagens quando há arquivos novos ou atualizados.<br></li>
+</ol>
+</li>
+<li>O aplicativo do App Engine pode invocar um destes pipelines de MapReduce:
+<ol>
+<li>Uso da estrutura MapReduce do App Engine</li>
+<li>Início de um processo para executar o Hadoop no Google Compute Engine. O aplicativo usa a REST API do Google Compute Engine para configurar as instâncias e iniciar a tarefa de MapReduce. Os arquivos processados são gravados de volta no Cloud Storage.<br></li>
+</ol>
+</li>
+<li>O aplicativo pode, em seguida, fazer upload dos dados de registro processados no BigQuery usando a REST API.<br></li>
+<li>É possível usar a App Engine Mail API em qualquer parte desse processo para gerar uma notificação de conclusão de tarefa.</li>
+</ol>
+<h5><a name="h.cb8xji59oiym" id="h.cb8xji59oiym"></a>Uso de fornecedores de terceiros para pipeline de dados</h5>
+<p>No mercado atual, existem muitos fornecedores de terceiros que oferecem ferramentas de extração, transformação e carga (ETL) para o BigQuery. Essas ferramentas fornecem uma interface de usuário "arrastar e soltar" fácil de usar para transformar e desnormalizar dados e têm a capacidade de carregar dados diretamente no BigQuery. Basicamente, elas executam todos os passos acima de uma maneira contínua. Essas ferramentas serão especialmente úteis se houver dados da empresa provenientes de diversas fontes. Consulte a página <a href="https://developers.google.com/bigquery/docs/third_party_tools">Ferramentas de terceiros</a> para ver a lista atual de empresas que integraram seu software ao BigQuery.</p>
+<h4><a name="h.win4wmvvsml0" id="h.win4wmvvsml0"></a>Visualização de dados</h4>
+<p>Interfaces do BigQuery</p>
+<p>O BigQuery é compatível com várias interfaces para a realização de consultas. Para consulta interativa, uma interface da Web e uma ferramenta de linha de comando estão disponíveis. Da mesma forma, é possível usar a REST API de forma programática. Como as consultas são expressas em um subconjunto simplificado de SQL, a curva de aprendizado é reduzida para quem já está familiarizado com SQL padrão.</p>
+<h5><a name="h.ax95rounvxyb" id="h.ax95rounvxyb"></a>Uso de tecnologias do Google Cloud Platform para visualização</h5>
+<p>É possível criar um painel personalizado baseado na Web no Google App Engine usando a BigQuery REST API para executar as consultas e usando as <a href="https://developers.google.com/chart/">Ferramentas de gráficos do Google</a><a href="https://developers.google.com/chart/"></a> para visualizar os resultados. Estes passos explicam resumidamente como isso pode ser feito:</p>
+<ol>
+<li>Crie um aplicativo do App Engine.</li>
+<li>Crie uma Google API Project e ative a BigQuery API.</li>
+<li>Crie um&nbsp;ID do cliente OAuth 2.0 para que o aplicativo acesse o BigQuery.</li>
+<li>Crie um aplicativo do Google App Engine que utiliza a BigQuery API e a Charts API para criar o painel.</li>
+</ol>
+<p>Para encontrar mais detalhes sobre como criar um painel personalizado, consulte este codelab em <a href="http://developers.google.com">developers.google.com</a>: "<a href="https://developers.google.com/bigquery/articles/dashboard">Codelab: criação de um painel do BigQuery</a>".</p>
+<h5><a name="h.kdj5xvm5l9tn" id="h.kdj5xvm5l9tn"></a>Uso de fornecedores de visualização de terceiros</h5>
+<p>O Google tem uma lista de empresas que já integraram o BigQuery a seus produtos. Esses produtos oferecem&nbsp;interfaces "arrastar e soltar" fáceis de usar para consultar os dados e criar painéis de relatórios, sem ter que especificar instruções SQL. Consulte a página <a href="https://developers.google.com/bigquery/docs/third_party_tools">Ferramentas de terceiros</a> para ver a lista atual de empresas que integraram seu software ao BigQuery.</p>
+<h2><a name="h.h7dmxw21ml5g" id="h.h7dmxw21ml5g"></a>Práticas de projeto</h2>
+<p>Ao carregar dados no BigQuery, é preciso considerar algumas práticas de projeto desde o início para garantir uma implantação bem-sucedida do projeto de análise de Big Data.</p>
+<h3><a name="h.p1i0bmel8gcm" id="h.p1i0bmel8gcm"></a>Considere políticas de cota ao arquitetar uma solução</h3>
+<p>É preciso considerar várias políticas de cota existentes. Um exemplo ocorre com o processamento de dados, em que é importante não exceder o <a href="https://developers.google.com/bigquery/quota-policy#import">tamanho máximo de arquivo por tarefa de carregamento</a>. Saber dessa limitação é importante porque, se um arquivo exceder o limite, terá que ser dividido em arquivos menores e carregado separadamente. As políticas de cota mais atuais para o BigQuery são documentadas no <a href="https://developers.google.com/bigquery/docs/quota-policy#import">site de desenvolvedores do Google BigQuery</a>.</p>
+<h3><a name="h.gctgul14rasn" id="h.gctgul14rasn"></a>Desnormalização de dados antes do carregamento de dados</h3>
+<p>A implementação técnica do BigQuery é diferente de um RDBMS. O BigQuery usa armazenamento colunar e árvores de execução de vários níveis <sup><a href="#ftnt10" name="ftnt_ref10" id="ftnt_ref10">[10]</a></sup> para alcançar escalonamento e desempenho. O Apêndice 1 explica o processo de desnormalização de tabelas em mais detalhes.</p>
+<h3><a name="h.9s787yspk7x4" id="h.9s787yspk7x4"></a>JSON x CSV</h3>
+<p>O BigQuery é compatível com o carregamento de dados em formato CSV e Java Script Object Notation (JSON). O JSON suporta estrutura aninhada/repetida e representa uma visualização mais orientada a objetos dos dados em comparação com CSV. O JSON também elimina a necessidade de duplicação de dados exigida pelo achatamento de registros em CSV.</p>
+<p>O BigQuery fornece funções SQL especiais, FLATTEN e WITHIN, para apoiar a consulta de dados repetidos e aninhados. Nem todas as ferramentas de BI são compatíveis com essas funções especiais do SQL, por isso é uma boa prática testar um pequeno subconjunto de dados com as ferramentas de terceiros desejadas para o formato JSON.</p>
+<h3><a name="h.gjtnx5oq49k2" id="h.gjtnx5oq49k2"></a>Partição de tabela</h3>
+<p>O particionamento de uma tabela significa dividi-la em uma ou mais tabelas com o mesmo esquema para fins específicos.</p>
+<h4><a name="h.c8z4l1689q1v" id="h.c8z4l1689q1v"></a>Dados estáticos e variáveis</h4>
+<p>Como mencionado anteriormente, o BigQuery não é compatível com atualizações de dados que já estão carregados. Ao separar os dados que têm mais chances de mudar daqueles que não têm, as atualizações podem ser feitas simplesmente excluindo uma tabela e preenchendo novamente com os dados atualizados, o que evita a necessidade de recarregar o conjunto de dados inteiro.</p>
+<h4><a name="h.lrp4j2ahcftx" id="h.lrp4j2ahcftx"></a>Economia</h4>
+<p>O preço para consultas interativas e em lote é baseado na quantidade de dados processados. É possível otimizar os custos particionando as tabelas de acordo com o padrão de uso. Por exemplo, se a maioria das consultas se concentrar nas tendências mensais, o particionamento da tabela por mês reduzirá os custos da consulta. Se for necessária a consulta de dados em vários meses, ela poderá ser feita por uniões de tabela, como mostrado na Figura 2.</p>
+<pre>
+// Find suspicious activity over several months<br>SELECT FORMAT_UTC_USEC(event.timestamp_in_usec) AS time, request_url<br>FROM [applogs.events_201205], [applogs.events_201206], [applogs.events_201207]<br>WHERE event.username = 'root' AND NOT event.source_ip.is_internal;
+</pre>
+<p>Figura 2. Exemplo de tabelas particionadas</p>
+<p>Se forem necessárias uniões de tabela, não há limite para o número de tabelas que podem ser especificadas, mas há uma limitação da extensão da consulta, que atualmente é de 10 KB.</p>
+<h3><a name="h.a9gxvp1x3w09" id="h.a9gxvp1x3w09"></a>Armazenamento de dados no Google Cloud Storage como backup</h3>
+<p>Depois de carregar os dados no BigQuery, considere deixar os dados no Google Cloud Storage como dados no BigQuery.</p>
+<h3><a name="h.r1kiddsl771o" id="h.r1kiddsl771o"></a>Operações JOIN</h3>
+<p>O BigQuery aceita dois tipos de operações JOIN. O uso de cada operação é determinado pelo tamanho da tabela do lado direito do JOIN, enquanto não há nenhum limite de tamanho para a tabela do lado esquerdo. A instrução JOIN básica requer que a tabela do lado direito contenha menos de 8 MB <sup><a href="#ftnt11" name="ftnt_ref11" id="ftnt_ref11">[11]</a></sup> de dados compactados. Essa operação JOIN é projetada para ser rápida, por isso o limite máximo de tamanho para a tabela do lado direito.</p>
+<p>Quando ambas as tabelas são extremamente grandes, de dezenas de gigabytes a vários terabytes, é possível usar a operação JOIN EACH. A JOIN EACH faz com que o BigQuery realize uma operação interna que quebra tabelas grandes em partes menores que são processadas com mais eficiência em paralelo. Essa etapa incorre no processamento adicional, ao contrário de uma cláusula JOIN.</p>
+<h4><a name="h.dr7gwxqhiv3i" id="h.dr7gwxqhiv3i"></a>Otimização de desempenho usando subselect</h4>
+<p>Em alguns casos, é possível usar uma instrução subselect para reduzir a quantidade de dados da tabela do lado direito para se encaixar no limite de 8 MB, sem ter de usar JOIN EACH, como mostrado na Figura 3.</p>
+<pre>
+// Limit number of fields and rows.<br>SELECT purchases.amount, users.email_address<br>FROM PurchaseData AS purchases<br>AS users<br>ON purchases.user_id = users.user_id<br>WHERE purchases.amount &gt; 500
+</pre>
+<p>Figura 3. Exemplo de uso de subselect para reduzir o tamanho dos dados</p>
+<h4><a name="h.2ljovxji7xdk" id="h.2ljovxji7xdk"></a>Evite dados extremamente desiguais</h4>
+<p>Quando JOIN EACH é utilizado e uma resposta de consulta parece estar levando um tempo surpreendentemente longo, é uma indicação de que os dados estão distribuídos de forma desigual. A distribuição desigual faz com que alguns blocos de dados sejam desproporcionalmente maiores do que outros, deixando toda a execução da consulta mais lenta. A Figura 4 pode ser usada para ilustrar esse ponto. Foi projetada para analisar a eficácia de uma campanha de e-mail.</p>
+<pre>
+select date_of_visit, page, sum(time_spent_on_page)<br>from weblog_20130301 w<br>join each<br>(select user_id from email_campaign) e<br>on w.user_id = e.user_id<br>group by date_of_visit, page
+</pre>
+<p>Figura 4. Exemplo de uma consulta que possivelmente contém dados distribuídos de forma irregular</p>
+<p>No entanto, se uma grande parte do weblog contiver tráfego de usuários que não estão conectados e o sistema usar um user_id anônimo, essa consulta levará mais tempo do que o necessário para processar os usuários anônimos. Um filtro simples, como mostrado na Figura 5, melhoraria o desempenho de consulta:</p>
+<pre>
+select date_of_visit, page, sum(time_spent_on_page)<br>from weblog_20130301 w<br>join each<br>(select user_id from email_campaign) e<br>on w.user_id = e.user_id<br>where w.user_id != '&lt;anonymous_user_id&gt;'<br>group by time_of_visit, page
+</pre>
+<p>Figura 5. Exemplo de uso do filtro para eliminar dados que causaram a distribuição irregular de dados</p>
+<h2><a name="h.ef1i4f8n4ss5" id="h.ef1i4f8n4ss5"></a>Exemplos de aplicativos</h2>
+<h4><a name="h.yv6q5armjpvp" id="h.yv6q5armjpvp"></a>Carregador de arquivos automatizado para o BigQuery</h4>
+<p>Este exemplo de aplicativo Java do App Engine demonstra como automatizar o carregamento de dados do Google Cloud Storage para o BigQuery. O aplicativo utiliza a Cloud Storage Object Notification API para receber notificações de que foi realizado o upload de arquivos para um intervalo do Cloud Storage. Em seguida, usa a BigQuery API para carregar os dados dos arquivos no BigQuery. Faça o download deste exemplo em <a href="https://github.com/GoogleCloudPlatform/solutions-automated-file-loader-for-bigquery">GitHub</a>.</p>
+<p><a href="#" name="id.hdiyxbxcxwmx" id="id.hdiyxbxcxwmx"></a></p>
+<h4><a name="h.yl5dzmy8845k" id="h.yl5dzmy8845k"></a>Uso da ferramenta ETL no Google Compute Engine</h4>
+<p>Este exemplo de script fornece uma instância de máquina virtual no Google Compute Engine e instala o software necessário para a execução de uma ferramenta ETL de código aberto. Outro documento relacionado fornece um guia passo a passo sobre como usar a ferramenta ETL imediatamente. Faça o download deste exemplo em <a href="https://github.com/GoogleCloudPlatform/Solutions-Using-ETL-tool-on-Google-Compute-Engine">GitHub</a>.</p>
+<h2><a name="h.a21uo0g0v18x" id="h.a21uo0g0v18x"></a>Conclusão</h2>
+<p>O BigQuery é um serviço hospedado totalmente gerenciável, adequado para a rápida análise de negócios. Seguindo a abordagem descrita neste artigo, é possível carregar dados com facilidade e consultá-los imediatamente para ter percepções de negócios. É possível conseguir isso sem incorrer em despesas de capital adicionais para a compra de softwares caros e configuração da infraestrutura de computação. Os investimentos existentes em tecnologia e as habilidades são aproveitados, pois o BigQuery fornece uma linguagem de consulta padrão semelhante a SQL e um crescente ecossistema de ferramentas de terceiros.</p>
+<h2><a name="h.jl0wzalkeolu" id="h.jl0wzalkeolu"></a>Recursos adicionais</h2>
+<ol>
+<li><a href="https://cloud.google.com/files/BigQueryTechnicalWP.pdf">Análise detalhada do Google BigQuery</a></li>
+<li><a href="https://cloud.google.com/customers/#cp-interactive">Estudos de caso do Google BigQuery</a></li>
+<li><a href="https://cloud.google.com/bigquery-tour">Google BigQuery em ação: um tour pelo BigQuery</a></li>
+<li><a href="https://developers.google.com/bigquery/docs/browser_tool">Navegador do Google BigQuery</a></li>
+<li><a href="https://developers.google.com/bigquery/docs/third_party_tools">Ferramentas de terceiros para o Google BigQuery</a></li>
+<li><a href="https://developers.google.com/bigquery/articles/ingestionbestpractices">Práticas recomendadas do BigQuery</a></li>
+<li><a href="https://developers.google.com/bigquery/docs/reference/v2/">Referência da Google BigQuery API</a></li>
+<li><a href="https://developers.google.com/storage/docs/gsutil">Ferramenta gsutil do Google Cloud Storage</a></li>
+<li><a href="https://developers.google.com/bigquery/docs/cli_tool">Ferramenta bq do Google BigQuery</a></li>
+</ol>
+<p><a href="#" name="id.60g9gyxi6n4f" id="id.60g9gyxi6n4f"></a></p>
+<h2><a name="h.66ttc9wlit26" id="h.66ttc9wlit26"></a>Apêndice 1 - Desnormalização de dados</h2>
+<p>O BigQuery usa armazenamento colunar e árvores de execução de vários níveis <sup><a href="#ftnt12" name="ftnt_ref12" id="ftnt_ref12">[12]</a></sup> para atingir escalonamento e desempenho para consultas interativas. A implementação técnica é diferente de um RDBMS. O BigQuery tem um melhor desempenho quando o número de junções de tabela é minimizado. Em alguns casos, é preciso desnormalizar as tabelas antes que sejam carregadas no BigQuery.</p>
+<p>O exemplo a seguir, um sistema de pedidos simples, ilustra o processo de desnormalização. Um banco de dados de RDBMS típico contém estas tabelas de RDBMS: pedido, itens, cliente e produto. Um pedido consiste em uma referência de chave estrangeira para a tabela de clientes, diversos itens da tabela de itens e os próprios itens, cada um dos quais faz referência a um produto na tabela de produtos. Essa relação é descrita no seguinte diagrama "Relacionamento de entidades aprimorado" (Fig. 6).</p>
+<p><img height="134" src="getting-started-with-google-bigquery/image00.png" width="582" alt="Diagrama Relacionamento de entidades aprimorado"><br>
+Figura 6. Diagrama Relacionamento de entidades aprimorado</p>
+<p>A Figura 7 mostra um exemplo de como as tabelas são desnormalizadas em uma única tabela com este layout:</p>
+<p><img height="186" src="getting-started-with-google-bigquery/image02.png" width="169" alt="Tabelas desnormalizadas em uma única tabela"><br>
+Figura 7. Tabelas desnormalizadas em uma única tabela</p>
+<hr>
+<p><a href="#ftnt_ref1" name="ftnt1" id="ftnt1">[1]</a> https://developers.google.com/bigquery/docs/sla</p>
+<p><a href="#ftnt_ref2" name="ftnt2" id="ftnt2">[2]</a> https://developers.google.com/bigquery/docs/pricing</p>
+<p><a href="#ftnt_ref3" name="ftnt3" id="ftnt3">[3]</a> Uma consulta de exemplo para encontrar os 10 principais artigos revisados na Wikipedia geralmente é feita em 10 segundos. O tamanho do conjunto de dados é de 36 GB, com 313 milhões de linhas.</p>
+<p><a href="#ftnt_ref4" name="ftnt4" id="ftnt4">[4]</a> Para encontrar mais informações, consulte <a href="http://googleenterprise.blogspot.com/2012/07/gmail-log-search-feature-enhances.html">O recurso de pesquisa de registro do Gmail melhora a visibilidade dos administradores de domínio</a>.</p>
+<p><a href="#ftnt_ref5" name="ftnt5" id="ftnt5">[5]</a> Para encontrar mais informações, consulte o <a href="https://cloud.google.com/files/Redbus.pdf">Estudo de caso de negócios da Redbus</a>.</p>
+<p><a href="#ftnt_ref6" name="ftnt6" id="ftnt6">[6]</a> Hadoop é uma marca registrada de propriedade da Apache Software Foundation.</p>
+<p><a href="#ftnt_ref7" name="ftnt7" id="ftnt7">[7]</a> Para mais detalhes, consulte <a href="http://static.googleusercontent.com/external_content/untrusted_dlcp/research.google.com/en/us/pubs/archive/36632.pdf">Dremel: análise interativa de conjuntos de dados da Web</a> <a href="http://static.googleusercontent.com/external_content/untrusted_dlcp/research.google.com/en/us/pubs/archive/36632.pdf">.</a></p>
+<p><a href="#ftnt_ref8" name="ftnt8" id="ftnt8">[8]</a> O delimitador de campo não se restringe a vírgulas. O BigQuery suporta qualquer caractere de byte único como delimitador.</p>
+<p><a href="#ftnt_ref9" name="ftnt9" id="ftnt9">[9]</a> https://developers.google.com/bigquery/docs/cli_tool</p>
+<p><a href="#ftnt_ref10" name="ftnt10" id="ftnt10">[10]</a> Para encontrar mais detalhes, consulte <a href="http://static.googleusercontent.com/external_content/untrusted_dlcp/research.google.com/en/us/pubs/archive/36632.pdf">Dremel: análise interativa de conjuntos de dados da Web</a></p>
+<p><a href="#ftnt_ref11" name="ftnt11" id="ftnt11">[11]</a> O Google faz melhorias constantemente. Verifique a documentação on-line sobre a <a href="https://developers.google.com/bigquery/docs/query-reference#joins"></a> <a href="https://developers.google.com/bigquery/docs/query-reference#joins">cláusula JOIN</a> para ver o limite atual.</p>
+<p><a href="#ftnt_ref12" name="ftnt12" id="ftnt12">[12]</a> Para encontrar mais detalhes, consulte <a href="http://static.googleusercontent.com/external_content/untrusted_dlcp/research.google.com/en/us/pubs/archive/36632.pdf">Dremel: análise interativa de conjuntos de dados da Web</a></p>
+</div>
+<div class="maia-col-3"><br>
+<img src="//www.google.com/images/icons/product/feedback-16.png" class="g-app-icon" alt=""> <a href="javascript:void(0);" class="google-feedback">Feedback sobre este documento</a><br>
+<br>
+<img src="//www.google.com/images/icons/thirdparty/pdf-16.png" class="g-app-icon" alt=""> <a href="../../../files/articles/google-cloud_technical-article_bigquery.pdf" class="cp-pdf" onclick="javascript: _gaq.push(['_trackPageview', '../../../files/articles/google-cloud_technical-article_bigquery.pdf']);">Fazer o download do PDF</a>
+<hr>
+<h4>Aplicativos de exemplo</h4>
+<ul>
+<li><a href="https://github.com/GoogleCloudPlatform/solutions-automated-file-loader-for-bigquery" target="github">Carregador de arquivos automatizado para o BigQuery <img src="../images/ext-link-8px.png" height="8px" width="8px" alt=""></a></li>
+<li><a href="https://github.com/GoogleCloudPlatform/Solutions-Using-ETL-tool-on-Google-Compute-Engine" target="github">Uso da a ferramenta ETL no exemplo de script do Google Compute Engine<img src="../images/ext-link-8px.png" height="8px" width="8px" alt=""></a></li>
+</ul>
+<hr></div>
+</div>
+</div>
+<script>
+(function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+</script><script src="//www.gstatic.com/feedback/api.js">
+</script><script>
+$('body').delegate('.google-feedback', 'click', function() {
+      userfeedback.api.startFeedback({'productId': '94614'});
+  });
+</script><!-- Scripts to include both on Goro + Devsite --><script>
+window.___gcfg = {
+     lang: ''
+   };
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+</script><!-- GTM implementation --><!-- Start dataLayer --><script>
+dataLayer = [{
+        'country': 'None',
+        'region': 'None',
+        'language': 'pt-br'
+      }];
+</script><!-- End dataLayer --><!-- Start Google Tag Manager --><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5CVQBG" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript> <script>
+(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-5CVQBG');
+</script><!-- End Google Tag Manager --><!-- Global JS scripts to load; path will depend on whether we're on devsite or Goro --><script src="/js/base.min.js">
+</script><!-- Retina loader; Do not load if partners page because we need to wait until the Angular app runs --><script>
+new lfl.system.RetinaLoader();
+</script><!-- Secondary right-side scroll-nav --><script>
+new lfl.ui.ScrollNav({});
+</script>
+</body>
+</html>

@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html devsite="">
+<head>
+<title>Load Testing Articles &amp; Tutorials — Google Cloud Platform</title>
+<meta name="description" content="Read technical articles about load testing and solutions with Google Cloud Platform, specifically using Google's Compute Engine for load testing.">
+<meta name="hide_page_heading" value="true">
+<meta name="full_width" value="true">
+<meta name="top_category" value="developers">
+<meta name="subcategory" value="articles">
+<meta name="viewport" content="initial-scale=1, minimum-scale=1, width=device-width">
+<link rel="apple-touch-icon" href="//cloud.google.com/_static/images/apple-touch-icon.png">
+<link href="//fonts.googleapis.com/css?family=Open+Sans:400italic,300,400,600,700" rel="stylesheet">
+<link href="/css/default.css" rel="stylesheet"><!--[if lt IE 9]>
+    <link rel="stylesheet" media="screen" href='/c/cp-ie.css'>
+    <![endif]-->
+<script src="/js/floodlight.js">
+</script>
+</head>
+<body>
+<div id="maia-main" class="cp-article">
+<div class="maia-cols">
+<div class="maia-col-9">
+<div>
+<div style="float:right">
+<div class="g-plusone"></div>
+</div>
+<h1 class="title">How to Configure SSH Port Forwarding and Set Up Load Testing on Google Compute Enginee</h1>
+</div>
+<div class="cp-article-tutorial"><a name="intro" id="intro"></a>
+<h2>소개</h2>
+<p>Google Compute Engine은 요청형 가상 머신을 제공합니다. Compute Engine을 사용하면 대규모 연산 작업을 수행할 수 있을 뿐만 아니라 높은 성능을 달성할 수 있으며, Compute Engine의 가상 머신과 개인용 로컬 컴퓨터와 같은 원격 머신 간에 양방향으로 통신할 수 있으므로 이를 유용하게 사용할 수 있습니다.</p>
+<p>이 문서에서는 이러한 시나리오의 예로 JMeter를 사용하며, SSH 포트 포워딩을 구성하여 양방향 연결을 사용 설정하는 방법에 대해 설명합니다. 이 기술을 사용하면 부하 테스트를 위해 Compute Engine에 JMeter 서버 클러스터를 설정할 수 있으며, 개인용 로컬 컴퓨터에서 실행되는 JMeter 클라이언트에서 이를 제어할 수 있습니다.</p>
+<p><a href="http://jmeter.apache.org/">JMeter</a>는 Apache 프로젝트의 오픈소스 부하 테스트 프레임워크입니다. 서버를 개발하거나 시스템을 배포할 때, 부하 테스트는 시스템을 실제로 가동하기 전에 반드시 거쳐야 하는 중요한 단계입니다. 부하 테스트가 중요한 이유는 다음과 같습니다.</p>
+<ul>
+<li>시스템에서 예상 사용자수/요청수를 처리하는지 확인합니다.</li>
+<li>부하가 높은 상황에서 서버의 동작과 응답성을 모니터링할 수 있습니다.</li>
+<li>시스템의 잠재적인 병목현상을 노출합니다.</li>
+</ul>
+<p>이 문서에서는 Compute Engine 인스턴스에서 JMeter를 사용하여 분산 부하 테스트 환경을 설정하는 효율적인 방법을 제시합니다.</p>
+<h3>가정</h3>
+<p>이 문서는 <a href="http://jmeter.apache.org/">JMeter</a> 부하 테스트 환경을 설정하여 Compute Engine에서 부하 테스트를 실행하는 방법을 자세하게 설명합니다. 문서에서는 개발자가 네트워크에 대해 기술적으로 이해하고 있다고 가정하며, 개발자는 <a href="https://developers.google.com/compute/">Compute Engine</a> 및 <a href="https://developers.google.com/compute/docs/gcutil/">gcutil</a> 명령줄 도구에 어느 정도 익숙해야 합니다.</p>
+<p>이 문서는 JMeter 테스트 환경을 설정하는 방법을 설명하지만 JMeter 자체를 자세히 다루지는 않습니다. JMeter에서 테스트 계획을 수립하고 테스트를 실행하는 것은 이 문서의 범위에 포함되지 않습니다.</p>
+<h3>목차</h3>
+<ul>
+<li><a href="#intro">소개</a></li>
+<li><a href="#loadtest">부하 테스트 및 JMeter 기본사항</a></li>
+<li><a href="#server-config">Google Compute Engine에서의 JMeter 서버 구성</a></li>
+<li><a href="#resources">추가 리소스</a></li>
+</ul>
+<a name="loadtest" id="loadtest"></a>
+<h2>부하 테스트 및 JMeter 기본사항</h2>
+<p>다음 섹션에서는 부하 테스트 및 JMeter의 기본사항을 소개하며, 이어지는 섹션에서는 JMeter와 Google Compute Engine을 함께 사용할 때 고려해야 하는 일부 세부사항을 자세하게 설명합니다.</p>
+<h3>부하 테스트 기본사항</h3>
+<p>부하 테스트 소프트웨어의 일반적인 기능은 서버를 대상으로 부하를 자동으로 생성하는 것입니다. 부하 테스트 시스템은 대규모 동시 사용자 요청을 시뮬레이션할 수 있습니다. 또한 서버의 응답을 기록하고 서버 응답에 대한 통계 정보를 수집할 수 있습니다.</p>
+<p>부하 테스트의 과제는 바로 테스트하는 서버에 부하를 주기에 충분한 대량의 요청을 생성하는 것입니다. 대개 한 컴퓨터에서 실행되는 부하 테스트로는 부하를 충분히 생성할 수 없으므로 여러 컴퓨터를 조작하여 서버에 대한 부하를 높여야 합니다.</p>
+<p>이 문서에서는 Compute Engine 인스턴스에 JMeter 서버 클러스터를 설정하는 방법을 보여줍니다. Compute Engine에서 제공하는 가상 머신에 JMeter 서버 클러스터를 설정하면 물리적인 서버를 유지관리할 필요가 없으며, 부하 테스트를 위한 인스턴스의 수를 자유롭게 조절할 수 있습니다. JMeter는 일반적인 프레임워크이며, 부하 테스트의 대상 시스템은 JMeter 클러스터에서 액세스할 수 있는 곳이면 어디든지 위치할 수 있습니다. Google App Engine 애플리케이션이든 Compute Engine, 사내 서버 또는 다른 클라우드 플랫폼에 위치하는 시스템이든 상관이 없습니다. 실제 성능은 네트워크 성능을 비롯한 여러 요인의 영향을 받을 수 있으며, 정확한 성능을 측정하려면 격리된 시스템이 필요합니다. 따라서 이 시스템은 성능 테스트 환경으로 간주되지 않습니다.</p>
+<h3>JMeter</h3>
+<p>JMeter는 Windows, Mac 및 Linux에서 실행됩니다. 테스트를 위한 다양한 프로토콜을 지원하며 부하 테스트 구성을 위한 시각적인 사용자 인터페이스를 제공합니다. JMeter UI의 스크린샷을 확인하려면 그림 1을 참조하세요.</p>
+<figure><img src="../images/articles/config-ssh-port-forw-tut/jmeter-ui.png" alt="">
+<figcaption>그림 1. JMeter 인터페이스의 스크린샷</figcaption>
+</figure>
+<p>JMeter는 부하 테스트 시스템이 다음과 같이 구성된 분산 테스트를 지원합니다.</p>
+<ul>
+<li>테스트하는 서버에 요청을 보내는 JMeter 서버</li>
+<li>부하 수준을 제어하고 JMeter 서버로부터 테스트 결과를 집계하는 JMeter 클라이언트</li>
+</ul>
+<p>JMeter 클라이언트는 JMeter 인터페이스를 실행하는 워크스테이션입니다. JMeter 서버는 다른 위치, 원격 서버에 배치할 수 있습니다(그림. 2). 구성 시 서버 유형을 혼합할 수 있습니다. 예를 들어 Mac을 JMeter 클라이언트로 설정하고 Linux 서버를 JMeter 서버로 설정할 수 있습니다.</p>
+<p>JMeter는 각 JMeter 서버 스레드가 HTTP 클라이언트 역할을 하는 HTTP 요청을 시뮬레이션하지만, 페이지를 렌더링하거나 자바스크립트를 실행하지는 않습니다. 따라서 Ajax에 의해 다운로드되는 이미지나 데이터와 같은 삽입된 파일은 자동으로 다운로드되지 않습니다.</p>
+<p>실제 부하 상황을 시뮬레이션하려면, 시스템이 실제 사용자와 최대한 비슷하게 동작을 모방할 수 있도록 테스트 시나리오를 신중하게 만들어야 합니다.</p>
+<figure><img src="../images/articles/config-ssh-port-forw-tut/load-testing.jpg" alt="">
+<figcaption>그림 2. 부하 테스트에 JMeter 사용</figcaption>
+</figure>
+<p>JMeter 분산 설정을 사용하려면 먼저 JMeter 클라이언트의 구성 파일에 있는 JMeter 서버를 모두 나열합니다(bin/jmeter.properties의 <span class="code">remote_hosts</span> 항목). 테스트를 시작하려면 <span class="code">start</span>가 아닌 <span class="code">remote start all</span>을 사용합니다. <span class="code">remote start all</span> 명령을 사용하면 JMeter client가 나열된 모든 원격 JMeter 서버에 연결되어 테스트를 실행하고 모든 결과를 수신합니다.</p>
+<p>부하 테스트를 수행하는 동안 JMeter 클러스터에 있는 모든 서버의 결과가 클라이언트로 전송됩니다. 결과는 통합되어 JMeter 클라이언트 화면에 표시됩니다(그림. 3).</p>
+<figure><img src="../images/articles/config-ssh-port-forw-tut/apache-jmeter.png" alt="">
+<figcaption>그림 3. JMeter 클라이언트에 표시된 통합된 부하 테스트 결과 스크린샷</figcaption>
+</figure>
+<p>JMeter에는 위에 나와 있는 것 외에도 다른 종류의 결과 핸들러가 갖춰져 있다는 점을 기억해 주세요.</p>
+<a name="server-config" id="server-config"></a>
+<h2>Google Compute Engine에서의 JMeter 서버 구성</h2>
+<p>이 문서의 나머지 부분에서는 Compute Engine에서 JMeter 서버를 구성하는 방법을 다룹니다. 이 문서의 목적에 따라, Compute Engine Linux 인스턴스에 여러 개의 JMeter 서버를 설정하고 Mac에서 JMeter 클라이언트를 실행한다고 가정하겠습니다.</p>
+<h3>JMeter 클라이언트와 JMeter 서버 간 연결</h3>
+<p>JMeter 클라이언트에서 원격으로 테스트를 시작하면 JMeter 연결 및 RMI(원격 메소드 호출)를 통해 JMeter 클라이언트와 JMeter 서버 간의 통신이 설정됩니다. JMeter 연결은 항상 JMeter 클라이언트에 의해 시작됩니다. 반면 RMI를 위한 TCP 연결은 양쪽 모두에서 시작됩니다. 따라서 총 3개의 연결이 생성됩니다(그림. 4).</p>
+<figure><img src="../images/articles/config-ssh-port-forw-tut/jmeter-connections.png" alt="">
+<figcaption>그림 4. JMeter 클라이언트와 JMeter 서버 간 연결</figcaption>
+</figure>
+<p>JMeter 클라이언트가 일대다 NAT(네트워크 주소 변환)를 통해 방화벽 뒤에서 실행 중이며, 역시 방화벽 뒤에 있는 Compute Engine의 JMeter 서버에 연결된 경우 연결을 구성하기가 어려울 수 있습니다.</p>
+<p>Compute Engine에서는 외부 IP 주소에 일대일 NAT를 사용하며, 각 Compute Engine 인스턴스는 인스턴스 내부 비공개 IP 주소를 자신의 IP 주소로 사용합니다. 이 경우 클라이언트가 방화벽 뒤에 있고 공개 주소를 보유하고 있지 않으므로, JMeter 원격 서버에서 JMeter 클라이언트에 연결할 수 없습니다. 한편, 서버에서는 서버 내부 비공개 IP 주소를 공개 주소로 보고하므로 클라이언트에서 원격 서버에 연결할 수 없습니다(그림. 5).</p>
+<figure><img src="../images/articles/config-ssh-port-forw-tut/firewalls.jpg" alt="">
+<figcaption>그림 5. 방화벽으로 인해 JMeter 클라이언트와 JMeter 서버 간의 통신이 어려워짐</figcaption>
+</figure>
+<h3>SSH 포트 포워딩 기술</h3>
+<p>SSH(보안 셸)에는 SSH 연결에서 실제 통신이 이루어지는 다른 포트로 연결을 전달하는 SSH 포트 포워딩(또는 SSH 터널링)이라는 기능이 있습니다. 포트 포워딩은 SSH 클라이언트 측 또는 SSH 서버 측에서 수행할 수 있습니다. 포트 포워딩을 사용하면 JMeter 클라이언트와 서버가 서로 연결되는 것을 허용하는 포트를 설정할 수 있습니다.</p>
+<figure><img src="../images/articles/config-ssh-port-forw-tut/forw-connections.jpg" alt="">
+<figcaption>그림 6. 연결을 다른 포트에 전달</figcaption>
+</figure>
+<p>그림 6의 예에서 'A'와 'B'는 포트 번호를 나타냅니다.</p>
+<p>위 예에 나와 있는 것처럼 서버 측 SSH 포트 포워딩을 설정하려면 클라이언트 머신에서 다음 명령을 실행해야 합니다. 여기서 -L은 로컬을 -R는 원격을 나타냅니다.</p>
+<pre>
+ssh -L A:127.0.0.1:B &lt;username&gt;@&lt;server&gt;
+</pre>
+<p>이와 유사하게 다음 명령은 클라이언트 측 포트 포워딩을 설정합니다.</p>
+<pre>
+ssh -R  B:127.0.0.1: A &lt;username&gt;@&lt;server&gt;
+</pre>
+<p>이와 유사한 방식으로 Windows에서는 PuTTY 구성의 'Connection'(연결) - 'SSH' - 'Tunnels'(터널)에 있는 PuTTY를 사용하여 SSH 포트 포워딩을 구성할 수 있습니다.</p>
+<h3>JMeter를 위한 SSH 포트 포워딩 구성</h3>
+<p>JMeter는 총 세 개의 연결을 사용합니다. 하나는 JMeter 연결을 사용하여 클라이언트에서 서버로 연결하는 것이고, 나머지 두 개의 추가 연결은 RMI를 위해 클라이언트와 서버에서 서로의 방향으로 연결하는 것입니다. 그런 다음 세 개의 포트 포워딩에서 모든 연결을 처리하도록 구성해야 합니다. 예를 들기 위해 그림 7에 나와 있는 것처럼 다음 포트 번호를 사용하겠습니다:</p>
+<p>JMeter 연결을 위한 포트 24000</p>
+<ul>
+<li>서버에서 클라이언트로 연결되는 RMI를 위한 포트 25000</li>
+<li>클라이언트에서 서버로 연결되는 RMI를 위한 포트 26000</li>
+</ul>
+<figure><img src="../images/articles/config-ssh-port-forw-tut/forw-config.png" alt="">
+<figcaption>그림 7. 세 개의 연결을 위한 포트 포워딩 구성의 예</figcaption>
+</figure>
+<p>다음 명령은 3개 포트를 위한 포트 포워딩을 설정합니다.</p>
+<pre>
+ssh -L 24000:127.0.0.1:24000   \
+-R 25000:127.0.0.1:25000   \
+-L 26000:127.0.0.1:26000 &lt;username&gt;@&lt;server&gt;
+</pre>
+<p>SSH 포트 포워딩만 설정하고 원격 명령은 실행할 필요가 없으므로 -N 및 -f 옵션 또한 추가하는 것이 좋습니다.</p>
+<pre>
+ssh -L 24000:127.0.0.1:24000   \
+-R 25000:127.0.0.1:25000   \
+-L 26000:127.0.0.1:26000 -N -f &lt;username&gt;@&lt;server&gt;
+</pre>
+<p>이제 JMeter 클라이언트와 서버만 구성하면 올바른 포트 번호를 사용할 수 있습니다.</p>
+<p>클라이언트 구성</p>
+<p>JMeter 클라이언트 구성(<span class="code">bin/jmeter.properties</span>)에서 다음 항목을 변경합니다.</p>
+<pre>
+remote_hosts=127.0.0.1:24000
+client.rmi.localport=25000
+mode=Statistical
+</pre>
+<p>몇 가지 구성 세부정보는 다음과 같습니다.</p>
+<ul>
+<li><span class="bld">remote_hosts</span>는 JMeter 클라이언트에 사용할 JMeter 서버를 지시합니다.</li>
+<li><span class="bld">client.rmi.localport</span>는 클라이언트의 JMeter 연결 포트 번호를 지정합니다.</li>
+<li><span class="bld">mode</span>는 결과가 서버에서 클라이언트로 다시 전송되는 방법을 나타냅니다.</li>
+</ul>
+<p>이전 섹션에서는 JMeter 연결을 위한 포트 포워딩을 설명했습니다. 여기에서는 localhost (127.0.0.1)의 포트 24000을 원격 호스트로 지정하고 클라이언트 RMI 수신 포트를 25000으로 지정합니다. 이렇게 지정하는 것은 이 포트 번호가 JMeter 서버의 RMI 연결이 전달되는 포트 번호이기 때문입니다.</p>
+<p>JMeter 서버에서 대상 시스템으로 대량의 요청을 전송할 계획이므로 동일한 수의 결과를 JMeter 클라이언트에 다시 전송하지 않는 것이 좋습니다. 따라서 데이터 전송은 'Statistical'(통계) 모드로 설정해야 합니다. 통계 모델은 JMeter 서버에서 통계 정보가 전송되도록 지정하므로 JMeter 서버와 클라이언트 간의 전송량을 줄일 수 있습니다. 통계 모드를 사용하지 않으면 JMeter 클라이언트에서 부하 테스트 병목현상이 발생하게 됩니다. 구성에 대한 자세한 내용은 <a href="http://jmeter.apache.org/usermanual/remote-test.html#sendermode">JMeter 문서</a>를 참조하세요.</p>
+<h6 class="ital">서버 구성</h6>
+<p>원격 JMeter 서버도 구성해야 합니다. 구성하려면 bin/jmeter.property를 다음과 같이 수정해야 합니다.</p>
+<pre>
+server_port=24000
+server.rmi.localhostname=127.0.0.1
+server.rmi.localport=26000
+</pre>
+<p>이렇게 설정하면 JMeter 서버가 JMeter 연결을 위해서는 포트 24000에 묶이고, 서버 측 RMI 수신을 위해서는 포트 26000에 묶이도록 지시합니다.</p>
+<h6 class="ital">원격 서버 시작</h6>
+<p>마지막으로 원격 Linux 박스에서 JMeter 서버를 시작할 때, JMeter에서 localhost (127.0.0.1)를 RMI 서버로 사용하도록 지시해야 합니다.</p>
+<pre>
+bin/jmeter-server -Djava.rmi.server.hostname=127.0.0.1
+</pre>
+<p>이 명령은 Linux 박스에서 JMeter 서버를 시작하고 JMeter 클라이언트의 연결을 허용합니다. 그러면 다시 한 번 localhost를 RMI 서버로 지정하여 JMeter 클라이언트를 시작할 수 있습니다.</p>
+<pre>
+bin/jmeter.sh -Djava.rmi.server.hostname=127.0.0.1
+</pre>
+<p>Windows에서는 bin/jmeter.bat를 사용해야 한다는 점에 유의해 주세요.</p>
+<p>평소처럼 JMeter 인터페이스를 사용하여 테스트 사례를 생성할 수 있습니다. JMeter 클라이언트는 원격 JMeter 서버를 자동으로 인식하고 <span class="code">remote start all</span> 명령을 발급하여 JMeter 서버와의 연결을 시작합니다. 그리고 원격 JMeter 서버에서 테스트 중인 대상 시스템으로 요청을 전송하기 시작합니다.</p>
+<h4>Google Compute Engine에서 JMeter 서버 설정</h4>
+<p>Compute Engine 인스턴스는 일반 Linux 박스로 작동하므로 특별한 구성이 필요하지 않습니다. 하지만 gcutil <span class="code">ssh</span>는 Compute Engine에 연결하는 일부 옵션을 사전 설정하므로, Compute Engine 인스턴스에 <a href="https://developers.google.com/compute/docs/instances#sshing">ssh</a>를 설정하는 가장 쉬운 방법은 vanilla <span class="code">ssh</span> 명령 대신 <span class="code">gcutil ssh</span> 명령을 사용하는 것입니다.</p>
+<p><span class="code">gcutil ssh</span> 명령과 함께, <span class="code">--ssh_arg</span> 옵션을 지정하여 매개변수를 ssh에 전달해야 합니다.</p>
+<p>Compute Engine에 SSH 포트 포워딩을 설정하려면 다음 명령을 사용합니다.</p>
+<pre>
+gcutil ssh  \
+--ssh_arg -L24000:127.0.0.1:24000  \
+--ssh_arg -R25000:127.0.0.1:25000  \
+--ssh_arg -L26000:127.0.0.1:26000  \
+--ssh_arg -N --ssh_arg -f &lt;instance name&gt;
+</pre>
+<p><span class="code">ssh</span> 명령의 인수에 해당하는 <span class="code">-L</span> 또는 <span class="code">-R</span>이 그 뒤에 오는 매개변수와 결합되어야 합니다. 그래야 이러한 매개변수가 <span class="code">ssh</span>에 단일 매개변수로 전달됩니다. 그렇지 않으면 매개변수 부분이 <span class="code">gcutil</span>의 매개변수로 해석됩니다.</p>
+<h3>여러 개의 JMeter 서버 구성</h3>
+<p>지금까지 Compute Engine 인스턴스에서 JMeter 서버를 성공적으로 설정하는 방법을 예를 통해 제시해 보았습니다. 하지만 원격 JMeter 서버를 사용하는 주요 목적은 단일 JMeter 클라이언트를 사용 설정하여 단일 컴퓨터로는 불가능한 방식으로 테스트하는 서버에 부하를 주도록 여러 개의 JMeter 서버를 관리하는 것입니다.</p>
+<p>JMeter 클라이언트와 JMeter 서버가 방화벽의 동일한 측에 있는 경우(예: 둘 다 회사의 사내 서버에 있음) 모든 JMeter 서버는 동일한 포트를 사용할 수 있습니다. 하지만 이 예에서는 SSH 포트 포워딩을 사용 설정했으므로 각 서버는 서로 다른 포워딩 포트와 해당하는 RMI 수신 로컬 포트를 사용하도록 구성되어야 합니다.</p>
+<p>위 예의 사례와 마찬가지로, 모든 서버는 RMI 포트에 동일한 번호(예: 25000)를 계속해서 사용하여 클라이언트에 연결할 수 있습니다.</p>
+<p>예를 들어 두 번째 JMeter 서버에서 JMeter 연결에 24001을, 클라이언트-서버 방향의 RMI에 26001을 각각 사용한다고 가정해 보겠습니다. 이 경우, 두 번째 서버의 SSH 포트 포워딩 설정 명령은 다음과 같아야 합니다.</p>
+<pre>
+gcutil ssh  \
+--ssh_arg -L24001:127.0.0.1:24001  \
+--ssh_arg -R25000:127.0.0.1:25000  \
+--ssh_arg -L26001:127.0.0.1:26001  \
+--ssh_arg -N --ssh_arg -f &lt;instance name&gt;
+</pre>
+<p>두 번째 서버의 JMeter 구성은 다음과 같아야 합니다.</p>
+<pre>
+server_port=24001
+server.rmi.localhostname=127.0.0.1
+server.rmi.localport=26001
+</pre>
+<p>마지막으로 두 서버와 JMeter 클라이언트의 구성은 다음과 같아야 합니다.</p>
+<pre>
+remote_hosts=127.0.0.1:24000,127.0.0.1:24001
+client.rmi.localport=25000
+mode=Statistical
+</pre>
+<p>이 문서에 제시된 예에서는 포트 번호가 겹치는 것을 방지하기 위해 최대 서버 수를 1,000개로 가정하고 포트 번호를 24000, 25000 및 26000으로 지정했다는 점에 유의해 주세요. 클러스터에 1000개 이상의 서버가 있는 경우 각각의 간격이 더 큰 다른 포트 번호를 사용해야 합니다.</p>
+<h2>여러 개의 원격 서버에 따라 확장</h2>
+<p>지금까지 JMeter를 구성하여 Google Compute Engine 인스턴스를 JMeter 서버로 사용하는 방법을 보여드렸습니다. 하지만 몇 개의 인스턴스를 수동으로 설정해야 하는 것은 이상적인 상황이라 할 수 없습니다. Compute Engine은 API를 통한 액세스를 허용하고 각 Compute Engine 인스턴스는 시작 스크립트를 통해 구성될 수 있으므로, 자동화된 스크립트를 생성하여 다음을 수행할 수 있습니다.</p>
+<ul>
+<li>Compute Engine 인스턴스 시작</li>
+<li>이를 JMeter 서버 클러스터로 구성</li>
+<li>로컬 컴퓨터에서 SSH 포트 포워딩 활성화</li>
+<li>JMeter 클라이언트를 시작</li>
+<li>더 이상 필요하지 않은 경우 JMeter 서버 클러스터를 해제</li>
+</ul>
+<p>다음은 이러한 스크립트(<span class="code">'jmeter_cluster.py'</span>)를 구현한 샘플에 대한 소개입니다. 샘플 애플리케이션은 <a href="https://github.com/GoogleCloudPlatform/solutions-google-compute-engine-cluster-for-jmeter">GitHub</a>에서 확인할 수 있습니다.</p>
+<h4>자동화된 스크립트의 설계</h4>
+<p>'jmeter_cluster.py'는 다음을 사용합니다.</p>
+<ul>
+<li>Compute Engine 인스턴스를 제어하는 <a href="https://developers.google.com/api-client-library/python/">Python용 Google API 클라이언트 라이브러리</a></li>
+<li>SSH 포트 포워딩을 설정하는 <a href="https://developers.google.com/compute/docs/gcutil/">gcutil</a> 명령줄 도구</li>
+<li>Compute Engine 인스턴스의 시작 스크립트와 JMeter 서버 패키지를 저장하는 <a href="https://developers.google.com/storage/">Google Cloud Storage</a></li>
+</ul>
+<p>JMeter 서버 패키지에는 'bin' 하위 디렉토리의 사전 구성된 jmeter.properties가 포함되어 있습니다. 하지만 포트 번호는 인스턴스에 따라 맞춤설정되어야 합니다. 시작 스크립트는 포트 번호를 덮어씁니다.</p>
+<p>스크립트가 수행하는 작업에 대한 개요는 다음과 같습니다.</p>
+<ol>
+<li>클러스터를 시작
+<ul style="list-style-type:circle;">
+<li>Compute Engine 인스턴스를 시작합니다.</li>
+<li>시작 스크립트가 Cloud Storage에서 JMeter 서버 패키지를 다운로드합니다.</li>
+<li>시작 스크립트는 JMeter 구성에서 클러스터의 서버 ID 번호(0, 1, 2, …)에 따라 포트 번호를 수정합니다. 서버 ID는 각 인스턴스에 Compute Engine 인스턴스의 맞춤 <a href="https://developers.google.com/compute/docs/metadata">메타데이터</a>로 전달됩니다.</li>
+<li>시작 스크립트는 JMeter 서버 프로세스를 시작합니다.</li>
+</ul>
+</li>
+<li>SSH 포트 포워딩을 설정
+<ul style="list-style-type:circle;">
+<li><span class="code">gcutil ssh</span> 명령을 실행하여 SSH 포트 포워딩을 설정합니다.</li>
+<li>서버 목록을 <span class="code">remote_host</span> JMeter 구성으로 업데이트합니다.</li>
+</ul>
+</li>
+<li>JMeter 클라이언트를 시작
+<ul style="list-style-type:circle;">
+<li>JMeter 클라이언트 패키지의 로컬 머신에서 JMeter 클라이언트를 시작합니다.</li>
+</ul>
+</li>
+<li>클러스터를 해제
+<ul>
+<li>JMeter 서버 인스턴스를 삭제합니다.</li>
+</ul>
+</li>
+</ol>
+<h3>용도</h3>
+<h6 class="ital">클러스터를 시작하고 SSH 포트 포워딩을 설정</h6>
+<p class="code">./jmeter_cluster.py start [cluster size] [--project &lt;project name&gt;] [--prefix &lt;prefix&gt;] [--image &lt;image&gt;] [--zone &lt;zone&gt;] [--machinetype &lt;machine type&gt;]</p>
+<ul>
+<li>[cluster size] 수의 Compute Engine 인스턴스로 구성된 클러스터를 시작합니다.</li>
+<li>SSH 포트 포워딩도 설정합니다.</li>
+</ul>
+<p>시작 명령을 실행하여 JMeter 서버를 시작한 후 클라이언트 명령을 실행하여 JMeter 클라이언트를 시작합니다.</p>
+<h6 class="ital">터미널이 중단된 경우 SSH 포트 포워딩을 설정</h6>
+<p class="code">./jmeter_cluster.py portforward [cluster size] [--project &lt;project name&gt;] [--prefix &lt;prefix&gt;]</p>
+<ul>
+<li>[cluster size] 수의 인스턴스에 SSH 포트 포워딩을 설정합니다.</li>
+<li>이는 클러스터를 시작한 터미널에서 인스턴스 연결이 끊어지는 경우에만 필요합니다. 연결이 끊어지면 SSH 포트 포워딩이 취소됩니다.</li>
+</ul>
+<p>portforward 명령을 실행하여 포트 포워딩을 다시 설정한 다음 클라이언트 명령을 실행하여 JMeter 클라이언트를 다시 시작합니다.</p>
+<h6 class="ital">JMeter 클라이언트를 시작</h6>
+<p class="code">./jmeter_cluster.py client [additional parameters to JMeter]</p>
+<ul>
+<li>로컬 머신에서 JMeter 클라이언트를 시작합니다.</li>
+</ul>
+<h6 class="ital">JMeter 시스템을 종료</h6>
+<p class="code">./jmeter_cluster.py shutdown [--project &lt;project name&gt;] [--prefix &lt;prefix&gt;]</p>
+<ul>
+<li>JMeter 서버 클러스터를 해제합니다.</li>
+</ul>
+<h6 class="ital">스크립트 사용에 대한 도움말 보기</h6>
+<p class="code">./jmeter_cluster.py -h</p>
+<ul>
+<li>명령의 용도를 표시합니다.</li>
+</ul>
+<p class="code">./jmeter_cluster [start|shutdown|portforward|client] -h</p>
+<ul>
+<li>하위 명령의 용도를 표시합니다.</li>
+</ul>
+<a name="resources" id="resources"></a>
+<h2>추가 리소스</h2>
+<ul>
+<li><a href="https://developers.google.com/compute/">Google Compute Engine 개발자 문서</a></li>
+<li><a href="https://developers.google.com/compute/docs/instances#sshing">SSH를 사용하여 Google Compute Engine에 연결</a></li>
+<li><a href="http://jmeter.apache.org/">JMeter</a></li>
+<li><a href="http://www.google.com/url?q=http%3A%2F%2Fionelmc.wordpress.com%2F2012%2F02%2F16%2Fhow-to-run-jmeter-over-ssh-tunnel%2F&amp;sa=D&amp;sntz=1&amp;usg=AFQjCNG8dqQYCuEU-RITYdHZoFcLR3JWeQ">SSH 터널에서 JMeter를 실행하는 방법</a></li>
+</ul>
+</div>
+<!-- /maia-main --></div>
+<div class="maia-col-3"><br>
+<img src="//www.google.com/images/icons/product/feedback-16.png" class="g-app-icon" alt=""> <a href="javascript:void(0);" class="google-feedback">이 문서에 대한 의견 보내기</a><br>
+<br></div>
+</div>
+</div>
+<script>
+(function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+</script><script src="//www.gstatic.com/feedback/api.js">
+</script><script>
+$('body').delegate('.google-feedback', 'click', function() {
+      userfeedback.api.startFeedback({'productId': '94614'});
+  });
+</script><!-- Scripts to include both on Goro + Devsite --><script>
+window.___gcfg = {
+     lang: ''
+   };
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+</script><!-- GTM implementation --><!-- Start dataLayer --><script>
+dataLayer = [{
+        'country': 'ko',
+        'region': 'japac',
+        'language': 'ko'
+      }];
+</script><!-- End dataLayer --><!-- Start Google Tag Manager --><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5CVQBG" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript> <script>
+(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-5CVQBG');
+</script><!-- End Google Tag Manager --><!-- Global JS scripts to load; path will depend on whether we're on devsite or Goro --><script src="/js/base.min.js">
+</script><!-- Retina loader; Do not load if partners page because we need to wait until the Angular app runs --><script>
+new lfl.system.RetinaLoader();
+</script><!-- Secondary right-side scroll-nav --><script>
+new lfl.ui.ScrollNav({});
+</script>
+</body>
+</html>

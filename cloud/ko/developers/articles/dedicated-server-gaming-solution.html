@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html devsite="">
+<head>
+<title>Gaming Articles &amp; Gaming Tutorials — Google Cloud Platform</title>
+<meta name="description" content="Read about technical gaming articles and solutions with Google Cloud Platform. Gaming specific articles cover game hosting solutions and server configurations.">
+<meta name="hide_page_heading" value="true">
+<meta name="full_width" value="true">
+<meta name="top_category" value="developers">
+<meta name="subcategory" value="articles">
+<meta name="viewport" content="initial-scale=1, minimum-scale=1, width=device-width">
+<link rel="apple-touch-icon" href="//cloud.google.com/_static/images/apple-touch-icon.png">
+<link href="//fonts.googleapis.com/css?family=Open+Sans:400italic,300,400,600,700" rel="stylesheet">
+<link href="/css/default.css" rel="stylesheet"><!--[if lt IE 9]>
+    <link rel="stylesheet" media="screen" href='/c/cp-ie.css'>
+    <![endif]-->
+<script src="/js/floodlight.js">
+</script>
+</head>
+<body>
+<div id="maia-main" class="cp-article">
+<div class="maia-cols">
+<div class="maia-col-9">
+<div>
+<div style="float:right">
+<div class="g-plusone"></div>
+</div>
+<h1 class="title">전용 서버 게임 솔루션</h1>
+</div>
+<h2>소개</h2>
+<p>게임을 즐기는 사용자 수가 계속 증가하면서, 흥미진진한 게임 경험을 제공할 수 있도록 엄청난 양의 컴퓨팅 리소스가 요구되고 있습니다. 이 문서에서는 플레이어의 실시간 상호작용을 위해 Google App Engine과 Google Compute Engine을 활용하여 높은 확장성과 신뢰성으로 게임을 구현하는 방법에 대해 설명합니다. 게임 내 랜덤 대결과 플레이어 맞춤설정 등의 핵심적인 게임 요소는 App Engine에 의해 구동되는 한편, <span title="게임 전용 서버란 실시간 플레이어의 상호작용을 처리하는 맞춤 바이너리를 의미합니다.">게임 전용 서버</span> 및 일반 게임 엔진을 실행하는 데에는 Compute Engine이 활용됩니다.</p>
+<p>이 솔루션에서 다루고 있는 핵심 요점은 다음과 같습니다.</p>
+<ul>
+<li>수백에서 수백만에 이르는 플레이어에게 서비스를 제공할 수 있는 확장성</li>
+<li>Google Cloud Platform을 활용하여 모든 기능을 제공하는 게임 경험 구축</li>
+<li>프론트엔드 상호작용에 App Engine 활용 및 데이터 저장소에 게임 상태 유지</li>
+<li>App Engine을 사용하여 Compute Engine 게임 전용 서버 관리 및 자동 확장</li>
+<li>대규모 사용자 및 게임 데이터세트 분석을 통한 게임 비즈니스 관련 통계 확보</li>
+</ul>
+<p>온라인 게임은 단지 몇 사람이 차고에서 서버를 운영하던 시절에서 랜덤 대결, 인게임 스토어 및 친구 목록을 통해 수백만의 플레이어가 원활한 온라인 경험을 즐길 수 있는 정도로 성장했습니다. 이러한 일반적인 게임 구성요소로 인해 고성능 컴퓨팅과 대규모 웹 구현을 처리할 수 있는 정교한 분산 시스템이 개발되었습니다. 다음 '대박' 게임을 개발 및 제공하기 위해 치열하게 경쟁하고 소셜 네트워크에서 바이럴을 통한 선풍적인 인기를 얻으려면, 게임 개발자는 리소스를 신중하게 관리하여 핵심적인 게임 구성요소에 집중할 수 있어야 합니다. 클라우드 플랫폼을 과도하게 프로비저닝하거나 불필요한 복잡성에 집중하다 보면 게임 플레이 또는 그래픽 애셋에 집중해야 할 인적 및 재정 리소스가 크게 줄어들게 됩니다. 게임 개발자는 Google Cloud Platform을 활용하여 고유한 게임 환경을 구축하는 데 집중할 수 있으며, 동시에 분산 시스템 개발에 있어 Google의 방대한 경험을 활용할 수 있습니다.</p>
+<p>이 솔루션은 App Engine의 확장성과 안정성을 활용하여 완전히 관리되는 Compute Engine 게임 서버에서 플레이어를 게임 세션에 연결해 줍니다. App Engine은 사용자 프로필, 게임 랜덤 대결, 인게임 스토어, 소셜 커뮤니티 및 모바일 참여와 같은 필수 기능을 제공하는 데 사용할 수 있는 확장형 플랫폼입니다. 이상적으로는 온라인 게임의 모든 부분을 구동하는 데 App Engine을 활용할 수 있지만, 개발자는 일반적인 게임 엔진 및 SDK(소프트웨어 개발 키트) 실행을 위해 가상 머신에 액세스해야 하는 경우가 종종 있습니다. 또한 이 솔루션의 많은 부분을 순전히 App Engine을 구현하는 데만 활용할 수도 있습니다. 하지만 이 솔루션은 Compute Engine의 게임 전용 서버를 필요로 하는 사용 사례에 가장 큰 초점을 두고 있습니다.</p>
+<p>이 솔루션에서 사용하는 제품은 다음과 같습니다.</p>
+<ul>
+<li>Google App Engine
+<ul>
+<li>기본 그래픽 사용자 인터페이스를 구동하여 게임 및 사용자 설정을 제공</li>
+<li>랜덤 대결 및 서버 탐색 제공</li>
+<li>Compute Engine 인스턴스로 부하 분산</li>
+<li>클러스터를 유지하여 플레이어 게임 플레이 로드 처리</li>
+</ul>
+</li>
+<li>Google Compute Engine
+<ul>
+<li>맞춤 게임 서버 운영</li>
+</ul>
+</li>
+<li>Google BigQuery
+<ul>
+<li>대규모 게임 및 사용자 데이터세트 분석</li>
+</ul>
+</li>
+<li>Google Cloud Storage
+<ul>
+<li>게임 서버 바이너리 저장</li>
+<li>게임 클라이언트 바이너리 및 게임 애셋 분산</li>
+<li>백업 로그를 저장하여 BigQuery에서 처리 및 내부 데이터화</li>
+</ul>
+</li>
+</ul>
+<h2>시나리오</h2>
+<p>Dora는 잠깐의 여유 시간 동안 가장 좋아하는 온라인 게임인 Giant Robot Smash 5000을 몇 번 플레이하려고 합니다. 그녀는 노트북을 열고 게임을 실행한 후 맞춤 프로필에 로그인합니다.</p>
+<p>멀티플레이어 플레이를 시작하기 전에 Dora는 새 미사일 발사기가 게임 내 스토어에서 구입할 수 있게 된 것을 확인합니다. 몇 번의 클릭으로, 그녀는 Google 월렛을 통해 새로운 장비를 구입하고 이를 가장 좋아하는 대형 보행 로봇에 장착합니다.</p>
+<p>이제 Dora는 새 게임을 시작하고 다시 한 번 우주의 영웅이 될 준비가 되었습니다. 그녀는 온라인에 접속 중인 친구 몇 명과 함께 동맹을 맺습니다. 이 그룹은 가장 좋아하는 게임 모드가 실행되는 서버에 참여를 요청하고, 몇 초 안에 이들은 각자의 로봇 조종석에 앉아 다른 그룹의 도전에 응수하기 시작합니다.</p>
+<h2>솔루션 개요</h2>
+<p>아래 그림 1에 나와 있는 참조용 아키텍처 다이어그램은 Compute Engine과 App Engine을 통합하여 확장 가능하고 신뢰할 수 있는 온라인 게임 솔루션을 구축하는 방법에 대한 높은 수준의 개요를 보여줍니다.</p>
+<figure><img src="../images/articles/dedicated-2.png" alt="구현 세부정보">
+<figcaption>그림 1. 온라인 게임 솔루션을 위한 참조용 아키텍처 다이어그램</figcaption>
+</figure>
+<h2>제안된 온라인 게임 솔루션의 핵심 요소</h2>
+<ol>
+<li>게임 서버 선택</li>
+<li>플레이어의 게임 클라이언트가 게임 전용 서버에 연결</li>
+<li>인게임 요청 및 Google Compute Engine 인스턴스 상태 확인</li>
+<li>게임 서버 자동 확장</li>
+<li>분석 및 MapReduce를 위해 로그 저장</li>
+<li>Google BigQuery에서 대규모 사용자 및 게임 데이터세트 분석</li>
+</ol>
+<p>한 사용자가 지역 애플리케이션을 로드하거나 게임 웹사이트로 이동하여 가장 좋아하는 게임에서 플레이를 시작합니다. 처음 플레이하는 경우 Cloud Storage에서 클라이언트 바이너리와 게임 애셋을 모두 다운로드할 수 있습니다. 휴대기기와 개인용 컴퓨터의 게임 클라이언트가 다르지만 핵심적인 게임 기능은 모든 기기에 제공할 수 있습니다. 핵심 기능에는 사용자 프로필 업데이트, 플레이어 설정 관리 및 친구의 업적 확인 등이 있습니다. 웹사이트에 직접 서비스하거나 필요한 모든 정보에 액세스하기 위한 RESTful API를 제공함으로써 모든 기기에서 App Engine을 활용할 수 있습니다.</p>
+<p>다음 섹션에는 제안된 게임 솔루션(그림 1)의 각 핵심 구성요소가 더욱 자세하게 설명되어 있습니다.</p>
+<ol>
+<li><strong>게임 서버 선택</strong>
+<p>기본 인터페이스의 가장 중요한 요소 중 하나는 플레이어가 게임 서버에 참여하여 다른 플레이어와 상호작용할 수 있도록 하는 것입니다. 랜덤 대결은 동일한 지역에서 같은 게임 모드를 이용하는 플레이어를 서로 간에 연결해 주므로 게임 솔루션의 핵심적인 부분이 됩니다. 또한 이 솔루션은 검색, 성능 및 확장성 요구사항에 따라 모든 기능을 갖춘 서버 브라우저 및 검색 기능을 포함하도록 확장될 수도 있으며, 이때 Google Cloud SQL, Search API 또는 Datastore를 활용합니다.</p>
+</li>
+<li><strong>플레이어의 게임 클라이언트가 게임 전용 서버에 연결</strong>
+<p>플레이어가 참가할 서버를 선택하고 게임 클라이언트가 전용 서버의 IP 주소를 수신하면, 플레이어의 게임 클라이언트가 Compute Engine을 실행하는 전용 서버에 연결되고 인게임 애셋이 로드됩니다.</p>
+<p>Compute Engine 게임 서버는 지연 시간이 작은 클라이언트 서버 통신을 통한 모든 플레이어의 상호작용 처리를 담당합니다. 멀티플레이 게임 서버 설계에 대한 정보는 이 문서의 범위를 벗어납니다. 멀티플레이 게임 서버를 설계하는 경우에는 기존 게임 서버 및 소프트웨어 개발 키트를 활용하는 것이 좋습니다.</p>
+</li>
+<li><strong>인게임 요청 및 Compute Engine 인스턴스 상태 확인</strong>
+<p>Compute Engine에서 게임 전용 서버를 실행하는 경우 App Engine에 인게임 요청을 전송해야 할 수도 있습니다. 플레이어가 스토어에서 아이템을 구입했거나 맞춤 게임 구성을 새롭게 설정한 경우 App Engine은 이러한 정보에 대해 신뢰할 수 있는 소스로 작동할 수 있습니다. 또한 게임 전용 서버는 App Engine과 다시 통신하여 플레이어 점수, 통계 및 기록을 업데이트할 수 있습니다.</p>
+<p>게임 플레이가 완료되면 플레이어는 새로운 플레이를 위해 게임 서버에 대기하거나 서버 찾기로 리디렉션될 수 있습니다. 각 플레이 간에 플레이어의 점수, 게임 통계 및 인게임 스토어 추천 아이템이 표시될 수 있습니다. 예상치 않게 게임 전용 서버가 종료되는 경우, 게임 클라이언트는 이러한 이벤트를 처리하고 새 세션을 위해 플레이어를 서버 찾기로 리디렉션해야 합니다.</p>
+</li>
+<li><strong>게임 서버 자동 확장</strong>
+<p>자동 확장은 게임 플레이에 큰 영향을 미치지 않는 기본적인 백그라운드 작업 중 하나에 불과하지만 확장 가능하고 모든 기능을 갖춘 게임을 구축하기 위해서는 필수적인 요소입니다. 이 단계는 개발자가 App Engine에서 구현한 게임 전용 서버의 자동 확장 로직을 나타냅니다. 플레이어 수가 늘어남에 따라 가상 머신 관리 로직은 새 전용 서버를 만들어 늘어난 로드를 처리합니다. 마찬가지로 하루 동안 플레이어 수가 감소하는 경우에는 사용하지 않는 전용 서버가 종료되어 불필요한 비용을 절약할 수 있습니다.</p>
+</li>
+<li><strong>분석 및 MapReduce를 위해 로그 저장</strong>
+<p>서버 로그 및 MapReduce 파이프라인의 출력과 같은 파일을 저장하는 데 Google Cloud Storage를 권장합니다. Compute Engine의 게임 전용 서버에서는 플레이어 행동을 이해하고 소프트웨어 버그를 해결하기 위한 상당한 양의 유용한 데이터를 생성합니다. 이러한 데이터를 장기간 저장하려면 백그라운드 프로세스를 사용하여 Compute Engine 인스턴스에서 Google Cloud Storage로 파일을 정기적으로 업로드해야 합니다. 데이터를 변환하고 수집하는 데 MapReduce 파이프라인이 요구되는 경우 Google Cloud Storage에서 관련 파일을 다운로드할 수 있으며, 추가 Compute Engine 인스턴스에서 이를 처리할 수 있습니다. MapReduce 작업에서 얻은 출력 데이터는 Google Cloud Storage에 저장하여 추가적인 파이프라인에 입력 데이터로 사용되거나, Google BigQuery에서 내부 데이터화되거나, 보고서로 컴파일될 수 있습니다.</p>
+</li>
+<li><strong>Google BigQuery에서 대규모 사용자 및 게임 데이터세트 분석</strong>
+<p>실시간으로 방대한 데이터세트를 분석하기 위한 즉석 쿼리 도구인 Google BigQuery가 이 솔루션에 통합되었습니다. 게임 전용 서버에서 수백만 명의 활성 플레이어를 호스팅 중인 경우 수십억 행의 유용한 데이터가 생성될 수 있습니다. 이 데이터가 원본 게임 로그 원본인지 또는 MapReduce 출력 데이터인지와 상관없이, 사전 정의된 스키마를 사용하여 Google Cloud Storage에서 Google BigQuery로 내부 데이터화됩니다. 내부 데이터화가 완료된 후 SQL과 유사한 쿼리가 몇 초 내에 완료되며, 이 쿼리를 사용자 참여 및 게임 보상의 영향과 같은 유용한 정보를 얻기 위해 사용할 수 있습니다.</p>
+</li>
+</ol>
+<h2>구현 세부정보</h2>
+<p>다음 섹션에서는 모든 기능을 갖춘 게임 경험을 만들기 위해 필요한 플레이어 로드 분산 및 핵심 게임 기능 제공에 대한 구현 세부정보를 설명합니다. 이 솔루션은 기본적으로 게임 서버를 분산하여 실시간으로 플레이어 상호작용을 처리하는 핵심 시나리오에 초점을 맞추고 있습니다. 이 솔루션을 확장하여 전체 스토어 및 소셜 커뮤니티의 모델과 같은 추가 기능을 제공할 수는 있지만, 이는 이 문서의 범위를 벗어나는 내용입니다.</p>
+<p>다음 아키텍처 다이어그램(그림 2)은 확장 가능한 전용 서버 게임 솔루션을 구현하는 방법을 설명하는 개요를 나타냅니다.</p>
+<figure><img src="../images/articles/dedicated-1.png" alt="참조용 아키텍처 다이어그램">
+<figcaption>그림 2. 전용 서버 게임 솔루션을 위한 구현 세부정보</figcaption>
+</figure>
+<h2>가이드 및 구현 세부정보</h2>
+<ol>
+<li><strong>게임 서버 선택 요청</strong>
+<p>플레이어는 게임 서버 브라우저를 사용하여 서버 찾기 기준에 따른 추천 게임 서버 목록을 요청합니다. 이 요청은 Cloud Endpoints를 통해 제출되며, 이는 App Engine에 의해 구동되는 인증된 RESTful API를 제공합니다.</p>
+</li>
+<li><strong>게임 서버 찾기 로직</strong>
+<p>서버 찾기 로직은 사용자에게 추천 서버 목록을 제공합니다. 서버 찾기 요청의 규모와 빈도에 따라 이 솔루션을 구현하는 방식이 달라집니다. 한 가지 접근 방식은 App Engine 백그라운드 작업을 사용하여 각 데이터센터의 추천 서버 목록을 유지하고 빠른 검색이 가능하도록 이 목록을 Memcache에 저장하는 것입니다. 서버 추천을 위한 로직은 게임 유형에 따라 다릅니다. 예를 들어 일부 게임의 경우 지연 시간 최소화를 위해 로드를 최하로 유지해야 하는 반면, 서버 내에 다수의 사용자를 수용하여 충분한 수의 대전 상대를 확보해야 하는 게임도 있습니다. Memcache에서 고성능의 분산 메모리 개체 캐싱 시스템을 제공하기는 하지만 Memcache 삭제를 처리할 수 있도록 App Engine Datastore에도 추천 목록을 저장해야 합니다. 추천 목록 백그라운드 작업은 App Engine Cron 서비스에 의해 1분마다 실행되도록 예약할 수 있습니다. 플레이어는 보통 지연 시간이 가장 적은 서버에 연결되기를 원하므로 백그라운드 작업에서 각 지역의 추천 서버 목록을 유지하는 것이 중요합니다. 다른 서버 선택 기술을 통해 순차 순환 대기 방식으로 사용 가능한 서버에 연결하거나, 클라이언트가 지연 시간이 가장 적은 서버를 파악할 수 있도록 적합한 크기의 목록을 제공할 수도 있습니다. 더 복잡한 솔루션은 플레이어 수, 로드, 지연 시간 및 전체 서버 상태를 유지하는 작업을 포함할 수 있습니다. 또한 각 요청을 동적으로 쿼리하도록 솔루션을 설계할 수도 있습니다.</p>
+</li>
+<li><strong>게임 서버 찾기 결과 반환</strong>
+<p>게임 서버 찾기 결과가 클라이언트로 반환되면, 플레이어가 목록에서 선택하거나 클라이언트가 자동으로 가장 적합한 서버를 결정할 수 있습니다.</p>
+</li>
+<li><strong>게임 클라이언트가 게임 전용 서버에 연결</strong>
+<p>게임 클라이언트는 선택한 게임 전용 서버의 IP 주소로 연결을 시도합니다. 연결에 실패하거나 서버가 가득 찬 상태면 클라이언트는 서비스 중인 다른 서버에 연결을 시도하거나 플레이어를 서버 찾기로 안내합니다.</p>
+</li>
+<li><strong>게임 서버 인게임 요청</strong>
+<p>플레이어가 게임 전용 서버로 연결되면 서버는 플레이어의 모든 이벤트를 처리하고 현재 플레이에 참여 중인 다른 플레이어의 정보를 제공해야 합니다. 중요한 이벤트를 처리하고 플레이어 정보를 제공하여 모든 전용 서버에서 일관성 있는 게임 경험을 유지하는 데 App Engine을 활용할 수 있습니다. 예를 들어 플레이어가 맞춤 구성을 설정한 경우, App Engine 요청을 통해 플레이어의 구성에 대한 정보를 제공하고 플레이어가 구매 아이템에 액세스할 수 있도록 할 수 있습니다. 플레이어가 경험치를 얻고 중요한 인게임 이벤트가 발생함에 따라, 세부정보가 App Engine으로 전송되어 모든 플레이어의 정보를 유지할 수 있습니다. 인증된 Cloud Endpoints 요청과 제공된 RESTful API를 사용하면 게임 서버를 App Engine에 쉽게 연결할 수 있습니다.</p>
+</li>
+<li><strong>플레이어 구성 요청</strong>
+<p>플레이어가 아이템을 구매하거나 맞춤 캐릭터 구성을 만들 수 있는 게임인 경우, 이러한 정보는 신뢰할 수 있고 확장 가능한 데이터베이스에서 유지되어야 합니다. App Engine Datastore는 수백만 사용자에게 서비스를 제공하는 웹 애플리케이션에 따라 확장이 가능하도록 설계되었으며, 기반 Google Megastore 기술은 Google의 모든 제품과 서비스에서 활용되고 있습니다. App Engine Datastore는 플레이어 수가 수백에서 수백만으로 증가함에 따라 원활하게 확장되므로 모든 플레이어의 정보를 저장하는 데 좋습니다. 또한 성능을 향상하기 위해 자주 수행하는 App Engine Datastore 쿼리의 결과를 저장하는 데 Memcache를 활용할 수도 있습니다. Memcache는 제한된 리소스이므로 현명하게 사용하는 것이 좋습니다. 복잡한 SQL 쿼리가 필요하거나 다른 이유로 MySQL을 활용해야 하는 경우, Google Cloud SQL에서는 완전히 관리되며 가용성이 높은 서비스로서의 관계형 데이터베이스를 제공합니다. 비록 App Engine에 밀접하게 통합되어 있기는 하지만 Google Cloud SQL은 무제한으로 확장할 수 있도록 설계되지 않았으며, 실제 데이터베이스 성능을 이해하기 위해서는 로드 테스트를 진행하는 것이 좋습니다.</p>
+</li>
+<li><strong>중요한 인게임 이벤트 저장</strong>
+<p>플레이어가 인게임 활동 후 경험치를 습득하는 것과 같이 중요한 이벤트를 처리하고 저장하는 것은, 계속 플레이하고 싶고 참여도가 높은 게임을 만드는 데 있어 중요한 부분을 차지합니다. 플레이어 구성 요청과 마찬가지로 이러한 요청은 App Engine에서 처리하며, 핵심 정보는 App Engine Datastore에 저장할 수 있습니다. 이러한 두 요청의 유형에 있어 가장 큰 차이점은 모든 활성 플레이어에 대해 인게임 이벤트가 더 자주 발생할 수 있다는 것입니다. 예를 들어 플레이어 구성은 플레이 시작 시에만 가져올 수 있는 반면, 인게임 이벤트는 플레이어의 캐릭터가 경험치를 얻을 때마다 발생합니다. App Engine Datastore는 수백만 사용자로부터 발생하는 수천 건의 이벤트를 처리할 수 있도록 확장할 수 있지만, 잠재적인 확장성 문제를 예방하기 위해서는 사용자, 항목 그룹, NoSQL 및 최종 일관성을 이해해야 합니다. 이러한 주제에 대한 상세한 기술적인 논의는 App Engine 개발자 문서에서 찾을 수 있습니다.</p>
+</li>
+<li><strong>서버 상태 확인 프로세스</strong>
+<p>게임 전용 서버의 클러스터를 정상적인 상태로 유지하기 위해서는 각 서버의 통계와 상태를 지속적으로 확인하는 것이 매우 중요합니다. 이 경우에도 Cloud Endpoints를 활용하여 인증된 RESTful API를 제공할 수 있으며, 그러면 각 Compute Engine 인스턴스에서 실행되는 프로세스에서 사용 통계를 제공할 수 있게 됩니다. CPU 및 RAM 사용량과 같은 하드웨어 관련 정보와 함께 플레이어 평균 지연 시간 및 서버의 활성 플레이어 수와 같은 게임 관련 정보까지 제공받을 수 있습니다.</p>
+</li>
+<li><strong>서버 상태 및 통계 저장</strong>
+<p>각 Compute Engine 인스턴스에서 실행되는 상태 확인 프로세스에서는 많은 유용한 정보를 제공합니다. 서버 상태 확인 로직은 관련 데이터를 파싱하고 저장하는 데 필요합니다. 서버의 활성 플레이어 수 및 평균 지연 시간과 같이 자동 확장과 직접적으로 관련된 정보는 자동 확장 백엔드 프로세스에서 빠른 검색이 가능하도록 Memcache에서 캐싱되어야 합니다. 또한 Memcache 삭제에 대비할 수 있도록 중요한 수치를 모두 App Engine Datastore에 저장해야 합니다. 또한 이 정보가 분석 및 서버 기록 유지에도 관련이 있는 경우, 자동 확장과 독립적으로 활용되는 별도의 표에 모든 과거 수치를 저장하는 것이 좋습니다.</p>
+</li>
+<li><strong>게임 전용 서버 자동 확장 및 클러스터를 정상 상태로 유지</strong>
+<p>플레이어 로드에 따라 Compute Engine 리소스를 자동 확장하는 데에는 여러 가지 접근 방식이 있지만, 일반적인 방법은 App Engine Cron 서비스로 예약 작업이 1분마다 실행되도록 하는 것입니다. 이상적인 가상 머신의 수는 사전 정의된 예약 일정이나, 게임 서버에서 사용 가능한 위치의 수 또는 플레이어 지연 시간 분석을 통해 계산될 수 있습니다. 자동 확장에 입력해야 하는 중요한 다른 사항은 Memcache 또는 App Engine Datastore에서 최근 상태 확인 프로세스 데이터를 가져와 현재 정상적인 상태의 활성 머신 수를 확인하는 것입니다. 이상적인 게임 서버의 수와 현재 서버 수의 차이를 확인하여 인스턴스를 생성하거나 삭제할 수 있습니다. 또한 문제가 있는 서버를 모두 확인하여 이를 서버 선택에서 제외하고, 서버에 플레이어가 없음을 확인한 후에는 인스턴스를 삭제해야 합니다. 여러 Compute Engine 영역 사이에서 게임 서버를 마이그레이션해야 하는 경우 자동 확장 로직을 사용하여 새 영역에 인스턴스를 생성하고 기존 영역의 빈 인스턴스를 종료할 수 있습니다. 다음은 게임 서버 자동 확장의 개요를 높은 수준으로 보여줍니다. 확장 알고리즘을 구현할 때에는 신중을 기해야 하며, 오버슈트 및 응답이 안정되지 않는 것과 같은 문제를 방지하는 데 집중하여 구현해야 합니다. Compute Engine 서버는 시간에 따라 청구됩니다. 따라서 사용하지 않는 Compute Engine 인스턴스로 인한 불필요한 비용을 줄이려면 인스턴스를 지속적으로 생성하거나 삭제하지 말아야 합니다.</p>
+</li>
+<li><strong>게임 전용 서버 생성 및 삭제</strong>
+<p>게임 서버가 삭제되거나 생성되면 App Engine 작업 대기열에 작업이 추가됩니다. 별도의 백그라운드 작업은 서버 유지관리 작업을 가져오고 Compute Engine API 호출을 실행하는 역할을 합니다. 필요한 API 호출의 수가 단일 백엔드 제한을 초과하는 경우 백엔드를 더 추가할 수 있습니다. Compute Engine API 호출이 거의 없는 경우에는 예약 작업에서 서버 유지관리를 처리하여 App Engine 리소스 사용을 줄일 수 있습니다. 시스템에 백로그 발생 시 알림을 생성하도록 모든 서버 관리 작업에 타임스탬프를 추가하는 것이 좋습니다. 가져오기 대기열 대신 내보내기 대기열을 사용할 수 있으며, 로드 테스트를 실행하여 사용량이 많을 때 각 자동 확장 시스템이 반응하는 방식을 이해하는 것이 좋습니다. Google에서는 로드 테스트 서비스를 제공하지 않지만 일반적인 오픈소스 기술을 Compute Engine에서 실행하거나 타사 서비스를 활용하여 대량 로드 테스트를 진행할 수 있습니다.</p>
+</li>
+<li><strong>Google Cloud Storage에 로그 저장</strong>
+<p>모든 플레이어의 활동과 움직임을 기록하는 인게임 서버 로그에서 최종 게임 통계에 이르는 많은 로그 파일이 각 게임 서버에서 생성됩니다. 이러한 파일은 실행되는 백그라운드 프로세스를 사용하여 정기적인 간격으로 Google Cloud Storage로 복사될 수 있습니다. 중요한 데이터가 저장된 파일은 영구 디스크에 저장해야 합니다. 그러면 복사 프로세스가 완료되기 전에 인스턴스가 종료되는 경우 데이터가 손실되는 것을 방지할 수 있습니다. 또는 파일을 임시 디스크에 저장하여 비용을 줄일 수도 있지만, 인스턴스 종료되는 즉시 디스크가 삭제됩니다. 디스크 선택 여부에 상관없이, 모든 로그와 통계를 Google Cloud Storage에서 유지하도록 자동 복사 프로세스를 사용하는 것이 좋습니다.</p>
+</li>
+<li><strong>로그 파일 변환 및 처리</strong>
+<p>서버에서 원본 로그 데이터를 대량 수집한 후에 로그 파일을 정리하고 추가 데이터를 더해 다른 수준으로 집계해야 합니다. MapReduce 또는 추출, 변환 및 로드 도구를 활용하여 데이터를 생성할 수 있으며, 이러한 데이터는 스토어 아이템 추천과 같은 사용자 측 기능에 사용하거나 분석을 위해 Google BigQuery에서 내부 데이터화될 수 있습니다.</p>
+</li>
+<li><strong>보고 및 분석</strong>
+<p>Google BigQuery는 사용자 및 게임 정보를 포함한 대규모 데이터세트를 즉석에서 분석할 수 있게 해 주므로 게임 솔루션에서 중요한 역할을 합니다. 예를 들어 스토어 판매 또는 주말 경험치 2배와 같은 게임 플레이 보상이 사용자 유지 및 참여에 미치는 영향을 Google BigQuery를 사용하여 확인할 수 있습니다. 또한 Google BigQuery는 데이터 크기가 테라바이트와 수십억 행으로 증가해도 동일한 성능을 유지합니다.</p>
+</li>
+</ol>
+<h2>샘플 앱</h2>
+<p>이 솔루션의 개념을 높은 수준으로 보여주는 샘플 애플리케이션을 사용할 수 있으며, 작업 시 참조 자료로 활용할 수 있습니다. 샘플 애플리케이션의 핵심 기능은 다음과 같습니다.</p>
+<ul>
+<li>클라이언트가 App Engine에 게임 전용 서버 IP 주소를 쿼리</li>
+<li>클라이언트가 Compute Engine에서 실행되는 게임 서버에 연결하여 새 게임 시작</li>
+<li>관리자가 App Engine 관리 UI에서 게임을 생성 및 삭제할 수 있음</li>
+<li>Compute Engine 인스턴스에서 App Engine에 주기적으로 로드 수준을 보고</li>
+<li>관리자가 모든 게임 서버 Compute Engine 인스턴스의 로드 수준을 볼 수 있음</li>
+<li>클러스터가 최대 로드 기준을 초과하는 경우 App Engine에서 자동으로 새로운 인스턴스를 클러스터에 추가</li>
+</ul>
+<p><a href="https://github.com/GoogleCloudPlatform/solutions-load-balanced-gaming-server-on-google-compute-engine" target="_blank">Github</a>에서 소스를 얻어 보세요.</p>
+<h2>맺음말</h2>
+<p>이 솔루션은 개발자가 모든 기능을 갖춘 게임 경험을 제공하면서 수백만 명의 플레이어를 지원할 수 있도록 온라인 게임을 확장하는 방법을 보여줍니다. Google Cloud Platform의 여러 구성요소를 활용하면 개발자는 App Engine의 확장성과 안정성을 확보하는 한편, Compute Engine에서 업계 표준의 게임 서버를 운영할 수 있습니다. 이를 통해 게임 개발자는 실행, 반복 및 확장을 빠르게 수행하는 동시에 멋진 게임을 제작하는 데 집중할 수 있습니다.</p>
+</div>
+<div class="maia-col-3"><br>
+<img src="//www.google.com/images/icons/product/feedback-16.png" class="g-app-icon" alt=""> <a href="javascript:void(0);" class="google-feedback">이 문서에 대한 의견 보내기</a><br>
+<br>
+<img src="//www.google.com/images/icons/thirdparty/pdf-16.png" class="g-app-icon" alt=""> <a href="../../../files/articles/google-cloud_technical-article_dedicated-server.pdf" class="cp-pdf" onclick="javascript: _gaq.push(['_trackPageview', '../../../files/articles/google-cloud_technical-article_dedicated-server.pdf']);">PDF 다운로드</a></div>
+</div>
+</div>
+<script>
+(function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+</script><script src="//www.gstatic.com/feedback/api.js">
+</script><script>
+$('body').delegate('.google-feedback', 'click', function() {
+      userfeedback.api.startFeedback({'productId': '94614'});
+  });
+</script><!-- Scripts to include both on Goro + Devsite --><script>
+window.___gcfg = {
+     lang: ''
+   };
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+</script><!-- GTM implementation --><!-- Start dataLayer --><script>
+dataLayer = [{
+        'country': 'ko',
+        'region': 'japac',
+        'language': 'ko'
+      }];
+</script><!-- End dataLayer --><!-- Start Google Tag Manager --><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5CVQBG" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript> <script>
+(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-5CVQBG');
+</script><!-- End Google Tag Manager --><!-- Global JS scripts to load; path will depend on whether we're on devsite or Goro --><script src="/js/base.min.js">
+</script><!-- Retina loader; Do not load if partners page because we need to wait until the Angular app runs --><script>
+new lfl.system.RetinaLoader();
+</script><!-- Secondary right-side scroll-nav --><script>
+new lfl.ui.ScrollNav({});
+</script>
+</body>
+</html>

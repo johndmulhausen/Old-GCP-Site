@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html devsite="">
+<head>
+<title>Mobile Articles &amp; Mobile Development Guides — Google Cloud Platform</title>
+<meta name="description" content="Read technical articles on mobile solutions with Google Cloud Platform. Mobile specific articles cover application development, mobile backend and mobile gaming.">
+<meta name="hide_page_heading" value="true">
+<meta name="full_width" value="true">
+<meta name="top_category" value="developers">
+<meta name="subcategory" value="articles">
+<meta name="viewport" content="initial-scale=1, minimum-scale=1, width=device-width">
+<link rel="apple-touch-icon" href="//cloud.google.com/_static/images/apple-touch-icon.png">
+<link href="//fonts.googleapis.com/css?family=Open+Sans:400italic,300,400,600,700" rel="stylesheet">
+<link href="/css/default.css" rel="stylesheet"><!--[if lt IE 9]>
+    <link rel="stylesheet" media="screen" href='/c/cp-ie.css'>
+    <![endif]-->
+<script src="/js/floodlight.js">
+</script>
+</head>
+<body>
+<div id="maia-main" class="cp-article">
+<div class="maia-cols">
+<div class="maia-col-9">
+<div>
+<div style="float:right">
+<div class="g-plusone"></div>
+</div>
+<h1 class="title">Mobile Backend Starter: guía de la API</h1>
+</div>
+<div class="cp-article-tutorial">
+<h2>Presentación</h2>
+<p>La aplicación de ejemplo Mobile Backend Starter es una herramienta para crear tu propio backend en la nube en Google App Engine y para desarrollar aplicaciones Android que funcionen con ese backend. Este artículo es un estudio en detalle de la API de backend en la nube y de la API del cliente Android que la aplicación de ejemplo Mobile Backend Starter utiliza. La aplicación de ejemplo incluye fácil acceso al almacén de datos, consulta continua, mensajería de publicación o de suscripción (pub/sub) y modelo de seguridad.</p>
+<h2>Contenido</h2>
+<a href="#cbao">Información general de la API de backend en la nube</a><br>
+<a href="mobile-backend-starter-the-best-mix-of-baas-and-paas-1.html">Mobile Backend Starter: la mejor combinación de BaaS y PaaS</a><br>
+<a href="#dawcb">(A) Acceso al almacén de datos con la API de backend en la nube</a><br>
+<a class="indnt" href="#pdice">Introducción de datos a CloudEntity</a><br>
+<a class="indnt" href="#cep">Propiedades de CloudEntity</a><br>
+<a class="indnt" href="#sdt">Tipos de datos compatibles</a><br>
+<a class="indnt" href="#ecbc">Ejecución de CRUD con CloudBackend</a><br>
+<a class="indnt" href="#eqbcqaf">Ejecución de consultas con CloudQuery y con F</a><br>
+<a class="indnt" href="#roq">Restricciones aplicadas a las consultas</a><br>
+<a href="#adaacq">(B) Acceso asíncrono al almacén de datos y consulta continua</a><br>
+<a class="indnt" href="#acaq">CRUD y consulta asíncronos</a><br>
+<a class="indnt" href="#contqu">Consulta continua</a><br>
+<a class="indnt" href="#rocq">Restricciones aplicadas a la consulta continua</a><br>
+<a href="#psm">(C) Mensajería de publicación o de suscripción</a><br>
+<a class="indnt" href="#reascm">Recepción y envío de mensajes en la nube</a><br>
+<a class="indnt" href="#rom">Recepción de mensajes sin conexión</a><br>
+<a class="indnt" href="#bmta">Emisión de mensajes para actividades</a><br>
+<a href="#secmod">(D) Modelo de seguridad</a><br>
+<a class="indnt" href="#ciagaa">ID de cliente y autenticación de cuentas de Google</a><br>
+<a class="indnt" href="#acfce">Control de acceso para las entidades en la nube</a><br>
+<a class="indnt" href="#easysec">Seguridad fácil</a><br>
+<a href="#pdn">Notas para el desarrollo de producción</a><br>
+<a class="indnt" href="#packnames">Nombres de paquete</a><br>
+<a class="indnt" href="#extendbackend">Ampliación del backend</a><br>
+<a class="indnt" href="#locba">Limitaciones de CloudBackendActivity</a><br>
+<a class="indnt" href="#cqsub">Suscripción a la consulta continua</a><br>
+<a href="#conclusion">Conclusión</a>
+<h2><a name="cbao" id="cbao"></a>Información general de la API de backend en la nube</h2>
+<p>El primer artículo de esta serie de dos partes fue <a href="mobile-backend-starter-the-best-mix-of-baas-and-paas-1.html">Mobile Backend Starter: la mejor combinación de BaaS y PaaS</a>, en el que se explicaron las características y los conceptos generales de la aplicación de ejemplo Mobile Backend Starter y cómo empezar a usarla. Se incluyen instrucciones sobre cómo implementar el backend y configurar las características fundamentales con la aplicación de ejemplo. En este artículo de examina cada clase de la API de backend en la nube que se utiliza en la aplicación de ejemplo. Se describe cómo utilizarlas junto con las características fundamentales para crear tu propia aplicación cliente Android.</p>
+<p>A continuación presentamos las características principales y las clases compatibles que se incluyen en la API de backend en la nube. La "F" de la lista y del diagrama significa "filtro". Compacta el código todo lo posible, ya que la clase se puede utilizar muchas veces en una línea para redactar una consulta compleja.</p>
+<ul>
+<li>(A) Acceso al almacén de datos
+<ul>
+<li>CloudBackend</li>
+<li>CloudEntity</li>
+<li>CloudQuery</li>
+<li>F</li>
+</ul>
+</li>
+<li>(B) Acceso asíncrono al almacén de datos y consulta continua
+<ul>
+<li>CloudBackendAsync</li>
+</ul>
+</li>
+<li>(C) Mensajería de publicación o de suscripción (pub/sub)
+<ul>
+<li>CloudBackendMessaging</li>
+</ul>
+</li>
+<li>(D) Modelo de seguridad
+<ul>
+<li>CloudBackendActivity</li>
+</ul>
+</li>
+<li>Ejemplos
+<ul>
+<li>GuestbookActivity</li>
+<li>SocialTalkActivity<br></li>
+</ul>
+</li>
+</ul>
+<figure><img src="../images/articles/mobile-backend-starter-baas-paas/securitymodel.png" alt="">
+<figcaption>Figura 1. Diagrama de clases de la API de backend en la nube</figcaption>
+</figure>
+<h2><a name="dawcb" id="dawcb"></a>(A) Acceso al almacén de datos con la API de backend en la nube</h2>
+<p>La función fundamental de la API de backend en la nube es hacer que un subconjunto de características del <a href="https://developers.google.com/appengine/docs/java/datastore/overview">almacén de datos de App Engine</a> tenga acceso directo desde los clientes. No hace falta que escribas código del servidor para ejecutar operaciones de creación, de lectura, de actualización y de eliminación (CRUD) y consultas sobre el almacén de datos.</p>
+<figure><img src="../images/articles/mobile-backend-starter-baas-paas/api-classes.png" alt="">
+<figcaption>Figura 2. Clases de la API de backend en la nube</figcaption>
+</figure>
+<h3><a name="pdice" id="pdice"></a>Introducción de datos a CloudEntity</h3>
+<p>En la API de backend en la nube, la entidad del almacén de datos se representa con una clase llamada <span class="code">CloudEntity</span>. Para crear una nueva instancia de <span class="code">CloudEntity</span>, escribe el código de esta manera:</p>
+<pre>
+CloudEntity ce = new CloudEntity("MyAddressBook");
+ce.put("name", "John Smith");
+ce.put("label", "friends");
+ce.put("address", "1600 Amphitheatre Parkway, Mountain View, CA 94043");
+</pre>
+<p><span class="code">CloudEntity</span> es una clase de contenedor como java.util.Map. Para crear una nueva instancia, el código especifica el nombre de tipo "MyAddressBook" e introduce valores a las propiedades definidas por el usuario: nombre, etiqueta y dirección. El almacén de datos no tiene esquema. Esta situación se conoce también como esquema flexible. No hace falta que predefinas un esquema en el backend antes de almacenar entidades. Además, cada entidad de un tipo puede tener distintos conjuntos de propiedades.</p>
+<p>Para insertar <span class="code">CloudEntity</span> en el almacén de datos del backend, utiliza la clase <span class="code">CloudBackend</span>.</p>
+<pre>
+CloudBackend cb = new CloudBackend();
+cb.insert(ce);
+</pre>
+<p>Este código emite una solicitud HTTP para el backend que accede al almacén de datos para insertar la entidad. Analizaremos los detalles de las funciones de <span class="code">CloudBackend</span> más adelante en esta sección.</p>
+<h3><a name="cep" id="cep"></a>Propiedades de CloudEntity</h3>
+<p>Las propiedades de la clase CloudEntity se muestran en la tabla siguiente. Se puede acceder a cada propiedad a través de los métodos get y set, como en el caso de getKindName().</p>
+<table>
+<thead>
+<tr>
+<th style="width:25%;">Nombre de la propiedad</th>
+<th style="width:75%;">Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>kindName</td>
+<td>Nombre del tipo de entidad. Obligatoria.</td>
+</tr>
+<tr>
+<td>id</td>
+<td>ID de la entidad. Si no estableces un ID antes de la inserción, se generará un UUID de manera automática y aleatoria. O puedes especificar explícitamente un ID antes de la inserción. El ID de una entidad no se puede cambiar después.</td>
+</tr>
+<tr>
+<td>properties</td>
+<td>Una colección de propiedades definidas por el usuario. Se puede acceder a cada propiedad a través de métodos put(clave de cadena, valor del objeto), get(clave de cadena) y remove(clave de cadena).</td>
+</tr>
+<tr>
+<td>createdAt*</td>
+<td>La marca de tiempo de creación de la entidad.</td>
+</tr>
+<tr>
+<td>createdBy*</td>
+<td>La dirección de correo electrónico del usuario que ha creado la entidad.</td>
+</tr>
+<tr>
+<td>updatedAt*</td>
+<td>La marca de tiempo de la última actualización de la entidad.</td>
+</tr>
+<tr>
+<td>updatedBy*</td>
+<td>La dirección de correo electrónico del usuario que ha actualizado la entidad.</td>
+</tr>
+<tr>
+<td>owner*</td>
+<td>
+<p>ID del usuario que es propietario de la entidad. El ID de usuario es un ID único de una aplicación de ejemplo Mobile Backend Starter que se asigna de manera automática a cada cuenta de Google.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>* Estas propiedades se generan automáticamente en el backend y son de solo lectura. Si las utilizas con CloudQuery para filtrar o para ordenar, tienes que añadir un prefijo de guion bajo ("_") al nombre, como en "_createdAt", para diferenciarlas de las propiedades definidas por el usuario.</p>
+<h3><a name="sdt" id="sdt"></a>Tipos de datos compatibles</h3>
+<p>Los siguientes tipos de datos son compatibles con las propiedades definidas por el usuario. Cada entidad en la nube puede contener hasta aproximadamente 1 MB de datos.</p>
+<table>
+<thead>
+<tr>
+<th style="width:25%">Tipo de datos</th>
+<th style="width:75%">Nota</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>String</td>
+<td>Hasta 500 caracteres Unicode</td>
+</tr>
+<tr>
+<td>Integer</td>
+<td>Se convierte a BigDecimal al leer el valor del backend.</td>
+</tr>
+<tr>
+<td>Double/Float</td>
+<td>Se convierte a BigDecimal al leer el valor del backend.</td>
+</tr>
+<tr>
+<td>Boolean</td>
+<td>Con los valores "true" o "false"</td>
+</tr>
+<tr>
+<td>DateTime</td>
+<td>El objeto com.google.api.client.util.DateTime se convierte en una cadena al leer el valor del backend.</td>
+</tr>
+<tr>
+<td>List/Map</td>
+<td>El objeto java.util.List o java.util.Map que puede contener cadenas de más de 500 caracteres y elementos secundarios de List/Map. Los elementos no se indexan en el almacén de datos y no se pueden utilizar como una condición de filtrado o de ordenación de la consulta. Los objetos List/Map vacíos no se almacenan en el almacén de datos.</td>
+</tr>
+<tr>
+<td>null</td>
+<td>No es compatible. Si estableces "null" en una propiedad, no se almacena en el almacén de datos.</td>
+</tr>
+</tbody>
+</table>
+<h3><a name="ecbc" id="ecbc"></a>Ejecución de CRUD con CloudBackend</h3>
+<p>La clase <span class="code">CloudBackend</span> proporciona las operaciones CRUD y la función de consulta. Para utilizar <span class="code">CloudBackend</span>, crea una instancia tal como se indica a continuación:</p>
+<pre>
+&lt;...prepare for CloudEntity instance to insert...&gt;
+CloudBackend cb = new CloudBackend();
+cb.insert(cloudEntity);
+</pre>
+<p>Todos los métodos funcionan de manera síncrona. El subproceso de llamada se bloquea hasta que el backend ofrece una respuesta. Por lo tanto, no se puede llamar a los métodos directamente desde subprocesos de interfaz de usuario, como pueden ser los controladores de eventos de la clase <span class="code">Activity</span>. Utiliza la clase <span class="code">CloudBackendAsync</span> o AsyncTask/Thread. Analizaremos este punto más adelante.</p>
+<a href="#" name="ae658cbe34291edb447f83456aa93c066aa51fab" id="ae658cbe34291edb447f83456aa93c066aa51fab"></a><a href="#" name="4" id="4"></a>
+<table>
+<thead>
+<tr>
+<th style="width:40%;">
+<p>Método</p>
+</th>
+<th style="width:60%;">
+<p>Descripción</p>
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="code">insert(CloudEntity) update(CloudEntity) insertAll(List&lt;CloudEntity&gt;) updateAll(List&lt;CloudEntity&gt;)</td>
+<td>Si el ID no está especificado ni se encuentra en el almacén de datos, CloudEntity se inserta en el almacén de datos. Si el ID se encuentra en el almacén de datos, actualiza la clase CloudEntity existente. Las propiedades definidas por el usuario anulan las propiedades existentes.</td>
+</tr>
+<tr>
+<td class="code">delete(CloudEntity) deleteAll(List&lt;CloudEntity&gt;)</td>
+<td>Elimina la clase CloudEntity especificada del almacén de datos.</td>
+</tr>
+<tr>
+<td class="code">get(String, String) getAll(String, List&lt;String&gt;)</td>
+<td>Lee la clase CloudEntity del almacén de datos mediante la especificación de la propiedad kindName y del ID.</td>
+</tr>
+<tr>
+<td class="code">list(CloudQuery)</td>
+<td>Ejecuta una consulta en el almacén de datos para obtener objetos CloudEntity.</td>
+</tr>
+</tbody>
+</table>
+<p>Las clases de la API de backend en la nube no están protegidas contra los subprocesos. No llames a los métodos con varios subprocesos a la vez.</p>
+<h3><a name="eqbcqaf" id="eqbcqaf"></a>Ejecución de consultas con CloudQuery y con F</h3>
+<p>La clase CloudBackend proporciona el método list() para ejecutar una consulta en el almacén de datos para obtener objetos de CloudEntity, tal como se muestra en el siguiente código:</p>
+<pre>
+CloudQuery cq = new CloudQuery("MyAddressBook");
+cq.setFilter(F.and(F.eq("name", "John Smith"), F.eq("label", "friends")));
+cq.setLimit(50);
+List&lt;CloudEntity&gt; results = cloudBackend.list(cq);
+</pre>
+<p>Para ejecutar una consulta, tienes que crear una clase CloudQuery según se ha descrito antes. El objeto tiene los métodos siguientes:</p>
+<table>
+<thead>
+<tr>
+<th style="width:40%;">Método</th>
+<th style="width:60%;">Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="code">setFilter(F)</td>
+<td>Establece el filtrado en la consulta con el objeto F.</td>
+</tr>
+<tr>
+<td class="code">setSort(String, Order)</td>
+<td>Establece el nombre de la propiedad y el orden de clasificación, ASC o DESC.</td>
+</tr>
+<tr>
+<td class="code">setLimit(int)</td>
+<td>Establece el límite de números superior para el conjunto de resultados.</td>
+</tr>
+<tr>
+<td class="code">setScope(Scope)</td>
+<td>Establece el ámbito de la clase CloudQuery, que de manera predeterminada está establecido en Scope.PAST. Por lo tanto, la consulta se ejecuta solo en las entidades existentes del almacén de datos. Analizaremos los detalles de la consulta continua en una sección posterior.</td>
+</tr>
+</tbody>
+</table>
+<p>Si utilizas el método <span class="code">setFilter()</span>, puedes añadir condiciones de filtrado expresadas en un objeto F. F puede expresar un filtro para una sola propiedad, como name = "David Herrero"). Y también puede expresar un árbol más complejo de subfiltros, como con name = "David Herrero" y label = "amigos". Utiliza los siguientes métodos estáticos:</p>
+<table style="width:100%;">
+<thead>
+<tr>
+<th style="width:40%;">Método</th>
+<th style="width:60%;">Condición de filtrado</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>F.eq(String, Object)</td>
+<td>&lt;nombre de la propiedad&gt; = &lt;valor de la propiedad&gt;</td>
+</tr>
+<tr>
+<td>F.ne(String, Object)</td>
+<td>&lt;nombre de la propiedad&gt; <span class="bld">!</span>= &lt;valor de la propiedad&gt;</td>
+</tr>
+<tr>
+<td>F.lt(String, Object)</td>
+<td>&lt;nombre de la propiedad&gt; &lt; &lt;valor de la propiedad&gt;</td>
+</tr>
+<tr>
+<td>F.le(String, Object)</td>
+<td>&lt;nombre de la propiedad&gt; &lt;= &lt;valor de la propiedad&gt;</td>
+</tr>
+<tr>
+<td>F.gt(String, Object)</td>
+<td>&lt;nombre de la propiedad&gt; &gt; &lt;valor de la propiedad&gt;</td>
+</tr>
+<tr>
+<td>F.ge(String, Object)</td>
+<td>&lt;nombre de la propiedad&gt; &gt;= &lt;valor de la propiedad&gt;</td>
+</tr>
+<tr>
+<td>F.in(String, List&lt;Object&gt;)<br>
+F.in(String, Object...)</td>
+<td>&lt;nombre de la propiedad&gt; <span class="bld">IN</span> (&lt;valor de la propiedad&gt;, etc.)</td>
+</tr>
+<tr>
+<td>F.and(F...)</td>
+<td>F <span class="bld">AND</span> F <span class="bld">AND</span> ...</td>
+</tr>
+<tr>
+<td>F.or(F...)</td>
+<td>F <span class="bld">OR</span> F <span class="bld">OR</span> ...</td>
+</tr>
+</tbody>
+</table>
+<h3><a name="roq" id="roq"></a>Restricciones aplicadas a las consultas</h3>
+<p>For other forms, you get a DatastoreNeedIndexException from by the backend. To use a more complex form of queries, add the <a href="https://developers.google.com/appengine/docs/java/datastore/indexes#Index_Configuration">Index Configuration</a> on the backend. See <a href="https://developers.google.com/cloud/samples/mbs/">Mobile Backend Starter document</a> for details about customizing the backend. It is important to understand that the queries in Cloud Backend API have some restrictions derived from App Engine Datastore. By default, App Engine automatically creates an index for each user-defined property, with the exception of List/Map properties. This index handles the following forms of queries:</p>
+<ul>
+<li>Las consultas que solo utilizan un nombre de tipo sin filtros ni ordenación.</li>
+<li>Las consultas que solo utilizan filtros de igualdad (F.eq) en las propiedades indexadas sin ordenación.</li>
+<li>Las consultas que solo utilizan filtros de desigualdad, como F.lt o F.ge, en una propiedad indexada.</li>
+<li>Las consultas que utilizan un criterio de ordenación en una propiedad sin filtros.</li>
+</ul>
+<p>Para obtener más información sobre las consultas del almacén de datos de App Engine y sobre sus restricciones, consulta el documento <span class="c62"><a href="https://developers.google.com/appengine/docs/java/datastore/queries#Restrictions_on_Queries">Restricciones aplicadas a las consultas</a>. Para obtener más información sobre los precios de Google App Engine, consulta el documento <a href="https://developers.google.com/appengine/docs/billing">Aplicaciones de pago: elaboración de presupuestos para recursos, facturación de recursos y compra de recursos</a>.</span></p>
+<p><span class="c62">La consulta solo garantiza resultados con <a href="http://en.wikipedia.org/wiki/Eventual_consistency">coherencia eventual</a>. El estado más reciente de la clase CloudEntities no está garantizado. Además, la API de backend en la nube no admite la transacción en estos momentos. Para garantizar la <a href="http://en.wikipedia.org/wiki/Strong_consistency">coherencia fija</a> o para utilizar transacciones, personaliza el backend para que utilice un grupo de entidades y una consulta de antecedente. Consulta <a href="https://developers.google.com/appengine/docs/java/datastore/structuring_for_strong_consistency">Estructuración de los datos para la coherencia fija</a> y <a href="https://developers.google.com/appengine/docs/java/datastore/transactions">Transacciones</a> para obtener más información.</span></p>
+<h2><span class="c62"><a name="adaacq" id="adaacq"></a>(B) Acceso asíncrono al almacén de datos y consulta continua</span></h2>
+<p><span class="c62">Los métodos CRUD y de consulta de CloudBackend son todos síncronos y no se pueden utilizar directamente desde subprocesos de interfaz de usuario de Android. Utiliza la clase <span class="code">CloudBackendAsync</span> para utilizar estos métodos del subproceso de interfaz de usuario de Activity o de Fragment.</span></p>
+<h3><a name="acaq" id="acaq"></a>CRUD y consulta asíncronos</h3>
+<p><span class="code">CloudBackendAsync</span> es una subclase de <span class="code">CloudBackend</span> que proporciona versiones asíncronas de los métodos CRUD y de consulta. Por ejemplo, utiliza el código siguiente para ejecutar una consulta en <span class="code">Activity</span> con el subproceso de interfaz de usuario:</p>
+<pre>
+cloudBackendAsync.list(cloudQuery,
+  new CloudCallbackHandler&lt;List&lt;CloudEntity&gt;&gt;() {
+    @Override
+    public void onComplete(List&lt;CloudEntity&gt; results) {
+      &lt;update UI with the results&gt;
+    }
+});
+</pre>
+<p>El método <span class="code">list()</span> de <span class="code">CloudBackendAsync</span> toma el segundo parámetro, <span class="code">CloudCallbackHandler</span>, como controlador. Después de recibir el resultado del backend, se vuelve a llamar a este controlador en el subproceso de interfaz de usuario. Al igual que con el código analizado antes, puedes escribir una clase interna anónima que implemente el método <span class="code">onComplete() de CloudCallbackHandler()</span>. Puedes escribir código para actualizar los componentes de interfaz de usuario con los resultados. Si implementas el método <span class="code">onError()</span> en el controlador, también puedes obtener IOException del backend en caso de que haya errores o excepciones de red causados por el backend. En la siguiente lista encontrarás métodos disponibles en <span class="code">CloudBackendAsync</span>:</p>
+<table>
+<thead>
+<tr>
+<th style="width:50%;">Métodos</th>
+<th style="width:50%;">Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="code">insert(CloudEntity, CloudCallbackHandler)<br>
+insertAll(List&lt;CloudEntity&gt;, CloudCallbackHandler)<br>
+update(CloudEntity, CloudCallbackHandler)<br>
+updateAll(List&lt;CloudEntity&gt;, CloudCallbackHandler)<br>
+get(CloudEntity, CloudCallbackHandler)<br>
+getAll(List&lt;CloudEntity&gt;, CloudCallbackHandler)<br>
+delete(CloudEntity, CloudCallbackHandler)<br>
+deleteAll(List&lt;CloudEntity&gt;, CloudCallbackHandler)<br></td>
+<td>Ejecuta la operación CRUD de manera asíncrona. Los resultados se transfieren al controlador especificado. Si transfieres nulo como controlador, no se ejecuta la devolución de llamada.</td>
+</tr>
+<tr>
+<td class="code">list(CloudQuery, CloudCallbackHandler)</td>
+<td>Ejecuta una consulta asíncrona.</td>
+</tr>
+<tr>
+<td class="code">listByProperty(String, String, Op, Object, Order, int, Scope, CloudCallbackHandler)</td>
+<td>Ejecuta una consulta de manera asíncrona con filtrado y con ordenación según una sola propiedad. Puedes especificar un nombre de clase, un nombre de propiedad, un valor y una operación para el filtrado, un orden de clasificación, un recuento del límite, el ámbito y un controlador.</td>
+</tr>
+<tr>
+<td class="code">listByKind(String, String, Order, int, Scope, CloudCallbackHandler)</td>
+<td>Ejecuta una consulta de manera asíncrona con ordenación según una sola propiedad. Puedes especificar un nombre de clase, un nombre de propiedad y un orden para la clasificación, un recuento del límite, el ámbito y un controlador.</td>
+</tr>
+<tr>
+<td class="code">getLastEntityOfKind(String, Scope, CloudCallbackHandler)</td>
+<td>Solo lee la última entidad del tipo especificado.</td>
+</tr>
+</tbody>
+</table>
+<h3><a name="contqu" id="contqu"></a>Consulta continua</h3>
+<p>CloudBackendAsync es compatible con la consulta continua, que se <a href="http://en.wikipedia.org/wiki/Data-stream_management_system#Query_Processing">utiliza en el procesamiento de transmisión</a> para aplicar el filtrado en datos en constante cambio. Con la consulta continua en la API de backend en la nube, capturas actualizaciones en las entidades en la nube presentes en el backend y compartes al instante los cambios con todos los usuarios online. También la puedes usar para habilitar la programación basada en eventos y el vínculo de datos entre los componentes de interfaz de usuario y las entidades del backend. Este uso proporciona una experiencia de usuario en tiempo real e interactiva.</p>
+<p>Para utilizar la característica, establece Scope.FUTURE_AND_PAST o Scope.FUTURE en un objeto de CloudQuery con este código:</p>
+<pre>
+cloudQuery.setScope(<span class="bld">Scope.FUTURE_AND_PAST</span>);
+</pre>
+<p>El valor predeterminado del ámbito de CloudQuery está establecido en Scope.PAST. Este valor predeterminado quiere decir que la consulta solo se ejecuta con las entidades existentes en el almacén de datos como referencia. Al establecer Scope.FUTURE_AND_PAST, la consulta se vuelve a ejecutar cada vez que un usuario que comparte el mismo backend inserta o actualiza entidades que coinciden con la condición de consulta. Aquí tienes un ejemplo:</p>
+<pre>
+CloudQuery cq = new CloudQuery("MyAddressBook");
+cq.setFilter(F.eq("label", "friends"));
+<span class="bld">cq.setScope(Scope.FUTURE_AND_PAST);</span>
+List&lt;CloudEntity&gt; results = cloudBackendAsync.list(cq, handler);
+</pre>
+<p>Cuando se ejecuta esta consulta, el controlador recibe un resultado de consulta que se ejecuta en las entidades existentes. Cuando más tarde otro usuario inserta o actualiza una entidad que coincide con la condición label = "friends", el backend lo detecta y envía una notificación push a los clientes que han emitido la consulta mediante <span class="code">Scope.FUTURE_AND_PAST</span>. La consulta se ejecuta de nuevo automáticamente. El controlador recibe el resultado más reciente, que incluye inserciones o actualizaciones hechas por otros. A continuación tienes un ejemplo del código:</p>
+<pre>
+CloudEntity ce = new CloudEntity("MyAddressBook");
+ce.put("name", "Foo Bar");
+ce.put("label", "friends");
+cb.insert(ce);
+</pre>
+<p>Cuando estableces el ámbito de la consulta en Scope.FUTURE, la consulta recibe primero un resultado vacío. Se ofrecen resultados de la consulta cuando se ejecuta una inserción o una actualización que coincide.</p>
+<p>Puedes establecer la duración de la consulta continua. Solo tienes que establecer el valor de los segundos con el método <span class="code">CloudQuery#setSubscriptionDuration(int)</span>. De manera predeterminada, la consulta continua caduca en un plazo de 24 horas a partir de la última invocación explícita hecha por el cliente. Para eliminar las consultas continuas existentes, utiliza estos métodos en CloudBackendAsync:</p>
+<table>
+<tbody>
+<tr>
+<td class="code">unsubscribeFromQuery(String)</td>
+<td>Cancela la suscripción a una consulta continua especificada con queryId.</td>
+</tr>
+<tr>
+<td class="code">clearAllSubscription()</td>
+<td>Cancela la suscripción a todas las consultas continuas.</td>
+</tr>
+</tbody>
+</table>
+<p>También puedes eliminar manualmente todas las consultas continuas desde el enlace de configuración del backend móvil que hay en el menú de navegación de la Consola de administración de App Engine.</p>
+<p>Mobile Backend Starter implementa la consulta continua con una combinación de la <a href="https://developers.google.com/appengine/docs/java/prospectivesearch/">API de búsqueda prospectiva</a> y de la <a href="http://developer.android.com/google/gcm/index.html">mensajería en la nube de Google</a> en el backend. La condición de filtrado de CloudQuery se convierte en consultas de las suscripciones a la búsqueda prospectiva. En la Consola de administración de App Engine, si haces clic en el enlace de la búsqueda prospectiva del menú de navegación, verás el estado de las suscripciones. Todos los servicios subyacentes que la consulta continua utiliza tienen alta escalabilidad y disponibilidad, lo que quiere decir que puedes diseñar un sistema de gran tamaño que utilice miles de consultas continuas online.</p>
+<h3><a name="rocq" id="rocq"></a>Restricciones aplicadas a la consulta continua</h3>
+<p>En estos momentos la consulta continua en la propiedad de cadena solo es compatible con los filtros de igualdad (F.eq y F.ne).</p>
+<p>La API de búsqueda prospectiva es altamente escalable y es compatible con un gran número de suscripciones simultáneas, mientras que Google App Engine tiene un número máximo de suscripciones por aplicación. La cuota actual es de 10.000 suscripciones. El número de suscripciones actuales se puede supervisar en la página "Quota Details" (Detalles de cuota) de la Consola de administración de App Engine. Si tienes una aplicación que pudiera superar ese límite, ponte en contacto con nosotros a través del <a href="https://cloud.google.com/support/packages">programa de asistencia</a> para aumentar la cuota antes de que llegue al límite.</p>
+<p>La API de búsqueda prospectiva es una función experimental de App Engine. La consulta continua también es experimental y puede que su función, su compatibilidad y su disponibilidad varíen.</p>
+<h2><a name="psm" id="psm"></a>(C) Mensajería de publicación o de suscripción</h2>
+<p>La API de backend en la nube es compatible con la <a href="http://en.wikipedia.org/wiki/Publish%E2%80%93subscribe_pattern">mensajería pub/sub</a> a través de la clase <span class="code">CloudBackendMessaging</span>, que es una subclase de <span class="code">CloudBackendAsync</span>. La mensajería pub/sub es un patrón de arquitectura de software que te permite implementar fácilmente la emisión de mensajes 1:N entre editores (remitentes de mensajes) y suscriptores (destinatarios de mensajes).</p>
+<h3><a name="reascm" id="reascm"></a>Recepción y envío de mensajes en la nube</h3>
+<p>Para escribir una aplicación Android que ofrezca una sala de chat, puedes escribir el siguiente código en Activity para definir que Activity sea un suscriptor.</p>
+<pre>
+cloudBackendMessaging.<span class="bld">subscribeToCloudMessage("dog", handler)</span>;
+cloudBackendMessaging.<span class="bld">subscribeToCloudMessage("cat", handler)</span>;
+</pre>
+<p>El método <span class="code">subscribeToCloudMessage()</span> toma un TopicId como primer parámetro. <span class="code">TopicId</span> puede ser una cadena arbitraria que identifique a cualquier grupo de clientes en una sola aplicación. En el ejemplo anterior, "perro" se utiliza como un <span class="code">TopicId</span> para recibir todos los mensajes de chat relacionados con perros a través del controlador.</p>
+<p>Para enviar un mensaje desde Activity como editor, utiliza el siguiente código:</p>
+<pre>
+CloudEntity ce = cloudBackendMessaging.createCloudMessage("dog");
+ce.put("chatMessage", &lt;chat message typed by the user&gt;);
+cloudBackendMessaging.sendCloudMessage(ce);
+</pre>
+<p>Para crear un mensaje, utiliza el método <span class="code">createCloudMessage()</span> y transmite <span class="code">topicId</span> para recibir una clase <span class="code">CloudEntity</span> que representa el mensaje. A continuación, utiliza el método <span class="code">put()</span> para suministrar contenido al mensaje. Utiliza <span class="code">sendCloudMessage()</span> para enviar el mensaje a los suscriptores.</p>
+<p>En el código de suscriptor, puedes escribir el controlador que se transmite como segundo parámetro del método <span class="code">subscribeToCloudMessage()</span> de esta manera:</p>
+<pre>
+CloudCallbackHandler&lt;List&lt;CloudEntity&gt;&gt; handler =
+  new CloudCallbackHandler&lt;List&lt;CloudEntity&gt;&gt;() {
+    @Override
+    public void onComplete(List&lt;CloudEntity&gt; messages) {
+      &lt;update UI with the messages&gt;
+    }
+  };
+</pre>
+<p>Los mensajes recibidos se transmiten al método <span class="code">onComplete()</span> del controlador como una lista de <span class="code">CloudEntity</span>. Puedes escribir código para actualizar los componentes de interfaz de usuario con los mensajes. De esta manera, implementas una aplicación de chat en tiempo real con tan solo decenas de líneas de código.</p>
+<h3><a name="rom" id="rom"></a>Recepción de mensajes sin conexión</h3>
+<p>Después de llamar al método <span class="code">subscribeToCloudMessage()</span>, un cliente recibe todos los mensajes enviados después de la suscripción. A veces es recomendable recibir los mensajes anteriores enviados a un tema antes de que se añadiera la suscripción. Para recibirlos, especifica el tercer parámetro en la llamada al método:</p>
+<pre>
+cloudBackendMessaging.subscribeToCloudMessage("perro", handler, 50);
+</pre>
+<p>El cliente puede recibir hasta 50 mensajes pasados. Puedes recibir todos los mensajes que se pierdan debido a un fallo en la conectividad a la red o a la inactividad de la aplicación cliente.</p>
+<p>Mobile Backend Starter implementa la función de mensajería pub/sub mediante la consulta continua. Crea una consulta especial llamada <span class="code">_CloudMessages</span> en el almacén de datos que almacena todos los mensajes. Mediante la consulta continua, la clase <span class="code">CloudBackendMessaging</span> recibe todas las inserciones hechas en el tipo con el valor de topicId especificado. Todos los mensajes se conservan en el almacén de datos y se pueden recuperar más tarde, incluso si la aplicación cliente pierde la conexión a la red.</p>
+<p>El tipo <span class="code">_CloudMessages</span> dará lugar a una gran acumulación de mensajes. Cuando una aplicación genere una gran cantidad de mensajes, tienes que eliminar los mensajes antiguos del tipo.</p>
+<h3><a name="bmta" id="bmta"></a>Emisión de mensajes para actividades</h3>
+<p>La API de backend en la nube incluye la clase <span class="code">CloudBackendActivity</span>, que proporciona la característica de emisión de mensajes basada en la mensajería pub/sub. La clase <span class="code">GuestbookActivity</span> y <span class="code">SocialTalkActivity</span> son buenos ejemplos de esta clase.</p>
+<p>Para utilizar la clase <span class="code">CloudBackendActivity</span>, empieza por definir una subclase.</p>
+<span>public class GuestbookActivity <span class="bld">extends CloudBackendActivity</span> { ...</span>
+<p><span class="code">CloudBackendActivity</span> es una subclase, por lo que tu clase heredará todas las características de la clase Activity. Para heredar otras clases Activity, como <span class="code">ListActivity</span> o <span class="code">TabActivity</span>, modifica la definición de clase de <span class="code">CloudBackendActivity</span>.</p>
+<p>La clase <span class="code">CloudBackendActivity</span> tiene dos métodos para la emisión de mensajes: <span class="code">onBroadcastMessageReceived()</span> y <span class="code">createBroadcastMessage()</span>. En el ejemplo de GuestbookActivity, la clase anula el método para recibir mensajes de emisión y para mostrarlos como notificaciones del sistema.</p>
+<pre>
+@Override
+public void <span class="bld">onBroadcastMessageReceived</span>(List&lt;CloudEntity&gt; l) {
+  for (CloudEntity e : l) {
+    String message = (String) e.get("message");
+    int duration = Integer.parseInt((String) e.get("duration"));
+    Toast.makeText(this, message, duration).show();
+  }
+}
+</pre>
+<p>En el ejemplo anterior se recupera el mensaje de las propiedades y la <span class="bld">duración</span> del mensaje para mostrar una notificación del sistema con el mensaje sobre la duración. Puedes probar este código en la sección "Send Cloud Message" (Enviar mensaje en la nube) de la página de configuración "Mobile Backend" (Backend móvil) de la Consola de administración.</p>
+<p><img src="../images/articles/mobile-backend-starter-baas-paas/messaging.png" alt=""></p>
+<p>Inicia la aplicación de libro de visitas (Guestbook) y haz clic en <span class="bld">Send</span> (Enviar). A continuación se mostrará el mensaje en la aplicación como una notificación del sistema.</p>
+<p>La emisión no es más que otro mensaje en la nube que tiene <span class="code">topicId <span class="bld">_broadcast</span></span>. La clase <span class="code">CloudBackendActivity</span> se suscribe automáticamente a <span class="code">topicId</span> para recibir los mensajes enviados a <span class="code">topicId</span>.</p>
+<p>Utiliza el método <span class="code">createBroadcastMessage()</span> del backend dentro de la clase Activity para crear un mensaje de emisión. Luego llama al método <span class="code">sendCloudMessage()</span> del backend con el mensaje.</p>
+<pre>
+CloudEntity ce = cb.<span class="bld">createBroadcastMessage()</span>;
+ce.put("message", "my broadcast message");
+ce.put("duration", "5");
+cb.<span class="bld">sendCloudMessage(ce)</span>;
+</pre>
+<p>El código anterior envía el mensaje a todas las actividades que amplían <span class="code">CloudBackendActivity</span> y anulan el método <span class="code">onBroadcastMessageReceived()</span>. Las propiedades "message" y "duration" anteriores son solo algunos ejemplos de la aplicación de libro de visitas. Puedes colocar un conjunto arbitrario de propiedades en un mensaje de difusión.</p>
+<h2><a name="secmod" id="secmod"></a>(D) Modelo de seguridad</h2>
+<p>La API de backend en la nube tiene dos tipos de seguridad:</p>
+<ul>
+<li>el ID de cliente y la autenticación de cuentas de Google,</li>
+<li>el control de acceso para las entidades en la nube.</li>
+</ul>
+<h3><a name="ciagaa" id="ciagaa"></a>ID de cliente y autenticación de cuentas de Google</h3>
+<p>Como hemos mencionado en la sección de introducción, puedes establecer la configuración de autenticación o autorización en uno de estos tres modos:</p>
+<ul>
+<li><span class="bld">Locked down</span> (Bloqueado): se rechazan todas las solicitudes.</li>
+<li><span class="bld">Open</span> (Abierto): se permiten todas las solicitudes no autenticadas.</li>
+<li><span class="bld">Secured by client IDs</span> (Protegido con ID de cliente): solo se permiten las llamadas autenticadas con un ID de cliente y con una cuenta de Google.</li>
+</ul>
+<img src="../images/articles/mobile-backend-starter-baas-paas/authentication.png" alt="">
+<p>Utiliza el modo "Open" (Abierto) solo para el desarrollo. No lo dejes abierto durante mucho tiempo, ya que permite las llamadas no autenticadas. Cualquiera que conozca el ID del proyecto podría hacer una llamada en el backend. No utilices el modo "Open" (Abierto) en una producción.</p>
+<p>"Secured by Client IDs" (Protegido con ID de cliente) es el mejor modo para la producción. Solo permite las llamadas autenticadas que estén asociadas a las dos características siguientes:</p>
+<ul>
+<li>IDs de cliente registrados, que garantiza que el cliente Android lo haya creado tu entorno de desarrollo y que tenga la firma registrada.</li>
+<li>Cuenta de Google, que demuestra que Google ha autenticado al usuario de la solicitud.</li>
+</ul>
+<p>Todas las llamadas que se originen desde un cliente y que no tengan un ID de cliente o una cuenta de Google recibirán un aviso UnauthorizedException.</p>
+<p>De manera predeterminada, no todas las llamadas de las API de backend en la nube al backend están asociadas a datos de la cuenta de Google. Para transferir los datos de la cuenta de Google del usuario al backend en cada llamada, utiliza el método <span class="code">CloudBackend#setCredential()</span>. Este método también está disponible en las subclases <span class="code">CloudBackendAsync</span> y <span class="code">CloudBackendMessaging</span> para establecer un objeto <span class="code">GoogleAccountCredential</span> antes de llamar a las API de backend en la nube. A continuación tienes un ejemplo del código:</p>
+<pre>
+GoogleAccountCredential credential =
+  GoogleAccountCredential.usingAudience(this, "<span class="code">&lt;Web Client ID&gt;</span>");
+credential.setSelectedAccountName("<span class="code">&lt;Google Account Name&gt;</span>");
+cloudBackend.<span class="code">setCredential</span>(credential);
+</pre>
+<p>En el código anterior, el backend permite la llamada en modo protegido con ID de cliente. También establece automáticamente las propiedades createdBy/updatedBy/owner de la clase <span class="code">CloudEntity</span>. Para obtener más información acerca de cómo tu cliente crea un objeto <span class="code">GoogleAccountCredential</span> (por ejemplo, para que se muestre el cuadro de diálogo "AccountPicker" para seleccionar una cuenta), consulta el documento <a href="https://developers.google.com/appengine/docs/java/endpoints/consume_android#making-authenticated-calls">Realización de llamadas autenticadas</a> o el código fuente de la clase <span class="code">CloudBackendActivity</span>.</p>
+<h3><a name="acfce" id="acfce"></a>Control de acceso para las entidades en la nube</h3>
+<p>La API de backend en la nube proporciona una característica de control de acceso en CloudEntities. Para especificar el control de acceso, añade uno de los prefijos siguientes al nombre de tipo de las entidades.</p>
+<table style="width:100%;">
+<thead>
+<tr>
+<th style="width:25%;">Prefijo del nombre de tipo</th>
+<th style="width:25%;">Obtener/consultar</th>
+<th style="width:25%;">Actualizar/eliminar</th>
+<th style="width:25%;">Insertar</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>[private]</td>
+<td>Propietario de la entidad</td>
+<td>Propietario de la entidad</td>
+<td>Todo el mundo</td>
+</tr>
+<tr>
+<td>Sin prefijo</td>
+<td>Todo el mundo</td>
+<td>Propietario de la entidad</td>
+<td>Todo el mundo</td>
+</tr>
+<tr>
+<td>[public]</td>
+<td>Todo el mundo</td>
+<td>Todo el mundo</td>
+<td>Todo el mundo</td>
+</tr>
+</tbody>
+</table>
+<p>Un nombre de tipo "MyAddressBook" permite a todo el mundo, por ejemplo, insertar entidades y obtener o consultar las entidades existentes. Pero los únicos que pueden actualizar o eliminar cada entidad son los propietarios de la entidad. Si un usuario intenta actualizar la entidad de otra persona, el backend envía la excepción <span class="code">UnauthorizedException</span>. Si no quieres hacer que las entidades de MyAddressBook estén disponibles para que las lea todo el mundo, llama "[private]MyAddressBook" al nombre de tipo. Una consulta que se haga en el tipo para obtener una lista de todas las entidades obtiene solo las entidades propiedad del usuario que envía la consulta. Las entidades de tipos [private] se <a href="https://developers.google.com/appengine/docs/java/multitenancy/multitenancy#Creating_Namespaces_on_a_per_User_Basis">almacenan con otro espacio de nombres</a> para cada cuenta de Google, para garantizar así que los usuarios estén aislados.</p>
+<p>Si creas un tipo llamado "[public]Libro de visitas", todas las entidades están disponibles para que todo el mundo las lea y las modifique. Todas las entidades que no tengan un ID de usuario válido asignado a su propiedad owner también estarán disponibles para que todo el mundo las lea y las modifique.</p>
+<p>Todas las solicitudes y las respuestas que un cliente Android y el backend intercambian están protegidas con una conexión https. Pero los valores de CloudEntities no se encriptan en el almacenamiento del backend y no se deben utilizar para almacenar información confidencial como, por ejemplo, datos financieros o médicos. Además, puedes ampliar <a href="https://github.com/GoogleCloudPlatform/solutions-mobile-backend-starter-java">el código fuente del backend</a> para implementar la encriptación de tus datos antes de almacenarlos.</p>
+<h3><a name="easysec" id="easysec"></a>Seguridad fácil</h3>
+<p>Normalmente, para la seguridad de la autenticación del ID de cliente y de la cuenta de Google, tienes que escribir <a href="https://developers.google.com/appengine/docs/java/endpoints/consume_android#making-authenticated-calls">muchas líneas de código</a>. El código te permite hacer cosas como las siguientes:</p>
+<ul>
+<li>Crear un objeto de GoogleAccountCredential y transferirlo a CloudBackend.</li>
+<li>Mostrar el cuadro de diálogo AccountPicker para permitir que un usuario seleccione una cuenta de Google.</li>
+<li>Anular un método <span class="code">onActivityResult()</span> para recibir un resultado del cuadro de diálogo <span class="code">AccountPicker</span> y establecerlo en <span class="code">GoogleAccountCredential</span>.</li>
+<li>Guardar un nombre de cuenta seleccionado como <span class="code">SharedPreference</span> y recordarlo cuando la aplicación se vuelva a iniciar.</li>
+</ul>
+<p>La API de backend en la nube incluye una clase <span class="code">CloudBackendActivity</span> que hace todas estas tareas en tu nombre. Las clases <span class="code">GuestbookActivity</span> y <span class="code">SocialTalkActivity</span> son buenos ejemplos.</p>
+<p>Para utilizar <span class="code">CloudBackendActivity</span>, define una subclase:</p>
+<pre>
+public class GuestbookActivity <span class="bld">extends CloudBackendActivity</span> {
+...
+</pre>
+<p><span class="code">CloudBackendActivity</span> es una subclase de la clase <span class="code">Activity</span>. Tu clase hereda todas las características de la clase Activity. Para heredar otras clases <span class="code">Activity</span>, como <span class="code">ListActivity</span> o <span class="code">TabActivity</span>, modifica la definición de clase de <span class="code">CloudBackendActivity</span>.</p>
+<p>En tu clase <span class="code">Activity</span>, anula el método <span class="code">isAuthEnabled()</span> para ofrecer "true" como resultado y que así se puedan habilitar las características de seguridad.</p>
+<pre>
+@Override
+public boolean <span class="bld">isAuthEnabled()</span> {
+  return <span class="bld">true</span>;
+}
+</pre>
+<p>También puedes anular el método <span class="code">onPostCreate()</span> para ejecutar tareas de inicialización que utilicen la API de backend en la nube y características de seguridad. Estas API y características no están disponibles hasta que se llama a <span class="code">onPostCreate()</span>.</p>
+<pre>
+@Override
+protected void <span class="bld">onPostCreate()</span> {
+  super.onPostCreate();
+  &lt;do initialization&gt;
+}
+</pre>
+<p>Se llama al método después de que la clase <span class="code">Activity</span> muestre un cuadro de diálogo <span class="code">AccountPicker</span> al usuario y el usuario haga una selección o después de que <span class="code">Activity</span> obtenga el nombre de cuenta seleccionado antes en <span class="code">SharedPreference</span>. Se llama al método <span class="code">onPostCreate()</span> después de que se complete la autenticación del usuario y esté lista para utilizar todas las características de la API de backend en la nube. En el libro de visitas, por ejemplo, la aplicación de libro de visitas ejecuta la primera consulta para leer las entradas más recientes del libro de visitas y para mostrarlas en la interfaz de usuario.</p>
+<pre>
+@Override
+protected void <span class="bld">onPostCreate()</span> {
+  super.onPostCreate();
+  <span class="bld">getCloudBackend()</span>.listByKind("Guestbook", CloudEntity.PROP_CREATED_AT,
+    Order.DESC, 50, Scope.FUTURE_AND_PAST, handler);
+}
+</pre>
+<p>Para llamar a las API de backend en la nube que hay dentro de la clase Activity, utiliza <span class="code">getCloudBackend()</span> para obtener una instancia de CloudBackendMessaging. Llama también a las API asíncronas que <span class="code">CloudBackendAsync</span> ha implementado con <span class="code">CloudCallbackHandler</span>. Con esta llamada, los datos de la cuenta de Google se asocian a la solicitud y recibes todas las características de seguridad que se han descrito antes.</p>
+<h2><a name="pdn" id="pdn"></a>Notas para el desarrollo de producción</h2>
+<h3><a name="packnames" id="packnames"></a>Nombres de paquete</h3>
+<p>El cliente Android de Mobile Backend Starter tiene el nombre de paquete predeterminado "com.google.cloud.backend.android". Cuando desarrolles tu aplicación, edita el archivo AndroidManifest.xml para cambiar las siguientes partes según tu nombre de paquete:</p>
+<ul>
+<li>el atributo "package" del elemento "manifest" en la línea 3,</li>
+<li>el atributo "name" del elemento "permission" en la línea 12,</li>
+<li>el atributo "name" del elemento users-permission" en la línea 16,</li>
+<li>el atributo "name" del elemento "activity" en la línea 29 (cámbialo por tu Activity),</li>
+<li>el atributo "name" del elemento "service" en la línea 46 (copia también la clase <span class="code">GCMIntentService</span> en tu paquete).</li>
+</ul>
+<h3><a name="extendbackend" id="extendbackend"></a>Ampliación del backend</h3>
+<p>¿Necesitas más funciones del servidor? El código fuente del backend de Mobile Backend Starter se publica como software de código abierto. Puedes ampliar las funciones para crear tu propio backend. Consulta el archivo <a href="https://github.com/GoogleCloudPlatform/solutions-mobile-backend-starter-java">README.md de GitHub</a> para obtener más información.</p>
+<h3><a name="locba" id="locba"></a>Limitaciones de CloudBackendActivity</h3>
+<p>Las funciones del modelo de seguridad se muestran en estos momentos como una clase CloudBackendActivity que tienes que ampliar. Esto puede entrar en conflicto con otros marcos que te obliguen a ampliar otra clase Activity. Es posible que alguna implementación de Mobile Backend Starter que aparezca más adelante proporcione un fragmento o servicios para eliminar esta limitación.</p>
+<p>En consonancia con el buen diseño de Android, todas las solicitudes de red se ejecutan con independencia del subproceso de la interfaz de usuario. Sin embargo, las instancias de CloudCallbackHandler creadas en tu clase Activity se pierden cuando la configuración de la aplicación cambia; por ejemplo, si se gira la pantalla. Por lo tanto, el código de ejemplo del libro de visitas bloquea el modo vertical en la clase Activity. En vez de ampliar CloudBackendActivity y de llamar a getCloudBackend() para eliminar esta limitación, puedes crear instancias de CloudBackendMessaging mediante un fragmento con setRetainInstance(true). Es probable que tengas que hacer más tareas para extraer totalmente los enlaces de ciclo de vida como onPostCreate().</p>
+<h3><a name="cqsub" id="cqsub"></a>Suscripción a la consulta continua</h3>
+<p>La consulta continua crea "suscripciones", tanto en el cliente como en el servidor para observar los cambios en los datos de entidades y para volver a ejecutar consultas. Dentro de la biblioteca cliente Android de Mobile Backend Starter, cada suscripción se identifica con el "ID de consulta" generado a partir de una representación en cadena de la condición de consulta. Aunque tu aplicación Android tenga creadas varias instancias de Activity, una nueva consulta en la nueva instancia de Activity anula la antigua suscripción de consulta de modo que habrá un ID de consulta para cada consulta. No hace falta que llames a CloudBackendAsync#clearAllSubscription() cada vez que quieras borrar las suscripciones.</p>
+<h2><a name="conclusion" id="conclusion"></a>Conclusión</h2>
+<p>Puedes usar la API de backend en la nube de la aplicación de ejemplo Mobile Backend Starter para crear rápidamente aplicaciones para móviles con el backend. La API te permite acceder al almacén de datos de App Engine con un mínimo esfuerzo. También proporciona características útiles tales como llamadas asíncronas, consulta continua, mensajería pub/sub y modelo de seguridad. Si combinas estas características, puedes crear aplicaciones para móviles completas e interactivas con un backend y completarlas en poco tiempo.</p>
+</div>
+<!-- /maia-main --></div>
+<div class="maia-col-3"><br>
+<img src="//www.google.com/images/icons/product/feedback-16.png" class="g-app-icon" alt=""> <a href="javascript:void(0);" class="google-feedback">Comentarios sobre este documento</a><br>
+<br>
+<hr>
+<h4>Más información</h4>
+<ul>
+<li><a href="mobile-backend-starter.html">Información general</a></li>
+<li><a href="http://developers.google.com/cloud/samples/mbs/" target="popout">Empezar <img src="../images/ext-link-8px.png" height="8px" width="8px" alt=""></a></li>
+</ul>
+<hr></div>
+</div>
+</div>
+<script>
+(function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+</script><script src="//www.gstatic.com/feedback/api.js">
+</script><script>
+$('body').delegate('.google-feedback', 'click', function() {
+      userfeedback.api.startFeedback({'productId': '94614'});
+  });
+</script><!-- Scripts to include both on Goro + Devsite --><script>
+window.___gcfg = {
+     lang: ''
+   };
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+</script><!-- GTM implementation --><!-- Start dataLayer --><script>
+dataLayer = [{
+        'country': 'es',
+        'region': 'emea',
+        'language': 'es'
+      }];
+</script><!-- End dataLayer --><!-- Start Google Tag Manager --><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5CVQBG" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript> <script>
+(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-5CVQBG');
+</script><!-- End Google Tag Manager --><!-- Global JS scripts to load; path will depend on whether we're on devsite or Goro --><script src="/js/base.min.js">
+</script><!-- Retina loader; Do not load if partners page because we need to wait until the Angular app runs --><script>
+new lfl.system.RetinaLoader();
+</script><!-- Secondary right-side scroll-nav --><script>
+new lfl.ui.ScrollNav({});
+</script>
+</body>
+</html>

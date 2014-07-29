@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html devsite="">
+<head>
+<title>Web Apps Articles &amp; Tutorials — Google Cloud Platform</title>
+<meta name="description" content="Read technical articles about web applications and solutions with Google Cloud Platform, including auto scaling and how to manage complex applications in the cloud.">
+<meta name="hide_page_heading" value="true">
+<meta name="full_width" value="true">
+<meta name="top_category" value="developers">
+<meta name="subcategory" value="articles">
+<meta name="viewport" content="initial-scale=1, minimum-scale=1, width=device-width">
+<link rel="apple-touch-icon" href="//cloud.google.com/_static/images/apple-touch-icon.png">
+<link href="//fonts.googleapis.com/css?family=Open+Sans:400italic,300,400,600,700" rel="stylesheet">
+<link href="/css/default.css" rel="stylesheet"><!--[if lt IE 9]>
+    <link rel="stylesheet" media="screen" href='/c/cp-ie.css'>
+    <![endif]-->
+<script src="/js/floodlight.js">
+</script>
+</head>
+<body>
+<div id="maia-main" class="cp-article">
+<div class="maia-cols">
+<div class="maia-col-9">
+<div>
+<div style="float:right">
+<div class="g-plusone"></div>
+</div>
+<h1 class="title">App Engine Memcache 모범 사례</h1>
+</div>
+<div class="cp-article-tutorial">
+<h2>스레드 안전, 성능 및 코드 마이그레이션을 위한 참고사항</h2>
+<p>이 문서는 Google App Engine Memcache 기능을 사용하기 위한 몇 가지 권장사항을 간략하게 설명합니다. 주로 다루게 되는 주제는 동시 실행, 성능 및 마이그레이션입니다. Memcache를 사용 중인 개발자는 코드 보완 시 위험 요소와 고려사항에 대해 숙지하는 것이 좋습니다.</p>
+<h2>소개</h2>
+<p>Memcache는 메모리 내 임시 저장소를 제공하는 App Engine 기능으로서, Google Cloud Datastore와 같은 일부 영구 저장소 형식에 의해 백업되는 데이터의 빠른 검색을 위한 캐시로 제공됩니다. Memcache는 읽을 수 있지만 수정할 수 없는 블로그, 뉴스 피드 및 기타 콘텐츠와 같은 게시된 데이터를 캐싱하는 경우에 사용하는 것이 가장 좋습니다. Memcache에 저장된 데이터는 언제든지 삭제될 수 있으므로 항목의 존재 여부에 의존하지 않는 방식으로 애플리케이션을 구조화해야 합니다. Memcache는 동일한 데이터에 액세스하는 여러 원격 클라이언트로 동시 요청을 전달할 수 있습니다. 따라서 데이터 일관성을 염두에 두어야 합니다. 조회율을 비롯한 Memcache 통계는 App Engine 콘솔에 표시되며, 성능 최적화에 도움이 될 수 있습니다.</p>
+<p>Memcache 서비스에는 <a href="https://developers.google.com/appengine/docs/adminconsole/memcache?hl=en">공유 및 전용</a>이라는 두 가지 등급이 있습니다. 공유 Memcache는 무료로 제공되는 최선형 서비스로서, 이 서비스로 저장되는 데이터는 언제든지 삭제될 수 있습니다. 전용 Memcache는 유료 서비스로서 애플리케이션의 메모리를 보관할 수 있도록 해 줍니다. 이를 통해 개발자는 좀 더 예측 가능한 수준의 서비스를 제공받을 수 있습니다. 하지만 캐시가 가득 차면 키가 삭제되므로 Memcache에 예약된 공간보다 더 많은 데이터를 저장해야 하는 경우에는 데이터가 삭제될 수 있습니다. 또한 정기 또는 예정되지 않은 유지보수로 인해 Memcache 서비스가 다시 시작되는 경우에도 데이터가 제거될 수 있습니다. API 서명 및 사용은 공유 및 전용 Memcache 모두 동일합니다. 사용 방식에 있어 차이점은 App Engine 관리 콘솔에서 구성이 서로 다르다는 점입니다. 전용 Memcache의 경우 애플리케이션에 특정한 양의 메모리를 할당할 수 있습니다.</p>
+<h3>가정</h3>
+<p>이 문서는 개발자가 지원되는 언어인 Python, 자바, Go 또는 PHP 중 하나로 프로그래밍하는 것을 비롯하여 App Engine에 대한 기본 지식을 보유하고 있다고 가정하며, 문서의 예제는 Python으로 제공됩니다. 다른 지원 언어로 제공되는 Memcache Python API 소개 문서의 링크는 <a href="#h.hcpwxlh68lnh">추가 리소스</a> 섹션에 나와 있습니다.</p>
+<h2>목차</h2>
+<p><a href="#h.jwc0hny6a890">코드 복잡도 및 동시 실행</a><br>
+<a class="indnt" href="#h.fwyqb8g2zy0t">개요</a><br>
+<a class="indnt" href="#h.wi5fzzzah4gw">세부정보/논의</a><br>
+<a class="indnt" href="#h.sg7rpjnv4o06">권장사항</a><br>
+<a href="#h.uz3c4sf9ikok">데이터 직렬화 및 마이그레이션</a><br>
+<a class="indnt" href="#h.gwwz72j6awlr">개요</a><br>
+<a class="indnt" href="#h.d9xvsqr5m6ay">세부정보/논의</a><br>
+<a class="indnt" href="#h.byozlhots0jm">권장사항</a><br>
+<a class="indnt" href="#h.qqajkpqh73lf">예제</a><br>
+<a href="#h.s2hkym9v8ah7">기타 권장사항</a><br>
+<a class="indnt" href="#h.wienob6xccso">Memcache API 오류를 적절하게 해결</a><br>
+<a class="indnt" href="#h.oh5pu6mleh70">가능한 경우 일괄 함수 사용</a><br>
+<a class="indnt" href="#h.dvl6r64mnvyr">키스페이스에 로드 분산</a><br>
+<a href="#h.4w4l8tnb9s7a">추가 리소스</a></p>
+<h2><a name="h.jwc0hny6a890" id="h.jwc0hny6a890"></a>코드 복잡도 및 동시 실행</h2>
+<h3><a name="h.fwyqb8g2zy0t" id="h.fwyqb8g2zy0t"></a>개요</h3>
+<p>Memcache는 Datastore 또는 CloudSQL에 보관된 데이터를 캐싱하는 데 유용하게 활용할 수 있습니다. 하지만 경우에 따라 Memcache가 영구 데이터 저장소에서 작성 및 수정된 애플리케이션 데이터와 동기화를 유지하도록 코드를 작성하는 것이 어려울 수도 있습니다. 이 섹션에는 동시 액세스의 잠재적인 위험 요소를 방지하기 위해 코드 복잡도를 처리하는 과정에서 얻은 몇 가지 권장사항을 모아 두었습니다.</p>
+<ul class="c26 lst-kix_v1ggjnnvcueh-0 start">
+<li>Memcache와 데이터 저장소 간에는 일관성 문제가 발생할 위험이 없기 때문에 데이터가 읽기 전용인 경우 Memcache를 사용하는 것이 더 편리합니다.</li>
+<li>읽고 수정할 수 있는 데이터에 Memcache를 사용하는 경우 Python NDB API를 사용하세요. NDB API 플랫폼 코드에서 동시 액세스 조정 및 오류 상태를 확실하게 처리하므로 이를 권장합니다. 또한 이에 따라 애플리케이션 코드를 단순화할 수도 있습니다.</li>
+</ul>
+<h3><a name="h.wi5fzzzah4gw" id="h.wi5fzzzah4gw"></a>세부정보/논의</h3>
+<p>읽기 전용 데이터는 Memcache에 저장하는 것이 가장 좋습니다. 사용 사례로는 블로그, RSS 피드 및 읽을 수 있지만 수정할 수 없는 기타 게시된 데이터를 제공하는 경우를 예로 들 수 있습니다.</p>
+<p>Memcache는 여러 프론트엔드 인스턴스 및 요청에 의해 공유되는 글로벌 캐시 서비스입니다. 애플리케이션 로직에서 여러 클라이언트에 의해 업데이트되는 공유 데이터에 읽기 일관성을 요구하는 경우 동시 실행 제어가 필요합니다. 관계형 데이터베이스 또는 Google Cloud Datastore와 같은 트랜잭션 데이터 소스는 여러 클라이언트의 동시 액세스를 조정하지만, Memcache는 트랜잭션 데이터 소스가 아닙니다. 이 점이 Memcache 사용 시 숙지해야 할 중요한 사항입니다. 두 클라이언트가 Memcache에 있는 동일한 데이터를 동시에 읽고 수정할 가능성이 있으며, 그 결과 저장된 데이터가 잘못될 수도 있습니다. 반대로 애플리케이션 로직에서 공유 데이터에 읽기 일관성을 요구하지 않는 경우 별도의 코드를 사용하여 동시 요청을 조정할 필요가 없습니다. 문서 액세스를 위해 타임스탬프를 업데이트하는 경우를 한 예로 들 수 있습니다. 두 클라이언트가 마지막으로 액세스한 날짜를 동시에 업데이트하려는 경우 더 나중에 업데이트한 클라이언트의 날짜가 적용됩니다. 이러한 결과는 쉽게 예상할 수 있습니다.</p>
+<p>단순한 로컬 실행 환경의 상황에서 공유 데이터에 대한 동시 액세스 문제를 해결하는 한 가지 접근 방식은 스레드를 동기화하여 중요한 부분에서 한 번에 하나의 스레드만 실행되도록 하는 것입니다. App Engine을 사용하면 여러 인스턴스에서 코드를 실행하는 상황에서 '비교 및 설정'(<span class="code">Client.cas()</span>) 함수를 사용하여 동시 액세스를 조정할 수 있습니다. 하지만 이러한 함수 유형의 단점은 실패 시 오류를 처리하고 다시 시도하도록 애플리케이션이 준비되어야 한다는 점입니다.</p>
+<p>동시 실행 문제를 감지하는 것은 쉽지 않습니다. 보통 이러한 문제는 다수의 사용자가 애플리케이션을 로드할 때까지 나타나지 않습니다.</p>
+<h3><a name="h.sg7rpjnv4o06" id="h.sg7rpjnv4o06"></a>권장사항</h3>
+<p><span class="code">incr()</span> 및 <span class="code">decr()</span> 함수는 증가 및 감소 작업의 개별 실행 시 제공됩니다. 가능한 경우 <span class="code">incr()</span>, <span class="code">decr()</span>을 비롯한 개별 Memcache 함수를 사용하고, 동시 액세스를 조율에는 <span class="code">cas()</span> 함수를 사용합니다. Google Cloud Datastore에서 읽기 및 쓰기를 최적화하기 위해 애플리케이션에서 Memcache를 사용하는 경우 Python NDB API를 사용합니다.</p>
+<h2><a name="h.uz3c4sf9ikok" id="h.uz3c4sf9ikok"></a>데이터 직렬화 및 마이그레이션</h2>
+<h3><a name="h.gwwz72j6awlr" id="h.gwwz72j6awlr"></a>개요</h3>
+<p>App Engine에는 시스템 중단이나 오류 없이 애플리케이션에 업그레이드를 원활하게 배포하는 데 필요한 도구가 기본적으로 포함되어 있습니다. 하지만 마이그레이션은 신중하게 계획해야 합니다.</p>
+<p>App Engine Memcache 기능에는 각각 유사하면서도 약간씩 다른 특징을 가진 언어별 라이브러리가 포함되어 있습니다. 대부분의 경우 Memcache 라이브러리는 데이터 직렬화를 투명한 방식으로 처리합니다. 이 문서에서는 Memcache에 대한 요점을 설명하기 위해 Python이 사용되었습니다. 하지만 Python은 App Engine에서 지원하는 네 가지 언어 중 하나에 불과합니다. 다른 지원 언어의 Memcache API는 유사하지만 약간의 차이점이 있습니다. Python의 <a href="http://docs.python.org/2/library/pickle.html">피클링</a>과 같은 언어별 직렬화 기능은 대부분의 Python 클래스의 개체를 직렬화하는 데 사용합니다. 자바에는 데이터 값을 바이트 배열로 처리하는 JCache API 구현 기능이 제공됩니다. 따라서 자바 애플리케이션 개발자는 애플리케이션 수준에서의 개체 직렬화 및 역직렬화를 위한 코드를 작성해야 합니다. 반대로 다른 경우에는 protobuf로 언어 독립형 직렬화를 사용합니다. 특히 protobuf는 Python의 db.Model을 확장하는 클래스에 활용됩니다.</p>
+<p>저장된 개체의 버전을 변경하거나 새 API 버전으로 업그레이드하면 역직렬화 처리 방식에 따라 오류가 발생할 수 있습니다. 새 코드 배포 시 사용자에게 원활한 경험을 제공하기 위해 애플리케이션 코드가 오류를 적절하게 처리할 수 있도록 준비되어 있어야 합니다.</p>
+<h3><a name="h.d9xvsqr5m6ay" id="h.d9xvsqr5m6ay"></a>세부정보/논의</h3>
+<p>새 코드를 배포할 때는 직렬화된 기존 개체의 여러 형식을 역직렬화를 테스트해야 합니다. App Engine은 Python 2.5로 출시되었으며 나중에 2.7로 업그레이드되었습니다. 피클링이라고 불리는 Python 개체 직렬화의 오류는 이러한 사항을 테스트하지 않은 애플리케이션에서 마이그레이션 문제의 원인이었습니다. Python 2.5 개체는 피클링된 Python 개체로 저장되었고, 코드는 Python 2.7로 업그레이드되었으며, 개체는 Memcache에서 검색되었습니다. 하지만 App Engine Python 2.7 런타임에서 Python 2.5 개체를 마셜링 취소('피클링 취소')할 수 없었고 이로 인해 오류가 발생했습니다. 이러한 예외가 포럼에서 자주 논의되는 주제였습니다.</p>
+<p>Python의 한 버전에서 다른 버전으로 마이그레이션하는 문제 외에 다른 언어의 직렬화에서도 유사한 문제가 발생할 수 있습니다. 또한 서로 다른 버전의 애플리케이션 코드 간에 마이그레이션하는 경우 동일한 문제가 발생할 수도 있습니다. 개체가 이전 구조로 직렬화된 클래스를 변경할 때는 항상 테스트를 수행해야 합니다.</p>
+<p>다음과 같은 네 가지 방법으로 이러한 문제를 피할 수 있습니다. (1) 개체 변경 시 호환성을 고려합니다. (2) 오류를 올바르게 처리합니다. (3) 새 코드를 배포하기 전에 캐시를 비웁니다. (4) 네임스페이스를 사용하여 멀티테넌트와 유사한 방법으로 데이터를 격리합니다.</p>
+<p>애플리케이션에서 여러 언어로 제작된 모듈을 사용하는 경우, 250바이트 이하의 간단한 문자열 키를 사용하여 Memcache에서 키로 항목을 검색할 때 호환성 문제가 발성하는 것을 방지합니다.</p>
+<h3><a name="h.byozlhots0jm" id="h.byozlhots0jm"></a>권장사항</h3>
+<p>호환성을 고려하여 개체 구조를 변경하고, Memcache에서 개체를 읽을 때 오류를 올바르게 처리합니다. 또한 주요한 변경사항이 포함된 새 코드를 배포할 때 Memcache를 비웁니다.</p>
+<h3><a name="h.qqajkpqh73lf" id="h.qqajkpqh73lf"></a>예제</h3>
+<p>다음 예제는 개체가 Memcache에 저장된 경우 코드를 마이그레이션할 때 발생할 수 있는 문제를 보여줍니다. 아래 코드는 Person 클래스와 get_or_add_person 함수를 정의하여 Memcache에서 특정 이름으로 사용자를 검색하거나, Memcache에 사용자를 추가합니다.</p>
+<pre>
+<span style="color:#245dc1">class</span> Person(db.Model):
+  name = db.StringProperty(required=True)
+
+<span style="color:#245dc1">def</span> get_or_add_person(name):
+  person = memcache.get(name)
+  <span style="color:#245dc1">if</span> person <span style="color:#245dc1">is</span> None:
+    person = Person(name = name)
+    memcache.add(name, person)
+  <span style="color:#245dc1">else</span>:
+    logging.info('Found in cache: ' + name)
+  <span style="color:#245dc1">return</span> person
+</pre>
+<p>제작 시 이 코드를 한 동안 실행한 후에는 Person 클래스를 위한 새 userid 입력란이 추가됩니다. 다음 코드가 변경사항을 보여줍니다.</p>
+<pre>
+<span style="color:#245dc1">class</span> Person(db.Model):
+  name = db.StringProperty(required=True)
+  userid = db.StringProperty(required=True)
+<span style="color:#245dc1">def</span> get_or_add_person(name, userid):
+  person = memcache.get(name)
+  <span style="color:#245dc1">if</span> person <span style="color:#245dc1">is</span> None:
+    person = Person(name = name, userid = userid)
+    memcache.add(name, person)
+  <span style="color:#245dc1">else</span>:
+    logging.info('Found in cache: ' + name + ', userid: ' + person.userid)
+  <span style="color:#245dc1">return</span> person
+</pre>
+<p>업그레이드에서 발생하는 문제는 기존 스키마가 포함된 개체가 Memcache에 저장되었고, 이 개체가 필수 <span class="code">userid</span> 입력란이 있는 새로운 개체 구조와 호환되지 않는다는 점입니다. 테스트를 완료하면 Memcache 서비스에서 <span class="code">Person</span> 개체를 기존 구조로 정상적으로 마셜링 취소합니다. 새 <span class="code">userid</span> 입력란이 필수이기 때문에 기존 개체가 정상적으로 마셜링 취소된다는 것은 놀라운 일입니다. 일반적으로 테스트 없이 코드를 마이그레이션하는 경우 이러한 유형의 동작을 신뢰해서는 안 됩니다. 하지만 문제는 <span class="code">person.userid</span> 입력란을 참조하여 오류를 발생시킨 로그 구문에 의해 야기되었습니다. 콘솔에서 Memcache를 비운 후에는 더 이상 오류가 발생하지 않았습니다.</p>
+<p>자바는 다소 다르지만 동일한 원칙이 적용됩니다. 자바 직렬화에서의 권장사항은 직렬화된 개체에 <span class="code">serialVersionUID</span> 값을 사용하는 것입니다. 그러면 애플리케이션 프로그래머가 기존 형식을 역직렬화할 때 오류를 명확히 파악할 수 있으며, 역직렬화를 맞춤설정할 수 있는 기회를 얻을 수 있습니다.</p>
+<h2><a name="h.s2hkym9v8ah7" id="h.s2hkym9v8ah7"></a>기타 권장사항</h2>
+<p>몇 가지 다른 권장사항 또한 이 섹션에서 다룹니다.</p>
+<h3><a name="h.wienob6xccso" id="h.wienob6xccso"></a>Memcache API 문제를 적절하게 처리</h3>
+<p>코드가 계속해서 올바르게 작동하도록 하려면 Memcache 오류를 올바르게 처리해야 합니다. 데이터를 찾을 수 없을 때 애플리케이션에서 Google Cloud Datastore에 저장된 데이터로 대체할 수도 있지만 이때 Memcache에 저장된 값이 올바른지 확인해야 합니다. Memcache를 정상적으로 업데이트하지 못하면 데이터가 오래된 상태로 남아 있게 되어, 나중에 이를 읽는 경우 프로그램이 잘못 동작할 수도 있습니다. 다음 코드 조각이 이러한 개념을 보여줍니다.</p>
+<pre>
+<span style="color:#245dc1">if</span> not memcache.set('counter', value):
+  handle_memcache_error('Memcache set failed')
+</pre>
+<p>Memcache에 데이터를 추가하거나 설정할 때 오류가 발생하면 <span class="code">set()</span> 메소드에서 False가 반환됩니다. 값을 설정할 수 없는 경우 애플리케이션은 다시 시도하거나, Memcache의 데이터를 지우거나, Memcache를 비우거나, 예외를 표시할 수 있습니다. 다시 시도하는 것이 가장 적절한 방법이긴 하지만 이는 특정한 경우에만 가능합니다. 대부분의 경우 설정 및 다시 시도는 사용할 수 있는 올바른 방식이 아닙니다. 다음은 Memcache와 영구 저장소를 동기화하는 더욱 강력한 쓰기 순서를 위한 간단한 유사 코드입니다.</p>
+<ol class="code">
+<li>memcache.delete(key, seconds) # clears cache</li>
+<li>write-to-persistent</li>
+<li># 캐시에 새 값을 입력하지 마세요. 처음 캐시를 읽는 사용자가 입력할 것입니다.</li>
+</ol>
+<p>간단한 읽기 순서 하나를 위한 유사 코드는 아래와 같습니다.</p>
+<ol class="code">
+<li>v= memcache.get(key)</li>
+<li>if v is None:</li>
+<li style="padding-left:20px;">v = read-from-persistent</li>
+<li style="padding-left:20px;">memcache.add(v)</li>
+<li>return v</li>
+</ol>
+<p>두 순서 중 어디에도 <span class="code">memcache.set()</span>가 사용되지 않았습니다. 이는 캐시에 오래된 데이터가 남아 있게 되는 위험을 방지하기 위함입니다. 하지만 이 코드에서는 경합 상태가 발생할 위험이 있습니다. 첫 번째 클라이언트가 <span class="code">memcache.delete()</span>와 <span class="code">write-to-persistent</span> 완료 시점 사이에 있을 때 두 번째 클라이언트가 읽기를 수행하는 경우 두 번째 클라이언트가 영구 저장소에서 이전 값을 가져와 이를 다시 캐싱할 수 있습니다. 경합 상태의 위험을 줄이기 위해 '잠금 기간'으로도 알려져 있는 <span class="code">memcache.delete()</span>의 두 번째 인수가 여기에 추가되었습니다. 결론적으로 Memcache와 Datastore를 동기화하려는 경우, 예외적인 경우를 올바르게 처리하여 데이터를 동기화 상태로 유지해야 하므로 NDB와 같은 라이브러리를 사용하는 것이 가장 좋습니다.</p>
+<h3><a name="h.oh5pu6mleh70" id="h.oh5pu6mleh70"></a>가능한 경우 일괄 함수 사용</h3>
+<p>관련된 여러 값을 검색하는 경우 일괄 함수를 사용하는 것이 가장 좋습니다. 이러한 함수는 일관성이 없는 값이 검색되지 않도록 하며, 더 빠른 성능을 제공합니다. 다음 코드 조각 예제는 일괄 함수가 사용되는 방식을 보여줍니다.</p>
+<pre>
+values = {'comment': 'I did not ... ', 'comment_by': 'Bill Holiday'}
+<span style="color:#245dc1">if</span> not memcache.set_multi(values):
+  handle_memcache_error('Unable to set Memcache values')
+tvalues = memcache.get_multi(('comment', 'comment_by'))
+</pre>
+<p>코드 조각은 <span class="code">set_multi()</span> 함수로 여러 값을 설정하고, <span class="code">get_multi()</span> 함수로 여러 값을 가져오는 방법을 보여줍니다. 여러 값을 설정할 때 두 값이 본질적으로 관련이 있는 경우 이를 하나의 값으로 저장하는 것이 가장 좋습니다.</p>
+<h3><a name="h.dvl6r64mnvyr" id="h.dvl6r64mnvyr"></a>키스페이스에 로드 분산</h3>
+<p>전용 Memcache 서비스는 기가바이트당 1초에 10,000개의 작업을 처리할 수 있습니다(전용 Memcache 서비스 및 제한사항에 대한 자세한 내용은 <a href="https://developers.google.com/appengine/docs/adminconsole/memcache?hl=en">Memcache 문서</a> 참조). 개발자는 다수의 요청을 처리하는 App Engine 애플리케이션에 대해 이러한 제한사항을 염두에 두어야 합니다. 초당 10,000개 작업 제한은 초당 수백 건에 이르는 HTTP 요청을 처리하기에 충분할 수 있지만, 몇몇 애플리케이션의 경우 키 사용에서 편향적인 분배 패턴을 보입니다. 예를 들어 Memcache 액세스 호출의 80%가 20개 키에 집중될 수 있습니다. 이는 잘못된 키 이름 분배로 인해 특정 서버에 키가 집중되는 경우 문제가 될 수 있으며, 오류 및 성능 저하로 이어질 수 있습니다.</p>
+<p>성능 저하를 방지하려면 개발자는 데이터 액세스를 여러 키에 분배하고 읽기가 수행되면 데이터를 집계합니다. 예를 들어 카운터에 여러 번 쓰기 작업을 수행하는 경우, 카운터를 여러 키에 분배한 다음 Memcache에서 카운터 읽기가 수행되면 관련 값을 합산합니다. 이제 관리자 콘솔의 Memcache 보기에는 상위 키 목록이 포함되며, 병목 현상을 파악하는 데 이 목록을 활용할 수 있습니다. 일반적으로는 상위 10개 키의 비율을 합한 값이 총 트래픽의 5% 미만이 되도록 하는 것이 좋습니다.</p>
+<p>Memcache 작업 속도는 대략 <a href="https://developers.google.com/appengine/docs/adminconsole/memcache">Memcache 문서 페이지</a>의 표에 따른 항목 크기별로 다릅니다. 항목 크기가 커지는 경우 초당 최대 작업 속도가 크게 낮아집니다. 이러한 문제를 해결하려면 큰 값을 여러 항목으로 분할하거나 이를 압축합니다.</p>
+<h2><a name="h.4w4l8tnb9s7a" id="h.4w4l8tnb9s7a"></a>추가 리소스</h2>
+<p>다음 링크는 유용한 추가 리소스로 연결됩니다.</p>
+<ul>
+<li><a href="https://developers.google.com/appengine/docs/adminconsole/memcache">Google App Engine 관리 콘솔: Memcache</a></li>
+<li><a href="https://developers.google.com/appengine/docs/python/memcache/">Memcache Python API</a></li>
+<li><a href="https://developers.google.com/appengine/docs/java/memcache/">Memcache Java API</a></li>
+<li><a href="https://developers.google.com/appengine/docs/go/memcache/">Memcache Go API</a></li>
+<li><a href="https://developers.google.com/appengine/docs/php/memcache/">Memcache PHP API</a></li>
+<li><a href="http://www.youtube.com/watch?feature=player_embedded&amp;v=TGl81wr8lz8">Memcache 기본사항 프레젠테이션 동영상</a></li>
+<li><a href="https://developers.google.com/appengine/articles/scaling/memcache">효과적인 Memcache</a></li>
+<li><a href="https://developers.google.com/appengine/articles/scaling/overview">확장 가능한 애플리케이션 작성을 위한 권장사항(시리즈)</a></li>
+<li><a href="http://neopythonic.blogspot.com/2011/08/compare-and-set-in-memcache.html">Memcache의 '비교 및 설정' 기능</a></li>
+<li><a href="https://developers.google.com/appengine/docs/python/python25/migrate27">Python 2.7로 마이그레이션</a></li>
+<li><a href="https://developers.google.com/appengine/docs/python/ndb/">Python NDB</a></li>
+<li><a href="https://code.google.com/p/protobuf/">프로토콜 버퍼(Protobuf)</a></li>
+<li><a href="https://code.google.com/p/memcached/wiki/NewStart">Memcached 위키</a></li>
+</ul>
+</div>
+<!-- /maia-main --></div>
+<div class="maia-col-3"><br>
+<img src="//www.google.com/images/icons/product/feedback-16.png" class="g-app-icon" alt=""> <a href="javascript:void(0);" class="google-feedback">이 문서에 대한 의견 보내기</a><br>
+<br></div>
+</div>
+</div>
+<script>
+(function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+</script><script src="//www.gstatic.com/feedback/api.js">
+</script><script>
+$('body').delegate('.google-feedback', 'click', function() {
+      userfeedback.api.startFeedback({'productId': '94614'});
+  });
+</script><!-- Scripts to include both on Goro + Devsite --><script>
+window.___gcfg = {
+     lang: ''
+   };
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+</script><!-- GTM implementation --><!-- Start dataLayer --><script>
+dataLayer = [{
+        'country': 'ko',
+        'region': 'japac',
+        'language': 'ko'
+      }];
+</script><!-- End dataLayer --><!-- Start Google Tag Manager --><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5CVQBG" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript> <script>
+(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-5CVQBG');
+</script><!-- End Google Tag Manager --><!-- Global JS scripts to load; path will depend on whether we're on devsite or Goro --><script src="/js/base.min.js">
+</script><!-- Retina loader; Do not load if partners page because we need to wait until the Angular app runs --><script>
+new lfl.system.RetinaLoader();
+</script><!-- Secondary right-side scroll-nav --><script>
+new lfl.ui.ScrollNav({});
+</script>
+</body>
+</html>
