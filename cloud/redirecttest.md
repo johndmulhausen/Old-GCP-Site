@@ -15,6 +15,11 @@ $( document ).ready(function() {
       {
         if(redirect.from && redirect.to) {
           console.log("redirect.from=" + redirect.from + ", redirect.to=" + redirect.to);
+        } else {
+          for(i=0;i<redirect.length;i++)
+          {
+            console.log(i+"="+redirect[i])
+          }
         }
         //document.write(redirect.from + "=" redirect.to)
       }
