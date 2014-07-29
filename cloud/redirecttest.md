@@ -11,12 +11,12 @@ $( document ).ready(function() {
     if (errors.length == 0) {
       console.log("Done! Took " + YAML.getProcessingTime() + " miliseconds. data.redirects.length=" + data.redirects.length );
       console.log(data);
-      for(var redirect in data.redirects)
+      for(i=0;i<data.redirects.length)
       {
-        if(redirect.from && redirect.to) {
-          console.log("redirect.from=" + redirect.from + ", redirect.to=" + redirect.to);
+        if(data.redirects[i].from && data.redirects[i].to) {
+          console.log("data.redirects[i].from=" + data.redirects[i].from + ", data.redirects[i].to=" + data.redirects[i].to);
         } else {
-          console.log(redirect.toString())
+          console.log(data.redirects[i].toString())
         }
         //document.write(redirect.from + "=" redirect.to)
       }
