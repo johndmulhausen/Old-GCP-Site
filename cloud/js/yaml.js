@@ -47,7 +47,7 @@ var YAML =
             "map" : new RegExp("\\{\\s*(.*)\\s*\\}"),
             "key_value" : new RegExp("([a-z0-9_-][ a-z0-9_-]*):( .+)", "i"),
             "single_key_value" : new RegExp("^([a-z0-9_-][ a-z0-9_-]*):( .+?)$", "i"),
-            "key" : new RegExp("([a-z0-9_-][ a-z0-9_-]*):( .+)?", "i"),
+            "key" : new RegExp("([a-z0-9_-][ a-z0-9_-]+):( .+)?", "i"),
             "item" : new RegExp("^-\\s+"),
             "trim" : new RegExp("^\\s+|\\s+$"),
             "comment" : new RegExp("([^\\\'\\\"#]+([\\\'\\\"][^\\\'\\\"]*[\\\'\\\"])*)*(#.*)?")
@@ -77,6 +77,47 @@ var YAML =
                 ++this.length;
             }
         };
+    }
+
+    // function to create an XMLHttpClient in a cross-browser manner
+    function createXMLHTTPRequest() {
+        var xmlhttp;
+        
+        try {
+            // Mozilla / Safari / IE7
+            xmlhttp = new XMLHttpRequest();
+        } catch (e) {
+            // IE
+            var XMLHTTP_IDS = new Array('MSXML2.XMLHTTP.5.0',
+            'MSXML2.XMLHTTP.4.0',
+            'MSXML2.XMLHTTP.3.0',
+            'MSXML2.XMLHTTP',
+            'Microsoft.XMLHTTP' );
+            var success = false;
+            for (var i=0;i < XMLHTTP_IDS.length && !success; i++) {
+                try {
+                xmlhttp = new ActiveXObject(XMLHTTP_IDS[i]);
+                success = true;
+                } catch (e) {}
+            }
+            if (!success) {
+                throw new Error('Unable to create XMLHttpRequest.');
+            }
+        }
+        
+        return xmlhttp;
+    }
+
+    function fromURL(src, ondone) {
+        var client = createXMLHTTPRequest();
+        client.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                var txt = this.responseText;
+                ondone(YAML.eval(txt));
+            }
+        };
+        client.open('GET', src);
+        client.send();
     }
 
     function parser(str) {
@@ -409,7 +450,7 @@ var YAML =
         var r = regex["comment"];
         
         for(var i in lines) {
-            if(m = (typeof lines[i] === 'string' && lines[i].match(r))) {
+            if(m = lines[i].match(r)) {
 /*                var cmt = "";
                 if(typeof m[3] != "undefined")
                     lines[i] = m[1];
@@ -441,6 +482,14 @@ var YAML =
         
     return {        
         /**
+         * Load and parse a YAML file from a URL.
+         * @param {String} src URL from where to load the YAML file
+         * @param {Function} ondone Function that will be called when the file is parsed. The result is passed as an argument.
+         * @function
+         */
+        fromURL : fromURL,
+        
+        /**
          * Parse a YAML file from a string.
          * @param {String} str String with the YAML file contents.
          * @function
@@ -462,5 +511,3 @@ var YAML =
         getProcessingTime : function() { return processing_time; }
     }
 })();
-
-module.exports = YAML;
