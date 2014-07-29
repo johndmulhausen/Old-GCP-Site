@@ -1,0 +1,219 @@
+<html devsite>
+  <head>
+    
+    <title>Companies Using Google Cloud</title>
+    <meta name="description" content="Discover what companies are using Google Cloud Platform and how they&#39;ve found successful and scalable cloud storage and hosting solutions for their business." />
+    <meta name="hide_page_heading" value="true" />
+    <meta name="full_width" value="true" />
+    <meta name="top_category" value="customers" />
+    
+    <meta name="google-site-verification" content="8dOEM3Xenm6yaBc83y2WKgqQG0iHI7Ph6Rl_YLIZLQ8" />
+    <meta name="viewport" content="initial-scale=1, minimum-scale=1, width=device-width">
+    <link rel="apple-touch-icon" href="//cloud.google.com/_static/images/apple-touch-icon.png">
+    <link href="//fonts.googleapis.com/css?family=Open+Sans:400italic,300,400,600,700" rel="stylesheet">
+    
+    <link href="/css/default.css" rel="stylesheet">
+
+    <!--[if lt IE 9]>
+    <link rel="stylesheet" media="screen" href='/c/cp-ie.css'>
+    <![endif]-->
+
+    <!-- GSAP animation frameworks -->
+    <script src="//www.gstatic.com/external_hosted/gsap/TweenMax.min.js"></script>
+    <script src="//www.gstatic.com/external_hosted/gsap/TimelineMax.min.js"></script>
+    <script src="/js/floodlight.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+  </head>
+  <body>
+
+
+
+
+
+
+
+
+<div class="site-wrapper case-studies" data-ng-controller="CloudCustomersController as ctrl" data-ng-cloak>
+  <div class="maia-stage page-header tertiary">
+    <div class="maia-aux page-header-inner">
+      <div class="page-header-inner-inner">
+        <h1 class="headline">Customers</h1>
+        <div class="subheadline">
+          <p>See how companies are using Google Cloud Platform to build robust and scalable apps.<br />
+It’s time for you to build apps for the future.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="maia-main" data-ng-click="ctrl.tryCloseFilter($event)">
+    <div id="case-studies" class="generic-section">
+      <div class="header">
+        <div class="maia-cols">
+          <h2 class="headline maia-col-8">Case Studies</h2>
+          <div class="subheadline maia-col-8"><p>See how companies are using Google Cloud Platform to build robust and scalable apps.<br />
+It’s time for you to build apps for the future.</p></div>
+
+          <div class="filter-bar maia-col-12">
+            <div class="maia-cols">
+              <div class="filters maia-col-7">
+                <div class="filters-inner">
+                  <label class="filter-label">Filter by:</label>
+                  <ul class="active-filters">
+                    <li class="filter-item" data-ng-repeat="filter in ctrl.activeFilters">
+                      <a data-ng-click="ctrl.toggleFilter(filter)" data-ng-bind="filter.value"></a>
+                    </li>
+                    <li class="filter-results placeholder" data-ng-hide="ctrl.activeFilters.length">All industries and products</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="maia-col-5 filter-controls">
+
+                <div class="clear-filters filters">
+                  <a class="filters-inner clear-filters-label" data-ng-click="ctrl.clearFilters()">Clear all filters X</a>
+                </div>
+
+                <div id="filter-container" class="add-filters filters" data-ng-class="{'active':ctrl.filterDropdownActive}">
+
+                  <label class="filters-inner add-filters-label" data-ng-click="ctrl.filterDropdownActive = !ctrl.filterDropdownActive">Add a filter +</label>
+                  <div class="available-filter-container">
+                    <div class="filters-inner">
+                      <div class="product-filters" data-ng-show="(ctrl.filters|filter:{field:'platformTypes'}).length">
+                        <h3 class="available-filters-headline">Products</h3>
+                        <ul class="filter-list">
+                          <li class="filter-item" data-ng-repeat="filter in ctrl.filters|filter:{field:'platformTypes'}">
+                            <a data-ng-click="ctrl.toggleFilter(filter)" data-ng-bind="filter.value" ng-class="{'active':filter.active}"></a>
+                          </li>
+                        </ul>
+                      </div>
+                      <div class="industry-filters" data-ng-show="(ctrl.filters|filter:{field:'industries'}).length">
+                        <h3 class="available-filters-headline">Industry</h3>
+                        <ul class="filter-list">
+                          <li class="filter-item" data-ng-repeat="filter in ctrl.filters|filter:{field:'industries'}">
+                            <a data-ng-click="ctrl.toggleFilter(filter)" data-ng-bind="filter.value" ng-class="{'active':filter.active}"></a>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+          <div class="maia-col-12" data-paginator="ctrl.paginator"></div>
+
+
+          <div class="customers maia-col-12">
+            <div class="maia-cols" data-ng-repeat="row in ctrl.paginatedFilteredCustomers | rows:2">
+              <div class="customer inner-block maia-col-6" data-ng-repeat="customer in ctrl.paginatedFilteredCustomers | cols:row:2">
+
+                <div class="maia-cols">
+                  <div class="image-wrapper maia-col-4">
+                    <a data-ng-href="{[customer.slug]}/" class="read-more" event="autotrack-data-g" data-g-event="Customers" data-g-action="Case Study" data-g-label="{[customer.name]}">
+                      <img data-ng-src="{[customer.logo]}" alt="{[customer.name]}" />
+                    </a>
+                  </div>
+                  <div class="details maia-col-8">
+                    <h3 class="headline" data-ng-bind="customer.name"></h3>
+                    <p class="subheadline" data-ng-bind="customer.blurb"></p>
+                    <div class="author-wrapper" data-ng-show="customer.blurbAuthor">
+                      <span class="author" data-ng-bind="customer.blurbAuthor"></span>
+                      <span class="author-role" data-ng-bind="customer.blurbAuthorRole" data-ng-show="customer.blurbAuthorRole"></span>
+                    </div>
+                    <a data-ng-href="{[customer.slug]}/" class="read-more" event="autotrack-data-g" data-g-event="Customers" data-g-action="Case Study" data-g-label="{[customer.name]}">Read about {[customer.name]}</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div data-ng-show="!ctrl.paginatedFilteredCustomers || !ctrl.paginatedFilteredCustomers.length">
+
+              <div class="clear-filters filters" data-ng-show="ctrl.ready">
+                <p>No case-studies were found matching your criteria.  Click <a class="clear-filters-label clear-filter-button" data-ng-click="ctrl.clearFilters()">here</a> to clear filters and restart your search.</p>
+              </div>
+
+              <div data-ng-show="!ctrl.ready" class="ajax-loader">
+                <img src="../images/google-spinner.gif">
+                <span>Loading...</span>
+              </div>
+
+            </div>
+
+
+           <div class="paginator-wrapper" data-paginator="ctrl.paginator"></div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+  <!-- is this feedback sticky needed?
+  <div class="feedback-sticky"><a href="javascript:void(0);">Feedback</a></div>
+  <script type="text/javascript" src="//www.gstatic.com/feedback/api.js"></script>
+  <script>
+    jQuery('body').delegate('.feedback-sticky', 'click', function() {
+      _gaq.push(['_trackEvent', 'Feedback', 'User Feedback: ' + location.pathname]);
+      userfeedback.api.startFeedback({'productId': '96209'});
+    });
+  </script>
+  -->
+
+  <!-- Scripts to include both on Goro + Devsite -->
+  <script type="text/javascript">
+   window.___gcfg = {
+     lang: ''
+   };
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+  </script>
+
+  <!-- GTM implementation -->
+  
+  <!-- Start dataLayer -->
+    <script>
+      dataLayer = [{
+        'country': '',
+        'region': '',
+        'language': 'en'
+      }];
+    </script>
+  <!-- End dataLayer -->
+  
+  <!-- Start Google Tag Manager -->
+  <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5CVQBG"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-5CVQBG');</script>
+  <!-- End Google Tag Manager -->    
+
+
+<!-- Global JS scripts to load; path will depend on whether we're on devsite or Goro -->
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular-sanitize.js"></script>
+
+
+
+  <script src="/js/base.min.js"></script>
+
+
+<!-- Secondary right-side scroll-nav -->
+<script>
+  new lfl.ui.ScrollNav({});
+</script>
+
+
+
+  </body>
+</html>

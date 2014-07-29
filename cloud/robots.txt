@@ -1,0 +1,9 @@
+User-agent: *
+Disallow: /skus/
+Disallow: /resources/startups/
+Disallow: /startups
+Disallow: /test-floodlight-iframe2-public.html
+Disallow: /test-floodlight-standard-public.html
+Disallow: /console?*getstarted=*
+
+Sitemap: https://cloud.google.com/sitemap.xml

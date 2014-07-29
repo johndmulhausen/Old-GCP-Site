@@ -1,0 +1,40 @@
+table th,
+table td
+	{width: 25%;}
+
+.dinosaur .z,
+.dinosaur .w
+	{zoom: 1;}
+
+.dinosaur #maia-nav-x ul ul
+	{top: 50px;}
+
+.cp-row ul
+/* for generated content to create gradient borders */
+	{z-index: -1;}
+
+.cp-row:before {
+  left: -2px;
+  background-position: 0 -400px;
+}
+.cp-jump-to:after {
+  right: -4px;
+}
+
+.cp-contact-form .inputtext {
+  border: 1px solid #ebebeb;
+  color: #444444;
+  font-family: arial,sans-serif;
+  line-height: normal;
+  padding: 6px 10px;
+  width: 300px;
+  margin: 0 0 5px;
+}
+
+.cp-row-newslsetter p br {
+  display : none\9;
+}
+
+.cp-home .cp-hero-mob .cp-figure {
+  height : 482px\9;
+}

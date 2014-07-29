@@ -1,0 +1,160 @@
+/* TABLE DECLARATIONS - LOTS OF MAIA OVER-RIDES 
+ *sorry for all the importants - it was troublesome :( 
+ */
+
+table {
+  width: 100%;
+  border: 0;
+  margin-bottom: 20px;
+}
+
+table th,
+table td {
+  background: #fff;
+  vertical-align: middle;
+  font-size: 15px;
+}
+
+table th {
+  border: 1px solid #e3e3e3 !important;
+  border-right: none !important;
+  color: #444 !important;
+  font-weight: 700;
+  font-size: 16px;
+  empty-cells: show;
+}
+
+table th:first-of-type,
+table td:first-of-type {
+  white-space: nowrap;
+}
+
+table th:first-of-type {
+  border-left: none !important;
+}
+
+table:first-of-type th:nth-of-type(2),
+table:first-of-type th:nth-of-type(3)  {
+  width: 250px;
+}
+
+table thead tr + tr th,
+table.cp-secondary th {
+  background: #f9f9f9 !important;
+}
+  
+table thead tr + tr th {
+  color: #666 !important;
+  font-weight: 600;
+  font-size: 15px;
+}
+
+table.cp-secondary th {
+  color: #444 !important;
+}
+
+table th, table td {
+  padding: 14px !important;  
+}
+
+table td {
+ color: #666;
+ font-weight: 400;
+ vertical-align: top;
+}
+
+tbody th {
+  border: none !important;
+  border-left: 1px solid #e3e3e3 !important;
+  background: #fff !important;
+  padding: 40px 14px 14px 14px !important;
+}
+
+tr > td:first-of-type,
+thead tr > th:first-of-type,
+tbody th:first-of-type {
+  text-align: left;
+}
+
+tr > td:first-of-type {
+  font-weight: 600;
+}
+
+tr:nth-of-type(even) td {
+  background-color: #f9f9f9;
+}
+
+td {
+  border-left: 1px solid #e3e3e3;
+}
+
+
+tr > td:first-of-type,
+tbody th:first-of-type {
+   border-left: none !important;
+}
+
+tr > td:first-of-type {
+   background-position: -500px -630px;
+   color: #666;
+}
+
+tr > td:last-of-type {
+  border-right: none;
+  background-position: -327px -630px;
+}
+
+/* secondary type of table - basic pricing */
+
+.cp-secondary { 
+  margin-top: 20px;
+  text-align: center;
+}
+
+.cp-secondary th {
+  text-align: center;
+}
+
+.cp-secondary tbody th {
+  background: #fff !important;
+  color: #666 !important;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.cp-secondary tbody th:first-of-type { 
+  color: #444 !important;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.cp-secondary tr > td:last-of-type {
+  background-position: -197px -630px;
+}
+
+/* centered table */
+.cp-centered tr td, .cp-centered thead tr th {
+  text-align: center;
+}
+
+.cp-centered tr > td:first-of-type, .cp-centered tr > td:last-of-type, .cp-centered th:last-of-type {
+  padding:0;
+}
+
+.cp-twocol tbody td, .cp-twocol tbody th {
+  width:50%;
+} 
+
+table .subhd {
+  font-size: 16px !important;
+  font-weight: bold !important;
+  color: #444 !important;
+}
+
+table .ctr {
+  text-align: center !important;
+}
+
+table .small {
+  font-size: 12px;
+}

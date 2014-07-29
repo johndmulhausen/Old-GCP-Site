@@ -1,0 +1,297 @@
+<html devsite>
+  <head>
+    
+    <title>Service Partners</title>
+    <meta name="description" content="Find Service Partners with Google Cloud Platform. Our Service Partners assist with implementation services and provide consulting on Cloud Platform services." />
+    <meta name="hide_page_heading" value="true" />
+    <meta name="full_width" value="true" />
+    <meta name="top_category" value="partners" />
+    <meta name="subcategory" value="service-partners" />
+    <meta name="google-site-verification" content="8dOEM3Xenm6yaBc83y2WKgqQG0iHI7Ph6Rl_YLIZLQ8" />
+    <meta name="viewport" content="initial-scale=1, minimum-scale=1, width=device-width">
+    <link rel="apple-touch-icon" href="//cloud.google.com/_static/images/apple-touch-icon.png">
+    <link href="//fonts.googleapis.com/css?family=Open+Sans:400italic,300,400,600,700" rel="stylesheet">
+    
+    <link href="/css/default.css" rel="stylesheet">
+
+    <!--[if lt IE 9]>
+    <link rel="stylesheet" media="screen" href='/c/cp-ie.css'>
+    <![endif]-->
+
+    <!-- GSAP animation frameworks -->
+    <script src="//www.gstatic.com/external_hosted/gsap/TweenMax.min.js"></script>
+    <script src="//www.gstatic.com/external_hosted/gsap/TimelineMax.min.js"></script>
+    <script src="/js/floodlight.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+  </head>
+  <body>
+
+
+
+
+
+
+
+
+
+
+
+<script>
+  var cloudPartnersPageType = 'Service';
+</script>
+
+<!-- <script src="//www.google.com/js/gweb/ui/lightbox.js"></script> -->
+
+<div class="site-wrapper partners Service" data-ng-controller="CloudPartnersController as ctrl">
+  <div class="maia-stage page-header tertiary">
+    <div class="maia-aux page-header-inner">
+      <div class="page-header-inner-inner">
+        <h1 class="maia-col-8 headline">Find a service partner</h1>
+        <p class="subheader-tech-partners">Find help getting your project up and running</p>
+      </div>
+    </div>
+  </div>
+  <div id="maia-main">
+
+    
+
+    <div id="partners" data-ng-cloak>
+
+      <div class="maia-cols headline-wrapper serv-partners">
+        <div class="maia-col-9">
+          <h1 class="serv-partners headline">
+            Service Partners
+          </h1>
+          <p>
+            Service Partners provide consulting and implementation services on various Google Cloud Platform products. You can use their knowledge and expertise to develop applications for a variety of use cases.
+          </p>
+        </div>
+        <div class="maia-col-3 paginator-wrapper top" data-paginator="ctrl.paginator"></div>
+      </div>
+      
+      <div class="maia-cols serv-partners-container">
+      
+        <div class="filter-bar map-version maia-col-5">
+          <div class="maia-cols">
+            <div class="filters-inner maia-col-12">
+              <div class="active-filters">
+                <label class="filter-label">Active Filters:</label>
+                <ul>
+                  <li class="filter-item" data-ng-repeat="filter in ctrl.activeFilters">
+                    <a data-ng-click="ctrl.toggleFilter(filter)" data-ng-bind="filter.value"></a>
+                  </li>
+                  <li class="filter-results placeholder" data-ng-hide="ctrl.activeFilters.length">All industries and products</li>
+                </ul>
+              </div>
+              <div class="map-lock">
+                <label for="limit-to-map">Update results when map is moved</label>
+                <input id="limit-to-map" type="checkbox" data-ng-model="ctrl.limitMapToBounds">
+              </div>
+              <div class="location-filter">
+                <label>Location</label>
+                <input type="text" data-ng-model="ctrl.locationFilter" placeholder="90291">
+              </div>
+              <div class="filter-controls">
+
+                <div class="clear-filters filters">
+                  <a class="clear-filters-label" data-ng-click="ctrl.clearFilters()">Clear all filters X</a>
+                </div>
+
+                <div class="add-filters filters" data-ng-class="{'active':ctrl.filterDropdownActive}">
+                  <label class="add-filters-label" data-ng-click="ctrl.filterDropdownActive = !ctrl.filterDropdownActive">Add a filter +</label>
+                </div>
+              </div>
+            </div>
+
+            <div data-ng-class="{'active':ctrl.filterDropdownActive}" class="maia-col-12">
+              <div class="available-filter-container filters-inner">
+                <span class="available-filters-close" data-ng-click="ctrl.filterDropdownActive = !ctrl.filterDropdownActive">Close X</span>
+                <h3 class="available-filters-headline">Products</h3>
+                <ul class="maia-cols filter-list">
+                  <li class="filter-item maia-col-4" data-ng-repeat="filter in ctrl.filters">
+                    <a data-ng-click="ctrl.toggleFilter(filter)" data-ng-bind="filter.value" ng-class="{'active':filter.active}"></a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="partner-locations maia-col-12" data-ng-class="{'active':ctrl.filterDropdownActive}">
+              <div class="google-map" data-google-map data-markers="ctrl.markers" data-map-data="ctrl.mapData"></div>
+            </div>
+
+          </div>
+        </div>
+    
+        
+        <div id="service-partners" class="maia-col-7 service-partners-list-container">
+          <ul class="partners">
+            <li class="generic-section partner maia-cols" data-ng-repeat="partner in ctrl.paginatedFilteredPartners">
+
+              <div class="logo maia-col-2">
+                <img class="partner-image-logo" data-ng-src="{[partner.logo]}" alt="{[partner.name]}">
+              </div>
+              <div class="partner-wrapper maia-col-10">
+                <div class="partner-headline-wrapper">
+                  <img class="google-map-icon" data-ng-src="{[partner.mapIcon]}">
+                  <div class="partner-headline-details">
+                    <h2 class="partner-headline partner-num" data-ng-bind="partner.name"></h2>
+                    <ul class="platform-list"><li data-ng-repeat="platform in partner.platformTypes" data-ng-bind="platform"></li></ul>
+                  </div>
+                </div>
+                
+                <div class="learn-more-container">
+                  <p class="partner-paragraph" data-ng-bind="partner.description"></p>
+                  <h2 class="learn-more">Learn more</h2>
+                  <ul class="learn-more-list">
+                    <li data-ng-hide="!partner.location.phone">
+                      <a class="link" data-ng-href="tel:{[partner.location.phone]}" data-ng-bind="partner.location.phone"></a>
+                    </li>
+                    <li data-ng-hide="!partner.location.address || (partner.additionalLocations && partner.additionalLocations.length > 0)">
+                      <a class="link" data-ng-href="//maps.google.com/?q={[partner.location.address]}" target="_blank">Location</a>
+                    </li>
+                    <li data-ng-show="partner.location.address && partner.additionalLocations && partner.additionalLocations.length > 0">
+                      <a class="link" data-lightbox="{['lb-' + partner.slug]}" data-content-id="{[partner.slug]}-location-info" data-disable-nav="true" data-lightbox-width="640">Locations</a>
+                    </li>
+                  </ul>
+                  <ul class="learn-more-list">
+                    <li data-ng-hide="!partner.location.contactEmail">
+                      <a class="link" data-ng-href="mailto:{[partner.location.contactEmail]}">Contact us</a>
+                    </li>
+                    <li data-ng-hide="!partner.location.website">
+                      <a class="link" data-ng-href="{[partner.location.website]}">Visit the site</a>
+                    </li>
+                  </ul>
+                  
+                  <div id="{[partner.slug]}-location-info" class="lightbox-section lightbox-location" style="display: none;">
+                    <div class="lightbox-locations">
+                      <h2 class="headline">{[partner.name]}</h2>
+                      <div class="locations">
+                        <div class="location" data-ng-repeat="location in partner.locations">
+                          <div class="lightbox-map-wrapper image-wrapper">
+                            <a data-ng-href="//maps.google.com/?q={[location.address]}" target="_blank">
+                              <img data-ng-src="//maps.googleapis.com/maps/api/js?center={[location.latitude]},{[location.longitude]}&zoom=16&size=422x375&maptype=roadmap&sensor=false&language=&markers=color:red|label:none|{[location.latitude]},{[location.longitude]}&key=AIzaSyBtfSp9TSlUDCNJ0jTwFc-PelOc24-LuzM">
+                            </a>
+                          </div>
+                          <div class='location-details'>
+                            <p class="location-detail">{[location.address]}</p>
+                            <p class="location-detail">{[location.phone]}</p>
+                            <p class="location-detail">{[location.contactEmail]}</p>
+                            <p class="location-detail">{[location.website]}</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                </div>
+             </div>
+           </li>          
+          </ul>
+          
+          
+          <div data-ng-show="!ctrl.paginatedFilteredPartners || !ctrl.paginatedFilteredPartners.length">
+            <div class="clear-filters filters" data-ng-show="ctrl.ready">
+              <p>No partners were found matching your criteria.  Click <a class="clear-filters-label clear-filter-button" data-ng-click="ctrl.clearFilters()">here</a> to clear filters and restart your search.</p>
+            </div>
+            <div data-ng-show="!ctrl.ready" class="ajax-loader">
+              <img src="../../images/google-spinner.gif">
+              <span>Loading...</span>
+            </div> 
+          </div>
+          
+        </div>
+
+      </div>
+
+      <div class="paginator-wrapper" data-paginator="ctrl.paginator"></div>
+
+    </div>
+    
+
+    <div id="become-a-partner" class="generic-section">
+      <div class="maia-cols become-a-partner-section">
+        <div class="maia-col-8">
+          <h1 class="headline">
+            Become a Service Partner
+          </h1>
+          <p>
+            Service partners provide products and tools that integrate with our platform that extend its reach and functionality, or use one of our Cloud services as a foundation for their products.
+          </p>
+        </div>
+      </div>
+
+
+      <a data-ng-href="//cloud-partners-program.appspot.com/registration/services" id="apply-button" class="maia-button maia-button-secondary">
+        Apply to be a service partner
+      </a>
+
+    </div>
+
+  </div>
+</div>
+
+
+  <!-- is this feedback sticky needed?
+  <div class="feedback-sticky"><a href="javascript:void(0);">Feedback</a></div>
+  <script type="text/javascript" src="//www.gstatic.com/feedback/api.js"></script>
+  <script>
+    jQuery('body').delegate('.feedback-sticky', 'click', function() {
+      _gaq.push(['_trackEvent', 'Feedback', 'User Feedback: ' + location.pathname]);
+      userfeedback.api.startFeedback({'productId': '96209'});
+    });
+  </script>
+  -->
+
+  <!-- Scripts to include both on Goro + Devsite -->
+  <script type="text/javascript">
+   window.___gcfg = {
+     lang: ''
+   };
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+  </script>
+
+  <!-- GTM implementation -->
+  
+  <!-- Start dataLayer -->
+    <script>
+      dataLayer = [{
+        'country': '',
+        'region': '',
+        'language': 'en'
+      }];
+    </script>
+  <!-- End dataLayer -->
+  
+  <!-- Start Google Tag Manager -->
+  <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5CVQBG"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-5CVQBG');</script>
+  <!-- End Google Tag Manager -->    
+
+
+<!-- Global JS scripts to load; path will depend on whether we're on devsite or Goro -->
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular-sanitize.js"></script>
+
+
+
+  <script src="/js/base.min.js"></script>
+
+
+<!-- Secondary right-side scroll-nav -->
+<script>
+  new lfl.ui.ScrollNav({});
+</script>
+
+
+
+  </body>
+</html>

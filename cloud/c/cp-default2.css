@@ -1,0 +1,288 @@
+/* NEW DEFAULT CSS
+ * excludes reset.css, table.css, + maia-edits.css
+ */
+
+figure {
+  text-align: center;
+}
+
+.f-100 {
+  width: 100%;
+}
+
+.f-80 {
+  width: 80%;
+}
+
+.f-60 {
+  width: 60%;
+}
+
+figcaption {
+  font-weight: bold;
+  margin-top: 1em;
+}
+
+.cp-pdf {
+  background-image: url(../i/s-fix-2.png);
+  background-repeat: no-repeat;
+  background-position: 0 -930px;
+  padding: 10px 0 10px 36px;
+}
+
+#maia-nav-x .cp-cta {
+  float: right;
+  position: relative;
+  margin-top: 13px;
+  z-index: 1;
+  color: #e0e0e0;
+  padding-right: 95px;
+}
+
+#maia-nav-x .cp-cta a:first-child {
+  color: #fff;
+  font-weight: 700;
+}
+
+#maia-nav-x .cp-cta .maia-button {
+  top:  -13px;
+}
+
+#maia-main {
+	margin-bottom: 30px;
+}
+
+#maia-header h1 {
+  font-size: 27px;
+  color: #91959c;
+}
+
+#maia-signature {
+  margin-top: 0;
+}
+
+#maia-footer {
+  background: #f5f5f5;
+  clear: both;
+  color: #666
+}
+#maia-footer-global,#maia-footer-local {
+  padding: 10px 15px
+}
+#maia-footer-global {
+  border-top: 1px solid #ebebeb;
+  font-size: 11px;
+  line-height: 1.8;
+  list-style: none
+}
+#maia-footer-global ul {
+  margin: 0
+}
+#maia-footer-global li {
+  display: inline;
+  font-weight: bold
+}
+#maia-footer-global li+li:before {
+  content: "·";
+  padding: 0 3px
+}
+* html #maia-footer-global li {
+  margin: 0 13px 0 0
+}
+* [dir="rtl"] #maia-footer-global li {
+  margin: 0 0 0 13px
+}
+*+html #maia-footer-global li {
+  margin: 0 13px 0 0
+}
+*+[dir="rtl"] #maia-footer-global li {
+  margin: 0 0 0 13px
+}
+#maia-footer-global li a {
+  font-weight: normal
+}
+#maia-footer-local {
+  background: #f9f9f9;
+  border-top: 1px solid #f5f5f5
+}
+
+#maia-footer h3 {
+  color: #222;
+  font-weight: 600;
+  font-size: 13px;
+}
+
+.maia-footer h4 {
+  font-weight: bold;
+  color: #666
+}
+.maia-footer ul {
+  margin: 0
+}
+.maia-footer li {
+  list-style-type: none
+}
+#maia-footer .cp-share {
+  margin-left: 25px;
+}
+.maia-footer .footer-links h3 {
+  margin: 20px 0 10px;
+}
+.footer-top {
+  margin-bottom: 20px;
+  margin-top: 8px
+}
+.footer-top.social {
+  margin-top: 14px
+}
+.footer-links {
+  border-top: 1px solid #e9e9e9;
+  padding-top: 5px;
+  padding-bottom: 10px
+}
+.maia-aux .follow {
+  left: 2px;
+  position: relative;
+  top: 2px
+}
+
+.cp-article .cp-pdf {
+  display: inline-block;
+  margin-top: 17px;
+}
+
+.suez-cols {
+  width: auto;
+  margin: 0 -15px;
+  padding: 0;
+  position: relative;
+  zoom: 1;
+}
+
+.suez-cols:after {
+  content: ".";
+  display: block;
+  height: 0;
+  clear: both;
+  visibility: hidden
+}
+.suez-col-1,.suez-col-2,.suez-col-3,.suez-col-4,.suez-col-5,.suez-col-6,.suez-col-7,.suez-col-8,.suez-col-9,.suez-col-10,.suez-col-11,.suez-col-12,.suez-col-20pc {
+  float: left;
+  margin: 0 15px 20px;
+  display: inline
+}
+.suez-col-1 {
+  width: 54px
+}
+.suez-col-2 {
+  width: 138px
+}
+.suez-col-3 {
+  width: 222px
+}
+.suez-col-4 {
+  width: 306px
+}
+.suez-col-5 {
+  width: 390px
+}
+.suez-col-6 {
+  width: 474px
+}
+.suez-col-7 {
+  width: 558px
+}
+.suez-col-8 {
+  width: 642px
+}
+.suez-col-9 {
+  width: 726px
+}
+.suez-col-10 {
+  width: 810px
+}
+.suez-col-11 {
+  width: 894px
+}
+.suez-col-12 {
+  width: 978px
+}
+.suez-col-20pc {
+  width: 171px
+}
+[dir='rtl'] .suez-col-1,[dir='rtl'] .suez-col-2,[dir='rtl'] .suez-col-3,[dir='rtl'] .suez-col-4,[dir='rtl'] .suez-col-5,[dir='rtl'] .suez-col-6,[dir='rtl'] .suez-col-7,[dir='rtl'] .suez-col-8,[dir='rtl'] .suez-col-9,[dir='rtl'] .suez-col-10,[dir='rtl'] .suez-col-11,[dir='rtl'] .suez-col-12,[dir='rtl'] .suez-col-20pc {
+  float: right
+}
+#cp-track {
+  position: relative;
+  right: 5px;
+}
+#maia-nav-x .cp-cta-text {
+  margin-right: 5px;
+}
+
+/* MEDIA FIXES */
+
+
+@media (min-width: 768px) and (max-width: 979px) {
+
+}
+
+
+@media (max-width: 767px) {
+
+}
+
+
+@media (min-width: 1200px) {
+
+}
+
+
+@media (min-width: 768px) and (max-width: 979px) {
+
+}
+
+
+@media (min-width: 767px) {
+	#maia-main {
+		margin-top: 75px;
+	}
+}
+
+
+@media (max-width: 480px) {
+
+
+  #maia-footer .cp-share {
+    display: block;
+    margin: 5px 0 0 0;
+  }
+
+}
+
+@media (max-width: 979px) {
+
+  #maia-nav-x .cp-cta {
+    float: right;
+    padding: 0;
+    margin: 0;
+  }
+
+  #maia-nav-x .cp-cta span {
+    display: none;
+  }
+
+  #maia-nav-x .cp-cta .maia-button {
+    position: static;
+    top: auto;
+    float: none;
+    margin-left: 6px;
+  }
+
+}
+
+@media (min-width: 980px) {
+
+}
+

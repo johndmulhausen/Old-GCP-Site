@@ -1,0 +1,122 @@
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+  display: block;
+}
+
+body {
+  line-height: 1;
+}
+
+ol, ul {
+  list-style: none;
+}
+
+blockquote, q {
+  quotes: none;
+}
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: '';
+  content: none;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+:focus {
+  outline: none;
+}
+
+a img {
+  border: 0;
+}
+
+body,
+input,
+textarea,
+select {
+  font: 400 100%/1 "Open Sans", sans-serif;
+  color: #444;
+}
+
+::-webkit-input-placeholder   {
+  color:#666;
+  font-family: "Open Sans", sans-serif;
+}
+  
+input:-moz-placeholder  {
+  color:#666;
+  font-family: "Open Sans", sans-serif;
+} 
+
+h1 {
+  color: #1192fb;
+  font-size: 45px;
+  font-weight: 300;
+  line-height: 1.2;
+}
+
+h2 {
+  font-weight: 700;
+  font-size: 16px;
+}
+
+h3 {
+  font-weight: 600;
+  font-size: 15px;
+  margin-top: 1px;
+}
+
+h3 em {
+  display: block;
+  font-size: 11px;
+  font-weight: 400;
+}
+
+em,
+q
+{
+  font-style: italic;
+}
+
+q:before { 
+  content: "\0022";
+} 
+
+q:after { 
+  content: "\0022";
+}
+
+small {
+  font-size: 12px;
+}
+
+body {
+  font-size: 13px;
+  line-height: 21px;
+}
+

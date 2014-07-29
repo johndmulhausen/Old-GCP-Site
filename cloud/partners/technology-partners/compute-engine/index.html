@@ -1,0 +1,185 @@
+<html devsite>
+  <head>
+    <title>Compute Engine Technology Partners &mdash; Google Cloud Platform</title>
+    <meta name="description" content="Google Cloud Platform lets you build and host applications and websites, store data, and analyze data on Google&#39;s scalable infrastructure." />
+    <meta name="hide_page_heading" value="true" />
+    <meta name="full_width" value="true" />
+    <meta name="top_category" value="partners" />
+    <meta name="subcategory" value="technology-partners" />
+    <meta name="google-site-verification" content="8dOEM3Xenm6yaBc83y2WKgqQG0iHI7Ph6Rl_YLIZLQ8" />
+    <meta name="viewport" content="initial-scale=1, minimum-scale=1, width=device-width">
+    <link rel="apple-touch-icon" href="//cloud.google.com/_static/images/apple-touch-icon.png">
+    <link href="//fonts.googleapis.com/css?family=Open+Sans:400italic,300,400,600,700" rel="stylesheet">
+
+    <link href="/css/default.css" rel="stylesheet">
+
+    <!--[if lt IE 9]>
+    <link rel="stylesheet" media="screen" href='/c/cp-ie.css'>
+    <![endif]-->
+    <script src="/js/floodlight.js"></script>
+  </head>
+  <body>
+
+
+
+
+
+
+
+
+<script>
+var techJson = "../techPartnersData.json";
+var serviceJson = "../servicePartnersData.json";
+</script>
+
+<script src="../../../js/base.min.js"></script>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
+
+<script src="../../../js/partners.min.js"></script>
+
+<script>
+$(window).on('scopeReady', function() {
+  console.log('scope');
+  new lfl.system.RetinaLoader();
+});
+
+</script>
+
+<!-- variables to be addressed per page -->
+
+
+
+
+
+
+
+
+
+<!-- page variables -->
+
+<div class="site-wrapper partners" ng-app="lflApp" ng-controller="TechPartnersCtrl" data-status="{[{data.status}]}">
+  <div class="maia-stage page-header tertiary">
+    <div class="maia-aux page-header-inner">
+      <div class="page-header-inner-inner">
+        <h1 class="headline">Compute Engine Technology Partners</h1>
+        <p class="subheadline">Find help getting your project up and running</p>
+      </div>
+    </div>
+  </div>
+  <div id="maia-main" ng-cloak>
+
+    <div id="app-engine" class="generic-section">
+      <div class="maia-cols">
+        <h2 class="headline maia-col-8"><span class="icon compute-engine"></span>Compute Engine</h2>
+        <div class="partners-wrapper maia-col-12">
+
+          
+
+        
+          <div class="maia-cols" ng-repeat="partnerG in computeEnginePartners">
+            <div class="inner-block maia-col-6" ng-repeat="partner in partnerG">
+              <div class="maia-cols">
+                <div class="image-wrapper maia-col-4">
+                  <img src="../../../images/partners/{[{partner.name|slugify}]}.png" alt="{[{partner.name}]}'s logo" data-retina="139x123">
+                </div>
+                <div class="details maia-col-8">
+                  <h3 class="headline" ng-bind="partner.name"></h3>
+                  <p class="subheadline" ng-bind="partner.description | characters:250">
+                  </p>
+                  <ul class="partner-links">
+                    <li class="phone">
+                      <a href="tel:{[{partner.phone}]}" event="autotrack-data-g" data-g-event="Technology" data-g-action="Technology Compute Engine Partners" data-g-label="{[{partner.name}]} Phone" ng-bind="partner.phone"></a>
+                    </li>
+                    <li class="location">
+                      <a href="http://maps.google.com/?q={[{partner.address}]}" event="autotrack-data-g" data-g-event="Technology" data-g-action="Technology Compute Engine  Partners" data-g-label="{[{partner.name}]} Location">Location</a>
+                    </li>
+                    <li class="email">
+                      <a href="mailto:{[{partner.contactUsEmail}]}" event="autotrack-data-g" data-g-event="Technology" data-g-action="Technology Compute Engine  Partners" data-g-label="{[{partner.name}]} Contact">Contact Us</a>
+                    </li>
+                    <li class="website">
+                      <a href="{[{partner.url}]}" target="_blank" event="autotrack-data-g" data-g-event="Technology" data-g-action="Technology Compute Engine  Partners" data-g-label="{[{partner.name}]}: Visit the site">Visit the site</a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>  
+        
+
+        
+
+        
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+  <!-- Scripts to include both on Goro + Devsite -->
+  <script type="text/javascript">
+   window.___gcfg = {
+     lang: ''
+   };
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+  </script>
+
+  <!-- GTM implementation -->
+  
+
+
+
+
+
+
+  <!-- Start dataLayer -->
+    <script>
+      dataLayer = [{
+        'country': 'us',
+        'region': 'noram',
+        'language': 'en'
+      }];
+    </script>
+  <!-- End dataLayer -->
+  
+  <!-- Start Google Tag Manager -->
+  <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5CVQBG"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-5CVQBG');</script>
+  <!-- End Google Tag Manager -->
+
+
+  <!-- Global JS scripts to load; path will depend on whether we're on devsite or Goro -->
+  
+
+  
+    
+      <script src="/js/base.min.js"></script>
+    
+  
+
+  
+    <!-- Retina loader; Do not load if partners page because we need to wait until the Angular app runs -->
+    
+      <script>new lfl.system.RetinaLoader();</script>
+    
+    
+    <!-- Secondary right-side scroll-nav -->
+    <script>new lfl.ui.ScrollNav({});</script>
+  
+
+
+
+  </body>
+</html>

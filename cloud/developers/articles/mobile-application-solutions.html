@@ -1,0 +1,314 @@
+<html devsite>
+  <head>
+    <title>Mobile Articles &amp; Mobile Development Guides</title>
+    <meta name="description" content="Read technical articles on mobile solutions with Google Cloud Platform. Mobile specific articles cover application development, mobile backend and mobile gaming." />
+    <meta name="hide_page_heading" value="true" />
+    <meta name="full_width" value="true" />
+    <meta name="top_category" value="developers" />
+    <meta name="subcategory" value="articles" />
+    <meta name="viewport" content="initial-scale=1, minimum-scale=1, width=device-width">
+    <link rel="apple-touch-icon" href="//cloud.google.com/_static/images/apple-touch-icon.png">
+    <link href="//fonts.googleapis.com/css?family=Open+Sans:400italic,300,400,600,700" rel="stylesheet">
+
+    <link href="/css/default.css" rel="stylesheet">
+
+    <!--[if lt IE 9]>
+    <link rel="stylesheet" media="screen" href='/c/cp-ie.css'>
+    <![endif]-->
+    <script src="/js/floodlight.js"></script>
+  </head>
+  <body>
+
+
+
+
+
+
+
+
+<div id="maia-main" class="cp-article">
+  <div class="maia-cols">
+    <div class="maia-col-9">
+      <div>
+        <div style="float:right">
+          <div class="g-plusone"></div>
+        </div>
+        <h1 class="title">Mobile Solutions on Google Cloud Platform</h1>
+      </div>
+      
+      <h2>Introduction</h2>
+      <p>With over <a href="http://blogs.strategyanalytics.com/WDS/post/2012/10/17/Worldwide-Smartphone-Population-Tops-1-Billion-in-Q3-2012.aspx">a billion people using smartphones</a> and tablets in their daily lives, there is a huge opportunity and growing demand for mobile solutions. Users can choose from hundreds of thousands of applications, so in order for mobile developers to be successful, it is important to create compelling, engaging and connected user experiences. This typically requires a need for backend components or services to feed the application with relevant data, provide push notification, and allow interactions between users, and more.</p>
+      <p>With Google Cloud Platform you can easily build a backend for your mobile solution. You may be starting small and hoping to get a lot of users or you may already have a large customer base that you want to start serving through a new mobile experience. In either case, you can develop a backend that scales to meet the growing demand. By leveraging Google infrastructure, you can focus on implementing your application’s scenarios and not have to worry about things such as managing machines or load balancing.</p>
+      <h3>Requirements</h3>
+      <p>Typical requirements for a compelling mobile solution include:</p>
+      <ul>
+        <li>Support for Android and iOS devices through native applications</li>
+        <li>Storage, retrieval, and processing data outside of mobile devices</li>
+        <li>Orchestrating push notification to Android and IOS devices</li>
+        <li>Geo-location awareness and geo-proximity search</li>
+        <li>User authentication</li>
+        <li>High scalability</li>
+      </ul>
+      <p>You can easily meet these requirements when you build your mobile solution on Google Cloud Platform.</p>
+      <h3>Scope</h3>
+      <p>This paper presents the key components of a mobile solution built on Google Cloud Platform. It includes both components that are common to most mobile solutions and optional components that might be useful in more specific contexts.</p>
+      <p>This paper is intended for architects and developers interested in building their own backend and designing the communications between mobile clients and the backend. Building the actual mobile clients is not covered in this document beyond information relevant to communicating with the backend, authenticating users and receiving push notification.</p>
+      <h3>High-Level Overview</h3>
+      <p>The key components in the proposed mobile solution architecture are:</p>
+      <ul>
+        <li>Your mobile clients - any combination of Android, iOS and HTML/JavaScript clients.</li>
+        <li>Your mobile backend application which is responsible for serving requests from the clients.</li>
+        <li>The communication layer between the mobile clients and the backend.</li>
+        <li>Various cloud services for storing your application data, delivering push notification, etc.</li>
+      </ul>
+      <p>This document walks you through the steps required for assembling a mobile solution step by step, leading to <a href="#architecture-diagram">a complete architectural diagram</a> presented at the end.</p>
+      <h2>Your mobile backend<sup>[<a href="#fn-1" name="ref-1">1</a>]</sup> in the cloud</h2>
+      <p>The ability to have your own backend means that you can run your custom code on the backend and not be limited to only calling 3rd party services from your mobile client applications.</p>
+      <p>By leveraging Google Cloud Platform, you can easily have your own backend in the cloud. Google App Engine is an ideal platform for running your code, especially code that can be called from your mobile client devices.</p>
+      <h3>Primary role of your custom code in the backend</h3>
+      <p>The approach for building the backend as presented in this document allows you to focus on developing your core scenarios. Your two main tasks are defining your domain specific Resources and implementing custom logic needed for specific operations on these Resources. Your mobile clients will be able to easily access these Resources and invoke these operations through your API that can be easily exposed from your mobile backend as described later.</p>
+      <p>Your mobile backend may retrieve some of Resources from external services without storing them within your application. But typically your mobile solution will have at least some Resources that are managed and persisted as part of your solution.</p>
+      <p>For example, if you are building an application that includes reviews, you can define Review as one of your Resources. If your application allows mobile shopping, you may include reviews of products in the inventory. If your application lists movies, you may include movie reviews. If you are developing a casual game you may define CompletedPlay as an entity with attributes such as score, date, user id, and more.</p>
+      <p>Then you can define operations on these Resources such as inserting a new review, adding a usefulness rating to a review, retrieving the reviews sorted by their usefulness rating or retrieving top scores for a day.</p>
+      <p>Depending on your scenario and requirements, the implementation of these operations and your custom code won’t always be trivial. Your code may also do a lot of things besides synchronously handling simple API requests from the clients. You may want to do background processing, geo-proximity based searches, or push notification, all of which are possible when running your mobile backend on Google Cloud Platform. As a result, you can focus on writing your application-specific code and not infrastructure code.</p>
+      <h3>What you don’t have to worry much about</h3>
+      <p>Running your mobile backend code on Google App Engine, according to the recommended design, offers you the following benefits of Google Infrastructure:</p>
+      <ul>
+        <li><a href="https://developers.google.com/appengine/whyappengine#scale">Automatic scalability</a></li>
+        <li><a href="https://developers.google.com/appengine/docs/whatisgoogleappengine?hl=en">Automatic load balancing across instances of your mobile backend</a></li>
+        <li><a href="https://developers.google.com/appengine/docs/java/config/appconfig#Static_Files_and_Resource_Files">Static content serving and caching</a></li>
+        <li><a href="https://developers.google.com/appengine/whyappengine#reliable">Reliability, performance, and security features</a></li>
+        <li><a href="https://developers.google.com/appengine/docs/adminconsole/index">Monitoring and management</a></li>
+        <li><a href="https://developers.google.com/appengine/docs/java/config/dos?hl=en">Configurable DoS protection</a></li>
+        <li>Integration with Google Accounts for OAuth2 authentication (for both Android and iOS clients)</li>
+      </ul>
+      <h2>Communication between your mobile clients and your mobile backend</h2>
+      <p>There are many possible patterns for communication between mobile clients and the backend. However, over the last decade REST-based model has emerged as a predominant one.</p>
+      <p>Google Cloud Platform offers a powerful new technology called <a href="https://developers.google.com/appengine/docs/java/endpoints/overview">Google Cloud Endpoints</a><sup>[<a href="#fn-2" name="ref-2">2</a>]</sup> that simplifies, not only exposing REST API from your mobile backend, but also consuming REST APIs from Android, iOS, and JavaScript clients. It also provides OAuth2-based authentication, so your mobile backend code can know the identity of the caller. Cloud Endpoints service leverages Google infrastructure so you can count on it to scale to meet the demand. You can also use tooling support to have necessary boilerplate code auto-generated, so you can focus on writing code specific to your application scenarios.</p>
+      <p>Please follow Google Cloud Endpoints documentation for information on how to annotate your application code to have your API exposed through Google Cloud Endpoints, how to configure OAuth2 authentication, and how to generate strongly typed Android and iOS clients as well as lightweight JavaScript clients. If you use Eclipse, you can benefit from additional integrated tooling support provided by <a href="https://developers.google.com/eclipse/">Google Plugin for Eclipse</a>.</p>
+      <p>Although you can build your mobile backend without using Google Cloud Endpoints (and many parts of this document would still be applicable), the proposed solution assumes the usage of Google Cloud Endpoints.</p>
+      <h2>Assembling Your Mobile Solution</h2>
+      <h3>The basics</h3>
+      <p>As mentioned in previous sections, the essential components (Fig. 1) in the proposed mobile solution architecture are:</p>
+      <ol>
+        <li>Android and/or iOS mobile clients.</li>
+        <li>Google Cloud Endpoints used for communications between the clients and the backend over REST API with optional OAuth2 authentication.</li>
+        <li>Your mobile backend application code running on Google App Engine and responsible for serving requests from the clients.</li>
+      </ol>
+      <figure>
+        <img src="../images/articles/mobile-app-1.jpg" alt="Essential components" class="f-80" />
+        <figcaption>Figure 1. Essential components in proposed Mobile Solutions architecture</figcaption>
+      </figure>
+      <h3>Storing data</h3>
+      <p>A typical requirement for a mobile solution with a backend is to store data outside of client devices<sup>[<a href="#fn-3" name="ref-3">3</a>]</sup>. This data can be categorized into two groups (Fig. 2):</p>
+      <ol>
+        <li>
+          <strong>Large, and typically binary, objects such as images</strong>
+          <p>These objects can be a part of your solution, for example, product images for a dynamic inventory of gifts offered by your mobile application. Or, you may also want to allow your users to upload their pictures, avatars, and other images. In both cases, for storing this kind of data you can use <a href="https://developers.google.com/storage/docs/getting-started">Google Cloud Storage</a>, a service that stores objects and files up to terabytes in size. See also “<a href="#serving-and-processing-images">Serving and processing images</a>” below.</p>
+        </li>
+        <li>
+          <strong>Fine grained properties and entities</strong>
+          <p>These properties and entities might include information about the last completed level in a mobile game, information about users, user’s device registration for push notification, records of in-app purchases, or other similar application-specific data. </p>
+          <p>The properties of these entities can also include a reference, for example, object name and optionally bucket name or URL, to objects stored in Google Cloud Storage.</p>
+          <p>With your mobile backend hosted on Google App Engine, a natural place to store this kind of data is <a href="https://developers.google.com/appengine/docs/java/datastore/">App Engine Datastore</a>. It provides a NoSQL<sup>[<a href="#fn-4" name="ref-4">4</a>]</sup> schemaless object data store, with a query engine and atomic transactions. These entities will often map to the Resources exposed over Google Cloud Endpoints API. When using appropriate <a href="https://developers.google.com/appengine/docs/java/datastore/jpa/overview-dn2#Class_and_Field_Annotations">annotations</a> you can leverage Google Plugin for Eclipse to generate skeleton code for typical list/get/insert/update/remove operations using App Engine Datastore.</p>
+        </li>
+      </ol>
+      <figure>
+        <img src="../images/articles/mobile-app-2.png" alt="Storing data" class="f-60" />
+        <figcaption>Figure 2. Storing data</figcaption>
+      </figure>
+      <h3>Optimizing data access with Memcache </h3>
+      <p>If your mobile clients are making frequent requests to the backend to retrieve the same data, it wouldn’t be optimal to retrieve this data from persistent storage for every request. For example, if you are building a mobile application that shows movie reviews, it is likely that most users would be retrieving reviews about one of a handful movies that are currently in theaters and there will be significantly fewer requests for reviews of the remaining thousands of movies that the backend stores in a persistent storage.</p>
+      <p>A backend running on Google App Engine can use a distributed in-memory data cache service called <a href="https://developers.google.com/appengine/docs/java/memcache/">Memcache</a> to store and retrieve frequently accessed data (Fig. 3). Using Memcache not only allows your mobile solution to have higher performance and to scale better, but also reduces your cost of accessing App Engine Datastore as your application will be sending fewer requests to App Engine Datastore.</p>
+      <figure>
+        <img src="../images/articles/mobile-app-3.png" alt="Optimizing data access" class="f-60" />
+        <figcaption>Figure 3. Optimizing data access with Memcache</figcaption>
+      </figure>
+      <h3>Asynchronous processing with Task Queues</h3>
+      <p>Sometimes it is not possible, or desirable, to do all the work associated with a request sent from a mobile client before the response needs to be sent back to the user’s device. For example, let's say you are developing a social application that notifies user’s friends when the user checks into a restaurant. You may want to record the check-in occurrence synchronously, together with recording the fact that the notification needs to be processed, and then send the acknowledgment response to the client immediately without waiting until all notifications are processed.</p>
+      <p>Your code running on Google App Engine can use a service called <a href="https://developers.google.com/appengine/docs/java/taskqueue/">Task Queues</a> to enqueue information about work that needs to be done asynchronously (i.e., “tasks”). In the example above, your application could enqueue a task to notify Joe’s friends that Joe checked into Trendy Perks restaurant at 7:35 pm.</p>
+      <p>Typically, you would configure Task Queue service to send the enqueued tasks (<a href="https://developers.google.com/appengine/docs/java/taskqueue/overview-push">push model</a>) to your code running on Google App Engine as HTTP requests to a chosen URL. Your application can process these requests through regular web request handlers. In the example above, your request handler could retrieve the task information from the HTTP request, look up Joe’s friends, and then notify each of the friends by sending a push notification. You can configure the tasks to be processed by the same Google App Engine instance(s) that are processing requests from mobile clients or <a href="https://developers.google.com/appengine/docs/java/taskqueue/overview-push#Push_Queues_and_Backends">by dedicated instance(s)</a>.</p>
+      <p>Alternatively, your code can <a href="https://developers.google.com/appengine/docs/java/taskqueue/overview-pull">pull the tasks</a> from the queue(s). This can be done by either your mobile backend code running on Google App Engine, or by your code running outside of App Engine, which can be used to process tasks by Google Compute Engine instances.</p>
+      <p>In either case, processing tasks is typically the second most common responsibility your custom code running on Google App Engine would have, in addition to processing requests from mobile clients over Google Cloud Endpoints, as mentioned in previous sections.</p>
+      <figure>
+        <img src="../images/articles/mobile-app-4.png" alt="Asynchronous processing" class="f-60" />
+        <figcaption>Figure 4. Asynchronous processing with Task Queues</figcaption>
+      </figure>
+      <h3 id="push-notification">Push notification</h3>
+      <p>Push notification is very important to the overall user experience on mobile devices. Depending on the client platform, your mobile solution can use this technology to display “<a href="http://developer.android.com/guide/topics/ui/notifiers/toasts.html">toasts</a>” and other notifications on users’ devices, even if your mobile application has not been running. It can also be used to keep feeding the mobile client application with relevant data.</p>
+      <p>With your mobile backend code running on Google App Engine, you can orchestrate sending push notifications to your users by leveraging the following technologies:</p>
+      <ul>
+        <li><a href="http://developer.android.com/google/gcm/index.html">Google Cloud Messaging for Android</a> - a Google service that allows you to send data to your users that have your client application installed on their Android-powered devices. If you use Eclipse you can have skeleton code generated by <a href="https://developers.google.com/eclipse/">Google Plugin for Eclipse.</a></li>
+        <li>Sockets API<sup>[<a href="#fn-5" name="ref-5">5</a>]</sup> to send push notification using Apple ® Push Notification Service to your iOS users.</li>
+      </ul>
+      <p>An example of this might be to send push notifications to the users of your mobile solution when their friend checks into a restaurant or posts a review (Fig. 5).</p>
+      <figure>
+        <img src="../images/articles/mobile-app-5.png" alt="Push Notification Service" class="f-80" />
+        <figcaption>Figure 5. Push Notification</figcaption>
+      </figure>
+      <h3 id="serving-static-content">Serving static content</h3>
+      <p>In some cases, you may also benefit from packaging <a href="https://developers.google.com/appengine/docs/java/config/appconfig#Static_Files_and_Resource_Files">static content</a> as part of your Google App Engine application and then having it served by Google App Engine infrastructure using dedicated servers and caches without having your mobile backend code involved at all. This is typically more relevant to HTML/JavaScript clients than to native iOS or Android applications and is applicable to resources such as images, CSS style sheets, or browser JavaScript code.</p>
+      <h3 id="serving-and-processing-images">Serving and processing images</h3>
+      <p>If your mobile solution includes a manageable number of static images, you can package them (often in multiple resolutions) as part of your native Android and iOS applications. This applies, for example, to various icons that are part of your application and are used to build the UI of your client applications.</p>
+      <p>Other category of images are images that are not part of your applications, but are, rather, related to the data that your application processes, such as thumbnails of movies in your movie related application, pictures of products that can be gifted through your application, or avatars in your game or social applications. If you can store such images in resolutions and formats optimized for your mobile clients then you can upload them to <a href="https://developers.google.com/storage/docs/getting-started">Google Cloud Storage</a> and then provide direct URLs to these images to the mobile clients. This approach is very scalable as it allows mobile clients to retrieve these images directly from the scalable cloud storage without involving your mobile backend code.</p>
+      <p>In some cases, you may want to manipulate and process images in addition to storing them. For example, you may want to serve the images in dynamically adjusted sizes depending on the resolution of your client devices. In such scenarios you can use Google App Engine <a href="https://developers.google.com/appengine/docs/java/images/">Images Service</a> to resize, rotate, flip, and crop images, as well as to enhance photographs using a predefined algorithm. These operations can be performed on images from, among other sources, Google Cloud Storage.  The modified images can then be served to the clients directly from the dynamic image serving infrastructure provided by Google without involving your mobile backend code. Your code is responsible just for using the Images Service API to obtain the appropriate image URL and for providing this URL to the mobile clients.</p>
+      <figure>
+        <img src="../images/articles/mobile-app-6.png" alt="Serving and processing images" class="f-80" />
+        <figcaption>Figure 6. Serving and processing images</figcaption>
+      </figure>
+      <h3>Full text and geo-proximity (location based) search</h3>
+      <p>If you want to give your users full text search capability over some of the structured data managed by your mobile solution, you can leverage Google App Engine <a href="https://developers.google.com/appengine/docs/java/search/">Search API</a><sup>[<a href="#fn-6" class="ref-6">6</a>]</sup>. For example, if your application provides access to a large and dynamic inventory of items, your users may benefit from being able to find items by entering words that are part of an item’s name or description, even if you provide a convenient touch UI with categorization, paging, etc.</p>
+      <p>To use Search API, you can construct “documents” that contain searchable data and then add these “documents” to an index. Then, your mobile backend can construct search queries, including full-text search queries, and run them against the “documents” in the index. In the example above, each item in the inventory could be mapped to a “document” in the index with properties such as name, description, etc.</p>
+      <p>Your mobile solution may also perform geo-proximity search if, for instance, you wanted to retrieve the list of nearby stores. You can avoid the complexity of building such functionality yourself and simply leverage Search API for <a href="https://developers.google.com/appengine/docs/java/search/overview#Performing_Location-Based_Searches">geo-proximity search</a>[<sup><a href="#fn-7" class="ref-7">7</a>]</sup>. The basic flow is very similar to the process described above for full text search. You can simply add geo-location as one of document properties and then include geo-proximity condition in your search queries.</p>
+      <figure>
+        <img src="../images/articles/mobile-app-7.png" alt="Full text and geo-proximity search" class="f-60" />
+        <figcaption>Figure 7. Full text and geo-proximity search</figcaption>
+      </figure>
+      <h3>Custom maintenance and other scheduled jobs</h3>
+      <p>Besides processing requests from the mobile clients synchronously through Google Cloud Endpoints and asynchronously using Task Queues, your mobile backend code may need to do some processing at various regular or semi-regular intervals. For example, you may want your mobile solution to send push notification to your mobile users every morning with a relevant local offer or you may want your solution to do various application specific maintenance jobs daily or few times a day. For example, your application may offer premium subscriptions. When the subscriptions expire, or about to expire, you may want to do various related processing, for example, send an email using <a href="https://developers.google.com/appengine/docs/java/mail/">Mail API</a>, deactivate user accounts, etc. You may also want your mobile backend to update some data cached in Memcache every 10 minutes or update statistics of top players every hour.</p>
+      <p>With your mobile backend code running on Google App Engine, configuring such scheduled jobs is straightforward with <a href="https://developers.google.com/appengine/docs/java/config/cron">Cron Service</a>. You can configure it to invoke some URLs in your mobile backend at the requested intervals or specific times.</p>
+      <figure>
+        <img src="../images/articles/mobile-app-8.png" alt="Cron Service" class="f-60" />
+        <figcaption>Figure 8. Scheduled jobs with Cron Service</figcaption>
+      </figure>
+      <h3>Storing and Analyzing Application Logs</h3>
+      <p>Application logs can provide a lot of insight about how your users are using your mobile solution and how your mobile backend behaves. With your mobile backend code running on Google App Engine, you can use <a href="https://developers.google.com/appengine/docs/java/logs/">Logs API</a> to retrieve the application logs. Then, you can upload them to Google Cloud Storage and ingest them into <a href="https://developers.google.com/bigquery/">Google BigQuery</a>. If your mobile client application allows users to make a lot of interactions within the applications without sending regular requests to the backend, you may want to augment the backend logs with logs that the client application can collect and periodically send to your mobile backend through your API exposed over Google Cloud Endpoints.</p>
+      <h3 id="running-code">Running code outside of App Engine sandbox</h3>
+      <p>If you can build your complete mobile backend using runtimes supported by Google App Engine<sup>[<a href="#fn-8" name="ref-8">8</a>]</sup>, you will be able to avoid having to deal with infrastructural issues such as auto scaling, load-balancing, failover, etc. However, you may have requirements that are not suitable for running in App Engine sandbox. For example, you may want to use some C/C++ libraries, custom binaries, or Perl programs as part of asynchronous request processing or batch processing.</p>
+      <p>In such scenarios, you can use <a href="../../products/compute-engine">Google Compute Engine</a><sup>[<a href="#fn-9" name="ref-9">9</a>]</sup> to run the parts of your mobile backend not suitable for hosting on Google App Engine.</p>
+      <p>When code running on Compute Engine is used for batch processing or asynchronous request processing<sup>[<a href="#fn-10" name="ref-10">10</a>]</sup>, your code that runs on Google App Engine can enqueue tasks into a pull queue (or multiple queues) and your code that runs on Google Compute Engine can pull these tasks using <a href="https://developers.google.com/appengine/docs/python/taskqueue/rest/">Task Queue REST API</a><sup>[<a href="#fn-11" name="ref-11">11</a>]</sup>.</p>
+      <figure>
+        <img src="../images/articles/mobile-app-9.png" alt="Running code outside of App Engine sandbox" class="f-90" />
+        <figcaption>Figure 9. Running code outside of App Engine sandbox</figcaption>
+      </figure>
+      <h3>Other relevant services and APIs</h3>
+      <p>Google offers many other <a href="https://developers.google.com/mobile/">services and APIs</a> that can be used in mobile solutions.  These include: <a href="http://www.google.com/ads/admob/">AdMob</a>, <a href="https://developers.google.com/analytics/devguides/">Analytics</a>, and various <a href="https://developers.google.com/maps/">Maps APIs</a>, such as <a href="https://developers.google.com/places/">Places API</a>, <a href="https://developers.google.com/maps/documentation/android/">Android Maps</a>, and <a href="https://developers.google.com/maps/documentation/ios/">iOS Maps</a> SDKs. The usage of these services and APIs is beyond the scope of this document.</p>
+      <h2 id="architecture-diagram">Architecture diagram</h2>
+      <p>The following architecture diagram (Fig. 10) illustrates the components in the solution:</p>
+      <figure>
+        <a href="../images/articles/mobile-app-10.png"><img src="../images/articles/mobile-app-10.png" alt="Architecture Diagram" class="f-100" /></a>
+        <figcaption>Figure 10. Architecture Diagram of the proposed Mobile Solution (<a href="../images/articles/mobile-app-10.png">full size</a>)</figcaption>
+      </figure>
+      <h2>Conclusion</h2>
+      <p>By leveraging Google Cloud Platform, you can easily build a backend for your mobile solution. You don't have to worry about plumbing and infrastructure. Your solution can be highly scalable and meet requirements for building compelling applications. Among other things, it can use integrated user authentication, support Android and iOS native applications, store, retrieve and process data outside of mobile devices, as well as orchestrate push notification and use geo-proximity search.</p>
+      <h2>Sample Application</h2>
+      <p>You can download the Mobile Shopping Assistant sample application (<a href="https://github.com/GoogleCloudPlatform/solutions-mobile-shopping-assistant-backend-java" target="_blank">App Engine backend</a>, <a href="https://github.com/GoogleCloudPlatform/solutions-mobile-shopping-assistant-android-client" target="_blank">Android client</a> and <a href="https://github.com/GoogleCloudPlatform/solutions-mobile-shopping-assistant-ios-client" target="_blank">iOS client</a>) and read the corresponding <a href="//cloud.google.com/resources/articles/how-to-build-mobile-app-with-app-engine-backend-tutorial">tutorial</a> to see how the key parts of the architecture (presented in this document) have been implemented for a particular scenario. The sample application features REST API exposed through Google Cloud Endpoints with integrated OAuth-based client authentication, geo-proximity search, push notification, asynchronous request processing, scheduled tasks, and serving images from Google Cloud Storage.</p>
+
+      <br>
+      <h2>Notes</h2>
+      <p id="fn-1"><sup>[<a href="#ref-1">1</a>]</sup> In this document, a backend refers broadly to the part of a mobile solution that runs outside of client devices. It should not be confused with Google App Engine <a href="http://developers.google.com/appengine/docs/java/backends/overview?hl=en">backend instances</a>, which represent a type of instances that have <a href="http://developers.google.com/appengine/docs/java/backends/overview?hl=en#Properties_of_Backends">different characteristics</a> than default App Engine instances. In many mobile solutions, default Google App Engine instances should be sufficient. However, if you have specific requirements, you can assemble a mobile solution using a “backend” composed of any combination of default App Engine instances and backend instances.</p>
+      <p id="fn-2"><sup>[<a href="#ref-2">2</a>]</sup> As of February 2013, Google Cloud Endpoints is an experimental feature.</p>
+      <p id="fn-3"><sup>[<a href="#ref-3">3</a>]</sup> Section 4.2 of <a href="https://developers.google.com/appengine/terms">Google App Engine Terms of Service</a> describes your obligation to protect the privacy and legal rights of your End Users,  including the requirement to provide a legally adequate privacy policy about the use of data you collect and to obtain all necessary consents from your end users to the collection, use, monitoring or disclosure of such data.</p>
+      <p id="fn-4"><sup>[<a href="#ref-4">4</a>]</sup> If you prefer to use relational SQL database you can choose to use <a href="http://developers.google.com/cloud-sql/">Google Cloud SQL</a> either <a href="http://developers.google.com/cloud-sql/faq#choice">instead of Datastore or complementary to Datastore</a>.</p>
+      <p id="fn-5"><sup>[<a href="#ref-5">5</a>]</sup> As of early January 2013 Sockets API is a feature available for Trusted Testers only and doesn’t have production support.</p>
+      <p id="fn-6"><sup>[<a href="#ref-6">6</a>]</sup> As of early January 2013, App Engine Search API is an experimental feature with <a href="http://developers.google.com/appengine/docs/java/search/overview#Quotas">limited free quotas</a>.</p>
+      <p id="fn-7"><sup>[<a href="#ref-7">7</a>]</sup> As of December 2012, geo-proximity search works in applications deployed to App Engine. However, it doesn’t work on local dev server.</p>
+      <p id="fn-8"><sup>[<a href="#ref-8">8</a>]</sup> As of December 2012, App Engine <a href="http://developers.google.com/appengine/docs/whatisgoogleappengine">supports</a> Java 5 and 6, Python 2.7.3 and 2.5.2, as well as Go runtime (the last one as experimental feature).</p>
+      <p id="fn-9"><sup>[<a href="#ref-9">9</a>]</sup> As of December 2012, Google Compute Engine is available to selected users in limited preview.</p>
+      <p id="fn-10"><sup>[<a href="#ref-10">10</a>]</sup> Google Compute Engine can be used also in other mobile solutions scenarios, but such usage is beyond the scope of this document.</p>
+      <p id="fn-11"><sup>[<a href="#ref-11">11</a>]</sup> As of December 2012, Task Queue REST API is an experimental feature.</p>
+
+    </div>
+    <div class="maia-col-3">
+      <br>
+      <img src="//www.google.com/images/icons/product/feedback-16.png" class="g-app-icon">
+      <a href="javascript:void(0);" class="google-feedback">Feedback on this document</a>
+      <br><br>
+      
+      <img src="//www.google.com/images/icons/thirdparty/pdf-16.png" class="g-app-icon">
+      <a href="../../../files/articles/google-cloud_technical-article_mobile-solutions.pdf" class="cp-pdf" onclick="javascript: _gaq.push(['_trackPageview', '../../../files/articles/google-cloud_technical-article_mobile-solutions.pdf']);">Download PDF</a>
+<hr><h4>Sample App and Tutorial</h4>
+<ul>
+  <li>Sample Shopping Assistant App in Github<br>
+    <a href="https://github.com/GoogleCloudPlatform/solutions-mobile-shopping-assistant-backend-java" target="popout">
+    [Java Backend]</a>
+    <a href="https://github.com/GoogleCloudPlatform/solutions-mobile-shopping-assistant-android-client" target="popout">
+    [Android Client]</a>
+    <a href="https://github.com/GoogleCloudPlatform/solutions-mobile-shopping-assistant-ios-client" target="popout">
+    [iOS Client]</a> <img src="../images/ext-link-8px.png" height="8px" width="8px"></li>
+
+  <li><a href="articles/how-to-build-mobile-app-with-app-engine-backend-tutorial">Tutorial</a></li>
+</ul>
+<hr>
+
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+</script>
+<script type="text/javascript" src="//www.gstatic.com/feedback/api.js"></script>
+<script>
+  $('body').delegate('.google-feedback', 'click', function() {
+      userfeedback.api.startFeedback({'productId': '94614'});
+  });
+</script>
+
+  <!-- Scripts to include both on Goro + Devsite -->
+  <script type="text/javascript">
+   window.___gcfg = {
+     lang: ''
+   };
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+  </script>
+
+  <!-- GTM implementation -->
+  
+
+
+
+
+
+
+  <!-- Start dataLayer -->
+    <script>
+      dataLayer = [{
+        'country': 'us',
+        'region': 'noram',
+        'language': 'en'
+      }];
+    </script>
+  <!-- End dataLayer -->
+  
+  <!-- Start Google Tag Manager -->
+  <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5CVQBG"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-5CVQBG');</script>
+  <!-- End Google Tag Manager -->
+
+
+  <!-- Global JS scripts to load; path will depend on whether we're on devsite or Goro -->
+  
+
+  
+    
+    <script src="/js/base.min.js"></script>
+    
+  
+
+  
+    <!-- Retina loader; Do not load if partners page because we need to wait until the Angular app runs -->
+    
+      <script>new lfl.system.RetinaLoader();</script>
+    
+
+    <!-- Secondary right-side scroll-nav -->
+    <script>new lfl.ui.ScrollNav({});</script>
+  
+
+
+
+  </body>
+</html>
