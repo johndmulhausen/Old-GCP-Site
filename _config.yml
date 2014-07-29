@@ -22,8 +22,8 @@ destination: ../googledevdocs.github.io-build/
 # Branch defaults to "source" for USERNAME.github.io
 # or "master" otherwise
 username: GoogleDevDocs
-sourcerepo: googledevdocs.github.io
-destinationrepo: googledevdocs_build
+repo: googledevdocs.github.io
+branch: build
 
 permalink: pretty
 
@@ -31,12 +31,12 @@ paginate: 10
 paginate_path: "blog/page:num"
 
 exclude:
+  - README.md
   - Rakefile
   - Gemfile
   - Gemfile.lock
+  - changelog.md
   - "*.Rmd"
-  - README.md
   - "*.yml"
-  - "*.json"
+  - ".gitignore"
   - vendor
-  - .gitignore
