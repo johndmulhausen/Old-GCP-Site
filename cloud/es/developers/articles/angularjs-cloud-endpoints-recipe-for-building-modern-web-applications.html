@@ -10,10 +10,10 @@
 <meta name="viewport" content="initial-scale=1, minimum-scale=1, width=device-width">
 <link rel="apple-touch-icon" href="//cloud.google.com/_static/images/apple-touch-icon.png">
 <link href="//fonts.googleapis.com/css?family=Open+Sans:400italic,300,400,600,700" rel="stylesheet">
-<link href="/css/default.css" rel="stylesheet"><!--[if lt IE 9]>
+<link href="/cloud/css/default.css" rel="stylesheet"><!--[if lt IE 9]>
     <link rel="stylesheet" media="screen" href='/c/cp-ie.css'>
     <![endif]-->
-<script src="/js/floodlight.js">
+<script src="/cloud/js/floodlight.js">
 </script>
 </head>
 <body>
@@ -144,8 +144,8 @@ $scope.list = function() {
 </ol>
 <p>Para seguir este orden, el archivo <span class="code">index.html</span> contiene las siguientes etiquetas <span class="code">&lt;script&gt;</span> dentro de la etiqueta <span class="code">&lt;head&gt;</span> para cargar cada una de las bibliotecas JS:</p>
 <pre>
-&lt;script src="js/angular.min.js"&gt;&lt;/script&gt;
-&lt;script src="js/guestbook.js"&gt;&lt;/script&gt;
+&lt;script src="/cloud/js/angular.min.js"&gt;&lt;/script&gt;
+&lt;script src="/cloud/js/guestbook.js"&gt;&lt;/script&gt;
 &lt;script src="<a href="https://apis.google.com/js/client.js?onload=init">https://apis.google.com/js/client.js?onload=init</a>"&gt;&lt;/script&gt;
 </pre>
 <p>Una vez cargada, la tercera biblioteca (cliente de la API de Google) llama a la función de inicialización que su parámetro "onload" ha especificado. En este caso, se espera y se invoca la función <span class="code">init()</span>.</p>
@@ -225,7 +225,7 @@ dataLayer = [{
   j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
   })(window,document,'script','dataLayer','GTM-5CVQBG');
-</script><!-- End Google Tag Manager --><!-- Global JS scripts to load; path will depend on whether we're on devsite or Goro --><script src="/js/base.min.js">
+</script><!-- End Google Tag Manager --><!-- Global JS scripts to load; path will depend on whether we're on devsite or Goro --><script src="/cloud/js/base.min.js">
 </script><!-- Retina loader; Do not load if partners page because we need to wait until the Angular app runs --><script>
 new lfl.system.RetinaLoader();
 </script><!-- Secondary right-side scroll-nav --><script>
