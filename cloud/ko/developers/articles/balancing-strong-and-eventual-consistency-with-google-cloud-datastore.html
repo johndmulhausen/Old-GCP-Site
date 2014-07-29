@@ -45,12 +45,12 @@
 <h3><a name="h.86naen3bqe0" id="h.86naen3bqe0"></a>최종 일관성이란 무엇인가요?</h3>
 <p><span class="bld">최종 일관성</span>은 항목에 새로운 업데이트가 적용되지 않는다는 전제하에 항목의 모든 읽기 작업에서 결국 마지막으로 업데이트된 값을 반환한다는 것을 이론적으로 보장합니다. DNS(인터넷 도메인 이름 시스템)은 최종 일관성 모델이 사용된 시스템의 예로 잘 알려져 있습니다. DNS 서버는 꼭 마지막 값을 반영할 필요가 없으며, 그보다는 값이 캐싱되고 인터넷상의 수많은 디렉토리에서 복제됩니다. 수정된 값을 모든 DNS 클라이언트와 서버에 복제하려면 어느 정도의 시간이 소요됩니다. 하지만 DNS 시스템은 인터넷의 근간을 이루는 요소 중 하나가 된 매우 성공적인 시스템입니다. DNS는 가용성이 매우 높으며 엄청난 확장성이 증명되었고, 인터넷 전체에서 수천만 대 기기의 이름 조회를 가능하게 하고 있습니다.</p>
 <p>그림 1은 최종 일관성에서 복제의 개념을 보여줍니다. 다이어그램은 복제본을 언제든지 읽을 수 있지만, 일부 복제본은 특정 시점에 상위 노드에 쓰여진 값과 일치하지 않을 수 있음을 보여줍니다. 다이어그램에서 노드 A는 상위 노드이며 노드 B와 C는 복제본입니다.</p>
-<figure><img src="../images/articles/balancing-strong-and-eventual-consistency-with-gcd/eventual-consistency.png" alt="">
+<figure><img src="/cloud/images/articles/balancing-strong-and-eventual-consistency-with-gcd/eventual-consistency.png" alt="">
 <figcaption>그림 1: 최종 일관성에서 복제의 개념적인 묘사</figcaption>
 </figure>
 <p>반대로 기존의 관계형 데이터베이스는 즉각적 일관성으로도 불리는 강력한 일관성의 개념에 기반하여 설계되었습니다. 즉, 업데이트 즉시 조회된 데이터는 항목을 보는 모든 사용자에게 일관성 있게 표시됩니다. 이러한 특성은 관계형 데이터를 사용하는 많은 개발자에게 기본적인 전제가 되어 왔습니다. 하지만 강력한 일관성을 얻기 위해서는, 개발자는 애플리케이션의 확장성과 성능을 어느 정도 포기해야 합니다. 간단히 말해 업데이트 또는 복제 프로세스 도중에는 데이터를 잠금 설정하여 다른 프로세스에서 동일한 데이터를 업데이트하지 않도록 해야 합니다.</p>
 <p>그림 2에는 강력한 일관성에서의 배포 토폴로지 및 복제 프로세스에 대한 개념적인 묘사가 나와 있습니다. 이 다이어그램에서는 복제본이 항상 상위 노드와 일치하는 값을 가지지만 업데이트가 완료되기 전까지 이 값에 액세스할 수 없다는 것을 확인할 수 있습니다.</p>
-<figure><img src="../images/articles/balancing-strong-and-eventual-consistency-with-gcd/strong-consistency.png" alt="">
+<figure><img src="/cloud/images/articles/balancing-strong-and-eventual-consistency-with-gcd/strong-consistency.png" alt="">
 <figcaption>그림 2: 강력한 일관성에서 복제의 개념적인 묘사</figcaption>
 </figure>
 <h3><a name="h.rcbsdmar23fq" id="h.rcbsdmar23fq"></a>강력한 일관성과 최종 일관성 간에 균형 유지</h3>
@@ -143,7 +143,7 @@
 <h2><a name="h.3loc7ynqbw6i" id="h.3loc7ynqbw6i"></a>상위 쿼리 및 항목 그룹</h2>
 <p>문서 초반에 설명한 것처럼, Google Cloud Datastore의 장점 중 하나는 개발자가 강력한 일관성과 최종 일관성 간에 최적의 균형을 찾을 수 있다는 점입니다. Google Cloud Datastore에서 <a href="https://developers.google.com/appengine/docs/python/datastore/structuring_for_strong_consistency">항목 그룹</a>은 강력한 일관성, 트랜잭션 특성 및 집약성을 갖춘 단위입니다. 개발자는 항목 그룹을 활용하여 애플리케이션 내 항목에서 강력한 일관성의 범위를 정의할 수 있습니다. 이러한 방식을 통해 애플리케이션은 항목 그룹 내에서 일관성을 유지할 수 있는 한편, 동시에 완전한 시스템으로서의 높은 확장성, 가용성 및 성능을 확보할 수 있습니다.</p>
 <p>항목 그룹은 루트 항목과 그 하위 항목 또는 후속 항목에 의해 형성되는 계층구조입니다.<sup><a href="#ftnt1" name="ftnt_ref1" id="ftnt_ref1">[1]</a></sup> 항목 그룹을 만들려면 개발자는 상위 경로를 지정해야 하며, 이는 기본적으로 하위 키 앞에 붙는 일련의 상위 키입니다. 그림 3은 항목 그룹의 개념을 보여줍니다. 이 경우에서 'ateam' 키가 있는 루트 항목에는 'ateam/098745' 및 'ateam/098746' 키가 있는 두 개의 하위 항목이 있습니다.</p>
-<figure><img src="../images/articles/balancing-strong-and-eventual-consistency-with-gcd/croup-concept.png" alt="">
+<figure><img src="/cloud/images/articles/balancing-strong-and-eventual-consistency-with-gcd/croup-concept.png" alt="">
 <figcaption>그림 3: 항목 그룹 개념의 도식적인 보기</figcaption>
 </figure>
 <p>항목 그룹 내에서는 다음과 같은 특성이 보장됩니다.</p>

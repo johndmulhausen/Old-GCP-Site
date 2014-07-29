@@ -40,7 +40,7 @@
 <p>La pregunta que queda por responder es cómo diseñar e implementar estas aplicaciones web modernas. En la siguiente sección se proporciona cierta orientación para desarrolladores y para arquitectos de aplicaciones web que quieran aprender a incorporar clientes basados en navegador en una arquitectura existente basada en servicios.</p>
 <h2>Información general: MVC del cliente y Google Cloud Endpoints</h2>
 <p>Google Cloud Endpoints es la respuesta a esta pregunta: una característica de Google App Engine que proporciona un marco de llamada remota de procedimiento (RPC):</p>
-<figure><img src="../images/articles/angularjs-cloud-endpoints-recipe/cloud-endpoints.jpg" alt="">
+<figure><img src="/cloud/images/articles/angularjs-cloud-endpoints-recipe/cloud-endpoints.jpg" alt="">
 <figcaption>Figura 1. Google Cloud Endpoints</figcaption>
 </figure>
 <p>Más adelante se describe el proceso con más detalle.</p>
@@ -65,16 +65,16 @@ public void <span class="bld">insert</span>(Message message) {
 </pre>
 <p>El método <span class="code">insert()</span> recibe un objeto Java, el mensaje y se proporciona con propiedades como <span class="code">createdAt</span> (la marca de tiempo de creación), <span class="code">createdBy</span> (el propietario del mensaje) y el contenido. A continuación, crea una entidad "e" de almacén de datos con esos valores de propiedad y la guarda en el almacén de datos de Google App Engine.</p>
 <p>Estos puntos de acceso de servicio se muestran de manera automática a través de la API REST, y se puede utilizar el <a href="https://developers.google.com/apis-explorer/#p/">Explorador de APIs de Google</a> para ver los puntos de acceso de servicio. También es recomendable emitir solicitudes de prueba para confirmar las respuestas en formato JSON. En la siguiente pantalla, el resultado de <span class="code">guestbook.messages.insert</span> proviene directamente de las anotaciones hechas en la clase Java.</p>
-<figure><img src="../images/articles/angularjs-cloud-endpoints-recipe/api-explorer.png" alt="">
+<figure><img src="/cloud/images/articles/angularjs-cloud-endpoints-recipe/api-explorer.png" alt="">
 <figcaption>Figura 2. Realización de pruebas en los puntos de acceso de servicio con el Explorador de APIs de Google</figcaption>
 </figure>
 <h2>Combinación de AngularJS con Cloud Endpoints</h2>
 <p>En el siguiente paso se analiza la integración de Cloud Endpoints con marcos MVC del cliente como <a href="http://angularjs.org/">AngularJS</a>. Este tipo de sistema tiene una arquitectura parecida a la descrita en la figura 4.</p>
-<figure><img src="../images/articles/angularjs-cloud-endpoints-recipe/endpoints-architecture.png" alt="">
+<figure><img src="/cloud/images/articles/angularjs-cloud-endpoints-recipe/endpoints-architecture.png" alt="">
 <figcaption>Figura 4. Arquitectura MVC del cliente y de puntos de acceso de servicio</figcaption>
 </figure>
 <p>Aunque la integración de las dos tecnologías es sencilla, hay algunas dificultades y advertencias que debes tener en cuenta antes de iniciar la codificación. Vamos a echar un vistazo más detallado a la parte izquierda del diagrama anterior (figura 4): el código JavaScript que integra el MVC del cliente con los puntos de acceso que se muestran en el lado derecho del diagrama. Como ejemplo, nos vamos a plantear la creación de una interfaz de usuario web basada en AngularJS para el punto de acceso del servicio de libro de visitas que acabamos de definir. El siguiente diagrama es una captura de pantalla del aspecto de la interfaz de usuario:</p>
-<figure><img src="../images/articles/angularjs-cloud-endpoints-recipe/guestbook-app.png" alt="">
+<figure><img src="/cloud/images/articles/angularjs-cloud-endpoints-recipe/guestbook-app.png" alt="">
 <figcaption>Figura 3. Aplicación de libro de visitas con AngularJS y Cloud Endpoints</figcaption>
 </figure>
 <h3>Creación de una vista y de un modelo</h3>

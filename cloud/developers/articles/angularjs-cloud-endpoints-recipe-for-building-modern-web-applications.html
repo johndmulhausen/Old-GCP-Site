@@ -55,7 +55,7 @@
   <p>Google Cloud Endpoints is the answer for this question: a feature of Google App Engine that provides a RPC framework:</p>
 
   <figure>
-    <img src="../images/articles/angularjs-cloud-endpoints-recipe/cloud-endpoints.jpg">
+    <img src="/cloud/images/articles/angularjs-cloud-endpoints-recipe/cloud-endpoints.jpg">
     <figcaption>Figure 1: Google Cloud Endpoints</figcaption>
   </figure>
 
@@ -88,7 +88,7 @@ public void <span class="bld">insert</span>(Message message) {
   <p>These service endpoints are automatically exposed via REST API and you can use <a href="https://developers.google.com/apis-explorer/#p/">Google APIs Explorer</a> to view the service endpoints. It is also good to issue test requests to confirm the responses in JSON format. In the following screen, the <span class="code">guestbook.messages.insert</span> results directly from the annotations to the Java class.</p>
 
   <figure>
-    <img src="../images/articles/angularjs-cloud-endpoints-recipe/api-explorer.png">
+    <img src="/cloud/images/articles/angularjs-cloud-endpoints-recipe/api-explorer.png">
     <figcaption>Figure 2: Testing your service endpoints with Google APIs Explorer</figcaption>
   </figure>
 
@@ -98,14 +98,14 @@ public void <span class="bld">insert</span>(Message message) {
   <p>The next step addresses the integration of Cloud Endpoints with client-side MVC frameworks such as <a href="http://angularjs.org/">AngularJS</a>. Such a system would have an architecture similar to the one described in Figure 4:</p>
 
   <figure>
-    <img src="../images/articles/angularjs-cloud-endpoints-recipe/endpoints-architecture.png">
+    <img src="/cloud/images/articles/angularjs-cloud-endpoints-recipe/endpoints-architecture.png">
     <figcaption>Figure 4: Client-side MVC and Service Endpoints Architecture</figcaption>
   </figure>
 
   <p>Although the integration between two technologies is straightforward, there are some pitfalls and caveats you should know about before starting your coding. So, let&rsquo;s take a closer look at the left side of the diagram above (Fig. 4) &ndash; the actual JavaScript code that integrates the client-side MVC with the endpoints shown in the right side of the diagram. As an example, let&rsquo;s consider creating an AngularJS-based web UI for the Guestbook service endpoint we have just defined. The following diagram is a screenshot of how the UI will appear:</p>
 
   <figure>
-    <img src="../images/articles/angularjs-cloud-endpoints-recipe/guestbook-app.png">
+    <img src="/cloud/images/articles/angularjs-cloud-endpoints-recipe/guestbook-app.png">
     <figcaption>Figure 3: Guestbook app with AngularJS + Cloud Endpoints</figcaption>
   </figure>
 

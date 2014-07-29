@@ -56,7 +56,7 @@
 <p>이 문서에서는 Compute Engine 인스턴스에 JMeter 서버 클러스터를 설정하는 방법을 보여줍니다. Compute Engine에서 제공하는 가상 머신에 JMeter 서버 클러스터를 설정하면 물리적인 서버를 유지관리할 필요가 없으며, 부하 테스트를 위한 인스턴스의 수를 자유롭게 조절할 수 있습니다. JMeter는 일반적인 프레임워크이며, 부하 테스트의 대상 시스템은 JMeter 클러스터에서 액세스할 수 있는 곳이면 어디든지 위치할 수 있습니다. Google App Engine 애플리케이션이든 Compute Engine, 사내 서버 또는 다른 클라우드 플랫폼에 위치하는 시스템이든 상관이 없습니다. 실제 성능은 네트워크 성능을 비롯한 여러 요인의 영향을 받을 수 있으며, 정확한 성능을 측정하려면 격리된 시스템이 필요합니다. 따라서 이 시스템은 성능 테스트 환경으로 간주되지 않습니다.</p>
 <h3>JMeter</h3>
 <p>JMeter는 Windows, Mac 및 Linux에서 실행됩니다. 테스트를 위한 다양한 프로토콜을 지원하며 부하 테스트 구성을 위한 시각적인 사용자 인터페이스를 제공합니다. JMeter UI의 스크린샷을 확인하려면 그림 1을 참조하세요.</p>
-<figure><img src="../images/articles/config-ssh-port-forw-tut/jmeter-ui.png" alt="">
+<figure><img src="/cloud/images/articles/config-ssh-port-forw-tut/jmeter-ui.png" alt="">
 <figcaption>그림 1. JMeter 인터페이스의 스크린샷</figcaption>
 </figure>
 <p>JMeter는 부하 테스트 시스템이 다음과 같이 구성된 분산 테스트를 지원합니다.</p>
@@ -67,12 +67,12 @@
 <p>JMeter 클라이언트는 JMeter 인터페이스를 실행하는 워크스테이션입니다. JMeter 서버는 다른 위치, 원격 서버에 배치할 수 있습니다(그림. 2). 구성 시 서버 유형을 혼합할 수 있습니다. 예를 들어 Mac을 JMeter 클라이언트로 설정하고 Linux 서버를 JMeter 서버로 설정할 수 있습니다.</p>
 <p>JMeter는 각 JMeter 서버 스레드가 HTTP 클라이언트 역할을 하는 HTTP 요청을 시뮬레이션하지만, 페이지를 렌더링하거나 자바스크립트를 실행하지는 않습니다. 따라서 Ajax에 의해 다운로드되는 이미지나 데이터와 같은 삽입된 파일은 자동으로 다운로드되지 않습니다.</p>
 <p>실제 부하 상황을 시뮬레이션하려면, 시스템이 실제 사용자와 최대한 비슷하게 동작을 모방할 수 있도록 테스트 시나리오를 신중하게 만들어야 합니다.</p>
-<figure><img src="../images/articles/config-ssh-port-forw-tut/load-testing.jpg" alt="">
+<figure><img src="/cloud/images/articles/config-ssh-port-forw-tut/load-testing.jpg" alt="">
 <figcaption>그림 2. 부하 테스트에 JMeter 사용</figcaption>
 </figure>
 <p>JMeter 분산 설정을 사용하려면 먼저 JMeter 클라이언트의 구성 파일에 있는 JMeter 서버를 모두 나열합니다(bin/jmeter.properties의 <span class="code">remote_hosts</span> 항목). 테스트를 시작하려면 <span class="code">start</span>가 아닌 <span class="code">remote start all</span>을 사용합니다. <span class="code">remote start all</span> 명령을 사용하면 JMeter client가 나열된 모든 원격 JMeter 서버에 연결되어 테스트를 실행하고 모든 결과를 수신합니다.</p>
 <p>부하 테스트를 수행하는 동안 JMeter 클러스터에 있는 모든 서버의 결과가 클라이언트로 전송됩니다. 결과는 통합되어 JMeter 클라이언트 화면에 표시됩니다(그림. 3).</p>
-<figure><img src="../images/articles/config-ssh-port-forw-tut/apache-jmeter.png" alt="">
+<figure><img src="/cloud/images/articles/config-ssh-port-forw-tut/apache-jmeter.png" alt="">
 <figcaption>그림 3. JMeter 클라이언트에 표시된 통합된 부하 테스트 결과 스크린샷</figcaption>
 </figure>
 <p>JMeter에는 위에 나와 있는 것 외에도 다른 종류의 결과 핸들러가 갖춰져 있다는 점을 기억해 주세요.</p>
@@ -81,17 +81,17 @@
 <p>이 문서의 나머지 부분에서는 Compute Engine에서 JMeter 서버를 구성하는 방법을 다룹니다. 이 문서의 목적에 따라, Compute Engine Linux 인스턴스에 여러 개의 JMeter 서버를 설정하고 Mac에서 JMeter 클라이언트를 실행한다고 가정하겠습니다.</p>
 <h3>JMeter 클라이언트와 JMeter 서버 간 연결</h3>
 <p>JMeter 클라이언트에서 원격으로 테스트를 시작하면 JMeter 연결 및 RMI(원격 메소드 호출)를 통해 JMeter 클라이언트와 JMeter 서버 간의 통신이 설정됩니다. JMeter 연결은 항상 JMeter 클라이언트에 의해 시작됩니다. 반면 RMI를 위한 TCP 연결은 양쪽 모두에서 시작됩니다. 따라서 총 3개의 연결이 생성됩니다(그림. 4).</p>
-<figure><img src="../images/articles/config-ssh-port-forw-tut/jmeter-connections.png" alt="">
+<figure><img src="/cloud/images/articles/config-ssh-port-forw-tut/jmeter-connections.png" alt="">
 <figcaption>그림 4. JMeter 클라이언트와 JMeter 서버 간 연결</figcaption>
 </figure>
 <p>JMeter 클라이언트가 일대다 NAT(네트워크 주소 변환)를 통해 방화벽 뒤에서 실행 중이며, 역시 방화벽 뒤에 있는 Compute Engine의 JMeter 서버에 연결된 경우 연결을 구성하기가 어려울 수 있습니다.</p>
 <p>Compute Engine에서는 외부 IP 주소에 일대일 NAT를 사용하며, 각 Compute Engine 인스턴스는 인스턴스 내부 비공개 IP 주소를 자신의 IP 주소로 사용합니다. 이 경우 클라이언트가 방화벽 뒤에 있고 공개 주소를 보유하고 있지 않으므로, JMeter 원격 서버에서 JMeter 클라이언트에 연결할 수 없습니다. 한편, 서버에서는 서버 내부 비공개 IP 주소를 공개 주소로 보고하므로 클라이언트에서 원격 서버에 연결할 수 없습니다(그림. 5).</p>
-<figure><img src="../images/articles/config-ssh-port-forw-tut/firewalls.jpg" alt="">
+<figure><img src="/cloud/images/articles/config-ssh-port-forw-tut/firewalls.jpg" alt="">
 <figcaption>그림 5. 방화벽으로 인해 JMeter 클라이언트와 JMeter 서버 간의 통신이 어려워짐</figcaption>
 </figure>
 <h3>SSH 포트 포워딩 기술</h3>
 <p>SSH(보안 셸)에는 SSH 연결에서 실제 통신이 이루어지는 다른 포트로 연결을 전달하는 SSH 포트 포워딩(또는 SSH 터널링)이라는 기능이 있습니다. 포트 포워딩은 SSH 클라이언트 측 또는 SSH 서버 측에서 수행할 수 있습니다. 포트 포워딩을 사용하면 JMeter 클라이언트와 서버가 서로 연결되는 것을 허용하는 포트를 설정할 수 있습니다.</p>
-<figure><img src="../images/articles/config-ssh-port-forw-tut/forw-connections.jpg" alt="">
+<figure><img src="/cloud/images/articles/config-ssh-port-forw-tut/forw-connections.jpg" alt="">
 <figcaption>그림 6. 연결을 다른 포트에 전달</figcaption>
 </figure>
 <p>그림 6의 예에서 'A'와 'B'는 포트 번호를 나타냅니다.</p>
@@ -111,7 +111,7 @@ ssh -R  B:127.0.0.1: A &lt;username&gt;@&lt;server&gt;
 <li>서버에서 클라이언트로 연결되는 RMI를 위한 포트 25000</li>
 <li>클라이언트에서 서버로 연결되는 RMI를 위한 포트 26000</li>
 </ul>
-<figure><img src="../images/articles/config-ssh-port-forw-tut/forw-config.png" alt="">
+<figure><img src="/cloud/images/articles/config-ssh-port-forw-tut/forw-config.png" alt="">
 <figcaption>그림 7. 세 개의 연결을 위한 포트 포워딩 구성의 예</figcaption>
 </figure>
 <p>다음 명령은 3개 포트를 위한 포트 포워딩을 설정합니다.</p>

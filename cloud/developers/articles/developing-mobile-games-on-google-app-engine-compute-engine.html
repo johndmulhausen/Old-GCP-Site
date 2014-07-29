@@ -94,7 +94,7 @@
   <p>The following diagram (Fig. 1) illustrates the high level architecture for mobile games on Google Cloud Platform:</p>
 
   <figure>
-    <img src="../images/articles/developing-mobile-games-on-gcp/architecture-diag.jpg">
+    <img src="/cloud/images/articles/developing-mobile-games-on-gcp/architecture-diag.jpg">
     <figcaption>Figure 1. Architecture Diagram of the proposed Mobile Gaming Solution</figcaption>
   </figure>
 
@@ -143,28 +143,28 @@
   <p>Imagine that you want to build a trivia or riddle multiplayer mobile game named Griddler. Two or more players will compete to solve as many riddles as they can within a specific time frame. This competition will be referred to as a game. Each player in a game is presented with the same grid of letters, for example a grid like this one:</p>
 
   <figure>
-    <img src="../images/articles/developing-mobile-games-on-gcp/griddler.png" height="195" width="196">
+    <img src="/cloud/images/articles/developing-mobile-games-on-gcp/griddler.png" height="195" width="196">
     <figcaption>Figure 2. Griddler screenshot</figcaption>
   </figure>
 
   <p>Each player will be challenged with the same series of riddles for a single grid. For example a first riddle can be:</p>
 
   <figure>
-    <img src="../images/articles/developing-mobile-games-on-gcp/sample-q.png" height="396" width="222">
+    <img src="/cloud/images/articles/developing-mobile-games-on-gcp/sample-q.png" height="396" width="222">
     <figcaption>Figure 3. Sample question on Griddler</figcaption>
   </figure>
 
   <p>Each player needs to figure out what the answer should be and then make a touch gesture to build the right word out of adjacents letters on a grid, as shown in Figure 4.</p>
 
   <figure>
-    <img src="../images/articles/developing-mobile-games-on-gcp/answ-entry-griddler.png" height="396" width="222">
+    <img src="/cloud/images/articles/developing-mobile-games-on-gcp/answ-entry-griddler.png" height="396" width="222">
     <figcaption>Figure 4. Answer entry in Griddler</figcaption>
   </figure>
 
   <p>When a player finds the correct word or decides to skip a given riddle, she is challenged with another riddle for the same grid, as shown in Figure 5.</p>
 
   <figure>
-    <img src="../images/articles/developing-mobile-games-on-gcp/riddle-griddler.png" height="396" width="222">
+    <img src="/cloud/images/articles/developing-mobile-games-on-gcp/riddle-griddler.png" height="396" width="222">
     <figcaption>Figure 5. Another sample riddle in Griddler</figcaption>
   </figure>
 
@@ -221,7 +221,7 @@ gameId, playerId)).execute();
   <p>Such a call should typically be run asynchronously to avoid blocking for network calls on the UI thread.</p>
 
   <figure>
-    <img src="../images/articles/developing-mobile-games-on-gcp/communication.png" height="341" width="579">
+    <img src="/cloud/images/articles/developing-mobile-games-on-gcp/communication.png" height="341" width="579">
     <figcaption>Figure 6. Communication between the mobile game client and the game backend</figcaption>
   </figure>
 
@@ -236,14 +236,14 @@ gameId, playerId)).execute();
   <p>With your mobile backend hosted on Google App Engine, the recommended place to store such entities is <a href="https://developers.google.com/datastore/">Cloud Datastore</a>. It provides a NoSQL,<sup><a href="#ftnt6" name="ftnt_ref6" id="ftnt_ref6">[6]</a></sup> schemaless, highly-scalable, object data store, with a query engine and atomic transactions.</p>
 
   <figure>
-    <img src="../images/articles/developing-mobile-games-on-gcp/storing-data.jpg" height="350" width="305">
+    <img src="/cloud/images/articles/developing-mobile-games-on-gcp/storing-data.jpg" height="350" width="305">
     <figcaption>Figure 7. Storing data</figcaption>
   </figure>
 
   <p>For example in Griddler, key entities are:</p>
 
   <figure>
-    <img src="../images/articles/developing-mobile-games-on-gcp/key-entities.jpg">
+    <img src="/cloud/images/articles/developing-mobile-games-on-gcp/key-entities.jpg">
     <figcaption>Figure 8. Key entities used in Griddler</figcaption>
   </figure>
 
@@ -267,7 +267,7 @@ gameId, playerId)).execute();
   <p>For example, there may be millions of players playing Griddler at the same time and there may, potentially, be up to hundreds of thousands of players solving riddles from the same board (grid of letters) at the same time. Instead of retrieving the Board definitions every time, it makes sense to cache them.</p>
 
   <figure>
-    <img src="../images/articles/developing-mobile-games-on-gcp/optimizing-data.jpg" height="421" width="352">
+    <img src="/cloud/images/articles/developing-mobile-games-on-gcp/optimizing-data.jpg" height="421" width="352">
     <figcaption>Figure 9. Optimizing data access with Memcache</figcaption>
   </figure>
 
@@ -292,7 +292,7 @@ gameId, playerId)).execute();
   </ul>
 
   <figure>
-    <img src="../images/articles/developing-mobile-games-on-gcp/push-notification.png" height="438" width="457">
+    <img src="/cloud/images/articles/developing-mobile-games-on-gcp/push-notification.png" height="438" width="457">
     <figcaption>Figure 10. Push Notification</figcaption>
   </figure>
 
@@ -305,7 +305,7 @@ gameId, playerId)).execute();
   <p>In some cases, you may want to manipulate and process images in addition to storing them. For example, you may want to serve the images in dynamically adjusted sizes depending on the resolution of your client devices. In such scenarios, you can use the Google App Engine <a href="https://developers.google.com/appengine/docs/java/images/">Images Service</a> to resize, rotate, flip, and crop images, as well as to enhance photographs using a predefined algorithm. These operations can be performed on images from Google Cloud Storage and other sources. The modified images can then be served to the clients directly from the dynamic image serving infrastructure provided by Google without involving your mobile game backend code. Your code is responsible just for using the Images Service API to obtain the appropriate image URL and for providing this URL to the mobile game clients.</p>
 
   <figure>
-    <img src="../images/articles/developing-mobile-games-on-gcp/serving-processing-imgs.jpg" height="373" width="467">
+    <img src="/cloud/images/articles/developing-mobile-games-on-gcp/serving-processing-imgs.jpg" height="373" width="467">
     <figcaption>Figure 11. Serving and processing images</figcaption>
   </figure>
 
@@ -316,7 +316,7 @@ gameId, playerId)).execute();
   <p>With your mobile game backend code running on Google App Engine, configuring such scheduled jobs is straightforward with the <a href="http://developers.google.com/appengine/docs/java/config/cron">Cron Service</a>. You can configure it to invoke some URLs in your mobile backend at the requested intervals or specific times.</p>
 
   <figure>
-    <img src="../images/articles/developing-mobile-games-on-gcp/scheduled-jobs.jpg" height="282" width="412">
+    <img src="/cloud/images/articles/developing-mobile-games-on-gcp/scheduled-jobs.jpg" height="282" width="412">
     <figcaption>Figure 12. Scheduled jobs with Cron Service</figcaption>
   </figure>
 
@@ -362,13 +362,13 @@ gameId, playerId)).execute();
     <a href="https://github.com/GoogleCloudPlatform/solutions-griddler-sample-android-client" target="popout">
     [Android Client]</a>
     <a href="https://github.com/GoogleCloudPlatform/solutions-griddler-sample-iOS-client" target="popout">
-    [iOS Client]</a> <img src="../images/ext-link-8px.png" height="8px" width="8px"></li>
+    [iOS Client]</a> <img src="/cloud/images/ext-link-8px.png" height="8px" width="8px"></li>
 
 <li>Cloud Adventure text-based Android game<br>
     <a href="https://github.com/GoogleCloudPlatform/solutions-cloud-adventure-sample-backend-java" target="popout">
     [Java Backend]</a>
     <a href="https://github.com/GoogleCloudPlatform/solutions-cloud-adventure-sample-android-client" target="popout">
-    [Android Client]</a> <img src="../images/ext-link-8px.png" height="8px" width="8px"></li>
+    [Android Client]</a> <img src="/cloud/images/ext-link-8px.png" height="8px" width="8px"></li>
 </ul>
 <hr>
 

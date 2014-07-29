@@ -96,7 +96,7 @@
         <li>Your mobile backend application code running on Google App Engine and responsible for serving requests from the clients.</li>
       </ol>
       <figure>
-        <img src="../images/articles/mobile-app-1.jpg" alt="Essential components" class="f-80" />
+        <img src="/cloud/images/articles/mobile-app-1.jpg" alt="Essential components" class="f-80" />
         <figcaption>Figure 1. Essential components in proposed Mobile Solutions architecture</figcaption>
       </figure>
       <h3>Storing data</h3>
@@ -114,14 +114,14 @@
         </li>
       </ol>
       <figure>
-        <img src="../images/articles/mobile-app-2.png" alt="Storing data" class="f-60" />
+        <img src="/cloud/images/articles/mobile-app-2.png" alt="Storing data" class="f-60" />
         <figcaption>Figure 2. Storing data</figcaption>
       </figure>
       <h3>Optimizing data access with Memcache </h3>
       <p>If your mobile clients are making frequent requests to the backend to retrieve the same data, it wouldn’t be optimal to retrieve this data from persistent storage for every request. For example, if you are building a mobile application that shows movie reviews, it is likely that most users would be retrieving reviews about one of a handful movies that are currently in theaters and there will be significantly fewer requests for reviews of the remaining thousands of movies that the backend stores in a persistent storage.</p>
       <p>A backend running on Google App Engine can use a distributed in-memory data cache service called <a href="https://developers.google.com/appengine/docs/java/memcache/">Memcache</a> to store and retrieve frequently accessed data (Fig. 3). Using Memcache not only allows your mobile solution to have higher performance and to scale better, but also reduces your cost of accessing App Engine Datastore as your application will be sending fewer requests to App Engine Datastore.</p>
       <figure>
-        <img src="../images/articles/mobile-app-3.png" alt="Optimizing data access" class="f-60" />
+        <img src="/cloud/images/articles/mobile-app-3.png" alt="Optimizing data access" class="f-60" />
         <figcaption>Figure 3. Optimizing data access with Memcache</figcaption>
       </figure>
       <h3>Asynchronous processing with Task Queues</h3>
@@ -131,7 +131,7 @@
       <p>Alternatively, your code can <a href="https://developers.google.com/appengine/docs/java/taskqueue/overview-pull">pull the tasks</a> from the queue(s). This can be done by either your mobile backend code running on Google App Engine, or by your code running outside of App Engine, which can be used to process tasks by Google Compute Engine instances.</p>
       <p>In either case, processing tasks is typically the second most common responsibility your custom code running on Google App Engine would have, in addition to processing requests from mobile clients over Google Cloud Endpoints, as mentioned in previous sections.</p>
       <figure>
-        <img src="../images/articles/mobile-app-4.png" alt="Asynchronous processing" class="f-60" />
+        <img src="/cloud/images/articles/mobile-app-4.png" alt="Asynchronous processing" class="f-60" />
         <figcaption>Figure 4. Asynchronous processing with Task Queues</figcaption>
       </figure>
       <h3 id="push-notification">Push notification</h3>
@@ -143,7 +143,7 @@
       </ul>
       <p>An example of this might be to send push notifications to the users of your mobile solution when their friend checks into a restaurant or posts a review (Fig. 5).</p>
       <figure>
-        <img src="../images/articles/mobile-app-5.png" alt="Push Notification Service" class="f-80" />
+        <img src="/cloud/images/articles/mobile-app-5.png" alt="Push Notification Service" class="f-80" />
         <figcaption>Figure 5. Push Notification</figcaption>
       </figure>
       <h3 id="serving-static-content">Serving static content</h3>
@@ -153,7 +153,7 @@
       <p>Other category of images are images that are not part of your applications, but are, rather, related to the data that your application processes, such as thumbnails of movies in your movie related application, pictures of products that can be gifted through your application, or avatars in your game or social applications. If you can store such images in resolutions and formats optimized for your mobile clients then you can upload them to <a href="https://developers.google.com/storage/docs/getting-started">Google Cloud Storage</a> and then provide direct URLs to these images to the mobile clients. This approach is very scalable as it allows mobile clients to retrieve these images directly from the scalable cloud storage without involving your mobile backend code.</p>
       <p>In some cases, you may want to manipulate and process images in addition to storing them. For example, you may want to serve the images in dynamically adjusted sizes depending on the resolution of your client devices. In such scenarios you can use Google App Engine <a href="https://developers.google.com/appengine/docs/java/images/">Images Service</a> to resize, rotate, flip, and crop images, as well as to enhance photographs using a predefined algorithm. These operations can be performed on images from, among other sources, Google Cloud Storage.  The modified images can then be served to the clients directly from the dynamic image serving infrastructure provided by Google without involving your mobile backend code. Your code is responsible just for using the Images Service API to obtain the appropriate image URL and for providing this URL to the mobile clients.</p>
       <figure>
-        <img src="../images/articles/mobile-app-6.png" alt="Serving and processing images" class="f-80" />
+        <img src="/cloud/images/articles/mobile-app-6.png" alt="Serving and processing images" class="f-80" />
         <figcaption>Figure 6. Serving and processing images</figcaption>
       </figure>
       <h3>Full text and geo-proximity (location based) search</h3>
@@ -161,14 +161,14 @@
       <p>To use Search API, you can construct “documents” that contain searchable data and then add these “documents” to an index. Then, your mobile backend can construct search queries, including full-text search queries, and run them against the “documents” in the index. In the example above, each item in the inventory could be mapped to a “document” in the index with properties such as name, description, etc.</p>
       <p>Your mobile solution may also perform geo-proximity search if, for instance, you wanted to retrieve the list of nearby stores. You can avoid the complexity of building such functionality yourself and simply leverage Search API for <a href="https://developers.google.com/appengine/docs/java/search/overview#Performing_Location-Based_Searches">geo-proximity search</a>[<sup><a href="#fn-7" class="ref-7">7</a>]</sup>. The basic flow is very similar to the process described above for full text search. You can simply add geo-location as one of document properties and then include geo-proximity condition in your search queries.</p>
       <figure>
-        <img src="../images/articles/mobile-app-7.png" alt="Full text and geo-proximity search" class="f-60" />
+        <img src="/cloud/images/articles/mobile-app-7.png" alt="Full text and geo-proximity search" class="f-60" />
         <figcaption>Figure 7. Full text and geo-proximity search</figcaption>
       </figure>
       <h3>Custom maintenance and other scheduled jobs</h3>
       <p>Besides processing requests from the mobile clients synchronously through Google Cloud Endpoints and asynchronously using Task Queues, your mobile backend code may need to do some processing at various regular or semi-regular intervals. For example, you may want your mobile solution to send push notification to your mobile users every morning with a relevant local offer or you may want your solution to do various application specific maintenance jobs daily or few times a day. For example, your application may offer premium subscriptions. When the subscriptions expire, or about to expire, you may want to do various related processing, for example, send an email using <a href="https://developers.google.com/appengine/docs/java/mail/">Mail API</a>, deactivate user accounts, etc. You may also want your mobile backend to update some data cached in Memcache every 10 minutes or update statistics of top players every hour.</p>
       <p>With your mobile backend code running on Google App Engine, configuring such scheduled jobs is straightforward with <a href="https://developers.google.com/appengine/docs/java/config/cron">Cron Service</a>. You can configure it to invoke some URLs in your mobile backend at the requested intervals or specific times.</p>
       <figure>
-        <img src="../images/articles/mobile-app-8.png" alt="Cron Service" class="f-60" />
+        <img src="/cloud/images/articles/mobile-app-8.png" alt="Cron Service" class="f-60" />
         <figcaption>Figure 8. Scheduled jobs with Cron Service</figcaption>
       </figure>
       <h3>Storing and Analyzing Application Logs</h3>
@@ -178,7 +178,7 @@
       <p>In such scenarios, you can use <a href="../../products/compute-engine">Google Compute Engine</a><sup>[<a href="#fn-9" name="ref-9">9</a>]</sup> to run the parts of your mobile backend not suitable for hosting on Google App Engine.</p>
       <p>When code running on Compute Engine is used for batch processing or asynchronous request processing<sup>[<a href="#fn-10" name="ref-10">10</a>]</sup>, your code that runs on Google App Engine can enqueue tasks into a pull queue (or multiple queues) and your code that runs on Google Compute Engine can pull these tasks using <a href="https://developers.google.com/appengine/docs/python/taskqueue/rest/">Task Queue REST API</a><sup>[<a href="#fn-11" name="ref-11">11</a>]</sup>.</p>
       <figure>
-        <img src="../images/articles/mobile-app-9.png" alt="Running code outside of App Engine sandbox" class="f-90" />
+        <img src="/cloud/images/articles/mobile-app-9.png" alt="Running code outside of App Engine sandbox" class="f-90" />
         <figcaption>Figure 9. Running code outside of App Engine sandbox</figcaption>
       </figure>
       <h3>Other relevant services and APIs</h3>
@@ -186,8 +186,8 @@
       <h2 id="architecture-diagram">Architecture diagram</h2>
       <p>The following architecture diagram (Fig. 10) illustrates the components in the solution:</p>
       <figure>
-        <a href="../images/articles/mobile-app-10.png"><img src="../images/articles/mobile-app-10.png" alt="Architecture Diagram" class="f-100" /></a>
-        <figcaption>Figure 10. Architecture Diagram of the proposed Mobile Solution (<a href="../images/articles/mobile-app-10.png">full size</a>)</figcaption>
+        <a href="/cloud/images/articles/mobile-app-10.png"><img src="/cloud/images/articles/mobile-app-10.png" alt="Architecture Diagram" class="f-100" /></a>
+        <figcaption>Figure 10. Architecture Diagram of the proposed Mobile Solution (<a href="/cloud/images/articles/mobile-app-10.png">full size</a>)</figcaption>
       </figure>
       <h2>Conclusion</h2>
       <p>By leveraging Google Cloud Platform, you can easily build a backend for your mobile solution. You don't have to worry about plumbing and infrastructure. Your solution can be highly scalable and meet requirements for building compelling applications. Among other things, it can use integrated user authentication, support Android and iOS native applications, store, retrieve and process data outside of mobile devices, as well as orchestrate push notification and use geo-proximity search.</p>
@@ -225,7 +225,7 @@
     <a href="https://github.com/GoogleCloudPlatform/solutions-mobile-shopping-assistant-android-client" target="popout">
     [Android Client]</a>
     <a href="https://github.com/GoogleCloudPlatform/solutions-mobile-shopping-assistant-ios-client" target="popout">
-    [iOS Client]</a> <img src="../images/ext-link-8px.png" height="8px" width="8px"></li>
+    [iOS Client]</a> <img src="/cloud/images/ext-link-8px.png" height="8px" width="8px"></li>
 
   <li><a href="articles/how-to-build-mobile-app-with-app-engine-backend-tutorial">Tutorial</a></li>
 </ul>

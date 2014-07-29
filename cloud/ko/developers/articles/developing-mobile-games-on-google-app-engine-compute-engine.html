@@ -68,7 +68,7 @@
 <p>Google Cloud Platform에서 모바일 게임을 제작하면 이러한 요구사항을 충족시키는 데 도움이 됩니다.</p>
 <h1>모바일 게임 솔루션 아키텍처</h1>
 <p>다음 다이어그램(그림 1)은 Google Cloud Platform의 모바일 게임에 대한 높은 수준의 아키텍처를 보여줍니다.</p>
-<figure><img src="../images/articles/developing-mobile-games-on-gcp/architecture-diag.jpg" alt="">
+<figure><img src="/cloud/images/articles/developing-mobile-games-on-gcp/architecture-diag.jpg" alt="">
 <figcaption>그림 1. 제시된 모바일 게임 솔루션의 아키텍처 다이어그램</figcaption>
 </figure>
 <h3>높은 수준의 개요</h3>
@@ -108,19 +108,19 @@
 <p>이 문서에 설명된 아키텍처는 여러 모바일 게임에 적용할 수 있으며, 아래 제시된 샘플 시나리오는 주로 설계를 더욱 구체적으로 만들기 위해 사용합니다. 설명된 대부분의 설계 선택사항은 다른 모바일 게임과도 관련이 있습니다.</p>
 <h3>Griddler - 멀티플레이어 모바일 수수께끼 게임</h3>
 <p>Griddler라는 이름의 일반상식 또는 수수께끼 멀티플레이어 모바일 게임을 제작한다고 가정해 보겠습니다. 두 명 이상의 플레이어가 특정 시간 동안 최대한 많은 수수께끼를 풀기 위해 경쟁하게 됩니다. 이러한 경쟁을 게임이라고 부르겠습니다. 게임의 각 플레이어에게는 알파벳으로 이루어진 동일한 그리드가 제시됩니다. 예를 들면 다음과 같습니다.</p>
-<figure><img src="../images/articles/developing-mobile-games-on-gcp/griddler.png" height="195" width="196" alt="">
+<figure><img src="/cloud/images/articles/developing-mobile-games-on-gcp/griddler.png" height="195" width="196" alt="">
 <figcaption>그림 2. Griddler 스크린샷</figcaption>
 </figure>
 <p>하나의 그리드에 대해 일련의 동일한 수수께끼가 제시되고 각 플레이어는 이를 풀어야 합니다. 예를 들어 첫 번째 수수께끼가 다음과 같이 제시될 수 있습니다.</p>
-<figure><img src="../images/articles/developing-mobile-games-on-gcp/sample-q.png" height="396" width="222" alt="">
+<figure><img src="/cloud/images/articles/developing-mobile-games-on-gcp/sample-q.png" height="396" width="222" alt="">
 <figcaption>그림 3. Griddler의 샘플 질문</figcaption>
 </figure>
 <p>각 플레이어는 답을 고민한 후, 그림 4에 나와 있는 것처럼 그리드의 인접한 알파벳에서 터치 동작으로 올바른 단어를 만들어야 합니다.</p>
-<figure><img src="../images/articles/developing-mobile-games-on-gcp/answ-entry-griddler.png" height="396" width="222" alt="">
+<figure><img src="/cloud/images/articles/developing-mobile-games-on-gcp/answ-entry-griddler.png" height="396" width="222" alt="">
 <figcaption>그림 4. Griddler에 답 입력</figcaption>
 </figure>
 <p>플레이어가 올바른 단어를 찾거나 주어진 수수께끼를 건너뛰면, 그림 5에 나와 있는 것처럼 같은 그리드에서 또 다른 수수께끼가 제시됩니다.</p>
-<figure><img src="../images/articles/developing-mobile-games-on-gcp/riddle-griddler.png" height="396" width="222" alt="">
+<figure><img src="/cloud/images/articles/developing-mobile-games-on-gcp/riddle-griddler.png" height="396" width="222" alt="">
 <figcaption>그림 5. Griddler의 또 다른 샘플 수수께끼</figcaption>
 </figure>
 <p>각 게임이 시작될 때 게임 클리이언트는 모바일 게임 백엔드에서 보드 정의를 가져옵니다. 그러면 클라이언트 애플리케이션을 업데이트하지 않고도 새 보드와 수수께끼를 추가할 수 있습니다. 주어진 보드의 수수께끼 순서는 임의로 구성하거나 고정할 수 있습니다. 가져온 보드 정의에는 보드를 위한 수수께끼와 이 게임에 분배된 시간이 포함되어 있습니다. 분배된 시간이 종료되었을 때 가장 많은 수수께끼를 푼 플레이어가 승리하게 됩니다. 동점자가 있는 경우에는 수수께끼를 가장 빨리 푼 플레이어가 이 라운드에서 승리합니다.</p>
@@ -165,7 +165,7 @@ InvitationResult invitationResult = gameBackend.sendInvitation(
 gameId, playerId)).execute();
 </pre>
 <p>보통 이러한 호출은 인터페이스 스레드에서 네트워크 호출을 차단하지 않도록 비동기식으로 실행해야 합니다.</p>
-<figure><img src="../images/articles/developing-mobile-games-on-gcp/communication.png" height="341" width="579" alt="">
+<figure><img src="/cloud/images/articles/developing-mobile-games-on-gcp/communication.png" height="341" width="579" alt="">
 <figcaption>그림 6. 모바일 게임 클라이언트 및 게임 백엔드 간 통신</figcaption>
 </figure>
 <a name="storedata" id="storedata"></a>
@@ -175,11 +175,11 @@ gameId, playerId)).execute();
 <p>클라이언트 기기 외부에 저장해야 하는 다른 유형의 데이터는 세분화된 속성과 항목이 있습니다. 이러한 속성과 항목에는 모바일 게임에서 완료된 가장 높은 레벨을 비롯하여 닉네임, 플레이어 기기의 푸시 알림 등록 여부, 게임 내 구매 내역 및 기타 게임 특정 데이터가 포함될 수 있습니다.</p>
 <p>또한 이러한 항목의 속성에는 개체 이름과 같이 Google Cloud Storage에 저장된 개체 참조가 포함될 수 있으며, 선택사항으로 버킷 이름이나 URL이 포함될 수도 있습니다.</p>
 <p>Google App Engine에서 호스팅되는 모바일 백엔드에서 이러한 항목을 <a href="https://developers.google.com/datastore/">Cloud Datastore</a>에 저장하는 것이 좋습니다. Cloud Datastore는 스키마가 없고 가용성이 높은 개체 저장소인 NoSQL,<sup><a href="#ftnt6" name="ftnt_ref6" id="ftnt_ref6">[6]</a></sup>을 쿼리 엔진과 개별 트랜잭션과 함께 제공합니다.</p>
-<figure><img src="../images/articles/developing-mobile-games-on-gcp/storing-data.jpg" height="350" width="305" alt="">
+<figure><img src="/cloud/images/articles/developing-mobile-games-on-gcp/storing-data.jpg" height="350" width="305" alt="">
 <figcaption>그림 7. 데이터 저장</figcaption>
 </figure>
 <p>예를 들어 Griddler에서 핵심 항목은 다음과 같습니다.</p>
-<figure><img src="../images/articles/developing-mobile-games-on-gcp/key-entities.jpg" alt="">
+<figure><img src="/cloud/images/articles/developing-mobile-games-on-gcp/key-entities.jpg" alt="">
 <figcaption>그림 8. Griddler에 사용되는 핵심 항목</figcaption>
 </figure>
 <ul>
@@ -198,7 +198,7 @@ gameId, playerId)).execute();
 <p>부하가 증가하면 요청을 처리하는 수천 개의 개별 인스턴스로 모바일 게임 백엔드를 구성할 수 있습니다. 모바일 게임 클라이언트에서 동일한 데이터를 가져오기 위해 백엔드에 자주 요청을 보내는 경우, 요청이 발생할 때마다 영구 저장소에서 데이터가 가져오는 것을 피하도록 데이터 액세스를 최적화할 수 있습니다.</p>
 <p>Google App Engine에서 실행되는 백엔드는 <a href="http://developers.google.com/appengine/docs/java/memcache/">Memcache</a>라고 하는 분산된 메모리 내 데이터 캐시 서비스를 사용하여 자주 액세스되는 데이터를 저장하고 가져올 수 있습니다(그림 9). Memcache를 사용하면 모바일 게임 백엔드의 성능과 확장성이 개선되는 것은 물론, 애플리케이션의 App Engine Datastore 요청이 줄어들므로 App Engine Datastore 액세스 비용을 줄일 수 있습니다.</p>
 <p>예를 들어 같은 시간대에 Griddler 플레이어 수가 수백만 명에 달할 수 있으며, 이 중 수십만 명에 달하는 플레이어가 같은 보드(알파벳으로 이루어진 그리드)에서 수수께끼를 풀고 있을 수도 있습니다. 매번 보드 정의를 가져오는 대신 이를 캐싱하는 것이 합리적입니다.</p>
-<figure><img src="../images/articles/developing-mobile-games-on-gcp/optimizing-data.jpg" height="421" width="352" alt="">
+<figure><img src="/cloud/images/articles/developing-mobile-games-on-gcp/optimizing-data.jpg" height="421" width="352" alt="">
 <figcaption>그림 9. Memcache로 데이터 액세스 최적화</figcaption>
 </figure>
 <h3>작업 대기열을 사용하여 비동기 처리</h3>
@@ -216,7 +216,7 @@ gameId, playerId)).execute();
 <li>Android용 <a href="http://developer.android.com/google/gcm/index.html">GCM(Google Cloud Messaging)</a> - Android 기반 기기에 모바일 게임 클라이언트 애플리케이션을 설치한 사용자에게 데이터를 보낼 수 있게 해 주는 Google 서비스입니다. Eclipse 사용자는 <a href="http://developers.google.com/eclipse/">Eclipse용 Google 플러그인</a>에서 생성된 기본 코드를 얻을 수 있습니다.</li>
 <li>Sockets API<sup><a href="#ftnt7" name="ftnt_ref7" id="ftnt_ref7">[7]</a></sup> - Apple ® 푸시 알림 서비스를 사용하여 iOS 사용자에게 알림을 푸시합니다. 시작하려면 <a href="https://cloud.google.com/resources/articles/ios-push-notifications">Google Cloud Platform에서 iOS 푸시 알림 관리</a>에 대한 문서를 읽거나 <a href="https://github.com/GoogleCloudPlatform/solutions-ios-push-notification-sample-backend-java">Github에 게시된 샘플 코드</a>를 검토해 주세요.</li>
 </ul>
-<figure><img src="../images/articles/developing-mobile-games-on-gcp/push-notification.png" height="438" width="457" alt="">
+<figure><img src="/cloud/images/articles/developing-mobile-games-on-gcp/push-notification.png" height="438" width="457" alt="">
 <figcaption>그림 10. 푸시 알림</figcaption>
 </figure>
 <a name="sapi" id="sapi"></a>
@@ -226,7 +226,7 @@ gameId, playerId)).execute();
 <p>예를 들어 Griddler는 특정 수수께끼의 시각적인 단서를 포함하도록 확장될 수 있으며, 플레이어가 자신의 아바타를 나타내는 이미지를 업로드하도록 할 수도 있습니다.</p>
 <p>이러한 이미지를 모바일 클라이언트에 최적화된 해상도와 형식으로 준비해 <a href="http://developers.google.com/storage/docs/getting-started">Google Cloud Storage</a>에 업로드할 수 있습니다. 그런 다음 모바일 클라이언트에 이러한 이미지로 바로 연결되는 URL을 제공할 수 있습니다. 모바일 백엔드 코드를 사용하지 않고도 모바일 클라이언트가 확장 가능한 클라우드 저장소에서 이러한 이미지를 바로 가져올 수 있으므로 이러한 접근 방식은 높은 확장성을 가집니다.</p>
 <p>경우에 따라 이미지를 저장하는 것 외에 이를 조작하고 처리해야 할 수도 있습니다. 예를 들어 클라이언트 기기의 해상도에 따라 동적으로 조절된 크기의 이미지를 제공하고자 할 수 있습니다. 이러한 시나리오에서는 Google App Engine <a href="https://developers.google.com/appengine/docs/java/images/">이미지 서비스</a>를 사용하여 이미지를 회전하고 뒤집고 자르고 크기를 조절하는 것뿐만 아니라, 사전 정의된 알고리즘을 사용하여 사진 품질을 향상할 수도 있습니다. Google Cloud Storage와 다른 소스에서 가져온 이미지에 이러한 작업을 수행할 수 있으며, 수정된 이미지는 모바일 백엔드 코드를 사용하지 않고도 Google에서 제공하는 동적 이미지 제공 인프라에서 클라이언트로 바로 전달할 수 있습니다. 코드는 Images Service API를 사용하여 적절한 이미지 URL을 얻고 이 URL을 모바일 게임 클라이언트에 제공하는 역할만 담당합니다.</p>
-<figure><img src="../images/articles/developing-mobile-games-on-gcp/serving-processing-imgs.jpg" height="373" width="467" alt="">
+<figure><img src="/cloud/images/articles/developing-mobile-games-on-gcp/serving-processing-imgs.jpg" height="373" width="467" alt="">
 <figcaption>그림 11.이미지 제공 및 처리</figcaption>
 </figure>
 <a name="scheduled" id="scheduled"></a>
@@ -234,7 +234,7 @@ gameId, playerId)).execute();
 <p>모바일 클라이언트의 요청을 Google Cloud Endpoints를 통해 동기식으로 처리하고 작업 대기열을 사용하여 비동기식으로 처리하는 것 외에도, 모바일 백엔드 코드는 여러 가지 정기적인 간격 또는 반정기적인 간격에 따라 처리 작업을 수행할 수 있어야 합니다. 예를 들어 모바일 게임 백엔드에서 푸시 알림을 전송하여 며칠 동안 플레이하지 않은 플레이어가 다시 플레이하도록 유도하거나, 하루의 특정 시간에 이러한 작업을 처리하도록 할 수 있습니다.</p>
 <p>또한 모바일 게임 백엔드에서 Memcache에 캐싱된 일부 데이터를 5분마다 업데이트하거나 상위 플레이어 통계를 15분마다 업데이트하도록 할 수 있습니다.</p>
 <p>Google App Engine에서 실행되는 모바일 게임 백엔드 코드를 사용하면 <a href="http://developers.google.com/appengine/docs/java/config/cron">Cron 서비스</a>를 통해 간단하게 이러한 예약 작업을 구성할 수 있으며, 요청된 간격이나 특정 시간에 모바일 백엔드의 일부 URL을 호출하도록 이를 구성할 수도 있습니다.</p>
-<figure><img src="../images/articles/developing-mobile-games-on-gcp/scheduled-jobs.jpg" height="282" width="412" alt="">
+<figure><img src="/cloud/images/articles/developing-mobile-games-on-gcp/scheduled-jobs.jpg" height="282" width="412" alt="">
 <figcaption>그림 12. Cron 서비스를 사용한 예약 작업</figcaption>
 </figure>
 <h2>Google Play 게임 서비스</h2>
@@ -265,9 +265,9 @@ gameId, playerId)).execute();
 <h4>샘플 앱</h4>
 <ul>
 <li>Griddler 멀티플레이어 모바일 게임<br>
-<a href="https://github.com/GoogleCloudPlatform/solutions-griddler-sample-backend-java" target="popout">[Java 백엔드]</a> <a href="https://github.com/GoogleCloudPlatform/solutions-griddler-sample-android-client" target="popout">[Android 클라이언트]</a> <a href="https://github.com/GoogleCloudPlatform/solutions-griddler-sample-iOS-client" target="popout">[iOS 클라이언트]</a> <img src="../images/ext-link-8px.png" height="8px" width="8px" alt=""></li>
+<a href="https://github.com/GoogleCloudPlatform/solutions-griddler-sample-backend-java" target="popout">[Java 백엔드]</a> <a href="https://github.com/GoogleCloudPlatform/solutions-griddler-sample-android-client" target="popout">[Android 클라이언트]</a> <a href="https://github.com/GoogleCloudPlatform/solutions-griddler-sample-iOS-client" target="popout">[iOS 클라이언트]</a> <img src="/cloud/images/ext-link-8px.png" height="8px" width="8px" alt=""></li>
 <li>Cloud Adventure 텍스트 기반 Android 게임<br>
-<a href="https://github.com/GoogleCloudPlatform/solutions-cloud-adventure-sample-backend-java" target="popout">[Java 백엔드]</a> <a href="https://github.com/GoogleCloudPlatform/solutions-cloud-adventure-sample-android-client" target="popout">[Android 클라이언트]</a> <img src="../images/ext-link-8px.png" height="8px" width="8px" alt=""></li>
+<a href="https://github.com/GoogleCloudPlatform/solutions-cloud-adventure-sample-backend-java" target="popout">[Java 백엔드]</a> <a href="https://github.com/GoogleCloudPlatform/solutions-cloud-adventure-sample-android-client" target="popout">[Android 클라이언트]</a> <img src="/cloud/images/ext-link-8px.png" height="8px" width="8px" alt=""></li>
 </ul>
 <hr></div>
 </div>

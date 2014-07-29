@@ -44,7 +44,7 @@
 <p>다른 접근 방식은 HAProxy 또는 Nginx와 같은 오픈소스를 사용하는 것입니다. 이러한 오픈소스 프로젝트는 몇 가지 추가 기능을 제공하지만 하드웨어 및 소프트웨어를 모두 설치하고 관리해야 합니다. 따라서 설치, 구성 및 업그레이드 비용이 늘어날 수 있으며 단일 장애점이 나타날 수 있습니다.</p>
 <p>Compute Engine 부하 분산은 Google Cloud Platform과 원활하게 통합되는 분산 서비스로 부하 분산 기능을 제공하여 이러한 단점과 요구사항을 없앨 수 있도록 도와줍니다. Compute Engine 부하 분산은 Google에서 완전히 관리하는 서비스로 실행됩니다. Compute Engine 인스턴스에서 부하 분산기를 실행할 필요가 없으며, 부하 분산 실행을 유지하거나 비정상적인 백엔드를 피해 라우팅하기 위해 고민하지 않아도 됩니다. Compute Engine 부하 분산에서 이러한 모든 작업을 처리합니다.</p>
 <p>그림 1은 Google의 Compute Engine 부하 분산 상황에서의 부하 분산 개념을 보여줍니다. 사용자는 Compute Engine 부하 분산을 통해 Compute Engine에서 실행되는 앱에 요청을 전송하고, 이때 비정상적인 인스턴스를 피하게 됩니다.</p>
-<figure><img src="../images/articles/gce-load-balancing-in-action/load-balancing-concepts.png" alt="">
+<figure><img src="/cloud/images/articles/gce-load-balancing-in-action/load-balancing-concepts.png" alt="">
 <figcaption>그림 1. Compute Engine 부하 분산 개념: 사용자 요청이 Compute Engine 부하 분산을 통해 전송되며 정상적인 백엔드로 분배됩니다.</figcaption>
 </figure>
 <h3>Compute Engine 부하 분산 사용 시 이점</h3>
@@ -66,13 +66,13 @@ gcutil --project=&lt;your-project-id&gt; listforwardingrules
 </pre>
 <p>이 명령만 실행하면 됩니다. 이제 클라이언트가 외부 측 IP와 Compute Engine 부하 분산을 사용하여 애플리케이션에서 액세스합니다. Compute Engine 부하 분산을 설정하는 과정은 이렇게 단순하며, 유지관리 작업도 없습니다.</p>
 <p>웹 인터페이스를 선호하는 경우 그림 2에 나와 있는 것처럼 Google Cloud Console을 사용하여 대상 풀, 전달 규칙 및 상태 확인을 설정할 수 있습니다.</p>
-<figure><img src="../images/articles/gce-load-balancing-in-action/setting-up-2.png" alt="">
+<figure><img src="/cloud/images/articles/gce-load-balancing-in-action/setting-up-2.png" alt="">
 <figcaption>그림 2: Cloud Console에서 부하 분산 설정</figcaption>
 </figure>
 <p>명령줄 및 UI 모두 사용자가 백업 풀 및 세션 유지와 같은 고급 기능을 설정할 수 있게 해 줍니다. 설정 옵션에 대한 자세한 내용은 전체 <a href="https://developers.google.com/compute/docs/load-balancing/">문서</a>를 참조해 주세요.</p>
 <h4>2. 지역의 단일 영역 또는 여러 영역 내에서 부하가 분산됨</h4>
 <p>Compute Engine 부하 분산은 분산을 실행하는 모든 인스턴스 간에 균등한 수준으로 부하를 분배합니다. 그림 3은 Compute Engine 부하 분산이 부하 분산기에 의해 노출된 외부 측 IP에 500,000건의 요청을 균등하게 분배하는 방식을 보여줍니다. 실제로 시스템에서 부하가 증가하고 있으므로 부하 분배의 필요성이 더욱 커지고 있습니다.</p>
-<figure><img src="../images/articles/gce-load-balancing-in-action/load-spread2.png" alt="">
+<figure><img src="/cloud/images/articles/gce-load-balancing-in-action/load-spread2.png" alt="">
 <figcaption>그림 3: 100개의 동시 스레드에 전송된 총 500,000회의 요청의 부하 분배<sup><a href="#ftnt1" name="ftnt_ref1" id="ftnt_ref1">[1]</a></sup></figcaption>
 </figure>
 <h4>3. 시작부터 안정적인 성능</h4>
@@ -120,13 +120,13 @@ gcutil --project=&lt;your-project-id&gt; listforwardingrules
 <p>Compute Engine 부하 분산을 사용하면 대상 풀이 지역 내 영역을 아우르는 인스턴스 집합을 정의할 수 있게 됩니다. 이는 강력한 시스템을 쉽게 설계할 수 있도록 하기 위해 고안되었습니다. 영역 중 하나가 중단되는 경우, 부하 분산기는 단순히 해당 시점에 비정상으로 간주되는 중단 영역의 인스턴스를 피해 라우팅합니다. 이 섹션에서는 여러 영역에 인스턴스가 분배되는 경우의 부하 분산의 성능을 살펴보겠습니다. 예제에는 네 개의 인스턴스가 있으며, 이 중 둘은 'us-central1-a'이고 나머지 둘은 'us-central1-b'입니다. 네 개의 인스턴스는 단일 전달 규칙의 동일한 대상 풀에 속하도록 구성되어 있습니다. 표 1에서 오른쪽 끝에 있는 열은 부하 분산기가 서로 다른 두 영역의 인스턴스에 응답을 분배하는 경우에도 응답 시간이 안정적으로 유지되는 방식을 보여줍니다.</p>
 <p>여러 영역에서의 안정성은 백업 풀에서 매우 중요한 기능입니다. 백업 풀은 기본 대상 풀에서 부분적으로 또는 완전히 장애가 발생하는 경우 앱이 더욱 충실하게 작동하도록 하기 위해 설계되었으며, 기본 풀과 다른 영역에 위치할 수 있습니다. 위에 나와 있는 안정적인 응답 시간은 트래픽을 VM의 백업 풀로 전송해야 할 때 사용자 경험이 저하되지 않음을 의미합니다.</p>
 <p>부하 분산은 시작부터 안정적인 성능을 보여줍니다. 이 섹션에서는 총 1,000,000회의 요청을 전송하기 위해 다시 한 번 100개의 스레드를 사용했습니다. 그림 4에는 이 정도의 부하에도 응답 시간이 어떻게 안정적인 상태를 유지할 수 있는지를 보여줍니다. y 축은 응답 시간을 나타내며 그래프의 각 점은 하나의 요청을 나타냅니다. 응답 시간이 시작부터 안정적이라는 점을 확인해 주세요. 다른 많은 솔루션과 달리, Compute Engine 부하 분산을 사용하면 부하 분산기를 가동 준비할 필요가 없습니다.</p>
-<figure><img src="../images/articles/gce-load-balancing-in-action/response-time.png" alt="">
+<figure><img src="/cloud/images/articles/gce-load-balancing-in-action/response-time.png" alt="">
 <figcaption>그림 4: Compute Engine 부하 분산을 통해 4개의 백엔드에 1,000,000회 요청(100개의 동시 스레드)하는 경우 응답 시간<sup><a href="#ftnt3" name="ftnt_ref3" id="ftnt_ref3">[3]</a></sup></figcaption>
 </figure>
 <h4>4. 비정상적인 인스턴스를 피해 라우팅할 수 있음</h4>
 <p>Compute Engine 부하 분산은 비정상적인 인스턴스를 피해 원활하게 라우팅할 수 있습니다. 구성한 상태 확인을 사용하면 부하 분산기에서 비정상적인 백엔드를 감지하고 트래픽을 나머지 백엔드로 라우팅합니다. 그림 5는 한 인스턴스의 중단 전과 후에 여러 인스턴스에 부하가 분배되는 것을 보여줍니다. 백엔드 'www-0'이 분산 배치에서 제거되기 전과 후로 500,000회 이하의 요청이 전송되었습니다. 그래프의 각 데이터 지점은 1분 동안 특정 백엔드 하나가 처리한 요청수를 나타냅니다. 인스턴스가 '레임덕 모드'로 전환되면(자세한 내용은 아래 참조) 백엔드를 종료할 준비가 될 때까지 이 백엔드에 대한 연결이 계속해서 처리되고 요청 시간이 초과되지 않습니다.</p>
 <p>개발자가 백엔드 인스턴스를 정상적인 상태로 되돌리기 위해 집중하는 동안, Google에서는 사용자 경험의 품질을 유지관리하는 데 집중합니다.</p>
-<figure><img src="../images/articles/gce-load-balancing-in-action/load-spread.png" alt="">
+<figure><img src="/cloud/images/articles/gce-load-balancing-in-action/load-spread.png" alt="">
 <figcaption>그림 5: Compute Engine 부하 분산에서 비정상적인 인스턴스를 처리하는 경우의 부하 분배<sup><a href="#ftnt4" name="ftnt_ref4" id="ftnt_ref4">[4]</a></sup></figcaption>
 </figure>
 <h4>5. '레임덕 모드'를 사용할 수 있음</h4>
@@ -177,7 +177,7 @@ gcutil --project=&lt;your-project-id&gt; listforwardingrules
 <p>두 개 이상의 인스턴스로 확장해야 하는 모든 애플리케이션은 Compute Engine 부하 분산의 이점을 활용할 수 있습니다. 애플리케이션 아키텍처 설계에 대해 안내해 드리기 위해 두 개의 시나리오를 설명해 보겠습니다.</p>
 <h4>1. 로그인한 사용자가 있는 Compute Engine의 웹 애플리케이션</h4>
 <p>첫 번째 일반적인 시나리오는 로그인한 사용자가 있는 웹 애플리케이션입니다. 사용자가 로그인하여 콘텐츠를 작성하고, 이 콘텐츠를 다른 사용자와 공유하는 앱을 한 예로 들 수 있습니다. 다른 사용자는 단순히 로그인하여 누군가가 제작한 콘텐츠를 소비합니다. 그림 6은 일반적인 사용 사례의 아키텍처의 개요를 보여줍니다.</p>
-<figure><img src="../images/articles/gce-load-balancing-in-action/web-apps.png" alt="">
+<figure><img src="/cloud/images/articles/gce-load-balancing-in-action/web-apps.png" alt="">
 <figcaption>그림 6: Compute Engine 부하 분산을 사용하는 웹 애플리케이션</figcaption>
 </figure>
 <p>대부분의 웹 애플리케이션에서는 세션 정보를 저장해야 합니다. 위의 예에서는 사용자의 현재 세션 정보는 아직 저장되지 않은 작성된 콘텐츠일 수 있습니다. 흔히 사용되는 강력한 아키텍처는 다음 방법으로 세션 정보를 서버 측에 저장합니다.</p>
@@ -188,7 +188,7 @@ gcutil --project=&lt;your-project-id&gt; listforwardingrules
 <p>기본 설정에서, 동일한 클라이언트 IP에서 Compute Engine 부하 분산을 통해 전송된 요청이 모든 백엔드에서 유지되지 않으며 실제로는 모든 인스턴스에 분배됩니다. Compute Engine 부하 분산은 특정 클라이언트 IP의 특정 백엔드에 유지<sup><a href="#ftnt6" name="ftnt_ref6" id="ftnt_ref6">[6]</a></sup>되도록 구성할 수 있습니다. 그러면 세션 정보를 자주 가져오지 않아도 되므로 성능이 더욱 개선됩니다. Compute Engine 부하 분산의 '레임덕 모드'를 사용하면 인스턴스를 분산 배치에서 제거하여 애플리케이션을 원활하게 순환 방식으로 업그레이드할 수 있습니다. Google에서는 관련 기능을 지속적으로 확장하고 있으므로 Compute Engine 부하 분산의 향후 버전에서는 이러한 용도를 더욱 강화할 것이며, 여기에는 부하 분산기에서의 SSL 종료 및 레이어 7 부하 분산과 같은 기능이 포함됩니다.</p>
 <h4>2. Compute Engine에서의 집중 처리</h4>
 <p>두 번째 시나리오는 사용자 요청에 대한 응답으로 장기간 또는 집중적인 처리를 수행하는 애플리케이션입니다(그림 7참조). 이 시나리오에서 각 사용자 요청은 하나 이상의 Compute Engine 인스턴스에서 어느 정도 처리되어야 합니다. 처리와 관련하여 OCR(광학 문자 인식), 동영상 트랜스코딩, MapReduce 작업 등이 수행될 수 있습니다.</p>
-<figure><img src="../images/articles/gce-load-balancing-in-action/backend-processing.png" alt="">
+<figure><img src="/cloud/images/articles/gce-load-balancing-in-action/backend-processing.png" alt="">
 <figcaption>그림 7: Compute Engine 부하 분산을 사용하는 백엔드 처리 애플리케이션</figcaption>
 </figure>
 <p>요청의 비용과 기간이 비슷하다면 Compute Engine 부하 분산은 이러한 시나리오에 특히 적합합니다. 백엔드 VM에는 세션 상태가 않지만 대신 일회성 작업을 수행합니다. 부하 분산기는 모든 백엔드 VM을 선택하여 이러한 각 작업을 수행하도록 할 수 있으며, 부하 분산으로 작업 부하를 백엔드 간에 효과적으로 분배할 수 있습니다.</p>

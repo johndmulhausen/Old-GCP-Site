@@ -55,7 +55,7 @@
 </div>
 
   <figure>
-    <img src="../images/articles/unleashing-appengine-scalability/image05.png">
+    <img src="/cloud/images/articles/unleashing-appengine-scalability/image05.png">
     <figcaption>Figure 1: How user requests are routed to application instances</figcaption>
   </figure>
 
@@ -81,7 +81,7 @@
   <p>Application instances are created and managed like Linux processes, so they can be started quickly and consume minimal system resources. In contrast, the unit of allocation and management in a typical infrastructure as a service (IaaS) offering is a <a href="http://en.wikipedia.org/wiki/Hypervisor">hypervisor-based</a> virtual machine (VM). Figure 2 illustrates the differences in the amount of resources that need to be initialized for a new VM instance compared to a new App Engine instance.</p>
 
   <figure>
-    <img src="../images/articles/unleashing-appengine-scalability/image03.png">
+    <img src="/cloud/images/articles/unleashing-appengine-scalability/image03.png">
     <figcaption>Figure 2: Comparing VMs to application instances</figcaption>
   </figure>
 
@@ -149,7 +149,7 @@
   <p>You can find the total number of instances and average QPS for your application on the Instances page of the <a href="https://appengine.google.com">App Engine Admin Console</a>, as shown in Figure 3.</p>
 
   <figure>
-    <img src="../images/articles/unleashing-appengine-scalability/image04.png">
+    <img src="/cloud/images/articles/unleashing-appengine-scalability/image04.png">
     <figcaption>Figure 3: Instances page of the Admin Console</figcaption>
   </figure>
 
@@ -158,7 +158,7 @@
   <p>As a best practice, strive to minimize the time required to process each request. You can check on the total processing time for requests on the Logs page of the Admin Console (Figure 4).</p>
 
   <figure>
-    <img src="../images/articles/unleashing-appengine-scalability/image02.png">
+    <img src="/cloud/images/articles/unleashing-appengine-scalability/image02.png">
     <figcaption>Figure 4: Latency shown in the log</figcaption>
   </figure>
 
@@ -172,7 +172,7 @@
   <p><a href="https://developers.google.com/appengine/docs/python/tools/appstats">Appstats</a> is a powerful tool you can use to understand, optimize, and improve your application’s QPS. As shown in Figure 5,  it shows the number of RPC calls that are invoked inside each request, the duration of each RPC call (such as Datastore or Memcache access), and the contribution of each RPC call to the overall latency of the request. This information gives you hints for finding bottlenecks in your application.</p>
 
   <figure>
-    <img src="../images/articles/unleashing-appengine-scalability/image06.png">
+    <img src="/cloud/images/articles/unleashing-appengine-scalability/image06.png">
     <figcaption>Figure 5: Example timeline from Appstats</figcaption>
   </figure>
 
@@ -185,7 +185,7 @@
   <p>While QPS represents the total throughput of your application, other parameters, such as idle instances and pending latency, determine the elasticity of your application scalability. Configure these parameters on the Application Settings page of the Admin Console<sup>3</sup> (Figure 6).</p>
 
   <figure>
-    <img src="../images/articles/unleashing-appengine-scalability/image00.png">
+    <img src="/cloud/images/articles/unleashing-appengine-scalability/image00.png">
     <figcaption>Figure 6: Idle instances and pending latency parameters</figcaption>
   </figure>
 
@@ -208,7 +208,7 @@
   <p>When an App Engine front end receives a request from a user and no instance is available to service that request, the request is added to a pending queue until an instance becomes available. App Engine tracks how long requests are held in this queue. If requests are held for too long, App Engine creates another instance to distribute the load. Figure 7 shows how instances are added or deleted based on traffic volume.</p>
 
   <figure>
-    <img src="../images/articles/unleashing-appengine-scalability/image01.png">
+    <img src="/cloud/images/articles/unleashing-appengine-scalability/image01.png">
     <figcaption>Figure 7: Busy instances, pending queue and pending latency</figcaption>
   </figure>
 

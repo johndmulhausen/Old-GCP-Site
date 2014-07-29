@@ -161,7 +161,7 @@
   <p>The Conference Central application opens at the home page.</p>
 
   <figure>
-    <img src="../images/articles/app-engine-introducing-conference-central/conf-central.png">
+    <img src="/cloud/images/articles/app-engine-introducing-conference-central/conf-central.png">
   </figure>
 
   <p><span class="bld">3.</span> Create a User Profile in the <span class="bld">User Profile</span> page of the Conference Central application. (Click &ldquo;Go to your user profile&rdquo;.)</p>
@@ -217,7 +217,7 @@
   <p>In the  following screenshot, the indexes for querying Conferences have finished building while the indexes for Tickets are still building. Depending on where things stand with your own application, you may see that all your indexes are still building, or all are now serving, or some combination.</p>
 
   <figure>
-    <img src="../images/articles/app-engine-introducing-conference-central/conference.png">
+    <img src="/cloud/images/articles/app-engine-introducing-conference-central/conference.png">
   </figure>
 
   <h3><a name="h.xb3k3lv3kiuv" id="h.xb3k3lv3kiuv"></a>Create a Conference to Send Email to Interested Users</h3>
@@ -237,7 +237,7 @@
   <p>This screenshot shows the top of the Developer Page, (the page has more content below, but for now we are only interested in the link to Review Conferences).</p>
 
   <figure>
-    <img src="../images/articles/app-engine-introducing-conference-central/dev-page.png">
+    <img src="/cloud/images/articles/app-engine-introducing-conference-central/dev-page.png">
   </figure>
 
   <p><span class="bld">3.</span> Click the <span class="bld">Review Conferences</span> button. This will take you to a new page, Review Conferences.</p>
@@ -257,14 +257,14 @@
         This displays the instances page. You will probably have one instance running (but you might have none or more than one).<br>
         <br>
         <figure>
-          <img src="../images/articles/app-engine-introducing-conference-central/ae-release.png">
+          <img src="/cloud/images/articles/app-engine-introducing-conference-central/ae-release.png">
         </figure>
     </li>
     <li>In the  Administration section of the navigation list on the left, select Application Settings.</li>
     <li>Scroll down to the Performance section.</li>
     <li>Set the Min Pending Latency to 15 s by moving the slider all the way to the right as shown here.<br>
         <figure>
-          <img src="../images/articles/app-engine-introducing-conference-central/pending-latency.png">
+          <img src="/cloud/images/articles/app-engine-introducing-conference-central/pending-latency.png">
         </figure>
         <br>
         This means that the App Engine will start creating new application instances when the majority of the requests are spending more than 15 seconds on the pending queue waiting to be processed.</li>
@@ -296,7 +296,7 @@ sudo apt-get install apache2-utils
     <li>While the command is benchmarking, go back to the Admin Console and click the Instances link. Confirm that two or three instances have been created.</li>
     <li>For each instance, check the numbers in the Latency and Requests columns as shown in the following figure.<br>
       <figure>
-        <img src="../images/articles/app-engine-introducing-conference-central/total-num.png">
+        <img src="/cloud/images/articles/app-engine-introducing-conference-central/total-num.png">
       </figure>
     </li>
     <li>Reload the Instances page a few times to see that the number of instances is not growing rapidly.</li>
@@ -320,7 +320,7 @@ sudo apt-get install apache2-utils
     <li>Go to the Instances page and confirm that there are several instances running.</li>
     <li>Reload the page a few times to see that the number of instances is growing rapidly.<br>
       <figure>
-        <img src="../images/articles/app-engine-introducing-conference-central/instances.png">
+        <img src="/cloud/images/articles/app-engine-introducing-conference-central/instances.png">
       </figure>
     </li>
     <li>In the Terminal, hit Ctrl+c key to stop the ab command if necessary.</li>
@@ -346,13 +346,13 @@ sudo apt-get install apache2-utils
       <li>Enable the Datastore Admin if necessary.<br>
           <br>
           <figure>
-            <img src="../images/articles/app-engine-introducing-conference-central/datastore-admin.png">
+            <img src="/cloud/images/articles/app-engine-introducing-conference-central/datastore-admin.png">
           </figure>
       </li>
       <li>Select Entity Kind to select all entities.</li>
       <li>Press Delete Entites to delete all the entities.<br>
         <figure>
-          <img src="../images/articles/app-engine-introducing-conference-central/entities.png">
+          <img src="/cloud/images/articles/app-engine-introducing-conference-central/entities.png">
         </figure>
       </li>
       <li>Confirm Deletion of the entities.</li>

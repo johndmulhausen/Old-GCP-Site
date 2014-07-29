@@ -40,7 +40,7 @@
 <p>Cependant, une question subsiste&nbsp;: Comment concevoir et mettre en œuvre ces applications Web modernes&nbsp;? La section suivante fournit des conseils à l'intention des architectes et des développeurs d'applications Web désireux d'en savoir plus sur l'intégration de clients intégrés au navigateur au sein d'une architecture basée sur les services.</p>
 <h2>Présentation&nbsp;: MVC&nbsp;+&nbsp;Google&nbsp;Cloud&nbsp;Endpoints côté client</h2>
 <p>La réponse à cette question tient en trois mots&nbsp;: Google&nbsp;Cloud&nbsp;Endpoints, une fonctionnalité de Google&nbsp;App&nbsp;Engine qui fournit un framework&nbsp;RPC&nbsp;:</p>
-<figure><img src="../images/articles/angularjs-cloud-endpoints-recipe/cloud-endpoints.jpg" alt="">
+<figure><img src="/cloud/images/articles/angularjs-cloud-endpoints-recipe/cloud-endpoints.jpg" alt="">
 <figcaption>Figure&nbsp;1&nbsp;: Google&nbsp;Cloud&nbsp;Endpoints</figcaption>
 </figure>
 <p>Vous trouverez une description détaillée du flux ci-dessous.</p>
@@ -65,16 +65,16 @@ public void <span class="bld">insert</span>(Message message) {
 </pre>
 <p>Un objet Java et un message sont envoyés à la méthode <span class="code">insert()</span>, laquelle intègre des propriétés telles que <span class="code">createdAt</span> (horodatage de création), <span class="code">createdBy</span> (propriétaire du message) et "content" (le contenu). Une entité Magasin de données "e" est ensuite créée avec ces valeurs de propriété, puis est enregistrée dans le magasin de données Google&nbsp;App&nbsp;Engine.</p>
 <p>Ces points de terminaison de service sont automatiquement affichés via l'API&nbsp;REST et peuvent être visualisés à l'aide de <a href="https://developers.google.com/apis-explorer/#p/">Google&nbsp;APIs&nbsp;Explorer</a>. Il est également conseillé d'émettre des demandes test afin de confirmer les réponses au format JSON. Dans l'écran ci-dessous, <span class="code">guestbook.messages.insert</span> provient directement des annotations de la classe Java.</p>
-<figure><img src="../images/articles/angularjs-cloud-endpoints-recipe/api-explorer.png" alt="">
+<figure><img src="/cloud/images/articles/angularjs-cloud-endpoints-recipe/api-explorer.png" alt="">
 <figcaption>Figure&nbsp;2&nbsp;: Test de vos points de terminaison de service avec Google&nbsp;APIs&nbsp;Explorer</figcaption>
 </figure>
 <h2>Combinaison des technologies AngularJS et Cloud&nbsp;Endpoints</h2>
 <p>L'étape suivante consiste à intégrer Cloud&nbsp;Endpoints dans des frameworks MVC côté client, tels que <a href="http://angularjs.org/">AngularJS</a>. Un tel système présente une architecture semblable à celle décrite à la figure&nbsp;4&nbsp;:</p>
-<figure><img src="../images/articles/angularjs-cloud-endpoints-recipe/endpoints-architecture.png" alt="">
+<figure><img src="/cloud/images/articles/angularjs-cloud-endpoints-recipe/endpoints-architecture.png" alt="">
 <figcaption>Figure&nbsp;4&nbsp;: Architecture de points de terminaison de service et MVC côté client</figcaption>
 </figure>
 <p>Bien que relativement simple, l'intégration des deux technologies présente des pièges et des risques dont il convient de tenir compte avant d'entreprendre le codage. Examinons la partie gauche de la figure&nbsp;4 ci-dessus&nbsp;: le code JavaScript proprement dit qui intègre le schéma MVC côté client dans les points de terminaison illustrés dans la partie droite de la figure. Prenons comme exemple la création d'une interface Web basée sur AngularJS pour le point de terminaison de service "Livre d'or" que nous venons de définir. La figure suivante constitue une capture d'écran de l'interface utilisateur&nbsp;:</p>
-<figure><img src="../images/articles/angularjs-cloud-endpoints-recipe/guestbook-app.png" alt="">
+<figure><img src="/cloud/images/articles/angularjs-cloud-endpoints-recipe/guestbook-app.png" alt="">
 <figcaption>Figure&nbsp;3&nbsp;: Application "Livre d'or" avec AngularJS&nbsp;+&nbsp;Cloud&nbsp;Endpoints</figcaption>
 </figure>
 <h3>Création d'une vue et d'un modèle</h3>

@@ -44,7 +44,7 @@
   <h3><span class="ital">“Web Creation Made Simple”</span></h3>
 
   <figure>
-  <img src="../images/articles/wix-case-study/wix.png">
+  <img src="/cloud/images/articles/wix-case-study/wix.png">
   </figure>
 
   <p>Wix provides technology that makes it simple for everyone to create a stunning, professional, and functional web presence. It is a cloud-based web development platform that allows users to create HTML5 websites and mobile sites through the use of a powerful online editor. Wix was founded in 2006, has 36 million registered users from all around the world, and is growing rapidly.</p>
@@ -100,7 +100,7 @@
   <p>Figure 1 shows the high-level architecture of our serving system on Google Cloud Platform:</p>
 
   <figure>
-    <img src="../images/articles/wix-case-study/wix-architecture.png">
+    <img src="/cloud/images/articles/wix-case-study/wix-architecture.png">
     <figcaption>Figure 1: High-level architecture of the Wix media serving system</figcaption>
   </figure>
 
@@ -112,7 +112,7 @@
   <p>To synchronize data between the Wix managed hosting and Google Cloud Platform systems, we had to build a replication supervisor. In our first attempt, we replicated the metadata and static files synchronously as they were uploaded to our current system (Figure 2).</p>
 
   <figure>
-    <img src="../images/articles/wix-case-study/replicate-init-version.png">
+    <img src="/cloud/images/articles/wix-case-study/replicate-init-version.png">
     <figcaption>Figure 2: First version of the replication supervisor</figcaption>
   </figure>
 
@@ -123,7 +123,7 @@
   <p>Task Queue was the perfect match for our revised design. Tasks are executed asynchronously and, instead of 60 seconds, have a 10-minute deadline. Since the time it takes to copy media files varies greatly from request to request, we used task queues to make file replication an asynchronous process. After the metadata is replicated and saved in the App Engine Datastore, our application adds a task to the task queue. The task is then pushed to another handler that handles the copying. If copying is successful, a new task is added to the task queue to notify the initiator that the transaction is complete. If copying fails, the system retries, until it completes the task successfully. Figure 3 shows the revised process.</p>
 
   <figure>
-    <img src="../images/articles/wix-case-study/replicate-final-version.png">
+    <img src="/cloud/images/articles/wix-case-study/replicate-final-version.png">
     <figcaption>Figure 3: Final design of the replication supervisor</figcaption>
   </figure>
 

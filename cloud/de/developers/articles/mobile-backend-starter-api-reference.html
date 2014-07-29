@@ -91,12 +91,12 @@
 </ul>
 </li>
 </ul>
-<figure><img src="../images/articles/mobile-backend-starter-baas-paas/securitymodel.png" alt="">
+<figure><img src="/cloud/images/articles/mobile-backend-starter-baas-paas/securitymodel.png" alt="">
 <figcaption>Abbildung 1: Klassendiagramm der Cloud Backend API</figcaption>
 </figure>
 <h2><a name="dawcb" id="dawcb"></a>(A) Datenspeicherzugriff mit Cloud Backend API</h2>
 <p>Die Kernfunktion der Cloud Backend API besteht darin, eine Untergruppe der Funktionen des <a href="https://developers.google.com/appengine/docs/java/datastore/overview">App Engine-Datenspeichers</a> zu erzeugen, auf die von den Clients direkt zugegriffen werden kann. Es ist nicht erforderlich, serverseitigen Code für die Ausführung von CRUD-Operationen (Erstellen, Lesen, Aktualisieren, Löschen) und Abfragen im Datenspeicher zu schreiben.</p>
-<figure><img src="../images/articles/mobile-backend-starter-baas-paas/api-classes.png" alt="">
+<figure><img src="/cloud/images/articles/mobile-backend-starter-baas-paas/api-classes.png" alt="">
 <figcaption>Abbildung 2: Klassen der Cloud Backend API</figcaption>
 </figure>
 <h3><a name="pdice" id="pdice"></a>Daten in CloudEntity einfügen</h3>
@@ -477,7 +477,7 @@ public void <span class="bld">onBroadcastMessageReceived</span>(List&lt;CloudEnt
 }
 </pre>
 <p>Im obigen Beispiel werden die Eigenschaften "message" (Nachricht) und <span class="bld">duration</span> (Dauer) aus der Nachricht abgerufen, um ein Pop-up mit der Nachricht über die Dauer darzustellen. Sie können diese Funktion im Abschnitt "Cloud-Nachricht senden" auf der Einstellungsseite "Mobiles Back-End” in der Admin-Konsole testen.</p>
-<p><img src="../images/articles/mobile-backend-starter-baas-paas/messaging.png" alt=""></p>
+<p><img src="/cloud/images/articles/mobile-backend-starter-baas-paas/messaging.png" alt=""></p>
 <p>Starten Sie die Gästebuch-App und klicken Sie auf <span class="bld">Senden</span>. Sie sehen dann die Nachricht als Pop-up auf der App.</p>
 <p>Das Broadcasting besteht lediglich in einer weiteren Cloud-Nachricht mit dem Element <span class="code">topicId <span class="bld">_broadcast</span></span>. Die <span class="code">CloudBackendActivity</span>-Klasse abonniert die <span class="code">topicId</span> automatisch, um Nachrichten, die an die <span class="code">topicId</span> gesendet werden, zu empfangen.</p>
 <p>Nutzen Sie die Methode <span class="code">createBroadcastMessage()</span> innerhalb der Activity-Klasse, um einen Broadcast zu erstellen. Rufen Sie anschließend die Back-End-Methode <span class="code">sendCloudMessage()</span> mit der Nachricht auf.</p>
@@ -501,7 +501,7 @@ cb.<span class="bld">sendCloudMessage(ce)</span>;
 <li><span class="bld">Offen</span> – Alle nicht authentifizierten Anfragen werden zugelassen.</li>
 <li><span class="bld">Über Client-IDs abgesichert</span> – Nur authentifizierte Aufrufe mit Client-ID und Google-Konto werden zugelassen.</li>
 </ul>
-<img src="../images/articles/mobile-backend-starter-baas-paas/authentication.png" alt="">
+<img src="/cloud/images/articles/mobile-backend-starter-baas-paas/authentication.png" alt="">
 <p>Verwenden Sie den Modus "Offen" ausschließlich für die Entwicklung. Lassen Sie die API nicht über längere Zeit geöffnet, weil so nicht authentifizierte Aufrufe möglich sind. Jede Person, die die Projekt-ID kennt, kann dann einen Aufruf im Back-End ausführen. Verwenden Sie den Modus "Offen" nicht in einer Produktionsumgebung.</p>
 <p>"Über Client-IDs abgesichert" eignet sich für die Verwendung in der Produktion am besten. In diesem Modus sind nur authentifizierte Aufrufe zulässig, denen die beiden folgenden Merkmale zugeordnet sind:</p>
 <ul>
@@ -620,7 +620,7 @@ protected void <span class="bld">onPostCreate()</span> {
 <h4>Weitere Informationen</h4>
 <ul>
 <li><a href="mobile-backend-starter.html">Übersicht</a></li>
-<li><a href="http://developers.google.com/cloud/samples/mbs/" target="popout">Erste Schritte<img src="../images/ext-link-8px.png" height="8px" width="8px" alt=""></a></li>
+<li><a href="http://developers.google.com/cloud/samples/mbs/" target="popout">Erste Schritte<img src="/cloud/images/ext-link-8px.png" height="8px" width="8px" alt=""></a></li>
 </ul>
 <hr></div>
 </div>

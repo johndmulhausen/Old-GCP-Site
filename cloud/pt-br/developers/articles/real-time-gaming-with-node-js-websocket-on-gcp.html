@@ -39,12 +39,12 @@
 <h3><a name="h.wciq2otu8ut" id="h.wciq2otu8ut"></a>Chrome Experiments: World Wide Maze</h3>
 <p><a href="http://www.chromeexperiments.com/">Chrome Experiments</a> é um website criado pelo Google para exibir aplicativos da Web criativos desenvolvidos com as mais recentes tecnologias HTML5. Um desses aplicativos da Web é um jogo de labirinto 3D interativo chamado <a href="http://www.chromeexperiments.com/detail/world-wide-maze/">World Wide Maze</a> (WWM, na sigla em inglês), desenvolvido pela equipe do Chrome em colaboração com parceiros terceirizados.<sup><a href="#ftnt1" name="ftnt_ref1" id="ftnt_ref1">[1]</a></sup></p>
 <p>No WWM, os jogadores especificam um website e um labirinto 3D é gerado a partir do layout visual da página da Web. O jogador usa um dispositivo Android/iOS como controle do jogo para rolar uma bola no labirinto inclinando o dispositivo.</p>
-<figure><img src="../images/articles/real-time-gaming-with-node-js-websocket-on-gcp/world-wide-maze.png" alt="">
+<figure><img src="/cloud/images/articles/real-time-gaming-with-node-js-websocket-on-gcp/world-wide-maze.png" alt="">
 <figcaption>Figura 1: World Wide Maze: jogo de labirinto 3D em tempo real jogável com o Chrome e dispositivos móveis</figcaption>
 </figure>
 <p>Uma das características únicas do WWM é que todas as interações em tempo real são orquestradas pelo Google Cloud Platform, especificamente pelo <a href="https://cloud.google.com/products/compute-engine">Google Compute Engine</a> e pelo <a href="https://cloud.google.com/products/">Google App Engine</a>. Para criar uma experiência jogável, a baixa latência entre a entrada do controle e a tela do jogo é um requisito fundamental.</p>
 <p>Quando foi lançado, o WWM ficou em destaque em muitos veículos de comunicação on-line importantes<sup><a href="#ftnt2" name="ftnt_ref2" id="ftnt_ref2">[2]</a></sup> e atraiu um grande aumento no número de usuários. Isso resultou em um aumento enorme do tráfego, como mostrado na Figura 2, com 6.600 jogadores simultâneos em todo o mundo, 7.000 visualizações de página por minuto e 1.000 solicitações por segundo. Como o sistema foi projetado para utilizar a escalabilidade maciça do Google Cloud Platform, ele lidou com o grande pico de tráfego expandindo facilmente as instâncias do App Engine e Compute Engine.</p>
-<figure><img src="../images/articles/real-time-gaming-with-node-js-websocket-on-gcp/traffic-analysis.png" alt="">
+<figure><img src="/cloud/images/articles/real-time-gaming-with-node-js-websocket-on-gcp/traffic-analysis.png" alt="">
 <figcaption>Figura 2: relatório do Google Analytics para a análise do tráfego do WWM</figcaption>
 </figure>
 <p>Um dos maiores desafios na criação de um jogo em tempo real é ser capaz de lidar com as conexões persistentes entre os clientes e os servidores. No WWM, a comunicação em tempo real da tela do jogo e do controle precisa ser tratada em 200 ms. Essa comunicação em tempo real inclui:</p>
@@ -57,7 +57,7 @@
 <h2><a name="h.hxaxg4tq3bcq" id="h.hxaxg4tq3bcq"></a>Visão geral da arquitetura</h2>
 <h3><a name="h.50ijektnspqp" id="h.50ijektnspqp"></a>Orquestração das instâncias do Google Compute Engine com o Google App Engine</h3>
 <p>A arquitetura do World Wide Maze utiliza muitos componentes do Google Cloud Platform, como destacado na Figura 3:</p>
-<figure><img src="../images/articles/real-time-gaming-with-node-js-websocket-on-gcp/client-server.png" alt="">
+<figure><img src="/cloud/images/articles/real-time-gaming-with-node-js-websocket-on-gcp/client-server.png" alt="">
 <figcaption>Figura 3: componentes do servidor e do cliente do World Wide Maze</figcaption>
 </figure>
 <ol>
@@ -94,27 +94,27 @@
 <p>Um dos aspectos interessantes da arquitetura é como os pontos fortes do App Engine e do Compute Engine são combinados para criar uma solução escalável para jogos em tempo real. É importante entender as diversas considerações de design de cada plataforma para "colocar a pessoa certa no lugar certo" ao projetar a arquitetura.</p>
 <h3><a name="h.niw6sokgh88z" id="h.niw6sokgh88z"></a>Uso do Google App Engine para o front-end da Web</h3>
 <p>O App Engine é usado para os front-ends da Web e conecta as Telas do jogo com as instâncias do Compute Engine disponíveis. Ele recebe solicitações HTTP, fornece arquivos estáticos para os clientes e envia as sessões de jogo para os Servidores WebSocket disponíveis.</p>
-<figure><img src="../images/articles/real-time-gaming-with-node-js-websocket-on-gcp/ae-web-frontend.png" alt="">
+<figure><img src="/cloud/images/articles/real-time-gaming-with-node-js-websocket-on-gcp/ae-web-frontend.png" alt="">
 <figcaption>Figura 4: uso do App Engine para o front-end da Web</figcaption>
 </figure>
 <p>As maiores vantagens do App Engine são sua disponibilidade e escalabilidade automática. Os aplicativos do App Engine devem seguir as diretrizes de design relacionadas a cada <a href="https://developers.google.com/appengine/docs/whatisgoogleappengine">ambiente de tempo de execução exclusivo do App Engine</a> e a diversas <a href="https://developers.google.com/appengine/docs/java/apis">App Engine service</a> <a href="https://developers.google.com/appengine/docs/java/apis">APIs</a>. O tempo de execução e as APIs são cuidadosamente projetados para abstrair os datacenters como um computador paralelo maciço que alimenta seu aplicativo e o isola de falhas de uma única máquina. Como resultado desses poderosos recursos, os desenvolvedores podem acessar uma plataforma que é altamente tolerante a eventos, como grandes aumentos de tráfego, rápida mudança no número de usuários e serviços e tempo de inatividade em todo o datacenter.</p>
-<figure><img src="../images/articles/real-time-gaming-with-node-js-websocket-on-gcp/traffic-peak.png" alt="">
+<figure><img src="/cloud/images/articles/real-time-gaming-with-node-js-websocket-on-gcp/traffic-peak.png" alt="">
 <figcaption>Figura 5: pico de tráfego no Console de administradores do App Engine do WWM</figcaption>
 </figure>
 <p>Ao usar o App Engine como um distribuidor de carga, o WWM conseguir lidar com o tráfego do pico, que chegou a 1.000 solicitações por segundo, conforme mostrado na Figura 5. Isso foi possível usando os recursos de escalonamento automático do App Engine para enviar facilmente as sessões de jogo em tempo real para as instâncias do Compute Engine.</p>
 <h3><a name="h.3jrjcfu0g87k" id="h.3jrjcfu0g87k"></a>Uso do Compute Engine para o Servidor WebSocket</h3>
 <p>Inicialmente, os desenvolvedores estavam pensando em usar apenas o App Engine para implementar todo o serviço do jogo e estavam avaliando a <a href="https://developers.google.com/appengine/docs/java/channel/">Channel API</a> e a <a href="https://developers.google.com/appengine/docs/java/sockets/">Socket API</a> do App Engine para ver se eram capazes de suportar os requisitos de comunicação em tempo real. Mas eles concluíram que essas APIs não são adequadas para a implementação da conexão bidirecional do WWM que pode transmitir mensagens em menos de 200 ms. Portanto, eles decidiram combinar o App Engine com o Compute Engine para implementar a conexão com os Servidores WebSocket.</p>
-<figure><img src="../images/articles/real-time-gaming-with-node-js-websocket-on-gcp/webSocket-server.png" alt="">
+<figure><img src="/cloud/images/articles/real-time-gaming-with-node-js-websocket-on-gcp/webSocket-server.png" alt="">
 <figcaption>Figura 6: uso do Compute Engine para o Servidor WebSocket</figcaption>
 </figure>
 <p>O Servidor WebSocket é implementado pelo Node.js e Socket.IO em execução nas instâncias do Compute Engine. O <a href="http://nodejs.org/">Node.js</a> é uma plataforma popular de tempo de execução JavaScript que possui um modelo de E/S sem bloqueios orientado a eventos para aplicativos em tempo real. O <a href="http://socket.io/">Socket.IO</a> é uma biblioteca popular para Node.js que fornece um transporte em tempo real entre o navegador da Web e o servidor do Node.js. Ele suporta diversos protocolos e métodos para o transporte em tempo real, incluindo WebSocket, Flash socket, <a href="http://en.wikipedia.org/wiki/Comet_(programming)">Comet</a> e pesquisa. Por padrão, o Socket.IO tenta se conectar ao protocolo WebSocket para atingir um desempenho melhor. Mas se ele detectar que o protocolo não está disponível em uma rede específica, recorrerá a outros protocolos e tentará estabelecer uma conexão em tempo real com desempenho potencialmente maior.</p>
 <h3><a name="h.85altn8fe0xj" id="h.85altn8fe0xj"></a>Uso do Compute Engine para o Criador de fases</h3>
 <p>Outro recurso interessante do WWM é que qualquer website pode ser transformado em uma fase jogável com um sistema de renderização sob demanda.</p>
-<figure><img src="../images/articles/real-time-gaming-with-node-js-websocket-on-gcp/storage-builder.png" alt="">
+<figure><img src="/cloud/images/articles/real-time-gaming-with-node-js-websocket-on-gcp/storage-builder.png" alt="">
 <figcaption>Figura 7: como usar o Compute Engine para o Criador de fases</figcaption>
 </figure>
 <p>A criação de fases é realizada pelo Criador de fases, executado no Compute Engine. A Figura 8 mostra como funciona o processo de criação de fases:</p>
-<figure><img src="../images/articles/real-time-gaming-with-node-js-websocket-on-gcp/generation-process.png" alt="">
+<figure><img src="/cloud/images/articles/real-time-gaming-with-node-js-websocket-on-gcp/generation-process.png" alt="">
 <figcaption>Figura 8: processo de criação de fases</figcaption>
 </figure>
 <p>As etapas para a criação de fases são estas:</p>
@@ -132,7 +132,7 @@
 <h3><a name="h.c1dbzf1ae2u5" id="h.c1dbzf1ae2u5"></a>Teste de carga do World Wide Maze</h3>
 <p>Para determinar a escalabilidade do Criador de fases, os desenvolvedores realizaram um extenso teste de carga no cluster das instâncias do Criador de fases. O Criador de fases lida com a criação de níveis jogáveis usando o PhantomJS e utiliza muito a CPU. O limite de taxa superior de fases que podem ser criadas por uma única instância é determinado com base no teste de carga.</p>
 <p>A figura a seguir ilustra as medições resultantes do teste de carga do Criador de fases, em que 36 clientes virtuais enviaram continuamente solicitações de renderização para uma única instância. O tempo de retorno médio para cada solicitação de criação de fase foi de aproximadamente 12 segundos.</p>
-<figure><img src="../images/articles/real-time-gaming-with-node-js-websocket-on-gcp/load-testing.png" alt="">
+<figure><img src="/cloud/images/articles/real-time-gaming-with-node-js-websocket-on-gcp/load-testing.png" alt="">
 <figcaption>Figura 9: resultado do teste de carga do Criador de fases (uso da CPU)</figcaption>
 </figure>
 <p>Os limites dos Servidores WebSocket foram determinados por testes de carga. Os testes confirmaram que os servidores podem suportar 360 conexões do WebSocket com latência média de 175 ms.</p>

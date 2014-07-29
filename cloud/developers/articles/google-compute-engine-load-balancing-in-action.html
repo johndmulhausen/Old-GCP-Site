@@ -64,7 +64,7 @@
   <p>Figure 1 illustrates the load balancing concepts in the context of Google&rsquo;s Compute Engine Load Balancing. Users will send requests to the app running on Compute Engine via Compute Engine Load Balancing, avoiding those instances that are unhealthy.</p>
 
   <figure>
-    <img src="../images/articles/gce-load-balancing-in-action/load-balancing-concepts.png">
+    <img src="/cloud/images/articles/gce-load-balancing-in-action/load-balancing-concepts.png">
     <figcaption>Figure 1: Compute Engine Load Balancing concepts. User requests are sent through Compute Engine Load Balancing and are spread among healthy backends.</figcaption>
   </figure>
 
@@ -95,7 +95,7 @@ gcutil --project=&lt;your-project-id&gt; listforwardingrules
   <p>If you prefer a web interface, you can set up target pools, forwarding rules, and health checks with Google&rsquo;s Cloud Console as shown in figure 2.</p>
 
   <figure>
-    <img src="../images/articles/gce-load-balancing-in-action/setting-up-2.png">
+    <img src="/cloud/images/articles/gce-load-balancing-in-action/setting-up-2.png">
     <figcaption>Figure 2: Setting up load balancing in the Cloud Console.</figcaption>
   </figure>
 
@@ -106,7 +106,7 @@ gcutil --project=&lt;your-project-id&gt; listforwardingrules
   <p>Compute Engine Load Balancing spreads load roughly evenly between all instances that it balances. Figure 3 demonstrates how evenly Compute Engine Load Balancing spread 500,000 requests to the externally-facing IP exposed by the load balancer. For any real-world system, load spreading becomes increasingly necessary as the load increases.</p>
 
   <figure>
-    <img src="../images/articles/gce-load-balancing-in-action/load-spread2.png">
+    <img src="/cloud/images/articles/gce-load-balancing-in-action/load-spread2.png">
     <figcaption>Figure 3: Load spread for a total of 500,000 requests sent in 100 parallel threads.<sup><a href="#ftnt1" name="ftnt_ref1" id="ftnt_ref1">[1]</a></sup></figcaption>
   </figure>
 
@@ -164,7 +164,7 @@ gcutil --project=&lt;your-project-id&gt; listforwardingrules
   <p>Compute Engine Load Balancing shows stable performance right from the start. In this section, we again used 100 threads to send a total number of 1,000,000 requests. We show how the response time stays stable under this load in figure 4. The y-axis show the response time, and each dot on the graph represents a single request. Note how the response time is stable right from the beginning. Unlike many other solutions, with Compute Engine Load Balancing, there is no need to pre-warm the load balancer.</p>
 
   <figure>
-    <img src="../images/articles/gce-load-balancing-in-action/response-time.png">
+    <img src="/cloud/images/articles/gce-load-balancing-in-action/response-time.png">
     <figcaption>Figure 4: Response time for 1,000,000 requests (100 parallel threads) to four backends through Compute Engine Load Balancing.<sup><a href="#ftnt3" name="ftnt_ref3" id="ftnt_ref3">[3]</a></sup></figcaption>
   </figure>
 
@@ -174,7 +174,7 @@ gcutil --project=&lt;your-project-id&gt; listforwardingrules
   <p>While you focus on bringing your backend instances back to a healthy state, Google focuses on ensuring that the quality of your users&rsquo; experience is maintained.</p>
 
   <figure>
-    <img src="../images/articles/gce-load-balancing-in-action/load-spread.png">
+    <img src="/cloud/images/articles/gce-load-balancing-in-action/load-spread.png">
     <figcaption>Figure 5: Load spread when Compute Engine Load Balancing is handling an instance that becomes unhealthy.<sup><a href="#ftnt4" name="ftnt_ref4" id="ftnt_ref4">[4]</a></sup></figcaption>
   </figure>
 
@@ -239,7 +239,7 @@ gcutil --project=&lt;your-project-id&gt; listforwardingrules
   <p>The first common scenario is a web application with logged-in users. One example is an app where users can log on, author content, and share this content with other users. Other users may simply log on and consume the content that has been produced by others. Figure 6 shows a sketch of an architecture for a typical use case.</p>
 
   <figure>
-    <img src="../images/articles/gce-load-balancing-in-action/web-apps.png">
+    <img src="/cloud/images/articles/gce-load-balancing-in-action/web-apps.png">
     <figcaption>Figure 6: Web application using Compute Engine Load Balancing.</figcaption>
   </figure>
 
@@ -256,7 +256,7 @@ gcutil --project=&lt;your-project-id&gt; listforwardingrules
   <p>The second scenario is an application that performs long-running or intensive processing in response to user requests (see figure 7). In this scenario, each user request requires some processing on one or more Compute Engine instances. The processing could involve Optical Character Recognition (OCR), video transcoding, a MapReduce job, and more.</p>
 
   <figure>
-    <img src="../images/articles/gce-load-balancing-in-action/backend-processing.png">
+    <img src="/cloud/images/articles/gce-load-balancing-in-action/backend-processing.png">
     <figcaption>Figure 7: Backend processing application using Compute Engine Load Balancing.</figcaption>
   </figure>
 

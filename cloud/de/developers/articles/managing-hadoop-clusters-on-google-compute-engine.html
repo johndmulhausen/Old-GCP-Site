@@ -42,7 +42,7 @@
 <li>DataNodes nutzen für das HDFS <a href="https://developers.google.com/compute/docs/disks">persistente Festplatten</a>. Diese Festplatten überdauern den Lebenszyklus einer Instanz. Damit haben die Administratoren die Möglichkeit, den HDFS-Replikationsfaktor zu reduzieren und gleichzeitig sicherzustellen, dass keine Daten verloren gehen, falls eine Zone nicht mehr verfügbar ist.</li>
 <li>Bei diesem Szenario wird die <a href="http://hadoop.apache.org/docs/stable/cluster_setup.html#Hadoop+Rack+Awareness">HDFS-Rack-Awareness</a> genutzt, damit der Cluster weiter betrieben werden kann, während Gruppen von DataNodes abgeschaltet werden. Da der HDFS-NameNode Blockreplikate auf separaten Racks <a href="https://issues.apache.org/jira/secure/attachment/12345251/Rack_aware_HDFS_proposal.pdf">verwaltet</a>, kann sichergestellt werden, dass Daten während dieses Vorgangs zwischen Zonen kopiert werden. Ein Rack wird als eine Sammlung von DataNodes simuliert, die in derselben Zone ausgeführt werden. Es werden genau zwei dieser Racks pro Zone konfiguriert.</li>
 </ol>
-<figure><img src="../images/articles/managing-hadoop-clusters-on-gce/minimizing-unavailability.png" alt="">
+<figure><img src="/cloud/images/articles/managing-hadoop-clusters-on-gce/minimizing-unavailability.png" alt="">
 <figcaption>Abbildung 1: Nichtverfügbarkeit während der Zonenmigration minimieren</figcaption>
 </figure>
 <h5>Vorgehensweise</h5>
@@ -82,7 +82,7 @@ Die neuen DataNodes sollten sich selbst mit einem Paar neuer Rack-Kennungen iden
 </ol>
 <h4>Szenario 2: Verwaltung vereinfachen</h4>
 <p>In diesem Szenario wird dargestellt, wie eine Migration mit einem einzigen Befehl durchgeführt werden kann. Dabei werden die Migrationsprozesse im Gegenzug für eine potenziell längere Clusterausfallzeit vereinfacht. Dieser Vorgang ist nahezu identisch mit der automatischen Migration der NameNode- und JobTracker-Instanzen, die im vorherigen Szenario beschrieben wurde. Mit <span class="code">gcutil moveinstances</span> wird der gesamte Cluster zwischen den Zonen migriert.</p>
-<figure><img src="../images/articles/managing-hadoop-clusters-on-gce/simplifying-management.png" alt="">
+<figure><img src="/cloud/images/articles/managing-hadoop-clusters-on-gce/simplifying-management.png" alt="">
 <figcaption>Abbildung 2: Verwaltung der Zonenmigration vereinfachen</figcaption>
 </figure>
 <h5>Vorgehensweise</h5>
@@ -98,7 +98,7 @@ Die neuen DataNodes sollten sich selbst mit einem Paar neuer Rack-Kennungen iden
 <ol>
 <li>Laufwerke gehen niemals verloren, wenn die Zone, in der sie vorliegen, ausfällt. Allerdings sind sie solange nicht verfügbar, bis die Zone wiederhergestellt ist. Mit Snapshots kann die Wiederherstellung des Clusters beschleunigt werden.</li>
 </ol>
-<figure><img src="../images/articles/managing-hadoop-clusters-on-gce/persistent-disks.png" alt="">
+<figure><img src="/cloud/images/articles/managing-hadoop-clusters-on-gce/persistent-disks.png" alt="">
 <figcaption>Abbildung 3: Persistente Festplatten für Notfallwiederherstellung</figcaption>
 </figure>
 <h5>Vorgehensweise</h5>
@@ -117,7 +117,7 @@ Die neuen DataNodes sollten sich selbst mit einem Paar neuer Rack-Kennungen iden
 <li>Einige Distributionen bieten Hochverfügbarkeitsfunktionen für NameNode und JobTracker. Nähere Informationen über deren Bereitstellung finden Sie im Abschnitt "Hochverfügbarkeit" weiter unten in diesem Artikel.</li>
 <li>Techniken wie rsync, NFS oder andere verteilte Dateisysteme können zur Synchronisierung von NameNode-Verzeichnissen verwendet werden.<sup><a href="#ftnt11" name="ftnt_ref11" id="ftnt_ref11">[11]</a></sup></li>
 </ol>
-<figure><img src="../images/articles/managing-hadoop-clusters-on-gce/multi-zone-cluster.png" alt="">
+<figure><img src="/cloud/images/articles/managing-hadoop-clusters-on-gce/multi-zone-cluster.png" alt="">
 <figcaption>Abbildung 4: Mehrzonencluster für Notfallwiederherstellung</figcaption>
 </figure>
 <h5>Vorgehensweise</h5>
@@ -138,7 +138,7 @@ Die neuen DataNodes sollten sich selbst mit einem Paar neuer Rack-Kennungen iden
 <p>Derzeit löst ZooKeeper DNS-Namen <a href="https://issues.apache.org/jira/browse/ZOOKEEPER-338">einmalig</a> beim Start auf. Damit wird der Austausch einer Mitgliedsinstanz vermieden, ohne die verbleibenden Mitglieder des Ensembles neu zu starten. Angesichts des oben beschriebenen Verhaltens des Google Compute Engine-DNS ist zu berücksichtigen, dass jedes Mal, wenn ein Knoten, auf dem ZooKeeper ausgeführt wird, neu gestartet oder ersetzt wird, alle anderen ZooKeeper-Dienste ebenfalls neu gestartet werden müssen. Wird dies unterlassen, weist das vorhandene Ensemble ein Mitglied weniger auf und die neue Instanz wird eine "verwaiste" ZooKepeer-Instanz ausführen.</p>
 <h4>Mehrere Zonen abdecken</h4>
 <p>Hochverfügbarkeit kann auch unter dem Gesichtspunkt der Widerstandsfähigkeit des Clusters gegenüber einem Zonenausfall betrachtet werden. Das wäre etwa bei Szenarien angebracht, bei denen eine Unterbrechung von Aufträgen oder Pipelines mit langer Laufzeit zu Schäden und/oder erheblichen Kosten führen könnte. Betrachten Sie das folgende Szenario, bei dem Zone&nbsp;A früher für die Wartung eingeplant ist als <span class="code">Zone&nbsp;B</span>. Unter diesen Voraussetzungen ist es möglich, einen Cluster zu konzipieren, der beide Zonen abdeckt und bei einem Ausfall einer Zone weiter ausgeführt wird.</p>
-<figure><img src="../images/articles/managing-hadoop-clusters-on-gce/straddling-multiple-zones.png" alt="">
+<figure><img src="/cloud/images/articles/managing-hadoop-clusters-on-gce/straddling-multiple-zones.png" alt="">
 <figcaption>Abbildung 5: Mehrere Zonen für hohe Verfügbarkeit abdecken</figcaption>
 </figure>
 <ol>

@@ -56,7 +56,7 @@
 <p>Cet article vous explique comment configurer un cluster de serveurs JMeter sur des instances Compute&nbsp;Engine. Lorsque vous mettez en place un cluster de serveurs JMeter sur des machines virtuelles fournies par Compute&nbsp;Engine, vous n'avez plus à vous soucier de la maintenance des serveurs physiques. En outre, vous avez toute latitude quant au nombre d'instances que vous souhaitez démarrer pour votre test de charge. JMeter est une infrastructure générique et le système cible du test de charge peut résider sur n'importe quel emplacement&nbsp;accessible par le cluster JMeter. Il peut s'agir d'une application Google App Engine, de tout système résidant sur Compute&nbsp;Engine, de serveurs sur site ou d'une autre plate-forme cloud. Les performances réelles peuvent être affectées par de nombreux facteurs, y compris les performances réseaux. Afin de pouvoir mesurer avec précision les performances, vous devez donc disposer d'un système isolé. De ce fait, le système n'est pas considéré comme un environnement de test des performances.</p>
 <h3>JMeter</h3>
 <p>JMeter s'exécute sous Windows, Mac et Linux. Il est compatible avec divers protocoles de test et propose une interface utilisateur visuelle pour la configuration des tests de charge. La Figure&nbsp;1 illustre une capture d'écran de l'interface utilisateur de JMeter&nbsp;:</p>
-<figure><img src="../images/articles/config-ssh-port-forw-tut/jmeter-ui.png" alt="">
+<figure><img src="/cloud/images/articles/config-ssh-port-forw-tut/jmeter-ui.png" alt="">
 <figcaption>Figure&nbsp;1. Capture d'écran de l'interface utilisateur de JMeter</figcaption>
 </figure>
 <p>JMeter accepte différents tests distribués dans lesquels le système de test de charge se compose des éléments suivants&nbsp;:</p>
@@ -67,12 +67,12 @@
 <p>Le client JMeter est la station de travail qui exécute l'interface utilisateur de JMeter. Les serveurs JMeter peuvent se trouver ailleurs, sur des serveurs distants (Fig.&nbsp;2). Vous pouvez mélanger différents types de serveur dans la configuration. Par exemple, votre Mac peut être configuré en tant que client JMeter et les serveurs Linux en tant que serveurs JMeter.</p>
 <p>Bien qu'il simule des requêtes HTTP dans lesquelles chaque fil de serveur JMeter agit comme un client HTTP, JMeter ne procède pas au rendu de la page et n'exécute pas JavaScript. C'est pourquoi les fichiers intégrés, tels que les images ou les données téléchargées par Ajax, ne sont pas téléchargés automatiquement.</p>
 <p>Pour simuler une véritable situation de charge, le scénario de test doit être élaboré avec soin de sorte que le système reproduise le comportement d'utilisateurs réels aussi fidèlement que possible.</p>
-<figure><img src="../images/articles/config-ssh-port-forw-tut/load-testing.jpg" alt="">
+<figure><img src="/cloud/images/articles/config-ssh-port-forw-tut/load-testing.jpg" alt="">
 <figcaption>Figure 2. Utilisation de JMeter pour les tests de charge</figcaption>
 </figure>
 <p>Pour utiliser une configuration JMeter distribuée, commencez par répertorier tous les serveurs JMeter dans le fichier de configuration de votre client JMeter (entrée <span class="code">remote_hosts</span> dans bin/jmeter.properties). Pour démarrer les tests, utilisez <span class="code">Tout démarrer à distance</span> au lieu de <span class="code">Démarrer</span>. Lorsque vous utilisez la commande <span class="code">Tout démarrer à distance</span>, le client JMeter se connecte à tous les serveurs distants répertoriés pour lancer les tests, et reçoit tous les résultats.</p>
 <p>Pendant le test de charge, les résultats de tous les serveurs du cluster JMeter sont envoyés au client. Les résultats sont consolidés et affichés sur l'écran du client JMeter (Fig. 3).</p>
-<figure><img src="../images/articles/config-ssh-port-forw-tut/apache-jmeter.png" alt="">
+<figure><img src="/cloud/images/articles/config-ssh-port-forw-tut/apache-jmeter.png" alt="">
 <figcaption>Figure&nbsp;3. Capture d'écran des résultats consolidés du test de charge sur le client JMeter</figcaption>
 </figure>
 <p>N'oubliez pas que JMeter dispose d'autres types de gestionnaires de résultats que celui illustré.</p>
@@ -81,17 +81,17 @@
 <p>La suite de cet article traite de la façon de configurer les serveurs JMeter sur Compute&nbsp;Engine. Pour les besoins de cet article, supposons que nous configurions plusieurs serveurs JMeter sur des instances Linux de Compute&nbsp;Engine et que nous exécutions le client JMeter sur un Mac.star</p>
 <h3>Connexions entre le client JMeter et les serveurs JMeter</h3>
 <p>Lorsque le client JMeter démarre le test à distance, la communication entre le client JMeter et le serveur JMeter est établie via la connexion JMeter et un appel RMI. La connexion JMeter est toujours initiée par le client JMeter. D'autre part, la connexion TCP pour l'appel RMI est lancée dans les deux directions. Trois connexions sont donc créées (Fig. 4).</p>
-<figure><img src="../images/articles/config-ssh-port-forw-tut/jmeter-connections.png" alt="">
+<figure><img src="/cloud/images/articles/config-ssh-port-forw-tut/jmeter-connections.png" alt="">
 <figcaption>Figure 4. Connexions entre le client JMeter et le serveur JMeter</figcaption>
 </figure>
 <p>Lorsque le client JMeter s'exécute derrière un pare-feu, à l'aide de la fonction NAT 1:N (NAT, Network Address Translation), et qu'il est connecté à des serveurs JMeter sur Compute&nbsp;Engine, eux aussi derrière un pare-feu, la configuration des connexions peut constituer un véritable défi.</p>
 <p>Compute&nbsp;Engine utilise la fonction NAT 1:1 pour son adresse IP externe. Chaque instance Compute&nbsp;Engine utilise son adresse interne privée comme adresse IP. De ce fait, le serveur distant JMeter ne parvient pas à se connecter au client JMeter, car ce dernier se trouve derrière un pare-feu et n'a pas d'adresse publique. D'autre part, le client ne peut pas se connecter au serveur distant, car celui-ci indique son adresse interne privée en tant qu'adresse publique (Fig. 5).</p>
-<figure><img src="../images/articles/config-ssh-port-forw-tut/firewalls.jpg" alt="">
+<figure><img src="/cloud/images/articles/config-ssh-port-forw-tut/firewalls.jpg" alt="">
 <figcaption>Figure&nbsp;5. Les pare-feu constituent un réel défi en matière de communication entre le client et les serveurs JMeter.</figcaption>
 </figure>
 <h3>Technique de transfert de port SSH</h3>
 <p>Secure Shell (SSH) dispose d'une fonctionnalité appelée le transfert de port SSH (ou tunnels SSH) avec laquelle une connexion est transférée vers un port différent alors que la communication réelle s'effectue sur la connexion SSH. Le transfert de port peut soit être effectué sur le client SSH, soit sur le serveur SSH. Avec le transfert de port, vous pouvez configurer des ports qui permettent au client et au serveur JMeter de se connecter l'un à l'autre.</p>
-<figure><img src="../images/articles/config-ssh-port-forw-tut/forw-connections.jpg" alt="">
+<figure><img src="/cloud/images/articles/config-ssh-port-forw-tut/forw-connections.jpg" alt="">
 <figcaption>Figure&nbsp;6. Transfert des connexions vers un port différent</figcaption>
 </figure>
 <p>Notez que dans les exemples de la Figure&nbsp;6, "A" et "B" correspondent aux numéros des ports.</p>
@@ -111,7 +111,7 @@ ssh -R  B:127.0.0.1: A &lt;username&gt;@&lt;server&gt;
 <li>Port 25000 pour l'appel RMI du serveur vers le client</li>
 <li>Port 26000 pour l'appel RMI du client vers le serveur</li>
 </ul>
-<figure><img src="../images/articles/config-ssh-port-forw-tut/forw-config.png" alt="">
+<figure><img src="/cloud/images/articles/config-ssh-port-forw-tut/forw-config.png" alt="">
 <figcaption>Figure&nbsp;7. Exemple de configuration de transfert de port avec trois connexions</figcaption>
 </figure>
 <p>La commande suivante configure le transfert pour trois&nbsp;ports&nbsp;:</p>

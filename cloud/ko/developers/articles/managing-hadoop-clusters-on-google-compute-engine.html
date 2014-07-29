@@ -42,7 +42,7 @@
 <li>DataNode는 HDFS에 <a href="https://developers.google.com/compute/docs/disks">영구 디스크</a>를 사용합니다. 영구 디스크는 인스턴스 기간 이상의 데이터 지속성을 제공합니다. 그러면 관리자가 HDFS 복제 요인을 줄일 수 있는 한편, 영역을 사용할 수 없는 사건이 발생할 때 데이터가 손실되지 않도록 할 수 있습니다.</li>
 <li>이 시나리오에서는 <a href="http://hadoop.apache.org/docs/stable/cluster_setup.html#Hadoop+Rack+Awareness">HDFS 랙 인식</a> 기능을 사용하여 DataNode 그룹이 해제되는 동안 클러스터가 계속 실행되도록 합니다. HDFS NameNode가 블록 복제본을 별도의 랙에서 <a href="https://issues.apache.org/jira/secure/attachment/12345251/Rack_aware_HDFS_proposal.pdf">구성</a>한다는 사실을 잘 활용하면 해제 과정 동안 데이터가 여러 영역에서 복사되도록 할 수 있습니다. 랙은 같은 영역에서 실행되는 DataNode 모음으로 시뮬레이션되며, 영역당 정확히 두 개만 구성됩니다.</li>
 </ol>
-<figure><img src="../images/articles/managing-hadoop-clusters-on-gce/minimizing-unavailability.png" alt="">
+<figure><img src="/cloud/images/articles/managing-hadoop-clusters-on-gce/minimizing-unavailability.png" alt="">
 <figcaption>그림 1: 영역 마이그레이션 과정 중 비가용성 최소화</figcaption>
 </figure>
 <h5>접근 방식</h5>
@@ -82,7 +82,7 @@
 </ol>
 <h4>시나리오 2: 관리 간소화</h4>
 <p>이 시나리오에서는 하나의 명령으로 마이그레이션을 수행하는 방법을 제시합니다. 이 방법에서는 클러스터 다운타임이 늘어날 수 있지만, 마이그레이션 작업을 쉽게 수행할 수 있습니다. 이 과정은 이전 시나리오에서 설명한 NameNode 및 JobTracker 인스턴스를 자동으로 마이그레이션하는 과정과 거의 동일합니다. <span class="code">gcutil moveinstances</span>에서 영역 간에 전체 클러스터를 마이그레이션합니다.</p>
-<figure><img src="../images/articles/managing-hadoop-clusters-on-gce/simplifying-management.png" alt="">
+<figure><img src="/cloud/images/articles/managing-hadoop-clusters-on-gce/simplifying-management.png" alt="">
 <figcaption>그림 2: 영역 마이그레이션 관리 간소화</figcaption>
 </figure>
 <h5>접근 방식</h5>
@@ -98,7 +98,7 @@
 <ol>
 <li>스냅샷이 존재하는 영역에서 중단이 발생해도 디스크는 손실되지 않지만, 영역이 복원될 때까지는 디스크를 사용할 수 없습니다. 스냅샷은 클러스터 재구성을 빠르게 할 수 있는 기술입니다.</li>
 </ol>
-<figure><img src="../images/articles/managing-hadoop-clusters-on-gce/persistent-disks.png" alt="">
+<figure><img src="/cloud/images/articles/managing-hadoop-clusters-on-gce/persistent-disks.png" alt="">
 <figcaption>그림 3: 재해 복구를 위한 영구 디스크</figcaption>
 </figure>
 <h5>접근 방식</h5>
@@ -117,7 +117,7 @@
 <li>일부 배포판에서는 NameNode 및 JobTracker에 고가용성 기능을 제공합니다. 관련 배포에 대한 자세한 내용은 문서 후반부의 고가용성 섹션을 참조하시기 바랍니다.</li>
 <li>rsync, NFC 또는 기타 분산 파일 시스템과 같은 다른 기술을 사용하여 NameNode 디렉토리<sup><a href="#ftnt11" name="ftnt_ref11" id="ftnt_ref11">[11]</a></sup>를 동기화할 수 있습니다.</li>
 </ol>
-<figure><img src="../images/articles/managing-hadoop-clusters-on-gce/multi-zone-cluster.png" alt="">
+<figure><img src="/cloud/images/articles/managing-hadoop-clusters-on-gce/multi-zone-cluster.png" alt="">
 <figcaption>그림 4: 재해 복구를 위한 다중 영역 클러스터</figcaption>
 </figure>
 <h5>접근 방식</h5>
@@ -138,7 +138,7 @@
 <p>현재 ZooKeeper에서는 시작 시 DNS 이름을 <a href="https://issues.apache.org/jira/browse/ZOOKEEPER-338">1회</a> 참조합니다. 그러면 인스턴스 그룹의 나머지 인스턴스를 재부팅하지 않고 한 구성 인스턴스가 대체되는 것을 방지할 수 있습니다. 따라서 Google Compute Engine DNS의 동작에 대한 이전 설명을 고려하면, ZooKeepr를 실행하는 노드가 다시 부팅되거나 대체될 때마다 다른 모든 ZooKeeper 서비스를 다시 시작해야 합니다. 그렇지 않으면 기존 인스턴스 그룹의 구성 인스턴스 하나가 비게 되며, 새 인스턴스는 그룹에 속하지 않은 ZooKeeper 인스턴스를 실행하게 됩니다.</p>
 <h4>다중 영역 처리</h4>
 <p>영역 장애에 대한 클러스터의 장애 복구성의 측면에서도 고가용성을 고려해 볼 수 있습니다. 이는 장기간 실행되는 작업 또는 파이프라인이 중단되는 경우 품질이 떨어지거나 이로 인해 상당한 비용이 발생할 수 있는 시나리오에 적용할 수도 있습니다. 영역 A가 <span class="code">영역 B</span>보다 먼저 유지관리가 예약되어 있는 시나리오를 생각해 보겠습니다. 설명된 내용에 따라, 두 영역 중 하나가 중단되는 경우에도 클러스터가 계속 실행될 수 있도록 두 영역을 아우르는 클러스터를 구축하는 것이 가능합니다.</p>
-<figure><img src="../images/articles/managing-hadoop-clusters-on-gce/straddling-multiple-zones.png" alt="">
+<figure><img src="/cloud/images/articles/managing-hadoop-clusters-on-gce/straddling-multiple-zones.png" alt="">
 <figcaption>그림 5: 고가용성을 위해 여러 영역 포함</figcaption>
 </figure>
 <ol>

@@ -82,7 +82,7 @@
   <p>Figure 1 illustrates a few scenarios on how the data can be loaded. Please note that on-premises can also be a third-party cloud provider hosting the data.</p>
 
   <figure>
-    <img src="../images/articles/bigquery-in-practice/scenarios.png">
+    <img src="/cloud/images/articles/bigquery-in-practice/scenarios.png">
     <figcaption>Figure 1. Scenarios for data ingestion into BigQuery</figcaption>
   </figure>
 
@@ -184,7 +184,7 @@
   <p>Dedicated clients and servers are required to use this software. Figure 2 depicts a typical setup when using third-party software. It is recommended to install the server on Compute Engine since it offers fast network bandwidth to Cloud Storage.</p>
 
   <figure>
-    <img src="../images/articles/bigquery-in-practice/file-transfer.png">
+    <img src="/cloud/images/articles/bigquery-in-practice/file-transfer.png">
     <figcaption>Figure 2. High-Speed File Transfer Software system diagram</figcaption>
   </figure>
 
@@ -276,7 +276,7 @@
   <p>Scripting can easily be adapted to run on the Hadoop<sup><a href="#ftnt2" name="ftnt_ref2" id="ftnt_ref2">[2]</a></sup> framework for distributing the  processing of large data sets across clusters of computers. Hadoop includes an open-source implementation of Google&rsquo;s MapReduce research papers. A sample application, Google Compute Engine Cluster for Hadoop, is available at <a href="https://github.com/GoogleCloudPlatform/solutions-google-compute-engine-cluster-for-hadoop">github</a> to bootstrap the development process. This application sets up Compute Engine instances as a Hadoop cluster and executes the MapReduce tasks. Using this application, the only task that a developer has to do is writing the mapper and the reducer function. Figure 3 depicts the Hadoop on Compute Engine workflow using this sample application.
 
   <figure>
-    <img src="../images/articles/bigquery-in-practice/data_files.png">
+    <img src="/cloud/images/articles/bigquery-in-practice/data_files.png">
     <figcaption>Figure 3: Hadoop on Compute Engine Workflow</figcaption>
   </figure>
 
@@ -316,7 +316,7 @@
   <p>The second example uses a simplified retail data schema to illustrate how to denormalize two large data sets. The data sets include  transactions and items, respectively, and there is a 1 to N relationship between them. The goal is to denormalize the two tables to a single table.</p>
 
   <figure>
-    <img src="../images/articles/bigquery-in-practice/transaction.png">
+    <img src="/cloud/images/articles/bigquery-in-practice/transaction.png">
     <figcaption>Figure 4: Entity diagram for the denormalizing data example</figcaption>
   </figure>
 
@@ -377,7 +377,7 @@
   <p>Using Hadoop to transform data requires a level of comfort with code development, debugging and an understanding of the Hadoop framework. ETL tools can be used as an alternative to Hadoop. These tools provide an easy to use "drag and drop" user interface for transforming and denormalizing data. A sample application, &ldquo;Using ETL Tool on Google Compute Engine,&rdquo; is available for download from <a href="https://github.com/GoogleCloudPlatform/Solutions-Using-ETL-tool-on-Google-Compute-Engine">github</a>. This application bootstraps the process of provisioning a single Compute Engine instance and installs the necessary software for running an open source ETL tool. For more scalable operations, cluster deployment should be used. Figure 5 depicts an overview of the clustering architecture:</p>
 
   <figure>
-    <img src="../images/articles/bigquery-in-practice/etl-master-node.png">
+    <img src="/cloud/images/articles/bigquery-in-practice/etl-master-node.png">
     <figcaption>Figure 5. ETL cluster deployment architecture on Compute Engine</figcaption>
   </figure>
 
@@ -426,7 +426,7 @@
   <p>The following illustrates how this is done using a simplified retail data schema. Figure 6 depicts the entity diagram among three normalized tables - ItemPurchased, ItemDetail and LoyaltyCard.</p>
 
   <figure>
-    <img src="../images/articles/bigquery-in-practice/item-detail.png">
+    <img src="/cloud/images/articles/bigquery-in-practice/item-detail.png">
     <figcaption>Figure 6. Entity Relationship Diagram for simple retail data</figcaption>
   </figure>
 

@@ -40,7 +40,7 @@
 <p>이제 남은 문제는 이러한 최신 웹 애플리케이션을 어떻게 설계하고 구현하는가입니다. 이 섹션에서는 브라우저 기반 클라이언트를 기존 서비스 기반 아키텍처에 통합하는 방법을 알아보려는 웹 애플리케이션 개발자 및 설계자를 위한 안내서 가이드를 제공합니다.</p>
 <h2>개요: 클라이언트 측 MVC와 Google Cloud Endpoints 통합</h2>
 <p>RPC 프레임워크를 제공하는 Google App Engine 기능인 Google Cloud Endpoints가 이러한 문제의 해답이 될 수 있습니다.</p>
-<figure><img src="../images/articles/angularjs-cloud-endpoints-recipe/cloud-endpoints.jpg" alt="">
+<figure><img src="/cloud/images/articles/angularjs-cloud-endpoints-recipe/cloud-endpoints.jpg" alt="">
 <figcaption>그림 1: Google Cloud Endpoints</figcaption>
 </figure>
 <p>이 플로는 아래에 자세하게 설명되어 있습니다.</p>
@@ -65,16 +65,16 @@ public void <span class="bld">insert</span>(Message message) {
 </pre>
 <p><span class="code">insert()</span> 메소드는 자바 개체와 메시지를 수신하고 <span class="code">createdAt</span>(생성 타임스탬프), <span class="code">createdBy</span>(메시지 소유자)와 같은 속성과 함께 콘텐츠를 가져옵니다. 그런 다음 이러한 속성 값으로 Datastore 항목 'e'를 생성하고 Google App Engine Datastore에 저장합니다.</p>
 <p>이러한 서비스 엔드포인트는 REST API를 통해 자동으로 노출되며, <a href="https://developers.google.com/apis-explorer/#p/">Google APIs Explorer</a>를 사용하여 서비스 엔드포인트를 확인할 수 있습니다. 또한 테스트 요청을 전송하여 JSON 형식으로 응답을 확인하는 것이 좋습니다. 다음 화면에서 <span class="code">guestbook.messages.insert</span>는 자바 클래스 주석에서 바로 생성되었습니다.</p>
-<figure><img src="../images/articles/angularjs-cloud-endpoints-recipe/api-explorer.png" alt="">
+<figure><img src="/cloud/images/articles/angularjs-cloud-endpoints-recipe/api-explorer.png" alt="">
 <figcaption>그림 2: Google APIs Explorer로 서비스 엔드포인트 테스트</figcaption>
 </figure>
 <h2>AngularJS와 Cloud Endpoints 결합</h2>
 <p>다음 단계로 <a href="http://angularjs.org/">AngularJS</a>와 같은 클라이언트 측 MVC 프레임워크와 Cloud Endpoints를 통합하는 과정을 설명해 보겠습니다. 이러한 시스템의 아키텍처는 그림 4에서 설명한 아키텍처와 유사합니다.</p>
-<figure><img src="../images/articles/angularjs-cloud-endpoints-recipe/endpoints-architecture.png" alt="">
+<figure><img src="/cloud/images/articles/angularjs-cloud-endpoints-recipe/endpoints-architecture.png" alt="">
 <figcaption>그림 4: 클라이언트 측 MVC 및 서비스 엔드포인트 아키텍처</figcaption>
 </figure>
 <p>두 기술의 통합은 간단하지만 코딩을 시작하기 전에 알아 두어야 할 몇 가지 실수와 주의사항이 있습니다. 따라서 위의 다이어그램(그림 4)에서 왼쪽 부분을 자세히 살펴보도록 하겠습니다. 이 부분이 클라이언트 측 MVC와 다이어그램 오른쪽에 나와 있는 엔드포인트를 통합하는 실제 자바스크립트 코드에 해당합니다. 앞서 정의한 방명록 서비스 엔드포인트를 위한 AngularJS 기반 웹 인터페이스를 생성하는 경우를 예로 사용하겠습니다. 다음 다이어그램은 인터페이스가 어떻게 표시되는지 보여주는 스크린샷입니다.</p>
-<figure><img src="../images/articles/angularjs-cloud-endpoints-recipe/guestbook-app.png" alt="">
+<figure><img src="/cloud/images/articles/angularjs-cloud-endpoints-recipe/guestbook-app.png" alt="">
 <figcaption>그림 3: AngularJS와 Cloud Endpoints가 통합된 방명록 앱</figcaption>
 </figure>
 <h3>보기 및 모델 생성</h3>
