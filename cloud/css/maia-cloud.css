@@ -1,0 +1,59 @@
+@media screen, projection
+{
+	#maia-header,#maia-nav-x,#maia-footer,.maia-stage
+	{
+		margin: 0 -15px !important;
+	}
+	#maia-nav-x .maia-button
+	{
+		box-shadow: none;
+		moz-box-shadow: none;
+		ms-box-shadow: none;
+		o-box-shadow: none;
+		webkit-box-shadow: none;
+	}
+	#maia-header .maia-search
+	{
+		margin-left: 15px;
+	}
+}
+@media screen and (max-width: 767px)
+{
+	#maia-header .maia-util
+	{
+		display: none;
+	}
+	.search-container
+	{
+		display: none;
+	}
+}
+#maia-nav-x .cp-cta
+{
+	color: #333 !important;
+}
+#maia-nav-x .cp-cta a:first-child
+{
+	color: #245dc1 !important;
+}
+#maia-nav-x .cp-cta-text
+{
+	font-weight: 600;
+	margin-left: 5px;
+	margin-right: 5px;
+}
+.cloud-social
+{
+	float: right;
+	line-height: 16px;
+	padding: 6px 0px;
+}
+.search-container
+{
+	float: right;
+	margin-top: .65em;
+}
+#maia-header #maia-social
+{
+	display: none;
+}
