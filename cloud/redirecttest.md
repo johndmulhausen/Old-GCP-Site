@@ -9,9 +9,9 @@ $( document ).ready(function() {
   YAML.fromURL("../redirects.yaml",function(string){
     var errors = YAML.getErrors();
     if(errors.length == 0)
-      document.getElementById("out").innerHTML = "Done! Took " + YAML.getProcessingTime() + " miliseconds.";
+      console.log("Done! Took " + YAML.getProcessingTime() + " miliseconds.");
     else {
-      document.getElementById("out").innerHTML = errors.join("<br>");
+      console.log(document.getElementById("out").innerHTML = errors.join("<br>"));
     }
   });
 }
