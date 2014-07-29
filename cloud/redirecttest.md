@@ -13,6 +13,7 @@ $( document ).ready(function() {
       console.log(data);
       for(var redirect in data.redirects)
       {
+        console.log("redirect.length=" + redirect.length);
         //document.write(redirect.from + "=" redirect.to)
       }
     } else {
