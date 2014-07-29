@@ -10,6 +10,7 @@ $( document ).ready(function() {
     var errors = YAML.getErrors();
     if(errors.length == 0)
       console.log("Done! Took " + YAML.getProcessingTime() + " miliseconds.");
+      console.log(data)
     else {
       console.log(document.getElementById("out").innerHTML = errors.join("<br>"));
     }
