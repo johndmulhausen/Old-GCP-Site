@@ -93,9 +93,9 @@ function googleTranslateElementInit() {
 
 <script language="javascript">
 $( document ).ready(function() {
-  YAML.fromURL("../redirects.yaml",function(data){
+  console.log($(location).attr('href'))
+  YAML.fromURL("/cloud/redirects.yaml",function(data){
     var errors = YAML.getErrors();
-    console.log($(location).attr('href'))
     if (errors.length == 0) {
       console.log("Done! Took " + YAML.getProcessingTime() + " miliseconds. data.redirects.length=" + data.redirects.length );
       console.log(data);
