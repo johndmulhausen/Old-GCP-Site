@@ -98,6 +98,10 @@ $( document ).ready(function() {
     if (errors.length == 0) {
       console.log("Done! Took " + YAML.getProcessingTime() + " miliseconds.");
       console.log(string);
+      for(i=0;i<data.redirects.length;i++)
+      {
+        document.write(data.redirects[i].from + "=" data.redirects[i].to)
+      }
     } else {
       console.log(document.getElementById("out").innerHTML = errors.join("<br>"));
     }
