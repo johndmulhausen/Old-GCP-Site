@@ -47,9 +47,9 @@ handlers:
   upload: (.*\.xml)
 
 # image files
-- url: /(.*\.(bmp|gif|ico|jpeg|jpg|png))
+- url: /(.*\.(bmp|gif|ico|jpeg|jpg|png|pdf))
   static_files: \1
-  upload: (.*\.(bmp|gif|ico|jpeg|jpg|png))
+  upload: (.*\.(bmp|gif|ico|jpeg|jpg|png|pdf))
 
 # clean urls
 - url: /(.+)
