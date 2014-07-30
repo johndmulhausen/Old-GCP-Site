@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en" class="maia">
   <head>
@@ -114,97 +113,8 @@
       </ul>
     </div>
   </div>
-  
-<!-- Products subnav -->  
-<div id="maia-nav-x" class="maia-nav products-nav">
-  <div class="maia-aux">
-    <div class="products-nav-dropdown maia-cols">
-    
-      <div id="compute-dropdown" class="products-column maia-col-2">
-        <span class="product-list-title">Compute</span>
-        <div class="dropdown-item-container">
-          <a href="/cloud/products/compute-engine/">
-            <span class="product-name">Compute Engine</span>
-          </a>
-        </div>
-        <div class="dropdown-item-container">
-          <a href="/cloud/products/app-engine/">
-            <span class="product-name">App Engine</span>
-          </a>
-        </div>
-      </div>
-      
-      <div id="storage-dropdown" class="products-column maia-col-2">
-        <span class="product-list-title">Storage</span>
-        <div class="dropdown-item-container">
-          <a href="/cloud/products/cloud-sql/">
-            <span class="product-name">Cloud SQL</span>
-          </a>
-        </div>
-        <div class="dropdown-item-container">
-          <a href="/cloud/products/cloud-storage/">
-            <span class="product-name">Cloud Storage</span>
-          </a>
-        </div>
-        <div class="dropdown-item-container">
-          <a href="/cloud/products/cloud-datastore/">
-            <span class="product-name">Cloud Datastore</span>
-          </a>
-        </div>
-      </div>
-      
-      <div id="big-data-dropdown" class="products-column maia-col-2">
-        <span class="product-list-title">Big Data</span>
-        <div class="dropdown-item-container">
-          <a href="/cloud/products/bigquery/">
-            <span class="product-name">BigQuery</span>
-          </a>
-        </div>
-      </div>
-      
-      <div id="services-dropdown" class="products-column maia-col-2">
-        <span class="product-list-title">Services</span>
-        <div class="dropdown-item-container">
-          <a href="/cloud/products/cloud-dns/">
-            <span class="product-name">Cloud DNS</span>
-          </a>
-        </div>
-        <div class="dropdown-item-container">
-          <a href="/cloud/products/cloud-endpoints/">
-            <span class="product-name">Cloud Endpoints</span>
-          </a>
-        </div>
-        <div class="dropdown-item-container">
-          <a href="/cloud/products/translate-api/">
-            <span class="product-name">Translate API</span>
-          </a>
-        </div>
-        <div class="dropdown-item-container">
-          <a href="/cloud/products/prediction-api/">
-            <span class="product-name">Prediction API</span>
-          </a>
-        </div>
-      </div>
-      
-      <div id="management-dropdown" class="products-column maia-col-2">
-        <span class="product-list-title">Management</span>
-        <div class="dropdown-item-container">
-          <span class="product-name"><a href="/cloud/products/cloud-deployment-manager/">Cloud Deployment Manager</a></span>
-        </div>
-      </div>
-      
-      <div id="pricing-dropdown" class="products-column maia-col-2">
-        <span class="product-list-title">Pricing</span>
-        <div class="dropdown-item-container">
-          <span class="product-name"><a href="/cloud/products/pricing/">Overview</a></span>
-        </div>
-        <div class="dropdown-item-container">
-          <span class="product-name"><a href="/cloud/products/calculator/">Calculator</a></span>
-        </div>
-      </div>
-    </div>
-  </div>
-</div> 
+
+{% include ProductsSubNavDropdown.html %}
 
 {{content}}
 
