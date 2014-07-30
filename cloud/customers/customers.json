@@ -383,16 +383,7 @@
     "industries": [],
     "blurbAuthor": "",
     "blurbAuthorRole": ""
-  },
-   {
-    "name": "bgold",
-    "blurb": "\"Is a baller\"",
-    "slug": "http://www.twitter.com/bgoldy",
-    "platformTypes": ["App Engine"],
-    "industries": [],
-    "logo": "test.png",
-    "blurbAuthor": "",
-    "blurbAuthorRole": ""
   }
+
 
 ]}
