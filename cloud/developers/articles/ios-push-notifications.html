@@ -63,7 +63,7 @@ title: Orchestrating iOS Push Notifications on Google Cloud Platform
         <p>The high level architecture of this solution is depicted in Figure 1 :</p>
 
         <figure>
-        <img height="408" src="ios-push-notifications/image00.jpg" width="640">
+        <img height="408" src="/cloud/images/articles/ios-push-notifications/image00.jpg" width="640">
         <figcaption>Figure 1: High-level architecture of solution</figcaption>
         </figure>
 
@@ -83,7 +83,7 @@ title: Orchestrating iOS Push Notifications on Google Cloud Platform
 
 
         <figure>
-        <img height="518" src="ios-push-notifications/image04.jpg" width="679">
+        <img height="518" src="/cloud/images/articles/ios-push-notifications/image04.jpg" width="679">
         <figcaption>Figure 2 : Key components of the solution</figcaption>
         </figure>
 
@@ -92,7 +92,7 @@ title: Orchestrating iOS Push Notifications on Google Cloud Platform
         <p>The interactions between these queues, Push Notification Manager, Notification Delivery Worker, and Push Preprocessing Handler are depicted in the diagram shown in Figure 3 :</p>
 
         <figure>
-        <img height="553" src="ios-push-notifications/image03.jpg" width="473">
+        <img height="553" src="/cloud/images/articles/ios-push-notifications/image03.jpg" width="473">
         <figcaption>Figure 3 : Implementation details of the solution</figcaption>
         </figure>
 
@@ -110,7 +110,7 @@ title: Orchestrating iOS Push Notifications on Google Cloud Platform
 
 
         <figure>
-        <img height="246" src="ios-push-notifications/image05.jpg" width="625">
+        <img height="246" src="/cloud/images/articles/ios-push-notifications/image05.jpg" width="625">
         <figcaption>Figure 4: Using Google Cloud Endpoints to expose a REST API from the backend</figcaption>
       </figure>
 
@@ -123,7 +123,7 @@ title: Orchestrating iOS Push Notifications on Google Cloud Platform
         <p>A natural choice for storing device tokens and related information is to use Datastore. However, if your mobile solution already uses Cloud SQL, you can choose to store device tokens there instead<sup> <a href="#ftnt5" name="ftnt_ref5">[5]</a> </sup>.</p>
 
       <figure>
-        <img height="331" src="ios-push-notifications/image01.jpg" width="338">
+        <img height="331" src="/cloud/images/articles/ios-push-notifications/image01.jpg" width="338">
         <figcaption>Figure 5: Storing device tokens using Datastore</figcaption>
       </figure>
 
@@ -205,7 +205,7 @@ title: Orchestrating iOS Push Notifications on Google Cloud Platform
         <p>This solution uses a combination of <a href="https://developers.google.com/appengine/docs/python/datastore/queries#Query_Cursors">query cursor</a>, push and pull task queues, and transactions to handle preprocessing and retrieving the list of target device tokens in a reliable way.</p>
 
       <figure>
-        <img height="568" src="ios-push-notifications/image02.jpg" width="486">
+        <img height="568" src="/cloud/images/articles/ios-push-notifications/image02.jpg" width="486">
         <figcaption>Figure 6: Retrieving a list of target device tokens</figcaption>
       </figure>
 
