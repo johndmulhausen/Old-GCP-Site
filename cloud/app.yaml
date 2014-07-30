@@ -1,5 +1,5 @@
 application: gcpjekyll
-version: 1
+version: cloud
 runtime: python27
 api_version: 1
 threadsafe: true
@@ -47,9 +47,9 @@ handlers:
   upload: (.*\.xml)
 
 # image files
-- url: /(.*\.(bmp|gif|ico|jpeg|jpg|png|pdf))
+- url: /(.*\.(bmp|gif|ico|jpeg|jpg|png))
   static_files: \1
-  upload: (.*\.(bmp|gif|ico|jpeg|jpg|png|pdf))
+  upload: (.*\.(bmp|gif|ico|jpeg|jpg|png))
 
 # clean urls
 - url: /(.+)
