@@ -1,57 +1,7 @@
-<html devsite>
-  <head>
-    
-    <title>Google Cloud Storage - Cloud Backup, Cloud Database &amp; Online Storage</title>
-    <meta name="description" content="Google Cloud Storage lets you store, access and manage data easily on Google&#39;s infrastructure. Get unlimited cloud storage with a reliable infrastructure." />
-    <meta name="hide_page_heading" value="true" />
-    <meta name="full_width" value="true" />
-    <meta name="top_category" value="products" />
-    <meta name="subcategory" value="cloud-storage" />
-    <meta name="google-site-verification" content="8dOEM3Xenm6yaBc83y2WKgqQG0iHI7Ph6Rl_YLIZLQ8" />
-    <meta name="viewport" content="initial-scale=1, minimum-scale=1, width=device-width">
-    <link rel="apple-touch-icon" href="//cloud.google.com/_static/images/apple-touch-icon.png">
-    <link href="//fonts.googleapis.com/css?family=Open+Sans:400italic,300,400,600,700" rel="stylesheet">
-    
-    <link href="/cloud/css/default.css" rel="stylesheet">
-
-    <!--[if lt IE 9]>
-    <link rel="stylesheet" media="screen" href='/c/cp-ie.css'>
-    <![endif]-->
-
-    <!-- GSAP animation frameworks -->
-    <script src="//www.gstatic.com/external_hosted/gsap/TweenMax.min.js"></script>
-    <script src="//www.gstatic.com/external_hosted/gsap/TimelineMax.min.js"></script>
-    <script src="/cloud/js/floodlight.js"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
-  </head>
-  <body>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+---
+layout: cloud/phase2
+title: Google Cloud Storage - Cloud Backup, Cloud Database
+---
 <div class="site-wrapper product cloud-storage">
   <div class="maia-stage page-header secondary scroll-section" data-section-label="Cloud Storage">
     <div id="intro" class="maia-aux page-header-inner">
@@ -71,8 +21,6 @@
     </div>
   </div>
   <div id="maia-main">
-    
-    
     
     <div id="features" class="generic-section scroll-section" data-section-label="Features">
       <div class="maia-cols">
@@ -112,8 +60,6 @@
         </div>
       </div>
     </div>
-    
-
         
     <div id="case-studies" class="generic-section scroll-section" data-section-label="Case Studies">
       <div class="header">
@@ -127,35 +73,26 @@
 
       <!-- maia-cols row for every 2 case studies -->
       
-        
         <div class="maia-cols">
           <div class="inner-block maia-col-6">
             <div class="maia-cols">
               <div class="image-wrapper maia-col-4">
-              <a href="../../../files/Ubisoft.pdf" class="read-more" event="autotrack-data-g" data-g-event="Products: Cloud Storage" data-g-action="Case Study" data-g-label="Ubisoft"><img src="../../images/case-studies/landing/ubisoft.png" alt="Ubisoft's case study image" data-retina="139x123" class="case-study-img" rel="canonical"></a>
+              <a href="../../files/Ubisoft.pdf" class="read-more" event="autotrack-data-g" data-g-event="Products: Cloud Storage" data-g-action="Case Study" data-g-label="Ubisoft"><img src="../../images/case-studies/landing/ubisoft.png" alt="Ubisoft's case study image" data-retina="139x123" class="case-study-img" rel="canonical"></a>
               </div>
               <div class="details maia-col-8">
                 <h3 class="headline">Ubisoft</h3>
                 <p class="subheadline">&quot;It was a huge challenge and a great achievement to get the game up and running on the web browser. Google App Engine and Google Cloud Storage played a significant part in our success.&quot;</p>
                 
-                <a href="../../../files/Ubisoft.pdf" class="read-more" event="autotrack-data-g" data-g-event="Products: Cloud Storage" data-g-action="Case Study" data-g-label="Ubisoft" rel="canonical">Read Ubisoft's story</a>
+                <a href="../../files/Ubisoft.pdf" class="read-more" event="autotrack-data-g" data-g-event="Products: Cloud Storage" data-g-action="Case Study" data-g-label="Ubisoft" rel="canonical">Read Ubisoft's story</a>
                 
               </div>
             </div>
           </div>
         
-
-      
-      
       <!-- close off the maia-cols row if we don't have evens -->
       
         </div>
-      
-      
     </div>
-    
-
-    
     <div id="pricing-calc" class="generic-section scroll-section" data-section-label="Pricing calculator">
       <div class="header">
         <div class="maia-cols">
@@ -169,9 +106,6 @@
         </div>
       </div>
     </div>
-    
-
-    
     <div id="pricing" class="generic-section scroll-section" data-section-label="Pricing">
       <div class="header">
         <div class="maia-cols">
@@ -406,182 +340,5 @@
         </div>
       </div>
     </div>
-    
   </div>
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<script>
-
-var hasClass = function(el, className) {
-  if (el.classList) {
-    if (el.classList.contains(className)) {
-      return true;
-    }
-    else {
-      return false;
-    }
-  }
-  else {
-    if (new RegExp('(^| )' + className + '( |$)', 'gi').test(el.className)) {
-      return true;
-    }
-    else {
-      return false;
-    }
-  }
-};
-
-var removeClass = function(el, className) {
-  if (el.classList) {
-    el.classList.remove(className);
-  }
-  else {
-    el.className = el.className.replace(new RegExp('(^|\\b)' + className.split(' ').join('|') + '(\\b|$)', 'gi'), ' ');  
-  }
-};
-
-var addClass = function(el, className) {
-  if (el.classList) {
-    el.classList.add(className);
-  }
-  else {
-    el.className += ' ' + className;  
-  }
-};
-
-var tables = document.querySelectorAll('.pricing-table');
-
-for (var i = 0, l = tables.length; i < l; i++) {
-  var tableHeads = tables[i].querySelectorAll('.pricing-table-head');
-  var tableContents = tables[i].querySelectorAll('.pricing-table-content');
-
-  if (tableHeads.length > 1) {
-    // Init it so first tablehead opens
-
-    if (!!tableHeads[0].nextElementSibling) {
-      addClass(tableHeads[0], 'expand');
-      addClass(tableHeads[0].nextElementSibling, 'expand');
-    }
-
-    for (var j = 0, k = tableHeads.length; j < k; j++) {
-
-      tableHeads[j].addEventListener('click', function(e) {
-
-        // Collapse
-        if (hasClass(this, 'expand')) {
-          removeClass(this, 'expand');
-          if (!!this.nextElementSibling) {
-            removeClass(this.nextElementSibling, 'expand');
-          }
-        }
-        
-        // Expand
-        else {
-          addClass(this, 'expand');
-          if (!!this.nextElementSibling) {
-            addClass(this.nextElementSibling, 'expand');
-          }
-        }
-      });
-    }
-  }
-
-  else {
-    if (!!tableHeads[0]) {
-      addClass(tableHeads[0].nextElementSibling, 'auto-expand');
-      addClass(tableHeads[0], 'auto-expand');
-    }
-  }
-}
-
-</script>
-
-
-
-  <!-- is this feedback sticky needed?
-  <div class="feedback-sticky"><a href="javascript:void(0);">Feedback</a></div>
-  <script type="text/javascript" src="//www.gstatic.com/feedback/api.js"></script>
-  <script>
-    jQuery('body').delegate('.feedback-sticky', 'click', function() {
-      _gaq.push(['_trackEvent', 'Feedback', 'User Feedback: ' + location.pathname]);
-      userfeedback.api.startFeedback({'productId': '96209'});
-    });
-  </script>
-  -->
-
-  <!-- Scripts to include both on Goro + Devsite -->
-  <script type="text/javascript">
-   window.___gcfg = {
-     lang: ''
-   };
-  (function() {
-    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
-    po.src = 'https://apis.google.com/js/plusone.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
-  })();
-  </script>
-
-  <!-- GTM implementation -->
-  
-  <!-- Start dataLayer -->
-    <script>
-      dataLayer = [{
-        'country': '',
-        'region': '',
-        'language': 'en'
-      }];
-    </script>
-  <!-- End dataLayer -->
-  
-  <!-- Start Google Tag Manager -->
-  <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5CVQBG"
-  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-  '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-  })(window,document,'script','dataLayer','GTM-5CVQBG');</script>
-  <!-- End Google Tag Manager -->    
-
-
-<!-- Global JS scripts to load; path will depend on whether we're on devsite or Goro -->
-<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular.js"></script>
-<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular-sanitize.js"></script>
-
-
-
-  <script src="/cloud/js/base.min.js"></script>
-
-
-<!-- Secondary right-side scroll-nav -->
-<script>
-  new lfl.ui.ScrollNav({});
-</script>
-
-
-
-  </body>
-</html>
