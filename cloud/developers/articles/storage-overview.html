@@ -1,211 +1,30 @@
-
-<!DOCTYPE html>
-<html lang="en" class="maia">
+<html devsite>
   <head>
-    <title>Storing and Analyzing Your Data in Google's Cloud - Google Cloud Platform</title>
-    <meta charset="utf-8" />
-    <link rel="shortcut icon" href="https://cloud.google.com/_static/images/favicon.ico">
-    <link rel="apple-touch-icon" href="https://cloud.google.com/_static/images/apple-touch-icon.png">
-    <link href='//fonts.googleapis.com/css?family=Open+Sans:300,400,600,700' rel='stylesheet' type='text/css'>
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
-
-    <!--[if lt IE 9]>
-    <script src="/cloud/js/html5.js"></script>
-    <![endif]-->
-
-    <title>Cloud Computing &amp; Cloud Hosting Services — Google Cloud Platform</title>
-    <meta name="google-site-verification" content="8dOEM3Xenm6yaBc83y2WKgqQG0iHI7Ph6Rl_YLIZLQ8" />
-
-    <!-- GSAP animation frameworks -->
-    <script src="//www.gstatic.com/external_hosted/gsap/TweenMax.min.js"></script>
-    <script src="//www.gstatic.com/external_hosted/gsap/TimelineMax.min.js"></script>
-    <script src="/cloud/js/floodlight.js"></script>
+    <title>Storing and Analyzing Your Data in Google&#39;s Cloud &mdash; Google Cloud Platform</title>
+    <meta name="description" content="Google Cloud Platform lets you build and host applications and websites, store data, and analyze data on Google&#39;s scalable infrastructure." />
+    <meta name="hide_page_heading" value="true" />
+    <meta name="full_width" value="true" />
+    <meta name="top_category" value="developers" />
+    <meta name="subcategory" value="articles" />
     <meta name="viewport" content="initial-scale=1, minimum-scale=1, width=device-width">
+    <link rel="apple-touch-icon" href="//cloud.google.com/_static/images/apple-touch-icon.png">
     <link href="//fonts.googleapis.com/css?family=Open+Sans:400italic,300,400,600,700" rel="stylesheet">
 
-    <link href="//www.google.com/css/maia.experimental.css" rel="stylesheet">
-    <link href="/cloud/css/maia-cloud.css" rel="stylesheet"/>
     <link href="/cloud/css/default.css" rel="stylesheet">
+
+    <!--[if lt IE 9]>
+    <link rel="stylesheet" media="screen" href='/c/cp-ie.css'>
+    <![endif]-->
+    <script src="/cloud/js/floodlight.js"></script>
   </head>
   <body>
-  <div id="maia-header">
-    <div class="maia-aux">
-      <h1><a href="/cloud/"><img src="/cloud/images/gcp-logo.png" alt="Cloud Platform" data-retina="383x48"></a></h1>
 
-<div class="search-container">
-  
-  <form action="/cloud/search" class="maia-search">
-    <input type="text" placeholder="Search this site" name="q">
-    <button class="maia-button" type="submit" data-g-event="Maia: Button" data-g-action="Maia: Primary – Header" data-g-label="Search">
-      <span class="maia-search-icon">Search</span>
-    </button>
-  </form>
-  <div class="cloud-social">
-    <div class="cloud-signed-out">
-      <!-- <a href="https://cloud.google.com/console" class="cp-track" id="try-header">Sign in</a> -->
-    </div>
-  </div>
-</div>
 
-    </div>
-  </div>
-  <div id="maia-nav-x" class="maia-nav">
-    <div class="maia-aux">
-   <div class="cp-cta">
-   <a class="cp-track maia-button maia-button-secondary white-button" href="/cloud/contact/">Contact sales</a>
-   <a class="cp-track maia-button blue-button" href="//cloud.google.com/console?getstarted=https://cloud.google.com" style="color: #ffffff;">Try it now</a>
-   </div>
-      <ul>
-        <li id="home-nav"
-            
-              class="active"
-            >
 
-            <a 
-              class="active"
-             href="index.html" event="autotrack-data-g" data-g-event="Global Nav" data-g-action="Nav Bar" data-g-label="Home"> 
-            Home
-            </a>
-        </li>      
-        <li
-            >
-            <a href="/cloud/why-google/" event="autotrack-data-g" data-g-event="Global Nav" data-g-action="Nav Bar" data-g-label="Why Google"> 
-            Why Google
-            </a>
-        </li>
-        <li id="main-nav-product-dropdown" class="dropdown">
-            <a href="/cloud/products/" event="autotrack-data-g" data-g-event="Global Nav" data-g-action="Nav Bar" data-g-label="Products"> 
-            Products
-            </a>
-        </li>
-        <li
-            >
-            <a href="/cloud/solutions/" event="autotrack-data-g" data-g-event="Global Nav" data-g-action="Nav Bar" data-g-label="Solutions"> 
-            Solutions
-            </a>
-        </li>
-        <li
-            >
-            <a href="/cloud/customers/" event="autotrack-data-g" data-g-event="Global Nav" data-g-action="Nav Bar" data-g-label="Customers"> 
-            Customers
-            </a>
-        </li>
-        <li
-            >
-            <a href="/cloud/developers/" event="autotrack-data-g" data-g-event="Global Nav" data-g-action="Nav Bar" data-g-label="Developers"> 
-            Developers
-            </a>            
-        </li>
-        <li
-            >
-            <a href="/cloud/support/" event="autotrack-data-g" data-g-event="Global Nav" data-g-action="Nav Bar" data-g-label="Support"> 
-            Support
-            </a>            
-        </li>
-        <li>
-            <a href="/cloud/partners/" event="autotrack-data-g" data-g-event="Global Nav" data-g-action="Nav Bar" data-g-label="Partners"> 
-            Partners
-            </a>            
-        </li>
-        <li>
-            <a href="https://github.com/GoogleDevDocs/googledevdocs.github.io/edit/master/cloud/developers/articles/storage-overview.html" event="autotrack-data-g" data-g-event="Global Nav" data-g-action="Nav Bar" data-g-label="Edit Page"> 
-            Edit Page
-            </a>            
-        </li>
-      </ul>
-    </div>
-  </div>
-  
-<!-- Products subnav -->  
-<div id="maia-nav-x" class="maia-nav products-nav">
-  <div class="maia-aux">
-    <div class="products-nav-dropdown maia-cols">
-    
-      <div id="compute-dropdown" class="products-column maia-col-2">
-        <span class="product-list-title">Compute</span>
-        <div class="dropdown-item-container">
-          <a href="/cloud/products/compute-engine/">
-            <span class="product-name">Compute Engine</span>
-          </a>
-        </div>
-        <div class="dropdown-item-container">
-          <a href="/cloud/products/app-engine/">
-            <span class="product-name">App Engine</span>
-          </a>
-        </div>
-      </div>
-      
-      <div id="storage-dropdown" class="products-column maia-col-2">
-        <span class="product-list-title">Storage</span>
-        <div class="dropdown-item-container">
-          <a href="/cloud/products/cloud-sql/">
-            <span class="product-name">Cloud SQL</span>
-          </a>
-        </div>
-        <div class="dropdown-item-container">
-          <a href="/cloud/products/cloud-storage/">
-            <span class="product-name">Cloud Storage</span>
-          </a>
-        </div>
-        <div class="dropdown-item-container">
-          <a href="/cloud/products/cloud-datastore/">
-            <span class="product-name">Cloud Datastore</span>
-          </a>
-        </div>
-      </div>
-      
-      <div id="big-data-dropdown" class="products-column maia-col-2">
-        <span class="product-list-title">Big Data</span>
-        <div class="dropdown-item-container">
-          <a href="/cloud/products/bigquery/">
-            <span class="product-name">BigQuery</span>
-          </a>
-        </div>
-      </div>
-      
-      <div id="services-dropdown" class="products-column maia-col-2">
-        <span class="product-list-title">Services</span>
-        <div class="dropdown-item-container">
-          <a href="/cloud/products/cloud-dns/">
-            <span class="product-name">Cloud DNS</span>
-          </a>
-        </div>
-        <div class="dropdown-item-container">
-          <a href="/cloud/products/cloud-endpoints/">
-            <span class="product-name">Cloud Endpoints</span>
-          </a>
-        </div>
-        <div class="dropdown-item-container">
-          <a href="/cloud/products/translate-api/">
-            <span class="product-name">Translate API</span>
-          </a>
-        </div>
-        <div class="dropdown-item-container">
-          <a href="/cloud/products/prediction-api/">
-            <span class="product-name">Prediction API</span>
-          </a>
-        </div>
-      </div>
-      
-      <div id="management-dropdown" class="products-column maia-col-2">
-        <span class="product-list-title">Management</span>
-        <div class="dropdown-item-container">
-          <span class="product-name"><a href="/cloud/products/cloud-deployment-manager/">Cloud Deployment Manager</a></span>
-        </div>
-      </div>
-      
-      <div id="pricing-dropdown" class="products-column maia-col-2">
-        <span class="product-list-title">Pricing</span>
-        <div class="dropdown-item-container">
-          <span class="product-name"><a href="/cloud/products/pricing/">Overview</a></span>
-        </div>
-        <div class="dropdown-item-container">
-          <span class="product-name"><a href="/cloud/products/calculator/">Calculator</a></span>
-        </div>
-      </div>
-    </div>
-  </div>
-</div> 
+
+
+
+
 
 <div id="maia-main" class="cp-article">
   <div class="maia-cols">
@@ -246,39 +65,39 @@
     <table width="80%"border="0">
         <tbody>
           <tr>
-            <td width="10%"><img src="/cloud/images/articles/which_to_use_when/drive_icon_2.png" width="50" height="43" /></td>
+            <td width="10%"><img src="which_to_use_when/drive_icon_2.png" width="50" height="43" /></td>
             <td width="40%" valign="top">You want to store your private files online and access them in a web browser. You want to choose who can view, share, and edit your files.</td>
-            <td width="10%"><img src="/cloud/images/articles/which_to_use_when/blue_arrow.png" width="58" height="31" /></td>
+            <td width="10%"><img src="which_to_use_when/blue_arrow.png" width="58" height="31" /></td>
             <td>Google Drive</td>
           </tr>
           <tr>
-            <td><img src="/cloud/images/articles/which_to_use_when/cloud_storage_icon_2.png" width="50" height="50" /></td>
+            <td><img src="which_to_use_when/cloud_storage_icon_2.png" width="50" height="50" /></td>
             <td>You want to store your application data, consisting of files of almost any kind and size, in the cloud.</td>
-            <td><img src="/cloud/images/articles/which_to_use_when/blue_arrow.png" alt="" width="58" height="31" /></td>
+            <td><img src="which_to_use_when/blue_arrow.png" alt="" width="58" height="31" /></td>
             <td>Google Cloud Storage</td>
           </tr>
           <tr>
-            <td><img src="/cloud/images/articles/which_to_use_when/cloud_sql_icon_2.png" width="50" height="50" /></td>
+            <td><img src="which_to_use_when/cloud_sql_icon_2.png" width="50" height="50" /></td>
             <td>You know and love MySQL, and want to host your databases in the cloud.</td>
-            <td><img src="/cloud/images/articles/which_to_use_when/blue_arrow.png" alt="" width="58" height="31" /></td>
+            <td><img src="which_to_use_when/blue_arrow.png" alt="" width="58" height="31" /></td>
             <td>Google Cloud SQL</td>
           </tr>
           <tr>
-            <td><img src="/cloud/images/articles/which_to_use_when/big_query_icon_2.png" width="50" height="50" /></td>
+            <td><img src="which_to_use_when/big_query_icon_2.png" width="50" height="50" /></td>
             <td>You want to interactively analyze massive datasets.</td>
-            <td><img src="/cloud/images/articles/which_to_use_when/blue_arrow.png" alt="" width="58" height="31" /></td>
+            <td><img src="which_to_use_when/blue_arrow.png" alt="" width="58" height="31" /></td>
             <td>Google BigQuery</td>
           </tr>
           <tr>
-            <td><img src="/cloud/images/articles/which_to_use_when/datastore_icon_2.png" width="50" height="50" /></td>
+            <td><img src="which_to_use_when/datastore_icon_2.png" width="50" height="50" /></td>
             <td>You're developing App Engine applications and you need scalable, fast queries over your data without the schema requirements imposed by a relational database.</td>
-            <td><img src="/cloud/images/articles/which_to_use_when/blue_arrow.png" alt="" width="58" height="31" /></td>
+            <td><img src="which_to_use_when/blue_arrow.png" alt="" width="58" height="31" /></td>
             <td>App Engine Datastore</td>
           </tr>
           <tr>
-            <td><img src="/cloud/images/articles/which_to_use_when/compute_engine_icon_2.png" width="50" height="50"></td>
+            <td><img src="which_to_use_when/compute_engine_icon_2.png" width="50" height="50"></td>
             <td>You're happy managing your own virtual machine.</td>
-            <td><img src="/cloud/images/articles/which_to_use_when/blue_arrow.png" alt="" width="58" height="31" /></td>
+            <td><img src="which_to_use_when/blue_arrow.png" alt="" width="58" height="31" /></td>
             <td>Google Compute Engine</td>
           </tr>
         </tbody>
@@ -290,12 +109,12 @@
     <p class="aside"><strong>A note about terminology</strong>: This article uses the term &quot;Google's cloud&quot; to mean Google's infrastructure, including its data centers, networks, and software.</p>
     <h2 id="drive"></a>Google Drive</h2>
     <p>Google Drive is a service for users to store and share their private files. Google Drive is intended for use by individuals, and has a UI that offers many features for creating, editing and sharing your work, in addition to uploading files for storage.</p>
-    <p><img src="/cloud/images/articles/which_to_use_when/drive_ui_3.png" width="631" height="200"></p>
+    <p><img src="which_to_use_when/drive_ui_3.png" width="631" height="200"></p>
     <p>Google Drive enables users to access and manage all their file content in the Google's cloud and have it accessible from anywhere. While Google Drive provides an API for uploading files and for searching and retrieving stored items, the UI is intended to be the primary mechanism for interaction. If your application is working with files that have historically been stored locally on a user's computer or phone, Google Drive is a good option.</p>
     <p>For more information, see <a href="https://www.google.com/intl/en_US/drive/start/index.html">Google Drive</a>.  The rest of this document discusses the storage and analysis options that are primarily intended for use by developers building applications.</p>
     <h2 id="storage"></a>Google Cloud Storage</h2>
     <p>Google Cloud Storage is a service for storing and accessing data in Google's cloud. It is primarily intended for programmatic use within applications. It has a interactive UI, which is helpful for learning about the product, getting started using it, and quickly uploading or deleting content.</p>
-    <p><img src="/cloud/images/articles/which_to_use_when/storage_bicycles_ui_2.png" width="650"></p>
+    <p><img src="which_to_use_when/storage_bicycles_ui_2.png" width="650"></p>
     <p>Google Cloud Storage offers direct access to Google's scalable storage and networking infrastructure, as well as powerful authentication and data sharing mechanisms. It lets you store files of any size and manage access to your data on an individual or group basis.</p>
     <p>Data stored in Google Cloud Storage can be designated as public or private. Public data can be shared with anyone, enabling you to use Google Cloud Storage as a conduit to making selected parts of your data available outside your company.</p>
     <h3>Typical Use Cases</h3>
@@ -326,7 +145,7 @@
     <h2 id="cloud-sql"></a>Google Cloud SQL</h2>
     <p>Google Cloud SQL allows you to create, configure, and use MySQL databases that live in Google's cloud. It is a fully-managed service that maintains, manages, and administers your databases.</p>
     <p>Google Cloud SQL is  primarily intended for programmatic use within applications. It has an interactive UI, which is helpful for learning about the product, getting started using it, investigating the schema, and submitting trial queries.</p>
-    <p><img src="/cloud/images/articles/which_to_use_when/cloud_sql_ui.png" width="650"></p>
+    <p><img src="which_to_use_when/cloud_sql_ui.png" width="650"></p>
     <p>MySQL is a full relational database system that supports full SQL syntax and table management tools. Google Cloud SQL supports a subset of MySQL, which includes most of the features of MySQL. For a list of differences, see the <a href="https://developers.google.com/cloud-sql/faq#supportmysqlfeatures">Google Cloud SQL FAQ</a>.</p>
     <h3>Typical Use Cases</h3>
     <p>Google Cloud SQL is good for small or medium data sets that:</p>
@@ -354,7 +173,7 @@
     <p>To export your data, use the Export option in the Google Cloud console to export your data to Google Cloud Storage.</p>
     <h2 id="bigquery"></a>BigQuery</h2>
     <p>Google BigQuery Service is a massively parallel query datastore that allows you to run SQL-like queries against very large datasets, with potentially billions of rows, in a matter of seconds. It is primarily intended for programmatic use within applications. It provides an interactive UI, which is helpful for learning about the product and running interactive queries.</p>
-    <p><img src="/cloud/images/articles/which_to_use_when/biq_query_ui.png" width="650"></p>
+    <p><img src="which_to_use_when/biq_query_ui.png" width="650"></p>
     <p>BigQuery is based on one of Google's core technologies, and has been used internally by Google for various analytical tasks since 2006.</p>
     <p>BigQuery supports analysis of datasets up to hundreds of terabytes. </p>
     <p>To use BigQuery, you upload your data into BigQuery and then you can query it interactively or programmatically. You can also query publicly available datasets as well as datasets that other people have shared with you. </p>
@@ -394,7 +213,7 @@
     <p class="note">For hints and tips on ingesting data into BigQuery, see <a href="https://developers.google.com/bigquery/articles/ingestioncookbook">BigQuery Data Ingestion and Best Practices Cookbook</a>.</p>
     <h4>Using the BigQuery UI to Upload Data</h4>
     <p>You can use the online UI to interactively upload data either from local files or from Google Cloud Storage. Here's a screenshot of the dialog box for interactive upload:</p>
-    <p><img src="/cloud/images/articles/which_to_use_when/biq_query_ingestion.png" width="537" height="267"></p>
+    <p><img src="which_to_use_when/biq_query_ingestion.png" width="537" height="267"></p>
     <h4>Exporting Query Results from BigQuery</h4>
     You can export query results as a CSV file to your local computer, or as a permanent table to your dataset. You can also export an entire table to Google Cloud Storage from the BigQuery UI.<br />
     <h4>Should I Use Google Cloud Storage or Upload Directly to BigQuery?</h4>
@@ -514,6 +333,9 @@
     </div>
     <div class="maia-col-3">
       <br>
+      <img src="//www.google.com/images/icons/product/feedback-16.png" class="g-app-icon">
+      <a href="javascript:void(0);" class="google-feedback">Feedback on this document</a>
+      <br><br>
       
       <img src="//www.google.com/images/icons/thirdparty/pdf-16.png" class="g-app-icon">
       <a href="../../../files/articles/google-cloud_technical-article_overview-of-storage-options.pdf" class="cp-pdf" onclick="javascript: _gaq.push(['_trackPageview', '../../../files/articles/google-cloud_technical-article_overview-of-storage-options.pdf']);">Download PDF</a>
@@ -521,18 +343,19 @@
     </div>
   </div>
 </div>
-
-
- <!-- is this feedback sticky needed?
-  <div class="feedback-sticky"><a href="javascript:void(0);">Feedback</a></div>
-  <script type="text/javascript" src="//www.gstatic.com/feedback/api.js"></script>
-  <script>
-    jQuery('body').delegate('.feedback-sticky', 'click', function() {
-      _gaq.push(['_trackEvent', 'Feedback', 'User Feedback: ' + location.pathname]);
-      userfeedback.api.startFeedback({'productId': '96209'});
-    });
-  </script>
-  -->
+<script type="text/javascript">
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+</script>
+<script type="text/javascript" src="//www.gstatic.com/feedback/api.js"></script>
+<script>
+  $('body').delegate('.google-feedback', 'click', function() {
+      userfeedback.api.startFeedback({'productId': '94614'});
+  });
+</script>
 
   <!-- Scripts to include both on Goro + Devsite -->
   <script type="text/javascript">
@@ -548,11 +371,17 @@
 
   <!-- GTM implementation -->
   
+
+
+
+
+
+
   <!-- Start dataLayer -->
     <script>
       dataLayer = [{
-        'country': '',
-        'region': '',
+        'country': 'us',
+        'region': 'noram',
         'language': 'en'
       }];
     </script>
@@ -566,149 +395,29 @@
   j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
   })(window,document,'script','dataLayer','GTM-5CVQBG');</script>
-  <!-- End Google Tag Manager -->    
+  <!-- End Google Tag Manager -->
 
 
+  <!-- Global JS scripts to load; path will depend on whether we're on devsite or Goro -->
+  
 
-<!-- Global JS scripts to load; path will depend on whether we're on devsite or Goro -->
-<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular.js"></script>
-<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular-sanitize.js"></script>
-
-  <script src="/cloud/js/base.min.js"></script>
-
-
-
-
-<!-- Secondary right-side scroll-nav -->
-<script>
-  new lfl.ui.ScrollNav({});
-</script>
-
-<script>new cloud.SocialFeeds(document.getElementById('feeds'));</script>
-
-
-
-  <div id="maia-signature"></div>
-  <div id="maia-footer">
-
-    <!-- maia-footer-local -->
-    <div id="maia-footer-local">
-      <div class="maia-aux">
-        
-          <div class="ent-footer-top">
-  <div class="g-plus-wrapper">
-    <div class="g-plusone" data-href="http://cloud.google.com"></div>
-  </div>
-  <div class="g-plus-link"><a href="https://plus.google.com/+googlecloudplatform" rel="publisher">Google+</a></div>
-  <div class="search">
-    <form onsumbit="return false;" class="maia-search">
-    <input name="q" placeholder="Search this site" type="text">
-    <input name="hl" type="hidden" value="">
-    <input name="q" type="hidden" value="site:cloud.google.com/">
-    <button class="maia-button" event="autotrack-data-g" data-g-event="Footer" data-g-action="Site Search" data-g-label="Submit">
-      <span class="maia-search-icon">Search</span>
-    </button>
-    </form>
-  </div>
-
-</div>
-
-<div class="ent-footer-links">
-  <div class="ent-footer-unit">
-    <h4><a href="/cloud/why-google/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Why Google" data-g-label="Why Google">Why Google</a></h4>
-    <ul>
-      <li><a href="/cloud/why-google/#infrastructure" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Why Google" data-g-label="Infrastructure">Infrastructure</a></li>
-      <li><a href="/cloud/why-google/#product" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Why Google" data-g-label="Product">Product</a></li>
-      <li><a href="/cloud/why-google/#services" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Why Google" data-g-label="Services">Services</a></li>
-      <li><a href="/cloud/why-google/#scalability" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Why Google" data-g-label="Scalability">Scalability</a></li>
-      <li><a href="/cloud/why-google/#performance" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Why Google" data-g-label="Performance">Performance</a></li>
-      <li><a href="/cloud/why-google/#support" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Why Google" data-g-label="Support">Support</a></li>      
-    </ul>
-  </div>
-
-  <div class="ent-footer-unit">
-    <h4><a href="/cloud/products/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="Products">Products</a></h4>
-    <ul>
-      <li><a href="/cloud/products/app-engine/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="App Engine">App Engine</a></li>
-      <li><a href="/cloud/products/compute-engine/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="Compute Engine">Compute Engine</a></li>
-      <li><a href="/cloud/products/cloud-storage/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="Cloud Storage">Cloud Storage</a></li>
-      <li><a href="/cloud/products/cloud-sql/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="Cloud SQL">Cloud SQL</a></li>
-      <li><a href="/cloud/products/cloud-datastore/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="Cloud Datastore">Cloud Datastore</a></li>
-      <li><a href="/cloud/products/bigquery/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="BigQuery">BigQuery</a></li>
-      <li><a href="/cloud/products/prediction-api/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="Prediction API">Prediction API</a></li>
-      <li><a href="/cloud/products/translate-api/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="Translate API">Translate API</a></li>
-      <li><a href="/cloud/products/cloud-endpoints/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="Cloud Endpoints">Cloud Endpoints</a></li>
-      <li><a href="/cloud/products/calculator/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="Pricing Calculator">Pricing Calculator</a></li>
-      <li><a href="/cloud/pricing/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="Pricing">Pricing</a></li>
-    </ul>
-  </div>
-
-  <div class="ent-footer-unit">
-    <h4><a href="/cloud/solutions" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Solutions" data-g-label="Solutions">Solutions</a></h4>
-    <ul>
-      <li><a href="/cloud/solutions/mobile/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Solutions" data-g-label="Mobile">Mobile</a></li>
-      <li><a href="/cloud/solutions/gaming/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Solutions" data-g-label="Gaming">Gaming</a></li>
-      <li><a href="/cloud/solutions/hadoop/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Solutions" data-g-label="Hadoop">Hadoop</a></li>
-      <li><a href="/cloud/solutions/mongodb/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Solutions" data-g-label="mongodb">mongodb</a></li>
-
-    </ul>
-  </div>
-
-  <div class="ent-footer-unit">
-    <h4><a href="/cloud/customers/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Customers" data-g-label="Customers">Customers</a></h4>
-  </div>
-
-  <div class="ent-footer-unit">
-    <h4><a href="/cloud/developers/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Developers" data-g-label="Developers">Developers</a></h4>
-    <ul>
-      <li><a href="/cloud/developers#documentation" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Developers" data-g-label="Documentation">Documentation</a></li>
-      <li><a href="/cloud/developers#resources" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Developers" data-g-label="Resources">Resources</a></li>
-    </ul>
-  </div>
-
-  <div class="ent-footer-unit">
-    <h4><a href="/cloud/support/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Support" data-g-label="Support">Support</a></h4>
-    <ul>
-      <li><a href="https://support.google.com/cloud/" target="_blank" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Support" data-g-label="Google Cloud Platform Support Help Center">Platform Support Help Center</a></li>
-      <li><a href="https://support.google.com/cloudbilling/" target="_blank" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Support" data-g-label="Google Cloud Billing Help Center">Billing Help Center</a></li>
-      <li><a href="https://enterprise.google.com/supportcenter" target="_blank" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Support" data-g-label="Google Enterprise Support Center">Google Enterprise Support Center</a></li>      
-    </ul>
+  
     
-  </div>
+      <script src="/cloud/js/base.min.js"></script>
+    
+  
 
   
-  <div class="ent-footer-unit">
-    <h4><a href="/cloud/partners/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Partners" data-g-label="Partners">Partners</a></h4>
-    <ul>
-      <li><a href="/cloud/partners/technology-partners/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Partners" data-g-label="Find A Technology Partner">Technology Partners</a></li>
-      <li><a href="/cloud/partners/service-partners/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Partners" data-g-label="Find A Service Partner">Find a Service Partner</a></li>
-    </ul>
-  </div>
- 
-</div>
-<br class="clear" />
-
-        
-      </div>
-    </div>
-    <!-- /maia-footer-local -->
-
-    <!-- maia-footer-global -->
-    <div id="maia-footer-global">
-      <div class="maia-aux">
-        <ul>
-          <li><a href="http://www.google.com/">Google</a></li>
-          <li><a href="https://developers.google.com/readme/terms">Terms of Service</a></li>
-          <li><a href="http://www.google.com/intlprivacy/">Privacy Policy</a></li>
-        </ul>
-      </div>
-    </div>
-  </div>
-  <!-- /maia-footer-global -->
-  <script type="text/javascript" async="" defer="" src="//www.gstatic.com/feedback/api.js"></script>
-  <script id="jqueryui" src="//ajax.googleapis.com/ajax/libs/jqueryui/1.8.10/jquery-ui.min.js"></script>
-
-  <!--script src="/cloud/_static/js/script_foot.js"></script-->
+    <!-- Retina loader; Do not load if partners page because we need to wait until the Angular app runs -->
+    
+      <script>new lfl.system.RetinaLoader();</script>
+    
+    
+    <!-- Secondary right-side scroll-nav -->
+    <script>new lfl.ui.ScrollNav({});</script>
   
+
+
+
   </body>
 </html>
