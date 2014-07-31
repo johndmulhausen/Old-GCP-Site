@@ -1,0 +1,3 @@
+initial-page   : /destination-page
+other-page     : http://example.org/destination-page
+"another/page" : /destination-page
