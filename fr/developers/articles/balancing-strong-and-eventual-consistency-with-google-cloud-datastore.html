@@ -51,7 +51,7 @@
   <div id="maia-nav-x" class="maia-nav">
     <div class="maia-aux">
    <div class="cp-cta">
-   <a class="cp-track maia-button maia-button-secondary white-button" href="/contact/">Contact sales</a>
+   <a class="cp-track maia-button maia-button-secondary white-button" href="/fr/contact/">Contact sales</a>
    <a class="cp-track maia-button blue-button" href="https://console.developers.google.com?getstarted=https://cloud.google.com" style="color: #ffffff;">Try it now</a>
    </div>
       <ul>
@@ -123,12 +123,12 @@
       <div id="compute-dropdown" class="products-column maia-col-2">
         <span class="product-list-title">Compute</span>
         <div class="dropdown-item-container">
-          <a href="/products/compute-engine/">
+          <a href="/fr/products/compute-engine/">
             <span class="product-name">Compute Engine</span>
           </a>
         </div>
         <div class="dropdown-item-container">
-          <a href="/products/app-engine/">
+          <a href="/fr/products/app-engine/">
             <span class="product-name">App Engine</span>
           </a>
         </div>
@@ -137,17 +137,17 @@
       <div id="storage-dropdown" class="products-column maia-col-2">
         <span class="product-list-title">Storage</span>
         <div class="dropdown-item-container">
-          <a href="/products/cloud-sql/">
+          <a href="/fr/products/cloud-sql/">
             <span class="product-name">Cloud SQL</span>
           </a>
         </div>
         <div class="dropdown-item-container">
-          <a href="/products/cloud-storage/">
+          <a href="/fr/products/cloud-storage/">
             <span class="product-name">Cloud Storage</span>
           </a>
         </div>
         <div class="dropdown-item-container">
-          <a href="/products/cloud-datastore/">
+          <a href="/fr/products/cloud-datastore/">
             <span class="product-name">Cloud Datastore</span>
           </a>
         </div>
@@ -156,7 +156,7 @@
       <div id="big-data-dropdown" class="products-column maia-col-2">
         <span class="product-list-title">Big Data</span>
         <div class="dropdown-item-container">
-          <a href="/products/bigquery/">
+          <a href="/fr/products/bigquery/">
             <span class="product-name">BigQuery</span>
           </a>
         </div>
@@ -165,22 +165,22 @@
       <div id="services-dropdown" class="products-column maia-col-2">
         <span class="product-list-title">Services</span>
         <div class="dropdown-item-container">
-          <a href="/products/cloud-dns/">
+          <a href="/fr/products/cloud-dns/">
             <span class="product-name">Cloud DNS</span>
           </a>
         </div>
         <div class="dropdown-item-container">
-          <a href="/products/cloud-endpoints/">
+          <a href="/fr/products/cloud-endpoints/">
             <span class="product-name">Cloud Endpoints</span>
           </a>
         </div>
         <div class="dropdown-item-container">
-          <a href="/products/translate-api/">
+          <a href="/fr/products/translate-api/">
             <span class="product-name">Translate API</span>
           </a>
         </div>
         <div class="dropdown-item-container">
-          <a href="/products/prediction-api/">
+          <a href="/fr/products/prediction-api/">
             <span class="product-name">Prediction API</span>
           </a>
         </div>
@@ -189,17 +189,17 @@
       <div id="management-dropdown" class="products-column maia-col-2">
         <span class="product-list-title">Management</span>
         <div class="dropdown-item-container">
-          <span class="product-name"><a href="/products/cloud-deployment-manager/">Cloud Deployment Manager</a></span>
+          <span class="product-name"><a href="/fr/products/cloud-deployment-manager/">Cloud Deployment Manager</a></span>
         </div>
       </div>
 
       <div id="pricing-dropdown" class="products-column maia-col-2">
         <span class="product-list-title">Pricing</span>
         <div class="dropdown-item-container">
-          <span class="product-name"><a href="/products/pricing/">Overview</a></span>
+          <span class="product-name"><a href="/fr/products/pricing/">Overview</a></span>
         </div>
         <div class="dropdown-item-container">
-          <span class="product-name"><a href="/products/calculator/">Calculator</a></span>
+          <span class="product-name"><a href="/fr/products/calculator/">Calculator</a></span>
         </div>
       </div>
     </div>
@@ -488,7 +488,7 @@ p3 = Person(key_name='PaV9fsXCdra7zCMkt7UX3THvFmu6xsUd')
 <p>Désormais, les entités "Personne" récemment créées seront dispersées sur l'espace de clés et sur plusieurs serveurs. Cela suppose qu'il y ait suffisamment d'entités "Personne".</p>
 <h3><a name="h.ou9y4doeg7dm" id="h.ou9y4doeg7dm"></a>Anti-patron n°&nbsp;2&nbsp;: Trop d'index</h3>
 <p>Dans Google&nbsp;Cloud&nbsp;Datastore, une mise à jour effectuée sur une entité entraînera la mise à jour de tous les index définis pour ce type d'entité. Pour en savoir plus, reportez-vous à la section <a href="https://developers.google.com/appengine/articles/life_of_write">Life of a Datastore Write</a>) (en anglais). Si de nombreux index personnalisés sont utilisés dans une application, une mise à jour peut impliquer des dizaines, des centaines, voire des milliers de mises à jour sur les tables d'index. Dans une application de grande envergure, une utilisation excessive d'index personnalisés peut entraîner une charge accrue sur le serveur et risque d'allonger le délai nécessaire pour appliquer la cohérence.</p>
-<p>Dans la plupart des cas, les index personnalisés sont ajoutés pour répondre à des besoins tels que des tâches d'analyse des données, de dépannage ou d'assistance clientèle. Google <a href="/products/big-query">BigQuery</a> est un moteur de requête massivement évolutif, capable d'exécuter des requêtes ad&nbsp;hoc sur de vastes ensembles de données sans index prédéfinis. Cet outil est mieux adapté que Google&nbsp;Cloud&nbsp;Datastore aux scénarios d'assistance clientèle, de dépannage ou d'analyse de données qui nécessitent des requêtes complexes.</p>
+<p>Dans la plupart des cas, les index personnalisés sont ajoutés pour répondre à des besoins tels que des tâches d'analyse des données, de dépannage ou d'assistance clientèle. Google <a href="/fr/products/big-query">BigQuery</a> est un moteur de requête massivement évolutif, capable d'exécuter des requêtes ad&nbsp;hoc sur de vastes ensembles de données sans index prédéfinis. Cet outil est mieux adapté que Google&nbsp;Cloud&nbsp;Datastore aux scénarios d'assistance clientèle, de dépannage ou d'analyse de données qui nécessitent des requêtes complexes.</p>
 <p>Une méthode consiste à combiner Google&nbsp;Cloud&nbsp;Datastore et BigQuery afin de répondre à différentes exigences commerciales. Vous pouvez utiliser Google&nbsp;Cloud&nbsp;Datastore pour le traitement transactionnel en ligne (OLTP, Online transaction processing) requis pour la logique d'application de base et Google&nbsp;BigQuery pour le traitement analytique en ligne (OLAP, Online analytical processing) nécessaire aux opérations de backend. Il peut s'avérer nécessaire de mettre en œuvre un flux d'exportation des données en continu de Google&nbsp;Cloud&nbsp;Datastore vers BigQuery afin de déplacer les données nécessaires pour ces requêtes.</p>
 <p>Outre une mise en œuvre différente pour ces index personnalisés, une autre recommandation concerne la définition explicite de propriétés non&nbsp;indexées (reportez-vous à la section <a href="https://developers.google.com/appengine/docs/python/ndb/properties#options">Options de propriété</a> dans la documentation de référence). Par défaut, Google&nbsp;Cloud&nbsp;Datastore permet de créer une table d'index différente pour chaque propriété indexable d'un type d'entité. S'il existe 100&nbsp;propriétés pour un type, il y aura 100&nbsp;tables d'index pour ce type, et 100&nbsp;autres mises à jour pour chaque mise à jour d'une entité. Une bonne pratique consiste alors à définir des propriétés non&nbsp;indexées, lorsque cela s'avère possible, si elles ne sont pas nécessaires pour une condition de requête.</p>
 <p>Outre le fait qu'elles réduisent les risques de latence accrue pour parvenir à la cohérence, ces optimisations d'index peuvent entraîner une réduction sensible des coûts de Google&nbsp;Cloud&nbsp;Datastore dans une application de grande envergure qui fait une utilisation intensive d'index.</p>
