@@ -67,9 +67,9 @@ title: Cloud Computing &amp; Cloud Hosting Services
 <ul>
 <li><a href="https://developers.google.com/appengine/">App Engine</a></li>
 <li><a href="https://developers.google.com/appengine/docs/python/taskqueue/">App Engine 작업 대기열</a></li>
-<li><a href="/products/cloud-storage">Cloud Storage</a></li>
+<li><a href="/ko/products/cloud-storage">Cloud Storage</a></li>
 <li><a href="https://developers.google.com/cloud-sql/">Cloud SQL</a></li>
-<li><a href="/products/compute-engine">Compute Engine</a></li>
+<li><a href="/ko/products/compute-engine">Compute Engine</a></li>
 <li><a href="https://developers.google.com/datastore/">Cloud Datastore</a></li>
 <li><a href="https://developers.google.com/appengine/docs/java/endpoints/">Mobile Cloud Endpoints</a></li>
 <li>App Engine 모듈</li>
@@ -247,7 +247,7 @@ title: Cloud Computing &amp; Cloud Hosting Services
 <p>애플리케이션의 여러 논리적 서비스를 고려하여 Google Cloud Platform의 몇 가지 핵심 기능을 최대한 사용했습니다. 이 플랫폼은 이러한 모든 기능을 함께 사용하여 클라우드의 복잡한 비즈니스 애플리케이션을 지원하기 위한 강력한 기반을 형성합니다.</p>
 <h5>Cloud Endpoints</h5>
 <p>Cloud Endpoints는 App Engine 애플리케이션에서 REST API 및 클라이언트 라이브러리를 생성하여 웹 클라이언트와 모바일 클라이언트 액세스를 모두 간소화하는 데 사용되는 도구 및 서비스 모음입니다. 이 조합을 사용하면 Android 애플리케이션에서 신속하게 API 서버를 시작할 수 있습니다. Cloud Endpoints는 App Engine 애플리케이션과의 통신을 간소화함으로써 Cloud <a href="https://developers.google.com/appengine/docs/java/datastore">Datastore</a>, <a href="https://developers.google.com/appengine/docs/java/googlestorage">Cloud Storage</a>, <a href="https://developers.google.com/appengine/docs/java/mail">Mail</a>, <a href="https://developers.google.com/appengine/docs/java/taskqueue">작업 대기열</a>과 같은 현재 사용 가능한 서비스의 이점을 활용할 수 있게 해 줍니다. 이 제품은 보이지 않는 곳에서 REST API 호출을 백엔드 애플리케이션의 메소드 호출로 변환하고 OAuth 2.0 인증을 통해 각 호출에 보안을 설정합니다. 현재 Eclipse, Android Studio 및 Apache Maven을 포함한 기존 개발 환경에서는 프로젝트 내에 클라이언트 라이브러리를 생성할 수 있는 기능을 제공합니다. Cloud Endpoints 기술을 사용하면 API 개발로 인한 간접 비용을 없앨 수 있으며 개발자는 자신에게 가장 중요한 일인 '제품'에 집중할 수 있습니다.</p>
-<p>Google Cloud Endpoints를 시작하기 위해 2013년 Google I/O에서 제공되었던 <a href="https://developers.google.com/events/io/sessions/333508149">From Nothing to Nirvana in Minutes(몇 분 만에 무에서 열반의 경지로)</a> 세션과 <a href="https://developers.google.com/appengine/docs/java/endpoints/">Cloud Endpoints</a> 개발자 문서를 참조할 수 있습니다. 또한 Google Cloud Endpoints는 <a href="https://github.com/GoogleCloudPlatform/appengine-endpoints-tictactoe-java">웹 앱</a>, <a href="/developers/articles/mobile-application-solutions">모바일 쇼핑 도우미</a> 및 <a href="https://developers.google.com/samples/mbs/">Mobile Backend Starter</a>를 포함한 여러 솔루션 샘플에 포함되어 있습니다.</p>
+<p>Google Cloud Endpoints를 시작하기 위해 2013년 Google I/O에서 제공되었던 <a href="https://developers.google.com/events/io/sessions/333508149">From Nothing to Nirvana in Minutes(몇 분 만에 무에서 열반의 경지로)</a> 세션과 <a href="https://developers.google.com/appengine/docs/java/endpoints/">Cloud Endpoints</a> 개발자 문서를 참조할 수 있습니다. 또한 Google Cloud Endpoints는 <a href="https://github.com/GoogleCloudPlatform/appengine-endpoints-tictactoe-java">웹 앱</a>, <a href="/ko/developers/articles/mobile-application-solutions">모바일 쇼핑 도우미</a> 및 <a href="https://developers.google.com/samples/mbs/">Mobile Backend Starter</a>를 포함한 여러 솔루션 샘플에 포함되어 있습니다.</p>
 <h5>Compute Engine API</h5>
 <p>Compute Engine API는 Google Cloud 환경에서 가상 머신 그룹을 제어할 수 있도록 프로그래밍 방식의 메소드를 제공합니다. 따라서 기본적인 가상 머신을 실행한 다음 필요한 사양에 맞게 시스템을 보완할 수 있습니다. 또한 머신 이미지를 미리 생성하여 실행에 필요한 시간을 단축할 수 있습니다. 자동 확장은 시스템 부하를 주기적으로 점검함으로써 구현할 수 있습니다. App Engine 작업 대기열을 사용하면 작업을 나누고 이에 맞게 처리 환경을 수평으로 확장할 수 있습니다. Google Compute Engine의 이점을 활용하면 거의 모든 작업 부하를 일괄적으로 혹은 맞춤 형식으로 처리할 수 있습니다.</p>
 <p>Compute Engine API 조정에 대한 자세한 내용은 <a href="https://github.com/GoogleCloudPlatform/solutions-load-balanced-gaming-server-on-google-compute-engine">부하 분산 게임 서버 샘플</a>을 참조하세요. 샘플에서는 게임을 시나리오로 사용하지만 대부분의 설계 패턴은 다른 시나리오에서도 일반적으로 사용할 수 있습니다.</p>
@@ -274,7 +274,7 @@ title: Cloud Computing &amp; Cloud Hosting Services
 <p>다음 오픈소스 샘플 앱을 통해 이 문서에서 제시된 도구를 미리 사용해볼 수 있습니다.</p>
 <ol>
 <li><a href="https://developers.google.com/samples/mbs/">Mobile Backend Starter</a> - Cloud Endpoints를 사용한 신속한 모바일 개발</li>
-<li><a href="/developers/articles/mobile-application-solutions">모바일 쇼핑 도우미</a>: <a href="https://github.com/GoogleCloudPlatform/solutions-mobile-shopping-assistant-backend-java">서버</a> | <a href="https://github.com/GoogleCloudPlatform/solutions-mobile-shopping-assistant-android-client">Android</a> - Cloud Endpoints를 사용한 애플리케이션 완성</li>
+<li><a href="/ko/developers/articles/mobile-application-solutions">모바일 쇼핑 도우미</a>: <a href="https://github.com/GoogleCloudPlatform/solutions-mobile-shopping-assistant-backend-java">서버</a> | <a href="https://github.com/GoogleCloudPlatform/solutions-mobile-shopping-assistant-android-client">Android</a> - Cloud Endpoints를 사용한 애플리케이션 완성</li>
 <li><a href="https://developers.google.com/samples/photofeed/">PhotoFeed Media Sharing</a> - App Engine에서의 미디어 공유</li>
 <li><a href="https://github.com/GoogleCloudPlatform/solutions-load-balanced-gaming-server-on-google-compute-engine">부하 분산 게임</a><a href="https://github.com/GoogleCloudPlatform/solutions-load-balanced-gaming-server-on-google-compute-engine">서버 샘플</a> - Compute Engine에서의 일괄 처리 조정</li>
 <li><a href="https://github.com/GoogleCloudPlatform/solutions-google-compute-engine-cluster-for-hadoop">Google Compu</a><a href="https://github.com/GoogleCloudPlatform/solutions-google-compute-engine-cluster-for-hadoop">te Engine용 Hadoop</a> - Compute Engine에서의 Hadoop 클러스터 실행</li>
@@ -288,7 +288,7 @@ title: Cloud Computing &amp; Cloud Hosting Services
 <li><a href="http://googledevelopers.blogspot.com/2013/05/google-compute-engine-is-now-open-to-all.html">일반에 공개된 Compute Engine</a><a href="http://googledevelopers.blogspot.com/2013/05/google-compute-engine-is-now-open-to-all.html">(Compute Engine 블로그)</a></li>
 <li><a href="/appengine/php">Google App Engine의 PHP</a></li>
 <li><a href="http://googlecloudplatform.blogspot.com/2013/05/get-started-with-google-cloud-datastore-nosql-database.html">Google Cl</a><a href="http://googlecloudplatform.blogspot.com/2013/05/get-started-with-google-cloud-datastore-nosql-database.html">oud Datastore</a></li>
-<li><a href="/products/cloud-sql">Google Cloud SQL</a></li>
+<li><a href="/ko/products/cloud-sql">Google Cloud SQL</a></li>
 </ul>
 <br>
 <hr>
