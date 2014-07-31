@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html devsite="">
+<head>
+<title>Mobile Articles &amp; Mobile Development Guides — Google Cloud Platform</title>
+<meta name="description" content="Read technical articles on mobile solutions with Google Cloud Platform. Mobile specific articles cover application development, mobile backend and mobile gaming.">
+<meta name="hide_page_heading" value="true">
+<meta name="full_width" value="true">
+<meta name="top_category" value="developers">
+<meta name="subcategory" value="articles">
+<meta name="viewport" content="initial-scale=1, minimum-scale=1, width=device-width">
+<link rel="apple-touch-icon" href="/_static/images/apple-touch-icon.png">
+<link href="//fonts.googleapis.com/css?family=Open+Sans:400italic,300,400,600,700" rel="stylesheet">
+<link href="/css/default.css" rel="stylesheet"><!--[if lt IE 9]>
+    <link rel="stylesheet" media="screen" href='/c/cp-ie.css'>
+    <![endif]-->
+<script src="/js/floodlight.js">
+</script>
+</head>
+<body>
+<div id="maia-main" class="cp-article">
+<div class="maia-cols">
+<div class="maia-col-9">
+<div>
+<div style="float:right">
+<div class="g-plusone"></div>
+</div>
+<h1 class="title">Organización de las notificaciones push de iOS en Google Cloud Platform</h1>
+</div>
+<h2><a name="h.wntts6bhyclb" id="h.wntts6bhyclb"></a> Presentación</h2>
+<p>Si has utilizado un smartphone o un tablet últimamente, es probable que te hayas encontrado con notificaciones push. Son los pequeños toques que el teléfono te da para hacerte saber que tienes un nuevo mensaje de una red social, que tu amigo está esperando a que juegues tu turno en el último juego o que el grupo que te gusta acaba de anunciar un concierto en tu ciudad. Como desarrollador, las notificaciones push te dan una nueva dimensión para relacionarte con tus usuarios en tiempo real, en cualquier momento y con independencia de si tienen tu aplicación abierta o si tienen el teléfono en la mano. Dicho en pocas palabras, las notificaciones push son un mecanismo importante para crear soluciones para móviles más atractivas.</p>
+<p>Si te diriges a dispositivos Android, es fácil empezar gracias al Complemento de Google para Eclipse (GPE). GPE te permite generar un <a href="https://developers.google.com/eclipse/docs/endpoints-androidconnected-gae">proyecto Android conectado de App Engine</a> que proporcione la lógica básica necesaria para enviar notificaciones push mediante la <a href="http://developer.android.com/google/gcm/index.html">mensajería en la nube de Google para Android</a> desde un backend móvil que se ejecute en <a href="https://developers.google.com/appengine/">Google App Engine</a>.</p>
+<p>Google Cloud Platform también se puede utilizar para enviar notificaciones push a los dispositivos iOS. Sin embargo, el envío de notificaciones push a dispositivos iOS mediante el servicio de notificaciones push de Apple® (APNs) obliga a utilizar un método diferente. Esto se debe sobre todo a que el protocolo de APNs se basa en sockets persistentes y el remitente tiene que limitar el número de conexiones que se establecen y se cierran. Normalmente, esto significa que el remitente no puede limitarse a establecer conexiones independientes para cada solicitud de envío, sino que tiene que reutilizar las conexiones establecidas o utilizar la agrupación de conexiones.<br>
+<br>
+En este documento y en el ejemplo que lo acompaña se presenta un diseño que puedes utilizar para organizar las notificaciones push de iOS mediante Google App Engine.</p>
+<a href="#" name="id.7b97dafwkyjt" id="id.7b97dafwkyjt"></a>
+<h2><a name="h.8eyqfg1ru295" id="h.8eyqfg1ru295"></a> Requisitos</h2>
+<p>Entre los requisitos funcionales habituales para organizar las notificaciones push de iOS como parte de tu aplicación para móviles se incluyen los siguientes:</p>
+<ol>
+<li>La capacidad de comunicarse con APNs y de ajustarse a lo indicado en el protocolo de notificaciones push, que incluye hacer sondeos continuos para determinar si hay tokens de dispositivo inactivos.</li>
+<li>El envío de notificaciones push a un dispositivo iOS concreto, por ejemplo, cuando un participante de tu juego para móviles rete a un amigo a jugar.</li>
+<li>El envío de notificaciones push a un pequeño número de dispositivos iOS, por ejemplo, para notificar a todos los amigos de un usuario determinado de tu aplicación para móviles que ha habido un evento importante, como, por ejemplo, si el usuario ha registrado visita en un restaurante o ha subido una foto.</li>
+<li>El envío de notificaciones push a todos los dispositivos iOS registrados para los usuarios que cumplen ciertos criterios, como, por ejemplo, para notificar a todos los clientes de tarjetas bancarias que hay una nueva promoción.</li>
+</ol>
+<p>Para programar aplicaciones para móviles que tengan éxito, también es importante tener en cuenta los requisitos no funcionales, como los siguientes:</p>
+<ol>
+<li>La escalabilidad. Aunque tu aplicación para móviles envíe una notificación determinada a un único dispositivo, es posible que quieras enviar muchas notificaciones dentro de un período de tiempo breve.</li>
+<li>La disponibilidad. Si tu aplicación para móviles quiere enviar una notificación push, debe ser capaz de enviarla en cualquier momento.</li>
+<li>La fiabilidad. Aunque APNs no garantiza que la notificación que ha aceptado se vaya a entregar al dispositivo de destino, es importante tener tanta fiabilidad como sea posible. Por ejemplo, si tu solución para móviles decide enviar una notificación push, tiene esta notificación se debe entregar de manera fiable a APNs. Además, la experiencia de los usuarios se vería afectada negativamente si recibieran notificaciones push duplicadas, de modo que los duplicados se deben evitar tanto como sea posible.</li>
+</ol>
+<p>Estos requisitos funcionales y no funcionales se pueden cumplir al ejecutar el backend móvil en Google Cloud Platform.</p>
+<h2><a name="h.vqkkrwp3v35v" id="h.vqkkrwp3v35v"></a> Ámbito</h2>
+<p>En este artículo se describe cómo puedes organizar las notificaciones push de iOS como parte de tu solución para móviles. Se da por supuesto que conoces el protocolo de APNs y que quieres enviar notificaciones push de iOS por comunicación directa con este servicio.</p>
+<p>La comunicación con APNs requiere abrir conexiones de socket TCP y mantenerlas. Si ejecutas el código en Google Cloud Platform, puedes lograr estos requisitos desde Google Compute Engine<sup><a href="#ftnt1" name="ftnt_ref1" id="ftnt_ref1">[1]</a></sup> o desde Google App Engine con la <a href="https://developers.google.com/appengine/docs/java/sockets/overview">API de sockets</a><sup><a href="#ftnt2" name="ftnt_ref2" id="ftnt_ref2">[2]</a></sup>.</p>
+<p>A menos que tengas motivos para crear todo el backend de tu solución para móviles en Google Compute Engine, te resultará muy ventajoso usar Google App Engine para tu backend móvil tal como se indica en la solución de este artículo. Estas ventajas incluyen la alta disponibilidad, la escalabilidad automática de instancias de interfaz, el equilibrio de la carga, la facilidad de implementación y otras ventajas de hacer la ejecución en una infraestructura administrada.</p>
+<h2><a name="h.gwppgtaaj6k3" id="h.gwppgtaaj6k3"></a> Información general de nivel alto</h2>
+<p>Los componentes clave de toda la solución son el cliente móvil, el backend móvil y el canal de comunicación entre ellos. La entrega real de las notificaciones push se realiza mediante APNs.</p>
+<p>El cliente móvil es tu aplicación nativa de iOS que utilice notificaciones push de iOS, así como un dispositivo iOS que tenga instalada esta aplicación.</p>
+<p>La aplicación para móviles se comunica con el backend móvil mediante <a href="https://developers.google.com/appengine/docs/java/endpoints/overview">Google Cloud Endpoints.</a><sup><a href="#ftnt3" name="ftnt_ref3" id="ftnt_ref3">[3]</a></sup> Esta comunicación incluye el registro de tokens de dispositivo, así como las API específicas de las aplicaciones que activen las notificaciones push de manera indirecta.</p>
+<p>El backend móvil se ejecuta en Google App Engine y utiliza Google Cloud <a href="https://developers.google.com/datastore/">Datastore</a> para el registro de tokens y la API de sockets para enviar notificaciones push a APNs, que se encarga de la entrega real de las notificaciones a los dispositivos iOS.</p>
+<p>El backend móvil también utiliza <a href="https://developers.google.com/appengine/docs/java/taskqueue/">colas de tareas</a> y <a href="https://developers.google.com/appengine/docs/java/config/cron">tareas programadas</a> para organizar las notificaciones push, tal como se describe en secciones posteriores.</p>
+<h2><a name="h.uyvftaxn4mxf" id="h.uyvftaxn4mxf"></a> Diagrama de la arquitectura</h2>
+<p>La arquitectura de alto nivel de esta solución se representa en la figura 1:</p>
+<figure><img height="408" src="ios-push-notifications/image00.jpg" width="640" alt="">
+<figcaption>Figura 1. Arquitectura de alto nivel de la solución</figcaption>
+</figure>
+<h2><a name="h.imutx75y3zex" id="h.imutx75y3zex"></a> Diseño de la solución</h2>
+<p>El backend móvil tiene varios componentes:</p>
+<ul>
+<li>El <strong>extremo de registro de dispositivos</strong>, que se encarga de almacenar y de administrar la lista de tokens de dispositivos (que señala la lista de dispositivos en la que está instalada tu aplicación cliente nativa y si los usuarios han accedido a permitir que tu aplicación utilice la notificación push en su dispositivo).</li>
+<li>El <strong>administrador de notificaciones push</strong>, que proporciona una API interna a la que otras partes de tu backend móvil pueden llamar para solicitar que se envíen varias notificaciones push.</li>
+<li>El <strong>proceso de trabajo de entrega de notificaciones</strong>, que se encarga de comunicarse con APNs mediante conexiones de socket TCP para enviar notificaciones push.</li>
+<li>El <strong>controlador de procesamiento de comentarios push</strong>, que se encarga de comunicarse con APNs para obtener la lista de tokens de dispositivo inactivos o no válidos.</li>
+<li>El <strong>controlador de limpieza de tokens de dispositivo</strong>, que actualiza la lista de tokens de dispositivo mediante la eliminación de los tokens no válidos o inactivos.</li>
+<li>El <strong>controlador del preprocesamiento push</strong>, que obtiene la lista de tokens de dispositivo de destino que tienen que recibir una notificación push determinada, como puede ser la lista de tokens de dispositivo que usan los amigos de David que han registrado visita en un restaurante.</li>
+</ul>
+<p>Estos componentes se ilustran en el diagrama de la figura 2:</p>
+<figure><img height="518" src="ios-push-notifications/image04.jpg" width="679" alt="">
+<figcaption>Figura 2. Componentes clave de la solución</figcaption>
+</figure>
+<p>Para organizar las notificaciones push, en esta solución se utiliza la cola de entrega de notificaciones (una <a href="https://developers.google.com/appengine/docs/java/taskqueue/overview-pull">cola para tareas extraídas</a>) y una cola de preprocesamiento (una <a href="https://developers.google.com/appengine/docs/java/taskqueue/overview-push">cola push</a>), así como una cola de limpieza de dispositivos (otra cola push).</p>
+<p>Las interacciones entre estas colas, el administrador de notificaciones push, el proceso de trabajo de entrega de notificaciones y el controlador del preprocesamiento push se ilustran en el diagrama de la figura 3:</p>
+<figure><img height="553" src="ios-push-notifications/image03.jpg" width="473" alt="">
+<figcaption>Figura 3. Detalles de la implementación de la solución</figcaption>
+</figure>
+<h3><a name="h.8ivv3v632vy4" id="h.8ivv3v632vy4"></a>Cliente iOS</h3>
+<p>Sigue las instrucciones de Apple para activar las notificaciones push de iOS en tu aplicación nativa. En concreto, tienes que obtener los certificados de APNs que sean específicos del paquete de tu aplicación. Tu aplicación cliente se tiene que registrar para las notificaciones push. Una forma de hacerlo es llamar a <code>registerForRemoteNotificationTypes()</code> durante el inicio de la aplicación desde dentro de <code>didFinishLaunchingWithOptions()</code>.</p>
+<p>Tu aplicación iOS también tiene que implementar <code>didRegisterForRemoteNotificationsWithDeviceToken()</code> y transmitir el token de dispositivo recuperado<sup><a href="#ftnt4" name="ftnt_ref4" id="ftnt_ref4">[4]</a></sup> a tu backend móvil según lo que se describe en la <a href="#id.6hycc246fjk6">siguiente sección</a>. También puede ser buena idea implementar <code>didReceiveRemoteNotification()</code> para procesar la notificación push recibida.</p>
+<p>Ten en cuenta que el mecanismo de las notificaciones push de APNs requiere dispositivos iOS físicos y no funciona en emuladores.</p>
+<p>La información detallada sobre cómo desarrollar aplicaciones cliente de iOS que utilicen la notificación push se encuentra fuera del ámbito de este artículo.</p>
+<a href="#" name="id.6hycc246fjk6" id="id.6hycc246fjk6"></a>
+<h3>Transmisión del token de dispositivo al backend móvil</h3>
+<p>Tal como se ha descrito antes, tu aplicación nativa de iOS tiene que transmitir el token de dispositivo a tu backend móvil.</p>
+<p>Una manera sencilla de transmitirlo es usar <a href="https://developers.google.com/appengine/docs/java/endpoints/overview">Google Cloud Endpoints</a> para mostrar una API REST desde el backend. A continuación, puedes usar <a href="https://developers.google.com/appengine/docs/java/endpoints/consume_ios">herramientas</a> para generar una biblioteca cliente de iOS y para autenticar la llamada mediante autenticación basada en OAuth2 y mediante Cuentas de Google.</p>
+<figure><img height="246" src="ios-push-notifications/image05.jpg" width="625" alt="">
+<figcaption>Figura 4. Uso de Google Cloud Endpoints para mostrar una API REST desde el backend</figcaption>
+</figure>
+<p>Sin embargo, si tu aplicación cliente ya se comunica con tu backend móvil mediante otro método, puedes optar por ampliar el método existente para permitir que la aplicación cliente transmita el token de dispositivo. Asegúrate de que esta comunicación esté autenticada y de que el backend verifique que la solicitud proviene de tu aplicación cliente.</p>
+<h3>Almacenamiento y administración de tokens de dispositivo</h3>
+<p>Como tu aplicación cliente no se invoca cuando un usuario decide desinstalar tu aplicación, tienes que administrar la lista de tokens de dispositivo activos según las especificaciones de APNs. En concreto, tu backend móvil tiene que obtener la lista de tokens de dispositivo inactivos o no válidos de manera periódica y en seguida dejar de enviar notificaciones push con esos tokens (consulta la sección <a href="#id.irb04jy25lno">Administración de tokens de dispositivo</a><a href="#id.irb04jy25lno"></a> para obtener más información sobre cómo poner en práctica esta indicación). Para este propósito, tu backend móvil tiene que almacenar no solo el token de dispositivo, sino también la marca de tiempo que indique cuándo se ha recibido el token para que pueda gestionar mejor los tokens inactivos.</p>
+<p>Además, a menos que tu solución para móviles solo envíe las mismas notificaciones push a todos los usuarios, será conveniente que atribuyas el token de dispositivo de modo que puedas orientar unas notificaciones específicas a unos usuarios concretos. Una forma de poder orientar las notificaciones, por ejemplo, es almacenar user_id con el token de dispositivo.</p>
+<p>Una elección natural para almacenar tokens de dispositivo y la información relacionada es utilizar Google Cloud Datastore. Sin embargo, si tu solución para móviles ya utiliza Cloud SQL, puedes optar por almacenar aquí los tokens de dispositivo.<sup><a href="#ftnt5" name="ftnt_ref5" id="ftnt_ref5">[5]</a></sup></p>
+<figure><img height="331" src="ios-push-notifications/image01.jpg" width="338" alt="">
+<figcaption>Figura 5. Almacenamiento de tokens de dispositivo en Google Cloud Datastore</figcaption>
+</figure>
+<h2><a name="h.q9c7r5sxdlz2" id="h.q9c7r5sxdlz2"></a> Inicio de solicitudes de notificación push</h2>
+<p>Hay métodos alternativos disponibles para que tu solución móvil inicie las solicitudes de notificación push:</p>
+<ol>
+<li>Solicitudes iniciadas por tu aplicación cliente para móviles.<br>
+<br>
+Estas solicitudes se suelen activar con una acción del usuario. Por ejemplo, cuando un jugador de tu juego móvil reta a un amigo a jugar, se puede utilizar una notificación push para informar al otro jugador de esta solicitud de reto.<br>
+<br>
+Por lo general, un backend móvil muestra la API a la que la aplicación cliente llama para iniciar la parte del proceso que debe ocurrir en el backend, en vez de tener una API explícita a disposición de la aplicación cliente para móviles cuya única función sea enviar notificaciones push. Por ejemplo, la API puede incluir un método, <code>ChallengeFriend</code>, y el inicio de la solicitud de notificación push sería una de varias acciones que tu backend móvil haría cuando el cliente llamara a esta API.<br>
+<br>
+Otro ejemplo es cuando tu usuario móvil registra visita en un restaurante o sube una foto y la notificación push se utiliza para informar a los amigos del usuario de este evento. Al igual que en el ejemplo anterior, la API que el backend móvil muestra se ajusta a operaciones completas, como <code>CheckIntoPlace</code> o <code>UploadPhoto</code>. La implementación de backend de estas operaciones incluye el envío de notificaciones push.<br>
+<br></li>
+<li>Solicitudes iniciadas por el backend de tu aplicación para móviles.<br>
+<br>
+Un ejemplo podría ser una interfaz de usuario web de administración incluida en tu solución para móviles que permita a un administrador enviar una notificación push a todos los usuarios para informarles de que hay un nuevo nivel de juego disponible. Otro ejemplo podría ser enviar todas las mañanas una notificación push a los usuarios sobre una nueva oferta disponible.</li>
+</ol>
+<p>En el diseño propuesto, todas las solicitudes para enviar notificaciones push las controla tu backend móvil y las encapsula un componente llamado administrador de notificaciones push.</p>
+<h2><a name="h.ji7ke78lxqo7" id="h.ji7ke78lxqo7"></a> Administrador de notificaciones push</h2>
+<p>La función del administrador de notificaciones push es proporcionar una API interna que otros componentes de tu backend móvil puedan utilizar para iniciar solicitudes de notificación push. Según los <a href="#id.7b97dafwkyjt">requisitos</a> indicados antes, esta API funciona en las siguientes situaciones:</p>
+<ol>
+<li>Una <a href="#" name="id.mpqb4ttxlxec" id="id.mpqb4ttxlxec"></a>notificación push que se envía a un solo dispositivo iOS, como en el ejemplo, cuando un participante de tu juego para móviles reta a un amigo a jugar.<a href="#" name="id.desexnl07y7s" id="id.desexnl07y7s"></a></li>
+<li>Notificaciones push que se envían a una cantidad reducida de dispositivos iOS, por ejemplo<a href="#" name="id.bz6o29177e7j" id="id.bz6o29177e7j"></a>, para informar a todos los amigos de un usuario concreto de tu solución para móviles sobre un evento importante, como que el usuario ha registrado visita en un restaurante o ha subido una foto.</li>
+<li>Notificaciones push que se envían a un gran número de dispositivos iOS, ya sea a todos los dispositivos registrados o a los dispositivos registrados para los usuarios que cumplen con ciertos criterios. Un ejemplo podría ser la notificación enviada a todos los clientes de un banco que sean titulares de un tipo de tarjeta específico para informarles de una nueva promoción a su disposición. Otro ejemplo podría ser la notificación enviada a todos los usuarios de tu juego para móviles para informar de que hay un nuevo nivel de juego disponible.</li>
+</ol>
+<p>Para permitir la creación de aplicaciones más receptivas y resistentes, esta API interna no debe bloquear el subproceso hasta que se envíe la notificación push. La llamada debe volver en cuanto la solicitud de envío de la notificación push se almacene de manera persistente. El resto del procesamiento se tiene que hacer de manera asíncrona.</p>
+<p>En el diseño que se describe en este artículo, estas solicitudes se almacenan de manera persistente como tareas en la cola de tareas. Este patrón se describe en secciones posteriores y también se implementa en la aplicación de ejemplo que acompaña al artículo.</p>
+<h2><a name="h.3mbjx0kzqv4f" id="h.3mbjx0kzqv4f"></a> Uso de la cola de tareas</h2>
+<p>Las dos siguientes colas de tareas se utilizan para solicitudes de notificaciones push:</p>
+<a href="#" name="21e8688b3421d8b0326b1b25b8e3f06c13f98433" id="21e8688b3421d8b0326b1b25b8e3f06c13f98433"></a> <a href="#" name="0" id="0"></a>
+<table cellpadding="0" cellspacing="0">
+<tbody>
+<tr>
+<th>
+<p>Nombre de la cola</p>
+</th>
+<th>
+<p>Tipo de cola</p>
+</th>
+<th>
+<p>Descripción</p>
+</th>
+</tr>
+<tr>
+<td>
+<p>Cola de entrega de notificaciones</p>
+</td>
+<td>
+<p>Para tareas extraídas</p>
+</td>
+<td>
+<p>Se utiliza para las tareas que representan solicitudes de notificación push que están listas para su envío. Es decir, se incluyen todos los datos necesarios (consulta las situaciones <a href="#id.mpqb4ttxlxec">número 1</a> y <a href="#id.desexnl07y7s">número 2</a>).</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>Cola de preprocesamiento push</p>
+</td>
+<td>
+<p>Push</p>
+</td>
+<td>
+<p>Se utiliza para las tareas que necesitan preprocesamiento adicional (consulta la situación <a href="#id.bz6o29177e7j">número 3</a>).</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3><a name="h.22arhi37cwlt" id="h.22arhi37cwlt"></a> Notificación push a un único dispositivo</h3>
+<p>En esta situación, una tarea almacenada de manera persistente incluye el token de dispositivo del usuario al que se quiere orientar la notificación y todos los detalles sobre la notificación push solicitada, tales como el tipo de notificación y el texto de la alerta. La tarea se pone en la cola de entrega de notificaciones.</p>
+<h3><a name="h.febpvyyl81ru" id="h.febpvyyl81ru"></a> Notificación push a una cantidad reducida de dispositivos</h3>
+<p>En esta situación, una tarea almacenada de manera persistente incluye todos los detalles sobre la notificación push solicitada y la lista de tokens de dispositivo a los que se quiere orientar la notificación. La tarea se pone en la cola de entrega de notificaciones. Es decir, el sistema almacena de manera persistente y atómica una única solicitud de una notificación push a enviar a una lista de dispositivos. Esta situación puede ser más escalable y más fiable que el almacenamiento persistente de una lista de solicitudes concretas a enviar a un dispositivo cada una.</p>
+<p>Este método se puede utilizar siempre y cuando se cumplan los dos requisitos siguientes:</p>
+<ul>
+<li>La lista de tokens de dispositivo no puede ser demasiado grande, ya que la lista serializada y la información sobre la notificación push solicitada deben encontrarse dentro del <a href="https://developers.google.com/appengine/docs/java/taskqueue/overview-pull#Quotas_and_Limits_for_Pull_Queues">límite de tamaño para tareas que se ha documentado</a>.</li>
+<li>Tu backend móvil debe poder obtener la lista de dispositivos de destino con la suficiente rapidez<sup><a href="#ftnt6" name="ftnt_ref6" id="ftnt_ref6">[6]</a></sup> a fin de que esta obtención se pueda completar mientras se procesa una solicitud del cliente.</li>
+</ul>
+<p>De lo contrario, puedes considerar esta situación como una versión simplificada de la siguiente situación.</p>
+<h3><a name="h.nnvl48zfeypg" id="h.nnvl48zfeypg"></a> Solicitud de notificación push que necesita preprocesamiento</h3>
+<p>En esta situación se contemplan casos en los que la lista de dispositivos de destino es demasiado grande como para caber en una sola tarea o en los que no se puede obtener la lista con la suficiente rapidez. En estos casos, la tarea que se almacena de manera persistente incluye solo los detalles sobre la notificación push solicitada y algunos metadatos que especifican de manera indirecta los tokens de dispositivo a los que se orienta la notificación. Sin embargo, la lista real de tokens de dispositivo destinatarios no se incluye en la carga de la tarea. Dicho de otro modo, lo que se pone en cola es una tarea que requiere un paso de preprocesamiento durante el cual los metadatos se utilizan para obtener la lista de tokens de dispositivo destinatarios. Normalmente, este paso implica localizar elementos según se describe en una <a href="#id.g7ueayegc7ih">sección</a> posterior. Esta tarea se pone en la cola de preprocesamiento push.</p>
+<h3>Aumento de la fiabilidad</h3>
+<p>Para lograr un mayor grado de fiabilidad, tienes que sacar partido de un mecanismo de la cola de tareas que impide insertar una <a href="https://developers.google.com/appengine/docs/java/taskqueue/overview#Task_Names">tarea con el mismo nombre</a> más de una vez dentro de un marco de tiempo. Para ello, tienes que especificar el nombre de la tarea. Este nombre puede provenir del evento que ha desencadenado la necesidad de enviar la notificación push. Por ejemplo, el nombre de la tarea puede incluir el ID del jugador, el ID del amigo invitado y un ID más para la solicitud de reto en el juego, como puede ser un ID de esa solicitud o de una marca de tiempo con un redondeo de cinco minutos. De este modo, si la solicitud se vuelve a procesar, como en caso de que el cliente vuelva a enviarla, tu backend intentará poner en cola una tarea con un nombre utilizado anteriormente. Esto provocará una excepción específica y tu backend podrá ignorar la solicitud y abstenerse de enviar notificaciones push duplicadas.</p>
+<a href="#" name="id.g7ueayegc7ih" id="id.g7ueayegc7ih"></a>
+<h2><a name="h.8c35ekdreh7p" id="h.8c35ekdreh7p"></a> Obtención de la lista de tokens de dispositivo destinatarios</h2>
+<p>En esta solución se utiliza una combinación de <a href="https://developers.google.com/appengine/docs/python/datastore/queries#Query_Cursors">cursor de consulta</a>, de colas push y para tareas extraídas y de transacciones para gestionar el preprocesamiento y la obtención de la lista de tokens de dispositivo destinatarios de una manera que sea fiable.</p>
+<figure><img height="568" src="ios-push-notifications/image02.jpg" width="486" alt="">
+<figcaption>Figura 6. Obtención de una lista de tokens de dispositivo de destino</figcaption>
+</figure>
+<p>Cuando el controlador del preprocesamiento push recibe una tarea inicial de preprocesamiento, utiliza metadatos en la carga de la tarea para construir una consulta del almacén de datos. A continuación, obtiene un lote de tokens de dispositivo que coinciden, así como información del cursor. Así el siguiente lote se puede obtener más tarde. A continuación, 1) pone una tarea en la cola de entrega de notificaciones de manera transaccional para enviar una notificación push al lote de tokens de dispositivos obtenido y 2) pone en la cola de preprocesamiento push una tarea de preprocesamiento de continuación (se describe más adelante en esta sección).</p>
+<p>Cuando la transacción se confirma, el controlador del preprocesamiento push completa la gestión de la tarea de preprocesamiento original, de modo que la tarea se pueda tratar como procesada. Si la transacción falla, se revierte y no se ponen nuevas tareas en cola. En este caso, el controlador del preprocesamiento push muestra un error y la cola de tareas de App Engine vuelve a intentar llevar a cabo la tarea de preprocesamiento inicial. Puedes <a href="https://developers.google.com/appengine/docs/java/config/queue#Configuring_Retry_Attempts_for_Failed_Tasks">configurar</a> el procedimiento que seguirá App Engine para reintentar las tareas fallidas para cada cola por separado.</p>
+<p>Una tarea de preprocesamiento de continuación es muy parecida a una tarea de preprocesamiento inicial, salvo que también incluye la información codificada del cursor. Cuando el controlador del preprocesamiento push recibe una tarea de continuación de este tipo, obtiene la información codificada del cursor y la utiliza para crear una consulta del almacén de datos que sigue localizando al conjunto de resultados.</p>
+<h2><a name="h.id7e1l7qi36u" id="h.id7e1l7qi36u"></a> Comunicación con APNs</h2>
+<h3><a name="h.ukkutndraosk" id="h.ukkutndraosk"></a> Envío de notificaciones push</h3>
+<p>Se recomienda mantener las conexiones con APNs en varias notificaciones para evitar que se establezcan y se retiren las conexiones en varias ocasiones.</p>
+<p>La forma más fácil de lograr el patrón de comunicación recomendado cuando tu backend móvil se ejecute en Google App Engine es comunicarse con APNs, pero desde una <a href="https://developers.google.com/appengine/docs/java/backends/overview?hl=en">instancia del backend</a> de App Engine, en concreto desde un <a href="https://developers.google.com/appengine/docs/java/config/backends#Types_of_Backends">backend residente</a>. Los backends residentes se ejecutan de manera continua, por lo que mantener las conexiones es fácil.</p>
+<p>Cada instancia del backend que quieras utilizar para enviar notificaciones push puede alojar un proceso de trabajo. El proceso de trabajo puede trabajar en un bucle y conceder un lote de tareas de la cola de entrega de notificaciones, enviar notificaciones solicitadas en estas tareas y, a continuación, eliminar las tareas.</p>
+<p>Cuando vuelve una llamada para enviar notificaciones push a APNs, es posible que el resultado incluya indicadores de que algunos tokens de dispositivo específicos no son válidos o están inactivos. El proceso de trabajo puede poner en cola una tarea de limpieza para cada lote de este tipo de tokens de dispositivo. A continuación, esta tarea de limpieza se procesa de manera asíncrona según se describe (consulta la sección <a href="#id.irb04jy25lno">Administración de tokens de dispositivo</a>).</p>
+<p>Si el rendimiento de las notificaciones push que se realizan con un único backend con un solo subproceso no satisface tus necesidades, te resultará muy fácil aumentar el número de procesos de trabajo (ya sea alojando varios procesos de trabajo en una instancia del backend o con varias instancias del backend). Si no, puedes utilizar varias colas para tareas extraídas y así fragmentar la carga. Un consejo aproximado es utilizar un máximo de tres o cinco procesos de trabajo por cada cola.</p>
+<h3><a name="h.jji4v2zg1m0c" id="h.jji4v2zg1m0c"></a> Consultas al servicio de comentarios</h3>
+<p>Uno de los requisitos del protocolo de APNs consiste en hacer consultas periódicas al servicio de comentarios para obtener la lista de tokens de dispositivo inactivos. En este diseño, esto se logra con el controlador de procesamiento de comentarios push, que se puede configurar para que el <a href="https://developers.google.com/appengine/docs/java/config/cron?hl=en">servicio cron de App Engine</a> lo invoque periódicamente según una programación que especifiques (por lo menos una vez al día). Este controlador pone en cola una tarea con la lista de tokens de dispositivo inactivos que hay que eliminar.</p>
+<a href="#" name="id.irb04jy25lno" id="id.irb04jy25lno"></a>
+<h2><a name="h.4khvlm2pr4" id="h.4khvlm2pr4"></a> Administración de tokens de dispositivo</h2>
+<p>Las tareas con información sobre tokens de dispositivo inactivos y no válidos las procesa el controlador de limpieza de tokens de dispositivo. Su función consiste en eliminar este tipo de tokens de dispositivo del almacén de persistencia.</p>
+<p>Los tokens de dispositivo no válidos que se muestran al enviar una notificación push se pueden eliminar sin más comprobaciones. Sin embargo, la gestión de tokens de dispositivo inactivos que se obtengan del servicio de comentarios debe dar cuenta de situaciones en las que un token que antes estuviera inactivo se vuelva a activar y a registrar en el backend móvil. Una manera de manejar esta situación es comparar una marca de tiempo, incluida con la información obtenida del servicio de comentarios, con la marca de tiempo almacenada para este token de dispositivo en el almacén de persistencia. Si la marca de tiempo del almacén de persistencia es más reciente, indica que la información de registro del dispositivo es más reciente que la información obtenida del servicio de comentarios y que, por lo tanto, este tipo de token de dispositivo no se debe eliminar.</p>
+<h2><a name="h.xr0rr9xfo8sm" id="h.xr0rr9xfo8sm"></a> Aplicación de ejemplo</h2>
+<p>Se ha publicado en <a href="https://github.com/GoogleCloudPlatform/solutions-ios-push-notification-sample-backend-java">GitHub</a> un ejemplo de implementación del diseño que se presenta en este artículo. Puedes implementarlo en tu cuenta de Google App Engine con la facturación activada y luego jugar con el ejemplo. Google App Engine ofrece un nivel gratuito sujeto a <a href="/pricing/">cuotas</a> que incluye cuotas para ejecutar <a href="https://developers.google.com/appengine/kb/billing#free_quota_backends">instancias del backend</a> residente. En <a href="https://github.com/GoogleCloudPlatform/solutions-ios-push-notification-sample-ios-client">GitHub</a> también se ha publicado una sencilla aplicación cliente de iOS.</p>
+<h2><a name="h.35wwcodr7yaf" id="h.35wwcodr7yaf"></a> Conclusión</h2>
+<p>Tu backend móvil que se ejecuta en Google App Engine puede organizar las notificaciones push que haya que enviar a varias plataformas para móviles, incluidas Android y iOS, todo ello sin tener que utilizar servicios de terceros.</p>
+<br>
+<hr>
+<br>
+<div>
+<p><a href="#ftnt_ref1" name="ftnt1" id="ftnt1">[1]</a> Desde junio de 2013, Google Compute Engine está disponible como una vista previa pública.</p>
+</div>
+<div>
+<p><a href="#ftnt_ref2" name="ftnt2" id="ftnt2">[2]</a> Desde junio de 2013, la API de sockets es una función experimental.</p>
+</div>
+<div>
+<p><a href="#ftnt_ref3" name="ftnt3" id="ftnt3">[3]</a> Desde junio de 2013, Google Cloud Endpoints es una función experimental.</p>
+</div>
+<div>
+<p><a href="#ftnt_ref4" name="ftnt4" id="ftnt4">[4]</a> El token de dispositivo es específico de tu aplicación cliente. No es lo mismo que el identificador de dispositivo único.</p>
+</div>
+<div>
+<p><a href="#ftnt_ref5" name="ftnt5" id="ftnt5">[5]</a> Consulta estas <a href="https://developers.google.com/cloud-sql/faq#choice">Preguntas frecuentes</a> para obtener más información sobre cómo elegir entre Datastore y Cloud SQL.</p>
+</div>
+<div>
+<p><a href="#ftnt_ref6" name="ftnt6" id="ftnt6">[6]</a> "Con la suficiente rapidez" depende de circunstancias concretas. Si tu propia norma interna es procesar todas las solicitudes del cliente en un plazo de x milisegundos o de y segundos, entonces puedes utilizarla como un factor clave para determinar si una lista de todos los dispositivos de destino se puede obtener "con la suficiente rapidez" o no.</p>
+</div>
+</div>
+<div class="maia-col-3"><br>
+<img src="//www.google.com/images/icons/product/feedback-16.png" class="g-app-icon" alt=""> <a href="javascript:void(0);" class="google-feedback">Comentarios sobre este documento</a><br>
+<br></div>
+</div>
+</div>
+<script>
+(function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+</script><script src="//www.gstatic.com/feedback/api.js">
+</script><script>
+$('body').delegate('.google-feedback', 'click', function() {
+      userfeedback.api.startFeedback({'productId': '94614'});
+  });
+</script><!-- Scripts to include both on Goro + Devsite --><script>
+window.___gcfg = {
+     lang: ''
+   };
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+</script><!-- GTM implementation --><!-- Start dataLayer --><script>
+dataLayer = [{
+        'country': 'es',
+        'region': 'emea',
+        'language': 'es'
+      }];
+</script><!-- End dataLayer --><!-- Start Google Tag Manager --><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5CVQBG" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript> <script>
+(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-5CVQBG');
+</script><!-- End Google Tag Manager --><!-- Global JS scripts to load; path will depend on whether we're on devsite or Goro --><script src="/js/base.min.js">
+</script><!-- Retina loader; Do not load if partners page because we need to wait until the Angular app runs --><script>
+new lfl.system.RetinaLoader();
+</script><!-- Secondary right-side scroll-nav --><script>
+new lfl.ui.ScrollNav({});
+</script>
+</body>
+</html>

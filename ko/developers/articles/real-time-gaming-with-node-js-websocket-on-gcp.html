@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html devsite="">
+<head>
+<title>Gaming Articles &amp; Gaming Tutorials — Google Cloud Platform</title>
+<meta name="description" content="Read about technical gaming articles and solutions with Google Cloud Platform. Gaming specific articles cover game hosting solutions and server configurations.">
+<meta name="hide_page_heading" value="true">
+<meta name="full_width" value="true">
+<meta name="top_category" value="developers">
+<meta name="subcategory" value="articles">
+<meta name="viewport" content="initial-scale=1, minimum-scale=1, width=device-width">
+<link rel="apple-touch-icon" href="/_static/images/apple-touch-icon.png">
+<link href="//fonts.googleapis.com/css?family=Open+Sans:400italic,300,400,600,700" rel="stylesheet">
+<link href="/css/default.css" rel="stylesheet"><!--[if lt IE 9]>
+    <link rel="stylesheet" media="screen" href='/c/cp-ie.css'>
+    <![endif]-->
+<script src="/js/floodlight.js">
+</script>
+</head>
+<body>
+<div id="maia-main" class="cp-article">
+<div class="maia-cols">
+<div class="maia-col-9">
+<div>
+<div style="float:right">
+<div class="g-plusone"></div>
+</div>
+<h1 class="title">Google Cloud Platform에서 Node.js 및 WebSocket을 사용하는 실시간 게임</h1>
+</div>
+<div class="cp-article-tutorial">
+<h3><a name="h.oi7tucgvvupn" id="h.oi7tucgvvupn"></a>Google App Engine 및 Google Compute Engine을 사용하여 실시간 상호작용 게임을 제작하는 방법</h3>
+<h2><a name="h.mxzvmqm6770x" id="h.mxzvmqm6770x"></a>확장 가능한 실시간 게임 개발의 과제</h2>
+<p>전 세계 미디어의 집중을 받고 엄청난 수의 동시 접속자를 확보할 가능성이 있는 실시간 게임을 제작하는 것과 연관된 과제를 생각해 보신 적이 있습니까? 이러한 과제에는 게임의 일반적인 요구사항을 충족시키기 위해 다양한 하드웨어, 소프트웨어 및 플랫폼을 통합하는 것이 있으며, 관련 요구사항은 다음과 같습니다.</p>
+<ul>
+<li>대규모 동시 접속자를 처리할 수 있는 확장성</li>
+<li>데이터 센터 다운타임의 영향을 받지 않기 위한 높은 가용성</li>
+<li>수백 밀리초 안에 플레이어 액션을 처리할 수 있는 낮은 지연 시간</li>
+</ul>
+<p>이러한 과제를 극복할 수 있는 가장 쉬운 방법은 기존 제작 서비스의 문제점을 파악하는 것입니다. World Wide Maze에서는 Google Cloud Platform과 최첨단 웹 기술을 활용하여 이러한 과제를 해결했습니다.</p>
+<h3><a name="h.wciq2otu8ut" id="h.wciq2otu8ut"></a>Chrome Experiments: World Wide Maze</h3>
+<p><a href="http://www.chromeexperiments.com/">Chrome Experiments</a>는 애플리케이션을 보여주기 위해 Google에서 마련한 웹사이트로서, 최신 HTML5로 제작된 창의적인 웹 애플리케이션을 시연해 볼 수 있습니다. 이러한 웹 애플리케이션 중 하나가 <a href="http://www.chromeexperiments.com/detail/world-wide-maze/">World Wide Maze</a>(WWM)라고 하는 상호작용 3D 미로 게임이며, Chrome 팀에서 타사 파트너와 협업하여 제작했습니다.<sup><a href="#ftnt1" name="ftnt_ref1" id="ftnt_ref1">[1]</a></sup></p>
+<p>WWM에서 플레이어가 웹사이트를 지정하면 지정한 웹 페이지의 시각적 레이아웃에서 3D 미로가 생성됩니다. 플레이어는 Android/iOS 기기를 게임 컨트롤러로 사용하고, 기기를 기울여 미로에서 공을 굴리게 됩니다.</p>
+<figure><img src="/images/articles/real-time-gaming-with-node-js-websocket-on-gcp/world-wide-maze.png" alt="">
+<figcaption>그림 1: World Wide Maze: Chrome 및 휴대기기에서 플레이할 수 있는 실시간 3D 미로 게임</figcaption>
+</figure>
+<p>WWM의 고유한 특징 중 하나는 모든 실시간 상호작용이 Google Cloud Platform, 특히 <a href="/products/compute-engine">Google Compute Engine</a> 및 <a href="/products/">Google App Engine</a>에서 관리된다는 점입니다. 여기서는 실제 플레이할 수 있는 게임 경험을 만들기 위해 컨트롤러 입력과 게임 화면 사이의 낮은 지연 시간이 핵심 요구사항이었습니다.</p>
+<p>WWM은 출시 후 다수의 온라인 미디어 매체에 소개되었으며,<sup><a href="#ftnt2" name="ftnt_ref2" id="ftnt_ref2">[2]</a></sup> 사용자 수가 크게 증가했습니다. 이에 따라 트래픽 양이 급증했고(그림 2 참조) 전 세계 동시 접속자 수 6,600명, 분당 페이지 조회수 7,000건, 초당 요청수 1,000건을 기록하기에 이르렀습니다. 시스템은 Google Cloud Platform의 방대한 확장성을 활용하도록 설계되었으므로 Compute Engine과 App Engine 인스턴스를 원활하게 확장하여 급증한 트래픽을 처리할 수 있었습니다.</p>
+<figure><img src="/images/articles/real-time-gaming-with-node-js-websocket-on-gcp/traffic-analysis.png" alt="">
+<figcaption>그림 2: WWM 트래픽에 대한 Google 웹로그 분석 보고서</figcaption>
+</figure>
+<p>실시간 게임을 제작할 때 가장 큰 과제 중 하나는 클라이언트와 서버 사이에 지속적인 연결을 처리하는 것입니다. WWM에서는 게임 컨트롤러와 게임 화면 사이의 통신을 200밀리초 안에 처리해야 하며, 실시간 통신에는 다음과 같은 항목이 포함됩니다.</p>
+<ul>
+<li>서버에서 수신하는 컨트롤러의 요청</li>
+<li>서버에서 화면으로 라우팅되는 요청</li>
+<li>요청에 따라 화면에서 렌더링되는 미로</li>
+</ul>
+<p>이 문서에서는 이러한 과제를 극복하기 위해 Google Cloud Platform의 고유한 기능을 활용하여 WWM을 설계하고 개발한 방식을 집중적으로 다룹니다.</p>
+<h2><a name="h.hxaxg4tq3bcq" id="h.hxaxg4tq3bcq"></a>아키텍처 개요</h2>
+<h3><a name="h.50ijektnspqp" id="h.50ijektnspqp"></a>Google App Engine으로 Google Compute Engine 인스턴스 관리</h3>
+<p>World Wide Maze 아키텍처는 그림 3에서 집중적으로 보여주는 것처럼 Google Cloud Platform의 많은 구성요소를 활용하고 있습니다.</p>
+<figure><img src="/images/articles/real-time-gaming-with-node-js-websocket-on-gcp/client-server.png" alt="">
+<figcaption>그림 3: World Wide Maze의 클라이언트 및 서버 구성요소</figcaption>
+</figure>
+<ol>
+<li>클라이언트
+<ul>
+<li>게임 화면</li>
+<li>게임 컨트롤러</li>
+</ul>
+</li>
+<li>서버
+<ul>
+<li>웹 프론트엔드 서버(App Engine)</li>
+<li>WebSocket 서버(Compute Engine)
+<ul>
+<li>Node.js 및 Socket.IO(WebSocket 통신 처리)</li>
+</ul>
+</li>
+<li>스테이지 제작 도구(Compute Engine)
+<ul>
+<li>PhantomJS(게임 스테이지 렌더링 담당)</li>
+<li>OpenCV(게임 스테이지 이미지 처리 담당)</li>
+</ul>
+</li>
+<li>데이터베이스 서버(Compute Engine)
+<ul>
+<li>MySQL(요청 대기열 처리)</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<p>클라이언트 측에는 두 가지 구성요소, 게임 화면(게임 화면을 표시하는 PC/Mac/Linux의 Chrome 브라우저)과 게임 컨트롤러(Android/iOS의 Chrome)가 있습니다. 두 클라이언트 측 구성요소 모두 Chrome에서 실행되는 HTML5 애플리케이션입니다.</p>
+<p>서버 측에서는 WWM이 App Engine과 Compute Engine의 조합을 사용합니다. Compute Engine에서는 <a href="http://en.wikipedia.org/wiki/WebSocket">WebSocket</a> 연결을 허용하며, 이는 컨트롤러와 화면 간에 지연 속도가 낮은 양방향 통신을 구현하는 데 사용됩니다. 또한 Compute Engine은 데이터베이스 서버를 호스팅하고 게임 스테이지를 제작하는 데에도 사용됩니다. App Engine에서는 HTTP 요청을 수락하고 Compute Engine 인스턴스를 관리하며, 클라이언트를 사용 가능한 Compute Engine 인스턴스에 연결합니다.</p>
+<p>아키텍처의 흥미로운 부분 중 하나는 App Engine과 Compute Engine의 강점을 조합하여 실시한 게임 플레이를 위한 확장 가능한 솔루션을 만드는 방식입니다. 아키텍처를 설계할 때에는 각 플랫폼의 다양한 설계 고려사항을 이해하여 '적절한 인력을 적절한 작업에 배치'하는 것이 중요합니다.</p>
+<h3><a name="h.niw6sokgh88z" id="h.niw6sokgh88z"></a>웹 프론트엔드에 Google App Engine 사용</h3>
+<p>App Engine은 웹 프론트엔드에 사용되며, 게임 화면을 사용 가능한 Compute Engine 인스턴스에 연결합니다. App Engine은 HTTP 요청을 수락하고, 클라이언트에 정적 파일을 제공하며, 각 게임 세션을 사용 가능한 WebSocket 서버에 전달합니다.</p>
+<figure><img src="/images/articles/real-time-gaming-with-node-js-websocket-on-gcp/ae-web-frontend.png" alt="">
+<figcaption>그림 4: 웹 프론트엔드에 App Engine 사용</figcaption>
+</figure>
+<p>App Engine의 가장 큰 장점은 자동으로 실행되는 확장성 및 가용성 기능입니다. App Engine 애플리케이션은 각각의 <a href="https://developers.google.com/appengine/docs/whatisgoogleappengine">고유한 App Engine 런타임 환경</a> 및 다양한 <a href="https://developers.google.com/appengine/docs/java/apis">App Engine 서비스</a> <a href="https://developers.google.com/appengine/docs/java/apis">API</a>와 관련된 설계 가이드라인을 따라야 합니다. 런타임 및 API는 데이터 센터를 애플리케이션을 구동하는 하나의 거대한 병렬 컴퓨터로 구성하고, 단일 머신 오류로부터 이를 분리할 수 있도록 신중하게 설계되었습니다. 이러한 강력한 기능을 통해 개발자는 트래픽 대량 급증, 사용자 수와 서비스에서의 급박한 변경사항 및 데이터 센터 전체 다운타임과 같은 상황에 잘 대처할 수 있는 플랫폼에 액세스할 수 있습니다.</p>
+<figure><img src="/images/articles/real-time-gaming-with-node-js-websocket-on-gcp/traffic-peak.png" alt="">
+<figcaption>그림 5: WWM App Engine 관리 콘솔에서의 최대 트래픽</figcaption>
+</figure>
+<p>WWM에서는 App Engine을 부하 분산기로 사용하여 초당 1,000건의 요청에 달하는 최대 트래픽(그림 5 참조)을 처리할 수 있었습니다. 이는 App Engine의 자동 확장 기능을 사용하여 실시간 게임 세션을 Compute Engine 인스턴스에 원활하게 전달할 수 있었기 때문에 가능했습니다.</p>
+<h3><a name="h.3jrjcfu0g87k" id="h.3jrjcfu0g87k"></a>WebSocket 서버에 Compute Engine 사용</h3>
+<p>처음에 개발자는 App Engine만을 사용하여 전체 게임 서비스를 구현하는 것을 고려했고, App Engine의 <a href="https://developers.google.com/appengine/docs/java/channel/">Channel API</a> 및 <a href="https://developers.google.com/appengine/docs/java/sockets/">Socket API</a>가 실시간 통신 요구사항을 지원할 수 있는지 평가했습니다. 하지만 200밀리초 안에 메시지를 전송해야 하는 WWM에 양방향 연결을 구현하는 데 이러한 API가 적합하지 않다는 사실을 알게 되었고, 결국 App Engine과 Compute Engine을 조합하여 WebSocket 서버 연결을 구현하기로 결정했습니다.</p>
+<figure><img src="/images/articles/real-time-gaming-with-node-js-websocket-on-gcp/webSocket-server.png" alt="">
+<figcaption>그림 5: WebSocket 서버에 Compute Engine 사용</figcaption>
+</figure>
+<p>WebSocket 서버는 Compute Engine 인스턴스에서 실행되는 Node.js 및 Socket.IO를 통해 구현됩니다. <a href="http://nodejs.org/">Node.js</a>는 인기 있는 자바스크립트 런타임 플랫폼으로서, 실시간 애플리케이션을 위한 이벤트 기반의 비차단형 I/O 모델을 특징으로 합니다. <a href="http://socket.io/">Socket.IO</a>는 인기 있는 Node.js 라이브러리로서, 웹브라우저와 Node.js 서버 간에 실시간 전송 기능을 제공합니다. 또한 실시간 전송을 위해 WebSocket, 플래시 소켓, <a href="http://en.wikipedia.org/wiki/Comet_(programming)">Comet</a> 및 폴링을 비롯한 다양한 프로토콜과 메소드를 지원합니다. 기본적으로 Socket.IO는 성능 향상을 위해 WebSocket 프로토콜로 연결을 시도합니다. 하지만 특정 네트워크에서 프로토콜을 사용할 수 없음을 감지하면, 다른 프로토콜로 대체하여 성능 향상을 기대할 수 있는 실시간 연결을 시도합니다.</p>
+<h3><a name="h.85altn8fe0xj" id="h.85altn8fe0xj"></a>스테이지 제작 도구에 Compute Engine 사용</h3>
+<p>WWM의 또 다른 흥미로운 부분은 요청형 렌더링 시스템을 사용하여 어떤 웹사이트라도 플레이할 수 있는 스테이지로 변환할 수 있다는 점입니다.</p>
+<figure><img src="/images/articles/real-time-gaming-with-node-js-websocket-on-gcp/storage-builder.png" alt="">
+<figcaption>그림 7: 스테이지 제작 도구에 Compute Engine 사용</figcaption>
+</figure>
+<p>스테이지 생성은 Compute Engine에서 실행되는 스테이지 제작 도구를 통해 수행됩니다. 그림 5는 스테이지가 생성되는 프로세스를 보여줍니다.</p>
+<figure><img src="/images/articles/real-time-gaming-with-node-js-websocket-on-gcp/generation-process.png" alt="">
+<figcaption>그림 8: 스테이지 생성 프로세스</figcaption>
+</figure>
+<p>스테이지 생성 단계는 다음과 같습니다.</p>
+<ol>
+<li>게임 화면에서 사용자가 지정한 웹사이트의 URL을 WebSocket 연결을 통해 WebSocket 서버로 전송</li>
+<li>WebSocket 서버에서 데이터베이스 서버(MySQL) 대기열에 렌더링 요청 메시지를 추가하고, 스테이지 제작 도구 중 하나에서 메시지를 가져옴<sup><a href="#ftnt3" name="ftnt_ref3" id="ftnt_ref3">[3]</a></sup></li>
+<li>스테이지 제작 도구에서 PhantomJS로 웹사이트 이미지를 렌더링하고, <span class="code">div</span> 또는 <span class="code">img</span> 태그와 같은 미로 구조물 위치가 JSON 문서로 생성됨</li>
+<li>스테이지 제작 도구에서 OpenCV 이미지 처리와 구조물 생성 데이터를 사용하여 미로 구조 데이터를 생성</li>
+<li>스테이지 제작 도구에서 미로 구조와 이미지가 포함된 JSON 문서를 게임 화면에 반환</li>
+</ol>
+<p><a href="http://phantomjs.org/">PhantomJS</a>는 화면이 없는 서버를 위해 설계된 모든 스택을 갖춘 웹브라우저입니다. 이 도구는 자동화 테스트, 화면 캡처, 웹페이지 스크래핑 및 웹사이트 성능 모니터링을 비롯하여 다양한 목적에 따라 웹페이지 렌더링을 자동화합니다. 개발자는 자바스크립트 또는 CoffeeScript를 작성하여 PhantomJS가 스크린샷 캡처와 같이 필요한 프로세스를 실행하도록 지시할 수 있습니다.</p>
+<p>PhantomJS에서 렌더링한 화면 이미지는 <a href="http://opencv.org/">OpenCV</a>에 의해 처리됩니다. 이러한 프로세스에는 불필요한 영역을 제거하고, 섬을 만들고, 섬을 다리로 연결하고, 출구를 설정하는 것이 포함됩니다. 웹 이미지 원본은 OpenCV에서 처리되어 미로 구조를 생성합니다.</p>
+<h2><a name="h.tapi9ignkzp" id="h.tapi9ignkzp"></a>Compute Engine으로 클러스터를 구축하는 과정의 과제</h2>
+<p>개발 도중 Compute Engine 인스턴스 클러스터를 구축할 때 주요한 두 가지 과제가 있습니다. 첫 번째 과제는 스테이지 제작 도구의 확장성을 결정하는 것입니다. 두 번째 과제는 여러 영역의 Compute Engine 인스턴스에 장애 극복 조치를 설계하는 것입니다.</p>
+<h3><a name="h.c1dbzf1ae2u5" id="h.c1dbzf1ae2u5"></a>World Wide Maze 부하 테스트</h3>
+<p>스테이지 제작 도구의 확장성을 결정하기 위해 WWM 개발자는 스테이지 제작 도구 인스턴스 클러스터에서 광범위한 부하 테스트를 수행했습니다. 스테이지 제작 도구는 PhantomJS를 사용하여 플레이할 수 있는 레벨을 생성하며, CPU를 많이 소비합니다. 단일 인스턴스에서 생성할 수 있는 스테이지의 최대 속도 제한은 부하 테스트에 따라 결정됩니다.</p>
+<p>다음 그림은 스테이지 제작 도구 부하 테스트의 측정 결과를 보여줍니다. 여기에서 36개의 가상 클라이언트는 계속해서 단일 인스턴스에 렌더링 요청을 전송했습니다. 각 스테이지 제작 요청의 평균 처리 시간은 약 12초였습니다.</p>
+<figure><img src="/images/articles/real-time-gaming-with-node-js-websocket-on-gcp/load-testing.png" alt="">
+<figcaption>그림 9: 스테이지 제작 도구 부하 테스트 결과(CPU 사용량)</figcaption>
+</figure>
+<p>WebSocket 서버 제한은 부하 테스트에 의해 결정되었습니다. 테스트 결과에 따르면 서버는 360개의 WebSocket 연결을 평균 175밀리초의 지연 시간으로 처리할 수 있었습니다.</p>
+<p>출시 이후에 급작스런 트래픽 증가가 있었지만, 관리자는 스테이지 제작 도구의 Compute Engine 인스턴스와 WebSocket 서버를 원활하게 프로비저닝했습니다. 따라서 트래픽 급증으로 인한 어떠한 심각한 문제도 발생하지 않았습니다.</p>
+<h3><a name="h.2jfpvn3lour7" id="h.2jfpvn3lour7"></a>여러 영역의 Compute Engine 인스턴스 간의 장애 극복 조치</h3>
+<p>두 번째 과제는 단일 인스턴스에서 <a href="https://developers.google.com/compute/docs/zones?hl=en">가용성 영역</a>(여러 지리적인 지역의 인스턴스 그룹)에 이르기까지, Compute Engine 인스턴스의 예정되었거나 예정되지 않은 다운타임 모두를 처리하는 것이었습니다. WWM에서 개발자는 권장사항에 따라, 부하를 분산하고 영역 간에 빠르게 장애를 극복할 수 있도록 시스템이 배치된 여러 영역에 인스턴스를 배포했습니다.</p>
+<p>WWM에서는 다음 두 가지 기술을 활용하여 예정되었거나 예정되지 않은 다운타임을 적절하게 처리하고 있습니다.</p>
+<ul>
+<li>데이터 백업에 영구 디스크 사용</li>
+<li>Compute Engine 인스턴스 간에 외부 정적 IP 주소 전환</li>
+</ul>
+<h4><a name="h.6rgxjfglm26h" id="h.6rgxjfglm26h"></a>데이터 백업에 영구 디스크 사용</h4>
+<p>영구 디스크는 확장성과 가용성이 높은 Compute Engine용 영구 저장소 기기입니다. 백업 및 복구에 영구 디스크를 활용하면 데이터를 안전하게 유지할 수 있으며 예정되었거나 예정되지 않은 다운타임이 Compute Engine에 발생하더라도 이에 대처할 수 있습니다. WWM의 데이터베이스 서버는 MySQL 데이터베이스의 주기적인 백업에 영구 디스크를 사용합니다. Compute Engine의 예정된 유지관리 기간에는 WWM 운영자가 다운타임 전에 복원 프로세스를 호출합니다. 운영자는 영구 디스크에 백업된 MySQL 데이터를 사용하고, 다른 영역에서 예약된 Compute Engine 인스턴스에 이 데이터를 복원합니다.</p>
+<h4><a name="h.lo6e3zikdjpp" id="h.lo6e3zikdjpp"></a>Compute Engine 인스턴스 간에 외부 정적 IP 주소 전환</h4>
+<p>장애 극복에 사용되는 두 번째 기술은 정적 IP 주소 전환입니다. Compute Engine을 사용하면 간단한 명령으로 Compute Engine 인스턴스의 <a href="https://developers.google.com/compute/docs/instances_and_network#externaladdresses">외부 정적 IP 주소</a>를 즉시 전환할 수 있습니다. 이 기능은 역 프록시나 부하 분산기와 같은 프론트엔드 없이도, 지역 내 영역 간에 원활한 마이그레이션이 가능하도록 해줍니다.</p>
+<p>WWM 에서는 예정된 유지관리 기간이 다가오면 다음 절차에 따라 인스턴스를 한 영역으로부터 이동합니다.</p>
+<ol>
+<li>웹 프론트엔드(App Engine)에서 '제작' 버전을 '유지관리' 버전으로 전환하여 유지관리 화면을 표시함</li>
+<li>데이터베이스를 백업하고 백업 파일을 영구 디스크에 저장함</li>
+<li>Compute Engine 인스턴스를 도착 영역에 복사하고,<sup><a href="#ftnt4" name="ftnt_ref4" id="ftnt_ref4">[4]</a></sup> Compute Engine 인스턴스의 외부 IP 주소 할당을 원래 영역에서 도착 영역으로 전환<sup><a href="#ftnt5" name="ftnt_ref5" id="ftnt_ref5">[5]</a></sup></li>
+<li>영구 디스크의 백업 파일에서 데이터베이스 서버 기록을 복원</li>
+<li>테스트를 실행하여 도착 영역의 Compute Engine 인스턴스가 제대로 작동하는지 확인</li>
+<li>웹 프론트엔드 버전을 '유지관리'에서 '제작'으로 전환</li>
+</ol>
+<h2><a name="h.dpesh79vnb3z" id="h.dpesh79vnb3z"></a>맺음말</h2>
+<p>App Engine 및 Compute Engine을 사용하여 높은 품질의 실시간 게임을 제작하는 데 따르는 어려움을 해결할 수 있도록 Google Cloud Platform의 강력한 기술을 활용할 수 있습니다. 여기서 중요한 점은 개발자가 이러한 기술에 따르는 제한사항을 이해하여 각 기술을 최대한 활용할 수 있어야 한다는 것입니다. 제작 서비스를 시작하는 경우 시스템에 방대한 부하 테스트를 실행하여 지연 시간, 확장성, 가용성에 대한 실용 가능성 연구를 수행하는 것이 중요합니다. Google Cloud Platform을 제작에 활용하고 철저한 테스트를 실행함으로써 WWM은 전 세계를 대상으로 제품을 출시하고 엄청난 매스컴의 관심으로 인한 사용자 급증에 대처할 수 있었습니다.</p>
+<br>
+<br>
+<hr>
+<p><a href="#ftnt_ref1" name="ftnt1" id="ftnt1">[1]</a> <a href="http://prty.jp/">PARTY</a>, AID, <a href="http://katamari.co.jp/">katamari</a> 및 <a href="http://www.futurek.com/">Futurek</a></p>
+<p><a href="#ftnt_ref2" name="ftnt2" id="ftnt2">[2]</a> <a href="http://www.google.com/url?q=http%3A%2F%2Fnews.cnet.com%2F8301-17938_105-57575847-1%2Fplaying-crave-with-nifty-chrome-world-wide-maze%2F&amp;sa=D&amp;sntz=1&amp;usg=AFQjCNH1f4w2oXpZ10fCKE48944Oa-hLUQ">'</a><a href="http://www.google.com/url?q=http%3A%2F%2Fnews.cnet.com%2F8301-17938_105-57575847-1%2Fplaying-crave-with-nifty-chrome-world-wide-maze%2F&amp;sa=D&amp;sntz=1&amp;usg=AFQjCNH1f4w2oXpZ10fCKE48944Oa-hLUQ">‘</a><a href="http://news.cnet.com/8301-17938_105-57575847-1/playing-crave-with-nifty-chrome-world-wide-maze/">멋진 Chrome World Wide Maze로 Crave 플레이하기</a><a href="http://www.google.com/url?q=http%3A%2F%2Fnews.cnet.com%2F8301-17938_105-57575847-1%2Fplaying-crave-with-nifty-chrome-world-wide-maze%2F&amp;sa=D&amp;sntz=1&amp;usg=AFQjCNH1f4w2oXpZ10fCKE48944Oa-hLUQ">'</a>(CNET), <a href="http://www.google.com/url?q=http%3A%2F%2Fwww.pcmag.com%2Farticle2%2F0%2C2817%2C2416931%2C00.asp&amp;sa=D&amp;sntz=1&amp;usg=AFQjCNEt7BMEKNmbmDADR4CiSGuLL_3Zww">'</a><a href="http://www.pcmag.com/article2/0,2817,2416931,00.asp">Chrome 'World Wide Maze' 시험 기능이 웹사이트를 놀이터로 바꿔 놓다</a><a href="http://www.google.com/url?q=http%3A%2F%2Fwww.pcmag.com%2Farticle2%2F0%2C2817%2C2416931%2C00.asp&amp;sa=D&amp;sntz=1&amp;usg=AFQjCNEt7BMEKNmbmDADR4CiSGuLL_3Zww">'</a>(PC Magazine), <a href="http://www.google.com/url?q=http%3A%2F%2Fwww.engadget.com%2F2013%2F03%2F21%2Fchrome-world-wide-maze-browser-game%2F&amp;sa=D&amp;sntz=1&amp;usg=AFQjCNEmLWAosWpZCXQbkaWeam63CmwA3w">'</a><a href="http://www.engadget.com/2013/03/21/chrome-world-wide-maze-browser-game/">Google Chrome의 World Wide Maze가 즐겨찾기 웹사이트를 휴대기기에 적합한 3D 게임으로 바꿔 놓다</a><a href="http://www.google.com/url?q=http%3A%2F%2Fwww.engadget.com%2F2013%2F03%2F21%2Fchrome-world-wide-maze-browser-game%2F&amp;sa=D&amp;sntz=1&amp;usg=AFQjCNEmLWAosWpZCXQbkaWeam63CmwA3w">'</a>(Engadget) 등</p>
+<p><a href="#ftnt_ref3" name="ftnt3" id="ftnt3">[3]</a> 이런 유형의 대기열을 구현하는 다른 방법은 App Engine에서 <a href="https://developers.google.com/appengine/docs/java/taskqueue/">작업 대기열</a>을 사용하는 것입니다.</p>
+<p><a href="#ftnt_ref4" name="ftnt4" id="ftnt4">[4]</a> 이러한 작업에 <a href="https://developers.google.com/compute/docs/gcutil/tips?hl=en#moving">gcutil moveinstances 명령</a>을 유용하게 사용할 수 있습니다.</p>
+<p><a href="#ftnt_ref5" name="ftnt5" id="ftnt5">[5]</a> 외부 정적 IP 주소는 다른 지역에 있는 영역 간에는 전환할 수 없습니다. 다른 지역 간에 장애 극복 조치를 구현하려면 DNS를 사용하여 호스트 이름과 IP 주소 매핑을 전환해야 합니다. 또 다른 방법으로는 여러 지역에 IP 그룹을 만들고, 활성 인스턴스를 전환하는 애플리케이션 로직으로 제작하는 것입니다.</p>
+</div>
+<!-- /maia-main --></div>
+<div class="maia-col-3"><br>
+<img src="//www.google.com/images/icons/product/feedback-16.png" class="g-app-icon" alt=""> <a href="javascript:void(0);" class="google-feedback">이 문서에 대한 의견 보내기</a><br>
+<br></div>
+</div>
+</div>
+<script>
+(function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+</script><script src="//www.gstatic.com/feedback/api.js">
+</script><script>
+$('body').delegate('.google-feedback', 'click', function() {
+      userfeedback.api.startFeedback({'productId': '94614'});
+  });
+</script><!-- Scripts to include both on Goro + Devsite --><script>
+window.___gcfg = {
+     lang: ''
+   };
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+</script><!-- GTM implementation --><!-- Start dataLayer --><script>
+dataLayer = [{
+        'country': 'ko',
+        'region': 'japac',
+        'language': 'ko'
+      }];
+</script><!-- End dataLayer --><!-- Start Google Tag Manager --><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5CVQBG" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript> <script>
+(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-5CVQBG');
+</script><!-- End Google Tag Manager --><!-- Global JS scripts to load; path will depend on whether we're on devsite or Goro --><script src="/js/base.min.js">
+</script><!-- Retina loader; Do not load if partners page because we need to wait until the Angular app runs --><script>
+new lfl.system.RetinaLoader();
+</script><!-- Secondary right-side scroll-nav --><script>
+new lfl.ui.ScrollNav({});
+</script>
+</body>
+</html>

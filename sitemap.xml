@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="utf-8"?>
+  <urlset
+     xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+     xmlns:xhtml="http://www.w3.org/1999/xhtml"
+     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+     xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+     http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+  <url>
+    <loc>https://cloud.google.com</loc>
+    <xhtml:link rel="alternate" hreflang="de" href="/de" />
+    <xhtml:link rel="alternate" hreflang="es" href="/es" />
+    <xhtml:link rel="alternate" hreflang="fr" href="/fr" />
+    <xhtml:link rel="alternate" hreflang="pt-br" href="/pt-br" />
+    <xhtml:link rel="alternate" hreflang="ja" href="/ja" />
+    <xhtml:link rel="alternate" hreflang="ko" href="/ko" />
+    <xhtml:link rel="alternate" hreflang="zh-tw" href="/zh-tw" />
+    <xhtml:link rel="alternate" hreflang="en" href="/" />
+  </url>
+  <url>
+    <loc>https://cloud.google.com/why-google/</loc>
+    <xhtml:link rel="alternate" hreflang="de" href="/why-google/de" />
+    <xhtml:link rel="alternate" hreflang="es" href="/why-google/es" />
+    <xhtml:link rel="alternate" hreflang="fr" href="/why-google/fr" />
+    <xhtml:link rel="alternate" hreflang="pt-br" href="/why-google/pt-br" />
+    <xhtml:link rel="alternate" hreflang="ja" href="/why-google/ja" />
+    <xhtml:link rel="alternate" hreflang="ko" href="/why-google/ko" />
+    <xhtml:link rel="alternate" hreflang="zh-tw" href="/why-google/zh-tw" />
+    <xhtml:link rel="alternate" hreflang="en" href="/why-google/" />
+  </url>
+  <url>
+    <loc>https://cloud.google.com/products/</loc>
+    <xhtml:link rel="alternate" hreflang="de" href="/products/de" />
+    <xhtml:link rel="alternate" hreflang="es" href="/products/es" />
+    <xhtml:link rel="alternate" hreflang="fr" href="/products/fr" />
+    <xhtml:link rel="alternate" hreflang="pt-br" href="/products/pt-br" />
+    <xhtml:link rel="alternate" hreflang="ja" href="/products/ja" />
+    <xhtml:link rel="alternate" hreflang="ko" href="/products/ko" />
+    <xhtml:link rel="alternate" hreflang="zh-tw" href="/products/zh-tw" />
+    <xhtml:link rel="alternate" hreflang="en" href="/products/" />
+  </url>
+  <url>
+    <loc>https://cloud.google.com/products/compute-engine/</loc>
+    <xhtml:link rel="alternate" hreflang="de" href="/products/compute-engine/de" />
+    <xhtml:link rel="alternate" hreflang="es" href="/products/compute-engine/es" />
+    <xhtml:link rel="alternate" hreflang="fr" href="/products/compute-engine/fr" />
+    <xhtml:link rel="alternate" hreflang="pt-br" href="/products/compute-engine/pt-br" />
+    <xhtml:link rel="alternate" hreflang="ja" href="/products/compute-engine/ja" />
+    <xhtml:link rel="alternate" hreflang="ko" href="/products/compute-engine/ko" />
+    <xhtml:link rel="alternate" hreflang="zh-tw" href="/products/compute-engine/zh-tw" />
+    <xhtml:link rel="alternate" hreflang="en" href="/products/compute-engine/" />
+  </url>
+  <url>
+    <loc>https://cloud.google.com/products/app-engine/</loc>
+    <xhtml:link rel="alternate" hreflang="de" href="/products/app-engine/de" />
+    <xhtml:link rel="alternate" hreflang="es" href="/products/app-engine/es" />
+    <xhtml:link rel="alternate" hreflang="fr" href="/products/app-engine/fr" />
+    <xhtml:link rel="alternate" hreflang="pt-br" href="/products/app-engine/pt-br" />
+    <xhtml:link rel="alternate" hreflang="ja" href="/products/app-engine/ja" />
+    <xhtml:link rel="alternate" hreflang="ko" href="/products/app-engine/ko" />
+    <xhtml:link rel="alternate" hreflang="zh-tw" href="/products/app-engine/zh-tw" />
+    <xhtml:link rel="alternate" hreflang="en" href="/products/app-engine/" />
+  </url>
+  <url>
+    <loc>https://cloud.google.com/products/cloud-sql/</loc>
+    <xhtml:link rel="alternate" hreflang="de" href="/products/cloud-sql/de" />
+    <xhtml:link rel="alternate" hreflang="es" href="/products/cloud-sql/es" />
+    <xhtml:link rel="alternate" hreflang="fr" href="/products/cloud-sql/fr" />
+    <xhtml:link rel="alternate" hreflang="pt-br" href="/products/cloud-sql/pt-br" />
+    <xhtml:link rel="alternate" hreflang="ja" href="/products/cloud-sql/ja" />
+    <xhtml:link rel="alternate" hreflang="ko" href="/products/cloud-sql/ko" />
+    <xhtml:link rel="alternate" hreflang="zh-tw" href="/products/cloud-sql/zh-tw" />
+    <xhtml:link rel="alternate" hreflang="en" href="/products/cloud-sql/" />
+  </url>
+  <url>
+    <loc>https://cloud.google.com/products/cloud-storage/</loc>
+    <xhtml:link rel="alternate" hreflang="de" href="/products/cloud-storage/de" />
+    <xhtml:link rel="alternate" hreflang="es" href="/products/cloud-storage/es" />
+    <xhtml:link rel="alternate" hreflang="fr" href="/products/cloud-storage/fr" />
+    <xhtml:link rel="alternate" hreflang="pt-br" href="/products/cloud-storage/pt-br" />
+    <xhtml:link rel="alternate" hreflang="ja" href="/products/cloud-storage/ja" />
+    <xhtml:link rel="alternate" hreflang="ko" href="/products/cloud-storage/ko" />
+    <xhtml:link rel="alternate" hreflang="zh-tw" href="/products/cloud-storage/zh-tw" />
+    <xhtml:link rel="alternate" hreflang="en" href="/products/cloud-storage/" />
+  </url>
+  <url>
+    <loc>https://cloud.google.com/products/cloud-datastore/</loc>
+    <xhtml:link rel="alternate" hreflang="de" href="/products/cloud-datastore/de" />
+    <xhtml:link rel="alternate" hreflang="es" href="/products/cloud-datastore/es" />
+    <xhtml:link rel="alternate" hreflang="fr" href="/products/cloud-datastore/fr" />
+    <xhtml:link rel="alternate" hreflang="pt-br" href="/products/cloud-datastore/pt-br" />
+    <xhtml:link rel="alternate" hreflang="ja" href="/products/cloud-datastore/ja" />
+    <xhtml:link rel="alternate" hreflang="ko" href="/products/cloud-datastore/ko" />
+    <xhtml:link rel="alternate" hreflang="zh-tw" href="/products/cloud-datastore/zh-tw" />
+    <xhtml:link rel="alternate" hreflang="en" href="/products/cloud-datastore/" />
+  </url>
+  <url>
+    <loc>https://cloud.google.com/products/bigquery/</loc>
+    <xhtml:link rel="alternate" hreflang="de" href="/products/bigquery/de" />
+    <xhtml:link rel="alternate" hreflang="es" href="/products/bigquery/es" />
+    <xhtml:link rel="alternate" hreflang="fr" href="/products/bigquery/fr" />
+    <xhtml:link rel="alternate" hreflang="pt-br" href="/products/bigquery/pt-br" />
+    <xhtml:link rel="alternate" hreflang="ja" href="/products/bigquery/ja" />
+    <xhtml:link rel="alternate" hreflang="ko" href="/products/bigquery/ko" />
+    <xhtml:link rel="alternate" hreflang="zh-tw" href="/products/bigquery/zh-tw" />
+    <xhtml:link rel="alternate" hreflang="en" href="/products/bigquery/" />
+  </url>
+  <url>
+    <loc>https://cloud.google.com/products/cloud-dns/</loc>
+    <xhtml:link rel="alternate" hreflang="de" href="/products/cloud-dns/de" />
+    <xhtml:link rel="alternate" hreflang="es" href="/products/cloud-dns/es" />
+    <xhtml:link rel="alternate" hreflang="fr" href="/products/cloud-dns/fr" />
+    <xhtml:link rel="alternate" hreflang="pt-br" href="/products/cloud-dns/pt-br" />
+    <xhtml:link rel="alternate" hreflang="ja" href="/products/cloud-dns/ja" />
+    <xhtml:link rel="alternate" hreflang="ko" href="/products/cloud-dns/ko" />
+    <xhtml:link rel="alternate" hreflang="zh-tw" href="/products/cloud-dns/zh-tw" />
+    <xhtml:link rel="alternate" hreflang="en" href="/products/cloud-dns/" />
+  </url>
+  <url>
+    <loc>https://cloud.google.com/products/cloud-endpoints/</loc>
+    <xhtml:link rel="alternate" hreflang="de" href="/products/cloud-endpoints/de" />
+    <xhtml:link rel="alternate" hreflang="es" href="/products/cloud-endpoints/es" />
+    <xhtml:link rel="alternate" hreflang="fr" href="/products/cloud-endpoints/fr" />
+    <xhtml:link rel="alternate" hreflang="pt-br" href="/products/cloud-endpoints/pt-br" />
+    <xhtml:link rel="alternate" hreflang="ja" href="/products/cloud-endpoints/ja" />
+    <xhtml:link rel="alternate" hreflang="ko" href="/products/cloud-endpoints/ko" />
+    <xhtml:link rel="alternate" hreflang="zh-tw" href="/products/cloud-endpoints/zh-tw" />
+    <xhtml:link rel="alternate" hreflang="en" href="/products/cloud-endpoints/" />
+  </url>
+  <url>
+    <loc>https://cloud.google.com/products/translate-api/</loc>
+    <xhtml:link rel="alternate" hreflang="de" href="/products/translate-api/de" />
+    <xhtml:link rel="alternate" hreflang="es" href="/products/translate-api/es" />
+    <xhtml:link rel="alternate" hreflang="fr" href="/products/translate-api/fr" />
+    <xhtml:link rel="alternate" hreflang="pt-br" href="/products/translate-api/pt-br" />
+    <xhtml:link rel="alternate" hreflang="ja" href="/products/translate-api/ja" />
+    <xhtml:link rel="alternate" hreflang="ko" href="/products/translate-api/ko" />
+    <xhtml:link rel="alternate" hreflang="zh-tw" href="/products/translate-api/zh-tw" />
+    <xhtml:link rel="alternate" hreflang="en" href="/products/translate-api/" />
+  </url>
+  <url>
+    <loc>https://cloud.google.com/products/prediction-api/</loc>
+    <xhtml:link rel="alternate" hreflang="de" href="/products/prediction-api/de" />
+    <xhtml:link rel="alternate" hreflang="es" href="/products/prediction-api/es" />
+    <xhtml:link rel="alternate" hreflang="fr" href="/products/prediction-api/fr" />
+    <xhtml:link rel="alternate" hreflang="pt-br" href="/products/prediction-api/pt-br" />
+    <xhtml:link rel="alternate" hreflang="ja" href="/products/prediction-api/ja" />
+    <xhtml:link rel="alternate" hreflang="ko" href="/products/prediction-api/ko" />
+    <xhtml:link rel="alternate" hreflang="zh-tw" href="/products/prediction-api/zh-tw" />
+    <xhtml:link rel="alternate" hreflang="en" href="/products/prediction-api/" />
+  </url>
+  <url>
+    <loc>https://cloud.google.com/products/cloud-deployment-manager/</loc>
+    <xhtml:link rel="alternate" hreflang="de" href="/products/cloud-deployment-manager/de" />
+    <xhtml:link rel="alternate" hreflang="es" href="/products/cloud-deployment-manager/es" />
+    <xhtml:link rel="alternate" hreflang="fr" href="/products/cloud-deployment-manager/fr" />
+    <xhtml:link rel="alternate" hreflang="pt-br" href="/products/cloud-deployment-manager/pt-br" />
+    <xhtml:link rel="alternate" hreflang="ja" href="/products/cloud-deployment-manager/ja" />
+    <xhtml:link rel="alternate" hreflang="ko" href="/products/cloud-deployment-manager/ko" />
+    <xhtml:link rel="alternate" hreflang="zh-tw" href="/products/cloud-deployment-manager/zh-tw" />
+    <xhtml:link rel="alternate" hreflang="en" href="/products/cloud-deployment-manager/" />
+  </url>
+  <url>
+    <loc>https://cloud.google.com/solutions/</loc>
+    <xhtml:link rel="alternate" hreflang="de" href="/solutions/de" />
+    <xhtml:link rel="alternate" hreflang="es" href="/solutions/es" />
+    <xhtml:link rel="alternate" hreflang="fr" href="/solutions/fr" />
+    <xhtml:link rel="alternate" hreflang="pt-br" href="/solutions/pt-br" />
+    <xhtml:link rel="alternate" hreflang="ja" href="/solutions/ja" />
+    <xhtml:link rel="alternate" hreflang="ko" href="/solutions/ko" />
+    <xhtml:link rel="alternate" hreflang="zh-tw" href="/solutions/zh-tw" />
+    <xhtml:link rel="alternate" hreflang="en" href="/solutions/" />
+  </url>
+  <url>
+    <loc>https://cloud.google.com/solutions/mobile/</loc>
+    <xhtml:link rel="alternate" hreflang="de" href="/solutions/mobile/de" />
+    <xhtml:link rel="alternate" hreflang="es" href="/solutions/mobile/es" />
+    <xhtml:link rel="alternate" hreflang="fr" href="/solutions/mobile/fr" />
+    <xhtml:link rel="alternate" hreflang="pt-br" href="/solutions/mobile/pt-br" />
+    <xhtml:link rel="alternate" hreflang="ja" href="/solutions/mobile/ja" />
+    <xhtml:link rel="alternate" hreflang="ko" href="/solutions/mobile/ko" />
+    <xhtml:link rel="alternate" hreflang="zh-tw" href="/solutions/mobile/zh-tw" />
+    <xhtml:link rel="alternate" hreflang="en" href="/solutions/mobile/" />
+  </url>
+  <url>
+    <loc>https://cloud.google.com/solutions/hadoop/</loc>
+    <xhtml:link rel="alternate" hreflang="de" href="/solutions/hadoop/de" />
+    <xhtml:link rel="alternate" hreflang="es" href="/solutions/hadoop/es" />
+    <xhtml:link rel="alternate" hreflang="fr" href="/solutions/hadoop/fr" />
+    <xhtml:link rel="alternate" hreflang="pt-br" href="/solutions/hadoop/pt-br" />
+    <xhtml:link rel="alternate" hreflang="ja" href="/solutions/hadoop/ja" />
+    <xhtml:link rel="alternate" hreflang="ko" href="/solutions/hadoop/ko" />
+    <xhtml:link rel="alternate" hreflang="zh-tw" href="/solutions/hadoop/zh-tw" />
+    <xhtml:link rel="alternate" hreflang="en" href="/solutions/hadoop/" />
+  </url>
+  <url>
+    <loc>https://cloud.google.com/solutions/gaming/</loc>
+    <xhtml:link rel="alternate" hreflang="de" href="/solutions/gaming/de" />
+    <xhtml:link rel="alternate" hreflang="es" href="/solutions/gaming/es" />
+    <xhtml:link rel="alternate" hreflang="fr" href="/solutions/gaming/fr" />
+    <xhtml:link rel="alternate" hreflang="pt-br" href="/solutions/gaming/pt-br" />
+    <xhtml:link rel="alternate" hreflang="ja" href="/solutions/gaming/ja" />
+    <xhtml:link rel="alternate" hreflang="ko" href="/solutions/gaming/ko" />
+    <xhtml:link rel="alternate" hreflang="zh-tw" href="/solutions/gaming/zh-tw" />
+    <xhtml:link rel="alternate" hreflang="en" href="/solutions/gaming/" />
+  </url>
+  <url>
+    <loc>https://cloud.google.com/customers/</loc>
+    <xhtml:link rel="alternate" hreflang="de" href="/customers/de" />
+    <xhtml:link rel="alternate" hreflang="es" href="/customers/es" />
+    <xhtml:link rel="alternate" hreflang="fr" href="/customers/fr" />
+    <xhtml:link rel="alternate" hreflang="pt-br" href="/customers/pt-br" />
+    <xhtml:link rel="alternate" hreflang="ja" href="/customers/ja" />
+    <xhtml:link rel="alternate" hreflang="ko" href="/customers/ko" />
+    <xhtml:link rel="alternate" hreflang="zh-tw" href="/customers/zh-tw" />
+    <xhtml:link rel="alternate" hreflang="en" href="/customers/" />
+  </url>
+  <url>
+    <loc>https://cloud.google.com/developers/</loc>
+    <xhtml:link rel="alternate" hreflang="de" href="/developers/de" />
+    <xhtml:link rel="alternate" hreflang="es" href="/developers/es" />
+    <xhtml:link rel="alternate" hreflang="fr" href="/developers/fr" />
+    <xhtml:link rel="alternate" hreflang="pt-br" href="/developers/pt-br" />
+    <xhtml:link rel="alternate" hreflang="ja" href="/developers/ja" />
+    <xhtml:link rel="alternate" hreflang="ko" href="/developers/ko" />
+    <xhtml:link rel="alternate" hreflang="zh-tw" href="/developers/zh-tw" />
+    <xhtml:link rel="alternate" hreflang="en" href="/developers/" />
+  </url>
+  <url>
+    <loc>https://cloud.google.com/support/</loc>
+    <xhtml:link rel="alternate" hreflang="de" href="/support/de" />
+    <xhtml:link rel="alternate" hreflang="es" href="/support/es" />
+    <xhtml:link rel="alternate" hreflang="fr" href="/support/fr" />
+    <xhtml:link rel="alternate" hreflang="pt-br" href="/support/pt-br" />
+    <xhtml:link rel="alternate" hreflang="ja" href="/support/ja" />
+    <xhtml:link rel="alternate" hreflang="ko" href="/support/ko" />
+    <xhtml:link rel="alternate" hreflang="zh-tw" href="/support/zh-tw" />
+    <xhtml:link rel="alternate" hreflang="en" href="/support/" />
+  </url>
+  <url>
+    <loc>https://cloud.google.com/partners/</loc>
+    <xhtml:link rel="alternate" hreflang="de" href="/products/de" />
+    <xhtml:link rel="alternate" hreflang="es" href="/products/es" />
+    <xhtml:link rel="alternate" hreflang="fr" href="/products/fr" />
+    <xhtml:link rel="alternate" hreflang="pt-br" href="/products/pt-br" />
+    <xhtml:link rel="alternate" hreflang="ja" href="/products/ja" />
+    <xhtml:link rel="alternate" hreflang="ko" href="/products/ko" />
+    <xhtml:link rel="alternate" hreflang="zh-tw" href="/products/zh-tw" />
+    <xhtml:link rel="alternate" hreflang="en" href="/products/" />
+  </url>
+  <url>
+    <loc>https://cloud.google.com/contact/</loc>
+    <xhtml:link rel="alternate" hreflang="de" href="/products/de" />
+    <xhtml:link rel="alternate" hreflang="es" href="/products/es" />
+    <xhtml:link rel="alternate" hreflang="fr" href="/products/fr" />
+    <xhtml:link rel="alternate" hreflang="pt-br" href="/products/pt-br" />
+    <xhtml:link rel="alternate" hreflang="ja" href="/products/ja" />
+    <xhtml:link rel="alternate" hreflang="ko" href="/products/ko" />
+    <xhtml:link rel="alternate" hreflang="zh-tw" href="/products/zh-tw" />
+    <xhtml:link rel="alternate" hreflang="en" href="/products/" />
+  </url>
+</urlset>

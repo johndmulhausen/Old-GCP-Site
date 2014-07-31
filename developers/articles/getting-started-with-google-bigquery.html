@@ -1,0 +1,435 @@
+---
+layout: cloud/phase2
+title: Getting Started with Google BigQuery
+---
+<div id="maia-main" class="cp-article">
+  <div class="maia-cols">
+    <div class="maia-col-9">
+      <div>
+        <div style="float:right">
+          <div class="g-plusone"></div>
+        </div>
+        <h1 class="title">Getting Started with Google BigQuery</h1>
+      </div>
+      
+      <h2>Executive Summary</h2>
+	  <p>This paper is intended for data analysts and IT professionals who want to understand how to use Google BigQuery within their current IT environment. It provides a basic understanding of how it works, an overview of the end-to-end process from loading data into BigQuery to visualization, and design practices that should be considered when using BigQuery.</p>
+	  <p>BigQuery supports open standards and protocols such as SQL-like query language and a REST-based API. It also supports traditional Extract, Transform and Load (ETL) tools for data ingestion and Business Intelligence (BI) tools for data visualization, making it straightforward to integrate BigQuery into an organization's existing IT environment.</p>
+	<h2>Big Data Landscape</h2>
+	<p>
+		The landscape in data analysis has changed rapidly in the past few years. More and more organizations are using data to drive their decision-making. At the same time, the pace of data generation is accelerating dramatically. This shift towards Big Data within organizations is driven by many factors. Some factors influencing this trend are:
+	</p>
+	<ol>
+		<li>The dramatic decrease in storage costs that enables organizations to collect and use vast amounts of data more cost effectively than ever before.
+		</li>
+		<li>Technological advancements now enable automation of data collection at each point in the process, which has resulted in capturing much larger data sets. The combination of capturing traditional data sets (through processes such as order management) and automated processes driven by technologies (such as RFID tags, sensors, machine logs, mobile device interactions) is fueling huge data growth.
+		</li>
+		<li>Innovations in data analysis technologies have made analysis of large scale data sets possible. Technologies pioneered by Google such as MapReduce, BigTable and Dremel are beginning to be used in industry. These technologies allow data analysis to be conducted over longer historical periods and at a much more granular level. This, in turn, provides new business insights not possible in the past.
+		</li>
+	</ol>
+	<p>
+		This shift in the landscape, however, also introduces a new set of challenges. Many businesses are beginning to face problems such as finding a scalable infrastructure and the computing resources required for storing, processing, and analyzing large data sets. Traditional IT infrastructure and processes do not lend themselves well to processing and managing large data sets. For example, with Big Data analysis, a business usually requires a lot of experimentation before durable insights can be developed. Experimenting with data also means that it is hard to identify the Return on Investment (ROI) upfront, making it difficult for IT organizations to plan the capacity required to manage large data sets. Given the pace at which business conditions change, business users want to validate their hypothesis quickly. The traditional Business Intelligence (BI)/Data Warehousing (DW) process, with its long cycle of data modeling, data architecture, and capacity planning, is not meeting their needs.
+	</p>
+	<h2>
+		<a name="h.fqmgu7liax2h" id="h.fqmgu7liax2h"></a>Google BigQuery
+	</h2>
+	<p>
+		BigQuery is a fully-managed data analysis service offered in the cloud that enables agile business analytics for today's fast changing business environment. Getting started with BigQuery requires no additional capital expenditure (CAPEX) to buy and configure either hardware or software. The BigQuery service is readily available, with a Service Level Agreement of greater or equal to 99.9% uptime<sup> <a href="#ftnt1" name="ftnt_ref1" id="ftnt_ref1">[1]</a></sup>. Storage and computing resources automatically scale to the size of the data and analysis requirements. The "pay only for what you use"<sup> <a href="#ftnt2" name="ftnt_ref2" id="ftnt_ref2">[2]</a></sup> model, "blazingly fast"<sup> <a href="#ftnt3" name="ftnt_ref3" id="ftnt_ref3">[3]</a></sup> performance, a familiar SQL-like query language and ease of provisioning data in BigQuery without the need for complex data architecture, enable organizations to quickly run ad-hoc queries, validate hypotheses, and iterate on analysis to understand the data in an agile and cost effective manner. Query results are obtained in seconds and not hours.
+	</p>
+	<p>
+		Because the cost and time required for setting up the data analysis infrastructure are no longer barriers, business teams, together with their developers, can rapidly set up and perform analysis projects. The resulting speed enables line of business teams and Chief Marketing Officers to quickly put into place turn-key analytical solutions that help their business to increase revenue.
+	</p>
+	<h3>
+		<a name="h.2rinulxarntz" id="h.2rinulxarntz"></a>BigQuery in Action
+	</h3>
+	<p>
+		Businesses have successfully taken advantage of BigQuery's strengths in cost, performance, scale, and uptime availability across a broad range of use cases. Below are several examples that illustrate how BigQuery has been used effectively.
+	</p>
+	<p>
+		<b>Gmail Log Search</b><sup> <a href="#ftnt4" name="ftnt_ref4" id="ftnt_ref4">[4]</a></sup>: The Google Apps team uses BigQuery's high performance to power their interactive Gmail Log Search feature in the Administrator Control Panel. They decided to use BigQuery because of its ability to analyze multi-terabyte data sets with billions of headers and deliver precise results in just a few seconds. The Gmail Log Search feature allows the domain app administrator to answer questions such as:
+	</p>
+	<ol>
+		<li>What happened to an inbound or outbound message?
+		</li>
+		<li>Was a message sent to my domain and marked as spam?
+		</li>
+		<li>Which user sent or received a specific message?
+		</li>
+	</ol>
+	<p>
+		<b>Online Ad Sales Optimization in Vacation Industry</b>: Crystalloids, an Amsterdam-based analytics firm, worked with Auto Camper Service International (ACSI), one of Europe's leading camping guide publishers, to improve its online ad sales. Using BigQuery, the ACSI Ads Sales team was able to contrast the average number of reservation requests between campsites that did or did not advertise, given the same region and features. This data enabled them to sell ads more effectively.
+	</p>
+	<p>
+		<b>Booking and Route Management in Travel</b><sup> <a href="#ftnt5" name="ftnt_ref5" id="ftnt_ref5">[5]</a></sup>: redBus.in, an online travel agency that introduced internet bus ticketing in India, chose BigQuery to analyze booking and inventory data across their system of hundreds of bus operators serving more than 10,000 routes. They were able to analyze data sets as large as 2 terabytes in less than 30 seconds and spent 80% less than they would have on a Hadoop<sup> <a href="#ftnt6" name="ftnt_ref6" id="ftnt_ref6">[6]</a></sup> infrastructure.
+	</p>
+	<h3>
+		<a name="h.mkp51z51i6ue" id="h.mkp51z51i6ue"></a>How BigQuery Works
+	</h3>
+	<p>
+		BigQuery is based on Dremel<sup> <a href="#ftnt7" name="ftnt_ref7" id="ftnt_ref7">[7]</a></sup>, a technology pioneered by Google, and used extensively within Google. BigQuery uses columnar storage and multi-level execution trees to achieve interactive performance for queries against multi-terabyte datasets. The technical implementation is different from that of a relational database management system (RDBMS) and traditional data warehousing solutions. BigQuery supports data inserts, deletion (through dropping of tables), and the ability to add columns to table schema after the data is already loaded. It does not support direct updates to the data stored. Even though direct row-level updates are not supported, many customers are able to accomplish updates by breaking up large datasets into finalized tables and non-finalized tables, and replacing the non-finalized tables as needed, so that the final analysis reflects the results of data updates.
+	</p>
+	<p>
+		BigQuery's performance advantage comes from its parallel processing architecture. The query is processed by thousands of servers in a multi-level execution tree structure, with the final results aggregated at the root. BigQuery stores the data in a columnar format so that only data from the columns being queried are read. This architecture has significant I/O performance gains over the traditional relational database/data warehousing model because the entire record is not read for each query.
+	</p>
+	<h2>
+		<a name="h.mfg0xvd0va3d" id="h.mfg0xvd0va3d"></a>Building A Big Data Solution on BigQuery: Pipeline to Analysis
+	</h2>
+	<p>
+		It is easy to build an end-to-end solution on BigQuery. This paper presents several approaches for ingesting and visualizing the data. It also includes design recommendations for using BigQuery effectively.
+	</p>
+	<p>
+		Google Cloud Platform products used in this solution are:
+	</p>
+	<ol>
+		<li>
+			 <a href="/products/big-query">BigQuery</a> to analyze event data
+		</li>
+		<li>
+			 <a href="/products/cloud-storage">Google Cloud Storage</a> to store the aggregated event data (optional)
+		</li>
+		<li>
+			 <a href="/products/index.html">Google App Engine</a> to run the App Engine MapReduce framework (optional)
+		</li>
+		<li>
+			 <a href="/products/compute-engine">Google Compute Engine</a> to run the Hadoop MapReduce framework (optional)
+		</li>
+	</ol>
+	<h3>
+		<a name="h.m0lzn3ypbfsm" id="h.m0lzn3ypbfsm"></a>Reference Architecture Diagram
+	</h3>
+	<p>
+		The following architecture diagram (Fig. 1) illustrates the key components in the pipeline (data loading to visualization) proposed in this paper:
+	</p>
+	<p>
+		<img height="460" src="/images/articles/getting-started-with-google-bigquery/image03.png" width="676" alt="Components of the Big Data Pipeline to Analysis For BigQuery"><br>
+		Figure 1. Components of the Big Data Pipeline to Analysis For BigQuery
+	</p>
+	<h3>
+		<a name="h.65ys2qd7plma" id="h.65ys2qd7plma"></a>Pipeline Walkthrough
+	</h3>
+	<p>
+		There are two main flows for data analysis, as depicted in Figure 1:
+	</p>
+	<ol>
+		<li>Data Pipeline - transforming and loading data into BigQuery
+		</li>
+		<li>Data Visualization - performing data analysis on BigQuery and visualizing the results
+		</li>
+	</ol>
+	<h4>
+		<a name="h.w2l4th88blpf" id="h.w2l4th88blpf"></a>Data Pipeline
+	</h4>
+	<p>
+		The process of loading of data into BigQuery follows these steps:
+	</p>
+	<ol>
+		<li>Extract source data from the originating system.
+		</li>
+		<li>Denormalize the data since BigQuery performs better with fewer JOINs (optional).
+		</li>
+		<li>Transform the data into comma separated values (CSV)<sup> <a href="#ftnt8" name="ftnt_ref8" id="ftnt_ref8">[8]</a></sup> file or Javascript Object Notation (JSON) file.
+		</li>
+		<li>Upload the CSV or JSON file into Google Cloud Storage. This can be accomplished by using Google Cloud Storage's gsutil command line utility. Some third-party ETL tools can upload directly into BigQuery.
+		</li>
+		<li>Load the CSV or JSON file from Google Cloud Storage into BigQuery using either the bq<sup> <a href="#ftnt9" name="ftnt_ref9" id="ftnt_ref9">[9]</a></sup> command line utility or the BigQuery REST API.
+		</li>
+	</ol>
+	<h5>
+		<a name="h.qn10gbavzisc" id="h.qn10gbavzisc"></a>Using Google Cloud Platform For Data Pipeline
+	</h5>
+	<p>
+		The process of using the Google Cloud Platform to upload data into BigQuery involves uploading the CSV files or Javascript Object Notation (JSON) files to Google Cloud Storage before loading the data into BigQuery. Both Cloud Storage and BigQuery provide easy-to-use command line tools to upload data. Alternatively, REST API can also be used to provide programmatic integration into the current computing environment.
+	</p>
+	<p>
+		ETL tools can be run on Google Compute Engine to transform source data into a format ready to be imported into BigQuery.
+	</p>
+	<p>
+		The App Engine MapReduce framework and running Hadoop on Google Compute Engine are two options for performing ETL. The following outline suggests how an App Engine application can be used to orchestrate either approach.
+	</p>
+	<ol>
+		<li>Upload the source data into Google Cloud Storage. This can be accomplished by using the gsutil command line tool or using the Cloud Storage REST API.<br>
+		</li>
+		<li>The Google App Engine application auto-detects the presence of such files. Auto-detection can be implemented in a couple of ways:
+		</li><ol>
+		<li>Use the App Engine Cron Service to periodically poll the Cloud Storage bucket, using the REST API to detect newly uploaded objects.
+		</li>
+		<li>Use the Cloud Storage Bucket Change Notification API.<br>
+			This is a publish/subscribe model where Cloud Storage acts as the publisher and the application acts as the subscriber. Upon startup of the application, a callback method is registered to receive messages when there are new or updated files.<br>
+		</li></ol>
+		<li>The App Engine application can invoke either one of the following MapReduce pipelines:
+		</li><ol>
+		<li>Using the App Engine MapReduce framework
+		</li>
+		<li>Initiating a process to run Hadoop on Google Compute Engine. The application uses Google Compute Engine's REST API to set up the instances and start the MapReduce job. The processed files are written back to Cloud Storage.<br>
+		</li></ol>
+		<li>The application can then upload the processed log data into BigQuery using the REST API.<br>
+		</li>
+		<li>The App Engine Mail API may be used during any part of this process to generate a job completion notification.
+		</li>
+	</ol>
+	<h5>
+		<a name="h.cb8xji59oiym" id="h.cb8xji59oiym"></a>Using Third-Party Providers For Data Pipeline
+	</h5>
+	<p>
+		In the current marketplace, there are many third party vendors that provide Extract, Transform and Load (ETL) tools for BigQuery. These tools provide an easy to use "drag and drop" user interface for transforming and de-normalizing data and have the capability of loading data directly into BigQuery. They essentially perform all the steps above in a seamless fashion. These tools are especially useful if there is enterprise data originating from multiple sources. Please refer to the  <a href="https://developers.google.com/bigquery/docs/third_party_tools">Third-party Tools</a> page for the current list of companies that have integrated their software with BigQuery.
+	</p>
+	<h4>
+		<a name="h.win4wmvvsml0" id="h.win4wmvvsml0"></a>Data Visualization
+	</h4>
+	<p>
+		BigQuery Interfaces
+	</p>
+	<p>
+		BigQuery supports multiple interfaces for performing queries. For interactive querying, a web interface and a command line tool are available. Likewise, the REST API can be used programmatically. Because queries are expressed in a simplified subset of SQL, the learning curve is lowered for anyone who is already familiar with standard SQL.
+	</p>
+	<h5>
+		<a name="h.ax95rounvxyb" id="h.ax95rounvxyb"></a>Using Google Cloud Platform Technologies For Visualization
+	</h5>
+	<p>
+		A custom, web-based dashboard can be built on Google App Engine using the BigQuery REST API to execute the queries and using  <a href="https://developers.google.com/chart/">Google Chart Tool</a> <a href="https://developers.google.com/chart/">s</a> to visualize the results. The following steps briefly explain how this can be done:
+	</p>
+	<ol>
+		<li>Create an App Engine application.
+		</li>
+		<li>Create a Google API Project and enable the BigQuery API.
+		</li>
+		<li>Create an OAuth 2.0 Client ID for the application to access BigQuery.
+		</li>
+		<li>Write a Google App Engine application that uses the BigQuery API and Charts API to create the dashboard.
+		</li>
+	</ol>
+	<p>
+		For further details on how to build a custom dashboard, please refer to the following codelab at  <a href="http://developers.google.com">developers.google.com</a>: " <a href="https://developers.google.com/bigquery/articles/dashboard">Codelab: Creating a BigQuery Dashboard</a>".
+	</p>
+	<h5>
+		<a name="h.kdj5xvm5l9tn" id="h.kdj5xvm5l9tn"></a>Using Third Party Visualization Providers
+	</h5>
+	<p>
+		Google has a list of companies that have already integrated BigQuery into their products. These products provide easy to use "drag and drop" interfaces to query the data and build reporting dashboards, without having to specify any SQL statements. Please refer to the  <a href="https://developers.google.com/bigquery/docs/third_party_tools">Third-party Tools</a> page for the current list of companies that have integrated their software with BigQuery.
+	</p>
+	<h2>
+		<a name="h.h7dmxw21ml5g" id="h.h7dmxw21ml5g"></a>Design Practices
+	</h2>
+	<p>
+		When loading data into BigQuery, there are some design practices that should be considered early on to ensure a successful deployment of the Big Data analysis project.
+	</p>
+	<h3>
+		<a name="h.p1i0bmel8gcm" id="h.p1i0bmel8gcm"></a>Consider Quota Policies When Architecting A Solution
+	</h3>
+	<p>
+		There are various quota policies that should be considered. One example is with data ingestion, where it's important not to exceed the <a href="https://developers.google.com/bigquery/quota-policy#import">maximum file size per load job</a>. Knowing this limitation is important because if a file exceeds the limit, then the file will need to be split into smaller files and loaded separately. The most current quota policies for BigQuery are documented on the  <a href="https://developers.google.com/bigquery/docs/quota-policy#import">Google BigQuery Developers Site</a>.
+	</p>
+	<h3>
+		<a name="h.gctgul14rasn" id="h.gctgul14rasn"></a>Data Denormalization Prior to Data Loading
+	</h3>
+	<p>
+		The technical implementation of BigQuery is different from an RDBMS. BigQuery uses columnar storage and multi-level execution trees<sup> <a href="#ftnt10" name="ftnt_ref10" id="ftnt_ref10">[10]</a></sup> to achieve the scale and performanceAppendix 1 explains the process of de-normalizing tables in more detail.
+	</p>
+	<h3>
+		<a name="h.9s787yspk7x4" id="h.9s787yspk7x4"></a>JSON vs CSV
+	</h3>
+	<p>
+		BigQuery supports loading of data in both CSV and Java Script Object Notation (JSON) format. JSON supports nested/repeated structure and represents a more object-oriented view of the data compared to CSV. JSON also removes the need for duplication of data required by the flattening of records into CSV.
+	</p>
+	<p>
+		BigQuery provides special SQL functions, FLATTEN and WITHIN, to support querying of repeated and nested data. Not all BI tools support these special SQL functions, so it is a good practice to test out a small subset of the data with the intended third-party tools for JSON format.
+	</p>
+	<h3>
+		<a name="h.gjtnx5oq49k2" id="h.gjtnx5oq49k2"></a>Table Partition
+	</h3>
+	<p>
+		Partitioning of a table means splitting it into one or more tables with the same schema for specific purposes.
+	</p>
+	<h4>
+		<a name="h.c8z4l1689q1v" id="h.c8z4l1689q1v"></a>Static versus Changing Data
+	</h4>
+	<p>
+		As mentioned earlier, BigQuery does not support updates to data that is already loaded. By separating data that is more likely to change from data that will not, updates can achieved by simply deleting a table and re-populating it with the updated data, avoiding the need to reload the entire dataset.
+	</p>
+	<h4>
+		<a name="h.lrp4j2ahcftx" id="h.lrp4j2ahcftx"></a>Cost Efficiency
+	</h4>
+	<p>
+		The pricing for both interactive and batch queries is based on the amount of data processed. Costs can be optimized by partitioning the tables according to the usage pattern. For example, if most of the queries focus on monthly trends, then partitioning the table by month will reduce query costs. If querying data across multiple months is needed, it can be supported by table unions as shown in Figure 2.
+	</p>
+	<pre>// Find suspicious activity over several months<br>SELECT FORMAT_UTC_USEC(event.timestamp_in_usec) AS time, request_url<br>FROM [applogs.events_201205], [applogs.events_201206], [applogs.events_201207]<br>WHERE event.username = 'root' AND NOT event.source_ip.is_internal;</pre>
+	<p>
+		Figure 2. Example of partitioned tables
+	</p>
+	<p>
+		If table unions are needed, there is no limit on the number of tables that can be specified, but there is a query length limitation, which is currently 10 KB.
+	</p>
+	<h3>
+		<a name="h.a9gxvp1x3w09" id="h.a9gxvp1x3w09"></a>Storing Data in Google Cloud Storage As Backup
+	</h3>
+	<p>
+		After loading the data into BigQuery, consider leaving the data in Google Cloud Storage as data into BigQuery.
+	</p>
+	<h3>
+		<a name="h.r1kiddsl771o" id="h.r1kiddsl771o"></a>Join Operations
+	</h3>
+	<p>
+		BigQuery supports two types of JOIN operations. The use of each operation is determined by the size of the right-side table of the JOIN, while there is no size limit on the left-side table. The basic JOIN statement requires that the right-side table contains less than 8 MB<sup> <a href="#ftnt11" name="ftnt_ref11" id="ftnt_ref11">[11]</a></sup> of compressed data. This JOIN operation is designed to be fast hence the maximum size limit for the right-side table.
+	</p>
+	<p>
+		When both tables are extremely large (tens of gigabytes to multiple terabytes), the JOIN EACH operation can be used. JOIN EACH causes BigQuery to perform an internal operation that breaks down both large tables into smaller chunks that are more efficiently processed in parallel. This step incurs additional processing than that of a JOIN clause.
+	</p>
+	<h4>
+		<a name="h.dr7gwxqhiv3i" id="h.dr7gwxqhiv3i"></a>Performance Optimization Using Subselect
+	</h4>
+	<p>
+		In some cases, a subselect statement can be used to reduce the amount of data from the right-side table to fit within the 8 MB limit without having to use JOIN EACH, as shown in Figure 3.
+	</p>
+  <pre>// Limit number of fields and rows.<br>SELECT purchases.amount, users.email_address<br>FROM PurchaseData AS purchases<br>AS users<br>ON purchases.user_id = users.user_id<br>WHERE purchases.amount &gt; 500</pre>
+	<p>
+		Figure 3. Example of using subselect to reduce data size
+	</p>
+	<h4>
+		<a name="h.2ljovxji7xdk" id="h.2ljovxji7xdk"></a>Avoid Data that is Highly Skewed
+	</h4>
+	<p>
+		When JOIN EACH is used, and a query response appears to be taking an unusually long time, it is an indication that the data is unevenly distributed. The uneven distribution causes some data chunks to be disproportionately larger than others, holding up the entire query execution. Figure 4 can be used to illustrates this point. It designed to analyze the effectiveness of an email campaign.
+	</p>
+	<pre>select date_of_visit, page, sum(time_spent_on_page)<br>from weblog_20130301 w<br>join each<br>(select user_id from email_campaign) e<br>on w.user_id = e.user_id<br>group by date_of_visit, page</pre>
+	<p>
+		Figure 4. Example of a query that potentially contain uneven distributed data
+	</p>
+	<p>
+		However, if a large portion of the weblog contains traffic from users who are not logged in, and the system uses an anonymous user_id, then this query will take longer than necessary processing the anonymous users. A simple filter, as shown in Figure 5, would improve the querying performance:
+	</p>
+	<pre>select date_of_visit, page, sum(time_spent_on_page)<br>from weblog_20130301 w<br>join each<br>(select user_id from email_campaign) e<br>on w.user_id = e.user_id<br>where w.user_id != '&lt;anonymous_user_id&gt;'<br>group by time_of_visit, page</pre>
+	<p>
+		Figure 5. Example of using filter to eliminate data that caused uneven distributed data
+	</p>
+	<h2>
+		<a name="h.ef1i4f8n4ss5" id="h.ef1i4f8n4ss5"></a>Sample Applications
+	</h2>
+	<h4><a name="h.yv6q5armjpvp" id="h.yv6q5armjpvp"></a>Automated File Loader for BigQuery</h4>
+	<p>This sample Java App Engine application demonstrates how to automate data loading from Google Cloud Storage to BigQuery. This application uses Cloud Storage Object Notification API to receive notifications that files have been uploaded to a Cloud Storage bucket. It then uses the BigQuery API to load the data from the files into BigQuery. Download this sample from <a href="https://github.com/GoogleCloudPlatform/solutions-automated-file-loader-for-bigquery">GitHub</a>.</p>
+	<p>
+		 <a href="#" name="id.hdiyxbxcxwmx" id="id.hdiyxbxcxwmx"></a>
+	</p>
+	<h4><a name="h.yl5dzmy8845k" id="h.yl5dzmy8845k"></a>Using ETL tool on Google Compute Engine</h4>
+	<p>This sample script provisions a virtual machine instance in Google Compute Engine and installs the necessary software for running an open source ETL tool. Another related document provides a step by step guide on how to use the ETL tool straight out of the box. Download this sample from <a href="https://github.com/GoogleCloudPlatform/Solutions-Using-ETL-tool-on-Google-Compute-Engine">GitHub</a>.</p>
+	<h2>
+		<a name="h.a21uo0g0v18x" id="h.a21uo0g0v18x"></a>Conclusion
+	</h2>
+	<p>
+		BigQuery is a fully-managed hosted service that is well suited for agile business analytics. By following the approach described in this paper, data can be easily loaded and immediately queried to gain business insights. This can be achieved without incurring additional capital expenditure for purchasing expensive software and setting up the computing infrastructure. Existing investments in technology and skill sets are leveraged because BigQuery provides a standard SQL-like query language and growing ecosystem of third-party tools.
+	</p>
+	<h2>
+		<a name="h.jl0wzalkeolu" id="h.jl0wzalkeolu"></a>Additional Resources
+	</h2>
+	<ol>
+		<li>
+			 <a href="/files/BigQueryTechnicalWP.pdf">An Inside Look to Google BigQuery</a>
+		</li>
+		<li>
+			 <a href="/customers/#cp-interactive">Google BigQuery Case Studies</a>
+		</li>
+		<li>
+			 <a href="/bigquery-tour">Google BigQuery In Action - A Tour of BigQuery</a>
+		</li>
+		<li>
+			 <a href="https://developers.google.com/bigquery/docs/browser_tool">Google BigQuery Browser</a>
+		</li>
+		<li>
+			 <a href="https://developers.google.com/bigquery/docs/third_party_tools">Third-party Tools for Google BigQuery</a>
+		</li>
+		<li>
+			 <a href="https://developers.google.com/bigquery/articles/ingestionbestpractices">BigQuery Best Practices</a>
+		</li>
+		<li>
+			 <a href="https://developers.google.com/bigquery/docs/reference/v2/">Google BigQuery API Reference</a>
+		</li>
+		<li>
+			 <a href="https://developers.google.com/storage/docs/gsutil">Google Cloud Storage gsutil Tool</a>
+		</li>
+		<li>
+			 <a href="https://developers.google.com/bigquery/docs/cli_tool">Google Bigquery bq Tool</a>
+		</li>
+	</ol>
+	<p>
+		 <a href="#" name="id.60g9gyxi6n4f" id="id.60g9gyxi6n4f"></a>
+	</p>
+	<h2>
+		<a name="h.66ttc9wlit26" id="h.66ttc9wlit26"></a>Appendix 1 - Data Denormalization
+	</h2>
+	<p>
+		BigQuery uses columnar storage and multi-level execution trees<sup> <a href="#ftnt12" name="ftnt_ref12" id="ftnt_ref12">[12]</a></sup> to achieve the scale and performance for interactive queries. The technical implementation is different from an RDBMS. BigQuery performs best when the number of table JOINs is minimized. In some cases, tables should be denormalized before they are loaded into BigQuery.
+	</p>
+	<p>
+		The following example, a simple ordering system, illustrates the process of denormalization. A typical RDBMS database contains the following RDBMS tables: order, items, customer, and product. An order consists of a foreign key reference to the customer table, a number of items from the items table, and the items themselves, each of which reference a product in the product table. This relationship is depicted in the following Enhanced Entity Relationship diagram (Fig. 6).
+	</p>
+	<p>
+		<img height="134" src="/images/articles/getting-started-with-google-bigquery/image00.png" width="582" alt="Enhanced Entity Relationship diagram"><br>
+		Figure 6. Enhanced Entity Relationship diagram
+	</p>
+	<p>
+		Figure 7 provides an example of how tables are denormalized into a single table with the following layout:
+	</p>
+	<p>
+		<img height="186" src="/images/articles/getting-started-with-google-bigquery/image02.png" width="169" alt="Tables denormalized into a single table"><br>
+		Figure 7. Tables denormalized into a single table
+	</p>
+
+	<hr>
+	<p>
+		 <a href="#ftnt_ref1" name="ftnt1" id="ftnt1">[1]</a> https://developers.google.com/bigquery/docs/sla
+	</p>
+	<p>
+		 <a href="#ftnt_ref2" name="ftnt2" id="ftnt2">[2]</a> https://developers.google.com/bigquery/docs/pricing
+	</p>
+	<p>
+		 <a href="#ftnt_ref3" name="ftnt3" id="ftnt3">[3]</a> A sample query to find the top ten revised articles in wikipedia usually completed within 10 seconds. The size of the data set is 36GB, with 313M rows.
+	</p>
+	<p>
+		 <a href="#ftnt_ref4" name="ftnt4" id="ftnt4">[4]</a> For more information, please refer to  <a href="http://googleenterprise.blogspot.com/2012/07/gmail-log-search-feature-enhances.html">Gmail log search feature enhances visibility for domain admins</a>.
+	</p>
+	<p>
+		 <a href="#ftnt_ref5" name="ftnt5" id="ftnt5">[5]</a> For more information, please refer to the  <a href="/files/Redbus.pdf">Redbus Business Case Study</a>.
+	</p>
+	<p>
+		 <a href="#ftnt_ref6" name="ftnt6" id="ftnt6">[6]</a> Hadoop is a registered trademark owned by the Apache Software Foundation.
+	</p>
+	<p>
+		 <a href="#ftnt_ref7" name="ftnt7" id="ftnt7">[7]</a> For more details, please refer to  <a href="http://static.googleusercontent.com/external_content/untrusted_dlcp/research.google.com/en/us/pubs/archive/36632.pdf">Dremel: Interactive Analysis of Web-Scale Datasets</a> <a href="http://static.googleusercontent.com/external_content/untrusted_dlcp/research.google.com/en/us/pubs/archive/36632.pdf">.</a>
+	</p>
+	<p>
+		 <a href="#ftnt_ref8" name="ftnt8" id="ftnt8">[8]</a> The field delimiter is not restricted to comma. BigQuery supports any single-byte character as delimiter.
+	</p>
+	<p>
+		 <a href="#ftnt_ref9" name="ftnt9" id="ftnt9">[9]</a> https://developers.google.com/bigquery/docs/cli_tool
+	</p>
+	<p>
+		 <a href="#ftnt_ref10" name="ftnt10" id="ftnt10">[10]</a> For more details, please refer to  <a href="http://static.googleusercontent.com/external_content/untrusted_dlcp/research.google.com/en/us/pubs/archive/36632.pdf">Dremel: Interactive Analysis of Web-Scale Datasets</a>
+	</p>
+	<p>
+		 <a href="#ftnt_ref11" name="ftnt11" id="ftnt11">[11]</a> Google is constantly making improvements. Check the online documentation on the  <a href="https://developers.google.com/bigquery/docs/query-reference#joins"></a> <a href="https://developers.google.com/bigquery/docs/query-reference#joins">JOIN clause</a> for the latest limit.
+	</p>
+	<p>
+		 <a href="#ftnt_ref12" name="ftnt12" id="ftnt12">[12]</a> For more details, please refer to  <a href="http://static.googleusercontent.com/external_content/untrusted_dlcp/research.google.com/en/us/pubs/archive/36632.pdf">Dremel: Interactive Analysis of Web-Scale Datasets</a>
+	</p>
+
+    </div>
+    <div class="maia-col-3">
+      <br><br>
+      
+      <img src="//www.google.com/images/icons/thirdparty/pdf-16.png" class="g-app-icon">
+      <a href="../../../files/articles/google-cloud_technical-article_bigquery.pdf" class="cp-pdf" onclick="javascript: _gaq.push(['_trackPageview', '../../../files/articles/google-cloud_technical-article_bigquery.pdf']);">Download PDF</a>
+
+<hr><h4>Sample Apps</h4>
+<ul>
+<li><a href="https://github.com/GoogleCloudPlatform/solutions-automated-file-loader-for-bigquery" target="github">
+Automated File Loader for BigQuery
+<img src="/images/ext-link-8px.png" height="8px" width="8px"></a></li>
+
+<li><a href="https://github.com/GoogleCloudPlatform/Solutions-Using-ETL-tool-on-Google-Compute-Engine" target="github">
+Using ETL tool on Google Compute Engine sample script<img src="/images/ext-link-8px.png" height="8px" width="8px">
+</a></li>
+</ul>
+<hr>
+
+    </div>
+  </div>
+</div>

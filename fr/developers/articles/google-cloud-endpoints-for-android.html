@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html devsite="">
+<head>
+<title>Mobile Articles &amp; Mobile Development Guides — Google Cloud Platform</title>
+<meta name="description" content="Read technical articles on mobile solutions with Google Cloud Platform. Mobile specific articles cover application development, mobile backend and mobile gaming.">
+<meta name="hide_page_heading" value="true">
+<meta name="full_width" value="true">
+<meta name="top_category" value="developers">
+<meta name="subcategory" value="articles">
+<meta name="viewport" content="initial-scale=1, minimum-scale=1, width=device-width">
+<link rel="apple-touch-icon" href="/_static/images/apple-touch-icon.png">
+<link href="//fonts.googleapis.com/css?family=Open+Sans:400italic,300,400,600,700" rel="stylesheet">
+<link href="/css/default.css" rel="stylesheet"><!--[if lt IE 9]>
+    <link rel="stylesheet" media="screen" href='/c/cp-ie.css'>
+    <![endif]-->
+<script src="/js/floodlight.js">
+</script>
+</head>
+<body>
+<div id="maia-main" class="cp-article">
+<div class="maia-cols">
+<div class="maia-col-9">
+<div>
+<div style="float:right">
+<div class="g-plusone"></div>
+</div>
+<h1 class="title">Google&nbsp;Cloud&nbsp;Endpoints pour Android</h1>
+</div>
+<div class="cp-article-tutorial">
+<h3><a name="h.k8r0kpj0p22n" id="h.k8r0kpj0p22n"></a>Bonnes pratiques et conseils à l'intention des développeurs Java</h3>
+<h2><a name="h.w16jd8tvbxs" id="h.w16jd8tvbxs"></a>Introduction</h2>
+<p>Vous voulez développer une application mobile de classe mondiale. À cette fin, vous comptez vous tourner vers Google&nbsp;Cloud&nbsp;Endpoints, une fonctionnalité qui vous permettra de gagner un temps précieux et vous épargnera de longues lignes de code. Il s'agit d'une fonctionnalité relativement nouvelle, à propos de laquelle vous avez déjà lu divers documents, articles et didacticiels très complets.</p>
+<p>Malgré toutes les informations que vous avez recueillies, vous avez encore des questions sur quelques points de détail. Ainsi, lorsque vous essayez de générer votre bibliothèque Cloud&nbsp;Endpoints, vous ne parvenez pas à déterminer la partie du code à l'origine de l'erreur. Comment annoter les méthodes pour éviter les conflits entre les chemins REST&nbsp;? L'utilisation de mappages à codage couleur entre le code généré et les annotations vous sera assurément d'une aide précieuse&nbsp;!</p>
+<p>Vous trouverez, dans cet article, des réponses à vos questions et d'autres informations utiles. Si vous n'avez pas de problèmes particuliers, mais souhaitez quand même obtenir quelques conseils, cet article est l'endroit idéal pour commencer. Si vous êtes un parfait débutant et vous posez encore des questions du style "Qu'est-ce que Google&nbsp;Cloud&nbsp;Endpoints&nbsp;?", nous vous invitons à relire les sections "Présentation" et <a href="https://developers.google.com/appengine/docs/python/endpoints/overview">Python</a> ou <a href="https://developers.google.com/appengine/docs/java/endpoints/overview">Java</a>. Ces sections sont relativement courtes. Un simple survol suffira, jusqu'à ce que vous deviez y faire référence ultérieurement lors du développement de votre application.</p>
+<p>Dans les sections suivantes, vous trouverez des conseils d'ordre général, des détails pratiques, les problèmes auxquels vous pouvez être confronté, ainsi que les solutions à y apporter. Cet article n'est pas un guide ni un didacticiel. Vous devez donc avoir quelques notions élémentaires quant à l'utilisation de Cloud&nbsp;Endpoints. Nous vous invitons donc à considérer cet article comme un addenda pratique à la documentation destinée aux développeurs. Si vous ne savez pas par où commencer, revenez à la section <a href="https://developers.google.com/appengine/docs/java/endpoints/overview">Présentation</a>.</p>
+<h4><a name="h.1wcbbrj9ibmf" id="h.1wcbbrj9ibmf"></a>Sommaire</h4>
+<p><a href="#h.hl6cwmm8921n">Cloud&nbsp;Endpoints en bref</a><br>
+<a href="#h.30w0sum7onat">Survol rapide de la configuration</a><br>
+<a href="#h.mvx1eqsso26q">Extraits de code des points de terminaison</a><br>
+<a href="#h.tb58w1ama1mo">Concevoir votre API</a><br>
+<a href="#h.f7irpyw3cics">Générer votre bibliothèque</a><br>
+<a href="#h.o64qp3kxmvbo">Concevoir votre modèle pour le magasin de données</a><br>
+<a href="#h.4blcldx52y6m">Google&nbsp;Cloud&nbsp;Messaging</a><br>
+<a href="#h.ergctzatsr0">À l'attention des développeurs qui découvrent Android</a><br>
+<a href="#h.vf1kryhr5nza">Le mot de la fin</a><br>
+<a href="#h.jihi5o477liv">Annexe</a><br></p>
+<h2><a name="h.hl6cwmm8921n" id="h.hl6cwmm8921n"></a>Cloud&nbsp;Endpoints en bref</h2>
+<p>Cloud&nbsp;Endpoints est un service destiné à la création et à la présentation d'API personnalisées avec lesquelles vos applications clientes peuvent interagir.</p>
+<p>Son objectif est de vous faciliter la tâche en tant que développeur. Les ingénieurs de Google ont déjà déployé beaucoup d'efforts pour son développement et son optimisation, vous épargnant ainsi l'écriture de la majeure partie des protocoles et interactions client/serveur.</p>
+<p>Créer sa propre API présente de nombreux avantages. L'un d'eux est la possibilité de la concevoir comme vous le souhaitez. Cloud&nbsp;Endpoints vous apporte une grande souplesse de développement&nbsp;; il accepte, en effet, les API de type REST ou RPC, ou une combinaison des deux. Mieux encore, vous pouvez modifier la conception aussi souvent que vous le souhaitez et mettre rapidement en œuvre ces changements. Il s'agit donc d'une solution idéale pour bénéficier d'un environnement de développement souple.</p>
+<h3><a name="h.u3eovjymoqi5" id="h.u3eovjymoqi5"></a>Quelques mots sur REST…</h3>
+<p>Dans l'architecture REST, l'idée de base consiste à présenter l'état du système sous la forme d'un ensemble de ressources adressables individuellement. Pour effectuer des opérations, vous manipulez ces ressources. Une ressource est une entité qui possède un état, ainsi qu'un nom ou un identifiant. Les ressources sont stockées dans votre backend, qu'il s'agisse de Google&nbsp;Cloud&nbsp;Datastore ou d'une autre base de données.</p>
+<p>En règle générale, avec l'architecture REST, le client voit les représentations des ressources via les demandes adressées au serveur. Il peut également mettre à jour les ressources en manipulant les représentations, puis en envoyant les représentations mises à jour au serveur via des demandes ultérieures. Les ressources peuvent être représentées de différentes manières&nbsp;: XML, JSON, CSV, etc. Pour l'heure, Cloud&nbsp;Endpoints n'accepte que le format JSON, qui a tendance à être moins détaillé et moins sensible aux erreurs humaines que le format XML.</p>
+<p>Peut-être avez-vous déjà entendu parler de CRUD (Create, Retrieve, Update, Delete) ou des variantes de cette méthode&nbsp;? CRUD est à la base de l'architecture REST. Lorsque vous utilisez le plug-in Google pour Eclipse (GPE, Google Plugin for Eclipse) pour générer une classe "Endpoint," ces types de méthodes de base sont générées pour vous dans cette classe.</p>
+<p>Vos possibilités ne se limitent toutefois pas à ces opérations de base. L'ajout de méthodes personnalisées vous garantit une souplesse accrue, ce qui vous permet de réaliser des opérations complexes. Comme cela, checkForVictory peut effectuer plusieurs requêtes, ainsi qu'une opération d'écriture, dans une base de données.</p>
+<h2><a name="h.30w0sum7onat" id="h.30w0sum7onat"></a>Survol rapide de la configuration</h2>
+<p>Cette section passe rapidement en revue la génération d'un projet et la création de points de terminaison sur Eclipe. Pour obtenir des informations plus détaillées, consultez la documentation destinée aux développeurs.</p>
+<ol>
+<li>Assurez-vous que les éléments suivants ont été téléchargés et configurés sur votre ordinateur&nbsp;:
+<ol>
+<li>Eclipse</li>
+<li>Plug-in Google relatif à votre version d'Eclipse</li>
+<li>App&nbsp;Engine&nbsp;SDK</li>
+<li>Android&nbsp;SDK</li>
+</ol>
+<p>À l'heure où nous écrivons ces lignes, les versions les plus récentes sont Eclipse&nbsp;4.2, App&nbsp;Engine&nbsp;SDK&nbsp;1.8.0 et Android&nbsp;SDK&nbsp;r21.01.1.</p>
+</li>
+<li>Si vous ne possédez pas encore d'application client Android, créez-en une dans Eclipse.</li>
+<li>Créez votre backend App&nbsp;Engine en cliquant avec le bouton droit sur votre application Android et en sélectionnant ensuite <span class="bld">Google&nbsp;&gt; Créer un backend App&nbsp;Engine</span>.</li>
+<li>Vous pouvez générer des classes "Endpoints" de base en cliquant avec le bouton droit sur la classe Java des objets de données, puis en sélectionnant <span class="bld">Google&nbsp;&gt; Générer une classe Cloud&nbsp;Endpoint</span>. Vous aurez toujours la possibilité de modifier ces classes par la suite.</li>
+<li>Générez votre bibliothèque en cliquant avec le bouton droit sur votre application de backend App&nbsp;Engine, puis en sélectionnant <span class="bld">Google&nbsp;&gt; Générer une bibliothèque Cloud&nbsp;Endpoint</span>.</li>
+</ol>
+<p>Si vous utilisez IntelliJ, <a href="http://developer.android.com/sdk/installing/studio.html">Android&nbsp;Studio sur IntelliJ</a> constitue une autre option pour l'environnement de développement Android. Cette option n'est pas décrite dans le présent article, mais vous trouverez davantage d'informations à son sujet sur le site destiné aux développeurs Android. Cette option étant, pour l'heure, disponible sous une <a href="http://blogs.jetbrains.com/idea/2013/05/intellij-idea-and-android-studio-faq/">forme préliminaire</a>, veuillez tenir compte du fait qu'elle peut faire l'objet de bogues ou de modifications. Elle se distingue toutefois par une extrême polyvalence et par un large éventail de fonctionnalités, tant actuelles que planifiées. Nous vous conseillons donc de la tenir à l'œil, surtout si vous êtes un adepte d'IntelliJ.</p>
+<h2><a name="h.mvx1eqsso26q" id="h.mvx1eqsso26q"></a>Extraits de code des points de terminaison</h2>
+<h3><a name="h.p8k706n6rk9o" id="h.p8k706n6rk9o"></a>Définition de points de terminaison dans le backend</h3>
+<p>Le code des points de terminaison de l'application App&nbsp;Engine peut être classé dans deux catégories&nbsp;: modèle et API.</p>
+<p>Le premier type est votre modèle. Ces classes représentent les objets dans le cadre de votre application&nbsp;; en d'autres termes, les ressources qui seront manipulées par votre API. Par exemple, si votre application contient des homards ("Lobsters") avec des moustaches ("Whiskers"), votre objet de données sera semblable au suivant&nbsp;:</p>
+<pre>
+public class Lobster {
+  private int whiskerLength;
+  public int getWhiskerLength() {
+    return whiskerLength;
+  }
+  public void setWhiskerLength(int whiskerLength) {
+    this.whiskerLength = whiskerLength;
+  }
+}
+</pre>
+<p>Le code de votre API constitue la deuxième catégorie. La partie API de votre code fournit les méthodes qui peuvent être accessibles dans une application cliente. Ces méthodes manipulent les objets de votre modèle. Pour commencer à rédiger le code d'une API, deux possibilités s'offrent à vous&nbsp;:</p>
+<ul>
+<li>Vous pouvez cliquer avec le bouton droit de la souris sur la classe Lobster.java et sélectionner ensuite <span class="bld">Google&nbsp;&gt; Générer une classe Endpoint</span>, après quoi Eclipse générera une nouvelle classe appelée LobsterEndpoint.java. Cette classe, remplie de code et d'<a href="https://developers.google.com/appengine/docs/java/endpoints/annotations">annotations</a> pré-générés, sera prête à être appelée à partir de votre client. Ces méthodes générées insèrent, mettent à jour et suppriment les objets "Lobster" de votre magasin de données. Vous pouvez apporter d'autres modifications à cette classe en ajoutant ou supprimant des méthodes.</li>
+<li>Vous pouvez créer votre propre classe Java et lui attribuer le nom de votre choix. Cloud&nbsp;Endpoints l'identifie comme une composante de votre API, pour autant qu'elle soit annotée correctement. Notez que les méthodes d'instance privées ne feront pas partie de votre API.</li>
+</ul>
+<p>Voici un exemple d'une classe de points de terminaison&nbsp;:</p>
+<pre>
+@Api(name = "lobster")
+public class LobsterEndpoint {
+  @ApiMethod(name = "lobster.growWhisker", httpMethod = HttpMethod.POST)
+  public void growWhisker(Lobster lobster) {
+    // grows the lobster’s whisker
+    // calculates growth, updates the Lobster in Datastore
+  }
+  private int calculateWhiskerGrowth(Lobster lobster) {
+    // this method is a private utility method
+    // it will NOT be visible in your API
+  }
+}
+</pre>
+<p>Conseil d'ordre général&nbsp;: affranchissez-vous du code de point de terminaison généré. Nul doute qu'il est utile et qu'il comporte d'excellents modèles pour commencer, mais n'hésitez pas à le modifier pour l'adapter à votre projet spécifique. Le code est aussi malléable que vous le souhaitez. Par exemple, les entités DeviceInfo générées automatiquement utilisent des identifiants d'enregistrement comme clés. Vous pourrez toujours ajouter des nouveaux champs à une entité DeviceInfo ou utiliser un champ différent pour la clé.</p>
+<h3><a name="h.yf5waeq61xd" id="h.yf5waeq61xd"></a>Utilisation de points de terminaison à partir du client</h3>
+<p>Dès que vous avez <a href="https://developers.google.com/appengine/docs/java/endpoints/gen_clients">généré</a> votre bibliothèque Cloud&nbsp;Endpoints, le nouveau code qui apparaît dans votre client (généralement sous un dossier dont le chemin d'accès contient "endpoint-libs") correspond à la fonctionnalité que vous avez fournie dans votre code de backend.</p>
+<p>Au niveau du modèle, la différence est que les nouvelles classes étendent la classe <a href="http://javadoc.google-http-java-client.googlecode.com/hg/1.12.0-beta/com/google/api/client/json/GenericJson.html">GenericJson</a>, de sorte qu'elles puissent être envoyées au format JSON. C'est pourquoi la classe "Lobster" que vous venez de générer peut se présenter comme suit&nbsp;:</p>
+<pre>
+public final class Lobster extends GenericJson {
+  private int whiskerLength;
+  public int getWhiskerLength() {
+    return whiskerLength;
+  }
+  public Lobster setWhiskerLength(int whiskerLength) {
+    this.whiskerLength = whiskerLength;
+    return this;
+  }
+}
+</pre>
+<p>Le code du client API est constitué d'une série de méthodes et de classes de requêtes JSON, ce qui vous permet de l'utiliser très facilement dans un client Android. Aussi, le résultat de votre classe LobsterEndpoint.java peut-il se présenter comme suit&nbsp;:</p>
+<pre>
+public Lobster lobster() {...}
+public class Lobster {
+  public GrowWhisker growWhisker(Lobster lobster) {...}
+  public class GrowWhisker extends LobsterRequest {
+    private static final String REST_PATH = “growWhisker”
+    protected GrowWhisker(Lobster lobster) {...}
+    ...
+  }
+}
+</pre>
+<p>Vous pouvez ensuite utiliser ce point de terminaison affiché avec le code suivant&nbsp;:</p>
+<pre>
+service.lobster().growWhisker(lobster).execute();
+</pre>
+<p>Si les requêtes HTTP vous sont un tant soit peu familières, vous n'êtes pas sans savoir que, pour un chemin REST donné, vous ne pouvez spécifier qu'une seule définition de POST, une de GET, <a href="https://developers.google.com/appengine/docs/java/javadoc/com/google/appengine/api/urlfetch/HTTPMethod">et ainsi de suite</a>. Vous pouvez assurément créer plusieurs méthodes POST dans la même API de point de terminaison, mais veillez à ce que leurs chemins REST soient différents, sans quoi vous serez confronté à des conflits. Pour en savoir plus sur les annotations @ApiMethod, consultez la section correspondante dans l'<a href="#h.pga0m919sg4m">annexe</a>.</p>
+<p>Idéalement, dès que la bibliothèque a été générée dans votre application cliente, vous ne devez plus toucher au code client généré. Toute modification que vous souhaitez apporter à votre modèle ou API doit être effectuée dans le backend.</p>
+<h2><a name="h.tb58w1ama1mo" id="h.tb58w1ama1mo"></a>Concevoir votre API</h2>
+<h3><a name="h.59ur83gz03xh" id="h.59ur83gz03xh"></a>Modèle</h3>
+<ul>
+<li><span class="bld">Les classes de votre modèle doivent présenter certaines caractéristiques.</span><br>
+Si vous voulez utiliser une classe de votre API, elle doit&nbsp;:
+<ul>
+<li>être sérialisable&nbsp;;</li>
+<li>posséder un constructeur à argument nul&nbsp;;</li>
+<li>mettre en œuvre des getters et des setters pour ses champs.</li>
+</ul>
+</li>
+<li><span class="bld">Les classes de votre modèle peuvent également contenir d'autres méthodes d'instance.</span><br>
+Pour rappel, seules les méthodes getter et setter pourront être publiées du côté client.</li>
+<li><span class="bld">Comment une définition de classe d'objets du modèle peut-elle être marquée en vue d'être insérée dans le modèle client généré&nbsp;?</span><br>
+Supposons que vous ayez une classe "Clam.java", ainsi que des champs, et des méthodes "getter" et "setter" (get/setPearl, get/setColor, par exemple). Cependant, lorsque vous générez la bibliothèque de points de terminaison, aucune classe "Clam.java" n'apparaît dans le code généré. Qu'est-elle devenue&nbsp;? Ce comportement est déterminé par l'utilisation de l'objet "Clam" dans le reste de votre modèle et dans l'API de votre backend.
+<ul>
+<li>L'utilisation de l'entité dans votre API force Cloud&nbsp;Endpoints à reconnaître l'existence de Clams en tant qu'objets.
+<pre>
+@ApiMethod(name = "clam.producePearl", httpMethod = HttpMethod.POST)
+public void producePearl(Clam clam) {
+  // adds a pearl to the clam
+}
+</pre></li>
+<li>L'utilisation correcte de Clams dans votre modèle force Cloud&nbsp;Endpoints à les reconnaître et à générer une classe Clam.java côté client. Pour que Cloud&nbsp;Endpoints reconnaisse les Clams en tant qu'objets, créez une méthode setter setClam (Clam clam) qui peut être publique, protégée ou privée.
+<ul>
+<li>Les méthodes "setter" doivent présenter les propriétés suivantes&nbsp;:
+<ul>
+<li>Le nom de la méthode doit commencer par "set".</li>
+<li>L'objet que vous voulez définir doit se trouver dans les paramètres.<br>
+Par exemple&nbsp;:
+<p>"setClam(Tree tree)" définit clairement un objet "Tree" (Arbre), et non un "Clam", bien que le nom de la méthode indique le contraire. Cette méthode générera en fait une classe "Tree.java" dans le client, ainsi que des méthodes "getTree()" et "setTree(Tree)". Elle ne générera pas de méthode "setClam(Clam)".</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4><a name="h.81ofeyalqugy" id="h.81ofeyalqugy"></a>À propos des types compatibles</h4>
+<ul>
+<li><span class="bld">Énumérations</span>&nbsp;: les énumérations (enums) dans votre backend sont générées sous la forme de représentations de chaîne dans le code client. En d'autres termes, si vous utilisez la fonctionnalité "enum" dans le backend et dans le client, vous devrez la définir aux deux emplacements.</li>
+<li><span class="bld">Booléen</span>&nbsp;: les getters apparaissent souvent sous une forme "isLobster" dans le code Java. Eclipse utilise cette convention lorsque vous cliquez sur le champ avec le bouton droit de la souris et sélectionnez ensuite "Source&nbsp;&gt; Générer des Getters/Setters". Sachez cependant que Cloud&nbsp;Endpoints générera "getLobster" dans le modèle client.</li>
+</ul>
+<h3><a name="h.2wd8p0vkyhzy" id="h.2wd8p0vkyhzy"></a>Méthodes API</h3>
+<ul>
+<li><span class="bld">L'attribut "name" de l'annotation @Api doit commencer par un caractère minuscule.</span> Il doit être formaté comme un nom de variable&nbsp;: camelCase et alphanumérique.</li>
+<li><span class="bld">Les méthodes statiques ne sont pas acceptées dans vos classes Endpoints.</span> Si une méthode statique est nécessaire, vous devez la rendre privée.</li>
+<li><span class="bld">Si vous ne spécifiez pas l'attribut httpMethod dans la signature @ApiMethod, Cloud&nbsp;Endpoints émet une hypothèse, en se basant sur le nom de votre méthode.</span></li>
+<li><span class="bld">Utilisez l'annotation @ApiNamespace</span> pour bénéficier d'un contrôle accru sur les noms de package de votre bibliothèque. Dans le cas contraire, votre API utilisera les noms de package par défaut.</li>
+<li><span class="bld">Les paramètres de méthode dans la bibliothèque client générée sont dans l'ordre alphabétique</span>, quel que soit l'ordre d'origine dans la méthode de backend. Vous devez donc être prudent lors de la modification de vos méthodes, surtout s'il existe plusieurs paramètres du même type. Le compilateur ne sera pas en mesure de détecter les erreurs de classement des paramètres à votre place.</li>
+<li><span class="bld">Les listes vides renvoyées arrivent sous la forme d'éléments "null" du côté client.</span> N'oubliez pas de les rechercher.</li>
+<li><span class="bld">Les méthodes surchargées ne sont pas acceptées dans une classe.</span></li>
+</ul>
+<h4><a name="h.2vyv9hju4ls9" id="h.2vyv9hju4ls9"></a>À propos des types de paramètre compatibles</h4>
+<ul>
+<li><span class="bld">La plupart des types de paramètre doivent être sérialisables</span>, car il s'agit d'une exigence du format JSON pour les objets.
+<ul>
+<li>Vous pouvez également utiliser des composants JavaBean, ce qui inclut tout élément de votre modèle, dans la mesure où les objets de votre modèle doivent se conformer à la norme JavaBean, comme indiqué ci-dessus.</li>
+</ul>
+</li>
+<li><span class="bld">Un petit nombre de types ne doit pas nécessairement être sérialisable, mais doit être annoté avec @Named.</span> Ces types sont&nbsp;: Chaîne, int/Entier, boolean/Booléen, long/Long.</li>
+</ul>
+<h4><a name="h.mz544pd5nvxv" id="h.mz544pd5nvxv"></a>À propos des types de renvoi compatibles</h4>
+<ul>
+<li><span class="bld">Les types de renvoi doivent être sérialisables</span>&nbsp;: les paramètres de méthode <span class="code">@Named</span> (tels que Chaîne et Booléen) ne sont pas acceptés comme types de renvoi. Vous pouvez néanmoins renvoyer <span class="code">void</span>, auquel cas la méthode générée côté client renverra <span class="code">Void.class</span>.</li>
+<li><span class="bld">Listes de types sérialisables</span>&nbsp;: en fait, Endpoints génère une nouvelle classe JSON "Collection", semblable à toutes les autres classes de modèles clients. Par exemple, si votre modèle comprend une classe représentée par <span class="code">Lobster.java</span>, et que vous voulez renvoyer <span class="code">List&lt;Lobster&gt;</span>, la bibliothèque contiendra une classe <span class="code">LobsterCollection.java</span>. Vous pouvez récupérer la liste des objets "Lobster" de votre client en appelant getItems().</li>
+<li><span class="bld">Cartes de types sérialisables</span>&nbsp;: comme c'est le cas pour le traitement des listes, Endpoints génère un type "JsonMap" pour Maps.</li>
+<li><span class="bld">Les types de classe génèrent le type d'interface.</span> Par exemple, si votre méthode de backend renvoie une <span class="code">ArrayList</span>, il s'agira d'une liste dans votre client. Il est probable que vous deviez quand même utiliser l'interface pour définir vos variables et types de renvoi. Veillez à y prêter attention lorsque vous souhaitez utiliser la sous-classe.</li>
+</ul>
+<h2><a name="h.f7irpyw3cics" id="h.f7irpyw3cics"></a>Générer votre bibliothèque</h2>
+<p>Voici quelques fonctionnalités du plug-in&nbsp;Google pour Eclipse qui vous seront bien utiles lorsque vous commencerez à générer votre bibliothèque d'API Cloud&nbsp;Endpoints&nbsp;:</p>
+<ul>
+<li><span class="bld">Commencer un projet de toutes pièces est un jeu d'enfant.</span> La première fois que vous générez votre backend App&nbsp;Engine à partir de votre projet Android, Eclipse définit les configurations nécessaires à leur liaison. Ces configurations indiquent à Eclipse de placer le code de la nouvelle bibliothèque générée dans le dossier approprié de votre projet Android. Pour en savoir plus, reportez-vous à la section <a href="#h.denl7ubxn3hc">Génération de points de terminaison</a>.</li>
+<li><span class="bld">S'il existe déjà une application App&nbsp;Engine que vous souhaitez lier</span> à votre frontend Android, vous devez modifier les paramètres de votre projet Eclipse.
+<ul>
+<li>Un dossier caché nommé ".settings/" se trouve dans le projet Eclipse de votre client Android. Le fichier <span class="code">com.google.gdt.eclipse.appengine.swarm.prefs</span> situé dans le dossier des paramètres doit contenir la ligne <span class="code">connectedProject=YourAppEngineBackend", où "YourAppEngineBackend"</span> est le nom de votre backend.</li>
+<li>Un dossier caché nommé ".settings/" se trouve également dans le projet Eclipse de votre backend App&nbsp;Engine. Le fichier <span class="code">com.google.gdt.eclipse.appengine.swarm.prefs</span> situé dans le dossier des paramètres doit contenir la ligne <span class="code">"connectedProject=YourAndroidClient", où "YourAndroidClient"</span> est le nom de votre client de frontend.</li>
+</ul>
+</li>
+<li><span class="bld">Corrigez les erreurs lors de la génération de la bibliothèque Cloud&nbsp;Endpoints en consultant le journal des erreurs d'Eclipse.</span> Lorsque vous commencez à développer avec Cloud&nbsp;Endpoints, des problèmes peuvent survenir lors de la <a href="https://developers.google.com/appengine/docs/java/endpoints/gen_clients">génération</a> de la bibliothèque. Il se peut que le message "Des erreurs se sont produites lors de la génération de Cloud&nbsp;Endpoints et l'opération n'est pas terminée." s'affiche. Pour obtenir une description beaucoup plus complète de l'erreur, sélectionnez <span class="bld">Fenêtre&nbsp;&gt; Afficher la vue&nbsp;&gt; Journal d'erreurs</span>. Double-cliquez ensuite sur chaque erreur pour en afficher une description détaillée.</li>
+<li><span class="bld">Assurez-vous que le plug-in&nbsp;Google de votre version d'Eclipse est compatible avec la version d'App&nbsp;Engine&nbsp;SDK.</span> Si des erreurs telles que "méthode introuvable" subsistent après avoir consulté le journal d'erreurs, le problème peut être dû à une incompatibilité entre les versions. En cas de doute, installez les versions les plus récentes du plug-in&nbsp;Google, d'App&nbsp;Engine&nbsp;SDK et d'Android&nbsp;SDK. Si le problème persiste, essayez de basculer vers une version plus récente d'Eclipse.</li>
+<li><span class="bld">Régénérez votre bibliothèque à intervalles réguliers ou à la suite d'une modification majeure.</span> Lorsque vous modifiez le nom de votre attribut @ApiMethod, ou tout autre élément qui entraîne des modifications côté client, la mise à jour de votre bibliothèque est conseillée. Envisagez la situation comme suit&nbsp;: vous êtes l'ingénieur du code serveur et du code client. Dans certains cas, vous devrez, en votre qualité d'ingénieur de frontend, adapter la solution en fonction des changements majeurs que vous aurez vous-même effectués, en votre qualité d'ingénieur de backend.</li>
+<li><span class="bld">Configurez un environnement de développement local si vous souhaitez effectuer des tests en local.</span> Lorsque vous générez la bibliothèque de points de terminaison, une classe <span class="code">CloudEndpointUtils</span> est automatiquement créée. Si vous souhaitez effectuer des tests en local, pensez à définir <span class="code">LOCAL_ANDROID_RUN = true</span>, et appelez <span class="code">CloudEndpointUtils.updateBuilder(builder)</span> à chaque emplacement qui instancie un service de point de terminaison. De cette manière, vous pourrez aisément basculer entre les versions locale et déployée en activant/désactivant la variable <span class="code">LOCAL_ANDROID_RUN</span>.</li>
+</ul>
+<h2><a name="h.o64qp3kxmvbo" id="h.o64qp3kxmvbo"></a>Concevoir votre modèle pour le magasin de données</h2>
+<p>N'oubliez pas de rendre votre modèle compatible avec Datastore si vous souhaitez utiliser l'espace de stockage persistant facilement accessible proposé par ce service et parfaitement adapté à Cloud&nbsp;Endpoints. <a href="https://developers.google.com/appengine/docs/java/datastore/entities#Properties_and_Value_Types">Cliquez ici</a> pour consulter la liste complète des types et propriétés de Datastore. Vous trouverez, ci-dessous, une description plus détaillée des éléments principaux et des ambiguïtés de Datastore&nbsp;:</p>
+<ul>
+<li><span class="bld">Plusieurs options vous sont proposées pour interagir avec Datastore.</span> JPA/JDO fournit une excellente couche d'abstraction lorsque votre modèle enregistré est simple. L'API Datastore de bas niveau vous garantit un meilleur contrôle sur le mode de persistance de vos objets. Si vous utilisez cette API, vous pourrez, et vous devrez, contrôler manuellement les modifications apportées à votre modèle. Cela présente des avantages et des inconvénients.</li>
+<li><span class="bld">Les listes vides persistent sous la forme de "bons vieux éléments null".</span> Il est intéressant de constater que même si vous recherchez ces valeurs "null" et associez une liste vide à l'objet qui est envoyé au client, il parviendra sous la forme d'un élément "null" sur ce dernier.</li>
+<li><span class="bld">Pour faire persister des groupes d'objets, n'oubliez pas que Datastore n'utilise que les objets de type "Collection" ou de ses sous-classes.</span> Les éléments de la collection doivent appartenir à l'un des autres types compatibles ou être sérialisables dans un objet <a href="https://developers.google.com/appengine/docs/java/javadoc/com/google/appengine/api/datastore/Blob">Blob</a>.</li>
+<li><span class="bld">Pas de tableaux.</span> Comme indiqué précédemment, Datastore utilise des valeurs du type "Collection". Veuillez donc utiliser ces valeurs plutôt que des tableaux.</li>
+<li><span class="bld">Datastore ne fait pas la distinction entre les tailles des nombres, tels que int32 et int64.</span> Par exemple, si vous faites persister une liste d'entiers, elle est stockée sous la forme <span class="code">List&lt;Long&gt;</span>.</li>
+</ul>
+<p>L'utilisation de Datastore n'est évidemment pas obligatoire. L'un des avantages d'App&nbsp;Engine est de vous permettre de combiner de nombreux services Cloud. Vous pouvez, par exemple, utiliser Cloud&nbsp;SQL avec JPA (ce qui constitue une option particulièrement puissante). Une autre solution consiste à explorer Google BigQuery s'il s'agit du type de stockage de données dont vous avez besoin. Google&nbsp;Cloud&nbsp;Storage constitue également un excellent moyen pour stocker un large éventail de types de données.</p>
+<h2><a name="h.4blcldx52y6m" id="h.4blcldx52y6m"></a>Google&nbsp;Cloud&nbsp;Messaging</h2>
+<p>L'utilisation de Google&nbsp;Cloud&nbsp;Messaging s'avère particulièrement simple pour des applications de base. Les problèmes connus sont documentés <a href="https://code.google.com/p/gcm/issues/list">ici</a>.</p>
+<h2><a name="h.ergctzatsr0" id="h.ergctzatsr0"></a>À l'attention des développeurs qui découvrent Android</h2>
+<p>Si vous découvrez le développement sous Android, vous constaterez que Cloud&nbsp;Endpoints vous simplifie la tâche et vous permet de vous concentrer sur l'application proprement dite. Voici un rapide tour d'horizon&nbsp;:</p>
+<ul>
+<li><span class="bld">Effectuer des appels asynchrones vers votre API sur des fils non&nbsp;associés à l'interface utilisateur</span>&nbsp;: un seul fil principal s'exécute sur Android (désigné généralement sous le nom de fil d'interface utilisateur). Vous ne voulez donc pas qu'il soit immobilisé dans l'attente de réponses.
+<ul>
+<li>Les tâches asynchrones (<a href="http://developer.android.com/reference/android/os/AsyncTask.html">AsyncTasks</a>) sont vos amies&nbsp;: ces tâches, qui sont liées à une activité, peuvent être détruites lors de la suppression de l'activité. Il vous appartient donc de vous assurer que ce comportement est voulu. Recherchez, par exemple, les articles traitant de la "rotation d'écran AsyncTasks". Vous y trouverez de nombreuses informations utiles à ce sujet.</li>
+<li>Si vous avez besoin d'un objet qui doit être renvoyé par la tâche, utilisez la méthode d'annulation <a href="http://developer.android.com/reference/android/os/AsyncTask.html#onPostExecute(Result)">onPostExecute</a> de la tâche. Si vous adressez une demande d'objet "Lobster" à votre API à l'aide d'une tâche asynchrone (AsyncTask), puis essayez immédiatement de l'utiliser dans la ligne de code suivante (par exemple&nbsp;: <span class="code">Lobster lobster = new GetLobsterAsyncTask().execute(lobsterName); lobster.dance()</span>;), une exception sera émise. Loin d'avoir l'effet escompté, cette opération vous renverra aussitôt une exception <span class="code">NullPointerException</span>.</li>
+<li>Si vous voulez que l'interface utilisateur attende le renvoi de la tâche, utilisez un <a href="http://developer.android.com/reference/android/app/ProgressDialog.html">ProgressDialog</a> dans les méthodes <a href="http://developer.android.com/reference/android/os/AsyncTask.html#onPreExecute()">onPreExecute</a> et onPostExecute.</li>
+</ul>
+</li>
+<li><span class="bld">Effectuer le suivi des cycles de vie "Activité" et "Fragment"</span>&nbsp;: si cela vous pose problème au début, ignorez un certain nombre de <a href="http://developer.android.com/reference/android/app/Activity.html#ActivityLifecycle">méthodes de cycle de vie importantes</a> et placez-y des instructions "debug&nbsp;Log", simplement pour voir dans quelles conditions et à quel moment vos activités sont suspendues, reprises, supprimées, etc. Vous trouverez <a href="http://developer.android.com/reference/android/app/Activity.html#promethods">ici</a> la liste complète de ces méthodes, au cas où vous en auriez besoin.
+<ul>
+<li>Par exemple, lorsque vous démarrerez une deuxième activité avec "startActivityForResult", vous constaterez que le tout premier élément auquel le cycle de vie accède à la fin de cette deuxième activité est la méthode <span class="code">onActivityResult</span> de la première activité, même avant <span class="code">onCreate/Resume</span>.</li>
+</ul>
+</li>
+<li><span class="bld">Le démarrage d'une nouvelle activité au milieu d'une méthode ne dispense pas le reste de la ligne de logique de s'exécuter.</span> Cette remarque s'applique aux méthodes <span class="code">startActivity, startActivityForResult</span> ou à tout autre élément. Bien que cela ne soit pas visible, la méthode est exécutée jusqu'à la fin, au même titre que les autres méthodes qu'elle appelle, le cas échéant. L'activité qui contient la méthode exécutée ne disparaît pas tant que vous ne l'avez pas détruite ou ne l'avez pas exclue de la pile.</li>
+<li><span class="bld">Parfois, vous devez simplement supprimer le fichier R.java</span>. En d'autres termes, vous nettoyez et vous recréez votre projet. Il peut arriver que vous receviez des messages d'erreur vous indiquant des problèmes d'association, par exemple entre les objets "Lobster" et les objets "Tree", alors que vous ne cherchez même pas à établir cette association improbable. Cela peut provenir d'erreurs d'association dans le fichier R.java, où les liens avec les valeurs définies dans le dossier "res/" sont définis. Il vous suffit normalement de recréer le projet pour résoudre le problème.</li>
+<li><span class="bld">Les règles de mise en page d'Android ne sont pas des règles CSS</span>. Compte tenu de leurs nombreuses similitudes, elles devraient vous être très familières. Cependant, il arrive qu'il y ait de légères différences. Ainsi, les marges ne sont pas réduites dans Android. Vous êtes donc invité à vérifier les faits avant de déployer beaucoup d'efforts pour la conception de votre mise en page.</li>
+<li><span class="bld">Dalvik et Java ne sont pas identiques</span>. Cependant, Dalvik utilise bel et bien la syntaxe Java, et Android accepte un très vaste sous-ensemble de bibliothèques Java standards, telles que java.util et java.io. Vous ne pouvez pas simplement importer une bibliothèque Java tierce et vous attendre à ce qu'elle fonctionne correctement sous Android.</li>
+<li>Lorsque vous <span class="bld">créez une activité</span> avec l'assistant de création d'activités d'Eclipse, cinq fichiers sont générés/modifiés&nbsp;:
+<ul>
+<li><span class="code">AndroidManifest.xml</span> (ajoute une nouvelle entrée &lt;activité&gt;)</li>
+<li><span class="code">res/values/strings.xml</span> (ajoute une chaîne de titre pour l'activité)</li>
+<li><span class="code">res/menu/your_activity.xml</span> (crée ce fichier)</li>
+<li><span class="code">res/layout/your_activity.xml</span> (crée ce fichier)</li>
+<li><span class="code">YourActivity.java</span> (crée ce fichier avec des méthodes de démarrage, telles que "onCreate override")</li>
+</ul>
+</li>
+<li><span class="bld">Utiliser la classe Logger standard pour vous connecter à App&nbsp;Engine</span>&nbsp;: le résultat peut être visualisé dans la console App&nbsp;Engine. Android utilise son propre mécanisme de journalisation et le journal peut être visualisé dans l'une des vues Eclipse, appelée "LogCat".</li>
+<li><span class="bld">Si des erreurs EOFException sont parfois émises</span>, cela est probablement dû à des connexions keepAlive sur Android. Plusieurs solutions sont disponibles sur <a href="http://stackoverflow.com/questions/15411213/android-httpsurlconnection-eofexception">StackOverflow</a>.</li>
+</ul>
+<h2><a name="h.vf1kryhr5nza" id="h.vf1kryhr5nza"></a>Le mot de la fin…</h2>
+<p>Vous avez pris connaissance d'un grand nombre de cas particuliers auxquels vous pouvez être confronté. Cependant, pour apprendre quelque chose, rien ne vaut la pratique&nbsp;! Cloud&nbsp;Endpoints est extrêmement souple et intuitif. Il vous affranchit du développement des protocoles et interactions client/serveur, et vous permet de vous concentrer sur le développement de la logique de votre application. Mais son meilleur atout est sa discrétion. Une fois que vous commencerez à développer votre application, vous pourrez établir la communication entre le client et le serveur avec tant de facilité que vous en oublierez que cela n'a pas toujours été aussi simple.</p>
+<p>Bonne chance&nbsp;!</p>
+<h2><a name="h.jihi5o477liv" id="h.jihi5o477liv"></a>Annexe</h2>
+<h3><a name="h.pga0m919sg4m" id="h.pga0m919sg4m"></a>Utilisation de @ApiMethod</h3>
+<p>Il existe une excellente <a href="https://developers.google.com/appengine/docs/java/endpoints/annotations#Method-Scoped-Annotations">table</a> qui vous guide dans le processus d'annotation de vos méthodes API Java. Vous trouverez, ci-après, d'autres informations détaillées&nbsp;:</p>
+<p>Le chemin URI&nbsp;REST de votre point de terminaison utilise, de préférence, les attributs ci-dessous, dans l'ordre indiqué&nbsp;:</p>
+<ol>
+<li>Votre attribut <span class="code">path</span>
+<ul>
+<li>Dans <span class="code">path = lobsters&nbsp;: <span class="span">"lobsters"</span></span> devient votre chemin REST.</li>
+</ul>
+</li>
+<li>Deuxième partie de votre attribut <span class="code">"name"</span>
+<ul>
+<li>Dans name = <span class="code">lobsters.assignName</span>&nbsp;: <span class="span">"assignName"</span> devient votre chemin REST.</li>
+</ul>
+</li>
+<li>Nom de votre méthode
+<ul>
+<li>Dans <span class="code">public void assignName(Lobster lobster)</span>&nbsp;: <span class="span">“assignName”</span> devient votre chemin REST.</li>
+</ul>
+</li>
+</ol>
+<p>Pour ce qui concerne l'attribut <span class="code">name</span>, vous devez considérer la première partie comme votre classe de ressources et la deuxième, comme la méthode que vous souhaitez effectuer. Voici quelques exemples de l'attribut "name"&nbsp;:</p>
+<ul>
+<li><span class="code">name = lobsters.assignName</span> sur votre backend sera utilisé avec <span class="code">service.lobsters().assignName(param)</span> dans votre code client.</li>
+<li><span class="code">name = lobsters</span> sur votre backend sera utilisé avec <span class="code">service.lobsters(param)</span> dans votre code client.</li>
+</ul>
+<h4><a name="h.9cloxwwufxup" id="h.9cloxwwufxup"></a>Exemple&nbsp;1</h4>
+<p>En tenant compte de ces règles, voici la forme sous laquelle peut se présenter une méthode dans votre backend App&nbsp;Engine. Notez que la ressource "lobster" est mise au pluriel&nbsp;:</p>
+<pre>
+@ApiMethod(path = “lobsters/assign/<sup><a href="#cmnt1" name="cmnt_ref1" id="cmnt_ref1">[a]</a></sup>name}<sup><a href="#cmnt1" name="cmnt_ref1" id="cmnt_ref1">[a]</a></sup>”, name = "lobsters.assignName",
+httpMethod = HttpMethod.POST)
+public void makeLobsterANewName(String name) {...}
+</pre>
+<p>La bibliothèque cliente va ensuite générer le code suivant à utiliser sur votre client&nbsp;:</p>
+<pre>
+public Lobsters lobsters() {...}
+  public class Lobsters {
+  public AssignName assignName(String name) {...}
+  public class AssignName extends CloudmazeRequest {
+    private static final String REST_PATH = “lobsters/assign/{name}”
+    protected AssignName(String name) {...}
+  }
+}
+</pre>
+<p>Pour utiliser le point de terminaison, vous pouvez rédiger le code suivant&nbsp;:</p>
+<pre>
+String name = “Bob the Lobster”;
+service.lobsters().assignName(name).execute();
+</pre>
+<h4><a name="h.lem9o0hrhs34" id="h.lem9o0hrhs34"></a>Exemple&nbsp;2</h4>
+<p>Voici un exemple de méthode de type CRUD pour une ressource "Lobster" dans votre backend App&nbsp;Engine. Notez que la ressource "lobster" est mise au pluriel et qu'il n'existe aucun attribut HttpMethod, car la méthode "update" est définie par défaut sur <span class="code">HttpMehod.PUT</span>&nbsp;:</p>
+<pre>
+@ApiMethod(path = “lobsters”, name = "lobsters.update")
+public void updateLobster(Lobster lobster) {...}
+</pre>
+<p>La bibliothèque cliente génère ensuite le code suivant à utiliser sur votre client&nbsp;:</p>
+<pre>
+public Lobsters lobsters() {...}
+  public class Lobsters {
+  public Update update(String name) {...}
+  public class Update extends CloudmazeRequest {
+    private static final String REST_PATH = “lobsters”
+    protected Update(String name) {...}
+  }
+}
+</pre>
+<p>Pour utiliser le point de terminaison, vous pouvez rédiger le code suivant&nbsp;:</p>
+<pre>
+Lobster bobLobster = new Lobster();
+service.lobsters().update(bobLobster).execute();
+</pre>
+<h3><a name="h.6vx27edzunlr" id="h.6vx27edzunlr"></a>Valeurs HttpMethod par défaut</h3>
+<p>Cloud&nbsp;Endpoints détermine la valeur HttpMethod à utiliser lorsque le nom d'une méthode commence par certains mots clés. Ainsi, sauf indication contraire, <span class="code">setLobster</span> est défini par défaut sur <span class="code">httpMethod = HttpMethod.POST</span>.</p>
+<a href="#" name="5f528a27aac83a12ba45a0026c538f5f336a7a6c" id="5f528a27aac83a12ba45a0026c538f5f336a7a6c"></a><a href="#" name="2" id="2"></a>
+<table class="brdr-table">
+<tbody>
+<tr>
+<td align="center">
+<p class="bld">Nom de la méthode</p>
+</td>
+<td align="center">
+<p class="bld">HttpMethod</p>
+</td>
+</tr>
+<tr>
+<td align="center">
+<p class="code">get, list</p>
+</td>
+<td align="center">
+<p class="code">GET</p>
+</td>
+</tr>
+<tr>
+<td align="center">
+<p class="code">set, insert</p>
+</td>
+<td align="center">
+<p class="code">POST</p>
+</td>
+</tr>
+<tr>
+<td align="center">
+<p class="code">update</p>
+</td>
+<td align="center">
+<p class="code">PUT</p>
+</td>
+</tr>
+<tr>
+<td align="center">
+<p class="code">remove</p>
+</td>
+<td align="center">
+<p class="code">DELETE</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- /maia-main --></div>
+<div class="maia-col-3"><br>
+<img src="//www.google.com/images/icons/product/feedback-16.png" class="g-app-icon" alt=""> <a href="javascript:void(0);" class="google-feedback">Commentaires sur ce document</a><br>
+<br></div>
+</div>
+</div>
+<script>
+(function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+</script><script src="//www.gstatic.com/feedback/api.js">
+</script><script>
+$('body').delegate('.google-feedback', 'click', function() {
+      userfeedback.api.startFeedback({'productId': '94614'});
+  });
+</script><!-- Scripts to include both on Goro + Devsite --><script>
+window.___gcfg = {
+     lang: ''
+   };
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+</script><!-- GTM implementation --><!-- Start dataLayer --><script>
+dataLayer = [{
+        'country': 'fr',
+        'region': 'emea',
+        'language': 'fr'
+      }];
+</script><!-- End dataLayer --><!-- Start Google Tag Manager --><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5CVQBG" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript> <script>
+(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-5CVQBG');
+</script><!-- End Google Tag Manager --><!-- Global JS scripts to load; path will depend on whether we're on devsite or Goro --><script src="/js/base.min.js">
+</script><!-- Retina loader; Do not load if partners page because we need to wait until the Angular app runs --><script>
+new lfl.system.RetinaLoader();
+</script><!-- Secondary right-side scroll-nav --><script>
+new lfl.ui.ScrollNav({});
+</script>
+</body>
+</html>

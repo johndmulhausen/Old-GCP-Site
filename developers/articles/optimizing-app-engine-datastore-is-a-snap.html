@@ -1,0 +1,125 @@
+---
+layout: cloud/phase2
+title: Optimizing App Engine Datastore is a Snap
+---
+<div id="maia-main" class="cp-article">
+  <div class="maia-cols">
+    <div class="maia-col-9">
+
+      <div>
+        <div style="float:right"><div class="g-plusone"></div></div>
+        <h1 class="title">Optimizing App Engine Datastore is a Snap</h1>
+      </div>
+
+      
+<div class="cp-article-tutorial">
+
+  <h3><a name="h.1ynb2qwfa3u1" id="h.1ynb2qwfa3u1"></a>How Snapchat optimizes their use of the App Engine Datastore and Memcache to boost performance and reduce cost</h3>
+  <p>When you send photos with the Snapchat app, you don&rsquo;t have to worry about those pictures coming back to haunt you, since the photos disappear after a few seconds. The Snapchat application was developed quickly, and has scaled quickly. Snapchatters snap photos and send them to each other ten times faster than using text messaging, to the tune of 350 million snaps a day (which averages out to about 4000 snaps a second). And underneath it all, App Engine runs the show, from storing information about users and friends to saving, serving and deleting snaps.</p>
+  <p>Read this article to learn how Snapchat optimizes the way their App Engine application uses the Datastore to boost performance while controlling costs.</p>
+
+  <h2><a name="h.6al7vdeotoj3" id="h.6al7vdeotoj3"></a>About Snapchat</h2>
+  <p>Snapchat is fundamentally a very simple application -- you snap a photo on your phone, you send it to your friend, your friend views it for a few seconds and then the photo disappears. Your friend can&rsquo;t get it back. You can&rsquo;t get it back (unless you deliberately saved it to your phone before you sent it). The photos are stored in App Engine's datastore, but only for as long as needed. Every photo is deleted from the datastore either as soon as the recipient views it, or after 30 days if it isn't viewed.</p>
+  <p>Most startup companies would give their right arm for Snapchat&rsquo;s surge in popularity and usage (not to mention funding). In June 2013, Institutional Venture Partners (IVP) headed a $60 million investment in Snapchat. As Dennis Phelps of IVP <a href="http://www.ivp.com/news/press-release/ten-reasons-why-ivp-invested-in-snapchat">says</a>,  &ldquo;the growth and engagement metrics are off the charts. Seldom have we seen a consumer application with this type of user momentum and excitement. Think Twitter... Think Instagram&hellip; Think Pinterest&hellip; and Snapchat is just getting started.&rdquo;</p>
+  <p>Snapchat got started by using Google App Engine, which allows developers to create scalable web applications and run them on Google's infrastructure.  App Engine offers a low-cost path to developing your application and making it available to users.  App Engine applications run on Google&rsquo;s datacenters -- there is no need to buy, setup, and maintain your own servers. App Engine enabled Snapchat to scale to huge numbers of users with minimal development expense.</p>
+  <p>Bobby Murphy, Snapchat CTO and co-founder, who developed the initial Snapchat application, said "I didn&rsquo;t know it would scale as well as it did."</p>
+  <p>Murphy was new to App Engine when he started developing the Java snapchat app back in the first half of 2011.  A few months later, in Sep 2011, the snapchat app launched in the iTunes AppStore as an iOS application with an App Engine backend. At the time, snapchat was only available as an iOS application.</p>
+  <p>About nine months later,  more than 110 million images had been sent via Snapchat. Another few months on, soon after the launch of the Android version, more than 1 billion snaps had been sent. There were occasional hiccups where the service was overwhelmed and snaps weren&rsquo;t sent snappily enough (like on Thanksgiving), but most of the time, the App Engine backend stored, fetched, served, and deleted snaps fast enough to keep everyone happy.</p>
+
+  <h2><a name="h.27d7nkibkr48" id="h.27d7nkibkr48"></a>Scaling up has its own problems</h2>
+  <p>But as Snapchat scaled up, usage costs scaled up too. When you use App Engine, there&rsquo;s nothing to pay upfront, so you can dive in and get started developing and running your application at hardly any cost, but as your application&rsquo;s resource usage increases, so do the costs, because you pay for what you use.</p>
+  <p>Murphy said that as Snapchat&rsquo;s usage grew, the company needed to look into ways to minimize the costs. Fortunately, &ldquo;Optimizing for cost meant optimizing for performance. If you&rsquo;re reducing costs, you&rsquo;re generally improving performance, and vice versa.&rdquo;</p>
+  <p>When asked how Snapchat went about managing App Engine costs, Murphy said, &ldquo;Its all about understanding what the datastore charges for.&rdquo;</p>
+
+  <h2><a name="h.uskso6xv4wta" id="h.uskso6xv4wta"></a>Understanding Datastore Charges</h2>
+  <p>App Engine uses a key-value datastore to persist data as entities. You define a key for the data, and put the data in the datastore as an entity with properties (for example, User entity Bobby might have properties &ldquo;friends&rdquo; and &ldquo;userid&rdquo;). When you need to retrieve the data entity, you either get it by the key, or you run queries (for example, find all User entities where the the friends property includes Bobby).</p>
+  <p> To optimize query performance, App Engine uses pre-configured indexes for all queries. One thing Google is very, very good at it is indexing and retrieving information, and App Engine applications capitalize on the expertise and infrastructure that gave us the Google search engine.</p>
+  <p>Part of the secret sauce that goes into Google&rsquo;s ability to speedily return search results, and App Engine query results, is that potential queries are pre-indexed. When an application saves an entity, App Engine gets ready for every possible query by not only writing the data to the datastore, but also creating two index entries for every indexed property in the entity, one by ascending value and the other by descending value. If the application will be running complex queries on the entity, an additional, composite index entry is required.</p>
+  <p>In summary, there are multiple write operations for each new Entity, as explained in <a href="https://developers.google.com/appengine/docs/python/datastore/entities?hl=en#Python_Understanding_write_costs">Understanding Write Costs</a>:</p>
+
+  <ul>
+    <li>one write operation for the entity itself</li>
+    <li>one write operation for the EntitiesByKind index</li>
+    <li>two write operations per indexed property (one  for ascending order and one for descending order)</li>
+    <li>one write operation per composite index value</li>
+  </ul>
+
+  <p>Modifying an entity in the datastore involves write operations, but less so than saving a new entity.</p>
+  <p>Each write operation incurs a charge against the application&rsquo;s quota. Free applications have a limit to the number of datastore writes per day, while paid applications incur a charge for each write that exceeds the daily free limit.  </p>
+  <p>Operations to get data from the datastore also incur charges, whether getting the entity by key or running queries to find entities that match a set of criteria (such as finding all Notifications that Bobby received since he last opened the Snapchat application). Getting an entity directly is one  read operation, while querying for entities involves one read operation, plus an additional read for each entity retrieved.</p>
+  <p>Every Snapchat photo is deleted from the datastore, either as soon as the recipient views it or after thirty days of waiting to be viewed. Updating and deleting entities incurs a charge, which depends on how many indexed properties are involved.</p>
+  <p>The cost of reading, writing and deleting entities in the datastore is only pennies per 100K operations. For applications that read and write to the datastore up to hundreds of thousands of times a day, the datastore operation costs are minimal, but when your application starts hitting the datastore millions of times a day, like Snapchat does, (remember users send on average more than 4000 snaps a second), it becomes important to manage datastore operations to manage costs.</p>
+  <p>The obvious way to reduce App Engine costs for Snapchat was to minimize the reads and writes to the Datastore. To minimize write operations, they looked into managing indexes and tightening their data model. To minimize read operations, they used Memcache.</p>
+
+  <h2><a name="h.vxc9lp9qa2re" id="h.vxc9lp9qa2re"></a>Optimizing Indexes</h2>
+  <p>Murphy says you&rsquo;re wasting money &ldquo;anytime you&rsquo;re unnecessarily indexing things.&rdquo; When creating entities, think about what properties really need to be indexed, and don&rsquo;t index any of the other properties. (The Datastore API has methods for creating unindexed properties.)</p>
+  <p>App Engine doesn't index some kinds of properties, in particular properties that would not be queried, such as long text strings or long byte strings (blobs). The photos for the snaps are not stored in indexed properties, so where else could Snapchat cut down on index costs? Sometimes simple changes make a huge difference, as we shall explain.</p>
+
+  <div class="maia-cols">
+    <div class="maia-col-4">
+      <img src="/images/articles/optimizing-app-engine-datastore-is-a-snap/snap-chat.png">
+    </div>
+    <div class="maia-col-8">
+      <p>A &ldquo;snap&rdquo; is a photo that is sent from the sender to the recipient. When a user has Snapchat open, the application shows all snaps that the user sent recently, as well as snaps that are waiting to be viewed by them.</p>
+      <p>Snaps are stored as entities in the datastore. Previously, the Snapchat app used composite indexes to support queries for the snaps sent both by a person, and to a person, ordered by time.</p>
+      <p>Every time a user sent a snap to a friend, the datastore performed multiple writes to save the entity, as well as to add entries to the two composite indexes. The query to retrieve snaps sent by a sender required a composite index filtered by sender and sorted chronologically by timestamp. Similarly, a query for the  list of snaps sent to a person required a composite index filtered by recipient and sorted chronologically by timestamp.</p>
+    </div>
+  </div>
+
+  <p>The indexes are illustrated here (this is an abstraction only, not exact code):</p>
+
+  <a href="#" name="4254cee372cd4dbb3a68fb1b134272736a1ec486"></a><a href="#" name="0"></a>
+
+<pre>
+&lt;datastore-index kind="Snap"&gt;
+  &lt;property name="Sender" direction="asc"/&gt;
+  &lt;property name="Timestamp" direction="des"/&gt;
+&lt;/datastore-index&gt;
+
+&lt;datastore-index kind="Snap"&gt;
+  &lt;property name="Recipient" direction="asc"/&gt;
+  &lt;property name="Timestamp" direction="desc"/&gt;
+&lt;/datastore-index&gt;
+</pre>
+
+  <p>To minimize index creation, Snapchat concatenated the sender and timestamp in a single field, and the recipient and timestamp in another field. This means that a query to get the snaps sent to a person is a query against a single property, and no longer requires a composite index. The same goes for queries to get the snaps send from a person.</p>
+  <p>Murphy says, that with this simple change in the way that Snapchat structured the entities representing snaps, they &ldquo;cut the number of write operations per snap from 10 to 6. We had fewer properties, and no composite indexes.&rdquo; </p>
+
+  <h2><a name="h.tv6euxa6hrqh" id="h.tv6euxa6hrqh"></a>Front Almost Everything with Memcache</h2>
+  <p>Refactoring the way entities are stored reduced the cost of writes to the datastore, but what about the costs of getting data? For that, Snapchat uses App Engine&rsquo;s memcache, a fast distributed cache for App Engine applications. Not only is getting data out of memcache faster than getting it out of the datastore, it&rsquo;s also cheaper.</p>
+  <p>The generally available version of memcache is free, but it comes with some limitations -- there&rsquo;s a limit to the maximum amount of data (across all applications) that can be saved in memcache, and data in memcache is subject to eviction at any time.</p>
+  <p>The Snapchat app saves everything in datastore, so they weren&rsquo;t losing data by eviction from memcache, but the unpredictability of the costs was a big concern. If the data got evicted from memcache and queries starting hitting the datastore directly, costs went up. So they enrolled as a trusted tester for <a href="https://developers.google.com/appengine/docs/adminconsole/memcache">Dedicated memcache</a>, starting out with several terabytes of dedicated memcache.</p>
+  <p>Murphy said that with the dedicated memcache, 95%of queries for snaps and friends were being served from memcache instead of datastore. For lists (such as lists of snaps), they store a list of keys, and then do batch gets into memcache to get the entities.</p>
+  <p>&ldquo;Most entities that we store we keep in memcache,&rdquo; said Murphy. &ldquo;Memcache is a huge help. There&rsquo;s a world of difference between the queries that solely hit memcache and that hit the datastore.&rdquo;</p>
+
+  <h2><a name="h.m4eb70wcmcax" id="h.m4eb70wcmcax"></a>Wrap-up</h2>
+  <p>When asked what he would do differently if he could start over, Murphy said, &ldquo;I wouldn&rsquo;t do anything differently. It&rsquo;s always a challenge growing things quickly. App Engine enabled us to focus on developing the application. We wouldn&rsquo;t have got here without the ease of development that App Engine gave us.&rdquo;</p>
+
+  <h2>Read More</h2>
+  <h4>About Snapchat</h4>
+
+  <ul>
+    <li><a href="http://www.snapchat.com">www.snapchat.com</a></li>
+    <li><a href="http://blog.snapchat.com/">Snapchat&rsquo;s blog</a></li>
+    <li><a href="http://infospace.ischool.syr.edu/2012/11/29/what-is-snapchat/">What is Snapchat?</a></li>
+    <li><a href="http://www.ivp.com/news/press-release/ten-reasons-why-ivp-invested-in-snapchat">Ten reasons why IVP invested in Snapchat</a></li>
+  </ul>
+
+  <h4>Datastore and Memcache Developer Documentation</h4>
+
+  <ul>
+    <li>App Engine Datastore Developer Docs (<a href="https://developers.google.com/appengine/docs/java/datastore/">Java</a>)  (<a href="https://developers.google.com/appengine/docs/python/datastore/">Python</a>)  (<a href="https://developers.google.com/appengine/docs/go/datastore/">Go</a>)</li>
+    <li>App Engine Memcache Developer Docs (<a href="https://developers.google.com/appengine/docs/java/memcache/">Java</a>) (<a href="https://developers.google.com/appengine/docs/python/memcache/">Python</a>) (<a href="https://developers.google.com/appengine/docs/go/memcache/">Go</a>)</li>
+    <li><a href="https://developers.google.com/appengine/docs/python/datastore/entities?hl=en#Python_Understanding_write_costs">Understanding Datastore Write Costs</a></li>
+    <li><a href="https://developers.google.com/appengine/docs/billing#cost_resource%20">Datastore Costs</a> and <a href="https://developers.google.com/appengine/docs/quotas#Datastore">Quotas</a> </li>
+    <li><a href="https://developers.google.com/appengine/docs/adminconsole/memcache">About App Engine Memcache</a></li>
+    <li><a href="https://developers.google.com/appengine/articles/indexselection">Datastore Index Selection and Advanced Search</a></li>
+    <li><a href="https://developers.google.com/datastore/">Cloud Datastore</a> (Datastore outside App Engine)</li>
+  </ul>
+
+</div>
+<!-- /maia-main -->
+
+    </div>
+  </div>
+</div>

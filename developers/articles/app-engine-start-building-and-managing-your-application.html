@@ -1,0 +1,435 @@
+---
+layout: cloud/phase2
+title: Exercise 1. Start Building and Managing your Application
+---
+<div id="maia-main" class="cp-article">
+  <div class="maia-cols">
+    <div class="maia-col-9">
+
+      <div>
+        <div style="float:right"><div class="g-plusone"></div></div>
+        <h1 class="title">Exercise 1. Start Building and Managing your Application</h1>
+      </div>
+
+      
+<div class="cp-article-tutorial">
+
+  <p>In the previous exercise, you deployed and tested the completed Conference Central application, to get an idea of what it does. It is now your turn to build the Conference Central application, almost (but not quite) from scratch.</p>
+  <p>To save you from spending too much time creating skeletal HTML pages, we have created a &ldquo;stub&rdquo; version of the application to get you started.</p>
+  <p>In this exercise, you will download a zip containing the skeletal application, explore the layout of the application, then deploy the application and investigate it in the Admin Console.</p>
+
+  <h4>Contents </h4>
+  <ul>
+    <li><a href="#h.qf8ny24ukrk9">What You Will Learn</a></li>
+    <li><a href="#h.67bvs6r0ddmb">What You Will Do</a></li>
+    <li><a href="#h.5yz0s0t2lmd7">Get Ready</a></li>
+    <li><a href="#h.uqaerl3hr1ju">Understanding the Organization of the Application</a></li>
+    <li><a href="#h.on8xjt2nr0ks">Set the Application ID</a></li>
+    <li><a href="#h.yj8715knct1q">Configure Your Application</a></li>
+    <li><a href="#h.5hza0yf6c2a1">Deploy and Run the Application</a></li>
+    <li><a href="#h.aqnxab4u87tx">Use the Admin Console to Monitor your Application</a></li>
+    <li><a href="#h.t3me1ftomjnx">Conclusion</a></li>
+    <li><a href="#h.csaafnrr58mt">Resources</a></li>
+  </ul>
+
+  <h2><a name="h.qf8ny24ukrk9" id="h.qf8ny24ukrk9"></a>What You Will Learn</h2>
+  <p>You will learn how to configure an application, how to deploy an application to the local development server and also to production, and how to find your way around the  Admin Console.</p>
+
+  <h2><a name="h.67bvs6r0ddmb" id="h.67bvs6r0ddmb"></a>What You Will Do</h2>
+  <p>In this exercise, you will:</p>
+
+  <ol>
+    <li>Download a skeleton application.</li>
+    <li>Tour the pages to learn the organization of the application.</li>
+    <li>Configure the application.</li>
+    <li>Deploy and run the application (even though it does not do much yet).</li>
+  </ol>
+
+  <h2><a name="h.5yz0s0t2lmd7" id="h.5yz0s0t2lmd7"></a>Get Ready</h2>
+  <p><span class="bld">1.</span> Download a zip containing the skeletal application.</p>
+
+  <ul>
+    <li>
+      Download and install the zip containing the initial version of ConferenceApp_1.
+      <ul>
+        <li>Java: <a href="https://drive.google.com/a/google.com/#folders/0B98Xxyb9nWqhMXlsSW1EcFZDcEU">ConferenceApp_1_Java_stub</a></li>
+        <li>Python zip: <a href="https://drive.google.com/a/google.com/#folders/0B4f5jMEb_K3TUEZZWFFHTXdiejg">ConferenceApp_1_Python_stub</a></li>
+      </ul>
+      <p>For instructions, see <a href="https://docs.google.com/a/google.com/document/d/13HwK6Pb1hrWIBcdV63XISlIngNLKRf9ErcjOaZqbPvM/edit#heading=h.mifrmk53ez1w">Downloading</a><a href="https://docs.google.com/a/google.com/document/d/13HwK6Pb1hrWIBcdV63XISlIngNLKRf9ErcjOaZqbPvM/edit#heading=h.mifrmk53ez1w"> and Installing a Zip File for an Application</a> in <a href="https://docs.google.com/a/google.com/document/d/13HwK6Pb1hrWIBcdV63XISlIngNLKRf9ErcjOaZqbPvM/edit">Tasks for Working with App Engine Applications</a>.</p>
+      <p><span class="bld">Java note:</span> If you have updated the Java App Engine SDK, see xx for information about how to update the project in Eclipse to use <a href="https://docs.google.com/a/google.com/document/d/13HwK6Pb1hrWIBcdV63XISlIngNLKRf9ErcjOaZqbPvM/edit#heading=h.o4swxbrls6in">Updating Projects to Use the Latest App Engine SDK</a> in in <a href="https://docs.google.com/a/google.com/document/d/13HwK6Pb1hrWIBcdV63XISlIngNLKRf9ErcjOaZqbPvM/edit">Tasks for Working with App Engine Applications</a>.</p>
+    </li>
+  </ul>
+
+
+  <p><span class="bld">2.</span> Rename ConferenceApp_1_START to ConferenceApp.</p>
+
+  <h2><a name="h.uqaerl3hr1ju" id="h.uqaerl3hr1ju"></a>Understanding the Organization of the Application</h2>
+  <p>After downloading and installing the zip file containing the skeletal application, you will now explore the source code.</p>
+  <p>[ <a href="#h.ny1hfzenntp4">Go to Python steps</a> ]</p>
+  <h3><a name="h.cyxbi9xyo2rn" id="h.cyxbi9xyo2rn"></a><img src="/images/articles/app-engine-start-building-and-managing-your-application/arrow-green.png">Java -- Explore the Application</h3>
+  <p>The Java version of the application uses both <a href="http://en.wikipedia.org/wiki/Servlets">servlets</a> and <a href="http://en.wikipedia.org/wiki/JavaServer_Pages">JSPs</a>. You will use Eclipse to explore the code.</p>
+  <p>JSPs are servlets defined using static content (such as HTML) mixed with Java code. JSP lets you put Java inside HTML pages. Using JSP, a page can switch back and forth between HTML and Java. JSP is not specific to App Engine, and this tutorial does not attempt to teach it or explain its syntax. There are many books and websites that teach JSP. However, just to get you started, we provide a <a href="https://docs.google.com/a/google.com/document/d/1WRFkLpg09aXx_ftYv8UnmUOeTLPUiZiSTXSefbNU9kg/edit#">JSP Quick Reference</a> that summarizes the syntax that is used in this tutorial.</p>
+  <p>You can read more about using JSPs with App Engine in the developer documentation:</p>
+  <ul>
+    <li><a href="https://developers.google.com/appengine/docs/java/gettingstarted/usingjsps">Using JSPs</a></li>
+    <li><a href="https://developers.google.com/appengine/docs/java/config/webxml#JSPs">Configuring JSPs</a> </li>
+  </ul>
+
+  <p>1. In Eclipse, explore the contents of ConferenceApp.</p>
+  <ul>
+    <li>In the src folder you see the SaveUserProfile servlet under com.google.cloud.training.conference:<br>
+        The project also contains a folder <span class="bld">more_classes</span>  that contains additional servlet classes that you will move into the main war file as needed as you work through the exercises.</li>
+    <li>In the war folder, you see several JSPs files.</li>
+  </ul>
+
+  <p>2. Take a look at header.jsp.</p>
+  <p>This file defines the heading that appears on every page of the Conference Central application. It writes the &lt;head&gt; section, links in the stylesheet, starts the &lt;html&gt; and &lt;body&gt; sections, displays an image for the banner, and then writes the navigation links under the banner image.</p>
+  <p>You see several lines marked &ldquo;TODO.&rdquo; As you work through the exercises, you will fill in the TODO sections.</p>
+  <p>Take a look at one of the navigation links:</p>
+  <p>&lt;span class="nav-item"&gt;&lt;a href="/listconferences"&gt;Upcoming Conferences&lt;/a&gt;&lt;/span&gt;</p>
+  <p>If you were to deploy the application now and try it out, the link above would not work, because the URL /listconferences is not defined yet. You will define it soon. For now, continue inspecting the other JSP files in war.</p>
+
+  <p>3. Take a look at some of the other JSP files.</p>
+  <p>The war directory includes several other JSP files, which do the following:</p>
+
+  <ul>
+    <li>include the header</li>
+    <li>define an &lt;H1&gt; heading</li>
+    <li>include partially completed content</li>
+    <li>include the footer</li>
+  </ul>
+
+  <p>As you work through the exercises in this training, you will fill out each of these pages so that the application will be functional.</p>
+  <p>The following JSP files define content that is common across multiple JSPs files:</p>
+
+  <ul>
+    <li>footer.jsp -- the footer for every page</li>
+    <li>header.jsp -- the header for every page</li>
+    <li>constants.jsp -- contains constants, such as lists of cities</li>
+  </ul>
+
+  <p>The following JSP files correspond to the pages that are linked from the home page and the horizontal navigation bar:</p>
+
+  <ul>
+    <li>homepage.jsp -- the home page for the application. Currently it just links to other pages.</li>
+    <li>listconferences.jsp -- this page will eventually list the conferences that have been scheduled.</li>
+    <li>scheduleconferences.jsp -- this page displays a form for scheduling a new conference.</li>
+    <li>userprofile.jsp -- this page displays the user&rsquo;s profile, including the topics that they are interested in learning about.</li>
+    <li>venues.jsp -- this page will eventually display information about the venues for conferences.</li>
+    <li>developer.jsp -- a page for developers (which is only accessible if you are logged in as a developer/admin)</li>
+  </ul>
+
+  <p>The project  also contains a folder more_JSPs that contains additional JSPS that you will move into the main war file as needed as you work through the exercises.</p>
+
+  <h3><a name="h.ny1hfzenntp4" id="h.ny1hfzenntp4"></a><img src="/images/articles/app-engine-start-building-and-managing-your-application/arrow-blue.png">Python -- Explore the Application</h3>
+
+  <p>The Python version of the application uses the Jinja2 templating language. Jinja2 is modelled after Django&rsquo;s templates.  Jinja2 is not specific to App Engine, and this tutorial does not attempt to teach Jinja2 or explain its syntax. For information, see the <a href="http://jinja.pocoo.org/docs/">Jinja2 website</a>.</p>
+
+  <p><span class="bld">1.</span> In the ConferenceApp directory where you unzipped the downloaded zip file,  explore the contents of the application.</p>
+  <p>You see a python module:</p>
+
+  <ul class="c18 lst-kix_bubnrhogghbh-0">
+    <li>main.py</li>
+  </ul>
+
+  <p>and several jinja2 template files. Note that the .template extension is arbitrary. Jinja2 does not impose any naming convention. You also see app.yaml and some other folders and files.</p>
+
+  <p><span class="bld">2.</span> First take a look at base.template. This file defines the heading that appears on every page of the Conference Central application. It writes the &lt;head&gt; section, links in the stylesheet, starts the &lt;body&gt; section, displays an image for the banner, and then writes the navigation links under the banner image.</p>
+  <p>Take a look at one of the navigation links:</p>
+  <p>&lt;span class="nav-item"&gt;&lt;a href="/listconferences"&gt;Upcoming Conferences&lt;/a&gt;&lt;/span&gt;</p>
+  <p>If you were to deploy the application now and try it out, the link above would not work, because the URL /listconferences is not defined yet. You will define it soon. For now, continue inspecting the other template files in same directory.</p>
+  <p>You will notice that base.template has the following tags:</p>
+
+<pre>
+&#123;% block content %&#125;
+&#123;% endblock %&#125;
+</pre>
+
+  <hr>
+  <p></p>
+  <p>This allows all other templates to extend the base template by simply defining the named block, which you would do as follows:</p>
+
+  <hr>
+<pre>
+&#123;% extends "base.template" %&#125;
+&#123;% block content %&#125;
+. . . page content ...
+&#123;% endblock %&#125;
+</pre>
+
+  <p><span class="bld">3.</span> Take a look at app.yaml. It defines static file and directory handlers for the css and images directory, handlers for other parts of the application, and the libraries used by the application.</p>
+
+  <hr>
+<pre>
+- url: /images
+  static_dir: images
+
+- url: /css
+  static_dir: css
+
+- url: /favicon.ico
+  static_files: favicon.ico
+  upload: favicon.ico
+etc...
+</pre>
+
+  <p>As you work through the exercises in this training, you will fill out the code for each of these pages.</p>
+
+  <ul>
+    <li>developer.template -- a page for developers</li>
+    <li>home.template -- the home page for the application. Currently it just links to other pages.</li>
+    <li>list_conferences.template -- this page will eventually list the conferences that have been scheduled.</li>
+    <li>schedule_conference.template -- this page will eventually display a form for scheduling a new conference.</li>
+    <li>user_profile.template -- this page will eventually display the user&rsquo;s profile, including the topics that they are interested in learning about.</li>
+    <li>venues.template -- this page will eventually display information about the venues for conferences.</li>
+  </ul>
+
+  <h2><a name="h.on8xjt2nr0ks" id="h.on8xjt2nr0ks"></a>Set the Application ID</h2>
+  <p>Every application must have an &ldquo;application ID,&rdquo; which corresponds to one of the IDs that you have created on <a href="https://appengine.google.com/">https://appengine.google.com/</a>. Every developer can have up to ten application IDs when operating in the free tier. During development and testing, it&rsquo;s a good idea to recycle application IDs whenever possible so that you don&rsquo;t use up all your free application IDs.</p>
+
+  <p><span class="bld">1.</span> Get an Application ID to use for the Conference Central application.</p>
+
+  <p class="bld indnt">Note: Use a different application ID than you used for the previous exercise.</p>
+  <p class="bld indnt">Since the application you deployed in the previous exercise was in a finished state, it is important to use a different application ID as you build the conference yourself, to avoid having the application be in an inconsistent state.</p>
+
+  <p>Go to <a href="https://appengine.google.com/">https://appengine.google.com/</a> and review your existing application IDs. Either pick an existing one or create a new one to use for the Conference Central application.</p>
+  <p><span class="bld">2.</span> Update your application to use your Application ID.</p>
+  <p>Java:</p>
+
+  <ol>
+    <li>In the war &gt; WEB-INF folder, edit appengine-web.xml.</li>
+    <li>Update the value of the &lt;application&gt; tag to be your own application ID:<br><span class="code">&lt;application&gt;yourappid&lt;/application&gt;</span></li>
+  </ol>
+
+  <p>Python:</p>
+  <ol>
+    <li>Edit app.yaml.</li>
+    <li>Change the value of the application element to be your own application ID:<br><span class="code">application: yourappid</span></li>
+  </ol>
+
+  <h2><a name="h.yj8715knct1q" id="h.yj8715knct1q"></a>Configure Your Application</h2>
+  <p>Before deploying the application, you need to configure it in web.xml (Java) or app.yaml (<a href="#h.4wsj7fmw1dum">Python</a>).</p>
+  <p>[ <a href="#h.4wsj7fmw1dum">Go to Python steps</a> ]</p>
+
+  <h3><a name="h.yi0inxlapum4" id="h.yi0inxlapum4"></a><img src="/images/articles/app-engine-start-building-and-managing-your-application/arrow-green.png">Java: Configure the Servlets and JSPs</h3>
+  <p>You can configure servlets and JSPs in web.xml, to specify which class or file implements each servlet or JSP and to map them to a URL. You can also configure them to control who can access them, but you will do that in the next exercise.</p>
+  <p><span class="bld indnt">Note:</span> You will not be able to run your application on localhost or deploy it to App Engine until you have fixed the web.xml configuration file.</p>
+  <p><span class="bld">1.</span> Edit war &gt; WEB-INF &gt; web.xml.<br>
+      You see a placeholder configuration for a servlet, and another one for a JSP.</p>
+
+<pre>
+&lt;servlet&gt;
+  &lt;servlet-name&gt;ServletName&lt;/servlet-name&gt;
+  &lt;servlet-class&gt;com.google.cloud.training.conference.ServletClass&lt;/servlet-class&gt;
+&lt;/servlet&gt;
+&lt;servlet-mapping&gt;
+  &lt;servlet-name&gt;ServletName&lt;/servlet-name&gt;
+  &lt;url-pattern&gt;/servlet_url&lt;/url-pattern&gt;
+&lt;/servlet-mapping&gt;
+
+&lt;servlet&gt;
+  &lt;servlet-name&gt;JSPName&lt;/servlet-name&gt;
+  &lt;jsp-file&gt;jsp_path&lt;/jsp-file&gt;
+&lt;/servlet&gt;
+
+&lt;servlet-mapping&gt;
+  &lt;servlet-name&gt;JSPName&lt;/servlet-name&gt;
+  &lt;url-pattern&gt;/jsp_url&lt;/url-pattern&gt;
+&lt;/servlet-mapping&gt;
+</pre>
+
+
+  <p><span class="bld">2.</span> Edit the existing servlet configuration in  web.xml to contain the settings for the SaveUserProfile.java servlet by entering the configuration code shown below.  This causes the servlet to be invoked by the /saveprofile URL.<br></p>
+
+<pre>
+&lt;servlet&gt;
+  &lt;servlet-name&gt;SaveUserProfile&lt;/servlet-name
+&lt;servlet-class&gt;com.google.cloud.training.conference.SaveUserProfile&lt;/servlet-class&gt;</p>
+&lt;/servlet&gt;
+&lt;servlet-mapping&gt;</p>
+  &lt;servlet-name&gt;SaveUserProfile&lt;/servlet-name&gt;
+  &lt;url-pattern&gt;/saveprofile&lt;/url-pattern&gt;
+&lt;/servlet-mapping&gt;
+</pre>
+
+  <p class="indnt"><span class="bld">Note:</span> be sure to update the existing placeholder servlet mappings for ServletName and JSPName. If you leave them in place the application will not be able to deploy.</p>
+
+  <p><span class="bld">3.</span> Add a configuration for homepage.jsp as follows:</p>
+<pre>
+&lt;servlet&gt;
+  &lt;servlet-name&gt;HomePage&lt;/servlet-name&gt;
+  &lt;jsp-file&gt;/homepage.jsp&lt;/jsp-file&gt;
+&lt;/servlet&gt;
+&lt;servlet-mapping&gt;
+  &lt;servlet-name&gt;HomePage&lt;/servlet-name&gt;
+  &lt;url-pattern&gt;/homepage&lt;/url-pattern&gt;
+&lt;/servlet-mapping&gt;
+</pre>
+
+  <p>4. Add &lt;servlet&gt; and &lt;servlet-mapping&gt; tags for the other JSPs that need to be accessible through a URL. You can copy and paste the configuration code for homepage.jsp and replace values as appropriate. Select an appropriate servlet name for each JSP configuration, and map the servlet to the url_pattern as follows:</p>
+  <ul>
+    <li>developer.jsp is accessed at /developer</li>
+    <li>listconferences.jsp is accessed at /listconferences</li>
+    <li>scheduleconference.jsp is accessed at /scheduleconference</li>
+    <li>venues.jsp is accessed at /venues</li>
+    <li>userprofile.jsp is accessed at /userprofile</li>
+  </ul>
+
+  <p>5. Update the &lt;welcome-file&gt; tag to be homepage.jsp:</p>
+
+<pre>
+&lt;welcome-file-list&gt;
+  &lt;welcome-file&gt;homepage.jsp&lt;/welcome-file&gt;
+&lt;/welcome-file-list&gt;
+</pre>
+
+  <h3><a name="h.4wsj7fmw1dum" id="h.4wsj7fmw1dum"></a><img src="/images/articles/app-engine-start-building-and-managing-your-application/arrow-blue.png">Python: Configure the handlers for the pages</h3>
+  <p><span class="bld">1.</span> Edit main.py</p>
+  <p><span class="bld">2.</span> Configure the pages in the application.</p>
+  <p>The code snippet below, app = webapp2.WSGIApplication(...), shows how App Engine associates a web page&rsquo;s URI  with the Python class, (the handler), that will process the page.</p>
+
+<pre>
+app = webapp2.WSGIApplication([
+  ('/developer', DeveloperPage),
+  ('/', HomePage),
+    ],
+    debug=True
+)
+</pre>
+
+  <p>The chart below shows the uri page handler associations in the</p>
+  <p> app = webapp2.WSGIAplication(...) statement :  </p>
+  <a href="#" name="ec469deb82119941320284e68985a86c8532843a" id="ec469deb82119941320284e68985a86c8532843a"></a><a href="#" name="0"></a>
+
+  <table class="brdr-table">
+        <thead>
+          <tr>
+              <th width="50%">
+                  <p>URI</p>
+              </th>
+              <th width="50%">
+                  <p>Handler (Python class)</p>
+              </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+              <td>
+                  <p>/userprofile</p>
+              </td>
+              <td>
+                  <p>UserProfilePage</p>
+              </td>
+          </tr>
+          <tr>
+              <td>
+                  <p>/scheduleconference</p>
+              </td>
+              <td>
+                  <p>ScheduleConferencePage</p>
+              </td>
+          </tr>
+          <tr>
+              <td>
+                  <p>/listconferences</p>
+              </td>
+              <td>
+                  <p>ListConferencesPage</p>
+              </td>
+          </tr>
+          <tr>
+              <td>
+                  <p>/venues</p>
+              </td>
+              <td>
+                  <p>VenuesPage</p>
+              </td>
+          </tr>
+      </tbody>
+  </table>
+
+  <p>The templates from which the web pages are generated have already been created for you.</p>
+
+  <h2><a name="h.5hza0yf6c2a1" id="h.5hza0yf6c2a1"></a>Run the Application</h2>
+  <p>The next step is to run the application on localhost.</p>
+
+  <p><span class="bld">1.</span> Run the application on the development server on your localhost machine</p>
+  <p>For detailed instructions, see <a href="https://docs.google.com/a/google.com/document/d/13HwK6Pb1hrWIBcdV63XISlIngNLKRf9ErcjOaZqbPvM/edit#heading=h.jt1dqmgl2uq9">Deploying an App Engine Application</a>.</p>
+
+  <p><span class="bld">2.</span> Test the navigation links.</p>
+  <p>Click on each of the navigation links in the header, and also test the links in the home page. At this stage, each of the pages should display but the content is limited. Any forms you see are not active yet.</p>
+
+  <p><span class="bld">3.</span> Deploy the application to App Engine.</p>
+  <p>For detailed instructions, see <a href="https://docs.google.com/a/google.com/document/d/13HwK6Pb1hrWIBcdV63XISlIngNLKRf9ErcjOaZqbPvM/edit#heading=h.jt1dqmgl2uq9">Deploying an App Engine Application</a>.</p>
+
+  <p><span class="bld">4.</span> Again, click through each of the navigation links to check that mapping has been configured properly.</p>
+
+  <p><span class="bld">5.</span> In the Admin Console, view the versions page. You should see one version.</p>
+  <p><span class="bld">Note:</span> In later exercises, as you deploy new versions, remember to check the versions page and makes sure the default version is selected.</p>
+
+  <h2><a name="h.aqnxab4u87tx" id="h.aqnxab4u87tx"></a>Use the Admin Console to Monitor your Application</h2>
+  <p>Now that you have deployed your application in production, this is a good opportunity to start learning your way around the Admin Console.</p>
+
+  <h3><a name="h.eh5fy96mnagn" id="h.eh5fy96mnagn"></a><img height="12" src="/images/articles/app-engine-start-building-and-managing-your-application/arrow-grey.png" width="40">View Charts</h3>
+
+  <ol>
+      <li>Open the Admin Console for your application by going to <a href="https://appengine.google.com/">https://appengine.google.com/</a> and selecting your application.<br>
+          The Admin Console opens at the Dashboard page.</li>
+      <li>
+        In the Dashboard page, view the &ldquo;Requests per second&rdquo; graph.
+        <ol type="a">
+          <li>Set the time period to 30 minutes.</li>
+          <li>You might need to run the application and view a few pages to generate some requests.</li>
+        </ol>
+      </li>
+      <li>Click through each of the different types of charts.</li>
+      <li>Refresh the page, then scroll down to the section &ldquo;Current Load.&rdquo; You can see the statistics for each of the pages.</li>
+  </ol>
+
+  <h3><a name="h.807w1lo9bziy" id="h.807w1lo9bziy"></a><img src="/images/articles/app-engine-start-building-and-managing-your-application/arrow-grey.png">View Logs</h3>
+  <ol class="c18 lst-kix_ee6i3izacuex-0 start" start="1">
+      <li>In the Admin Console, In the Main section, go to the Logs pages, and review the logs.<br>
+          Every request to the application is recorded in the logs.</li>
+      <li>In the deployed Conference Central application, go to any of the pages.</li>
+      <li>Back in the logs, confirm your request was recorded.</li>
+  </ol>
+  <h3><a name="h.tovtggl67hdz" id="h.tovtggl67hdz"></a><img src="/images/articles/app-engine-start-building-and-managing-your-application/arrow-grey.png">View quotas and billing settings</h3>
+  <ol>
+      <li>In the Admin Console, in the Main section in the left hand navigation panel, select <span class="bld">Quota Details</span>. Scroll down the page to see all the things that have a daily quota.</li>
+      <li>In the <span class="bld">Billing</span> (or <span class="bld">Resources</span>) section in the left hand navigation panel, select Billing Settings (or Billing Status).</li>
+      <li>Select the link to set up billing, then click <span class="bld">Enable Billing</span>. Review the data you can set when enabling billing.</li>
+      <li>Change the daily budget, and notice that the weekly charges update.</li>
+      <li>There is no need to enable billing.</li>
+  </ol>
+
+  <h3><a name="h.2q8ulehm673z" id="h.2q8ulehm673z"></a><img src="/images/articles/app-engine-start-building-and-managing-your-application/arrow-grey.png">View application settings</h3>
+  <ol>
+      <li>In the Admin Console, in the Administration section in the left hand navigation panel, select Application Settings.</li>
+      <li>Scroll down the page to see the settings that you can change. Notice that you can delete or duplicate your application on this page.</li>
+      <li>Change your application&rsquo;s title and save the changes.</li>
+      <li>Optionally, if you preferred your previous title, change the application title back to what it was.</li>
+      <li> In the Administration section in the left hand navigation panel, select Permissions.</li>
+      <li>Optionally, invite another developer to collaborate on the application with you. Notice the different roles that a developer can have. (In the next exercise, you will limit access to the developers page of your application to developers who have a role in developing your application).</li>
+      <li>In the Administration section in the left hand navigation panel, select Admin Logs to see a history of things that administrators have done with the application.</li>
+      <li>Select the Events dropdown menu to see the different kinds of events that can be listed.</li>
+  </ol>
+
+  <h2><a name="h.t3me1ftomjnx" id="h.t3me1ftomjnx"></a>Conclusion</h2>
+  <p>In this exercise, you got started building the Conference Central application, and you practiced deploying it and using the Admin Console to view settings and usage.</p>
+  <p>In the next exercise, you will set up access control for some of the pages to restrict access to logged in users for some of the pages.</p>
+
+  <h2><a name="h.csaafnrr58mt" id="h.csaafnrr58mt"></a>Resources</h2>
+  <ul>
+      <li><a href="http://appengine.google.com/">App Engine Administration Console</a></li>
+      <li><a href="https://developers.google.com/appengine/">App Engine developer documentation</a></li>
+      <li><a href="https://developers.google.com/appengine/kb/">App Engine FAQ</a></li>
+      <li><a href="https://developers.google.com/appengine/docs/adminconsole/">App Engine Admin Console documentation<br></a></li>
+      <li><a href="https://developers.google.com/appengine/downloads">App Engine SDK Downloads<br></a></li>
+      <li><a href="https://docs.google.com/a/google.com/document/d/1WRFkLpg09aXx_ftYv8UnmUOeTLPUiZiSTXSefbNU9kg/edit#">JSP Quick Reference companion document</a></li>
+  </ul>
+
+</div>
+<!-- /maia-main -->
+</div>
+</div>
+</div>

@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html devsite="">
+<head>
+<title>Web Apps Articles &amp; Tutorials — Google Cloud Platform</title>
+<meta name="description" content="Read technical articles about web applications and solutions with Google Cloud Platform, including auto scaling and how to manage complex applications in the cloud.">
+<meta name="hide_page_heading" value="true">
+<meta name="full_width" value="true">
+<meta name="top_category" value="developers">
+<meta name="subcategory" value="articles">
+<meta name="viewport" content="initial-scale=1, minimum-scale=1, width=device-width">
+<link rel="apple-touch-icon" href="/_static/images/apple-touch-icon.png">
+<link href="//fonts.googleapis.com/css?family=Open+Sans:400italic,300,400,600,700" rel="stylesheet">
+<link href="/css/default.css" rel="stylesheet"><!--[if lt IE 9]>
+    <link rel="stylesheet" media="screen" href='/c/cp-ie.css'>
+    <![endif]-->
+<script src="/js/floodlight.js">
+</script>
+</head>
+<body>
+<div id="maia-main" class="cp-article">
+<div class="maia-cols">
+<div class="maia-col-9">
+<div>
+<div style="float:right">
+<div class="g-plusone"></div>
+</div>
+<h1 class="title">Administración de aplicaciones complejas en la nube</h1>
+</div>
+<div class="cp-article-tutorial">
+<h2>Desarrollo de aplicaciones para el mundo real en Google Cloud Platform</h2>
+<p>La mayoría de las aplicaciones para empresas de hoy en día, y cada vez más, necesitan un nivel de complejidad al que es difícil que un solo servicio de alojamiento dé respuesta. Una aplicación puede incluir varios servicios lógicos, diferentes lenguajes de programación, diferentes tipos de necesidades de almacenamiento de datos y una serie de requisitos de tiempo de ejecución. Además, los equipos suelen estar formados por desarrolladores con áreas de especialización y con niveles de experiencia muy diferentes. Los requisitos cambian a un ritmo que a menudo conduce a un nivel de complejidad cuya administración supone un reto hasta para los equipos más grandes.</p>
+<h2>Presentación</h2>
+<p>Google Cloud Platform ha evolucionado para proporcionar un completo conjunto de herramientas para administrar hasta los requisitos más complejos de las aplicaciones. Tanto si se utiliza en una aplicación completamente administrada como si se aplica a máquinas virtuales personalizadas, ofrece a los desarrolladores la flexibilidad necesaria para equilibrar la carga administrativa con las exigencias técnicas. En Google Cloud Platform, las aplicaciones se pueden desarrollar fácilmente como componentes independientes con requisitos técnicos y empresariales muy diferentes. Estos componentes pueden tener su propia configuración de rendimiento, su propio presupuesto, su propia autorización y su propio control de versiones, a la vez que comparten un conjunto común de recursos. Los recursos compartidos permiten obtener una integración más estrecha que las aplicaciones individuales que se comunican a través de API tradicionales. Además, los componentes se benefician de un modelo integrado de seguridad y de la administración centralizada propia de un proyecto en la nube.<sup><a href="#ftnt1" name="ftnt_ref1" id="ftnt_ref1">[1]</a></sup> El desarrollo en Cloud Platform proporciona una serie de herramientas para administrar la creciente complejidad de las aplicaciones.</p>
+<p>Tanto si quieres crear una aplicación desde cero como si tu intención es trasladar una aplicación personalizada ya existente<sup><a href="#ftnt2" name="ftnt_ref2" id="ftnt_ref2">[2]</a></sup> a la nube, Google Cloud Platform puede proporcionarte el nivel de rendimiento y de funciones adecuado para tu negocio.</p>
+<p>En esta solución, te mostraremos las herramientas adecuadas para:</p>
+<ul>
+<li>diferentes niveles de conocimientos de los desarrolladores,</li>
+<li>diferentes requisitos de almacenamiento de datos,</li>
+<li>requisitos interactivos y de procesamiento por lotes,</li>
+<li>motores de análisis personalizados,</li>
+<li>componentes empresariales separados por lógica.</li>
+</ul>
+<h2>Ámbito y situación</h2>
+<p>Este artículo está diseñado para los arquitectos de soluciones y para los directores tecnológicos interesados en administrar la implementación y en el escalado de una aplicación de gran tamaño en Google Cloud Platform. En el ejemplo que se ofrece en el artículo se muestra cómo gestionar muchas de las complejidades a las que se hace frente durante la implementación de aplicaciones de gran tamaño. Proporcionamos una introducción a las herramientas de la plataforma y ofrecemos enlaces a datos más detallados siempre que resulta pertinente. El ejemplo que se utiliza en este artículo se ha mantenido a propósito en niveles de cierta sencillez para centrarse en resolver las complejidades habituales en vez de profundizar en funciones específicas de la aplicación.</p>
+<p>Para ilustrar cómo Google Cloud Platform te permite administrar aplicaciones complejas en la nube, describiremos paso a paso una situación del mundo real en la que se crea una comunidad para compartir vídeos. En esta situación, los usuarios podrán subir vídeos desde un teléfono móvil. El contenido se transcodificará para reproducirlo en varios formatos y, finalmente, se presentará en un sitio de la comunidad web para verlo y comentarlo. La aplicación de demostración para la situación incluye los siguientes componentes:</p>
+<ul>
+<li>aplicación de Android para subir vídeos y backend móvil,</li>
+<li>canalización de transcodificación de vídeo,</li>
+<li>sitio web de la comunidad para ver vídeos y añadir comentarlos,</li>
+<li>análisis de comentarios a través de Hadoop.</li>
+</ul>
+<p>Se tratarán los siguientes retos técnicos:</p>
+<ul>
+<li>varios lenguajes de backend,</li>
+<li>varios equipos o desarrolladores independientes,</li>
+<li>mezcla de aplicaciones administradas y binarios personalizados,</li>
+<li>varios requisitos de almacenamiento de datos,</li>
+<li>escalado dinámico para el procesamiento por lotes.</li>
+</ul>
+<p>También puedes ver una <a href="http://www.youtube.com/watch?v=kT019zkUMF0">demostración en directo</a> que ofrecimos en Google I/O 2013.</p>
+<h2>Información general sobre la solución</h2>
+<p>En la solución que proponemos se utilizan los siguientes productos de Cloud Platform:</p>
+<ul>
+<li><a href="https://developers.google.com/appengine/">App Engine</a></li>
+<li><a href="https://developers.google.com/appengine/docs/python/taskqueue/">Colas de tareas de App Engine</a></li>
+<li><a href="/products/cloud-storage">Cloud Storage</a></li>
+<li><a href="https://developers.google.com/cloud-sql/">Cloud SQL</a></li>
+<li><a href="/products/compute-engine">Compute Engine</a></li>
+<li><a href="https://developers.google.com/datastore/">Cloud Datastore</a></li>
+<li><a href="https://developers.google.com/appengine/docs/java/endpoints/">Cloud Endpoints para móviles</a></li>
+<li>Módulos de App Engine</li>
+</ul>
+<p>En la solución también se utilizan siguientes herramientas de terceros y de código abierto (no avaladas por Google):</p>
+<ul>
+<li><a href="http://hadoop.apache.org/">Apache Hadoop</a></li>
+<li><a href="http://www.ffmpeg.org/">FFmpeg</a></li>
+</ul>
+<h2>Diagrama de las soluciones</h2>
+<p>El siguiente diagrama de la arquitectura ilustra los componentes de la solución:</p>
+<figure><img src="/images/articles/managing-complex-applications-in-the-cloud/sharing-community.png" alt="">
+<figcaption>Figura 1. Ejemplo de comunidad para compartir vídeos</figcaption>
+</figure>
+<h3>Ejemplo de comunidad para compartir vídeos</h3>
+<p>En el diagrama se muestran los siguientes componentes:</p>
+<table>
+<thead>
+<tr>
+<th style="width:12%">
+<p>Referencia</p>
+</th>
+<th style="width:30%">
+<p>Componente</p>
+</th>
+<th style="width:58%">
+<p>Descripción</p>
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<p>1</p>
+</td>
+<td>
+<p>Cliente de navegador</p>
+</td>
+<td>
+<p>Navegador web estándar</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>2</p>
+</td>
+<td>
+<p>Sitio para compartir vídeos en PHP</p>
+</td>
+<td>
+<p>Propiedad web para explorar vídeos, para comentarlos y para compartirlos</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>3</p>
+</td>
+<td>
+<p>Cloud SQL</p>
+</td>
+<td>
+<p>Servicio de base de datos relacional utilizado para los metadatos de usuario y de vídeo</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>4</p>
+</td>
+<td>
+<p>Aplicación para subir vídeos para móviles</p>
+</td>
+<td>
+<p>Aplicación para Android para producir y para subir vídeos</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>5</p>
+</td>
+<td>
+<p>Backend de API de vídeo para móviles en Java</p>
+</td>
+<td>
+<p>Backend para publicar vídeos desde la aplicación para Android</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>6</p>
+</td>
+<td>
+<p>Cloud Storage</p>
+</td>
+<td>
+<p>Almacenamiento de archivos distribuido para el contenido de vídeo</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>7</p>
+</td>
+<td>
+<p>Canalización de transcodificación de vídeo</p>
+</td>
+<td>
+<p>Sistema para transcodificar vídeos entrantes en diferentes formatos de reproducción</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>8</p>
+</td>
+<td>
+<p>Cola de tareas</p>
+</td>
+<td>
+<p>Servicio de colas para la ejecución de tareas por lotes</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>9</p>
+</td>
+<td>
+<p>Agrupación de Hadoop</p>
+</td>
+<td>
+<p>Agrupación de Hadoop utilizada para analizar los datos de usuario</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>10</p>
+</td>
+<td>
+<p>Cloud Datastore</p>
+</td>
+<td>
+<p>Base de datos NoSQL altamente escalable y distribuida que se utiliza en este ejemplo para almacenar los comentarios de los vídeos y las estadísticas de transcodificación de vídeo</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Administración de la implementación y escalado de los servicios web</h3>
+<p>Para realizar la implementación y las tareas de mantenimiento de una propiedad web estándar, hay gran cantidad de gastos generales asociados a la administración de la red, de los sistemas y de los servicios subyacentes. App Engine proporciona una plataforma de aplicaciones totalmente administrada para paliar estas preocupaciones. Gestiona automáticamente el escalado de recursos para aumentarlos o reducirlos según la demanda. El control de versiones es otra función de gran utilidad que permite a los desarrolladores gestionar fácilmente la retirada de versiones, dividir el tráfico de clientes entre varias versiones y llevar a cabo un lanzamiento lento de las nuevas versiones. En el caso de las cargas de trabajo web, App Engine ayuda a un desarrollador a centrarse por completo en crear las mejores aplicaciones.</p>
+<p>La parte web del sitio para compartir vídeos se ha creado en App Engine para aprovechar estas ventajas únicas. Este componente se ha escrito en uno de los lenguajes más populares de la Web, PHP. La compatibilidad con PHP en App Engine aporta todas las ventajas del escalado automático, del control de versiones y del rendimiento, todo ello combinado con el rápido desarrollo que viene posibilitado por este lenguaje creado para la Web. La mayoría de las aplicaciones en PHP ya existentes se ejecutarán con cambios mínimos en el entorno de App Engine.</p>
+<p>Puesto que muchos equipos de desarrollo web están familiarizados con MySQL, hemos optado por utilizar una tecnología de bases de datos que probablemente dominen: Google Cloud SQL. Esta tecnología proporciona compatibilidad con las funciones de MySQL y con el protocolo de SQL, de modo que la transición de las cargas de trabajo ya existentes es muy sencilla. Además, Google se encarga de gestionar en segundo plano la complejidad de la alta disponibilidad y de las copias de seguridad. En el ejemplo, Cloud SQL se utiliza para el almacenamiento principal de datos de usuario y de metadatos de vídeo.</p>
+<p>Para el almacenamiento de archivos de vídeo y de miniaturas, hemos optado por Google Cloud Storage, que admite archivos de gran tamaño y hace envíos directos a nuestros clientes de la aplicación. También proporciona una caché perimetral opcional para la distribución general de nuestro contenido de vídeo. Para las subidas, Cloud Storage ofrece URL de duración limitada que se pueden editar para permitir que el cliente suba archivos directamente. Así se reduce la necesidad de gastar valiosos recursos de aplicaciones para transmitir los archivos al almacenamiento.</p>
+<p>Para la actividad del usuario en el sitio, es decir, para los comentarios, hemos previsto un crecimiento a una escala considerablemente mayor y hemos optado por utilizar la base de datos NoSQL de App Engine, el almacén de datos de replicación con alta disponibilidad (HRD). HRD proporciona un nivel de escalabilidad que otras soluciones puramente SQL no pueden igualar y es una buena opción para el acceso a datos de gran volumen. Esta elección también nos abrió las puertas al uso de la recién publicada función Cloud Datastore, que proporciona acceso a la actividad de nuestros usuarios en Cloud Platform y en el exterior.</p>
+<figure><img src="/images/articles/managing-complex-applications-in-the-cloud/video-sharing.png" alt="">
+<figcaption>Figura 2. Sitio web para compartir vídeos</figcaption>
+</figure>
+<h3>Administración de canalizaciones de procesamiento por lotes</h3>
+<p>Hoy en día, la mayoría de los sitios web grandes necesita cierto nivel de procesamiento por lotes. Las cargas de trabajo pueden incluir el procesamiento del contenido subido, la actualización de los datos de usuario, la administración de notificaciones externas o el análisis de datos. Sea cual sea la demanda empresarial, las canalizaciones de procesamiento por lotes son, por naturaleza, difíciles de crear, de escalar y de mantener. Google Cloud Platform proporciona las herramientas y los servicios para simplificar la tarea de crear una canalización de procesamiento escalable y fiable. Tanto si se trata de un entorno de procesamiento programable como si se trata de una gama de opciones de almacenamiento, la plataforma está preparada para el procesamiento por lotes distribuido.</p>
+<p>En la situación que planteamos se utiliza una canalización de procesamiento por lotes para administrar el contenido de vídeo subido a la aplicación. La mayoría de los sitios para compartir vídeos utilizan el procesamiento por lotes para el contenido subido y para todas las tareas que implica, desde transcodificarlo hasta añadir marcas de agua o administrar los derechos digitales. La demanda de estos servicios tiende a ser muy variable en función de la subida esporádica de contenido o de un comportamiento de consumo más estable. Además, los diversos componentes de una canalización de vídeo tienden a requerir aplicaciones o código personalizados que no son adecuados para un entorno puramente PaaS (Plataforma como servicio). Ambos factores convierten Compute Engine en una excelente opción. El escalado de un centro de datos o de un alojamiento administrado estándar suele requerir la compra de capacidad por anticipado o el pago de bloques de una hora. Google Compute Engine ofrece una puesta en marcha de extrema rapidez para las instancias (en la mayoría de los casos, en segundos) y una retirada rápida, por lo que es una excelente opción para este tipo de carga de trabajo. Además, Compute Engine proporciona un rendimiento muy coherente durante el escalado.</p>
+<p>Para nuestro entorno, utilizamos una combinación de App Engine y de Compute Engine para poner en marcha un servicio de transcodificación de vídeo escalable a petición. Usamos un motor de organización escrito en Python en App Engine que nos permite controlar el comportamiento de la instancia de Compute Engine mediante la API de JSON disponible y la actividad coordinada de transcodificación mediante las colas de tareas. La configuración nos permite asignar de manera dinámica la capacidad para responder a la demanda y a la carga existente. Además, una secuencia de comandos periódica comprueba la carga en el entorno y reduce la capacidad cuando ya no es necesaria. Así se proporciona un considerable beneficio económico, gracias al reciente cambio en Compute Engine hacia la facturación por fracciones de hora. Las colas de tareas proporcionan una forma de aceptar, de almacenar en búfer y de distribuir solicitudes entre las diferentes instancias de transcodificación de vídeo.</p>
+<figure><img src="/images/articles/managing-complex-applications-in-the-cloud/transcoding-pipeline.png" alt="">
+<figcaption>Figura 3. Canalización de transcodificación de vídeo</figcaption>
+</figure>
+<h3>Administración de implementaciones rápidas para móviles</h3>
+<p>Google Cloud Platform ofrece un conjunto de herramientas para permitir el desarrollo rápido de aplicaciones para móviles. Al combinar Cloud Endpoints y App Engine, se obtiene una plataforma para mostrar la tecnología de servidor backend como una API para el consumo externo. Sin Cloud Endpoints, añadir una aplicación para móviles a un sitio web ya existente, por lo general, requiere cierto nivel de planificación para tener una API flexible y autenticación segura. Endpoints gestiona la autenticación y la generación de API de forma automática en nombre de los desarrolladores, que así quedan libres para crear las funciones de la aplicación. Además, el uso de App Engine simplifica el escalado y las tareas continuas de mantenimiento para el servidor de la API.</p>
+<p>Para añadir una aplicación para móviles en nuestro sitio para compartir vídeos, el servidor de la API se ha creado en App Engine. También hemos utilizado Google Cloud Endpoints para facilitar la autenticación y el desarrollo rápido de la API. Además, hemos decidido implementar el backend en Java para ilustrar la flexibilidad de opciones de lenguaje entre los diferentes componentes empresariales. Nuestro backend móvil facilita la subida de contenido de vídeo desde la aplicación para móviles a Cloud Storage, la creación de metadatos en Cloud SQL y la integración en el servicio de transcodificación a través de colas de tareas.</p>
+<p>La aplicación de vídeo para móviles se ha escrito en Android con las bibliotecas de Cloud Endpoints generadas para integrar rápidamente la autenticación y la subida de vídeos. Además, los vídeos se suben directamente a Cloud Storage para evitar toda latencia o todo procesamiento adicional en el servidor de la API de App Engine. La autenticación se gestiona a la perfección a través de Cloud Endpoints y el permiso se delega al segmento de Cloud Storage para almacenar el contenido de vídeo. La delegación de permisos es una opción del segmento que permite a los usuarios de la aplicación subir directamente los archivos. Al combinar la autenticación simplificada y la generación de API, se ha podido desarrollar rápidamente una solución completa de recursos multimedia para móviles.</p>
+<figure><img src="/images/articles/managing-complex-applications-in-the-cloud/mobile-deployment-architecture.png" alt="">
+<figcaption>Figura 4. Arquitectura de implementación para móviles</figcaption>
+</figure>
+<h3>Administración del análisis de datos de usuario</h3>
+<p>El análisis de la actividad de usuario en las aplicaciones puede dar lugar a una explosión en el volumen de datos, junto con un aumento en el uso de los sistemas y del software para recuperar resultados importantes. Debido a la naturaleza esporádica de la mayoría de los análisis, los entornos aprovisionados pueden cruzarse de brazos durante periodos de tiempo prolongados. Sin embargo, al realizar análisis, estos sistemas pueden consumir grandes cantidades de recursos de procesamiento y de almacenamiento a fin de completar la tarea en plazos razonables. Estas características lo convierten en una buena opción para Compute Engine. La capacidad de poner en marcha rápidamente las instancias para responder a una carga de trabajo cada vez mayor y de reducir la escala de las instancias cuando no haya actividad permite que las tareas de análisis pequeñas y grandes se inicien a petición. Además, la disponibilidad de capacidad para expandirse evita embotellamientos asociados con entornos habituales de procesamiento de datos.</p>
+<p>Para procesar el volumen previsto de comentarios en nuestra aplicación de vídeo, hemos optado por utilizar una instalación de Hadoop ejecutada en Compute Engine. Una vez más, la API de Compute Engine hace que sea fácil iniciar una agrupación de Hadoop de diferentes tamaños para el procesamiento de datos. En nuestro caso, extraemos datos de comentarios de Cloud Datastore asociado a nuestra aplicación y hacemos un cálculo simple sobre la opinión expresada en los comentarios asociados a un vídeo. Los datos de Cloud Datastore se comparten automáticamente entre las instancias de App Engine y de Compute Engine pertenecientes al mismo proyecto. El resultado final del cálculo de las opiniones totales negativas o positivas se vuelve a escribir en una entidad de Datastore asociada al vídeo.</p>
+<figure><img src="/images/articles/managing-complex-applications-in-the-cloud/hadoop-deployment-architecture.png" alt="">
+<figcaption>Figura 5. Arquitectura de la implementación de Hadoop</figcaption>
+</figure>
+<p>Google ofrece varias alternativas para el análisis de datos. En concreto, para los análisis de opiniones, la <a href="https://developers.google.com/prediction/">Google Prediction API</a> proporciona una interfaz REST a un entorno de obtención de información automático que, entre otras opciones, llevará a cabo análisis de las opiniones en datos de usuario. Para el análisis de datos más generales, <a href="https://developers.google.com/bigquery/">Google BigQuery</a> proporciona un motor para procesar terabytes de datos sin el gasto general del desarrollo personalizado. Otra buena alternativa al procesamiento personalizable de Datastore es <a href="https://developers.google.com/appengine/docs/python/dataprocessing/">MapReduce de App Engine</a>.</p>
+<h2>Administración de la complejidad</h2>
+<p>Dada la variedad de servicios lógicos que hay en nuestra aplicación, hemos usado en gran medida varias funciones clave de Google Cloud Platform. Juntas, proporcionan una base férrea para admitir aplicaciones empresariales complejas en la nube.</p>
+<h5>Cloud Endpoints</h5>
+<p>Cloud Endpoints es una colección de herramientas y de servicios para generar API REST y bibliotecas cliente desde una aplicación de App Engine para simplificar el acceso tanto de clientes web como de clientes móviles. La combinación permite un rápido lanzamiento de un servidor de la API para aplicaciones para Android. Cloud Endpoints simplifica la comunicación con una aplicación de App Engine que posibilita las ventajas de los servicios disponibles, por ejemplo: Cloud <a href="https://developers.google.com/appengine/docs/java/datastore">Datastore</a>, <a href="https://developers.google.com/appengine/docs/java/googlestorage">Cloud Storage</a>, <a href="https://developers.google.com/appengine/docs/java/mail">correo</a>, <a href="https://developers.google.com/appengine/docs/java/taskqueue">colas de tareas</a>, etc. En segundo plano, Cloud Endpoints convierte las llamadas de la API REST en invocación de métodos en la aplicación backend y protege cada llamada con autenticación OAuth 2.0. En la actualidad, los entornos de desarrollo existentes, por ejemplo, Eclipse, Android Studio y Apache Maven, ofrecen funciones para generar una biblioteca cliente desde dentro de un proyecto. La tecnología de Cloud Endpoints elimina el gasto general del desarrollo de APIs y permite a los desarrolladores centrarse en lo que de verdad importa, su producto.</p>
+<p>Para empezar a utilizar Google Cloud Endpoints, echa un vistazo a la sesión <a href="https://developers.google.com/events/io/sessions/333508149">From Nothing to Nirvana in Minutes</a> (De la nada al nirvana en cuestión de minutos) que se celebró en Google I/O 2013. Consulta también la documentación para desarrolladores sobre <a href="https://developers.google.com/appengine/docs/java/endpoints/">Cloud Endpoints</a>. Además, las instancias de Google Cloud Endpoints se muestran en varios ejemplos de soluciones, incluidas <a href="https://github.com/GoogleCloudPlatform/appengine-endpoints-tictactoe-java">Aplicación web</a>, <a href="/resources/articles/mobile-application-solutions">Mobile Shopping Assistant</a> y <a href="https://developers.google.com/samples/mbs/">Mobile Backend Starter</a>.</p>
+<h5>API de Compute Engine</h5>
+<p>La de API de Compute Engine proporciona un método de programación para controlar un conjunto de máquinas virtuales en el entorno en la nube de Google. Se pueden iniciar y crear máquinas virtuales simples según las especificaciones necesarias. Asimismo, se pueden crear de antemano imágenes de las máquinas para reducir el tiempo necesario para iniciarlas. El escalado automático se puede lograr a través de comprobaciones periódicas de la carga de la máquina. Si utilizas colas de tareas de App Engine, puedes dividir el trabajo y escalar tu entorno de procesamiento en horizontal. Las ventajas de Google Compute Engine se pueden aprovechar para ofrecer procesamiento por lotes o personalizado para casi cualquier carga de trabajo.</p>
+<p>Para obtener más información sobre cómo coordinarte con la API de Compute Engine, consulta nuestro <a href="https://github.com/GoogleCloudPlatform/solutions-load-balanced-gaming-server-on-google-compute-engine">ejemplo de servidor para juegos con carga equilibrada</a>. Ten en cuenta que, aunque en el ejemplo se utilizan los juegos como caso, muchos patrones de diseño se pueden generalizar a otros casos.</p>
+<h5>Almacenamiento de datos compartidos</h5>
+<p>El almacenamiento de datos está profundamente integrado en Google Cloud Platform. Hay un servicio para satisfacer las necesidades de tu aplicación, desde el almacenamiento de archivos básico al almacenamiento de objetos de transacción:</p>
+<ul>
+<li>Cloud Storage ofrece un servicio de almacenamiento para objetos y para archivos con un tamaño que llega a los terabytes.</li>
+<li>Cloud SQL proporciona una base de datos SQL relacional basada en MySQL.</li>
+<li>Cloud Datastore (el almacén de datos de App Engine) proporciona un almacén de datos de objetos NoSQL sin esquema, con un motor de consultas y con transacciones atómicas.</li>
+</ul>
+<p>Todos y cada uno de estos servicios comparten un tema común, la accesibilidad. Están creados para que se pueda acceder a ellos desde cualquier lugar de Cloud Platform y también desde fuera. Todos los servicios representan una variedad de opciones de almacenamiento para los desarrolladores de aplicaciones. Tanto si necesitas la simplicidad de una implementación SQL pura como si optas por la escalabilidad de NoSQL, hay una opción de base de datos disponible para tu aplicación.<br>
+Google Cloud Platform gestiona automáticamente la autenticación y la autorización. De manera predeterminada, las aplicaciones tienen autorización para acceder a otros recursos que pertenezcan a un mismo proyecto. La cuenta de servicio es un tipo de cuenta con función que es específica para el proyecto y que permite el acceso de la aplicación a los recursos. Fuera de Cloud Platform, las cuentas de servicio basadas en certificados están disponibles para permitir un acceso seguro desde ubicaciones remotas. Las cuentas de servicio se pueden crear y revocar fácilmente desde dentro del proyecto en la nube.</p>
+<h5>Módulos de App Engine</h5>
+<p>Los módulos de App Engine permiten a los equipos dividir las aplicaciones en componentes con diferentes requisitos para:</p>
+<ul>
+<li>el escalado,</li>
+<li>las implementaciones,</li>
+<li>el control de versiones,</li>
+<li>la configuración del rendimiento.</li>
+</ul>
+<p>Las aplicaciones estándar a gran escala se dividen en servicios lógicos que posibilitan los diversos aspectos del negocio. Estos componentes pueden ser compatibles con una serie de áreas, como, por ejemplo, un sitio corporativo, las aplicaciones web, el acceso para móviles, el acceso a la API de cliente y los portales de administración. Normalmente, estos diferentes sitios se encargan de diferentes requisitos de niveles de servicio, de tráfico previsto y de procesamiento. Cumplir estos requisitos en un entorno administrado estándar suele obligar al desarrollador a elegir el nivel de rendimiento más alto para todas las aplicaciones. Los módulos de App Engine dan vía libre a la posibilidad de personalizar una aplicación en unidades lógicas sin sacrificar las ventajas de un entorno totalmente administrado, incluido el escalado automático opcional, el control de versiones de implementación automático y la división del tráfico.</p>
+<p>El resultado final es un entorno creado para varios equipos o para varios lenguajes de desarrollo. Una aplicación de App Engine puede satisfacer las diversas necesidades de una aplicación de gran tamaño.</p>
+<h2>Aplicaciones de ejemplo</h2>
+<p>Estas aplicaciones de ejemplo de código abierto te permitirán obtener ventaja en el uso de las herramientas de este artículo:</p>
+<ol>
+<li><a href="https://developers.google.com/samples/mbs/">Mobile Backend Starter</a>: desarrollo rápido para móviles con Cloud Endpoints</li>
+<li><a href="/resources/articles/mobile-application-solutions">Mobile Shopping Assistant</a>, <a href="https://github.com/GoogleCloudPlatform/solutions-mobile-shopping-assistant-backend-java">servidor</a> | <a href="https://github.com/GoogleCloudPlatform/solutions-mobile-shopping-assistant-android-client">Android</a>: aplicación completa con Cloud Endpoints</li>
+<li><a href="https://developers.google.com/samples/photofeed/">PhotoFeed Media Sharing</a>: uso compartido de recursos multimedia en App Engine</li>
+<li><a href="https://github.com/GoogleCloudPlatform/solutions-load-balanced-gaming-server-on-google-compute-engine">Ejemplo de servidor para juegos con c</a><a href="https://github.com/GoogleCloudPlatform/solutions-load-balanced-gaming-server-on-google-compute-engine">arga equilibrada</a>: organización del procesamiento por lotes en Compute Engine</li>
+<li><a href="https://github.com/GoogleCloudPlatform/solutions-google-compute-engine-cluster-for-hadoop">Hadoop para Google Compu</a><a href="https://github.com/GoogleCloudPlatform/solutions-google-compute-engine-cluster-for-hadoop">te Engine</a>: ejecución de una agrupación de Hadoop en Compute Engine</li>
+</ol>
+<h2>Resumen</h2>
+<p>Google Cloud Platform ofrece una serie de herramientas y de servicios para administrar aplicaciones a gran escala. Al combinar App Engine y Compute Engine, se obtiene una completa plataforma de procesamiento que admite un conjunto variado de cargas de trabajo. El conjunto de servicios, que incluye Cloud Storage, Cloud Datastore, Cloud SQL y las colas de tareas, proporciona los elementos básicos para varias necesidades de desarrollo. Además, las API y las herramientas de administración de Cloud Platform contribuyen a aliviar el coste de administración general hasta de las aplicaciones más grandes.</p>
+<p>Para obtener información más detallada sobre la tecnología que forma Cloud Platform, consulta los recursos adicionales que hay a continuación.</p>
+<h2>Recursos adicionales</h2>
+<ul>
+<li><a href="/">Google Cloud Platform</a></li>
+<li><a href="http://googledevelopers.blogspot.com/2013/05/google-compute-engine-is-now-open-to-all.html">Compute Engine abierto al público</a><a href="http://googledevelopers.blogspot.com/2013/05/google-compute-engine-is-now-open-to-all.html">(Blog sobre Compute Engine)</a></li>
+<li><a href="/appengine/php">PHP en Google App Engine</a></li>
+<li><a href="http://googlecloudplatform.blogspot.com/2013/05/get-started-with-google-cloud-datastore-nosql-database.html">Google Cl</a><a href="http://googlecloudplatform.blogspot.com/2013/05/get-started-with-google-cloud-datastore-nosql-database.html">oud Datastore</a></li>
+<li><a href="/products/cloud-sql">Google Cloud SQL</a></li>
+</ul>
+<br>
+<hr>
+<p><a href="#ftnt_ref1" name="ftnt1" id="ftnt1">[1]</a> Los proyectos en la nube se crean a través de Cloud Console y proporcionan un marco para administrar la variedad de productos en la nube, como, por ejemplo, App Engine, Compute Engine, Cloud Storage y Cloud Datastore. Estos productos proporcionan seguridad para el usuario y acceso a la API, además de un <a href="http://cloud.google.com/console">lugar común</a> para acceder a todas las piezas de una aplicación.</p>
+<p><a href="#ftnt_ref2" name="ftnt2" id="ftnt2">[2]</a> En estos momentos, Google Cloud Platform tiene limitada la compatibilidad con aplicaciones tradicionales empaquetadas. Haz una búsqueda <a href="https://developers.google.com/compute/docs/support">online</a> para consultar las últimas funciones compatibles.</p>
+</div>
+<!-- /maia-main --></div>
+<div class="maia-col-3"><br>
+<img src="//www.google.com/images/icons/product/feedback-16.png" class="g-app-icon" alt=""> <a href="javascript:void(0);" class="google-feedback">Comentarios sobre este documento</a><br>
+<br></div>
+</div>
+</div>
+<script>
+(function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+</script><script src="//www.gstatic.com/feedback/api.js">
+</script><script>
+$('body').delegate('.google-feedback', 'click', function() {
+      userfeedback.api.startFeedback({'productId': '94614'});
+  });
+</script><!-- Scripts to include both on Goro + Devsite --><script>
+window.___gcfg = {
+     lang: ''
+   };
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+</script><!-- GTM implementation --><!-- Start dataLayer --><script>
+dataLayer = [{
+        'country': 'es',
+        'region': 'emea',
+        'language': 'es'
+      }];
+</script><!-- End dataLayer --><!-- Start Google Tag Manager --><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5CVQBG" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript> <script>
+(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-5CVQBG');
+</script><!-- End Google Tag Manager --><!-- Global JS scripts to load; path will depend on whether we're on devsite or Goro --><script src="/js/base.min.js">
+</script><!-- Retina loader; Do not load if partners page because we need to wait until the Angular app runs --><script>
+new lfl.system.RetinaLoader();
+</script><!-- Secondary right-side scroll-nav --><script>
+new lfl.ui.ScrollNav({});
+</script>
+</body>
+</html>

@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html devsite="">
+<head>
+<title>Big Data Articles &amp; Tutorials — Google Cloud Platform</title>
+<meta name="description" content="Read about technical big data articles and solutions with Google Cloud Platform. Big data articles unpack BigQuery data analytics, Hadoop clusters and more.">
+<meta name="hide_page_heading" value="true">
+<meta name="full_width" value="true">
+<meta name="top_category" value="developers">
+<meta name="subcategory" value="articles">
+<meta name="viewport" content="initial-scale=1, minimum-scale=1, width=device-width">
+<link rel="apple-touch-icon" href="/_static/images/apple-touch-icon.png">
+<link href="//fonts.googleapis.com/css?family=Open+Sans:400italic,300,400,600,700" rel="stylesheet">
+<link href="/css/default.css" rel="stylesheet"><!--[if lt IE 9]>
+    <link rel="stylesheet" media="screen" href='/c/cp-ie.css'>
+    <![endif]-->
+<script src="/js/floodlight.js">
+</script>
+</head>
+<body>
+<div id="maia-main" class="cp-article">
+<div class="maia-cols">
+<div class="maia-col-9">
+<div>
+<div style="float:right">
+<div class="g-plusone"></div>
+</div>
+<h1 class="title">BigQuery in Practice : Loading Data Sets That are Terabytes and Beyond</h1>
+</div>
+<div class="cp-article-tutorial">
+<h4>Revised on: February 27th, 2014</h4>
+<h2><a name="h.ahz5ju9viybv" id="h.ahz5ju9viybv"></a>Table of Contents</h2>
+<p><a href="#h.je9i4v7kjgkp">Abstract</a><br>
+<a href="#h.kh0ykvxqkkn1">Assumption</a><br>
+<a href="#h.8k8olhm3j8qd">BigQuery Data Ingestion Workflow</a><br>
+<a class="indnt" href="#h.t74twn49zpwc">Uploading Data into Google Cloud Storage - Options and Considerations</a><br>
+<a class="indnt" href="#h.l14mvlbzl3m0">Transforming Data - Options and Considerations</a><br>
+<a class="indnt" href="#h.757bq5t4k2m8">Importing Data Into BigQuery - Options and Considerations</a><br>
+<a href="#h.4vkrpa592v8l">Conclusion</a><br>
+<a href="#h.toroz5nln1sm">Additional Resources and References</a></p>
+<h1><a name="h.je9i4v7kjgkp" id="h.je9i4v7kjgkp"></a>Abstract</h1>
+<p>This paper is intended for IT Professionals and Data Architects who are planning to deploy large data sets to Google BigQuery. When dealing with multi-terabytes to petabytes of data, managing the processing of data such as uploading, failure recovery, cost and quota management becomes paramount. Several design questions deserve careful attention at this scale:</p>
+<ul>
+<li>How long does it take to load the data?</li>
+<li>How should errors be handled if an upload is interrupted?</li>
+<li>What is the most efficient way to reload the data if an update is required?</li>
+<li>Will the processing exceed the quota policy of BigQuery?</li>
+<li>How should the BigQuery table schema be designed in order to optimize the cost and complexity of query?</li>
+</ul>
+<p>This paper discusses the considerations for uploading, transforming and importing very large data sets into BigQuery.</p>
+<h1><a name="h.kh0ykvxqkkn1" id="h.kh0ykvxqkkn1"></a>Assumption</h1>
+<p>There are two variations of loading data into BigQuery – batch processing and near real-time processing. Batch processing either refers to one-time loading or loading at regular intervals, such as hourly, daily or weekly. Near real-time is data that is collected continuously. The approach for designing the ingestion pipeline for each variant is vastly different. This paper is focused on batch processing of large data sets that are terabytes or larger.</p>
+<h1><a name="h.8k8olhm3j8qd" id="h.8k8olhm3j8qd"></a>BigQuery Data Ingestion Workflow</h1>
+<p>There are generally three steps involved in the BigQuery data ingestion workflow:</p>
+<ol>
+<li>Uploading the data to Cloud Storage</li>
+<li>Transforming the data and converting it to a format that is suitable for BigQuery</li>
+<li>Loading the data into BigQuery</li>
+</ol>
+<p>These steps do not have to be performed in the sequence mentioned above. Since data can be loaded directly into BigQuery, uploading the data to Cloud Storage is optional, but strongly recommended.</p>
+<p>Figure 1 illustrates a few scenarios on how the data can be loaded. Please note that on-premises can also be a third-party cloud provider hosting the data.</p>
+<figure><img src="/images/articles/bigquery-in-practice/scenarios.png" alt="">
+<figcaption>Figure 1. Scenarios for data ingestion into BigQuery</figcaption>
+</figure>
+<p>For Scenario A, the Extract, Transform and Load (ETL) process is done on-premises and the resulting files are uploaded to Cloud Storage before loading into BigQuery. For Scenario B, the ETL process is done on-premises and the data is directly uploaded to Big Query. For Scenario C, the raw data is either uploaded to Cloud Storage or some basic ETL is performed on-premises, followed by further ETL processing on Compute Engine. The transformed data can either be uploaded back to Cloud Storage and loaded into BigQuery or uploaded directly to BigQuery.</p>
+<p>Design decisions made in each step can have a significant impact on the performance, cost, flexibility and ease of use of the project. The following sections discuss these considerations in detail.</p>
+<h2><a name="h.t74twn49zpwc" id="h.t74twn49zpwc"></a>Uploading Data into Google Cloud Storage — Options and Considerations</h2>
+<p>Cloud Storage can be used to host the raw, pre-processed or processed data. This step is optional as data can be loaded directly into BigQuery from on-premises file systems or on-premises ETL tools. However, this step is recommended for the following reasons:</p>
+<ul>
+<li>Performance of data ingestion into BigQuery is generally much faster from Cloud Storage.</li>
+<li>Cloud Storage is well integrated with other Google Cloud Platform products. Once data is in Cloud Storage, it is inside the Google network. Subsequent movement of the data uses the Google Network backbone, which is generally much faster and more reliable than from outside the Google network. This is especially important for running ETL processing on Google Cloud Platform.</li>
+<li>The data in Cloud Storage acts as an archive even after it is uploaded to BigQuery and can be reused if there is ever a need to upload it again.</li>
+<li>Data in Cloud Storage can be used for debugging if necessary.</li>
+</ul>
+<p>The following questions need to be answered when transferring multi-terabytes of data to Cloud Storage:</p>
+<ul>
+<li><span class="bld">Time:</span> How long will it take to transfer the data? What time of the day is better for such a transfer?</li>
+<li><span class="bld">Bandwidth:</span> Will it impact my business and slow down any other services that rely on upload bandwidth? How much bandwidth will be required?</li>
+<li><span class="bld">Error and recovery:</span> What if data upload fails or is interrupted, will it be able to resume from where it left off without errors?</li>
+</ul>
+<p>There are multiple tools available for transferring data into Cloud Storage:</p>
+<ol>
+<li>The <a href="https://developers.google.com/storage/docs/gsutil"><span class="code">gsutil</span></a> command line tool.</li>
+<li>Google Cloud Storage Manager accessible via the Cloud Console at: https://console.developers.google.com.</li>
+<li>Third-party high-speed file transfer software.</li>
+<li><a href="https://developers.google.com/storage/docs/early-access?utm_source=cloud-google-com&amp;utm_medium=article&amp;utm_campaign=loading-terabytes">Offline disk import</a> service provided by Google.</li>
+</ol>
+<p>The following discusses strategies to consider for each option.</p>
+<h3><a name="h.45u7pv5fem82" id="h.45u7pv5fem82"></a>Using the <span class="code">gsutil</span> Command Line Tool</h3>
+<p>Using the <span class="code">gsutil</span> command line tool to import data to Cloud Storage has several advantages:</p>
+<ol>
+<li><span class="bld">Ease of use:</span> It can be invoked from a command shell or via scripts.</li>
+<li><span class="bld">Resumability:</span> In case of any errors/interruptions during transmission, it can be resumed from the previous state thus saving time and bandwidth in the long run.</li>
+<li><span class="bld">Error detection:</span> It handles error detection by performing checksum of the the files uploaded.</li>
+<li><span class="bld">Parallelized uploads:</span> It provides options to upload data in parallel to maximize the network bandwidth while reducing the time it takes to upload.</li>
+</ol>
+<p>The gsutil <a href="https://developers.google.com/storage/docs/gsutil">reference</a> guide documents how to use this tool with all the various options. This next section offers some tips on how to use <span class="code">gsutil</span> effectively for large data sets.</p>
+<h5>Identify Throughputs</h5>
+<p><span class="code">gsutil</span> provides an option to run a suite of diagnostic tests that measures the network performance. The results include the write throughput that can be used to estimate the time it takes to upload a file:</p>
+<pre>
+$ gsutil perfdiag &lt;target bucket&gt;
+</pre>
+<h5>Speed Up with Parallel Uploads</h5>
+<p>To speed up multi-file uploads, gsutil provides the -m option for performing parallel copying:</p>
+<pre>
+$ gsutil -m cp &lt;file1&gt; … &lt;fileN&gt; &lt;target bucket&gt;
+</pre>
+<h5>Speed Up by Splitting</h5>
+<p>Uploading large files to Cloud Storage can take some time. To speed up the process, split a large file into smaller files and upload them in parallel to a bucket. Load the files into BigQuery. Up to 500 files can be loaded per load operation. The load operation is atomic; that is, if even one file fails to load, the operation as a whole does not succeed, and no files are loaded.</p>
+<pre>
+$ split -l &lt;file&gt;
+  $ gsutil -m cp &lt;chunk-prefix&gt;* gs://&lt;bucket&gt;
+  $ bq --job_id &lt;job_id&gt; load &lt;dataset&gt;.&lt;tableid&gt; gs://&lt;bucket&gt;/&lt;chunk-prefix&gt;*
+</pre>
+<p>Refer to the section on <a href="#h.wakkkkkyjmt">Job Management</a> for the use of the job_id flag.</p>
+<h5>Speed Up by Distributing Across Multiple Machines</h5>
+<p>Consider using multiple machines to run gsutil to take advantage of additional CPU, I/O and network utilization. Since splitting files and copying them to multiple machines takes time, carefully calculate the end to end time gained.</p>
+<h5>Use Manifest Log Files to Minimize Redundant Uploads</h5>
+<p>Use the -L option to output a manifest log file that contains detailed information about each item that was copied. One such type of information in the file is the upload id, which indicates whether a resumable upload is performed. If a transfer is interrupted, this ID can be used to resume where it left off without having to upload from the beginning again.</p>
+<pre>
+$ gsutil cp -c -L cp.log -R &lt;source dir&gt; gs://&lt;bucket&gt;
+</pre>
+<h3><a name="h.6fn81j8pfh19" id="h.6fn81j8pfh19"></a>Using Cloud Storage Manager</h3>
+<p>Cloud Storage Manager is a web application where simple storage management tasks can be performed. It provides a convenient and intuitive way of interacting with Cloud Storage. This is especially true when there is a proxy setup in the organization. For gsutil to work properly, the proxy configuration has to be set up, whereas for browsers the proxy configuration is most likely already set up. Please note, however, that when dealing with large datasets, Cloud Storage Manager does pose some of the following challenges:</p>
+<ul>
+<li>Unable to optimize uploads by processing data in parallel.</li>
+<li>Unable to skip redundant uploads by checking existence of files and matching checksums.</li>
+<li>Unable to upload files that are larger than a few GB in size. Browsers have a limit on the size of a file that can be uploaded.</li>
+<li>Unable to resume upload if an upload session is interrupted.</li>
+<li>Unable to automate and schedule uploads programmatically.</li>
+</ul>
+<p>The use of Cloud Storage Manager is recommended only if the use case is not constrained by the above limitations.</p>
+<h3><a name="h.km57triyauiz" id="h.km57triyauiz"></a>Third-Party High Speed File Transfer Software</h3>
+<p>There are third-party vendors<sup><a href="#ftnt1" name="ftnt_ref1" id="ftnt_ref1">[1]</a></sup> that provide specialized file transfer softwares to transfer large data sets. Internet protocols, such as Hypertext Transfer Protocol (HTTP) and File Transfer Protocol (FTP), that are based on Transmission Control Protocol (TCP), are not optimized for sustained large data transfer. TCP requires an acknowledgement from the receiver for each data packet sent. If an acknowledgement does not arrive back on time due to network latency or packet loss, TCP will throttle the sending rate, assuming that it is too fast for the receiver to handle. The throttling causes the network bandwidth to be underutilized. These specialized software products remove the throughput bottleneck by using proprietary protocols. In addition, they provide robust error recovery as well as ways to automatically resume partial transfers and retry failed transfers.</p>
+<p>Dedicated clients and servers are required to use this software. Figure 2 depicts a typical setup when using third-party software. It is recommended to install the server on Compute Engine since it offers fast network bandwidth to Cloud Storage.</p>
+<figure><img src="/images/articles/bigquery-in-practice/file-transfer.png" alt="">
+<figcaption>Figure 2. High-Speed File Transfer Software system diagram</figcaption>
+</figure>
+<p>When using high speed transfer software, consider the following factors:</p>
+<ul>
+<li>The cost associated with software licensing.</li>
+<li>The administration cost required to maintain dedicated clients and servers in addition to the machines they run on.</li>
+<li>The level of integration between the third-party software and Cloud Storage.</li>
+<li>The security model of the software.</li>
+<li>The network performance between the client and the server on Compute Engine.</li>
+</ul>
+<h3><a name="h.czibd6i9zejm" id="h.czibd6i9zejm"></a>Cloud Storage Offline Disk Import Service</h3>
+<p>Google offers a service that loads data into Cloud Storage from hard drives that are physically shipped to Google. This is a great option for one-time batch upload if the internet connection is slow or unreliable, or for very large datasets. For security during shipment, the data must be encrypted. The following factors are useful when considering whether or not this is a suitable option:</p>
+<ul>
+<li>The additional costs for the service, which includes a flat fee per hard drive.</li>
+<li>The volume of subsequent data that needs to be uploaded on an ongoing basis.</li>
+<li>The requirement to encrypt the data for security.</li>
+<li>The turnaround time for shipping the data.</li>
+</ul>
+<p>More information on Cloud Storage Offline Disk Import can be found at: <a href="https://developers.google.com/storage/docs/early-access?utm_source=cloud-google-com&amp;utm_medium=article&amp;utm_campaign=loading-terabytes">https://developers.google.com/storage/docs/early-access</a>.</p>
+<h3><a name="h.5pm9gjrl0xu" id="h.5pm9gjrl0xu"></a>Other Considerations</h3>
+<h4><a name="h.pbk1w09jvq4q" id="h.pbk1w09jvq4q"></a>Update Data</h4>
+<p>Tables in BigQuery are append-only. This means that data cannot be updated once it is loaded. If there is ever a need to update data, the following strategies can be used:</p>
+<ol>
+<li>Table Sharding — Split the tables and use table unions to query the data. For example, a yearly table can be split into monthly tables. Delete and reload the table that needs to be updated. The <span class="code">bq</span> command has a <span class="code">--replace</span> flag to truncate and replace a table atomically.
+<pre>
+$ bq load --job_id=&lt;job id&gt; --replace &lt;dataset&gt;.&lt;tableid&gt; gs://&lt;bucket&gt;/&lt;files&gt;
+</pre></li>
+<li>Data Chunking — Upload the original data in chunks and save the files in Cloud Storage. Load all the files into a single table. Replace the files that needs to be updated, then delete and reload the whole table atomically.</li>
+</ol>
+<h4><a name="h.udhcjh1ofqri" id="h.udhcjh1ofqri"></a>Compress — Upload — Uncompress</h4>
+<p>If network bandwidth is the bottleneck, consider compressing files before uploading to Cloud Storage. Both CSV and JSON file types yield very good compression ratios. Once the data is in Cloud Storage, start an instance of Compute Engine to uncompress the files. The network bandwidth between Cloud Storage and Compute Engine is higher so copying compressed and uncompressed data between the two should be much faster.</p>
+<p>Alternatively, BigQuery also supports loading compressed files directly. The trade-offs between loading compressed or uncompressed files will be discussed in the <a href="#id.f2hxhdamjnn2">Importing Data Into BigQuery - Options and Considerations</a> section.</p>
+<h4><a name="h.jgpv8li4ommk" id="h.jgpv8li4ommk"></a>Verification</h4>
+<p>The Cloud Storage object includes a md5 message digest that can be used to verify if the uploaded file was corrupted in transit. The md5 hash is stored in the object’s metadata. You can use the -L option to print out the metadata of the object.</p>
+<pre>
+$ gsutil ls -L gs://&lt;bucket&gt;/&lt;object&gt;
+</pre>
+<p>Please note that most tools, including gsutil, will automatically perform the verification. Should there be a need to verify it manually, use the md5 (MacOS)/md5sum (Linux) command to get the md5 digest of the original file and check it against the one in Cloud Storage.</p>
+<h4><a name="h.ezcxqv2rueef" id="h.ezcxqv2rueef"></a>Data Loading Sequence</h4>
+<p>For historical data analysis, consider staging the data and loading it in reverse chronological order (most recent data first) so analysis can be done immediately. Continue to load additional data as needed.</p>
+<h2><a name="h.l14mvlbzl3m0" id="h.l14mvlbzl3m0"></a>Transforming Data — Options and Considerations</h2>
+<p>Transforming data is the process of converting the source data into a format that is optimized for BigQuery. The following are two common processes:</p>
+<ol>
+<li><span class="bld">Data transformation</span> — BigQuery supports a well-defined set of data types, however, some data types must be specified in a format recognized by BigQuery. An example is the timestamp data type. BigQuery supports either an integer number that specifies the number of seconds since the epoch, or a calendar date formatted as YYYY-MM-DD HH:MM:SS.</li>
+<li><span class="bld">Data denormalization</span> — Denormalization is reversing the process of normalization by adding redundant data to the schema. Because it reduces the number of JOINs required when querying the data, it offers better performance and makes the query simpler to construct.</li>
+</ol>
+<p>More information on “Preparing Data For BigQuery” can be found at: <a href="https://developers.google.com/bigquery/preparing-data-for-bigquery?utm_source=cloud-google-com&amp;utm_medium=article&amp;utm_campaign=loading-terabytes">https://developers.google.com/bigquery/preparing-data-for-bigquery</a>.</p>
+<p>The following are considerations when transforming multi-terabytes of data:</p>
+<ul>
+<li>Which technologies, such as Hadoop for example, are relevant and available?</li>
+<li>What are the trade-offs between the time it takes to perform the transform and the amount of computing resources required?</li>
+</ul>
+<p>There are multiple ways to transform data. The following section discusses each approach in detail.</p>
+<h3><a name="h.4rd70qh2o7yt" id="h.4rd70qh2o7yt"></a>Scripting</h3>
+<p>Scripting is easy to write for simple transformations. For example, the following Python snippet converts a date in the date time format ‘%d%b%Y:%H:%M:%S’ to ‘%Y-%m-%d %H:%M:%S’, a format that is supported by BigQuery. In this example, 01OCT2012:17:10:00 would be converted to 20121001 12:17:10.</p>
+<pre>
+dt = datetime.strptime(input, '%d%b%Y:%H:%M:%S').strftime('%Y-%m-%d %H:%M:%S')
+</pre>
+<p>Scripting can also be used to do simple denormalization. It requires reading in the dimension tables and joining them with the fact table, but you should be mindful of the amount of memory required to keep the dimension tables in memory.</p>
+<p>While scripting may appear to be simple, it is inefficient for processing terabytes of data on a single machine, and it is not practical to develop a framework to process the data in parallel, across clusters of machines.</p>
+<h3><a name="h.maxjfsot5lc" id="h.maxjfsot5lc"></a>Hadoop On Compute Engine</h3>
+<p>Scripting can easily be adapted to run on the Hadoop<sup><a href="#ftnt2" name="ftnt_ref2" id="ftnt_ref2">[2]</a></sup> framework for distributing the processing of large data sets across clusters of computers. Hadoop includes an open-source implementation of Google’s MapReduce research papers. A sample application, Google Compute Engine Cluster for Hadoop, is available at <a href="https://github.com/GoogleCloudPlatform/solutions-google-compute-engine-cluster-for-hadoop">github</a> to bootstrap the development process. This application sets up Compute Engine instances as a Hadoop cluster and executes the MapReduce tasks. Using this application, the only task that a developer has to do is writing the mapper and the reducer function. Figure 3 depicts the Hadoop on Compute Engine workflow using this sample application.</p>
+<figure><img src="/images/articles/bigquery-in-practice/data_files.png" alt="">
+<figcaption>Figure 3: Hadoop on Compute Engine Workflow</figcaption>
+</figure>
+<ol>
+<li>Unprocessed data files are uploaded to Cloud Storage.</li>
+<li>End user writes the Mapper and Reducer function.</li>
+<li>End user runs the sample application script to create the Hadoop cluster. The end user then starts the MapReduce job and specifies the data source, the mapper, reducer function and the output destination.</li>
+<li>Unprocessed data files are copied from Cloud Storage to Hadoop Distributed File System (HDFS) in the Hadoop cluster.</li>
+<li>Hadoop Master starts the MapReduce process and executes the mapper and reducer functions.</li>
+<li>Transformed output is uploaded to Cloud Storage.</li>
+</ol>
+<p>The following are two concrete examples of how to use Hadoop on Compute Engine to transform source data.</p>
+<h5>Example 1: Transforming Data</h5>
+<p>This example illustrates how to transform the following date time format for a large data set.</p>
+<pre>
+01OCT2012:17:10:00.000000,1224770765,15643
+</pre>
+<p>In this example, only the following mapper function is required. The Hadoop framework takes care of the details of distributing the processing to the worker nodes and assembling the final output.</p>
+<pre>
+#!/usr/bin/env python
+  import csv
+  import re
+  import sys
+  from datetime import datetime
+  csv_reader = csv.reader(sys.stdin)
+  for row in csv_reader:
+    row[0] = datetime.strptime(row[0], '%d%b%Y:%H:%M:%S.%f').strftime('%Y-%m-%d %H:%M:%S')
+    print ','.join(row)
+</pre>
+<h5>Example 2: Denormalizing Data</h5>
+<p>The second example uses a simplified retail data schema to illustrate how to denormalize two large data sets. The data sets include transactions and items, respectively, and there is a 1 to N relationship between them. The goal is to denormalize the two tables to a single table.</p>
+<figure><img src="/images/articles/bigquery-in-practice/transaction.png" alt="">
+<figcaption>Figure 4: Entity diagram for the denormalizing data example</figcaption>
+</figure>
+<p>For this example, both data sets are inputs to the mapper function. Since the data sets are joined on the Transaction Id, the mapper will emit the Transaction Id as the key and the corresponding record as the value. After the mapping phase is done, the MapReduce framework will shuffle the data, and transactions and items with the same transaction id will be passed to the reducer function. The reducer function then merges the data into a single record. The following is the code snippet for the mapper and reducer function to show how this is done.</p>
+<p>Mapper function:</p>
+<pre>
+#!/usr/bin/env python
+
+  import csv
+  import os
+  import sys
+
+  csv_reader = csv.reader(sys.stdin)
+  for row in csv_reader:
+    if 'item' in os.environ['map_input_file']:  # This is from the item file
+      print '%s\titem:%s' % (row[1], ','.join(row)) # column 1 is the transaction id
+    else:
+      print '%s\ttran:%s' % (row[0], ','.join(row)) # column 0 is the transaction id
+</pre>
+<p>Reducer function:</p>
+<pre>
+#!/usr/bin/env python
+
+  import csv
+  import sys
+
+  current_key = None
+  transaction = None
+  items = []
+
+  def denormalize(transaction, items):
+    if transaction:
+      transaction_values = csv.reader([transaction]).next()
+      for item in items:
+        item_values = csv.reader([item]).next()
+        print ','.join(transaction_values + item_values)
+
+  for line in sys.stdin:
+    key, value = line.split('\t')
+    if key != current_key:
+      denormalize(transaction, items)
+      current_key = key
+      transaction = None
+      items = []
+
+    if 'tran:' in value:
+      transaction = value.split(':')[1]
+    else:
+      items.append(value.split(':')[1])
+
+  denormalize(transaction, items)
+</pre>
+<h3><a name="h.16fygfm3rco6" id="h.16fygfm3rco6"></a>ETL Tools on Compute Engine</h3>
+<p>Using Hadoop to transform data requires a level of comfort with code development, debugging and an understanding of the Hadoop framework. ETL tools can be used as an alternative to Hadoop. These tools provide an easy to use "drag and drop" user interface for transforming and denormalizing data. A sample application, “Using ETL Tool on Google Compute Engine,” is available for download from <a href="https://github.com/GoogleCloudPlatform/Solutions-Using-ETL-tool-on-Google-Compute-Engine">github</a>. This application bootstraps the process of provisioning a single Compute Engine instance and installs the necessary software for running an open source ETL tool. For more scalable operations, cluster deployment should be used. Figure 5 depicts an overview of the clustering architecture:</p>
+<figure><img src="/images/articles/bigquery-in-practice/etl-master-node.png" alt="">
+<figcaption>Figure 5. ETL cluster deployment architecture on Compute Engine</figcaption>
+</figure>
+<p>In the clustering environment, the source data is partitioned across the ETL slave nodes and the ETL master node manages the configuration and rules.</p>
+<p>Factors to consider if you take this approach:</p>
+<ul>
+<li>What is the cost associated with commercial ETL licensing (if applicable)?</li>
+<li>Is the source data readily accessible from Compute Engine?
+<ul>
+<li>Connecting to on-premises databases should be carefully tested to make sure the firewall is properly configured to allow access from the ETL tool.</li>
+<li>Bandwidth and source system throttling should be carefully considered while pulling large volumes of data from on-premises source systems.</li>
+<li>Secure connections should be established while connecting to on-premises databases.</li>
+</ul>
+</li>
+<li>What is the clustering capability of the ETL tool and the number of Compute Engine instances required?</li>
+<li>What is the connectivity provided by the ETL tools?
+<ul>
+<li>Can data be loaded directly into BigQuery?</li>
+<li>Can data be written to Cloud Storage?</li>
+</ul>
+</li>
+<li>How should I handle and recover from errors when a particular load fails?</li>
+<li>What is the data quality of the source data?
+<ul>
+<li>ETL provides more flexible validation rules that can correct invalid data during the transforming stage.</li>
+</ul>
+</li>
+</ul>
+<h3><a name="h.oz4pjrkoym30" id="h.oz4pjrkoym30"></a>On-Premises ETL Tool</h3>
+<p>If the source data is spread across many systems and in different formats, you should consider using an on-premises ETL tool. There are many <a href="https://developers.google.com/bigquery/docs/third_party_tools">third-party</a> vendors that provide ETL tools for BigQuery. To check whether the tool is already in-use in your environment, please refer to the <a href="https://developers.google.com/bigquery/docs/third_party_tools">Third-party Tools</a> page for the list of companies that have integrated their software with BigQuery.</p>
+<p>The following are factors you should consider if on-premises ETL tools are used:</p>
+<ul>
+<li>What are the costs associated with hardware and software procurement?</li>
+<li>What are the logistics in planning the scale for handling the ETL job?</li>
+<li>What is the IT cost in maintaining the infrastructure?</li>
+</ul>
+<h3><a name="h.37ygqofuxvro" id="h.37ygqofuxvro"></a>BigQuery For Transformation</h3>
+<p>BigQuery can be used to transform or denormalize data sets by saving the query result to a destination table. Normally, query results have a maximum response size. The BigQuery Large Query Result feature can be used when the result set exceeds this limit. To use this approach, load the normalized data sets into BigQuery, execute the query that joins the normalized tables then save the result to a destination table. This table will now contain the denormalized data and will be the source for subsequent queries.</p>
+<p>The following illustrates how this is done using a simplified retail data schema. Figure 6 depicts the entity diagram among three normalized tables - ItemPurchased, ItemDetail and LoyaltyCard.</p>
+<figure><img src="/images/articles/bigquery-in-practice/item-detail.png" alt="">
+<figcaption>Figure 6. Entity Relationship Diagram for simple retail data</figcaption>
+</figure>
+<p>A denormalized table can be created with the following bq command:</p>
+<pre>
+$ bq  --project_id=&lt;project_id&gt; query --destination_table &lt;dataset.table&gt; --allow_large_results \
+  “SELECT
+    P.date, P.item_num, P.upc, I.description,
+    P.quantity, P.card_num, C.segment, C.income_level
+  FROM
+    Sample.ItemPurchased AS P
+  LEFT OUTER JOIN EACH
+    Sample.LoyaltyCard AS C ON P.card_num = C.card_num
+  LEFT OUTER JOIN EACH
+    Sample.ItemDetail AS I ON P.ritem_num = I.ritem_num”
+</pre>
+<p>The advantage of this approach is that it requires familiarity with BigQuery only. However, transform functions are limited to those provided by BigQuery. For example, it is not possible to run a custom function to convert location information in latitude and longitude into a zip code.</p>
+<a href="#" name="id.f2hxhdamjnn2" id="id.f2hxhdamjnn2"></a>
+<h2><a name="h.757bq5t4k2m8" id="h.757bq5t4k2m8"></a>Importing Data Into BigQuery — Options and Considerations</h2>
+<p>Importing data is the last step in the ingestion process. The following are questions that need to be answered when importing multi-terabytes of data into BigQuery:</p>
+<ul>
+<li>How long will it take to import the data?</li>
+<li>How should the BigQuery tables be partitioned?</li>
+<li>Should the data be imported in compressed format or uncompressed format?</li>
+<li>Which schema (flat/nested) should be used?</li>
+<li>How should the import process work within the confines of BigQuery quota policy?</li>
+</ul>
+<p>There are multiple options for importing data into BigQuery:</p>
+<ol>
+<li>Using the bq command line utility.</li>
+<li>Using the REST API.</li>
+<li>Using ETL Tools that provide BigQuery connector.<sup><a href="#ftnt3" name="ftnt_ref3" id="ftnt_ref3">[3]</a></sup></li>
+<li>Using the Streaming Insert API.</li>
+</ol>
+<h3><a name="h.ayx5ga8ygvi4" id="h.ayx5ga8ygvi4"></a>bq Command Line Utility</h3>
+<p>bq is a command-line tool that can be used to load data into BigQuery. The following command, for example, loads the data from Cloud Storage:</p>
+<pre>
+$ bq load --job_id &lt;id&gt; -F '&lt;delimiter&gt;' &lt;table_name&gt; gs://&lt;bucket_name&gt;/&lt;data_file&gt; &lt;schema&gt;
+</pre>
+<p>A new table will be created if the specified table does not exist. Otherwise, data will be appended to the existing table. For more information about this tool and how to set it up, see <a href="https://developers.google.com/bigquery/docs/hello_bigquery">bq Command-Line Tutorial</a>.</p>
+<p>Refer to the section on <a href="#h.wakkkkkyjmt">Job Management</a> for the use of the job_id flag.</p>
+<h3><a name="h.yaqkapodiar" id="h.yaqkapodiar"></a>REST API</h3>
+<p>Data can be loaded programmatically using the REST API.The <a href="https://developers.google.com/apis-explorer/">Google APIs Explorer</a> is a good starting point to learn about the available methods and try out the API. Alternatively, the <span class="code">bq</span> command provides a flag to log all server requests and responses.</p>
+<pre>
+$ bq --apilog &lt;log file&gt; &lt;command&gt; ...
+</pre>
+<p>More information on “BigQuery API Reference” can be found on <a href="https://developers.google.com/bigquery/docs/reference/v2/?utm_source=cloud-google-com&amp;utm_medium=article&amp;utm_campaign=loading-terabytes">developers.google.com</a>.</p>
+<h3><a name="h.s5jppsqprfy" id="h.s5jppsqprfy"></a>ETL BigQuery Connector</h3>
+<p>Most <a href="https://developers.google.com/bigquery/third-party-tools">third-party ETL</a> tools have developed direct connectors to BigQuery that make the workflow seamless. These tools are a mature technology and are commonly used by most IT organizations. They have a visual interface that makes it easy to configure and maintain the workflow. Familiarity with these tools can be leveraged to import data to BigQuery, hence minimal additional learning is required to get started.</p>
+<h3><a name="h.wakkkkkysia" id="h.wakkkkkysia"></a>Streaming Insert API</h3>
+<p>Data can be streamed into BigQuery one record at a time. Streamed data is available for query before the entire load job completes. Streaming API generally is not used for batch uploading but is more appropriate for near real-time ingestion.</p>
+<p>More information on “Streaming Insert” can be found at <a href="https://developers.google.com/bigquery/streaming-data-into-bigquery?utm_source=cloud-google-com&amp;utm_medium=article&amp;utm_campaign=loading-terabytes">https://developers.google.com/bigquery/streaming-data-into-bigquery</a>.</p>
+<h3><a name="h.oiei0nfxjjd7" id="h.oiei0nfxjjd7"></a>Considerations</h3>
+<p>The following section includes considerations when loading large data sets into BigQuery.</p>
+<h4><a name="h.wakkkkkyjmt" id="h.wakkkkkyjmt"></a>Job Management</h4>
+<p>When loading multiple data sets over time, it is important to manage each job carefully. A successful job should not be run more than once. Otherwise, the data will be duplicated. A recommended practice is to specify a job id for each unique load. BigQuery returns an error when the same job id is used more than once. The job id can be used to query the load status. Retry a load only if the job id is not found or if the job failed. The following code snippet demonstrates this using the Google API Client Library for Python:</p>
+<pre>
+body['jobReference']['jobId'] = job_id  # job id for each unique load
+    try:
+      result = bigquery.jobs().insert(projectId=PROJECT_ID, body=body).execute()
+    except apiclient.errors.HttpError, e:
+      if e.resp.get('status') == '409':
+        return STATUS_DUPLICATED_JOB_ID
+      else:
+        return STATUS_LOAD_FAILED_SHOULD_RETRY
+
+    # Polls first at 1 sec intervals, then every 3 seconds and max out at 30 seconds.
+    waits = itertools.chain(itertools.repeat(1, 8), xrange(2, 30, 3),
+                            itertools.repeat(30))
+    start_time = time.time()
+    while (time.time() - start_time) &lt; MAX_WAIT_TIME:
+      try:
+        result = bigquery.jobs().get(projectId=PROJECT_ID, jobId=job_id).execute()
+        if result['status']['state'] == 'DONE':
+          if 'errorResult' in result['status']:
+            return STATUS_LOAD_COMPLETED_WITH_ERRORS
+          else:
+            return STATUS_LOAD_COMPLETED
+      except apiclient.errors.HttpError, error:
+        status = int(error.resp.get('status', 0))
+        if status &gt;= 500:
+          logging.error('Server error caught %s. Will try again', error)
+        elif status == 404:
+          return STATUS_JOB_NOT_FOUND
+        else:
+          return STATUS_ERROR_GETTNG_JOB_STATUS
+      except Exception, e:
+        logging.error('Exception caught %s.', e)
+        return STATUS_ERROR_GETTNG_JOB_STATUS
+
+      time.sleep(waits.next())
+</pre>
+<p>Make sure that the job_id is unique for each distinct load job. For example, a timestamp is not guaranteed to be unique when jobs are loaded in parallel in a distributed environment.</p>
+<h4><a name="h.javelw8zyane" id="h.javelw8zyane"></a>Uncompressed or Compressed</h4>
+<p>When loading data from Cloud Storage, files can be either uncompressed or gzipped. Here are the trade-offs that need to be considered:</p>
+<ul>
+<li>Maximum file size limit for load jobs – The maximum file size for compressed file is 1GB whereas the limit for uncompressed file is 1TB. The exception for this is CSV files with new lines in strings where the maximum file size is 4GB.<sup><a href="#ftnt4" name="ftnt_ref4" id="ftnt_ref4">[4]</a></sup></li>
+<li>Load Performance – Uncompressed file is loaded in parallel.</li>
+<li>Storage Cost - CSV and JSON files yield very good compression ratios and are more cost effective.</li>
+<li>Network bandwidth - Compressed files consume less network bandwidth.</li>
+</ul>
+<p>For more information about the trade-offs between the two, please refer to <a href="https://developers.google.com/bigquery/preparing-data-for-bigquery?utm_source=cloud-google-com&amp;utm_medium=article&amp;utm_campaign=loading-terabytes">Preparing Data for BigQuery</a>.</p>
+<h4><a name="h.5do7qxq1kzmg" id="h.5do7qxq1kzmg"></a>Flat Schema or Nested/Repeated Schema</h4>
+<p>Some entity relationships are more naturally expressed as a hierarchy. An order transaction and line items is a perfect example. BigQuery supports nested/repeated fields using the JSON format. Alternatively, hierarchical relationships can be flattened first before loading into BigQuery. Once the data is flattened, then it can be loaded either in a CSV or JSON format. Here are the considerations when deciding between the two schemas:</p>
+<ul>
+<li>Nested/Repeated schema reduces duplications.</li>
+<li>JSON file size is much larger than CSV.</li>
+<li>Nested/Repeated fields require the use of special SQL syntax - FLATTEN and WITHIN, which may not be supported by third-party visualization tools.</li>
+</ul>
+<h4><a name="h.tbl3qon5a9bo" id="h.tbl3qon5a9bo"></a>Quota Management</h4>
+<p>BigQuery imposes quota policy to ensure that all users have a fair share of the resources. This prevents a few users from monopolizing and degrading the performance for all users. The quota policy includes limits on the number of import jobs that can be run each day.</p>
+<p>For example, the current limit is 10,000 load jobs per project per day. So if there are 1000 tables that are actively being loaded daily, then there can only be 10 load jobs per table per day.</p>
+<p>Plan ahead to stay within the quota policy. The quota policy is a soft limit. If there is a specific scenario that simply cannot be accommodated with the current quota, check with support to see if it may be possible to increase the limit.</p>
+<p>More information on “BigQuery Quota Policy” can be found at: <a href="https://developers.google.com/bigquery/docs/quota-policy#import?utm_source=cloud-google-com&amp;utm_medium=article&amp;utm_campaign=loading-terabytes">https://developers.google.com/bigquery/docs/quota-policy#import</a></p>
+<h4><a name="h.m3wwyhppvwv7" id="h.m3wwyhppvwv7"></a>Table Partitioning</h4>
+<p>One of the design decisions that needs to be made before loading large data sets is whether or not the table should be split up into multiple tables. The following are some reasons for partitioning the tables:</p>
+<ol>
+<li><span class="bld">Static versus Changing Data Management</span> - BigQuery is optimized for read performance and it does not support updates to data that has already been loaded. By separating data that is more likely to change from data that will not, updates can be achieved by simply deleting a table and re-populating it with the updated data, avoiding the need to reload the entire dataset.</li>
+<li><span class="bld">Cost Optimization</span> - Queries are charged by the amount of data processed. It is recommended to partition the table according to the querying pattern to optimize cost. For example, if analysis is mostly focused on the past quarter’s performance, it may make sense to shard the tables by quarter so only data from the quarter of interest is processed. Similarly, if analysis is mostly done on a per customer basis, partition the table using customer as the dimension.
+<p>Table unions can be used to query across partitioned tables. For example, the following query can be used to query a year’s worth of data from tables that are shared quarterly.</p>
+<pre>
+SELECT column1, column2 FROM Q1, Q2, Q3, Q4 WHERE …
+</pre>
+<p>Bear in mind that there is a limit to the length of the query so don’t be overly aggressive in sharding the tables. Refer to the <a href="https://developers.google.com/bigquery/quota-policy">quota policy</a> page for this limit.</p>
+</li>
+<li><span class="bld">Usage Patterns</span> - Data can be loaded into smaller tables for ad-hoc analytics and later moved to another aggregate table for durable analytics when ad-hoc analytics is no longer required.</li>
+<li><span class="bld">Data Isolation and Security Management</span> - BigQuery’s data access is controlled at the project and dataset level. Data should be partitioned into different datasets for security and isolation.</li>
+</ol>
+<p>When planning for how the table should be partitioned, carefully evaluate the trade-offs among cost, quota limits and query length limit. The following table summarizes the various trade-offs while choosing a specific sharding driver:</p>
+<a href="#" name="5c1ddbc02ac01c84716174cd11331f113fefb633" id="5c1ddbc02ac01c84716174cd11331f113fefb633"></a><a href="#" name="3" id="3"></a>
+<table class="tble-rt">
+<tbody>
+<tr>
+<td>
+<p>Table Sharding Driver</p>
+</td>
+<td>
+<p>Optimization Strategy</p>
+</td>
+<td>
+<p>Potential Impacts</p>
+</td>
+<td>
+<p>Quota Limits To Consider</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>Cost</p>
+</td>
+<td>
+<p>Define data shards such that a minimal amount of data is queried for most of the query patterns.</p>
+</td>
+<td>
+<p>It might impact performance and ease of use.</p>
+</td>
+<td>
+<p>Maximum daily limits for load jobs</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>Rendimiento</p>
+</td>
+<td>
+<p>Combine data into a single table if data sizes are relatively small.</p>
+</td>
+<td>
+<p>It might impact cost and ease of use.</p>
+</td>
+<td>
+<p>Maximum daily limits for load jobs per table</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h1><a name="h.4vkrpa592v8l" id="h.4vkrpa592v8l"></a>Conclusión</h1>
+<p>When dealing with large data sets, saving twice the amount of time can mean a difference in hours or days. It's important to weigh the various considerations during the planning phase, depending on the use case.</p>
+<h1><a name="h.toroz5nln1sm" id="h.toroz5nln1sm"></a>Additional Resources and References</h1>
+<p><a href="/resources/articles/getting-started-with-google-bigquery">Getting Started With Google BigQuery</a><br>
+<a href="https://developers.google.com/bigquery/">Google BigQuery</a><br>
+<a href="http://www.saama.com/wp-content/uploads/2013/08/HowToIngestDataIntoGoogleBigQuery.pdf">How to Ingest Data into Google BigQuery using Talend for Big Data</a><br>
+<a href="/files/BigQueryTechnicalWP.pdf">An Inside Look at Google BigQuery</a><br>
+<a href="/resources/articles/managing-hadoop-clusters-on-google-compute-engine.html">Managing Hadoop Clusters on Google Compute Engine</a></p>
+<br>
+<p><a href="#ftnt_ref1" name="ftnt1" id="ftnt1">[1]</a> A list of vendors that provide high speed file transfer software can be found under the Google Cloud Storage section of the Cloud Platform Partners page at: <a href="/partners">https://cloud.google.com/partners</a>.</p>
+<p><a href="#ftnt_ref2" name="ftnt2" id="ftnt2">[2]</a> Hadoop is a registered trademark owned by the Apache Software Foundation.</p>
+<p><a href="#ftnt_ref3" name="ftnt3" id="ftnt3">[3]</a> A comprehensive list of ETL tools supporting BigQuery can be found at <a href="https://developers.google.com/bigquery/third-party-tools?utm_source=cloud-google-com&amp;utm_medium=article&amp;utm_campaign=loading-terabytes">https://developers.google.com/bigquery/third-party-tools</a>.</p>
+<p><a href="#ftnt_ref4" name="ftnt4" id="ftnt4">[4]</a> More information on the quota on loading data into BigQuery can be found at <a href="https://developers.google.com/bigquery/quota-policy#import">https://developers.google.com/bigquery/quota-policy#import?utm_source=cloud-google-com&amp;utm_medium=article&amp;utm_campaign=loading-terabytes</a>.</p>
+</div>
+<!-- /maia-main --></div>
+<div class="maia-col-3"><br>
+<img src="//www.google.com/images/icons/product/feedback-16.png" class="g-app-icon" alt=""> <a href="javascript:void(0);" class="google-feedback">Comentarios sobre este documento</a><br>
+<br></div>
+</div>
+</div>
+<script>
+(function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+</script><script src="//www.gstatic.com/feedback/api.js">
+</script><script>
+$('body').delegate('.google-feedback', 'click', function() {
+      userfeedback.api.startFeedback({'productId': '94614'});
+  });
+</script><!-- Scripts to include both on Goro + Devsite --><script>
+window.___gcfg = {
+     lang: ''
+   };
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+</script><!-- GTM implementation --><!-- Start dataLayer --><script>
+dataLayer = [{
+        'country': 'es',
+        'region': 'emea',
+        'language': 'es'
+      }];
+</script><!-- End dataLayer --><!-- Start Google Tag Manager --><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5CVQBG" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript> <script>
+(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-5CVQBG');
+</script><!-- End Google Tag Manager --><!-- Global JS scripts to load; path will depend on whether we're on devsite or Goro --><script src="/js/base.min.js">
+</script><!-- Retina loader; Do not load if partners page because we need to wait until the Angular app runs --><script>
+new lfl.system.RetinaLoader();
+</script><!-- Secondary right-side scroll-nav --><script>
+new lfl.ui.ScrollNav({});
+</script>
+</body>
+</html>
