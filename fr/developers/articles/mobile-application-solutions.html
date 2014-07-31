@@ -11,7 +11,7 @@
 <link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
 <link href="//fonts.googleapis.com/css?family=Open+Sans:400italic,300,400,600,700" rel="stylesheet">
 <link href="/css/default.css" rel="stylesheet"><!--[if lt IE 9]>
-    <link rel="stylesheet" media="screen" href='/c/cp-ie.css'>
+    <link rel="stylesheet" media="screen" href='/css/cp-ie.css'>
     <![endif]-->
 <script src="/js/floodlight.js">
 </script>
@@ -155,7 +155,7 @@
 <p>Les journaux d'application peuvent contenir de précieuses informations sur la manière dont les utilisateurs se servent de votre solution et sur le comportement de votre backend mobile. Lorsque le code de votre backend mobile s'exécute sur Google&nbsp;App&nbsp;Engine, vous pouvez utiliser l'<a href="https://developers.google.com/appengine/docs/java/logs/">API&nbsp;Logs</a> pour récupérer les journaux d'application. Vous pouvez ensuite les importer dans Google&nbsp;Cloud&nbsp;Storage et les intégrer dans <a href="https://developers.google.com/bigquery/">Google&nbsp;BigQuery</a>. Si votre application cliente pour mobile permet aux utilisateurs d'effectuer de nombreuses interactions au sein des applications sans envoyer de demandes régulières au backend, vous pouvez enrichir les journaux d'application de fichiers que l'application cliente peut collecter et envoyer régulièrement à votre backend mobile par le biais de l'API présentée sur Google&nbsp;Cloud&nbsp;Endpoints.</p>
 <h3 id="running-code">Exécution de code en dehors du bac à sable de Google&nbsp;App&nbsp;Engine</h3>
 <p>Si la création de l'intégralité du backend mobile s'avère possible à l'aide d'exécutables compatibles avec Google&nbsp;App&nbsp;Engine<sup>[<a href="#fn-8" name="ref-8" id="ref-8">8</a>]</sup>, vous serez dispensé du traitement des problèmes d'infrastructure que sont notamment le dimensionnement automatique, l'équilibrage des charges, la reprise après incident, etc. Cependant, il se peut que certaines de vos exigences ne soient pas compatibles avec le bac à sable d'App&nbsp;Engine. Vous souhaitez, par exemple, utiliser des bibliothèques C/C++, des binaires personnalisés ou encore des programmes Perl dans le cadre d'un traitement de demandes asynchrone ou d'un traitement par lots.</p>
-<p>Dans les deux cas, vous pouvez utiliser <a href="../../products/compute-engine">Google&nbsp;Compute&nbsp;Engine</a><sup>[<a href="#fn-9" name="ref-9" id="ref-9">9</a>]</sup> pour exécuter les parties de votre backend mobile qui ne peuvent pas être hébergées sur Google&nbsp;App&nbsp;Engine.</p>
+<p>Dans les deux cas, vous pouvez utiliser <a href="/products/compute-engine">Google&nbsp;Compute&nbsp;Engine</a><sup>[<a href="#fn-9" name="ref-9" id="ref-9">9</a>]</sup> pour exécuter les parties de votre backend mobile qui ne peuvent pas être hébergées sur Google&nbsp;App&nbsp;Engine.</p>
 <p>Lorsque le code exécuté sur Compute&nbsp;Engine est utilisé en vue d'un traitement par lots ou d'un traitement de demandes asynchrone<sup>[<a href="#fn-10" name="ref-10" id="ref-10">10</a>]</sup>, celui exécuté sur Google&nbsp;App&nbsp;Engine peut placer des tâches dans une ou plusieurs files d'attente de retrait. Le code exécuté sur Compute&nbsp;Engine pourra alors extraire ces tâches à l'aide de l'<a href="https://developers.google.com/appengine/docs/python/taskqueue/rest/">API&nbsp;REST Task&nbsp;Queue</a><sup>[<a href="#fn-11" name="ref-11" id="ref-11">11</a>]</sup>.</p>
 <figure><img src="/images/articles/mobile-app-9.png" alt="Exécution de code en dehors du bac à sable de Google&nbsp;App&nbsp;Engine" class="f-90">
 <figcaption>Figure&nbsp;9&nbsp;: Exécution de code en dehors du bac à sable de Google&nbsp;App&nbsp;Engine</figcaption>
@@ -188,7 +188,7 @@
 <div class="maia-col-3"><br>
 <img src="//www.google.com/images/icons/product/feedback-16.png" class="g-app-icon" alt=""> <a href="javascript:void(0);" class="google-feedback">Commentaires sur ce document</a><br>
 <br>
-<img src="//www.google.com/images/icons/thirdparty/pdf-16.png" class="g-app-icon" alt=""> <a href="../../../files/articles/google-cloud_technical-article_mobile-solutions.pdf" class="cp-pdf" onclick="javascript: _gaq.push(['_trackPageview', '../../../files/articles/google-cloud_technical-article_mobile-solutions.pdf']);">Télécharger la version PDF</a>
+<img src="//www.google.com/images/icons/thirdparty/pdf-16.png" class="g-app-icon" alt=""> <a href="/files/articles/google-cloud_technical-article_mobile-solutions.pdf" class="cp-pdf" onclick="javascript: _gaq.push(['_trackPageview', '../../../files/articles/google-cloud_technical-article_mobile-solutions.pdf']);">Télécharger la version PDF</a>
 <hr>
 <h4>Exemple d'application et didacticiel</h4>
 <ul>

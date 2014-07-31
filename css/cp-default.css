@@ -136,7 +136,7 @@ a.maia-media.maia-media-secondary:after {
 }
 
 .cp-cloud {
-  background-image: url(../i/cloud.png);
+  background-image: url(/images/cloud.png);
   background-repeat: no-repeat;
   background-position: 100% 0;
 }
@@ -234,7 +234,7 @@ figcaption {
 
 /* basic sprite */
 .cp-s {
-  background-image: url(../i/s-fix.png);
+  background-image: url(/images/s-fix.png);
   background-repeat: no-repeat;
 }
 
@@ -461,7 +461,7 @@ p {
   width: 562px;
   height: 235px;
   overflow: hidden;
-  background: url(../i/build.png) 110px 153px no-repeat;
+  background: url(/images/build.png) 110px 153px no-repeat;
 }
 
 .cp-sq .cp-wrap-2 {
@@ -572,12 +572,12 @@ p {
 }
 
 .cp-hero .cp-ease {
-  background-image: url(../i/s-fix-2.png);
+  background-image: url(/images/s-fix-2.png);
   background-position: 0 -478px;
 }
 
 .cp-hero .cp-manage {
-  background-image: url(../i/s-fix-2.png);
+  background-image: url(/images/s-fix-2.png);
   background-position: 0 -240px;
 }
 
@@ -631,7 +631,7 @@ tr.cp-row {
   z-index: 1;
   width: 7px;
   height: 194px;
-  background: url(../i/build.png) 0 -630px;
+  background: url(/images/build.png) 0 -630px;
 }
 
 .cp-row-shadow:before {
@@ -739,7 +739,7 @@ a.cp-more  {
   padding-left: 86px;
   margin: 0 0 21px 30px;
   min-height: 110px;
-  background: url(../i/use-cases-fix.png) 0 5px no-repeat;
+  background: url(/images/use-cases-fix.png) 0 5px no-repeat;
 }
 
 .cp-cases .cp-graph {
@@ -965,7 +965,7 @@ a.cp-more  {
   border-bottom: 0;
   margin: 10px 0 0 0;
   padding: 20px 20px 0px 73px;
-  background-image: url(../i/s-fix-2.png);
+  background-image: url(/images/s-fix-2.png);
   background-repeat: no-repeat;
   background-position: 16px -675px;
 }
@@ -1056,7 +1056,7 @@ a.cp-more  {
 
 .cp-news li {
   line-height: 22px;
-  background: url(../i/product-icons-fix.png) 366px -2573px no-repeat;
+  background: url(/images/product-icons-fix.png) 366px -2573px no-repeat;
   padding-bottom: 20px;
 }
 
@@ -1332,7 +1332,7 @@ a.cp-more  {
   width: 100px;
   white-space: nowrap;
   margin: 0 11px 47px 0;
-  background: url(../i/product-icons-fix.png);
+  background: url(/images/product-icons-fix.png);
   vertical-align: baseline;
   font-size: 13px;
 }
@@ -1425,7 +1425,7 @@ a.cp-more  {
   height: 21px;
   overflow: hidden;
   text-indent: -500px;
-  background: url(../i/s-fix.png) 0 -4200px;
+  background: url(/images/s-fix.png) 0 -4200px;
 }
 
 .cp-pricing .cp-lge + h2 {
@@ -1591,7 +1591,7 @@ a.cp-more  {
   width: 84px;
   padding: 0;
   margin: 0 0 0 28px;
-  background: url(../i/s-fix.png) no-repeat 0 -4600px;
+  background: url(/images/s-fix.png) no-repeat 0 -4600px;
   line-height: 17px;
 }
 
@@ -1786,7 +1786,7 @@ a.cp-more  {
 }
 
 .cp-cloudpage {
-  background-image: url(../i/cloud.png);
+  background-image: url(/images/cloud.png);
   background-repeat: no-repeat;
   background-position: 50% 0px;
   margin-top: 0 !important;
@@ -1942,7 +1942,7 @@ a.cp-more  {
   font-size: 15px;
   margin-bottom: 18px;
   padding-top: 115px;
-  background-image: url(../i/product-icons-fix.png);
+  background-image: url(/images/product-icons-fix.png);
   background-repeat: no-repeat;
 }
 
@@ -1994,7 +1994,7 @@ a.cp-more  {
   width: 320px;
   padding: 0 0 70px 125px;
   margin-left: 60px;
-  background-image: url(../i/product-icons-fix.png);
+  background-image: url(/images/product-icons-fix.png);
   background-repeat: no-repeat;
 }
 
@@ -2062,7 +2062,7 @@ a.cp-more  {
   bottom: -1px;
   left: -40px;
   height: 10px;
-  background: url(../i/bg-shadow-fade.png) bottom center no-repeat;
+  background: url(/images/bg-shadow-fade.png) bottom center no-repeat;
 }
 .cp-blurb.cp-solutions {
   padding-bottom: 35px;
@@ -2087,7 +2087,7 @@ a.cp-more  {
   height: 58px;
   width: 60px;
   display: block;
-  background-image: url(../i/product-icons-solutions.png);
+  background-image: url(/images/product-icons-solutions.png);
   background-repeat: no-repeat;
 }
 .cp-solutions li.cp-sae:before {
@@ -2139,7 +2139,7 @@ a.cp-more  {
   display: block;
   width: 6px;
   height: 5px;
-  background: url(../i/icn-arrow.gif) 0 0 no-repeat;
+  background: url(/images/icn-arrow.gif) 0 0 no-repeat;
   position: absolute;
   right: 0;
   top: 13px;
@@ -2263,7 +2263,7 @@ a.cp-more  {
 #maia-main.cp-support {
 	margin-top: 0;
 	padding-top: 70px;
-	background-image: url(../i/cloud.png);
+	background-image: url(/images/cloud.png);
   background-repeat: no-repeat;
   background-position: 50% -92px;
 }
@@ -2327,7 +2327,7 @@ a.cp-more  {
 }
 
 .list-square li {
-	background: url(../i/bg-bullet-sq.gif) 0 8px no-repeat;
+	background: url(/images/bg-bullet-sq.gif) 0 8px no-repeat;
 	padding-left: 10px;
 	margin-bottom: 2px;
   list-style-type: none;
@@ -2376,7 +2376,7 @@ a.cp-more  {
 #maia-main.cp-packages {
 	margin-top: 0;
 	padding-top: 70px;
-	background-image: url(../i/cloud.png);
+	background-image: url(/images/cloud.png);
   background-repeat: no-repeat;
   background-position: 50% -92px;
 }
@@ -2466,7 +2466,7 @@ a.cp-more  {
 	padding-left: 98px;
 	padding-bottom: 10px;
 	margin-bottom: 30px;
-	background: url(../i/icon-app-engine-sm.png) 0 0 no-repeat;
+	background: url(/images/icon-app-engine-sm.png) 0 0 no-repeat;
 	width: auto;
 	min-height: 0;
 	border-bottom: 1px solid #d7d7d7;
@@ -2527,14 +2527,14 @@ a.cp-more  {
 	min-height: 55px;
 }
 #how-app-engine-works #step-1 {
-	background: url(../i/steps-1.gif) 0 0 no-repeat;
+	background: url(/images/steps-1.gif) 0 0 no-repeat;
 	padding-top: 8px;
 }
 #how-app-engine-works #step-2 {
-	background: url(../i/steps-2.gif) 0 0 no-repeat;
+	background: url(/images/steps-2.gif) 0 0 no-repeat;
 }
 #how-app-engine-works #step-3 {
-	background: url(../i/steps-3.gif) 0 0 no-repeat;
+	background: url(/images/steps-3.gif) 0 0 no-repeat;
 }
 .startups-using-app-engine {
 	margin-bottom: 10px;
@@ -2590,7 +2590,7 @@ a.cp-more  {
 	display: inline-block;
 	width: 8px;
 	height: 13px;
-	background: url(../i/icon-scroller.png) -26px -13px no-repeat;
+	background: url(/images/icon-scroller.png) -26px -13px no-repeat;
 	margin-left: 15px;
 }
 .cp-scroller .scroll-previous {
@@ -2890,7 +2890,7 @@ a.cp-more  {
     background: none;
   }
 	#maia-main.cp-support .maia-cols {
-		background: url(../i/bg-border-tile.gif) 33% 0 repeat-y;
+		background: url(/images/bg-border-tile.gif) 33% 0 repeat-y;
 	}
 	.startups-using-app-engine > div p {
 		min-height: 108px;
