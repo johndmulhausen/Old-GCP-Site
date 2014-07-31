@@ -469,7 +469,7 @@ MongoDB servers are configured with <a target="_blank" href="http://docs.mongodb
 
   <h3><a name="performance_tcp_keepalive" id="performance_tcp_keepalive"></a>TCP keepalive</h3>
 
-  <p>Operating systems have a heartbeat mechanism such that either end of a network connection knows that the other is still connected.  How long one end can go without hearing from the other is called the "<a target="_blank" href="REPLACE">keepalive</a>".  When one end of the connection has not heard from the other for a sufficient period of time, the connection will be considered dead and cleaned up.</p>
+  <p>Operating systems have a heartbeat mechanism such that either end of a network connection knows that the other is still connected.  How long one end can go without hearing from the other is called the "keepalive".  When one end of the connection has not heard from the other for a sufficient period of time, the connection will be considered dead and cleaned up.</p>
 
   <p>A MongoDB server with a high inbound connection rate can run into a problem where the network stack has kept dead connections around too long.  To prevent this, it is recommend that you lower the TCP keepalive time from its default.</p>
 
