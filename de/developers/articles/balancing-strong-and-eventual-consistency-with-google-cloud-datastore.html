@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" class="maia">
   <head>
-    <title>page.title - Google Cloud Platform</title>
+    <title>Cloud Computing &amp; Cloud Hosting Services - Google Cloud Platform</title>
     <meta charset="utf-8" />
     <link rel="shortcut icon" href="/images/gcp-favicon.ico">
     <link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
@@ -206,7 +206,358 @@
   </div>
 </div>
 
-
+<!DOCTYPE html>
+<html devsite="">
+<head>
+<title>Web Apps Articles &amp; Tutorials — Google Cloud Platform</title>
+<meta name="description" content="Read technical articles about web applications and solutions with Google Cloud Platform, including auto scaling and how to manage complex applications in the cloud.">
+<meta name="hide_page_heading" value="true">
+<meta name="full_width" value="true">
+<meta name="top_category" value="developers">
+<meta name="subcategory" value="articles">
+<meta name="viewport" content="initial-scale=1, minimum-scale=1, width=device-width">
+<link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
+<link href="//fonts.googleapis.com/css?family=Open+Sans:400italic,300,400,600,700" rel="stylesheet">
+<link href="/css/default.css" rel="stylesheet"><!--[if lt IE 9]>
+    <link rel="stylesheet" media="screen" href='/css/cp-ie.css'>
+    <![endif]-->
+<script src="/js/floodlight.js">
+</script>
+</head>
+<body>
+<div id="maia-main" class="cp-article">
+<div class="maia-cols">
+<div class="maia-col-9">
+<div>
+<div style="float:right">
+<div class="g-plusone"></div>
+</div>
+<h1 class="title">Strong Consistency und Eventual Consistency mit Google Cloud Datastore abstimmen</h1>
+</div>
+<div class="cp-article-tutorial">
+<h2><a name="h.4n3hcboreol0" id="h.4n3hcboreol0"></a>Konsistente Nutzererfahrung bieten und das Eventual Consistency-Modell für die Skalierung auf große Datensätze nutzen</h2>
+<p>In diesem Dokument wird die Umsetzung von Strong Consistency im Sinne einer positiven Nutzererfahrung und die Nutzung des Eventual Consistency-Modells von Google Cloud Datastore für die Verarbeitung großer Mengen von Daten und Nutzern erläutert.</p>
+<p>Dieses Dokument richtet sich an Softwarearchitekten und -entwickler, die Lösungen mit Google Cloud Datastore erstellen möchten. Zur Unterstützung von Lesern, die mehr mit relationalen Datenbanken als mit nicht relationalen Systemen wie Google Cloud Datastore vertraut sind, verweist dieses Dokument auf entsprechende Konzepte in relationalen Datenbanken. Im Rahmen dieses Dokuments wird vorausgesetzt, dass Sie über Grundkenntnisse von Google Cloud Datastore verfügen. Am leichtesten gelingt der Einstieg in Google Cloud Datastore über die Nutzung einer der unterstützten Sprachen, d.&nbsp;h. Python, Java, Go oder PHP, in Google App Engine. Wenn Sie App Engine noch nicht verwendet haben, empfehlen wir, Informationen über eine dieser Sprachen im Abschnitt <a href="https://developers.google.com/appengine/">Daten speichern</a> im <a href="https://developers.google.com/appengine/docs/python/storage">Erste Schritte-Leitfaden</a> nachzuschlagen. Obwohl Python in Beispiel-Codefragmenten genutzt wird, sind keine Python-Fachkenntnisse für das Verständnis dieses Dokuments erforderlich.</p>
+<h4>Inhalt</h4>
+<p><a class="indnt" href="#h.w3kz4fze562t">NoSQL und Eventual Consistency</a><br>
+<a class="indnt" href="#h.tf76fya5nqk8">Eventual Consistency in Google Cloud Datastore</a><br>
+<a class="indnt" href="#h.3loc7ynqbw6i">Ancestor-Abfrage und Entitätsgruppe</a><br>
+<a class="indnt" href="#h.ooaauy74mue8">Einschränkungen von Entitätsgruppen und Ancestor-Abfragen</a><br>
+<a class="indnt" href="#h.k31yisins6ul">Alternativen zu Ancestor-Abfragen</a><br>
+<a class="indnt" href="#h.buvz7spe7ytk">Dauer bis Full Consistency minimieren</a><br>
+<a class="indnt" href="#h.njxgygqflg9k">Fazit</a><br>
+<a class="indnt" href="#h.ywh7cedcuhkk">Zusätzliche Ressourcen</a></p>
+<h2><a name="h.w3kz4fze562t" id="h.w3kz4fze562t"></a>NoSQL und Eventual Consistency</h2>
+<p>In den letzten Jahren sind nicht relationale Datenbanken, die auch als NoSQL-Datenbanken bezeichnet werden, als Alternative zu relationalen Datenbanken aufgekommen. Google Cloud Datastore ist eine der am meisten genutzten nicht relationalen Datenbanken in der Branche. Im Jahr 2013 verarbeitete Google Cloud Datastore laut <a href="http://googlecloudplatform.blogspot.com/2013/05/reducing-app-engine-datastore-pricing-by-up-to-25-percent.html">Google Cloud Platform-Blogpost</a> 4,5&nbsp;Trillionen Transaktionen pro Monat. Der Dienst stellt für Entwickler eine vereinfachte Möglichkeit dar, um Daten zu speichern und darauf zuzugreifen. Das flexible Schema ist perfekt auf objektorientierte und skriptbasierte Sprachen abgestimmt. Google Cloud Datastore bietet außerdem eine Reihe von Funktionsmerkmalen, die relationale Datenbanken nicht optimal bereitstellen können, insbesondere hohe Leistung bei sehr großen Datenmengen und hohe Zuverlässigkeit.</p>
+<p>Für Entwickler, die relationale Datenbanken gewohnt sind, ist es möglicherweise nicht ganz einfach, ein System zu konzipieren, das nicht relationale Datenbanken nutzt, da sie mit einigen Eigenschaften und Verfahren solcher Datenbanken weniger vertraut sind. Obwohl das Google Cloud Datastore-Programmiermodell unkompliziert ist, ist es wichtig, sich diese Merkmale vor Augen zu führen. Eventual Consistency ist eines dieser Merkmale und das Hauptthema dieses Dokuments ist die darauf ausgerichtete Programmierung.</p>
+<h3><a name="h.86naen3bqe0" id="h.86naen3bqe0"></a>Was ist Eventual Consistency?</h3>
+<p><span class="bld">Eventual Consistency</span> ist die theoretische Garantie, dass alle Leservorgänge der Entität schließlich den zuletzt aktualisierten Wert zurückmelden, vorausgesetzt, es werden keine neuen Aktualisierungen der Entität vorgenommen. Das Domain Name System (DNS) des Internets ist ein gut bekanntes Beispiel für ein System mit einem Eventual Consistency-Modell. DNS-Server geben nicht unbedingt die neuesten Werte wieder, sondern die Werte werden vielmehr in den Cache aufgenommen und über das Internet in vielen Verzeichnissen repliziert. Die Replikation der geänderten Werte auf alle DNS-Clients und -Server nimmt eine gewisse Zeit in Anspruch. Dennoch ist das DNS ein sehr erfolgreiches System, das zu einem der Fundamente des Internets geworden ist. Es ist hochverfügbar und hat sich als äußerst skalierbar erwiesen, indem es das Nachschlagen von Namen für über hundert Millionen Geräte im gesamten Internet ermöglicht.</p>
+<p>Abbildung&nbsp;1 veranschaulicht das Konzept der Replikation mit Eventual Consistency. Im Diagramm ist ersichtlich, dass die Replikate zwar stets zum Lesen bereitstehen, aber einige zu einem bestimmten Zeitpunkt möglicherweise nicht mit dem letzten Schreibvorgang auf dem Ursprungsknoten übereinstimmen. Im Diagramm ist Node&nbsp;A (Knoten&nbsp;A) der Ursprungsknoten und die Knoten&nbsp;B und C sind die Replikate.</p>
+<figure><img src="/images/articles/balancing-strong-and-eventual-consistency-with-gcd/eventual-consistency.png" alt="">
+<figcaption>Abbildung 1: Konzeptionelle Darstellung einer Replikation mit Eventual Consistency</figcaption>
+</figure>
+<p>Im Gegensatz dazu basieren relationale Datenbanken auf dem Strong Consistency-Konzept, das auch als Immediate Consistency bezeichnet wird. Es bedeutet, dass Daten, die unmittelbar nach einer Aktualisierung angezeigt werden, für alle Beobachter der Entität übereinstimmen. Viele Entwickler, die relationale Datenbanken nutzen, gehen grundsätzlich von dieser Annahme aus. Für Strong Consistency müssen die Entwickler jedoch Kompromisse bezüglich der Skalierbarkeit und Leistungsstärke ihrer Anwendungen eingehen. Vereinfacht ausgedrückt müssen die Daten während des Aktualisierungs- oder Replizierungsvorgangs gesperrt werden, um sicherzugehen, dass dieselben Daten nicht durch andere Prozesse aktualisiert werden.</p>
+<p>In Abbildung&nbsp;2 ist die Bereitstellungstopologie und der Replikationsprozess mit Strong Consistency dargestellt. Sie können in diesem Diagramm sehen, dass Replikate stets mit dem Ursprungsknoten übereinstimmende Werte aufweisen, aber ein Zugriff darauf erst nach Abschluss des Aktualisierungsvorgangs möglich ist.</p>
+<figure><img src="/images/articles/balancing-strong-and-eventual-consistency-with-gcd/strong-consistency.png" alt="">
+<figcaption>Abbildung 2: Konzeptionelle Darstellung einer Replikation mit Strong Consistency</figcaption>
+</figure>
+<h3><a name="h.rcbsdmar23fq" id="h.rcbsdmar23fq"></a>Ausgleich zwischen Strong und Eventual Consistency herstellen</h3>
+<p>Nicht relationale Datenbanken sind in jüngster Zeit populär geworden, insbesondere bei Webanwendungen, die hohe Skalierbarkeit und hochverfügbare Leistungsfähigkeit erfordern. Mit nicht relationalen Datenbanken können die Entwickler für jede Anwendung einen optimalen Ausgleich zwischen Strong Consistency und Eventual Consistency erzielen. Auf diese Weise lassen sich die Vorteile beider Modelle kombinieren. Anwendungsfälle, bei denen Strong Consistency nicht benötigt wird, sind zum Beispiel: "wer von meinen Freunden ist zu einer bestimmten Zeit online" oder "wie viele Nutzer haben meinem Post +1 gegeben". Über die Nutzung von Eventual Consistency können Sie solche Anwendungsfälle jedoch mit Skalierbarkeit und Leistungsstärke versehen. Anwendungsfälle, die Strong Consistency erfordern, sind zum Beispiel: "hat ein Nutzer den Abrechnungsprozess durchlaufen oder nicht" oder "die Anzahl der Punkte, die ein Spieler während einer Spielsitzung erzielt hat".</p>
+<p>Grundsätzliche Schlussfolgerung aus den obigen Beispielen: Für Anwendungsfälle mit einer sehr großen Anzahl von Entitäten empfiehlt sich häufig Eventual Consistency als bestes Modell. Wenn sehr viele Ergebnisse in einer Abfrage vorliegen, wird die Nutzererfahrung durch die Aufnahme oder den Ausschluss bestimmter Entitäten wahrscheinlich nicht beeinträchtigt. Andererseits ist davon auszugehen, dass bei Anwendungsfällen mit einer kleinen Zahl von Entitäten und einem eingeschränkten Kontext Strong Consistency erforderlich ist. Die Nutzererfahrung wird beeinträchtigt sein, weil sich die Nutzer aufgrund des Kontextes bewusst werden, welche Entitäten ein- oder auszuschließen sind.</p>
+<p>Aus den oben genannten Gründen ist es wichtig, dass die Entwickler die nicht relationalen Eigenschaften von Google Cloud Datastore kennen. In den folgenden Abschnitten wird erläutert, wie Eventual Consistency- und Strong Consistency-Modelle miteinander kombiniert werden können, um eine skalierbare, hochverfügbare und leistungsstarke Anwendung zu schaffen. Dabei werden die Konsistenzanforderungen im Sinne einer positiven Nutzererfahrung erfüllt.</p>
+<h2><a name="h.tf76fya5nqk8" id="h.tf76fya5nqk8"></a>Eventual Consistency in Google Cloud Datastore</h2>
+<p>Wenn eine stark konsistente Ansicht der Daten benötigt wird, muss die richtige API ausgewählt werden. Die unterschiedlichen Versionen von Google Cloud Datastore-Abfrage-APIs und die entsprechenden Konsistenzmodelle sind in Tabelle&nbsp;1 dargestellt.</p>
+<a href="#" name="73aa40d03f7c0cd78a8b69d986cc7d802f3e49eb" id="73aa40d03f7c0cd78a8b69d986cc7d802f3e49eb"></a><a href="#" name="2" id="2"></a>
+<figure>
+<table class="brdr-table" style="text-align:left;">
+<tbody>
+<tr>
+<th>
+<p>Google Cloud Datastore API</p>
+</th>
+<th>
+<p>Entitätswert lesen</p>
+</th>
+<th>
+<p>Index lesen</p>
+</th>
+</tr>
+<tr>
+<td>
+<p><a href="https://developers.google.com/appengine/docs/python/datastore/queries">Globale Abfrage</a></p>
+</td>
+<td>
+<p>Eventual Consistency</p>
+</td>
+<td>
+<p>Eventual Consistency</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="https://developers.google.com/appengine/docs/python/datastore/queries#Python_Keys_only_queries">Globale Abfrage (nur Schlüssel)</a></p>
+</td>
+<td>
+<p>–</p>
+</td>
+<td>
+<p>Eventual Consistency</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="https://developers.google.com/appengine/docs/python/datastore/queries#Python_Ancestor_queries">Ancestor-Abfrage</a></p>
+</td>
+<td>
+<p>Strong Consistency</p>
+</td>
+<td>
+<p>Strong Consistency</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="https://developers.google.com/appengine/docs/python/datastore/entities#Python_Retrieving_an_entity">Suche nach Schlüssel</a> (get())</p>
+</td>
+<td>
+<p>Strong Consistency</p>
+</td>
+<td>
+<p>–</p>
+</td>
+</tr>
+</tbody>
+</table>
+<figcaption>Tabelle 1: Google Cloud Datastore-Abfragen/-get-Aufrufe und mögliches Konsistenzverhalten</figcaption>
+</figure>
+<p>Google Cloud Datastore-Abfragen ohne Ancestor werde als <span class="bld">globale Abfragen</span> bezeichnet und sind für die Einbindung in ein Eventual Consistency-Modell vorgesehen. Dies garantiert keine Strong Consistency. Eine <span class="bld">ausschließlich schlüsselbasierte</span> globale Abfrage, ist eine <span class="bld">globale Abfrage</span>, die nur die Schlüssel der Entitäten zurückmeldet, die der Abfrage entsprechen, nicht die Attributwerte der Entitäten. Eine <span class="bld">Ancestor-Abfrage</span> wird auf Basis einer Ancestor-Entität durchgeführt. In den folgenden Abschnitten wird das unterschiedliche Konsistenzverhalten näher beleuchtet.</p>
+<h3><a name="h.cb1okox563r3" id="h.cb1okox563r3"></a>Eventual Consistency beim Lesen von Entitätswerten</h3>
+<p>Mit der Ausnahme von Ancestor-Abfragen ist ein aktualisierter Entitätswert bei der Ausführung einer Abfrage möglicherweise nicht sofort sichtbar. Gehen Sie zum Verständnis der Auswirkung von Eventual Consistency beim Lesen von Entitätswerten von einem Szenario aus, bei dem eine Entität, "Spieler", eine Eigenschaft, "Spielstand", besitzt. Nehmen Sie zum Beispiel an, dass der Spielstand anfangs einen Wert von 100 aufweist. Nach einiger Zeit wird der Wert auf 200 aktualisiert. Wenn eine globale Abfrage ausgeführt wird und dieselbe Entität "Spieler" in das Ergebnis einbezieht, ist es möglich, dass der Wert der Eigenschaft "Spielstand" der zurückgemeldeten Entität unverändert angezeigt wird.</p>
+<p>Dieses Verhalten beruht auf der Replikation zwischen Google Cloud Datastore-Servern. Die Replikation wird von Bigtable und Megastore verwaltet, den zugrunde liegenden Technologien für Google Cloud Datastore. Nähere Informationen zu Bigtable und Megastore finden Sie unter <a href="#h.ywh7cedcuhkk">Zusätzliche Ressourcen</a>. Die Replikation wird mit dem <a href="http://en.wikipedia.org/wiki/Paxos_(computer_science)">Paxos-Algorithmus</a> durchgeführt, der gleichzeitig wartet, bis eine Mehrzahl der Replikate die Aktualisierungsanfrage quittiert hat. Die einzelnen Replikate werden nach einer gewissen Zeit mit den Daten aus der Anfrage aktualisiert. Dieser Zeitraum ist in der Regel kurz, seine tatsächliche Länge wird aber nicht garantiert. Es kann vorkommen, dass eine Abfrage die veralteten Daten liest, wenn sie vor Fertigstellung der Aktualisierung durchgeführt wird.</p>
+<p>In vielen Fällen erreicht die Aktualisierung sämtliche Replikate sehr schnell. Treffen allerdings mehrere Faktoren zusammen, kann die Dauer bis zum Erreichen der Konsistenz länger werden. Zu diesen Faktoren gehören das ganze Rechenzentrum betreffende Vorkommnisse, bei denen eine große Anzahl von Servern zwischen Rechenzentren umgestellt werden. Angesichts der Unterschiedlichkeit dieser Faktoren ist es unmöglich, feste Zeitvorgaben für die Herstellung vollständiger Konsistenz festzulegen.</p>
+<p>Eine Abfrage benötigt gewöhnlich nur sehr kurze Zeit bis zur Rückmeldung des neuesten Wertes. Wenn die Replikationslatenz in seltenen Fällen jedoch zunimmt, kann es wesentlich länger dauern. Anwendungen, die globale Google Cloud Datastore-Abfragen nutzen, sollten sorgfältig so konzipiert werden, dass sie solche Situationen gut bewältigen können.</p>
+<p>Die Eventual Consistency beim Lesen von Entitätswerten kann mithilfe einer ausschließlich schlüsselbasieren Abfrage, einer Ancestor-Abfrage, oder einer schlüsselbasierten Suche, d.&nbsp;h. Methode "get()", vermieden werden. Diese verschiedenen Abfragetypen werden weiter unten erläutert.</p>
+<h3><a name="h.4xdytk3hj44" id="h.4xdytk3hj44"></a>Eventual Consistency beim Lesen eines Index</h3>
+<p>Ein Index ist bei Ausführung einer globalen Abfrage möglicherweise noch nicht aktualisiert. Das bedeutet, dass auch wenn Sie die neuesten Eigenschaftswerte der Entitäten lesen können, die "Liste der Entitäten" im Abfrageergebnis möglicherweise auf der Grundlage alter Indexwerte gefiltert wird.</p>
+<p>Gehen Sie zum Verständnis von Eventual Consistency beim Lesen eines Index von einem Szenario aus, bei dem eine neue Entität, "Spieler", in Google Cloud Datastore eingefügt wird. Die Entität weist eine Eigenschaft, "Spielstand", auf, die anfangs einen Wert von 300 besitzt. Unmittelbar nach dem Einfügen führen Sie eine ausschließlich schlüsselbasierte Abfrage durch, um alle Entitäten mit einem Spielstand über 0 abzurufen. Sie würden dann erwarten, dass die Entität "Spieler", die soeben eingefügt wurde, in den Abfrageergebnissen erscheint. Stattdessen kann es geschehen, dass die Entität "Spieler" nicht in den Ergebnissen aufgeführt wird. Diese Situation kann eintreten, wenn die Indextabelle für die Eigenschaft "Spielstand" zum Zeitpunkt der Ausführung der Abfrage nicht mit dem neu eingefügten Wert aktualisiert ist.</p>
+<p>Bedenken Sie, dass alle Abfragen in Google Cloud Datastore in Bezug auf <a href="https://developers.google.com/appengine/docs/python/datastore/indexes#Python_Index_definition_and_structure">Indextabellen</a> ausgeführt werden und <a href="https://developers.google.com/appengine/articles/life_of_write">die Aktualisierungen der Indextabellen dennoch asynchron sind</a>. Jede Entitätsaktualisierung besteht im Wesentlichen aus zwei Phasen. In der ersten Phase, der Übernahmephase, wird ein Schreibvorgang in das Transaktionsprotokoll durchgeführt. In der zweiten Phase werden Daten geschrieben und Indizes aktualisiert. Wenn die Übernahmephase erfolgreich verläuft, wird die Schreibphase mit Sicherheit gelingen, auch wenn diese eventuell nicht sofort erfolgt. Wenn Sie eine Entität abfragen, bevor die Indizes aktualisiert sind, kann es dazu kommen, dass Sie Daten sehen, die noch nicht konsistent sind.</p>
+<p>Infolge dieses Zwei-Phasen-Prozesses besteht eine Zeitverzögerung, bevor die neuesten Aktualisierungen von Entitäten bei globalen Abfragen sichtbar sind. Wie bei der Eventual Consistency von Entitätswerten ist die Zeitverzögerung typischerweise gering. Sie kann aber auch länger dauern und unter außergewöhnlichen Umständen sogar mehrere Minuten betragen.</p>
+<p>Die gleiche Situation kann auch nach Aktualisierungen eintreten. Gehen wir zum Beispiel davon aus, dass Sie eine vorhandene Entität "Spieler" mit einem Eigenschaftswert für "Spielstand" von 0 aktualisieren und sofort anschließend dieselbe Abfrage ausführen. Sie würden erwarten, dass die Entität nicht in den Abfrageergebnissen erscheint, weil der neue "Spielstand" von 0 dies ausschließt. Aufgrund desselben asynchronen Verhaltens bei der Indexaktualisierung ist es dennoch möglich, dass die Entität im Ergebnis enthalten ist.</p>
+<p>Die Eventual Consistency beim Lesen eines Indexwerts lässt sich nur mithilfe einer Ancestor-Abfrage oder einer schlüsselbasierten Suche vermeiden. Mit einer ausschließlich schlüsselbasierten Abfrage kann dieses Verhalten nicht vermieden werden.</p>
+<h3><a name="h.ubkfi6o13a4f" id="h.ubkfi6o13a4f"></a>Strong Consistency beim Lesen von Entitätswerten und Indizes</h3>
+<p>In Google Cloud Datastore gibt es nur zwei APIs, die eine stark konsistente Ansicht für das Lesen von Entitätswerten und Indizes liefern: (1) die schlüsselbasierte Suche und (2) die Ancestor-Abfrage. Wenn die Anwendungslogik Strong Consistency erfordert, dann sollte der Entwickler eine dieser Methoden zum Lesen von Entitäten aus Google Cloud Datastore nutzen.</p>
+<p>Google Cloud Datastore ist speziell für die Bereitstellung von Strong Consistency mithilfe dieser APIs ausgelegt. Wenn Sie eine davon aufrufen, überträgt Google Cloud Datastore alle ausstehenden Aktualisierungen auf eines der Replikate und eine der Indextabellen und führt dann die Suche oder Ancestor-Abfrage durch. Auf diese Weise wird der neueste Entitätswert auf Basis der aktualisierten Indextabelle stets mit Werten auf der Grundlage der neuesten Aktualisierungen zurückgemeldet.</p>
+<p>Beim Aufruf der schlüsselbasierten Suche wird im Gegensatz zu Abfragen nur eine Entität oder eine Gruppe von Entitäten zurückgemeldet, die über einen Schlüssel oder eine Gruppe von Schlüsseln definiert ist. Das heißt, eine Ancestor-Abfrage stellt die einzige Möglichkeit in Google Cloud Datastore dar, um einer Strong Consistency-Anforderung zusammen mit einer Filteranforderung zu genügen. Allerdings funktionieren Ancestor-Abfragen nicht ohne die Angabe einer <span class="bld">Entitätsgruppe</span>.</p>
+<h2><a name="h.3loc7ynqbw6i" id="h.3loc7ynqbw6i"></a>Ancestor-Abfrage und Entitätsgruppe</h2>
+<p>Wie am Anfang dieses Dokuments erläutert, besteht einer der Vorteile von Google Cloud Datastore darin, dass die Entwickler einen optimalen Ausgleich zwischen Strong Consistency und Eventual Consistency erreichen können. In Google Cloud Datastore ist eine <a href="https://developers.google.com/appengine/docs/python/datastore/structuring_for_strong_consistency">Entitätsgruppe</a> eine Einheit mit Strong Consistency, Transaktionalität und Lokalität. Mithilfe von Entitätsgruppen können Entwickler den Grad der Strong Consistency unter den Entitäten in einer Anwendung bestimmen. Auf diese Weise kann die Anwendung die Konsistenz innerhalb der Entitätsgruppe aufrechterhalten und gleichzeitig für das komplette System Skalierbarkeit, Verfügbarkeit und Leistungsfähigkeit erzielen.</p>
+<p>Eine Entitätsgruppe ist eine hierarchische Struktur aus einer Root-Entität und deren untergeordneten und nachfolgenden Elementen.<sup><a href="#ftnt1" name="ftnt_ref1" id="ftnt_ref1">[1]</a></sup> Zur Erstellung einer Entitätsgruppe gibt der Entwickler einen Ancestor-Pfad vor, bei dem es sich im Wesentlichen um eine Reihe von übergeordneten Schlüsseln handelt, die dem untergeordneten Schlüssel vorangestellt sind. Das Konzept von Entitätsgruppen ist in Abbildung&nbsp;3 dargestellt. In diesem Fall hat die Root-Entität mit dem Schlüssel "ateam" zwei untergeordnete Elemente mit den Schlüsseln "ateam/098745" und "ateam/098746".</p>
+<figure><img src="/images/articles/balancing-strong-and-eventual-consistency-with-gcd/croup-concept.png" alt="">
+<figcaption>Abbildung 3: Schematische Darstellung des Entitätsgruppenkonzepts</figcaption>
+</figure>
+<p>Innerhalb der Entitätsgruppe sind die folgenden Eigenschaften garantiert:</p>
+<ul>
+<li>Strong Consistency
+<ul>
+<li>Eine Ancestor-Abfrage auf der Entitätsgruppe meldet eine stark konsistentes Ergebnis zurück. Auf diese Weise werden die neuesten Entitätswerte wiedergegeben, die nach dem letzten Indexstatus gefiltert wurden.</li>
+</ul>
+</li>
+<li>Transaktionalität
+<ul>
+<li>Wenn Sie eine Transaktion programmatisch abgrenzen, sieht die Entitätsgruppe ACID-Eigenschaften (Atomarität, Konsistenz, Isolation und Langlebigkeit) in der Transaktion vor.</li>
+</ul>
+</li>
+<li>Lokalität
+<ul>
+<li>Entitäten in einer Entitätsgruppe werden an physisch nahe gelegenen Orten auf Google Cloud Datastore-Servern gespeichert, weil alle Entitäten nach der lexikografischen Reihenfolge der Schlüssel sortiert und abgelegt werden. Eine Ancestor-Abfrage kann somit die Entitätsgruppe mit minimalem E/A-Einsatz rasch scannen.</li>
+</ul>
+</li>
+</ul>
+<p>Eine Ancestor-Abfrage ist die Sonderform einer Abfrage, die in Bezug auf eine vorgegebene Entitätsgruppe durchgeführt wird. Sie wird mit Strong Consistency ausgeführt. Im Hintergrund stellt Google Cloud Datastore sicher, dass alle anhängigen Replikationen und Indexaktualisierungen vor der Durchführung der Abfrage angewendet werden.</p>
+<h3><a name="h.pyro8j6ki6tn" id="h.pyro8j6ki6tn"></a>Beispiel für Ancestor-Abfrage</h3>
+<p>In diesem Abschnitt wird beschrieben, wie Entitätsgruppen und Ancestor-Abfragen in der Praxis einzusetzen sind. Im folgenden Beispiel betrachten wir das Problem der Verwaltung von Datensätzen für Personen. Dabei gehen wir von einem Code aus, der eine Entität eines bestimmten Typs hinzufügt, auf der unmittelbar eine Abfrage dieses Typs folgt. Dieses Konzept wird anhand des folgenden Python-Beispielcodes demonstriert.</p>
+<pre>
+# Define the Person entity
+class Person(db.Model):
+    given_name = db.StringProperty()
+    surname = db.StringProperty()
+    organization = db.StringProperty()
+# Add a person and retrieve the list of all people
+class MainPage(webapp2.RequestHandler):
+    def post(self):
+        person = Person(given_name='GI', surname='Joe', organization='ATeam')
+        person.put()
+        q = db.GqlQuery("SELECT * FROM Person")
+        people = []
+        for p in q.run():
+            people.append({'given_name': p.given_name,
+                        'surname': p.surname,
+                        'organization': p.organization})
+</pre>
+<p>Das Problem bei diesem Code besteht darin, dass die Abfrage in den meisten Fällen nicht die Entität zurückmeldet, die in der Anweisung davor hinzugefügt wurde. Da die Abfrage unmittelbar in der Zeile nach der Einfügung folgt, wird der Index nicht aktualisiert, wenn die Abfrage ausgeführt wird. Zudem liegt ein Problem mit der Validität dieses Anwendungsfalls vor: Ist es wirklich notwendig, eine Liste aller Personen auf einer Seite ohne Kontext zurückzumelden? Was wäre, wenn es sich um Millionen Personen handelte? Es würde zu lange dauern, bis die Seite zurückgemeldet wird.</p>
+<p>Die Art des Anwendungsfalls legt nahe, dass wir zur Eingrenzung der Abfrage einigen Kontext angeben sollten. In diesem Beispiel werden wir als Kontext die Organisation verwenden. Wir können dann die Organisation als Entitätsgruppe nutzen und eine Ancestor-Abfrage ausführen, die unser Konsistenzproblem löst. Der folgende Python-Code veranschaulicht dieses Vorgehen.</p>
+<pre>
+class Organization(db.Model):
+    name = db.StringProperty()
+class Person(db.Model):
+    given_name = db.StringProperty()
+    surname = db.StringProperty()
+class MainPage(webapp2.RequestHandler):
+    def post(self):
+        org = Organization.get_or_insert('ateam', name='ATeam')
+        person = Person(parent=org)
+        person.given_name='GI'
+        person.surname='Joe'
+        person.put()
+        q = db.GqlQuery("SELECT * FROM Person WHERE ANCESTOR IS :1 ", org)
+        people = []
+        for p in q.run():
+            people.append({'given_name': p.given_name,
+                        'surname': p.surname})
+</pre>
+<p>Da dieses Mal das Ancestor-ORG-Objekt in der GqlQuery angegeben ist, meldet die Abfrage die Entität zurück, die soeben eingefügt wurde. Das Beispiel ließe sich auf eine Einzelperson ausdehnen, indem zusammen mit dem Namen der Person das Ancestor-Objekt abgefragt wird. Alternativ hätte man dazu auch den Entitätsschlüssel speichern und anschließend zur Eingrenzung mittels einer schlüsselbasierten Suche verwenden können.</p>
+<h3><a name="h.l10xxpfjg70q" id="h.l10xxpfjg70q"></a>Konsistenz zwischen Memcache und Google Cloud Datastore aufrechterhalten</h3>
+<p>Entitätsgruppen können für die Aufrechterhaltung der Konsistenz zwischen Memcache-Einträgen und Google Cloud Datastore-Entitäten verwendet werden. Gehen Sie beispielsweise von einem Szenario aus, bei dem Sie die Anzahl der Personen in jedem Team zählen und diese in Memcache speichern. Zur Sicherstellung, dass die Daten im Cache mit den neuesten Werten im Google Cloud Datastore übereinstimmen, können Sie <a href="https://developers.google.com/appengine/docs/python/datastore/metadataqueries#Python_Entity_group_metadata">Metadaten der Entitätsgruppen</a> verwenden. Die Metadaten melden die neueste Versionsnummer der angegebenen Entitätsgruppe zurück. Sie können die Versionsnummer mit der in Memcache gespeicherten Nummer vergleichen. Mithilfe dieser Methode können Sie eine Änderung in einer der Entitäten in der gesamten Entitätsgruppe erkennen, indem Sie eine Gruppe von Metadaten auslesen, anstatt alle einzelnen Entitäten in der Gruppe zu scannen.</p>
+<h2><a name="h.ooaauy74mue8" id="h.ooaauy74mue8"></a>Einschränkungen von Entitätsgruppen und Ancestor-Abfragen</h2>
+<p>Die Verwendung von Entitätsgruppen und Ancestor-Abfragen ist keine Wunderlösung. In der Praxis erschweren die folgenden zwei Aspekte die allgemeine Anwendung der Methode.</p>
+<ol class="c28 lst-kix_qyusimaqza9q-0 start" start="1">
+<li>Der Schreibvorgang für jede Entitätsgruppe ist auf eine Aktualisierung pro Sekunde beschränkt.</li>
+<li>Die Beziehung der Entitätsgruppe kann nach der Erstellung der Entitäten nicht geändert werden.</li>
+</ol>
+<h3><a name="h.8yrg89iapdjp" id="h.8yrg89iapdjp"></a>Schreibbegrenzung</h3>
+<p>Eine entscheidende Problemstellung besteht darin, dass das System zur Aufnahme der Anzahl von Aktualisierungen oder Transaktionen in jeder Entitätsgruppe ausgelegt werden muss. Der unterstützte Grenzwert liegt bei einer Aktualisierung pro Sekunde und Entitätsgruppe.<sup><a href="#ftnt2" name="ftnt_ref2" id="ftnt_ref2">[2]</a></sup> Wenn die Zahl der Aktualisierungen diesen Grenzwert überschreitet, kann die Entitätsgruppe einen Leistungsengpass darstellen.</p>
+<p>Im obigen Beispiel muss jede Organisation potenziell den Datensatz einer jeden Person in der Organisation aktualisieren. Stellen Sie sich ein Szenario vor, in dem sich 1.000&nbsp;Personen im "ateam" befinden und für jede Person die Aktualisierung einer Eigenschaft pro Sekunde anfällt. Das würde dazu führen, dass 1.000&nbsp;Aktualisierungen pro Sekunde in der Entitätsgruppe nötig würden, eine Anforderung, die aufgrund der Aktualisierungsbeschränkung nicht erfüllt werden könnte. Dies macht deutlich, dass es wichtig ist, ein geeignetes Entitätsgruppendesign zu wählen, das die Leistungsanforderungen berücksichtigt. Dies ist eine der Herausforderungen bei der Bestimmung der optimalen Balance zwischen Eventual Consistency und Strong Consistency.</p>
+<h3><a name="h.slap2zz3i3rk" id="h.slap2zz3i3rk"></a>Unveränderlichkeit von Entitätsgruppenbeziehungen</h3>
+<p>Eine zweite Schwierigkeit besteht in der Unveränderlichkeit der Entitätsgruppenbeziehungen. Die Entitätsgruppenbeziehung wird statistisch auf Basis der Schlüsselbenennung gebildet. Nach der Erstellung der Entität kann sie nicht geändert werden. Die einzige verfügbare Option zur Änderung der Beziehung besteht darin, die Entitäten in einer Entitätsgruppe zu löschen und neu zu erstellen. Diese Schwierigkeit hindert uns daran, mithilfe von Entitätsgruppen dynamisch Ad-hoc-Anwendungsbereiche für Konsistenz und Transaktionalität festzulegen. Die Anwendungsbereiche für Konsistenz und Transaktionalität sind stattdessen eng mit der statischen Entitätsgruppe verbunden, die bei der Konzeption definiert wird.</p>
+<p>Stellen Sie sich beispielsweise ein Szenario vor, bei dem Sie eine Überweisung zwischen zwei Bankkonten vornehmen möchten. Ein solches Geschäftsszenario erfordert Strong Consistency und Transaktionalität. Die beiden Konten können jedoch nicht in letzter Minute in einer Entitätsgruppe zusammengefasst oder mit einem globalen übergeordneten Element verknüpft werden. Diese Entitätsgruppe würde einen Engpass für das gesamte System darstellen, der die Ausführung von anderen Überweisungsanfragen blockieren würde. Entitätsgruppen können demzufolge nicht auf diese Weise verwendet werden.</p>
+<p>Es gibt jedoch eine alternative Methode für die Implementierung einer Überweisung auf hoch skalierbare und hochverfügbare Weise. Sie besteht in der Nutzung <a href="https://developers.google.com/appengine/docs/python/datastore/#Python_Cross_group_transactions">gruppenübergreifender (XG) Transaktionen</a> für die Transaktionalität und der schlüsselbasierten Google Cloud Datastore-Suche bzw. einer Ancestor-Abfrage für die Konsistenz. Gruppenübergreifende Transaktionen sind ein Funktionsmerkmal von Google Cloud Datastore, das die Bereitstellung von ACID-Eigenschaften für bis zu fünf Entitätsgruppen oder Entitäten in einer Transaktion ermöglicht. Mithilfe von XG-Transaktionen können Sie mit den beiden Bankkonten zum Zeitpunkt der Anfragenverarbeitung&nbsp;dynamisch einen Transaktionsanwendungsbereich bilden.</p>
+<p>Beachten Sie, dass die XG-Transaktionen nur die Transaktionalität gewährleisten. Für Strong Consistency beim Auslesen der beiden Bankkonten sollten Sie das schlüsselbasierte Suchverfahren oder eine Ancestor-Abfrage verwenden. Sie erhalten eine Fehlermeldung, wenn Sie versuchen, eine Abfrage auszuführen, bei der es sich nicht um eine Ancestor-Abfrage innerhalb einer Transaktion handelt.</p>
+<h2><a name="h.k31yisins6ul" id="h.k31yisins6ul"></a>Alternativen zu Ancestor-Abfragen</h2>
+<p>Wenn Sie bereits über eine Anwendung verfügen, bei der eine große Anzahl von Entitäten in Google Cloud Datastore gespeichert ist, kann es sich als schwierig erweisen, Entitätsgruppen nachträglich im Rahmen einer Refaktorierung einzubinden. Dazu müssten alle Entitäten gelöscht und innerhalb einer Entitätsgruppenbeziehung hinzugefügt werden. Bei der Datenmodellierung in Google Cloud Datastore ist es deshalb wichtig, in der Frühphase des Anwendungsdesigns eine Entscheidung zur Konzeption der Entitätsgruppen zu treffen. Andernfalls sind Sie dahingehend eingeschränkt, dass Sie auf andere Alternativen refaktorieren müssen, um ein bestimmtes Maß an Konsistenz zu erreichen, zum Beispiel eine ausschließlich schlüsselbasierte Abfrage gefolgt von einer schlüsselbasierten Suche oder die Nutzung von Memcache.</p>
+<h3><a name="h.56geqhlrqja4" id="h.56geqhlrqja4"></a>Ausschließlich schlüsselbasierte, globale Abfrage gefolgt von einer schlüsselbasierten Suche</h3>
+<p>Eine ausschließlich schlüsselbasierte, globale Abfrage ist eine Sonderform der globalen Abfrage, die ausschließlich Schlüssel ohne die Eigenschaftswerte der Entitäten zurückmeldet. Da es sich bei den zurückgemeldeten Werten ausschließlich um Schlüssel handelt, umfasst die Abfrage keinen Entitätswert mit einem potenziellen Konsistenzproblem. Über eine Kombination der ausschließlich schlüsselbasierten, globalen Abfrage mit einer Suchmethode werden die neuesten Entitätswerte gelesen. Es ist allerdings zu beachten, dass mit einer ausschließlich schlüsselbasierten, globalen Abfrage nicht die Möglichkeit eines Index ausgeschlossen werden kann, der zum Zeitpunkt der Abfrage noch nicht konsistent war, was dazu führen kann, dass eine Entität überhaupt nicht abgerufen wird. Das Ergebnis der Abfrage könnte potenziell über das Ausfiltern alter Indexwerte generiert werden. Ein Entwickler kann also eine ausschließlich schlüsselbasierte, globale Abfrage gefolgt von einer schlüsselbasierten Suche nur verwenden, wenn es eine Anwendungsanforderung zulässt, dass der Indexwert zum Zeitpunkt der Abfrage noch nicht konsistent ist.</p>
+<h3><a name="h.kzvtug7i4vlw" id="h.kzvtug7i4vlw"></a>Memcache</h3>
+<p>Der Memcache-Dienst ist zwar volatil, aber stark konsistent. Über die Kombination von Memcache-Suchvorgängen und Google Cloud Datastore-Abfragen ist es möglich, ein System aufzubauen, das Konsistenzprobleme die meiste Zeit über minimiert.</p>
+<p>Gehen Sie zum Beispiel vom Szenario einer Spieleanwendung aus, die eine Liste der Spielerentitäten pflegt, die jeweils einen Spielstand größer null aufweisen.</p>
+<ul>
+<li>Wenden Sie Anfragen zum Einfügen oder Aktualisieren auf die Liste der Spielerentitäten in Memcache und in Google Cloud Datastore an.</li>
+<li>Lesen Sie für Abfrageanfragen die Liste der Spielerentitäten aus Memcache aus. Führen Sie eine ausschließlich schlüsselbasierte Abfrage in Google Cloud Datastore durch, wenn die Liste in Memcache nicht vorliegt.</li>
+</ul>
+<p>Die zurückgemeldete Liste ist immer dann konsistent, wenn die zwischengespeicherte Liste in Memcache vorliegt. Wenn der Eintrag entfernt wurde oder der Memcache-Dienst vorübergehend nicht verfügbar ist, muss das System den Wert möglicherweise aus einer Google Cloud Datastore-Abfrage lesen, die eventuell ein inkonsistentes Ergebnis liefert. Dieses Verfahren kann bei jeder Anwendung eingesetzt werden, die einen geringen Grad an Inkonsistenz toleriert.</p>
+<p>Bei der Nutzung von Memcache als Caching-Ebene für Google Cloud Datastore haben sich einige Verfahren bewährt:</p>
+<ul>
+<li>Fangen Sie Memcache-Ausnahmen und -Fehler ab, um die Konsistenz zwischen dem Memcache-Wert und dem Google Cloud Datastore-Wert aufrechtzuerhalten. Wenn Sie bei der Aktualisierung des Eintrags in Memcache eine Ausnahme empfangen, machen Sie den alten Eintrag in Memcache unbedingt ungültig. Andernfalls kann es zu unterschiedlichen Werten für eine Entität kommen: ein alter Wert in Memcache und ein neuer Wert in Google Cloud Datastore.</li>
+<li>Legen Sie einen <a href="https://developers.google.com/appengine/docs/python/memcache/#Python_How_cached_data_expires">Ablaufzeitraum</a> für die Memcache-Einträge fest. Es wird empfohlen, kurze Zeiträume für den Ablauf der einzelnen Einträge einzustellen, um die Möglichkeit der Inkonsistenz bei Memcache-Ausnahmen zu minimieren.</li>
+<li>Verwenden Sie zur Gleichzeitigkeitserkennung bei der Aktualisierung der Einträge die Funktion <a href="https://developers.google.com/appengine/docs/python/memcache/#Python_Using_compare_and_set_in_Python">compare-and-set</a>. Damit wird sichergestellt, dass sich simultane Aktualisierungen desselben Eintrags nicht gegenseitig beeinträchtigen.</li>
+</ul>
+<h3><a name="h.ooddikjhrygc" id="h.ooddikjhrygc"></a>Graduelle Umstellung auf Entitätsgruppen</h3>
+<p>Die Empfehlungen im vorherigen Abschnitt verringern lediglich die Möglichkeit inkonsistenten Verhaltens. Wenn starke Konsistenz benötigt wird, ist es am besten, die Anwendung basierend auf Entitätsgruppen und Ancestor-Abfragen zu konzipieren. Allerdings ist es möglicherweise nicht durchführbar, eine vorhandene Anwendung zu migrieren, was die Umstellung eines bestehenden Datenmodells und der Anwendungslogik von globalen Abfragen auf Ancestor-Abfragen bedeuten kann. Die Umstellung kann jedoch mit einem graduellen Prozess erfolgen, zum Beispiel:</p>
+<ol class="c28 lst-kix_gkyism9dw6ma-0 start" start="1">
+<li>Bestimmen und priorisieren Sie die Funktionen in der Anwendung, die starke Konsistenz erfordern.</li>
+<li>Schreiben Sie zusätzlich zur vorhandenen Logik (besser als Ersetzen) unter Verwendung von Entitätsgruppen neue Programmlogik für insert()- oder update()-Funktionen. Auf diese Weise können neue Einfügungen oder Aktualisierungen sowohl für neue Entitätsgruppen als auch alte Entitäten über eine geeignete Funktion abgewickelt werden.</li>
+<li>Modifizieren Sie die vorhandene Logik für Lese- und Abfragefunktionen. Ancestor-Abfragen werden erst durchgeführt, wenn eine neue Entitätsgruppe für die Anfrage vorliegt. Führen Sie die alte globale Abfrage als Fallback-Logik aus, wenn die Entitätsgruppe nicht existiert.</li>
+</ol>
+<p>Diese Strategie ermöglicht auf der Basis von Entitätsgruppen eine graduelle Migration von einem vorhandenen Datenmodell zu einem neuen Datenmodell. Damit werden die Risiken aufgrund von Eventual Consistency minimiert. In der Praxis hängt dieser Ansatz von den spezifischen Anwendungsfällen und Anforderungen für die Nutzung auf einem tatsächlichen System ab.</p>
+<h3><a name="h.gj5afnup3sr9" id="h.gj5afnup3sr9"></a>Fallback auf eingeschränkten Modus</h3>
+<p>Derzeit ist es schwierig, eine Situation programmatisch zu erkennen, in der eine Anwendung Konsistenz eingebüßt hat. In manchen Szenarien ist dies aber eventuell über die Überwachung von Kundensupportfällen möglich. Wenn dies der Fall ist, ist es potenziell möglich, einen eingeschränkten Modus zu implementieren, in dem einige Bereiche der Anwendungslogik deaktiviert sind, die starke Konsistenz benötigen. Anstelle der Anzeige eines inkonsistenten Abfrageergebnisses in einem Abrechnungsbericht könnte zum Beispiel eine Wartungsmeldung für diesen Bildschirm dargestellt werden. Auf diese Weise können die anderen Dienste in der Anwendung weiter ausgeführt werden und reduzieren so die Auswirkung auf die Nutzererfahrung.</p>
+<h2><a name="h.buvz7spe7ytk" id="h.buvz7spe7ytk"></a>Zeit bis zum Erreichen der vollständigen Konsistenz minimieren</h2>
+<p>In einer großen Anwendung mit Millionen Nutzern oder Terabytes an Google Cloud Datastore-Entitäten ist es möglich, dass eine unzweckmäßige Nutzung von Google Cloud Datastore zu verschlechterter Konsistenz führt. Beispiele für eine solche Nutzung:</p>
+<ul>
+<li>Fortlaufende Nummerierung in Entitätsschlüsseln</li>
+<li>Zu viele Indizes</li>
+</ul>
+<p>Bei kleinen Anwendungen wirken sich diese Vorgehensweisen nicht aus. Wenn die Anwendung jedoch sehr umfangreich wird, wird es mit diesen Ansätzen wahrscheinlicher, dass die Konsistenz mehr Zeit in Anspruch nimmt. Es ist deshalb am besten, diese Vorgehensweisen in den frühen Phasen des Anwendungsdesigns zu vermeiden.</p>
+<h3><a name="h.rwk0fv57jze5" id="h.rwk0fv57jze5"></a>Gegenmaßnahme Nr. 1: Fortlaufende Nummerierung von Entitätsschlüsseln</h3>
+<p>Vor der Herausgabe des App Engine SDK 1.8.1 nutzte Google Cloud Datastore als automatisch generieren Standardschlüssel eine Abfolge kleiner Ganzzahl-IDs mit üblicherweise fortlaufenden Schemas. In manchen Dokumenten wird dies als eine Legacy-Strategie für die Erstellung von Entitäten bezeichnet, die keinen über die Anwendung vorgegebenen Schlüsselnamen aufweisen. Aufgrund dieser Legacy-Strategie wurden Schlüsselnamen mit fortlaufender Nummerierung generiert, zum Beispiel 1000, 1001, 1002. Wie bereits weiter oben ausgeführt, speichert Google Cloud Datastore Entitäten jedoch in lexikografischer Reihenfolge der Schlüsselnamen, d.&nbsp;h., diese Entitäten werden sehr wahrscheinlich auf denselben Google Cloud Datastore-Servern abgelegt. Wenn eine Anwendung sehr starken Traffic generiert, könnte diese fortlaufende Nummerierung eine Konzentration der Operationen auf einem bestimmten Server bewirken, die bezüglich der Konsistenz zu längeren Latenzzeiten führen kann.</p>
+<p>In App Engine SDK 1.8.1 wurde für Google Cloud Datastore ein neues Verfahren zur ID-Nummerierung mit einer Standardstrategie eingeführt, die verteilte IDs nutzt, <a href="https://developers.google.com/appengine/docs/python/datastore/entities#Python_Assigning_identifiers">siehe Referenzdokumentation</a>. Bei diesem Verfahren wird eine zufällige Abfolge von IDs mit einer Länge von bis zu 16&nbsp;Ziffern erzeugt, die nahezu gleichmäßig verteilt werden. Damit ist es wahrscheinlich, dass der Traffic der großen Anwendung besser auf eine Gruppe von Google Cloud Datastore-Servern verteilt wird und die Konsistenz weniger Zeit in Anspruch nimmt. Diese Standardstrategie wird empfohlen, es sei denn, Ihre Anwendung muss mit der Legacy-Strategie kompatibel sein.</p>
+<p>Wenn Sie explizit Schlüsselnamen für Entitäten vergeben, sollte das Benennungsschema so konzipiert werden, dass der Zugriff auf die Entitäten gleichmäßig über den gesamten Namensraum der Schlüssel verteilt ist. In anderen Worten: Konzentrieren Sie den Zugriff nicht auf einen bestimmten Bereich, weil die Entitäten nach der lexikografischen Reihenfolge der Schlüsselnamen angeordnet sind. Andernfalls kann das gleiche Problem wie bei der fortlaufenden Nummerierung auftreten.</p>
+<p>Betrachten Sie zur Veranschaulichung einer ungleichmäßigen Zugriffsverteilung über den Schlüsselraum ein Beispiel, bei dem die Entitäten mit den sequenziellen Schlüsselnamen erstellt werden, so wie das im folgenden Code gezeigt wird:</p>
+<pre>
+p1 = Person(key_name='0001')
+p2 = Person(key_name='0002')
+p3 = Person(key_name='0003')
+...
+</pre>
+<p>Das Zugriffsschema der Anwendung kann zu einer Konzentration in einem bestimmten Bereich der Schlüsselnamen führen, zum Beispiel zu einem konzentrierten Zugriff auf kürzlich erstellte Personenentitäten. In diesem Fall hätten die Schlüssel mit häufigem Zugriff höhere IDs. Die Last ist dann möglicherweise auf einem bestimmten Google Cloud Datastore-Server konzentriert.</p>
+<p>Betrachten Sie alternativ zur Veranschaulichung einer gleichmäßigen Verteilung über den Schlüsselraum die Verwendung langer, zufälliger Strings für Schlüsselnamen. Dies ist im folgenden Beispiel dargestellt:</p>
+<pre>
+p1 = Person(key_name='t9P776g5kAecChuKW4JKCnh44uRvBDhU')
+p2 = Person(key_name='hCdVjL2jCzLqRnPdNNcPCAN8Rinug9kq')
+p3 = Person(key_name='PaV9fsXCdra7zCMkt7UX3THvFmu6xsUd')
+...
+</pre>
+<p>Die kürzlich erstellten Personenentitäten werden jetzt über den Schlüsselraum und auf mehrere Server verteilt. Dies setzt voraus, dass eine ausreichend große Zahl an Personentitäten vorhanden ist.</p>
+<h3><a name="h.ou9y4doeg7dm" id="h.ou9y4doeg7dm"></a>Gegenmaßnahme Nr. 2: Zu viele Indizes</h3>
+<p>In Google Cloud Datastore führt eine Aktualisierung in einer Entität zur Aktualisierung sämtlicher Indizes, die für diesen Entitätstyp definiert sind. Nähere Informationen finden Sie unter <a href="https://developers.google.com/appengine/articles/life_of_write">Leben eines Datenspeicher-Schreibvorgangs</a>. Wenn eine Anwendung viele benutzerdefinierte Indizes verwendet, könnte eine Aktualisierung Dutzende, Hunderte oder gar Tausende von Aktualisierungen in Indextabellen umfassen. In einer großen Anwendung kann eine übermäßige Verwendung benutzerdefinierter Indizes zu einer erhöhten Beanspruchung des Servers führen und die Latenzzeit bis zum Erreichen der Konsistenz verlängern.</p>
+<p>In den meisten Fällen werden benutzerdefinierte Indizes für die Unterstützung von Aufgaben des Kundensupports, der Fehlerbehebung oder der Datenanalyse hinzugefügt. Google <a href="/de/products/big-query">BigQuery</a> ist eine stark skalierbare Abfrage-Engine, die in der Lage ist, Ad-hoc-Abfragen in großen Datensätzen ohne zuvor angelegte Indizes durchzuführen. Der Dienst eignet sich besser für Anwendungsfälle wie Kundensupport, Fehlerbehebung oder Datenanalyse, die komplexere Abfragen benötigen als Google Cloud Datastore.</p>
+<p>Eine Vorgehensweise besteht darin, Google Cloud Datastore und BigQuery für die Erfüllung unterschiedlicher Geschäftsanforderungen zu kombinieren. Nutzen Sie Google Cloud Datastore für das Online Transaction Processing (OLTP) der Kernanwendungslogik und Google BigQuery für das Online Analytical Processing (OLAP) der Back-End-Prozesse. Es kann notwendig sein, einen kontinuierlichen Datenexportstrom aus Google Cloud Datastore nach BigQuery zu implementieren, um die benötigten Daten für diese Abfragen zu verschieben.</p>
+<p>Neben einer alternativen Implementierung für benutzerdefinierte Indizes wäre eine andere Empfehlung, nicht indexierte Eigenschaften explizit vorzugeben, siehe <a href="https://developers.google.com/appengine/docs/python/ndb/properties#options">Eigenschaftsoptionen</a> in der Referenzdokumentation. In der Standardeinstellung erstellt Google Cloud Datastore eine andere Indextabelle für jede indexierbare Eigenschaft eines Entitätstyps. Wenn also 100&nbsp;Eigenschaften für einen Typ vorliegen, sind 100&nbsp;Indextabellen für diesen Typ vorhanden und zusätzlich 100&nbsp;Aktualisierungen für jede Aktualisierung einer Entität. Eine bewährte Vorgehensweise wäre es dann, Eigenschaften soweit möglich nicht indexiert vorzugeben, wenn diese nicht für eine Abfragebedingung benötigt werden.</p>
+<p>Diese Indexoptimierungen können neben der geringeren Wahrscheinlichkeit für längere Konsistenzzeiten zu einer erheblichen Reduzierung der Google Cloud Datastore-Kosten bei großen Anwendungen mit erheblicher Indexnutzung führen.</p>
+<h2><a name="h.njxgygqflg9k" id="h.njxgygqflg9k"></a>Fazit</h2>
+<p>Eventual Consistency ist ein wesentliches Element nicht relationaler Datenbanken, das es Entwicklern ermöglicht, einen optimalen Ausgleich zwischen Skalierbarkeit, Leistungsfähigkeit und Konsistenz zu finden. Es ist wichtig, das Ausbalancieren zwischen Eventual und Strong Consistency zu beherrschen, um ein optimales Datenmodell für eine Anwendung zu konzipieren. In Google Cloud Datastore besteht die optimale Vorgehensweise zur Gewährleistung von Strong Consistency in einem Entitätsbereich in der Nutzung von Entitätsgruppen und Ancestor-Abfragen. Wenn Ihre Anwendung aufgrund der oben beschriebenen Einschränkungen keine Entitätsgruppen einbinden kann, können Sie andere Optionen wie die Verwendung von ausschließlich schlüsselbasierten Abfragen oder Memcache in Betracht ziehen. Wenden Sie bei großen Anwendungen Best Practices wie verteilte IDs und reduzierte Indexierung an, um die Zeit bis zum Erreichen der Konsistenz zu verringern. Eventuell ist es auch erforderlich, Google Cloud Datastore mit BigQuery zu kombinieren, um die geschäftlichen Anforderungen für komplexe Abfragen zu erfüllen und die Nutzung von Google Cloud Datastore-Indizes so weit wie möglich zu reduzieren.</p>
+<h2><a name="h.ywh7cedcuhkk" id="h.ywh7cedcuhkk"></a>Zusätzliche Ressourcen</h2>
+<p>In den folgenden Quellen finden Sie weitere Informationen über die in diesem Dokument behandelten Themen:</p>
+<ul>
+<li><a href="https://developers.google.com/appengine/docs/python/datastore/">Google App Engine: Daten speichern</a></li>
+<li><a href="https://developers.google.com/appengine/articles/datastore/overview">Richtiger Umgang mit dem Datenspeicher (mehrere Artikel)</a></li>
+<li><a href="http://googlecloudplatform.blogspot.com/">Google Cloud Platform-Blog</a></li>
+<li><a href="https://developers.google.com/cloud-sql/">Google Cloud SQL</a></li>
+<li><a href="https://developers.google.com/appengine/training/cloud-sql/">Python App Engine mit Google Cloud SQL verwenden</a></li>
+<li><a href="http://static.googleusercontent.com/external_content/untrusted_dlcp/research.google.com/en/us/archive/bigtable-osdi06.pdf">Bigtable: Ein verteiltes Speichersystem für strukturierte Daten</a></li>
+<li><a href="http://googleappengine.blogspot.com/2011/07/app-engine-152-sdk-released.html">App Engine 1.5.2 SDK herausgegeben</a></li>
+<li><a href="http://www.cidrdb.org/cidr2011/Papers/CIDR11_Paper32.pdf">Megastore: Skalierbaren, hochverfügbaren Speicher für interaktive Dienste bereitstellen</a></li>
+</ul>
+<br>
+<br>
+<hr>
+<p><a href="#ftnt_ref1" name="ftnt1" id="ftnt1">[1]</a> Eine Entitätsgruppe kann selbst über die Angabe von nur einem Schlüssel der Root- oder übergeordneten Entität gebildet werden, ohne die tatsächlichen Entitäten des Root- oder übergeordneten Elements zu speichern, weil sämtliche Funktionen der Entitätsgruppe auf der Grundlage von Beziehungen zwischen den Schlüsseln implementiert werden.</p>
+<p><a href="#ftnt_ref2" name="ftnt2" id="ftnt2">[2]</a> Der unterstützte Grenzwert ist eine Aktualisierung pro Sekunde und Entitätsgruppe außerhalb von Transaktionen oder eine Transaktion pro Sekunde und Entitätsgruppe. Wenn Sie mehrere Aktualisierungen in einer Transaktion zusammenfassen, unterliegen Sie der Beschränkung einer maximalen Transaktionsgröße von 10&nbsp;MB und der maximalen Schreibrate des Datastore-Servers.</p>
+</div>
+<!-- /maia-main --></div>
+<div class="maia-col-3"><br>
+<img src="//www.google.com/images/icons/product/feedback-16.png" class="g-app-icon" alt=""> <a href="javascript:void(0);" class="google-feedback">Feedback zu diesem Dokument</a><br>
+<br></div>
+</div>
+</div>
+<script>
+(function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+</script><script src="//www.gstatic.com/feedback/api.js">
+</script><script>
+$('body').delegate('.google-feedback', 'click', function() {
+      userfeedback.api.startFeedback({'productId': '94614'});
+  });
+</script><!-- Scripts to include both on Goro + Devsite --><script>
+window.___gcfg = {
+     lang: ''
+   };
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+</script><!-- GTM implementation --><!-- Start dataLayer --><script>
+dataLayer = [{
+        'country': 'de',
+        'region': 'emea',
+        'language': 'de'
+      }];
+</script><!-- End dataLayer --><!-- Start Google Tag Manager --><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5CVQBG" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript> <script>
+(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-5CVQBG');
+</script><!-- End Google Tag Manager --><!-- Global JS scripts to load; path will depend on whether we're on devsite or Goro --><script src="/js/base.min.js">
+</script><!-- Retina loader; Do not load if partners page because we need to wait until the Angular app runs --><script>
+new lfl.system.RetinaLoader();
+</script><!-- Secondary right-side scroll-nav --><script>
+new lfl.ui.ScrollNav({});
+</script>
+</body>
+</html>
   <!-- Scripts to include both on Goro + Devsite -->
   <script type="text/javascript">
    window.___gcfg = {
