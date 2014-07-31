@@ -1,3 +1,4 @@
+# Docs: https://github.com/nquinlan/jekyll-pageless-redirects
 bigquery : /products/bigquery
 appengine : /products/app-engine
 gae : /products/app-engine
@@ -20,38 +21,38 @@ roadshow : http://www.googlecloudroadshow.com/cloud-platform-roadshow.html?utm_s
 ROADSHOW : http://www.googlecloudroadshow.com/cloud-platform-roadshow.html?utm_source=CPredirect&utm_medium=social
 
 # GCP live event
-events/watch : /events/google-cloud-platform-live/
+"events/watch" : /events/google-cloud-platform-live/
 live : /events/google-cloud-platform-live/
-events/google-cloud-platform-live/invite : /events/google-cloud-platform-live/
+"events/google-cloud-platform-live/invite" : /events/google-cloud-platform-live/
 eap : https://developers.google.com/cloud/early-access
 
 ### Old site redirects ###
 # Resources section
-resources/tutorials-articles : /developers
-resources/sdk-tools : /developers
-resources/training : /developers
+"resources/tutorials-articles" : /developers
+"resources/sdk-tools" : /developers
+"resources/training" : /developers
 resources : /developers
 
 # Products
-products/big-query : /products/bigquery
-products/datastore : /products/cloud-datastore
+"products/big-query" : /products/bigquery
+"products/datastore" : /products/cloud-datastore
 datastore : /products/cloud-datastore
-products/more-products : /products
+"products/more-products" : /products
 
 # Pricing
-pricing/calculator : /products/calculator
-pricing/compute-engine : /products/compute-engine#pricing
-pricing/cloud-storage : /products/cloud-storage#pricing
-pricing/big-query : /products/bigquery#pricing
-pricing/cloud-sql : /products/cloud-sql#pricing
-pricing/datastore : /products/cloud-datastore#pricing
-pricing/billing-faq : https://support.google.com/cloudbilling
+"pricing/calculator" : /products/calculator
+"pricing/compute-engine" : /products/compute-engine#pricing
+"pricing/cloud-storage" : /products/cloud-storage#pricing
+"pricing/big-query" : /products/bigquery#pricing
+"pricing/cloud-sql" : /products/cloud-sql#pricing
+"pricing/datastore" : /products/cloud-datastore#pricing
+"pricing/billing-faq" : https://support.google.com/cloudbilling
 
 # Support
-support/packages : /support
+"support/packages" : /support
 
 # Needed for Billing emails
-billing/ui : https://bpui0.google.com/billing/ui
+"billing/ui" : https://bpui0.google.com/billing/ui
 pin : http://support.google.com/enterprisehelp/bin/answer.py?hl=en&answer=2961417
 
 # Campaign redirects
@@ -61,18 +62,18 @@ hipaa : /#hipaa
 redeem : https://console.developers.google.com/billing/redeem
 
 # form redirects
-r/managed-vms : http://goo.gl/JEv1ue
-r/windows : http://goo.gl/7KNJhC
+"r/managed-vms" : http://goo.gl/JEv1ue
+"r/windows" : http://goo.gl/7KNJhC
 
 # developers.google.com redirects
-r/deployment-manager : http://goo.gl/ZsvrV1
-r/replica-pools : http://goo.gl/IumEj2 
+"r/deployment-manager" : http://goo.gl/ZsvrV1
+"r/replica-pools" : http://goo.gl/IumEj2 
 
 # Legacy URLs that need to be redirected to avoid 404 error
-bigquery-tour : /products/bigquery/
+"bigquery-tour" : /products/bigquery/
 m : /
-solutions/mobile-b : /
+"solutions/mobile-b" : /
 virtualPage : /
 
 # Redirects outdated hadoop white paper link
-developers/articles/apache-hadoop-hive-and-pig-on-google-compute-engine : /developers
+"developers/articles/apache-hadoop-hive-and-pig-on-google-compute-engine" : /developers
