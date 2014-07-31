@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html devsite="">
+<head>
+<title>Web Apps Articles &amp; Tutorials — Google Cloud Platform</title>
+<meta name="description" content="Read technical articles about web applications and solutions with Google Cloud Platform, including auto scaling and how to manage complex applications in the cloud.">
+<meta name="hide_page_heading" value="true">
+<meta name="full_width" value="true">
+<meta name="top_category" value="developers">
+<meta name="subcategory" value="articles">
+<meta name="viewport" content="initial-scale=1, minimum-scale=1, width=device-width">
+<link rel="apple-touch-icon" href="/_static/images/apple-touch-icon.png">
+<link href="//fonts.googleapis.com/css?family=Open+Sans:400italic,300,400,600,700" rel="stylesheet">
+<link href="/css/default.css" rel="stylesheet"><!--[if lt IE 9]>
+    <link rel="stylesheet" media="screen" href='/c/cp-ie.css'>
+    <![endif]-->
+<script src="/js/floodlight.js">
+</script>
+</head>
+<body>
+<div id="maia-main" class="cp-article">
+<div class="maia-cols">
+<div class="maia-col-9">
+<div>
+<div style="float:right">
+<div class="g-plusone"></div>
+</div>
+<h1 class="title">Administración y uso compartido de recursos multimedia digitales</h1>
+</div>
+<h2>Presentación</h2>
+<p>Los recursos multimedia digitales constituyen una de las áreas con más rápido crecimiento de Internet. Según un estudio de mercado realizado por Informa Telecoms &amp; Media en 2012, el mercado mundial de vídeos online por si solo alcanzará los 37.000 millones de dólares en 2017.<sup><a href="#r-1" name="ref-1" id="ref-1">1</a></sup> Otros tipos de recursos multimedia habituales incluyen las imágenes, la música y los documentos digitales. Uno de los motores que impulsa este crecimiento es la popularidad de los dispositivos móviles con muchas funciones<sup><a href="#r-2" name="ref-2" id="ref-2">2</a></sup>, equipados con cámaras de mayor resolución, con pantallas más grandes y con conexiones de datos más rápidas. Esto ha llevado a un aumento cuantioso en la producción y en el consumo de contenidos multimedia. Otro motor impulsor es la tendencia entre muchas redes sociales a incorporar el intercambio de recursos multimedia como una característica esencial de sus sistemas<sup><a href="#r-2">2</a></sup>. Mientras tanto, numerosas empresas nuevas están intentando crear sus propios nichos en este mercado.</p>
+<p>En este artículo utilizaremos una situación de ejemplo para proporcionar un análisis técnico detallado sobre cómo utilizar Google Cloud Platform para crear un sistema de administración y de uso compartido de recursos multimedia digitales.</p>
+<h3>Situación de ejemplo: Photofeed</h3>
+<p>Photofeed, una empresa nueva ficticia, está interesada en crear una aplicación para compartir fotos que permita a los usuarios subir y compartir fotos entre sí. Esta aplicación también incluye un aspecto social y permite a los usuarios publicar comentarios sobre las fotos. El equipo de producto de Photofeed considera que, para llegar a ser competitivos en este terreno, los usuarios deben ser capaces de subir, de ver y de editar fotos de manera rápida, segura y con una experiencia de usuario de gran calidad. Además, el equipo quiere que esta aplicación se pueda escalar fácilmente a medida que aumente el número de usuarios y de fotos. Para alcanzar estos objetivos, el sistema también debe tener una canalización eficiente para las funciones de procesamiento de fotos, como, por ejemplo, cambiar el tamaño de las fotos, recortarlas y generar miniaturas. A medida que crezca el negocio, el sistema debe permitir al equipo de desarrollo introducir rápidamente nuevas características.</p>
+<h3>Retos en la creación de sistemas escalables de recursos multimedia digitales</h3>
+<p>La creación desde cero de un sistema escalable de recursos multimedia digitales que admita un gran número de usuarios y que almacene gran cantidad de contenidos multimedia no es tarea fácil. La siguiente lista proporciona una vista general de los retos técnicos habituales que van asociados a la creación de sistemas escalables de recursos multimedia digitales:</p>
+<ul>
+<li>Ingestión
+<ul>
+<li>El sistema debe permitir a los usuarios finales subir objetos multimedia de manera rápida y segura sin dejar de ofrecer una experiencia de usuario atractiva.</li>
+<li>Los metadatos de los objetos multimedia se tienen que ingerir y sincronizar si los objetos multimedia se modifican o se vuelven a ingerir.</li>
+<li>Se tiene que administrar el flujo de trabajo de ingestión que define la comunicación entre todos los componentes implicados.</li>
+</ul>
+</li>
+<li>Almacenamiento
+<ul>
+<li>Se debe proporcionar almacenamiento prácticamente ilimitado para el contenido multimedia que a la vez sea fiable y rentable y que permita el acceso mundial.<sup><a href="#r-3" name="ref-3" id="ref-3">3</a></sup></li>
+</ul>
+</li>
+<li>Procesamiento
+<ul>
+<li>Es necesario tener recursos informáticos escalables para el procesamiento de recursos multimedia, tales como la conversión de formato de documentos, el procesamiento de imágenes y la transcodificación multimedia.</li>
+<li>El flujo de trabajo del procesamiento multimedia se tiene que administrar.</li>
+</ul>
+</li>
+<li>Publicación
+<ul>
+<li>El sistema debe permitir a los usuarios finales descargar contenido multimedia de manera rápida y segura sin dejar de ofrecer una buena experiencia de usuario.</li>
+<li>El flujo de trabajo de publicación se tiene que administrar.</li>
+</ul>
+</li>
+<li>Aplicaciones multimedia
+<ul>
+<li>El sistema es compatible con la integración de metadatos multimedia con datos de dominio específicos de cada aplicación. También permite desarrollar aplicaciones escalables multimedia, tales como la administración de recursos y el uso compartido de contenidos, además de estos datos.</li>
+</ul>
+</li>
+<li>Experiencias de usuario final
+<ul>
+<li>El sistema ofrece atractivas experiencias de usuario para varios clientes, como pueden ser los navegadores, los dispositivos móviles y las aplicaciones de escritorio.</li>
+</ul>
+</li>
+</ul>
+<p>La solución que se presenta en este artículo demuestra cómo Cloud Platform Google puede abordar cada uno de los retos antes descritos. La arquitectura de sistema propuesta se puede aplicar en general a cualquier tipo de recurso multimedia. La solución sirve de referencia para que arquitectos y desarrolladores de software creen sus propios sistemas de recursos multimedia digitales en Google Cloud Platform.</p>
+<h2>Información general sobre la solución</h2>
+<p>Google App Engine, Google Cloud Storage y Google Compute Engine son las tres características de Google Cloud Platform. Como se muestra en la figura 1, todos estos productos colaboran entre ellos para formar la base de esta solución de administración y de uso compartido de recursos multimedia digitales.</p>
+<figure><img src="/images/articles/scalable-digital-media-1.png" alt="Componentes clave de la solución propuesta">
+<figcaption>Figura 1. Componentes clave de la solución propuesta para administrar y para compartir recursos multimedia digitales</figcaption>
+</figure>
+<h3>Ingestión</h3>
+<p>Tanto Google Cloud Storage como Google App Engine tienen un papel fundamental en la ingestión de recursos multimedia digitales. Durante la carga, el contenido multimedia fluye directamente desde el cliente, pasando por la red global de Google y hasta Google Cloud Storage. Gracias a su alcance mundial, al enorme ancho de banda y a la integración con Google Cloud Storage, la red de Google permite ingerir contenido en el almacenamiento con baja latencia desde casi cualquier lugar. Google Cloud Storage admite dos mecanismos de subida habituales: HTTP POST mediante <a href="https://developers.google.com/storage/docs/accesscontrol">URL firmada</a> y las <a href="https://developers.google.com/storage/docs/developer-guide">API REST</a>.</p>
+<p>Google App Engine está diseñado para posibilitar las aplicaciones web escalables que gestionan millones de usuarios. En App Engine se puede desarrollar una aplicación de interfaz para la ingestión de contenido. La aplicación se encarga de la autenticación y solo permite subir contenido a los usuarios autorizados. Mientras tanto, la aplicación administra el flujo de trabajo de la ingestión y se coordina con los clientes para subir contenido a Google Cloud Storage. En el caso de los clientes de navegador, la aplicación también implementa la interfaz de usuario web para subir contenido. En el caso de los clientes móviles o de escritorio, la interfaz de usuario se encuentra en la aplicación cliente, mientras que la aplicación de App Engine despliega sus funciones como API REST mediante <a href="https://developers.google.com/appengine/docs/java/endpoints/overview">Google Cloud Endpoints</a>. Las aplicaciones del cliente hacen llamadas a las API para autenticarse y para acceder a Google Cloud Storage.</p>
+<p>Otro papel importante de la aplicación de App Engine es ingerir metadatos y mantenerlos sincronizados con el contenido multimedia. Los metadatos se almacenan junto con los datos de la aplicación en el almacén de datos de App Engine o en la base de datos de Google Cloud SQL. La opción de almacenamiento que se debe elegir depende de las características de la aplicación. Hay varias maneras de sincronizar la ingestión de metadatos con la ingestión de contenido multimedia, por ejemplo: 1) usar la <a href="https://developers.google.com/appengine/docs/java/blobstore/overview">URL para la devolución de llamada de carga de Blobstore</a>, 2) utilizar la Notificación de cambios en objetos de Cloud Storage o 3) simplemente mostrar las API adecuadas de la aplicación de App Engine mediante <a href="http://www.youtube.com/watch?v=NU_wNR_UUn4">Google Cloud Endpoints</a>.</p>
+<h3>Almacenamiento</h3>
+<p>Google Cloud Storage ofrece almacenamiento prácticamente ilimitado para contenido multimedia a bajo coste. Los datos multimedia se copien en todos los centros de datos para lograr la redundancia. Al aprovechar la red de Google, se puede acceder al contenido que hay en Google Cloud Storage en todo el mundo desde Google App Engine, desde Google Compute Engine y desde la Internet pública fuera de Google Cloud Platform.</p>
+<p>Google Cloud Storage también proporciona una opción de almacenamiento de <a href="https://developers.google.com/storage/docs/durable-reduced-availability">disponibilidad reducida duradera (DRA)</a> a un coste aún más bajo. La desventaja es que ofrece una disponibilidad menor en comparación con lo que ofrece una instancia estándar de Google Cloud Storage. La opción de DRA es útil para almacenar recursos que no se necesitan siempre de inmediato o que se pueden regenerar. Un ejemplo podría ser el contenido resultante de la canalización del procesamiento multimedia.</p>
+<h3>Procesamiento</h3>
+<p>Google Compute Engine proporciona un rendimiento superior para el cálculo por lotes. El procesamiento multimedia, como puede ser la conversión de formato de documentos, la transcodificación y la manipulación de imágenes, es un candidato perfecto para Compute Engine. En este caso, Google Cloud Storage hace las veces tanto de fuente de entrada como de destino de salida de la canalización del procesamiento multimedia. Como Google Cloud Storage está bien integrado con Google Compute Engine, por ejemplo con la autenticación automática a través de cuentas de servicio, se puede acceder fácilmente a Google Cloud Storage desde Compute Engine.</p>
+<p>El flujo de trabajo del procesamiento multimedia también lo administra la aplicación de App Engine mencionada anteriormente. Después de subir contenido multimedia al almacenamiento, la aplicación de App Engine crea e inserta tareas de procesamiento multimedia en <a href="https://developers.google.com/appengine/docs/java/taskqueue/">TaskQueue</a>. El software de procesamiento multimedia que se ejecuta en Compute Engine mediante API REST extrae las tareas que están en cola y las ejecuta según sea necesario. La aplicación de App Engine también puede mantener el estado de procesamiento del contenido multimedia y la información de carga de las máquinas virtuales a fin de escalar automáticamente las instancias de Compute Engine.</p>
+<h3>Publicación</h3>
+<p>Google Cloud Storage aprovecha la red de Google para permitir que se publique contenido multimedia en Internet con baja latencia y alta disponibilidad. La red de Google proporciona automáticamente la capacidad de almacenamiento en la memoria perimetral para el contenido público, que puede reducir significativamente los costes de publicación.</p>
+<p>Como en el caso de la ingestión, la aplicación de Google App Engine gestiona la autenticación y la autorización de usuarios y coordina el acceso de los clientes a Google Cloud Storage. En el caso de los clientes de navegador, la aplicación de App Engine posibilita la descarga de contenidos multimedia en la interfaz de usuario. En el caso de los clientes móviles o de escritorio, las aplicaciones del cliente implementan la interfaz de usuario y se comunican con la aplicación de App Engine a través de las API expuestas mediante <a href="http://www.youtube.com/watch?v=NU_wNR_UUn4">Google Cloud Endpoints</a>.</p>
+<h3>Aplicaciones multimedia</h3>
+<p>Se pueden crear varias aplicaciones multimedia con la disponibilidad de metadatos y de datos de aplicaciones. En función de los dominios de la aplicación, la administración de activos, el uso compartido de contenido y los juegos sociales son algunos ejemplos habituales de aplicaciones multimedia. Google App Engine proporciona una plataforma escalable para crear aplicaciones multimedia. Las aplicaciones de App Engine son fáciles de crear, de mantener y de escalar a medida que aumenta el tráfico y las necesidades de almacenamiento de datos. Esto permite a los desarrolladores centrarse en la creación de su empresa principal y aportar rápidamente nuevas características al mercado.</p>
+<h3>Experiencias de usuario</h3>
+<p>En esta solución, la aplicación de App Engine tiene un papel crítico: definir las experiencias de usuario en el sistema. Tal como se ha mencionado antes, en el caso de los clientes de navegador, la aplicación de App Engine implementa la interfaz de usuario web para la ingestión, para la publicación y para las aplicaciones multimedia. En el caso de los clientes móviles y de escritorio, la aplicación de App Engine despliega sus funciones como API REST mediante <a href="http://www.youtube.com/watch?v=NU_wNR_UUn4">Google Cloud Endpoints</a>. La interfaz de usuario nativa del cliente funciona con estas API.</p>
+<h2>Detalles de la implementación</h2>
+<p>En la siguiente sección se explican los detalles de implementación de la solución multimedia digital que se ha propuesto. Empieza con una lista de los componentes clave del sistema y termina con una presentación detallada de los tres flujos de trabajo importantes del sistema: el flujo de ingestión multimedia, el flujo de procesamiento multimedia y el flujo de publicación multimedia.</p>
+<h3>Componentes del sistema</h3>
+<ul>
+<li>Aplicaciones de interfaz y multimedia ejecutadas en Google App Engine
+<ul>
+<li>Autentican y autorizan a los usuarios y coordinan el acceso a Google Cloud Storage.</li>
+<li>Implementan la interfaz de usuario para los clientes de navegador o muestra las API mediante <a href="http://www.youtube.com/watch?v=NU_wNR_UUn4">Google Cloud Endpoints</a> para los clientes de móviles y de escritorio.</li>
+<li>Tiene la función de controlador del sistema y se encarga de administrar los flujos de trabajo para la ingestión, para la publicación y para el procesamiento multimedia.</li>
+<li>Las aplicaciones multimedia escalables funcionan con App Engine, con equilibrio de carga integrado y escala automática.</li>
+</ul>
+</li>
+<li>Almacén de datos de Google
+<ul>
+<li>Almacena los metadatos de contenido multimedia y el modelo de datos de la aplicación.</li>
+</ul>
+</li>
+<li>Google Cloud SQL
+<ul>
+<li>Almacena los metadatos de contenido multimedia y el modelo de datos de la aplicación, como alternativa al almacén de datos de Google.</li>
+</ul>
+</li>
+<li>Cola de tareas de App Engine
+<ul>
+<li>Integra la aplicación de App Engine con el software de procesamiento multimedia que se ejecuta en Google Compute Engine.</li>
+</ul>
+</li>
+<li>Servicios de imágenes
+<ul>
+<li>Proporciona servicios dinámicos de procesamiento de imágenes para aplicaciones de App Engine, como la generación de miniaturas, el cambio el tamaño y el recorte de imágenes.</li>
+</ul>
+</li>
+<li>Google Cloud Storage
+<ul>
+<li>Proporciona almacenamiento escalable y de alta disponibilidad para contenido multimedia. Se puede acceder al almacenamiento con API REST o con URL firmadas.</li>
+<li>Aprovecha la red de Google para las siguientes ventajas: 1) para permitir una ingestión de contenido rápida y segura al almacenamiento y desde el almacenamiento, y 2) para las funciones de almacenamiento en la memoria caché perimetral para contenido público, que disminuye los costes de publicación.</li>
+</ul>
+</li>
+<li>Servidor de procesamiento multimedia
+<ul>
+<li>Ejecuta el procesamiento multimedia en Google Compute Engine.</li>
+</ul>
+</li>
+</ul>
+<h3>Flujo de trabajo de ingestión multimedia y flujo de trabajo de procesamiento multimedia</h3>
+<p>El flujo de trabajo de ingestión multimedia y el flujo de trabajo de procesamiento multimedia suelen están vinculados entre sí. Ambos flujos de trabajo se muestran en el diagrama de comunicación entre componentes de la figura 2.</p>
+<figure><img src="/images/articles/scalable-digital-media-2.png" alt="Flujos de trabajo de ingestión multimedia y de procesamiento multimedia">
+<figcaption>Figura 2. Flujos de trabajo de ingestión multimedia y de procesamiento multimedia</figcaption>
+</figure>
+<ol>
+<li>El cliente accede a la aplicación de Google App Engine para iniciar una subida. Según el tipo de cliente, esta solicitud puede ser: 1) una solicitud HTTP sencilla desde el navegador o 2) una llamada a un extremo implementada por la aplicación de App Engine desde una aplicación para móviles o de escritorio, como un programa de subida por lotes. La aplicación de App Engine se encarga de autenticar al cliente y al usuario y de coordinar el acceso a Cloud Storage.</li>
+<li>Si el cliente es un navegador web, la aplicación puede generar una URL de carga firmada en la instancia de Cloud Storage incluida en un formulario HTTP POST. De lo contrario, si el cliente es una aplicación para móviles o de escritorio, la aplicación web ofrece como resultado información de acceso de Cloud Storage como respuesta a una llamada del extremo.</li>
+<li>Sea cual sea el cliente, los archivos multimedia se suben directamente a Google Cloud Storage mediante el formulario web o mediante las API REST de Cloud Storage.</li>
+<li>Google Cloud Storage ofrece como resultado una respuesta devuelta al cliente. Según cuál sea el mecanismo de carga utilizado en el paso 3, la respuesta puede ser una <a href="https://developers.google.com/storage/docs/reference-methods#postobject">respuesta HTTP</a> para la subida basada en formularios o una <a href="https://developers.google.com/storage/docs/reference-methods#putobject">respuesta de API REST</a>.</li>
+<li>Si la subida sale bien, los metadatos multimedia se tienen que transmitir a la aplicación de App Engine. Hay diferentes formas de agilizar el proceso:
+<ol>
+<li>En el caso de los clientes de navegador que utilicen un formulario de subida, se puede especificar una URL de devolución de llamada dentro de la URL de subida. Según cuál sea la respuesta, el navegador se puede redirigir a esta URL con información de metadatos limitada insertada en la URL de devolución de llamada.</li>
+<li>Si la subida sale bien, Google Cloud Storage puede notificárselo a la aplicación de App Engine mediante una característica de Cloud Storage llamada Notificación de cambios en objetos.<sup>[<a href="#fn-1" name="ref-4" id="ref-4">1</a>]</sup> La notificación contiene metadatos del objeto multimedia que se quiere subir.</li>
+<li>Dependiendo de cuál sea la respuesta de subida de contenido que proporcione Cloud Storage, los clientes también pueden llamar directamente a la instancia de Google Cloud Endpoints de la aplicación de App Engine para subir los metadatos.</li>
+</ol>
+</li>
+<li>La aplicación de App Engine almacena los metadatos en un almacén persistente. Hay dos opciones para los almacenes de datos en función de la configuración de la aplicación: 1) almacén de datos NoSQL de App Engine o 2) Google Cloud SQL.</li>
+<li>Si hace falta realizar procesamiento multimedia, la aplicación de App Engine puede crear una tarea en la cola de tareas para iniciar el flujo de trabajo de procesamiento multimedia. La aplicación de App Engine también puede, si se solicita, poner en marcha máquinas virtuales o desactivarlas en función de la carga de trabajo.</li>
+<li>El software de procesamiento multimedia, que se ejecuta en Google Compute Engine, extrae la tarea de la cola y ejecuta los procedimientos necesarios.</li>
+<li>El software de procesamiento multimedia lee el contenido multimedia que hay en Cloud Storage, lo procesa y vuelve a almacenar el resultado en Cloud Storage.</li>
+</ol>
+<h3>Publicación de recursos multimedia y flujo de trabajo de descarga</h3>
+<p>En la figura 3 se describen la publicación de recursos multimedia y el flujo de trabajo de descarga. Además, viene acompañada de una lista de descripciones detalladas.</p>
+<figure><img src="/images/articles/scalable-digital-media-3.png" alt="Publicación de recursos multimedia y flujo de descarga">
+<figcaption>Figura 3. Publicación de recursos multimedia y flujo de descarga</figcaption>
+</figure>
+<ol>
+<li>Para iniciar la descarga multimedia, los clientes se ponen en contacto con la aplicación de App Engine, que los autentica y los autoriza y también permite la navegación y la búsqueda de contenido multimedia específico. Esto se puede llevar a cabo mediante la presentación de una interfaz de usuario web para el cliente de navegador o a través de una API REST que la aplicación de App Engine proporcione mediante Google Cloud Endpoints.</li>
+<li>En función de los metadatos multimedia y de los datos de la aplicación que haya en el almacén de datos o en Cloud SQL, la aplicación de App Engine puede comprobar las reglas de uso compartido de contenido que se han definido en la aplicación, y puede buscar información de acceso de los contenidos almacenados en Google Cloud Storage.</li>
+<li>Para que el contenido se descargue de manera segura de Google Cloud Storage, la aplicación de App Engine puede generar una URL firmada o proporcionar al cliente el token de acceso OAuth, junto con el segmento de Cloud Storage y los nombres de objeto. En el caso de los clientes de navegador, la información se inserta en la interfaz de usuario web. En el caso de los clientes móviles y de escritorio, la información se ofrece en la respuesta de la API REST mencionada en el paso 1.</li>
+<li>Los clientes, para enviar una solicitud a Google Cloud Storage de descarga del contenido, envían código HTTP o llaman a la API REST. Google Cloud Storage puede aprovechar la <a href="https://developers.google.com/storage/docs/developer-guide">función de almacenamiento en la memoria caché</a> de la red de Google para contenido público. Si el contenido está disponible en la caché, se ofrece desde la caché. De lo contrario, se produce lo siguiente:
+<ol>
+<li>El contenido se recupera de Google Cloud Storage y la caché se rellena.</li>
+<li>La aplicación de App Engine permite que el contenido recuperado de Cloud Storage se procese en proxy a través de los <a href="https://developers.google.com/appengine/docs/java/images/overview">Servicios de imágenes</a> de App Engine para cambiar el tamaño y recortar imágenes "sobre la marcha".</li>
+</ol>
+</li>
+<li>El contenido multimedia se publica para el cliente.</li>
+</ol>
+<h3>Consideraciones de implementación</h3>
+<ul>
+<li>Los metadatos del contenido multimedia se pueden almacenar junto con los datos de la aplicación, ya sea en el almacén de datos de Google App Engine o en Google Cloud SQL. La elección depende del tamaño de los datos, de las características del modelo de datos general y de la experiencia del equipo de desarrolladores. Por ejemplo, Cloud SQL podría ser mejor opción si tienes datos altamente relacionales. Si no, el almacén de datos podría ser mejor opción si quieres escalar datos desnormalizados para que se conviertan en un conjunto de datos de grandes proporciones. Los pros y los contras de ambas opciones se analizan en detalle en una sesión de Google IO 2012 llamada <a href="http://www.youtube.com/watch?v=rRoy6I4gKWU">SQL vs NoSQL: Battle of the Backends</a> (SQL frente a NoSQL: la batalla de los backends).</li>
+<li>La solución proporcionada utiliza Google Compute Engine para el procesamiento multimedia. Compute Engine permite ejecutar software y paquetes personalizados en sistemas operativos compatibles. La plataforma es adecuada para el procesamiento multimedia para finalidades generales. De forma alternativa, para las manipulaciones sencillas de imágenes y de fotos, Google App Engine ofrece un Servicio de imágenes que puede llevar a cabo el procesamiento de imágenes sobre la marcha.</li>
+</ul>
+<h2>Aplicación de ejemplo</h2>
+<p>Se ha desarrollado una aplicación de ejemplo para compartir fotos<sup><a href="#r-4" name="ref-5" id="ref-5">4</a></sup> con la finalidad de demostrar cómo implementar una solución de administración y de uso compartido de recursos multimedia, como la descrita anteriormente en la situación de ejemplo. La aplicación para compartir fotos permite a los usuarios subir fotos y ponerlas a disposición de otros usuarios para que las vean. Los usuarios también pueden publicar comentarios sobre las fotos subidas. En la siguiente lista se detallan los elementos clave de esta situación de uso:</p>
+<ul>
+<li>Para utilizar la aplicación, es necesario que un usuario inicie sesión con una cuenta de Google válida.</li>
+<li>Un usuario sube una foto y una descripción desde un disco local.</li>
+<li>Todas las fotos subidas en la aplicación para compartir fotos se muestran en orden cronológico.</li>
+<li>El usuario añade comentarios, visibles para todos los usuarios, a cualquier foto.</li>
+<li>Cuando se muestra una foto, se puede recortar la imagen y cambiarle el tamaño para cuadrarla en la interfaz de usuario.</li>
+</ul>
+<p>En <a href="https://developers.google.com/samples/">esta página web</a> se puede consultar la documentación detallada sobre los requisitos y sobre el diseño. El código fuente está alojado en <a href="https://github.com/GoogleCloudPlatform/solutions-photo-sharing-demo-java">Github</a>.</p>
+<h2>Conclusión</h2>
+<p>Google Cloud Platform permite a los desarrolladores crear rápidamente una solución de administración y de uso compartido de recursos multimedia digitales que se puede escalar para millones de usuarios y hasta petabytes de datos. La solución presentada en este artículo combina las capacidades de Google App Engine, de Google Compute Engine y de Google Cloud Storage para resolver los problemas técnicos que suponen los sistemas de recursos multimedia digitales.</p>
+<br>
+<h2>Notas</h2>
+<p id="fn-1"><sup>[<a href="#ref-4">1</a>]</sup> La característica de Notificación de cambios en objetos se encuentra todavía dentro del programa Tester de confianza.</p>
+<h2>Referencias</h2>
+<p id="r-1"><sup><a href="#ref-1">1</a></sup> Artículo sobre <a href="https://commerce.informatm.com/reports/ott-video-revenue-forecasts.html">previsiones en los ingresos por vídeos en Internet</a>, 2011-2017, de Informa Telecoms &amp; Media, noviembre de 2012</p>
+<p id="r-2"><sup><a href="#ref-2">2</a></sup> Artículo de Abhay Paliwal sobre <a href="http://www.kajashi.com/?q=content/key-trends-and-takeaways-digital-media-market">tendencias y sobre lecciones clave del mercado de recursos multimedia digitales</a>, marzo de 2012</p>
+<p id="r-3"><sup><a href="#ref-3">3</a></sup><a href="http://www.datacenterknowledge.com/archives/2012/07/02/gartner-consumers-will-store-more-in-the-cloud/">Gartner: Los consumidores harán que el almacenamiento en la nube crezca enormemente</a>, de Colleen Miller, julio de 2012</p>
+<p id="r-4"><sup><a href="#ref-5">4</a></sup> <a href="https://github.com/GoogleCloudPlatform/solutions-photo-sharing-demo-java">Aplicación de ejemplo para compartir fotos</a>, de Michael Tang, octubre de 2012</p>
+</div>
+<div class="maia-col-3"><br>
+<img src="//www.google.com/images/icons/product/feedback-16.png" class="g-app-icon" alt=""> <a href="javascript:void(0);" class="google-feedback">Comentarios sobre este documento</a><br>
+<br>
+<img src="//www.google.com/images/icons/thirdparty/pdf-16.png" class="g-app-icon" alt=""> <a href="../../../files/articles/google-cloud_technical-article_digital-media-asset-management.pdf" class="cp-pdf" onclick="javascript: _gaq.push(['_trackPageview', '../../../files/articles/google-cloud_technical-article_digital-media-asset-management.pdf']);">Descargar en PDF</a></div>
+</div>
+</div>
+<script>
+(function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+</script><script src="//www.gstatic.com/feedback/api.js">
+</script><script>
+$('body').delegate('.google-feedback', 'click', function() {
+      userfeedback.api.startFeedback({'productId': '94614'});
+  });
+</script><!-- Scripts to include both on Goro + Devsite --><script>
+window.___gcfg = {
+     lang: ''
+   };
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+</script><!-- GTM implementation --><!-- Start dataLayer --><script>
+dataLayer = [{
+        'country': 'es',
+        'region': 'emea',
+        'language': 'es'
+      }];
+</script><!-- End dataLayer --><!-- Start Google Tag Manager --><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5CVQBG" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript> <script>
+(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-5CVQBG');
+</script><!-- End Google Tag Manager --><!-- Global JS scripts to load; path will depend on whether we're on devsite or Goro --><script src="/js/base.min.js">
+</script><!-- Retina loader; Do not load if partners page because we need to wait until the Angular app runs --><script>
+new lfl.system.RetinaLoader();
+</script><!-- Secondary right-side scroll-nav --><script>
+new lfl.ui.ScrollNav({});
+</script>
+</body>
+</html>

@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html devsite="">
+<head>
+<title>Support Sign Up — Google Cloud Platform</title>
+<meta name="description" content="Google&nbsp;Cloud&nbsp;Platform vous permet de développer et d'héberger des applications ainsi que des sites Web, de stocker des données et de les analyser, le tout au sein de l'infrastructure évolutive de Google.">
+<meta name="hide_page_heading" value="true">
+<meta name="full_width" value="true">
+<meta name="top_category" value="support">
+<meta name="subcategory" value="support packages">
+<meta name="viewport" content="initial-scale=1, minimum-scale=1, width=device-width">
+<link rel="apple-touch-icon" href="/_static/images/apple-touch-icon.png">
+<link href="//fonts.googleapis.com/css?family=Open+Sans:400italic,300,400,600,700" rel="stylesheet">
+<link href="/css/default.css" rel="stylesheet"><!--[if lt IE 9]>
+    <link rel="stylesheet" media="screen" href='/c/cp-ie.css'>
+    <![endif]-->
+<script src="/js/floodlight.js">
+</script>
+</head>
+<body>
+<script>
+function validation(form) {
+
+
+  if(form.FirstName.value == '') {
+  form.FirstName.focus();
+  form.FirstName.style.borderColor="#D3152C";
+
+  return false;
+  }
+
+  if(form.LastName.value == '') {
+  form.LastName.focus();
+  form.LastName.style.borderColor="#D3152C";
+
+  return false;
+  }
+
+  if(form.Email.value == '') {
+  form.Email.focus();
+  form.Email.style.borderColor="#D3152C";
+
+  return false;
+  }
+
+  if(form.Phone.value == '') {
+  form.Phone.focus();
+  form.Phone.style.borderColor="#D3152C";
+
+  return false;
+  }
+
+  if(form.Company.value == '') {
+  form.Company.focus();
+  form.Company.style.borderColor="#D3152C";
+
+  return false;
+  }
+
+  if(form.Country.value == '') {
+  form.Country.focus();
+  form.Country.style.borderColor="#D3152C";
+
+  return false;
+  }
+
+  if(form.Country.value == 'US' || form.Country.value == 'CA') {
+    if(form.State.value == '') {
+      form.State.focus();
+      form.State.style.borderColor="#D3152C";
+
+      return false;
+    }
+  }
+
+  if(form.Industry.value == '') {
+  form.Industry.focus();
+  form.Industry.style.borderColor="#D3152C";
+
+  return false;
+  }
+
+  if(form.Plan.value == '') {
+  form.Plan.focus();
+  form.Plan.style.borderColor="#D3152C";
+
+  return false;
+  }
+
+  return true;
+  }
+</script>
+<div id="maia-main" class="cp-page cp-std cp-contact">
+<div class="cp-hero cp-cloud cp-wrap">
+<div class="cp-header">
+<h1>Contactez-nous à propos des offres d'assistance disponibles</h1>
+<p>Veuillez nous indiquer l'offre d'assistance qui vous intéresse. Un membre de notre équipe commerciale vous contactera.</p>
+<p class="cp-sub">Les champs marqués d'un astérisque (<span class="cp-required">*</span>) sont obligatoires.</p>
+</div>
+</div>
+<div class="cp-contact-form">
+<form enctype="application/x-www-form-urlencoded" method="post" action="http://app-g.marketo.com/index.php/leadCapture/save" name="cp-contact" onsubmit="return validation(this);" id="cp-contact"><input name="_mkt_trk" type="hidden" value=""> <input name="LeadSource" type="hidden" value="Site Web"> <input name="Lead_Source_Descr__c" type="hidden" value="Site Web&nbsp;: contacter le service commercial – Cloud&nbsp;Platform"> <input name="Most_Recent_Lead_Source_Description__c" type="hidden" value="Site Web&nbsp;: contacter le service commercial – Cloud&nbsp;Platform"> <input id="utm_source__c" name="utm_source__c" type="hidden" value=""> <input id="utm_content__c" name="utm_content__c" type="hidden" value=""> <input id="utm_campaign__c" name="utm_campaign__c" type="hidden" value=""> <input id="utm_medium" name="utm_medium" type="hidden" value=""> <input id="utm_term" name="utm_term" type="hidden" value=""> <input type="hidden" name="lpId" value="-1"> <input type="hidden" name="subId" value="95"> <input type="hidden" name="munchkinId" value="248-TPC-286"> <input type="hidden" name="formid" value="1104"> <input name="_mkt_disp" type="hidden" value="return"> <input id="returnURL" name="returnURL" type="hidden" value="http://cloud.google.com/support/signup-thankyou"> <input id="retURL" name="retURL" type="hidden" value="http://cloud.google.com/support/signup-thankyou"> <input id="Number_of_Employees__c" name="Number_of_Employees__c" type="hidden" value="1"> <input id="Title" name="title" type="hidden" value="Sans objet"> <input id="lead_type__c" name="lead_type__c" type="hidden" value="App&nbsp;Engine">
+<fieldset><label for="FirstName">Prénom<span class="cp-required">*</span></label> <input id="FirstName" maxlength="40" name="FirstName" type="text" class="inputtext" size="80"></fieldset>
+<fieldset><label for="LastName">Nom<span class="cp-required">*</span></label> <input id="LastName" maxlength="40" name="LastName" type="text" class="inputtext" size="80"></fieldset>
+<fieldset><label for="Email">Adresse e-mail<span class="cp-required">*</span></label> <input id="Email" maxlength="40" name="Email" type="text" class="inputtext" size="80"></fieldset>
+<fieldset><label for="Phone">Numéro de téléphone<span class="cp-required">*</span></label> <input id="Phone" maxlength="40" name="Phone" type="text" class="inputtext" size="80"></fieldset>
+<fieldset><label for="Company">Entreprise<span class="cp-required">*</span></label> <input id="Company" maxlength="40" name="Company" type="text" class="inputtext" size="80"></fieldset>
+<fieldset><label for="Industry">Secteur d'activité<span class="cp-required">*</span></label><select id="Industry" name="Industry" title="Secteur d'activité">
+<option value="">Sélectionnez</option>
+<option value="Services professionnels">Services professionnels</option>
+<option value="Enseignement">Enseignement</option>
+<option value="Energy, Chemicals &amp; Utilities">Énergie, produits chimiques et services collectifs</option>
+<option value="Agriculture, élevage, sylviculture, pêche">Agriculture, élevage, sylviculture, pêche</option>
+<option value="Services financiers">Services financiers</option>
+<option value="Administration">Administration</option>
+<option value="Health &amp; Social Care">Santé et protection sociale</option>
+<option value="Holdings">Holdings</option>
+<option value="Industrie manufacturière">Industrie manufacturière</option>
+<option value="Media &amp; Entertainment">Médias et divertissements</option>
+<option value="Mining &amp; Construction">Secteur minier et de la construction</option>
+<option value="Organisations à but non lucratif">Organisations à but non lucratif</option>
+<option value="Retail &amp; Wholesale Trade">Commerce de détail et de gros</option>
+<option value="Technologie">Technologie</option>
+<option value="Travel &amp; Transport">Tourisme et transports</option>
+</select></fieldset>
+<div style="clear:both;"></div>
+<fieldset><label for="Country">Pays<span class="cp-required">*</span></label><select id="Country" name="Country" title="pays">
+<option selected value="">Sélectionnez</option>
+<option value="US">États-Unis</option>
+<option value="AF">Afghanistan</option>
+<option value="AX">Åland (Îles)</option>
+<option value="AL">Albanie</option>
+<option value="DZ">Algérie</option>
+<option value="AS">Samoa américaines</option>
+<option value="AD">Andorre</option>
+<option value="AO">Angola</option>
+<option value="AI">Anguilla</option>
+<option value="AQ">Antarctique</option>
+<option value="AG">Antigua-et-Barbuda</option>
+<option value="AR">Argentine</option>
+<option value="AM">Arménie</option>
+<option value="AW">Aruba</option>
+<option value="AU">Australie</option>
+<option value="AT">Autriche</option>
+<option value="AZ">Azerbaïdjan</option>
+<option value="BS">Bahamas</option>
+<option value="BH">Bahreïn</option>
+<option value="BD">Bangladesh</option>
+<option value="BB">Barbade</option>
+<option value="BY">Biélorussie</option>
+<option value="BE">Belgique</option>
+<option value="BZ">Belize</option>
+<option value="BJ">Bénin</option>
+<option value="BM">Bermudes</option>
+<option value="BT">Bhoutan</option>
+<option value="BO">Bolivie (État plurinational de)</option>
+<option value="BQ">Bonaire, Saint-Eustache et Saba</option>
+<option value="BA">Bosnie-Herzégovine</option>
+<option value="BW">Botswana</option>
+<option value="BV">Bouvet (Île)</option>
+<option value="BR">Brésil</option>
+<option value="IO">Territoire britannique de l'océan Indien</option>
+<option value="BN">Brunei Darussalam</option>
+<option value="BG">Bulgarie</option>
+<option value="BF">Burkina Faso</option>
+<option value="BI">Burundi</option>
+<option value="KH">Cambodge</option>
+<option value="CM">Cameroun</option>
+<option value="CA">Canada</option>
+<option value="CV">Cap-Vert</option>
+<option value="KY">Caïmans (Îles)</option>
+<option value="CF">République centrafricaine</option>
+<option value="TD">Tchad</option>
+<option value="CL">Chili</option>
+<option value="CN">Chine</option>
+<option value="CX">Christmas (Île)</option>
+<option value="CC">Cocos (Îles)</option>
+<option value="CO">Colombie</option>
+<option value="KM">Comores</option>
+<option value="CG">Congo</option>
+<option value="CD">République démocratique du Congo</option>
+<option value="CK">Cook (Îles)</option>
+<option value="CR">Costa&nbsp;Rica</option>
+<option value="CI">Côte d'Ivoire</option>
+<option value="HR">Croatie</option>
+<option value="CU">Cuba</option>
+<option value="CW">Curaçao</option>
+<option value="CY">Chypre</option>
+<option value="CZ">République tchèque</option>
+<option value="DK">Danemark</option>
+<option value="DJ">Djibouti</option>
+<option value="DM">Dominique</option>
+<option value="DO">République dominicaine</option>
+<option value="EC">Équateur</option>
+<option value="EG">Égypte</option>
+<option value="SV">El&nbsp;Salvador</option>
+<option value="GQ">Guinée équatoriale</option>
+<option value="ER">Érythrée</option>
+<option value="EE">Estonie</option>
+<option value="ET">Éthiopie</option>
+<option value="FK">Falkland (Îles)</option>
+<option value="FO">Féroé (Îles)</option>
+<option value="FJ">Fidji</option>
+<option value="FI">Finlande</option>
+<option value="FR">France</option>
+<option value="GF">Guyane française</option>
+<option value="PF">Polynésie française</option>
+<option value="TF">Terres australes et antarctiques françaises</option>
+<option value="GA">Gabon</option>
+<option value="GM">Gambie</option>
+<option value="GE">Géorgie</option>
+<option value="DE">Allemagne</option>
+<option value="GH">Ghana</option>
+<option value="GI">Gibraltar</option>
+<option value="GR">Grèce</option>
+<option value="GL">Groenland</option>
+<option value="GD">Grenade</option>
+<option value="GP">Guadeloupe</option>
+<option value="GU">Guam</option>
+<option value="GT">Guatemala</option>
+<option value="GG">Guernesey</option>
+<option value="GN">Guinée</option>
+<option value="GW">Guinée-Bissau</option>
+<option value="GY">Guyana</option>
+<option value="HT">Haïti</option>
+<option value="HM">Heard et McDonald (Îles)</option>
+<option value="VA">Saint-Siège (État de la Cité du Vatican)</option>
+<option value="HN">Honduras</option>
+<option value="HK">Hong&nbsp;Kong</option>
+<option value="HU">Hongrie</option>
+<option value="IS">Islande</option>
+<option value="IN">Inde</option>
+<option value="ID">Indonésie</option>
+<option value="IR">Iran (République islamique d')</option>
+<option value="IQ">Iraq</option>
+<option value="IE">Irlande</option>
+<option value="IM">Man (Île de)</option>
+<option value="IL">Israël</option>
+<option value="IT">Italie</option>
+<option value="JM">Jamaïque</option>
+<option value="JP">Japon</option>
+<option value="JE">Jersey</option>
+<option value="JO">Jordanie</option>
+<option value="KZ">Kazakhstan</option>
+<option value="KE">Kenya</option>
+<option value="KI">Kiribati</option>
+<option value="KP">Corée (République populaire démocratique de)</option>
+<option value="KR">Corée (République de)</option>
+<option value="KW">Koweït</option>
+<option value="KG">Kirghizstan</option>
+<option value="LA">Laos (République démocratique populaire lao)</option>
+<option value="LV">Lettonie</option>
+<option value="LB">Liban</option>
+<option value="LS">Lesotho</option>
+<option value="LR">Liberia</option>
+<option value="LY">Libye</option>
+<option value="LI">Liechtenstein</option>
+<option value="LT">Lituanie</option>
+<option value="LU">Luxembourg</option>
+<option value="MO">Macao</option>
+<option value="MK">Macédoine (ancienne République yougoslave de)</option>
+<option value="MG">Madagascar</option>
+<option value="MW">Malawi</option>
+<option value="MY">Malaisie</option>
+<option value="MV">Maldives</option>
+<option value="ML">Mali</option>
+<option value="MT">Malte</option>
+<option value="MH">Marshall (Îles)</option>
+<option value="MQ">Martinique</option>
+<option value="MR">Mauritanie</option>
+<option value="MU">Maurice</option>
+<option value="YT">Mayotte</option>
+<option value="MX">Mexique</option>
+<option value="FM">Micronésie (États fédérés de)</option>
+<option value="MD">Moldavie (République de)</option>
+<option value="MC">Monaco</option>
+<option value="MN">Mongolie</option>
+<option value="ME">Monténégro</option>
+<option value="MS">Montserrat</option>
+<option value="MA">Maroc</option>
+<option value="MZ">Mozambique</option>
+<option value="MM">Myanmar/Birmanie</option>
+<option value="NA">Namibie</option>
+<option value="NR">Nauru</option>
+<option value="NP">Népal</option>
+<option value="NL">Pays-Bas</option>
+<option value="NC">Nouvelle-Calédonie</option>
+<option value="NZ">Nouvelle-Zélande</option>
+<option value="NI">Nicaragua</option>
+<option value="NE">Niger</option>
+<option value="NG">Nigeria</option>
+<option value="NU">Niue</option>
+<option value="NF">Norfolk (Île)</option>
+<option value="MP">Mariannes du Nord (Îles)</option>
+<option value="NO">Norvège</option>
+<option value="OM">Oman</option>
+<option value="PK">Pakistan</option>
+<option value="PW">Palaos</option>
+<option value="PS">Territoires palestiniens occupés</option>
+<option value="PA">Panama</option>
+<option value="PG">Papouasie - Nouvelle-Guinée</option>
+<option value="PY">Paraguay</option>
+<option value="PE">Pérou</option>
+<option value="PH">Philippines</option>
+<option value="PN">Pitcairn (Îles)</option>
+<option value="PL">Pologne</option>
+<option value="PT">Portugal</option>
+<option value="PR">Porto&nbsp;Rico</option>
+<option value="QA">Qatar</option>
+<option value="RE">La&nbsp;Réunion</option>
+<option value="RO">Roumanie</option>
+<option value="RU">Russie (Fédération de)</option>
+<option value="RW">Rwanda</option>
+<option value="BL">Saint-Barthélemy</option>
+<option value="SH">Sainte-Hélène, Ascension et Tristan da Cunha</option>
+<option value="KN">Saint-Christophe-et-Niévès</option>
+<option value="LC">Sainte-Lucie</option>
+<option value="MF">Saint-Martin (partie française)</option>
+<option value="PM">Saint-Pierre-et-Miquelon</option>
+<option value="VC">Saint-Vincent-et-les-Grenadines</option>
+<option value="WS">Samoa</option>
+<option value="SM">Saint-Marin</option>
+<option value="ST">Sao&nbsp;Tomé-et-Principe</option>
+<option value="SA">Arabie saoudite</option>
+<option value="SN">Sénégal</option>
+<option value="RS">Serbie</option>
+<option value="SC">Seychelles</option>
+<option value="SL">Sierra&nbsp;Leone</option>
+<option value="SG">Singapour</option>
+<option value="SX">Sint-Maarten (partie néerlandaise)</option>
+<option value="SK">Slovaquie</option>
+<option value="SI">Slovénie</option>
+<option value="SB">Salomon (Îles)</option>
+<option value="SO">Somalie</option>
+<option value="ZA">Afrique du Sud</option>
+<option value="GS">Géorgie du Sud et Sandwich du Sud (Îles)</option>
+<option value="SS">Soudan du Sud</option>
+<option value="ES">Espagne</option>
+<option value="LK">Sri&nbsp;Lanka</option>
+<option value="SD">Soudan</option>
+<option value="SR">Suriname</option>
+<option value="SJ">Svalbard et Jan Mayen</option>
+<option value="SZ">Swaziland</option>
+<option value="SE">Suède</option>
+<option value="CH">Suisse</option>
+<option value="SY">Syrie (République arabe syrienne)</option>
+<option value="TW">Taïwan, Province de Chine</option>
+<option value="TJ">Tadjikistan</option>
+<option value="TZ">Tanzanie (République unie de)</option>
+<option value="TH">Thaïlande</option>
+<option value="TL">Timor-Oriental</option>
+<option value="TG">Togo</option>
+<option value="TK">Tokélaou</option>
+<option value="TO">Tonga</option>
+<option value="TT">Trinité-et-Tobago</option>
+<option value="TN">Tunisie</option>
+<option value="TR">Turquie</option>
+<option value="TM">Turkménistan</option>
+<option value="TC">Turks-et-Caïcos (Îles)</option>
+<option value="TV">Tuvalu</option>
+<option value="UG">Ouganda</option>
+<option value="UA">Ukraine</option>
+<option value="AE">Émirats arabes unis</option>
+<option value="GB">Royaume-Uni</option>
+<option value="US">États-Unis</option>
+<option value="UM">États-Unis (Îles mineures éloignées des)</option>
+<option value="UY">Uruguay</option>
+<option value="UZ">Ouzbékistan</option>
+<option value="VU">Vanuatu</option>
+<option value="VE">Venezuela (République bolivarienne du)</option>
+<option value="VN">Viêt&nbsp;Nam</option>
+<option value="VG">Vierges britanniques (Îles)</option>
+<option value="VI">Vierges américaines (Îles)</option>
+<option value="WF">Wallis-et-Futuna</option>
+<option value="EH">Sahara occidental</option>
+<option value="YE">Yémen</option>
+<option value="ZM">Zambie</option>
+<option value="ZW">Zimbabwe</option>
+</select></fieldset>
+<fieldset><label for="Plan">Type d'assistance<span class="cp-required">*</span></label><select id="Plan" name="Cloud_Platform_Support_Options__c" title="package">
+<option selected value="">Sélectionnez</option>
+<option value="silver">Assistance&nbsp;Silver</option>
+<option value="gold">Assistance&nbsp;Gold</option>
+<option value="platinum">Assistance&nbsp;Platinum</option>
+<option value="help me decide">Aidez-moi à décider</option>
+</select></fieldset>
+<fieldset style="width:100%;"><label for="Plan description">Quels sont vos besoins en matière d'assistance&nbsp;?</label>
+<textarea style="width:93%;" name="Additional_Information__c">
+</textarea></fieldset>
+<div class="clear-both">&nbsp;</div>
+<input class="maia-button" type="submit" name="submit"></form>
+</div>
+</div>
+<!-- /maia-main -->
+<script>
+$(document).ready(function() {
+
+  var states = {
+    "US": [
+            {
+                "name": "Alabama",
+                "abbreviation": "AL"
+            },
+            {
+                "name": "Alaska",
+                "abbreviation": "AK"
+            },
+            {
+                "name": "Arizona",
+                "abbreviation": "AZ"
+            },
+            {
+                "name": "Arkansas",
+                "abbreviation": "AR"
+            },
+            {
+                "name": "California",
+                "abbreviation": "CA"
+            },
+            {
+                "name": "Colorado",
+                "abbreviation": "CO"
+            },
+            {
+                "name": "Connecticut",
+                "abbreviation": "CT"
+            },
+            {
+                "name": "Delaware",
+                "abbreviation": "DE"
+            },
+            {
+                "name": "District Of Columbia",
+                "abbreviation": "DC"
+            },
+            {
+                "name": "Florida",
+                "abbreviation": "FL"
+            },
+            {
+                "name": "Georgia",
+                "abbreviation": "GA"
+            },
+            {
+                "name": "Hawaii",
+                "abbreviation": "HI"
+            },
+            {
+                "name": "Idaho",
+                "abbreviation": "ID"
+            },
+            {
+                "name": "Illinois",
+                "abbreviation": "IL"
+            },
+            {
+                "name": "Indiana",
+                "abbreviation": "IN"
+            },
+            {
+                "name": "Iowa",
+                "abbreviation": "IA"
+            },
+            {
+                "name": "Kansas",
+                "abbreviation": "KS"
+            },
+            {
+                "name": "Kentucky",
+                "abbreviation": "KY"
+            },
+            {
+                "name": "Louisiana",
+                "abbreviation": "LA"
+            },
+            {
+                "name": "Maine",
+                "abbreviation": "ME"
+            },
+            {
+                "name": "Maryland",
+                "abbreviation": "MD"
+            },
+            {
+                "name": "Massachusetts",
+                "abbreviation": "MA"
+            },
+            {
+                "name": "Michigan",
+                "abbreviation": "MI"
+            },
+            {
+                "name": "Minnesota",
+                "abbreviation": "MN"
+            },
+            {
+                "name": "Mississippi",
+                "abbreviation": "MS"
+            },
+            {
+                "name": "Missouri",
+                "abbreviation": "MO"
+            },
+            {
+                "name": "Montana",
+                "abbreviation": "MT"
+            },
+            {
+                "name": "Nebraska",
+                "abbreviation": "NE"
+            },
+            {
+                "name": "Nevada",
+                "abbreviation": "NV"
+            },
+            {
+                "name": "New Hampshire",
+                "abbreviation": "NH"
+            },
+            {
+                "name": "New Jersey",
+                "abbreviation": "NJ"
+            },
+            {
+                "name": "New Mexico",
+                "abbreviation": "NM"
+            },
+            {
+                "name": "New York",
+                "abbreviation": "NY"
+            },
+            {
+                "name": "North Carolina",
+                "abbreviation": "NC"
+            },
+            {
+                "name": "North Dakota",
+                "abbreviation": "ND"
+            },
+            {
+                "name": "Ohio",
+                "abbreviation": "OH"
+            },
+            {
+                "name": "Oklahoma",
+                "abbreviation": "OK"
+            },
+            {
+                "name": "Oregon",
+                "abbreviation": "OR"
+            },
+            {
+                "name": "Pennsylvania",
+                "abbreviation": "PA"
+            },
+            {
+                "name": "Puerto Rico",
+                "abbreviation": "PR"
+            },
+            {
+                "name": "Rhode Island",
+                "abbreviation": "RI"
+            },
+            {
+                "name": "South Carolina",
+                "abbreviation": "SC"
+            },
+            {
+                "name": "South Dakota",
+                "abbreviation": "SD"
+            },
+            {
+                "name": "Tennessee",
+                "abbreviation": "TN"
+            },
+            {
+                "name": "Texas",
+                "abbreviation": "TX"
+            },
+            {
+                "name": "Utah",
+                "abbreviation": "UT"
+            },
+            {
+                "name": "Vermont",
+                "abbreviation": "VT"
+            },
+            {
+                "name": "Virginia",
+                "abbreviation": "VA"
+            },
+            {
+                "name": "Washington",
+                "abbreviation": "WA"
+            },
+            {
+                "name": "West Virginia",
+                "abbreviation": "WV"
+            },
+            {
+                "name": "Wisconsin",
+                "abbreviation": "WI"
+            },
+            {
+                "name": "Wyoming",
+                "abbreviation": "WY"
+            }
+        ],
+    "CA": [
+            {
+              "name":"Alberta",
+              "abbreviation":"AB"
+            },
+            {
+              "name":"British Columbia",
+              "abbreviation":"BC"
+            },
+            {
+              "name":"Manitoba",
+              "abbreviation":"MB"
+            },
+            {
+              "name":"New Brunswick",
+              "abbreviation":"NB"
+            },
+            {
+              "name":"Newfoundland",
+              "abbreviation":"NL"
+            },
+            {
+              "name":"Northwest Territories",
+              "abbreviation":"NT"
+            },
+            {
+              "name":"Nova Scotia",
+              "abbreviation":"NS"
+            },
+            {
+              "name":"Nunavut",
+              "abbreviation":"NU"
+            },
+            {
+              "name":"Ontario",
+              "abbreviation":"ON"
+            },
+            {
+              "name":"Prince Edward Island",
+              "abbreviation":"PE"
+            },
+            {
+              "name":"Quebec",
+              "abbreviation":"QC"
+            },
+            {
+              "name":"Saskatchewan",
+              "abbreviation":"SK"
+            },
+            {
+              "name":"Yukon Territory",
+              "abbreviation":"YT"
+            }
+        ]
+  }
+
+  $('#Country').change(function() {
+    var country = $('#Country').val();
+    if (country != 'US' && country != 'CA') {
+      $('.state-required').addClass('hide');
+      $('#State').attr('disabled', 'disabled');
+      $('#State').empty();
+      $('#State').append('<option selected="" value="">Please select</option>');
+    } else {
+      $('.state-required').removeClass('hide');
+      $('#State').removeAttr('disabled');
+      $('#State').empty();
+      $('#State').append('<option selected="" value="">Please select</option>');
+
+      if (country == 'US') {
+        for (var i in states['US']) {
+          $('#State').append('<option value="'+states['US'][i]['abbreviation']+'">'+states['US'][i]['name']+'</option>');
+        }
+      } else if (country == 'CA') {
+        for (var i in states['CA']) {
+          $('#State').append('<option value="'+states['CA'][i]['abbreviation']+'">'+states['CA'][i]['name']+'</option>');
+        }
+      }
+    }
+
+  });
+});
+</script><!-- Scripts to include both on Goro + Devsite --><script>
+window.___gcfg = {
+     lang: ''
+   };
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+</script><!-- GTM implementation --><!-- Start dataLayer --><script>
+dataLayer = [{
+        'country': 'fr',
+        'region': 'emea',
+        'language': 'fr'
+      }];
+</script><!-- End dataLayer --><!-- Start Google Tag Manager --><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5CVQBG" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript> <script>
+(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-5CVQBG');
+</script><!-- End Google Tag Manager --><!-- Global JS scripts to load; path will depend on whether we're on devsite or Goro --><script src="/js/base.min.js">
+</script><!-- Retina loader; Do not load if partners page because we need to wait until the Angular app runs --><script>
+new lfl.system.RetinaLoader();
+</script><!-- Secondary right-side scroll-nav --><script>
+new lfl.ui.ScrollNav({});
+</script>
+</body>
+</html>

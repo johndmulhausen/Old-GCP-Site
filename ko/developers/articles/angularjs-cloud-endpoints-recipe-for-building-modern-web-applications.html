@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html devsite="">
+<head>
+<title>Web Apps Articles &amp; Tutorials — Google Cloud Platform</title>
+<meta name="description" content="Read technical articles about web applications and solutions with Google Cloud Platform, including auto scaling and how to manage complex applications in the cloud.">
+<meta name="hide_page_heading" value="true">
+<meta name="full_width" value="true">
+<meta name="top_category" value="developers">
+<meta name="subcategory" value="articles">
+<meta name="viewport" content="initial-scale=1, minimum-scale=1, width=device-width">
+<link rel="apple-touch-icon" href="/_static/images/apple-touch-icon.png">
+<link href="//fonts.googleapis.com/css?family=Open+Sans:400italic,300,400,600,700" rel="stylesheet">
+<link href="/css/default.css" rel="stylesheet"><!--[if lt IE 9]>
+    <link rel="stylesheet" media="screen" href='/c/cp-ie.css'>
+    <![endif]-->
+<script src="/js/floodlight.js">
+</script>
+</head>
+<body>
+<div id="maia-main" class="cp-article">
+<div class="maia-cols">
+<div class="maia-col-9">
+<div>
+<div style="float:right">
+<div class="g-plusone"></div>
+</div>
+<h1 class="title">AngularJS와 Cloud Endpoints 통합: 최신 웹 애플리케이션 제작을 위한 안내서</h1>
+</div>
+<div class="cp-article-tutorial">
+<h2>소개</h2>
+<p>클라이언트 측 기술의 발달로 인해 오늘날 웹 애플리케이션 서버의 역할이 변화하고 있습니다. Android, iOS 및 전적으로 브라우저에 기반한 클라이언트는 그 자체로 강력한 컴퓨팅 플랫폼이라고 할 수 있습니다. 이러한 플랫폼의 성공은 '기존' 웹 애플리케이션에 대한 재평가로 이어졌고, <a href="http://angularjs.org/">AngularJS</a>와 같은 MVC 프레임워크가 개발되어 클라이언트 측 개발자가 강력하고 매력적인 인터페이스를 구축할 수 있게 되었습니다.</p>
+<p>AngularJS는 인기 있는 오픈소스 자바스크립트 클라이언트 측 MVC 프레임워크로서, 클라이언트 측 애플리케이션의 신속한 개발을 지원합니다. 대부분의 MVC 기능을 클라이언트 측에서 구현하면 서버의 복잡도를 줄이고, 유지관리와 적용이 쉬운 잘 정의된 API를 기반으로 애플리케이션을 제작할 수 있습니다.</p>
+<p>이 문서에서는 AngularJS 또는 기타 클라이언트 측 MVC 기술에 관심이 있고 이러한 기술에 맞게 서버 백엔드를 최적화하려는 웹 개발자에게 권장사항과 가이드를 제공합니다. 또한 Google Cloud Platform, 특히 <a href="https://developers.google.com/appengine/docs/java/endpoints/">Google Cloud Endpoints</a>에서 AngularJS를 활용하는 방법을 알려 드립니다. Google Cloud Endpoints 기술을 사용하면 개발자가 서비스 기반 API를 통해 간단한 주석으로 즉시 Google App Engine 애플리케이션의 백엔드 API를 노출할 수 있습니다.</p>
+<p>Google Cloud Endpoints는 서버 측 API를 쉽게 제작할 수 있도록 하고, 백엔드 표준 로직을 요약합니다. Google Cloud Endpoints 자바스크립트 클라이언트 라이브러리를 AngularJS에 통합하는 것은 매우 간단하므로, 코드 한 줄을 작성하는 것으로 서버 로직과 콜백 함수를 호출하여 모델 속성을 결과로 업데이트할 수 있습니다.</p>
+<p>이 문서는 App Engine을 사용해 본 경험이 있고 자바스크립트에 대한 기본 지식을 갖춘 자바 개발자를 대상으로 합니다. AngularJS 및 참고자료 가이드가 포함된 Cloud Endpoint 웹사이트로 연결되는 링크는 다른 섹션에서 제공되며, 문제해결 도움말은 부록에 나와 있습니다. App Engine용 자바 애플리케이션 작성이 처음인 경우 App Enigne 사이트의 <a href="https://developers.google.com/appengine/docs/java/gettingstarted/introduction">시작하기</a> 페이지에서 소개 관련 내용을 확인할 수 있습니다.</p>
+<h2>과제</h2>
+<p>최근에 웹 애플리케이션 프레임워크에 일어난 가장 큰 변화는 MVC(Model-View-Controller)가 서버 측에서 클라이언트 측으로 이동했다는 점입니다. 이러한 배경에는 클라이언트 측 기술의 발달이 있습니다. 하지만 이러한 변화의 결과로 클라우드에서 호스팅되는 여러 기기를 아우르는 세련된 아키텍처를 갖춘 애플리케이션을 제작해야 한다는 과제가 떠오르게 되었습니다.</p>
+<p>Android, iOS 및 브라우저 기반 클라이언트는 풍부한 기능을 갖춘 개발 플랫폼이며, 각 플랫폼 모두 완전한 MVC 프레임워크를 실행할 수 있습니다. 클라이언트에서 MVC를 사용하여 사용자 인터페이스를 개발하면 클라이언트 개발자의 기술을 더 잘 활용할 수 있는 자연스러운 아키텍처를 구축할 수 있습니다. <a href="http://backbonejs.org/">Backbone.js</a> 및 AngularJS와 같은 클라이언트 측 MVC 프레임워크가 인기를 얻고 있다는 것은 이러한 클라이언트로의 전환을 증명해 주고 있습니다. 이러한 프레임워크는 복잡도를 줄이고 가장 단순한 애플리케이션에서조차 재사용을 높이는 데 도움이 되고 있습니다.</p>
+<p>인터페이스가 클라이언트로 이동하면서 서버는 더 단순해 졌습니다. 서버 측 개발자는 동적 콘텐츠를 생성하는 템플릿을 사용하여 HTML 페이지를 만드는 방법을 고민하지 않아도 됩니다. 대신 App Engine Datastore 액세스 및 OAuth2 인증과 같은 기술을 사용하여 비즈니스 로직 및 데이터 지속성을 구현하는 데 집중하고, 프레임워크를 사용하여 애플리케이션 클라이언트에 서비스를 노출할 수 있게 되었습니다.</p>
+<p>이제 남은 문제는 이러한 최신 웹 애플리케이션을 어떻게 설계하고 구현하는가입니다. 이 섹션에서는 브라우저 기반 클라이언트를 기존 서비스 기반 아키텍처에 통합하는 방법을 알아보려는 웹 애플리케이션 개발자 및 설계자를 위한 안내서 가이드를 제공합니다.</p>
+<h2>개요: 클라이언트 측 MVC와 Google Cloud Endpoints 통합</h2>
+<p>RPC 프레임워크를 제공하는 Google App Engine 기능인 Google Cloud Endpoints가 이러한 문제의 해답이 될 수 있습니다.</p>
+<figure><img src="/images/articles/angularjs-cloud-endpoints-recipe/cloud-endpoints.jpg" alt="">
+<figcaption>그림 1: Google Cloud Endpoints</figcaption>
+</figure>
+<p>이 플로는 아래에 자세하게 설명되어 있습니다.</p>
+<p>Cloud Endpoints를 사용하면 개발자는 간단한 자바 주석을 추가함으로써 모든 클래스의 공개 메소드를 서비스 엔드포인트로 노출할 수 있습니다. 간단한 방명록 애플리케이션을 예로 들어 보겠습니다. 이 애플리케이션에는 방명록에 새 메시지 항목을 추가하는 <span class="code">insert()</span>와 이를 나열하는 <span class="code">list()</span>, 이렇게 두 가지 메소드를 포함한 단일 클래스 'GuestbookEndpointV1'이 있습니다. 클래스를 서비스 엔드포인트로 노출하기 위해 다음과 같이 클래스 정의에 @Api 주석을 추가합니다.</p>
+<pre>
+<span class="bld">@Api</span>(name = "guestbook")
+public class <span class="bld">GuestbookEndpointV1</span> {
+  ...
+}
+</pre>
+<p>이 코드는 위의 그림 1에 나와 있는 것처럼 Google App Engine 서버에 배포됩니다. 또한 클라이언트에 게시하려는 모든 메소드에 @ApiMethod 주석을 추가해야 합니다.</p>
+<pre>
+@<span class="bld">ApiMethod</span>(name = "messages.insert")
+public void <span class="bld">insert</span>(Message message) {
+  // store a Message on Datastore
+  Entity e = new Entity("<span class="bld">Message</span>");
+  e.setProperty("<span class="bld">createdAt</span>", message.getCreatedAt());
+  e.setProperty("<span class="bld">createdBy</span>", message.getCreatedBy());
+  e.setProperty("<span class="bld">content</span>", message.getContent());
+  datastore.put(e);
+}
+</pre>
+<p><span class="code">insert()</span> 메소드는 자바 개체와 메시지를 수신하고 <span class="code">createdAt</span>(생성 타임스탬프), <span class="code">createdBy</span>(메시지 소유자)와 같은 속성과 함께 콘텐츠를 가져옵니다. 그런 다음 이러한 속성 값으로 Datastore 항목 'e'를 생성하고 Google App Engine Datastore에 저장합니다.</p>
+<p>이러한 서비스 엔드포인트는 REST API를 통해 자동으로 노출되며, <a href="https://developers.google.com/apis-explorer/#p/">Google APIs Explorer</a>를 사용하여 서비스 엔드포인트를 확인할 수 있습니다. 또한 테스트 요청을 전송하여 JSON 형식으로 응답을 확인하는 것이 좋습니다. 다음 화면에서 <span class="code">guestbook.messages.insert</span>는 자바 클래스 주석에서 바로 생성되었습니다.</p>
+<figure><img src="/images/articles/angularjs-cloud-endpoints-recipe/api-explorer.png" alt="">
+<figcaption>그림 2: Google APIs Explorer로 서비스 엔드포인트 테스트</figcaption>
+</figure>
+<h2>AngularJS와 Cloud Endpoints 결합</h2>
+<p>다음 단계로 <a href="http://angularjs.org/">AngularJS</a>와 같은 클라이언트 측 MVC 프레임워크와 Cloud Endpoints를 통합하는 과정을 설명해 보겠습니다. 이러한 시스템의 아키텍처는 그림 4에서 설명한 아키텍처와 유사합니다.</p>
+<figure><img src="/images/articles/angularjs-cloud-endpoints-recipe/endpoints-architecture.png" alt="">
+<figcaption>그림 4: 클라이언트 측 MVC 및 서비스 엔드포인트 아키텍처</figcaption>
+</figure>
+<p>두 기술의 통합은 간단하지만 코딩을 시작하기 전에 알아 두어야 할 몇 가지 실수와 주의사항이 있습니다. 따라서 위의 다이어그램(그림 4)에서 왼쪽 부분을 자세히 살펴보도록 하겠습니다. 이 부분이 클라이언트 측 MVC와 다이어그램 오른쪽에 나와 있는 엔드포인트를 통합하는 실제 자바스크립트 코드에 해당합니다. 앞서 정의한 방명록 서비스 엔드포인트를 위한 AngularJS 기반 웹 인터페이스를 생성하는 경우를 예로 사용하겠습니다. 다음 다이어그램은 인터페이스가 어떻게 표시되는지 보여주는 스크린샷입니다.</p>
+<figure><img src="/images/articles/angularjs-cloud-endpoints-recipe/guestbook-app.png" alt="">
+<figcaption>그림 3: AngularJS와 Cloud Endpoints가 통합된 방명록 앱</figcaption>
+</figure>
+<h3>보기 및 모델 생성</h3>
+<p>메시지 양식은 컨트롤러의 <span class="code">insert()</span> 메소드를 호출하는 일반 AngularJS 양식을 사용하여 생성할 수 있습니다. 이 양식은 다음 스크립트에 나와 있는 것처럼 두 가지 모델 속성, createdBy 및 콘텐츠를 지정합니다.</p>
+<pre>
+&lt;h2&gt;Guestbook&lt;/h2&gt;
+&lt;form <span class="bld">ng-submit</span>="<span class="bld">insert()</span>"&gt;
+  &lt;input type="text" <span class="bld">ng-model</span>="<span class="bld">createdBy</span>" size="50"&gt;&lt;br&gt;
+  &lt;input type="text" <span class="bld">ng-model</span>="<span class="bld">content</span>" size="50"&gt;&lt;br&gt;
+  &lt;input type="submit" class="btn" value="올리기"&gt;
+&lt;/form&gt;
+</pre>
+<p>다음 코드는 AngularJS 반복자를 사용하여 엔드포인트의 'list' 메소드 호출에 대한 응답으로 클라이언트에 반환되는 메시지를 반복하는 방법을 보여 줍니다.</p>
+<pre>
+&lt;ul&gt;
+  &lt;li <span class="bld">ng-repeat</span>="<span class="bld">message</span> in <span class="bld">messages</span>"&gt;
+  <span class="bld">message.createdAt</span>|date:'short'&gt; <span class="bld">message.createdBy</span>&gt;: <span class="bld">message.content</span>&gt;
+&lt;/ul&gt;
+</pre>
+<h3>컨트롤러 생성</h3>
+<p>컨트롤러의 <span class="code">insert</span> 함수(<span class="code">$scope.insert</span> 변수로 설정됨)는 앞서 정의한 엔드포인트의 <span class="code">insert</span> 메소드에 해당합니다. 이 함수는 모델 속성에서 복사한 메시지 콘텐츠 및 <span class="code">createdAt/createdBy</span> 속성이 포함된 개체를 생성한 다음 엔드포인트의 <span class="code">insert</span> 메소드를 호출합니다. 이는 다음 자바스크립트 부분에 나와 있습니다.</p>
+<pre>
+function GuestbookCtrl($scope) {
+  $scope.<span class="bld">insert</span>= function() {
+    <span class="bld">message</span> = {
+      "createdAt" : new Date(),
+      "createdBy" : $scope.<span class="bld">createdBy</span>,
+      "content" : $scope.<span class="bld">content</span>
+    };
+  ...
+</pre>
+<p>다음으로, Cloud Endpoint 클라이언트 라이브러리의 <span class="code">insert</span> 함수에 개체를 전달하여 개체를 전송할 수 있습니다. 이는 GuestbookEndpointV1 클래스에 주석을 추가하여 Cloud Endpoint로 노출되는 두 메소드 중 하나임을 기억해 주세요.</p>
+<pre>
+gapi.client.guestbook.messages. <span class="bld">insert(message)</span>.execute();
+</pre>
+<p>같은 방식으로 서비스 엔드포인트의 <span class="code">list()</span> 메소드를 호출하여 방명록의 메시지를 가져올 수 있습니다.</p>
+<pre>
+$scope.list = function() {
+  gapi.client.guestbook.messages.list().execute(function(<span class="bld">resp</span>) {
+    $scope.<span class="bld">messages</span> = <span class="bld">resp.items</span>;
+    $scope.<span class="bld">$apply()</span>;
+  });
+}
+</pre>
+<p>콜백으로 <span class="code">execute()</span> 메소드에 전달된 익명 함수는 서버의 메시지를 수신할 때마다 호출되어 모델의 메시지 속성에 할당된다는 점에 유의해 주세요. 콜백 함수는 컨트롤러 스레드 외부에서 호출되므로 <span class="code">$apply()</span>를 호출하여 모델의 변경사항을 인터페이스에 적용해야 합니다. 또한 Cloud Endpoints 클라이언트 라이브러리는 이러한 유형의 비동기 처리를 기술하는 데 AngularJS의 <a href="http://docs.angularjs.org/api/ng.$q">Promise</a> API를 지원하지 않습니다.</p>
+<p>AngularJS를 Cloud Endpoints와 통합할 때 어려운 부분은 초기화 순서입니다. 라이브러리가 로드 및 초기화되는 순서는 꼭 알아 두어야 합니다. 필수 라이브러리 및 관련 초기화의 로드 순서에 주의를 기울이지 않으면 문제가 발생할 수 있으며 이를 디버그하는 데 많은 시간이 소요될 수 있습니다. 자세한 내용은 부록을 참조하세요.</p>
+<p>제시된 예를 통해 AngularJS와 Cloud Endpoints를 사용하면 클라이언트 측 MVC와 서버 측 서비스 엔드포인트를 결합하는 상당히 간단한 설계 패턴이 가능하다는 것을 알 수 있습니다. 실제로 서버 통신에 AngularJS로 <a href="http://docs.angularjs.org/tutorial/step_05">XHR 및 의존성 주입</a>을 구현하는 것보다 RPC에 Cloud Endpoints를 사용하는 것이 더 쉽고 간단합니다. 또한 Cloud Endpoints는 통합 OAuth2 보안 및 Android와 iOS에서의 다중 클라이언트 플랫폼 지원(공유 표준 클라이언트 API를 사용)을 비롯한 여러 가지 다른 이점을 제공합니다.</p>
+<h2>맺음말</h2>
+<p>마지막으로 이 문서에서 제시된 AngularJS와 Cloud Endpoints 통합의 핵심적인 이점 몇 가지를 요약해 드리겠습니다.</p>
+<ul>
+<li>Cloud Endpoints를 사용하면 클래스 및 메소드에 주석을 추가하여 자바스크립트를 지원하는 클라이언트 라이브러리를 생성함으로써 서버 측 API를 쉽게 노출할 수 있습니다.</li>
+<li>Cloud Endpoints에는 OAuth2 인증, URI 정의와 요청 라우팅, JSON 직렬화 및 원활한 오류 처리와 기타 기능을 포함한 RPC를 위한 연결 요소가 들어 있습니다. Cloud Endpoints 없이 이러한 작업을 구현하는 경우 어려운 작업이 될 수 있습니다.</li>
+<li>AngularJS 자바스크립트 기반 클라이언트 측 MVC 프레임워크는 클라이언트 측 애플리케이션을 신속하게 개발할 수 있도록 지원합니다. HTML5 및 자바스크립트로 풍부한 사용자 경험을 쉽게 구현할 수 있으므로, 서버 측 HTML 렌더링이 필요 없게 됩니다.</li>
+<li>Cloud Endpoints 자바스크립트 클라이언트 라이브러리를 AngularJS에 통합하는 것은 매우 간단하므로, 코드 한 줄을 작성하는 것으로 서버 로직과 콜백 함수를 호출하여 모델 속성을 결과로 업데이트할 수 있습니다.</li>
+</ul>
+<h2>참고자료</h2>
+<p>Google App Engine, <a href="https://developers.google.com/appengine/">https://developers.google.com/appengine/</a></p>
+<p>AngularJS, <a href="http://angularjs.org/">http://angularjs.org/</a></p>
+<p>Cloud Endpoints, <a href="https://developers.google.com/appengine/docs/java/endpoints/">https://developers.google.com/appengine/docs/java/endpoints/</a></p>
+<h2>부록: AngularJS 및 Cloud Endpoints 초기화 관련 도움말</h2>
+<h3>도움말 1: 초기화 순서에 주의하세요</h3>
+<p>방명록 앱은 다음 순서에 따라 서로 다른 세 가지 JS 라이브러리를 로드합니다.</p>
+<ol>
+<li>AngularJS</li>
+<li>방명록 앱</li>
+<li>Endpoints 기능이 포함된 Google API 클라이언트</li>
+</ol>
+<p>이 순서를 따를 수 있도록, <span class="code">index.html</span> 파일에는 각 JS 라이브러리 로드를 위한 다음 <span class="code">&lt;script&gt;</span> 태그가 태그에 있습니다.</p>
+<pre>
+&lt;script src="/js/angular.min.js"&gt;&lt;/script&gt;
+&lt;script src="/js/guestbook.js"&gt;&lt;/script&gt;
+&lt;script src="<a href="https://apis.google.com/js/client.js?onload=init">https://apis.google.com/js/client.js?onload=init</a>"&gt;&lt;/script&gt;
+</pre>
+<p>로드가 완료되면 세 번째 라이브러리(Google API 클라이언트)에서 'onload' 매개변수에 의해 지정된 초기화 함수를 호출합니다. 여기에서는 <span class="code">init()</span> 함수가 예상대로 호출됩니다.</p>
+<h3>도움말 2: 최대한 빨리 AngularJS에 입문하세요</h3>
+<p>초기화 순서에는 두 가지 함수가 사용됩니다.</p>
+<ul>
+<li><span class="code">init()</span> 함수</li>
+<li><span class="code">window.init()</span> 함수</li>
+</ul>
+<p><span class="code">init()</span> 함수는 <span class="code">guestbook.js</span>에서 다음과 같이 정의됩니다.</p>
+<pre>
+function init() {
+  window.init();
+}
+</pre>
+<p>위의 코드에서 알 수 있듯이, 이 함수는 <span class="code">window.init()</span> 함수(전역 창 개체에서 정의된 <span class="code">init()</span> 함수)만 호출하며 다른 작업은 전혀 수행하지 않습니다. <span class="code">window.init()</span>는 AngularJS 컨트롤러에서 다음과 같이 정의됩니다.</p>
+<pre>
+$window.init= function() {
+  $scope.$apply($scope.<span class="bld">load_guestbook_lib</span>);
+};
+</pre>
+<p>AngularJS에서 전역 창 개체는 개체를 위한 래퍼인 '$window' 표기에 의해 액세스됩니다. <a href="http://docs-angularjs-org-dev.appspot.com/api/ng.$window">AngularJS의 권장사항</a>에 따라 테스트 가능성을 향상하기 위해 창 개체에 직접 액세스하지 않는 것이 좋습니다.</p>
+<p>첫 번째 init() 메소드에서 초기화를 실행하지 않는 이유는 개발자가 컨트롤러, 서비스 및 지침과 같은 코드를 AngularJS에 최대한 많이 입력할 수 있도록 하기 위함입니다. 그러면 AngularJS의 기능을 최대한 활용할 수 있으며 단위 테스트, 통합 테스트 등을 수행할 수도 있습니다.</p>
+<h3>도움말 3: 플래그를 사용하여 백엔드 준비 여부를 표시하세요</h3>
+<p>마지막에는 <span class="code">$window.init()</span>가 호출되며 원하는 이 함수에 모든 애플리케이션 초기화 로직을 작성할 수 있습니다. 여기에서 기본적인 목표는 AngularJS에서 예측 가능한 순서에 따라 모든 초기화를 실행할 수 있도록, Google API 클라이언트의 onload 매개변수를 사용하여 AngularJS 컨트롤러 내에 정의된 초기화 함수를 호출하는 것입니다. 방명록 스크립트에서 <span class="code">$window.init()</span>는 <span class="code">load_guestbook_lib()</span> 함수를 호출하며 다음과 같이 정의됩니다.</p>
+<pre>
+$scope.load_guestbook_lib = function() {
+  gapi.client.load('guestbook', 'v1', function() {
+    $scope.<span class="bld">is_backend_ready</span> = true;
+    $scope.list();
+  }, '/_ah/api');
+};
+</pre>
+<p>백엔드에서 RPC 호출을 처리할 준비가 되기 전에는 호출을 수행해서는 안 됩니다. 백엔드의 '준비 여부'는 'is_backend_ready' 속성에 의해 표시됩니다. 이 속성은 방명록의 엔드포인트 클라이언트 라이브러리가 로드된 후에 핸들러 함수 콜백에서 설정됩니다. 엔드포인트가 준비되기 전에 애플리케이션 로직이 엔드포인트를 호출하는 것을 방지하기 위해, 방명록에서 index.html 파일에 <span class="code">is_backend_ready</span>라는 이름의 플래그를 사용합니다.</p>
+<pre>
+&lt;div ng-controller="GuestbookCtrl" class="container" <span class="bld">ng-show</span>="<span class="bld">is_backend_ready</span>"&gt;
+…. guestbook UI...
+&lt;/div&gt;
+</pre>
+<p>플래그 값으로 <span class="code">ng-show</span> 속성을 제어하면 엔드포인트를 호출할 준비가 되기 전에는 방명록 인터페이스가 표시되지 않습니다.</p>
+</div>
+<!-- /maia-main --></div>
+<div class="maia-col-3"><br>
+<img src="//www.google.com/images/icons/product/feedback-16.png" class="g-app-icon" alt=""> <a href="javascript:void(0);" class="google-feedback">이 문서에 대한 의견 보내기</a><br>
+<br></div>
+</div>
+</div>
+<script>
+(function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+</script><script src="//www.gstatic.com/feedback/api.js">
+</script><script>
+$('body').delegate('.google-feedback', 'click', function() {
+      userfeedback.api.startFeedback({'productId': '94614'});
+  });
+</script><!-- Scripts to include both on Goro + Devsite --><script>
+window.___gcfg = {
+     lang: ''
+   };
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+</script><!-- GTM implementation --><!-- Start dataLayer --><script>
+dataLayer = [{
+        'country': 'ko',
+        'region': 'japac',
+        'language': 'ko'
+      }];
+</script><!-- End dataLayer --><!-- Start Google Tag Manager --><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5CVQBG" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript> <script>
+(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-5CVQBG');
+</script><!-- End Google Tag Manager --><!-- Global JS scripts to load; path will depend on whether we're on devsite or Goro --><script src="/js/base.min.js">
+</script><!-- Retina loader; Do not load if partners page because we need to wait until the Angular app runs --><script>
+new lfl.system.RetinaLoader();
+</script><!-- Secondary right-side scroll-nav --><script>
+new lfl.ui.ScrollNav({});
+</script>
+</body>
+</html>

@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="en" class="maia">
+  <head>
+    <title>Google Prediction API - Predictive Analysis - Google Cloud Platform</title>
+    <meta charset="utf-8" />
+    <link rel="shortcut icon" href="/_static/images/favicon.ico">
+    <link rel="apple-touch-icon" href="/_static/images/apple-touch-icon.png">
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:300,400,600,700' rel='stylesheet' type='text/css'>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+
+    <!--[if lt IE 9]>
+    <script src="/js/html5.js"></script>
+    <![endif]-->
+
+    <title>Cloud Computing &amp; Cloud Hosting Services — Google Cloud Platform</title>
+    <meta name="google-site-verification" content="8dOEM3Xenm6yaBc83y2WKgqQG0iHI7Ph6Rl_YLIZLQ8" />
+
+    <!-- GSAP animation frameworks -->
+    <script src="//www.gstatic.com/external_hosted/gsap/TweenMax.min.js"></script>
+    <script src="//www.gstatic.com/external_hosted/gsap/TimelineMax.min.js"></script>
+    <script src="/js/floodlight.js"></script>
+    <meta name="viewport" content="initial-scale=1, minimum-scale=1, width=device-width">
+    <link href="//fonts.googleapis.com/css?family=Open+Sans:400italic,300,400,600,700" rel="stylesheet">
+
+    <link href="//www.google.com/css/maia.experimental.css" rel="stylesheet">
+    <link href="/css/maia-cloud.css" rel="stylesheet"/>
+    <link href="/css/default.css" rel="stylesheet">
+  </head>
+  <body>
+  <div id="maia-header">
+    <div class="maia-aux">
+      <h1><a href="/"><img src="/images/gcp-logo.png" alt="Cloud Platform" data-retina="383x48"></a></h1>
+
+<div class="search-container">
+  
+  <form action="/search" class="maia-search">
+    <input type="text" placeholder="Search this site" name="q">
+    <button class="maia-button" type="submit" data-g-event="Maia: Button" data-g-action="Maia: Primary – Header" data-g-label="Search">
+      <span class="maia-search-icon">Search</span>
+    </button>
+  </form>
+  <div class="cloud-social">
+    <div class="cloud-signed-out">
+      <!-- <a href="/console" class="cp-track" id="try-header">Sign in</a> -->
+    </div>
+  </div>
+</div>
+
+    </div>
+  </div>
+  <div id="maia-nav-x" class="maia-nav">
+    <div class="maia-aux">
+   <div class="cp-cta">
+   <a class="cp-track maia-button maia-button-secondary white-button" href="/contact/">Contact sales</a>
+   <a class="cp-track maia-button blue-button" href="https://console.developers.google.com?getstarted=https://cloud.google.com" style="color: #ffffff;">Try it now</a>
+   </div>
+      <ul>
+        <li id="home-nav"
+            
+              class="active"
+            >
+
+            <a 
+              class="active"
+             href="index.html" event="autotrack-data-g" data-g-event="Global Nav" data-g-action="Nav Bar" data-g-label="Home"> 
+            Home
+            </a>
+        </li>      
+        <li
+            >
+            <a href="/why-google/" event="autotrack-data-g" data-g-event="Global Nav" data-g-action="Nav Bar" data-g-label="Why Google"> 
+            Why Google
+            </a>
+        </li>
+        <li id="main-nav-product-dropdown" class="dropdown">
+            <a href="/products/" event="autotrack-data-g" data-g-event="Global Nav" data-g-action="Nav Bar" data-g-label="Products"> 
+            Products
+            </a>
+        </li>
+        <li
+            >
+            <a href="/solutions/" event="autotrack-data-g" data-g-event="Global Nav" data-g-action="Nav Bar" data-g-label="Solutions"> 
+            Solutions
+            </a>
+        </li>
+        <li
+            >
+            <a href="/customers/" event="autotrack-data-g" data-g-event="Global Nav" data-g-action="Nav Bar" data-g-label="Customers"> 
+            Customers
+            </a>
+        </li>
+        <li
+            >
+            <a href="/developers/" event="autotrack-data-g" data-g-event="Global Nav" data-g-action="Nav Bar" data-g-label="Developers"> 
+            Developers
+            </a>            
+        </li>
+        <li
+            >
+            <a href="/support/" event="autotrack-data-g" data-g-event="Global Nav" data-g-action="Nav Bar" data-g-label="Support"> 
+            Support
+            </a>            
+        </li>
+        <li>
+            <a href="/partners/" event="autotrack-data-g" data-g-event="Global Nav" data-g-action="Nav Bar" data-g-label="Partners"> 
+            Partners
+            </a>            
+        </li>
+        <li>
+            <a href="https://github.com/GoogleDevDocs/googledevdocs.github.io/edit/master/products/prediction-api/index.html" event="autotrack-data-g" data-g-event="Global Nav" data-g-action="Nav Bar" data-g-label="Edit Page"> 
+            Edit Page
+            </a>            
+        </li>
+      </ul>
+    </div>
+  </div>
+
+<!-- Products subnav -->
+<div id="maia-nav-x" class="maia-nav products-nav">
+  <div class="maia-aux">
+    <div class="products-nav-dropdown maia-cols">
+
+      <div id="compute-dropdown" class="products-column maia-col-2">
+        <span class="product-list-title">Compute</span>
+        <div class="dropdown-item-container">
+          <a href="/products/compute-engine/">
+            <span class="product-name">Compute Engine</span>
+          </a>
+        </div>
+        <div class="dropdown-item-container">
+          <a href="/products/app-engine/">
+            <span class="product-name">App Engine</span>
+          </a>
+        </div>
+      </div>
+
+      <div id="storage-dropdown" class="products-column maia-col-2">
+        <span class="product-list-title">Storage</span>
+        <div class="dropdown-item-container">
+          <a href="/products/cloud-sql/">
+            <span class="product-name">Cloud SQL</span>
+          </a>
+        </div>
+        <div class="dropdown-item-container">
+          <a href="/products/cloud-storage/">
+            <span class="product-name">Cloud Storage</span>
+          </a>
+        </div>
+        <div class="dropdown-item-container">
+          <a href="/products/cloud-datastore/">
+            <span class="product-name">Cloud Datastore</span>
+          </a>
+        </div>
+      </div>
+
+      <div id="big-data-dropdown" class="products-column maia-col-2">
+        <span class="product-list-title">Big Data</span>
+        <div class="dropdown-item-container">
+          <a href="/products/bigquery/">
+            <span class="product-name">BigQuery</span>
+          </a>
+        </div>
+      </div>
+
+      <div id="services-dropdown" class="products-column maia-col-2">
+        <span class="product-list-title">Services</span>
+        <div class="dropdown-item-container">
+          <a href="/products/cloud-dns/">
+            <span class="product-name">Cloud DNS</span>
+          </a>
+        </div>
+        <div class="dropdown-item-container">
+          <a href="/products/cloud-endpoints/">
+            <span class="product-name">Cloud Endpoints</span>
+          </a>
+        </div>
+        <div class="dropdown-item-container">
+          <a href="/products/translate-api/">
+            <span class="product-name">Translate API</span>
+          </a>
+        </div>
+        <div class="dropdown-item-container">
+          <a href="/products/prediction-api/">
+            <span class="product-name">Prediction API</span>
+          </a>
+        </div>
+      </div>
+
+      <div id="management-dropdown" class="products-column maia-col-2">
+        <span class="product-list-title">Management</span>
+        <div class="dropdown-item-container">
+          <span class="product-name"><a href="/products/cloud-deployment-manager/">Cloud Deployment Manager</a></span>
+        </div>
+      </div>
+
+      <div id="pricing-dropdown" class="products-column maia-col-2">
+        <span class="product-list-title">Pricing</span>
+        <div class="dropdown-item-container">
+          <span class="product-name"><a href="/products/pricing/">Overview</a></span>
+        </div>
+        <div class="dropdown-item-container">
+          <span class="product-name"><a href="/products/calculator/">Calculator</a></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="site-wrapper product prediction-api">
+  <div class="maia-stage page-header secondary scroll-section" data-section-label="Prediction API">
+    <div id="intro" class="maia-aux page-header-inner">
+
+      <div class="page-header-inner-inner">
+        <h1 class="headline">
+          <span class="app-icon prediction-api"><!-- --></span>
+          <span>Prediction API</span>
+        </h1>
+        <p class="subheadline">
+        Use Google’s machine learning algorithms to analyze data and predict future outcomes using a familiar RESTful interface.
+        </p>
+        
+        <a href="https://console.developers.google.com/?getstarted=https://cloud.google.com" class="maia-button try-it cp-track" id="try-body" event="autotrack-data-g" data-g-event="Products: Prediction API" data-g-action="Try It Now" data-g-label="Prediction API Canvas: Click">Try it now</a>        
+                
+      </div>
+    </div>
+  </div>
+  <div id="maia-main">
+    
+    <div id="features" class="generic-section scroll-section" data-section-label="Features">
+      <div class="maia-cols">
+        <div class="header">
+          <h2 class="headline maia-col-8">Features</h2>
+          <p class="subheadline maia-col-8">
+          
+          </p>
+        </div>
+      </div>
+      <div class="maia-cols">
+
+        <div class="maia-col-4 inner-block">
+          <h3 class="headline"><img class="inline-icon" src="../../images/products/icons/pred-1.png" alt="Data use">Put your data to use</h3>
+          <p>Predict future trends using historical data. Route messages, detect spam and recommend products for users by using Prediction API. Google’s powerful infrastructure analyzes the data for you.</p>
+        </div>
+
+        <div class="maia-col-4 inner-block">
+          <h3 class="headline"><img class="inline-icon" src="../../images/products/icons/pred-2.png" alt="Fast">Fast and reliable</h3>
+          <p>Your data is replicated across multiple data centers using Cloud Storage. Most prediction queries take less than 200ms. Greater performance is available. See the <a href="https://developers.google.com/prediction/docs/reference/v1.6/performance" target="_blank" event="autotrack-data-g" data-g-event="Products: Prediction API" data-g-action="Features" data-g-label="Documentation">documentation</a> for performance tips.</p>
+        </div>
+
+        <div class="maia-col-4 inner-block">
+          <h3 class="headline"><img class="inline-icon" src="../../images/products/icons/pred-3.png" alt="Cloud integration">Cloud integration</h3>
+          <p>Google services are designed to work together. Use results from Google BigQuery or pull in datasets of up to 2.5GB from Cloud Storage to create a predictive model. Use Prediction API directly from Google App Engine.</p>
+        </div>
+      </div>
+      <div class="maia-cols">
+        <div class="maia-col-4 inner-block">
+          <h3 class="headline"><img class="inline-icon" src="../../images/products/icons/pred-4.png" alt="Dev tools">Powerful development tools</h3>
+          <p>Prediction API can integrate with App Engine, and the RESTful API is available through libraries for many popular languages, such as Python, JavaScript and .NET. See the <a href="https://developers.google.com/prediction/docs/libraries#generic " target="_blank" event="autotrack-data-g" data-g-event="Products: Prediction API" data-g-action="Features" data-g-label="Documentation">documentation</a> for the full list.</p>
+        </div>
+
+        <div class="maia-col-4 inner-block">
+          <h3 class="headline"><img class="inline-icon" src="../../images/products/icons/pred-5.png" alt="Support">Examples and support</h3>
+          <p>Learn more about Prediction API by checking out our <a href="https://developers.google.com/prediction/docs/libraries#featuredsample" target="_blank" event="autotrack-data-g" data-g-event="Products: Prediction API" data-g-action="Features" data-g-label="Example applications">example applications</a>. Take a look at our <a href="https://developers.google.com/prediction/docs/gallery" target="_blank" event="autotrack-data-g" data-g-event="Products: Prediction API" data-g-action="Features" data-g-label="Demos">demos</a> and featured applications for more ideas. </p>
+        </div>
+        <div class="maia-col-4 inner-block">
+          <h3 class="headline"><img class="inline-icon" src="../../images/products/icons/pred-6.png" alt="Pricing">Flexible pricing</h3>
+          <p>Limited usage is free for the first six months. Beyond that, Prediction API’s comprehensible <a href="https://developers.google.com/prediction/pricing" target="_blank" event="autotrack-data-g" data-g-event="Products: Prediction API" data-g-action="Features" data-g-label="Pricing">pricing</a> comes with a 99.9% availability service level agreement. Like other Cloud products, you pay for what you use.</p>
+        </div>
+</div>
+    </div>
+    
+    <div id="pricing-calc" class="generic-section scroll-section" data-section-label="Pricing calculator">
+      <div class="header">
+        <div class="maia-cols">
+          <h2 class="headline maia-col-8">Pricing calculator</h2>
+          <p class="subheadline maia-col-8">
+          The Pricing Calculator provides you with a simple tool that can help you get a sense of what an application running on Google Cloud Platform could cost.
+
+<br /><br />
+<a href="../calculator" class="read-more">Get a custom quote</a>          
+          </p>
+        </div>
+      </div>
+    </div>
+    
+    <div id="pricing" class="generic-section scroll-section" data-section-label="Pricing">
+      <div class="header">
+        <div class="maia-cols">
+          <h2 class="headline maia-col-8">Pricing</h2>
+          <p class="subheadline maia-col-8">
+                    
+          </p>
+        </div>
+      </div>
+
+      <h3>Free Quota</h3>
+<p>Usage is free for the first six months, up to the following limits per
+<a href="https://console.developers.google.com" event="autotrack-data-g" data-g-event="Products: Prediction API" data-g-action="Pricing" data-g-label="Google Cloud Console">Google Cloud Console</a> project. This free quota
+applies even when billing is enabled, until the six-month expiration time.</p>
+<ul>
+  <li><strong>Usage limits:</strong>
+    <ul>
+      <li><strong>Predictions</strong>: 100 predictions/day</li>
+      <li><strong>Hosted model predictions</strong>: Hosted models have a usage limit of 100 predictions/day/user across all models.</li>
+      <li><strong>Training</strong>: 5MB trained/day</li>
+      <li><strong>Streaming updates</strong>: 100 streaming updates/day</li>
+    </ul>
+  </li>
+  <li><strong>Lifetime cap:</strong> 20,000 predictions.</li>
+  <li><strong>Expiration:</strong> Free quota expires six months after
+  activating Google Prediction for your project in the
+  <a href="https://console.developers.google.com" event="autotrack-data-g" data-g-event="Products: Prediction API" data-g-action="Pricing" data-g-label="Google Cloud Console">Google Cloud Console</a>.</li>
+</ul>
+<p>Note that some Prediction API usage scenarios depend on <a href="/storage/docs/pricingandterms"  event="autotrack-data-g" data-g-event="Products: Prediction API" data-g-action="Pricing" data-g-label="Google Cloud Storage">Google Cloud Storage</a>, which has different pricing terms from the Prediction API.</p>
+<h3>Paid Usage</h3>
+<p>Paid usage comes with a 99.9% availability service level agreement.
+Read more about the SLA <a href="/prediction/docs/sla" event="autotrack-data-g" data-g-event="Products: Prediction API" data-g-action="Pricing" data-g-label="Service Level Agreement">here</a>.</p>
+<p>Monitor your usage on the <a href="https://console.developers.google.com" event="autotrack-data-g" data-g-event="Products: Prediction API" data-g-action="Pricing" data-g-label="Google Cloud Console">Google Cloud Console</a>.
+Any usage beyond the free usage quota will fail if
+you have not enabled billing for the project. Once you exceed the free quota,
+the following prices and limits apply:</p>
+<ul>
+  <li><strong>Base fee:</strong> $10 monthly fee per
+  <a href="https://console.developers.google.com" event="autotrack-data-g" data-g-event="Products: Prediction API" data-g-action="Pricing" data-g-label="Google Cloud Console">Google Cloud Console</a> project.</li>
+  <li><strong>Usage fees:</strong>
+    <ul>
+      <li><strong>Prediction:</strong>
+        <ul>
+          <li><strong>10,000</strong> predictions/month: $0.00</li>
+          <li><strong>10,001+</strong> predictions/month: $0.50/1,000 predictions beyond the initial 10,000</li>
+        </ul>
+      </li>
+      <li><strong>Training:</strong>
+        <ul>
+          <li><strong>$0.002/MB bulk trained</strong> (maximum size of each dataset: 2.5GB)</li>
+          <li><strong>0-10,000 streaming updates:</strong> $0.00</li>
+          <li><strong>10,001+ streaming updates:</strong> $0.05/1,000 updates beyond the initial 10,000.</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li><strong>Usage limits:</strong>
+    <ul>
+      <li>If you intend to make more than 40,000 predictions/day, <a href="https://spreadsheets.google.com/a/google.com/viewform?hl=en&amp;authkey=CJ7P_tgM&amp;formkey=dHFKdmVRTXVaTlRaRGpvZjZPaHpXa2c6MQ#gid=0" target="_blank" event="autotrack-data-g" data-g-event="Products: Prediction API" data-g-action="Pricing" data-g-label="Please contact us">please contact us</a>.</li>
+      <li>Google Prediction has a default limit of 2,000,000 predictions/day per project for your own models.</li>
+      <li>Hosted models have a usage limit of 100 predictions/day/user across all demonstration models. Developers can set higher paid usage limits for models they create. Please see each model's documentation for more details.</li>
+</ul>
+  </li>
+</ul>
+<p class="caution"><strong>Important:</strong> These charges do <em>not</em> include any Google Cloud Storage fees that might be required to hold training data. Please see the <a href="https://developers.google.com/apis/storage/docs/pricingandterms" target="_blank" event="autotrack-data-g" data-g-event="Products: Prediction API" data-g-action="Pricing" data-g-label="Pricing Sheet">pricing sheet for Google Cloud Storage</a> to determine any additional costs that you might incur.</p>
+
+    </div>
+    
+    <div id="documentation" class="generic-section scroll-section last" data-section-label="Documentation & Resources">
+      <div class="header">
+        <div class="maia-cols">      
+          <h2 class="headline maia-col-8">Documentation & Resources</h2>
+          <p class="subheadline maia-col-8">
+          Learn how to train Prediction API and integrate its predictions into your application. Tools and resources include sample code and instructions that will show you how to use Prediction API with your other Cloud Platform products.
+          </p>
+        </div>
+      </div>
+      <div class="maia-cols">
+        <div class="inner-block maia-col-8 resources">
+          <div class="resources-inner">
+            <h3 class="headline"><img class="inline-icon" src="../../images/products/resources-icon.png" alt="Resources" /><span class="resources-title">Resources </span><span><a href="../../developers" class="bounce-link" event="autotrack-data-g" data-g-event="Products: Prediction API" data-g-action="Resources" data-g-label="View All Resources">View all resources</a></span>
+</h3>
+
+            <ul>
+            <li class="resource-block">
+            <h3 class="headline"><a href="https://developers.google.com/prediction/" event="autotrack-data-g" data-g-event="Products: Prediction API" data-g-action="Resources" data-g-label="What is the Google Prediction API?">What is the Google Prediction API?</a></h3>
+            <div class="details"><p>Google's cloud-based machine learning tools can help analyze your data to add the following features to your applications: Customer sentiment analysis, Spam detection, Message routing decisions, Upsell opportunity analysis, Document and email classification, and more.</p></div>
+          </li>
+          <li class="resource-block">
+            <h3 class="headline"><a href="https://developers.google.com/prediction/docs/scenarios#purchaseprediction" event="autotrack-data-g" data-g-event="Products: Prediction API" data-g-action="Resources" data-g-label="Predicting purchases">Predicting purchases</a></h3>
+            <div class="details"><p>Imagine a site that sells beer, wine, and cheese, and you want to predict whether a visitor will be interested in wine, given their purchase history. In this situation, we might create training data with three features: The number of times the customer has bought fancy dessert cheese. A value of 1 if the customer has ever bought wine, and 0 if not. The number of times the customer has bought beer.</p></div>
+          </li>
+          <li class="resource-block">
+            <h3 class="headline"><a href="https://developers.google.com/prediction/docs/sentiment_analysis" event="autotrack-data-g" data-g-event="Products: Prediction API" data-g-action="Resources" data-g-label="Creating a sentiment analysis model">Creating a sentiment analysis model</a></h3>
+            <div class="details"><p>This document explains how to create a basic sentiment analysis model using the Google Prediction API. A sentiment analysis model is used to analyze a text string and classify it with one of the labels that you provide; for example, you could analyze a tweet to determine whether it is positive or negative, or analyze an email to determine whether it is happy, frustrated, or sad.</p></div>
+          </li>
+            </ul>
+          </div>
+        </div>
+      
+        <div class="inner-block maia-col-4 docs">
+          <img class="inline-icon" src="../../images/products/documentation-icon.png" alt="Documentation" />
+          <h3 class="headline"> Prediction API Documentation</h3>
+          <ul>
+            <li><a href="https://developers.google.com/prediction/docs/getting-started" class="link-out" event="autotrack-data-g" data-g-event="Products: Prediction API" data-g-action="Prediction API Documentation" data-g-label="Getting Started">Getting Started</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+ <!-- is this feedback sticky needed?
+  <div class="feedback-sticky"><a href="javascript:void(0);">Feedback</a></div>
+  <script type="text/javascript" src="//www.gstatic.com/feedback/api.js"></script>
+  <script>
+    jQuery('body').delegate('.feedback-sticky', 'click', function() {
+      _gaq.push(['_trackEvent', 'Feedback', 'User Feedback: ' + location.pathname]);
+      userfeedback.api.startFeedback({'productId': '96209'});
+    });
+  </script>
+  -->
+
+  <!-- Scripts to include both on Goro + Devsite -->
+  <script type="text/javascript">
+   window.___gcfg = {
+     lang: ''
+   };
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+  </script>
+
+  <!-- GTM implementation -->
+  
+  <!-- Start dataLayer -->
+    <script>
+      dataLayer = [{
+        'country': '',
+        'region': '',
+        'language': 'en'
+      }];
+    </script>
+  <!-- End dataLayer -->
+  
+  <!-- Start Google Tag Manager -->
+  <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5CVQBG"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-5CVQBG');</script>
+  <!-- End Google Tag Manager -->    
+
+
+
+<!-- Global JS scripts to load; path will depend on whether we're on devsite or Goro -->
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular-sanitize.js"></script>
+
+  <script src="/js/base.min.js"></script>
+
+
+
+
+<!-- Secondary right-side scroll-nav -->
+<script>
+  new lfl.ui.ScrollNav({});
+  new lfl.cloud.GlobalProductMenu();
+</script>
+
+<script>new cloud.SocialFeeds(document.getElementById('feeds'));</script>
+
+
+
+  <div id="maia-signature"></div>
+  <div id="maia-footer">
+
+    <!-- maia-footer-local -->
+    <div id="maia-footer-local">
+      <div class="maia-aux">
+        
+          <div class="ent-footer-top">
+  <div class="g-plus-wrapper">
+    <div class="g-plusone" data-href="http://cloud.google.com"></div>
+  </div>
+  <div class="g-plus-link"><a href="https://plus.google.com/+googlecloudplatform" rel="publisher">Google+</a></div>
+  <div class="search">
+    <form onsumbit="return false;" class="maia-search">
+    <input name="q" placeholder="Search this site" type="text">
+    <input name="hl" type="hidden" value="">
+    <input name="q" type="hidden" value="site:cloud.google.com/">
+    <button class="maia-button" event="autotrack-data-g" data-g-event="Footer" data-g-action="Site Search" data-g-label="Submit">
+      <span class="maia-search-icon">Search</span>
+    </button>
+    </form>
+  </div>
+
+</div>
+
+<div class="ent-footer-links">
+  <div class="ent-footer-unit">
+    <h4><a href="/why-google/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Why Google" data-g-label="Why Google">Why Google</a></h4>
+    <ul>
+      <li><a href="/why-google/#infrastructure" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Why Google" data-g-label="Infrastructure">Infrastructure</a></li>
+      <li><a href="/why-google/#product" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Why Google" data-g-label="Product">Product</a></li>
+      <li><a href="/why-google/#services" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Why Google" data-g-label="Services">Services</a></li>
+      <li><a href="/why-google/#scalability" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Why Google" data-g-label="Scalability">Scalability</a></li>
+      <li><a href="/why-google/#performance" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Why Google" data-g-label="Performance">Performance</a></li>
+      <li><a href="/why-google/#support" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Why Google" data-g-label="Support">Support</a></li>      
+    </ul>
+  </div>
+
+  <div class="ent-footer-unit">
+    <h4><a href="/products/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="Products">Products</a></h4>
+    <ul>
+      <li><a href="/products/app-engine/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="App Engine">App Engine</a></li>
+      <li><a href="/products/compute-engine/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="Compute Engine">Compute Engine</a></li>
+      <li><a href="/products/cloud-storage/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="Cloud Storage">Cloud Storage</a></li>
+      <li><a href="/products/cloud-sql/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="Cloud SQL">Cloud SQL</a></li>
+      <li><a href="/products/cloud-datastore/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="Cloud Datastore">Cloud Datastore</a></li>
+      <li><a href="/products/bigquery/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="BigQuery">BigQuery</a></li>
+      <li><a href="/products/prediction-api/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="Prediction API">Prediction API</a></li>
+      <li><a href="/products/translate-api/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="Translate API">Translate API</a></li>
+      <li><a href="/products/cloud-endpoints/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="Cloud Endpoints">Cloud Endpoints</a></li>
+      <li><a href="/products/calculator/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="Pricing Calculator">Pricing Calculator</a></li>
+      <li><a href="/pricing/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="Pricing">Pricing</a></li>
+    </ul>
+  </div>
+
+  <div class="ent-footer-unit">
+    <h4><a href="/solutions" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Solutions" data-g-label="Solutions">Solutions</a></h4>
+    <ul>
+      <li><a href="/solutions/mobile/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Solutions" data-g-label="Mobile">Mobile</a></li>
+      <li><a href="/solutions/gaming/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Solutions" data-g-label="Gaming">Gaming</a></li>
+      <li><a href="/solutions/hadoop/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Solutions" data-g-label="Hadoop">Hadoop</a></li>
+      <li><a href="/solutions/mongodb/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Solutions" data-g-label="mongodb">mongodb</a></li>
+
+    </ul>
+  </div>
+
+  <div class="ent-footer-unit">
+    <h4><a href="/customers/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Customers" data-g-label="Customers">Customers</a></h4>
+  </div>
+
+  <div class="ent-footer-unit">
+    <h4><a href="/developers/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Developers" data-g-label="Developers">Developers</a></h4>
+    <ul>
+      <li><a href="/developers#documentation" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Developers" data-g-label="Documentation">Documentation</a></li>
+      <li><a href="/developers#resources" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Developers" data-g-label="Resources">Resources</a></li>
+    </ul>
+  </div>
+
+  <div class="ent-footer-unit">
+    <h4><a href="/support/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Support" data-g-label="Support">Support</a></h4>
+    <ul>
+      <li><a href="https://support.google.com/" target="_blank" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Support" data-g-label="Google Cloud Platform Support Help Center">Platform Support Help Center</a></li>
+      <li><a href="https://support.google.com/cloudbilling/" target="_blank" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Support" data-g-label="Google Cloud Billing Help Center">Billing Help Center</a></li>
+      <li><a href="https://enterprise.google.com/supportcenter" target="_blank" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Support" data-g-label="Google Enterprise Support Center">Google Enterprise Support Center</a></li>      
+    </ul>
+    
+  </div>
+
+  
+  <div class="ent-footer-unit">
+    <h4><a href="/partners/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Partners" data-g-label="Partners">Partners</a></h4>
+    <ul>
+      <li><a href="/partners/technology-partners/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Partners" data-g-label="Find A Technology Partner">Technology Partners</a></li>
+      <li><a href="/partners/service-partners/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Partners" data-g-label="Find A Service Partner">Find a Service Partner</a></li>
+    </ul>
+  </div>
+ 
+</div>
+<br class="clear" />
+
+        
+      </div>
+    </div>
+    <!-- /maia-footer-local -->
+
+    <!-- maia-footer-global -->
+    <div id="maia-footer-global">
+      <div class="maia-aux">
+        <ul>
+          <li><a href="http://www.google.com/">Google</a></li>
+          <li><a href="https://developers.google.com/readme/terms">Terms of Service</a></li>
+          <li><a href="http://www.google.com/intlprivacy/">Privacy Policy</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <!-- /maia-footer-global -->
+  <script type="text/javascript" async="" defer="" src="//www.gstatic.com/feedback/api.js"></script>
+  <script id="jqueryui" src="//ajax.googleapis.com/ajax/libs/jqueryui/1.8.10/jquery-ui.min.js"></script>
+
+  <!--script src="/_static/js/script_foot.js"></script-->
+  
+  </body>
+</html>

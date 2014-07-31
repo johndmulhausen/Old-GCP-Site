@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en" class="maia">
+  <head>
+    <title>WebFilings - Google Cloud Platform</title>
+    <meta charset="utf-8" />
+    <link rel="shortcut icon" href="/_static/images/favicon.ico">
+    <link rel="apple-touch-icon" href="/_static/images/apple-touch-icon.png">
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:300,400,600,700' rel='stylesheet' type='text/css'>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+
+    <!--[if lt IE 9]>
+    <script src="/js/html5.js"></script>
+    <![endif]-->
+
+    <title>Cloud Computing &amp; Cloud Hosting Services — Google Cloud Platform</title>
+    <meta name="google-site-verification" content="8dOEM3Xenm6yaBc83y2WKgqQG0iHI7Ph6Rl_YLIZLQ8" />
+
+    <!-- GSAP animation frameworks -->
+    <script src="//www.gstatic.com/external_hosted/gsap/TweenMax.min.js"></script>
+    <script src="//www.gstatic.com/external_hosted/gsap/TimelineMax.min.js"></script>
+    <script src="/js/floodlight.js"></script>
+    <meta name="viewport" content="initial-scale=1, minimum-scale=1, width=device-width">
+    <link href="//fonts.googleapis.com/css?family=Open+Sans:400italic,300,400,600,700" rel="stylesheet">
+
+    <link href="//www.google.com/css/maia.experimental.css" rel="stylesheet">
+    <link href="/css/maia-cloud.css" rel="stylesheet"/>
+    <link href="/css/default.css" rel="stylesheet">
+  </head>
+  <body>
+  <div id="maia-header">
+    <div class="maia-aux">
+      <h1><a href="/"><img src="/images/gcp-logo.png" alt="Cloud Platform" data-retina="383x48"></a></h1>
+
+<div class="search-container">
+  
+  <form action="/search" class="maia-search">
+    <input type="text" placeholder="Search this site" name="q">
+    <button class="maia-button" type="submit" data-g-event="Maia: Button" data-g-action="Maia: Primary – Header" data-g-label="Search">
+      <span class="maia-search-icon">Search</span>
+    </button>
+  </form>
+  <div class="cloud-social">
+    <div class="cloud-signed-out">
+      <!-- <a href="/console" class="cp-track" id="try-header">Sign in</a> -->
+    </div>
+  </div>
+</div>
+
+    </div>
+  </div>
+  <div id="maia-nav-x" class="maia-nav">
+    <div class="maia-aux">
+   <div class="cp-cta">
+   <a class="cp-track maia-button maia-button-secondary white-button" href="/contact/">Contact sales</a>
+   <a class="cp-track maia-button blue-button" href="https://console.developers.google.com?getstarted=https://cloud.google.com" style="color: #ffffff;">Try it now</a>
+   </div>
+      <ul>
+        <li id="home-nav"
+            
+              class="active"
+            >
+
+            <a 
+              class="active"
+             href="index.html" event="autotrack-data-g" data-g-event="Global Nav" data-g-action="Nav Bar" data-g-label="Home"> 
+            Home
+            </a>
+        </li>      
+        <li
+            >
+            <a href="/why-google/" event="autotrack-data-g" data-g-event="Global Nav" data-g-action="Nav Bar" data-g-label="Why Google"> 
+            Why Google
+            </a>
+        </li>
+        <li id="main-nav-product-dropdown" class="dropdown">
+            <a href="/products/" event="autotrack-data-g" data-g-event="Global Nav" data-g-action="Nav Bar" data-g-label="Products"> 
+            Products
+            </a>
+        </li>
+        <li
+            >
+            <a href="/solutions/" event="autotrack-data-g" data-g-event="Global Nav" data-g-action="Nav Bar" data-g-label="Solutions"> 
+            Solutions
+            </a>
+        </li>
+        <li
+            >
+            <a href="/customers/" event="autotrack-data-g" data-g-event="Global Nav" data-g-action="Nav Bar" data-g-label="Customers"> 
+            Customers
+            </a>
+        </li>
+        <li
+            >
+            <a href="/developers/" event="autotrack-data-g" data-g-event="Global Nav" data-g-action="Nav Bar" data-g-label="Developers"> 
+            Developers
+            </a>            
+        </li>
+        <li
+            >
+            <a href="/support/" event="autotrack-data-g" data-g-event="Global Nav" data-g-action="Nav Bar" data-g-label="Support"> 
+            Support
+            </a>            
+        </li>
+        <li>
+            <a href="/partners/" event="autotrack-data-g" data-g-event="Global Nav" data-g-action="Nav Bar" data-g-label="Partners"> 
+            Partners
+            </a>            
+        </li>
+        <li>
+            <a href="https://github.com/GoogleDevDocs/googledevdocs.github.io/edit/master/customers/webfilings/index.html" event="autotrack-data-g" data-g-event="Global Nav" data-g-action="Nav Bar" data-g-label="Edit Page"> 
+            Edit Page
+            </a>            
+        </li>
+      </ul>
+    </div>
+  </div>
+
+<!-- Products subnav -->
+<div id="maia-nav-x" class="maia-nav products-nav">
+  <div class="maia-aux">
+    <div class="products-nav-dropdown maia-cols">
+
+      <div id="compute-dropdown" class="products-column maia-col-2">
+        <span class="product-list-title">Compute</span>
+        <div class="dropdown-item-container">
+          <a href="/products/compute-engine/">
+            <span class="product-name">Compute Engine</span>
+          </a>
+        </div>
+        <div class="dropdown-item-container">
+          <a href="/products/app-engine/">
+            <span class="product-name">App Engine</span>
+          </a>
+        </div>
+      </div>
+
+      <div id="storage-dropdown" class="products-column maia-col-2">
+        <span class="product-list-title">Storage</span>
+        <div class="dropdown-item-container">
+          <a href="/products/cloud-sql/">
+            <span class="product-name">Cloud SQL</span>
+          </a>
+        </div>
+        <div class="dropdown-item-container">
+          <a href="/products/cloud-storage/">
+            <span class="product-name">Cloud Storage</span>
+          </a>
+        </div>
+        <div class="dropdown-item-container">
+          <a href="/products/cloud-datastore/">
+            <span class="product-name">Cloud Datastore</span>
+          </a>
+        </div>
+      </div>
+
+      <div id="big-data-dropdown" class="products-column maia-col-2">
+        <span class="product-list-title">Big Data</span>
+        <div class="dropdown-item-container">
+          <a href="/products/bigquery/">
+            <span class="product-name">BigQuery</span>
+          </a>
+        </div>
+      </div>
+
+      <div id="services-dropdown" class="products-column maia-col-2">
+        <span class="product-list-title">Services</span>
+        <div class="dropdown-item-container">
+          <a href="/products/cloud-dns/">
+            <span class="product-name">Cloud DNS</span>
+          </a>
+        </div>
+        <div class="dropdown-item-container">
+          <a href="/products/cloud-endpoints/">
+            <span class="product-name">Cloud Endpoints</span>
+          </a>
+        </div>
+        <div class="dropdown-item-container">
+          <a href="/products/translate-api/">
+            <span class="product-name">Translate API</span>
+          </a>
+        </div>
+        <div class="dropdown-item-container">
+          <a href="/products/prediction-api/">
+            <span class="product-name">Prediction API</span>
+          </a>
+        </div>
+      </div>
+
+      <div id="management-dropdown" class="products-column maia-col-2">
+        <span class="product-list-title">Management</span>
+        <div class="dropdown-item-container">
+          <span class="product-name"><a href="/products/cloud-deployment-manager/">Cloud Deployment Manager</a></span>
+        </div>
+      </div>
+
+      <div id="pricing-dropdown" class="products-column maia-col-2">
+        <span class="product-list-title">Pricing</span>
+        <div class="dropdown-item-container">
+          <span class="product-name"><a href="/products/pricing/">Overview</a></span>
+        </div>
+        <div class="dropdown-item-container">
+          <span class="product-name"><a href="/products/calculator/">Calculator</a></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="site-wrapper customer webfilings">
+
+  <div id="maia-main">
+   <div class="maia-cols">
+      <div class="maia-col-3 sidebar">
+      
+      
+      <div class="customer-img-container">
+      <img class="customer-img" src="../../images/customers/logo-webfilings.jpg" data-retina="163x93" alt="WebFilings" />
+      </div>
+      
+      
+      
+      
+       <div class="side-section at-a-glance">
+         <h3>At a Glance</h3>
+         <b>What they wanted to do</b><ul><li><span> Create a collaborative, secure, and reliable tool for companies to save time and reduce compliance reporting risks and costs</span></li><li><span> Quickly focus on product innovation through an iterative process</span></li></ul><b>What they did </b><ul><li><span> Leveraged Google App Engine’s datastore to scale quickly and reduce overhead</span></li><li><span> Completed 71 additional releases in 14 months, including 261 new features and 1,232 improvements</span></li></ul><b>What they accomplished</b><ul><li><span> Built WebFilings product in a year</span></li><li><span> $1 million savings in overhead annually</span></li><li><span> Streamlined operations, saving three to five positions </span></li></ul>
+       </div>
+      
+      
+      
+      
+       <div class="side-section about">
+         <h3></h3>
+         
+       </div>
+      
+      
+      
+      
+      
+      
+      
+       <div class="side-section product">
+         <h3>About Google App Engine</h3>
+         Google App Engine enables businesses to build and host web apps on the same systems that power Google applications. Google App Engine offers fast development and deployment; effortless administration, with no need to worry about hardware, patches or backups; and simple scalability. For more information visit <a href="www.google.com/enterprise/appengine" target="_blank">www.google.com/enterprise/appengine</a>
+       </div>
+      
+      
+      
+      
+       <div class="side-section product">
+         <h3></h3>
+         
+       </div>
+      
+      
+      
+      </div>
+
+      <div class="maia-col-9 customer-container">
+        <h1 class="headline">WebFilings builds innovative financial reporting tool, saves nearly $1 million annually with Google App Engine</h1>
+        
+        <p> WebFilings started as a big idea conceived in Co-founder and Managing Director Dan Murray’s basement. After several conversations with colleagues (among them two experienced CFOs), Murray and his small team of developers brought to life a cloud-based application that would define their industry. Their big idea: Dramatically improve the financial reporting process with the U.S. Securities Exchange Commission (SEC) for the thousands of private and public companies across the country. </p><p> Very early, WebFilings anchored its business to Google App Engine. The company was drawn to Google App Engine because of Google’s strong reputation for security. Working with Google App Engine, WebFilings created a highly innovative, collaborative, secure, and reliable cloud-based financial- reporting application, also called WebFilings. Today, WebFilings has a growing team of 185+ employees and is revolutionizing the compliance-reporting industry with its unique software. Twelve offices serve hundreds of the world’s leading companies, including Valero, eBay, United Airlines, and Dish Network. The mission is to help companies find new ways to reduce the time, risk, and costs associated with compliance reporting. </p><h2> Challenge </h2><p> The WebFilings founders knew there had to be a better way to handle SEC reporting than relying on simple desktop tools. Before building their product, they talked to dozens of companies to learn the pain points with SEC reporting. In every case, it was clear that word processors, spreadsheets, and email were insufficient for the task. </p><div class='quote'><p> “ Google App Engine has the breadth and the depth to grow with you. Every 6 months, it gets better. The Google App Engine team knows what you need to make a competitive application.” </p><p class="attribution"><span>Brett Harper</span>director of product development, WebFilings </p></div><p> Companies struggled with using spreadsheets to collaborate and exchange different types of data. Common issues included lack of integration between spreadsheets and word-processing programs, version-control problems, document change-management, late-breaking changes to data and text, and tight timelines. The process was painful. Filing teams at such companies as FBL Financial Group worked long hours, away from their families, to complete reports on time. </p><p> SEC Reporting is a mission-critical process for companies. WebFilings’ founders knew that to support it, they would have to store large amounts of granular data, create rich collaboration capabilities, and provide state-of-the-art information security. </p><h2> Solution </h2><p> As the development team worked to create the software they envisioned, WebFilings sought a platform that could help launch the product in 12 months without scale or server-reliability issues. A small team looked for the most efficient, cost-effective way to launch an application designed for rapid, mass scale-up. It needed a solution that would reduce overhead and provide a secure system to store client data. Google App Engine’s pricing and reputation for security covered both. </p><p> “Choosing to use Google App Engine for WebFilings for their back end was obvious,” Murray notes. “Google App Engine provides many benefits to a business building a large-scale, data-intensive product on a short timeline. </p><p> Within a year, the team had built a product using Google App Engine’s python runtime environment. The combination of python and Google App Engine’s datastore feature enabled an iterative and incremental approach to building the back end. Even more important, it let the team focus on innovation and creating the right features for the market by eliminating considerable IT overhead. </p><p> Instead of spending time managing servers and service systems, the WebFilings developers put their energy into building a cloud-based, totally collaborative tool. Filing teams could work on the same document online, thus resolving the complex data-editing and merging problem that so many companies faced with reporting. The developers also built a feature called “linking,” which let users update key financial numbers in one place and have them updated simultaneously everywhere. </p><p> Early beta tests yielded great results and rave reviews. One of the first companies to use the product was Winnebago Industries, Inc. Testers there loved the ease of access and version control. CFO Sarah Nielsen especially appreciated the software’s flexibility and accessibility. “First and foremost, I liked to be in the document whenever – and wherever – I wanted,” she says. </p><h2> Results </h2><p> After beta testing with several companies, WebFilings officially launched the software on St. Patrick’s Day, 2010. It has experienced tremendous growth ever since, and now works with hundreds of U.S. companies in numerous industries. Large companies are saving time and even submitting reports early. eBay, for example, submitted its 10-K annual report 20 days earlier this year. Many other WebFilings customers say they have filed their quarterly 10-Qs a week earlier. Filing teams in many companies have reported improved work/life balance and higher employee morale. </p><p> WebFilings attributes much of this success to Google App Engine. “WebFilings would not be here today without Google App Engine,” Murray notes. “Without it we would not have been able to put the money we needed into product development and distribution.” </p><p> Using Google App Engine has saved WebFilings three to five full-time positions in system administration and operations. With optimized headcount and improved server efficiency, savings are estimated at close to $1 million a year. Team members are also excited by Google App Engine’s new pricing model. They see it as an indication of Google’s continuing commitment to developing Google App Engine. </p><p> WebFilings developers also love that the Google App Engine Team is producing innovations rapidly. Team members are fond of the AppStats and TaskQueues features. AppStats has helped identify problems and fine-tune performance. TaskQueues has provided good solutions for processing large amounts of data and reducing request latency. </p><p> Beyond cost-savings and innovative features, perhaps Google App Engine’s greatest benefit is how it helps WebFilings rapidly deploy new functionality and features to customers with little or no service interruption. This is a huge competitive advantage. WebFilings can update its software without forcing customers to leave the app or worry about downtime. In 14 months after releasing the application, WebFilings completed 71 additional releases, which included 261 new features and 1,232 improvements. </p><p> As it grows, WebFilings will continue to expand its product and the web services that support it. “When we find opportunities to build new applications there is no doubt that Google App Engine will be at the core,” Murray adds. </p>
+      </div>
+    </div>  
+  </div>
+</div>
+
+
+ <!-- is this feedback sticky needed?
+  <div class="feedback-sticky"><a href="javascript:void(0);">Feedback</a></div>
+  <script type="text/javascript" src="//www.gstatic.com/feedback/api.js"></script>
+  <script>
+    jQuery('body').delegate('.feedback-sticky', 'click', function() {
+      _gaq.push(['_trackEvent', 'Feedback', 'User Feedback: ' + location.pathname]);
+      userfeedback.api.startFeedback({'productId': '96209'});
+    });
+  </script>
+  -->
+
+  <!-- Scripts to include both on Goro + Devsite -->
+  <script type="text/javascript">
+   window.___gcfg = {
+     lang: ''
+   };
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+  </script>
+
+  <!-- GTM implementation -->
+  
+  <!-- Start dataLayer -->
+    <script>
+      dataLayer = [{
+        'country': '',
+        'region': '',
+        'language': 'en'
+      }];
+    </script>
+  <!-- End dataLayer -->
+  
+  <!-- Start Google Tag Manager -->
+  <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5CVQBG"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-5CVQBG');</script>
+  <!-- End Google Tag Manager -->    
+
+
+
+<!-- Global JS scripts to load; path will depend on whether we're on devsite or Goro -->
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular-sanitize.js"></script>
+
+  <script src="/js/base.min.js"></script>
+
+
+
+
+<!-- Secondary right-side scroll-nav -->
+<script>
+  new lfl.ui.ScrollNav({});
+  new lfl.cloud.GlobalProductMenu();
+</script>
+
+<script>new cloud.SocialFeeds(document.getElementById('feeds'));</script>
+
+
+
+  <div id="maia-signature"></div>
+  <div id="maia-footer">
+
+    <!-- maia-footer-local -->
+    <div id="maia-footer-local">
+      <div class="maia-aux">
+        
+          <div class="ent-footer-top">
+  <div class="g-plus-wrapper">
+    <div class="g-plusone" data-href="http://cloud.google.com"></div>
+  </div>
+  <div class="g-plus-link"><a href="https://plus.google.com/+googlecloudplatform" rel="publisher">Google+</a></div>
+  <div class="search">
+    <form onsumbit="return false;" class="maia-search">
+    <input name="q" placeholder="Search this site" type="text">
+    <input name="hl" type="hidden" value="">
+    <input name="q" type="hidden" value="site:cloud.google.com/">
+    <button class="maia-button" event="autotrack-data-g" data-g-event="Footer" data-g-action="Site Search" data-g-label="Submit">
+      <span class="maia-search-icon">Search</span>
+    </button>
+    </form>
+  </div>
+
+</div>
+
+<div class="ent-footer-links">
+  <div class="ent-footer-unit">
+    <h4><a href="/why-google/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Why Google" data-g-label="Why Google">Why Google</a></h4>
+    <ul>
+      <li><a href="/why-google/#infrastructure" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Why Google" data-g-label="Infrastructure">Infrastructure</a></li>
+      <li><a href="/why-google/#product" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Why Google" data-g-label="Product">Product</a></li>
+      <li><a href="/why-google/#services" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Why Google" data-g-label="Services">Services</a></li>
+      <li><a href="/why-google/#scalability" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Why Google" data-g-label="Scalability">Scalability</a></li>
+      <li><a href="/why-google/#performance" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Why Google" data-g-label="Performance">Performance</a></li>
+      <li><a href="/why-google/#support" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Why Google" data-g-label="Support">Support</a></li>      
+    </ul>
+  </div>
+
+  <div class="ent-footer-unit">
+    <h4><a href="/products/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="Products">Products</a></h4>
+    <ul>
+      <li><a href="/products/app-engine/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="App Engine">App Engine</a></li>
+      <li><a href="/products/compute-engine/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="Compute Engine">Compute Engine</a></li>
+      <li><a href="/products/cloud-storage/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="Cloud Storage">Cloud Storage</a></li>
+      <li><a href="/products/cloud-sql/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="Cloud SQL">Cloud SQL</a></li>
+      <li><a href="/products/cloud-datastore/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="Cloud Datastore">Cloud Datastore</a></li>
+      <li><a href="/products/bigquery/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="BigQuery">BigQuery</a></li>
+      <li><a href="/products/prediction-api/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="Prediction API">Prediction API</a></li>
+      <li><a href="/products/translate-api/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="Translate API">Translate API</a></li>
+      <li><a href="/products/cloud-endpoints/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="Cloud Endpoints">Cloud Endpoints</a></li>
+      <li><a href="/products/calculator/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="Pricing Calculator">Pricing Calculator</a></li>
+      <li><a href="/pricing/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="Pricing">Pricing</a></li>
+    </ul>
+  </div>
+
+  <div class="ent-footer-unit">
+    <h4><a href="/solutions" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Solutions" data-g-label="Solutions">Solutions</a></h4>
+    <ul>
+      <li><a href="/solutions/mobile/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Solutions" data-g-label="Mobile">Mobile</a></li>
+      <li><a href="/solutions/gaming/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Solutions" data-g-label="Gaming">Gaming</a></li>
+      <li><a href="/solutions/hadoop/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Solutions" data-g-label="Hadoop">Hadoop</a></li>
+      <li><a href="/solutions/mongodb/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Solutions" data-g-label="mongodb">mongodb</a></li>
+
+    </ul>
+  </div>
+
+  <div class="ent-footer-unit">
+    <h4><a href="/customers/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Customers" data-g-label="Customers">Customers</a></h4>
+  </div>
+
+  <div class="ent-footer-unit">
+    <h4><a href="/developers/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Developers" data-g-label="Developers">Developers</a></h4>
+    <ul>
+      <li><a href="/developers#documentation" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Developers" data-g-label="Documentation">Documentation</a></li>
+      <li><a href="/developers#resources" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Developers" data-g-label="Resources">Resources</a></li>
+    </ul>
+  </div>
+
+  <div class="ent-footer-unit">
+    <h4><a href="/support/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Support" data-g-label="Support">Support</a></h4>
+    <ul>
+      <li><a href="https://support.google.com/" target="_blank" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Support" data-g-label="Google Cloud Platform Support Help Center">Platform Support Help Center</a></li>
+      <li><a href="https://support.google.com/cloudbilling/" target="_blank" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Support" data-g-label="Google Cloud Billing Help Center">Billing Help Center</a></li>
+      <li><a href="https://enterprise.google.com/supportcenter" target="_blank" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Support" data-g-label="Google Enterprise Support Center">Google Enterprise Support Center</a></li>      
+    </ul>
+    
+  </div>
+
+  
+  <div class="ent-footer-unit">
+    <h4><a href="/partners/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Partners" data-g-label="Partners">Partners</a></h4>
+    <ul>
+      <li><a href="/partners/technology-partners/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Partners" data-g-label="Find A Technology Partner">Technology Partners</a></li>
+      <li><a href="/partners/service-partners/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Partners" data-g-label="Find A Service Partner">Find a Service Partner</a></li>
+    </ul>
+  </div>
+ 
+</div>
+<br class="clear" />
+
+        
+      </div>
+    </div>
+    <!-- /maia-footer-local -->
+
+    <!-- maia-footer-global -->
+    <div id="maia-footer-global">
+      <div class="maia-aux">
+        <ul>
+          <li><a href="http://www.google.com/">Google</a></li>
+          <li><a href="https://developers.google.com/readme/terms">Terms of Service</a></li>
+          <li><a href="http://www.google.com/intlprivacy/">Privacy Policy</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <!-- /maia-footer-global -->
+  <script type="text/javascript" async="" defer="" src="//www.gstatic.com/feedback/api.js"></script>
+  <script id="jqueryui" src="//ajax.googleapis.com/ajax/libs/jqueryui/1.8.10/jquery-ui.min.js"></script>
+
+  <!--script src="/_static/js/script_foot.js"></script-->
+  
+  </body>
+</html>

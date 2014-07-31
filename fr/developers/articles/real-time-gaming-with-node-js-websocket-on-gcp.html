@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html devsite="">
+<head>
+<title>Gaming Articles &amp; Gaming Tutorials — Google Cloud Platform</title>
+<meta name="description" content="Read about technical gaming articles and solutions with Google Cloud Platform. Gaming specific articles cover game hosting solutions and server configurations.">
+<meta name="hide_page_heading" value="true">
+<meta name="full_width" value="true">
+<meta name="top_category" value="developers">
+<meta name="subcategory" value="articles">
+<meta name="viewport" content="initial-scale=1, minimum-scale=1, width=device-width">
+<link rel="apple-touch-icon" href="/_static/images/apple-touch-icon.png">
+<link href="//fonts.googleapis.com/css?family=Open+Sans:400italic,300,400,600,700" rel="stylesheet">
+<link href="/css/default.css" rel="stylesheet"><!--[if lt IE 9]>
+    <link rel="stylesheet" media="screen" href='/c/cp-ie.css'>
+    <![endif]-->
+<script src="/js/floodlight.js">
+</script>
+</head>
+<body>
+<div id="maia-main" class="cp-article">
+<div class="maia-cols">
+<div class="maia-col-9">
+<div>
+<div style="float:right">
+<div class="g-plusone"></div>
+</div>
+<h1 class="title">Jeu en temps réel avec Node.js et WebSocket sur Google&nbsp;Cloud&nbsp;Platform</h1>
+</div>
+<div class="cp-article-tutorial">
+<h3><a name="h.oi7tucgvvupn" id="h.oi7tucgvvupn"></a>Création d'un jeu en temps réel avec Google&nbsp;App&nbsp;Engine et Google&nbsp;Compute&nbsp;Engine</h3>
+<h2><a name="h.mxzvmqm6770x" id="h.mxzvmqm6770x"></a>Problèmes liés au développement d'un jeu en temps réel évolutif</h2>
+<p>Développer un jeu en temps réel susceptible d'attirer une couverture médiatique mondiale et un grand nombre de joueurs simultanés présente des défis qui vont au-delà de l'imagination. Cela peut notamment nécessiter l'intégration de divers composants matériels, logiciels et plates-formes pour répondre aux exigences d'un jeu de ce type, à savoir&nbsp;:</p>
+<ul>
+<li>Évolutivité nécessaire pour gérer un grand nombre d'utilisateurs simultanés</li>
+<li>Haute disponibilité pour offrir une tolérance face à un temps d'arrêt à l'échelle du centre de données</li>
+<li>Faible latence pour traiter les actions des joueurs en quelques centaines de millisecondes</li>
+</ul>
+<p>Pour surmonter ces problèmes, la solution idéale consiste à se baser sur un service de production déjà créé. World&nbsp;Wide&nbsp;Maze a remédié à ces problèmes en utilisant Google&nbsp;Cloud&nbsp;Platform et des technologies Web de pointe.</p>
+<h3><a name="h.wciq2otu8ut" id="h.wciq2otu8ut"></a>Chrome Experiments&nbsp;: World&nbsp;Wide&nbsp;Maze</h3>
+<p><a href="http://www.chromeexperiments.com/">Chrome&nbsp;Experiments</a> est un site web créé par Google pour mettre à l'honneur des applications Web créatives, développées avec les technologies HTML5 les plus récentes. L'une de ces applications Web est un jeu de labyrinthe en&nbsp;3D interactif appelé <a href="http://www.chromeexperiments.com/detail/world-wide-maze/">World&nbsp;Wide&nbsp;Maze</a> (WWM), développé par l'équipe de Chrome en collaboration avec des partenaires tiers.<sup><a href="#ftnt1" name="ftnt_ref1" id="ftnt_ref1">[1]</a></sup></p>
+<p>Dans WWM, les joueurs indiquent un site Web, et un labyrinthe en 3D est généré à partir de la mise en page visuelle de la page Web. Le joueur utilise un appareil Android/iOS comme contrôleur de jeu pour faire rouler la bille dans le labyrinthe en inclinant l'appareil.</p>
+<figure><img src="/images/articles/real-time-gaming-with-node-js-websocket-on-gcp/world-wide-maze.png" alt="">
+<figcaption>Figure&nbsp;1&nbsp;: World Wide Maze&nbsp;: un jeu de labyrinthe 3D en temps réel pour les appareils mobiles et Chrome</figcaption>
+</figure>
+<p>L'une des caractéristiques uniques de WWM est que toutes les interactions en temps réel sont organisées par Google&nbsp;Cloud&nbsp;Platform, et plus précisément par <a href="/products/compute-engine">Google&nbsp;Compute&nbsp;Engine</a> et <a href="/products/">Google&nbsp;App&nbsp;Engine</a>. Pour garantir une bonne jouabilité, un faible temps de latence est nécessaire entre les mouvements du contrôleur et l'écran de jeu.</p>
+<p>Lors de sa sortie, WWM a été présenté sur de nombreux médias en ligne<sup><a href="#ftnt2" name="ftnt_ref2" id="ftnt_ref2">[2]</a></sup>, ce qui a contribué à doper sa popularité. Il s'en est suivi un énorme pic de trafic (comme le montre la figure&nbsp;2) avec 6&nbsp;600&nbsp;utilisateurs simultanés à travers le monde, 7&nbsp;000&nbsp;pages vues par minute et 1&nbsp;000&nbsp;requêtes par seconde. Le système ayant été conçu pour tirer parti de l'évolutivité massive de Google&nbsp;Cloud&nbsp;Platform, il a pu gérer ce pic de trafic en augmentant, en douceur, les instances Compute&nbsp;Engine et App&nbsp;Engine.</p>
+<figure><img src="/images/articles/real-time-gaming-with-node-js-websocket-on-gcp/traffic-analysis.png" alt="">
+<figcaption>Figure&nbsp;2&nbsp;: Rapport Google&nbsp;Analytics sur l'analyse du trafic WWM</figcaption>
+</figure>
+<p>Lors de la création d'un jeu en temps réel, l'un des principaux défis consiste à gérer les connexions persistantes entre les clients et les serveurs. Dans WWM, la communication en temps réel entre le contrôleur et l'écran de jeu doit être traitée dans les 200&nbsp;ms. Cette communication en temps réel comprend les éléments suivants&nbsp;:</p>
+<ul>
+<li>La demande en provenance du contrôleur reçue par le serveur</li>
+<li>La demande acheminée à l'écran à partir du serveur</li>
+<li>Le labyrinthe affiché à l'écran sur base de la demande reçue</li>
+</ul>
+<p>Cet article porte sur la façon dont WWM est conçu et développé pour surmonter ces problèmes en utilisant les caractéristiques uniques de Google&nbsp;Cloud&nbsp;Platform.</p>
+<h2><a name="h.hxaxg4tq3bcq" id="h.hxaxg4tq3bcq"></a>Présentation de l'architecture</h2>
+<h3><a name="h.50ijektnspqp" id="h.50ijektnspqp"></a>Organisation des instances Google&nbsp;Compute&nbsp;Engine avec Google&nbsp;App&nbsp;Engine</h3>
+<p>L'architecture de World&nbsp;Wide&nbsp;Maze utilise de nombreux composants de Google Cloud Platform, comme le montre la figure&nbsp;3&nbsp;:</p>
+<figure><img src="/images/articles/real-time-gaming-with-node-js-websocket-on-gcp/client-server.png" alt="">
+<figcaption>Figure&nbsp;3&nbsp;: Composants client et serveur de World&nbsp;Wide&nbsp;Maze</figcaption>
+</figure>
+<ol>
+<li>Clients
+<ul>
+<li>Écran de jeu</li>
+<li>Contrôleur de jeu</li>
+</ul>
+</li>
+<li>Serveurs
+<ul>
+<li>Serveur frontend Web (App&nbsp;Engine)</li>
+<li>Serveur WebSocket (Compute&nbsp;Engine)
+<ul>
+<li>Node.js + Socket.IO (gère la communication WebSocket)</li>
+</ul>
+</li>
+<li>Stage&nbsp;Builder (Compute&nbsp;Engine)
+<ul>
+<li>PhantomJS (responsable du rendu des niveaux du jeu)</li>
+<li>OpenCV (responsable du traitement d'image des niveaux du jeu)</li>
+</ul>
+</li>
+<li>Serveur de base de données (Compute&nbsp;Engine)
+<ul>
+<li>MySQL (gère la mise en file d'attente des requêtes)</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<p>Deux composants sont disponibles côté client&nbsp;: l'écran de jeu (navigateur Chrome sur PC/Mac/Linux qui affiche l'écran de jeu) et le contrôleur de jeu (Chrome sur appareil Android/iOS). Les deux composants côté client sont des applications HTML5 fonctionnant sur Chrome.</p>
+<p>Du côté du serveur, WWM utilise une combinaison formée d'App&nbsp;Engine et de Compute&nbsp;Engine. Compute&nbsp;Engine accepte des connexions <a href="http://en.wikipedia.org/wiki/WebSocket">WebSocket</a> qui sont utilisées pour établir la communication bidirectionnelle à faible latence entre le contrôleur et l'écran. Compute&nbsp;Engine est également utilisé pour héberger les serveurs de base de données et créer des niveaux de jeu. App&nbsp;Engine accepte les requêtes HTTP, organise les instances Compute&nbsp;Engine et connecte les clients aux instances Compute&nbsp;Engine disponibles.</p>
+<p>L'architecture a ceci d'intéressant qu'elle allie les points forts d'App&nbsp;Engine et de Compute&nbsp;Engine pour créer une solution évolutive dédiée aux jeux en temps réel. Il importe de bien comprendre les exigences de chaque plate-forme en termes de conception afin de "placer la bonne personne au bon poste" lors de la conception de l'architecture.</p>
+<h3><a name="h.niw6sokgh88z" id="h.niw6sokgh88z"></a>Utilisation de Google&nbsp;App&nbsp;Engine pour le frontend Web</h3>
+<p>App&nbsp;Engine est utilisé pour les frontends Web et connecte les écrans de jeu aux instances Compute&nbsp;Engine disponibles. App&nbsp;Engine prend les requêtes HTTP, diffuse des fichiers statiques aux clients et répartit chaque session de jeu sur les serveurs WebSocket disponibles.</p>
+<figure><img src="/images/articles/real-time-gaming-with-node-js-websocket-on-gcp/ae-web-frontend.png" alt="">
+<figcaption>Figure&nbsp;4&nbsp;: Utilisation d'App&nbsp;Engine pour le frontend&nbsp;Web</figcaption>
+</figure>
+<p>Les principaux avantages d'App Engine sont sa disponibilité et son évolutivité automatique. Les applications App&nbsp;Engine doivent respecter les directives de conception liées à chaque <a href="https://developers.google.com/appengine/docs/whatisgoogleappengine">environnement d'exécution App&nbsp;Engine</a> et aux diverses <a href="https://developers.google.com/appengine/docs/java/apis">API</a> <a href="https://developers.google.com/appengine/docs/java/apis">de service App&nbsp;Engine</a>. L'environnement d'exécution et les API sont soigneusement conçus pour isoler le centre de données tel un seul ordinateur massivement parallèle qui alimente votre application et la met à l'écart des défaillances matérielles uniques. La combinaison de ces puissantes fonctionnalités permet aux développeurs de bénéficier d'une plate-forme qui se révèle particulièrement tolérante à des événements tels que des énormes pics de trafic, une évolution rapide du nombre d'utilisateurs et de services, et un temps d'arrêt à l'échelle du centre de données.</p>
+<figure><img src="/images/articles/real-time-gaming-with-node-js-websocket-on-gcp/traffic-peak.png" alt="">
+<figcaption>Figure&nbsp;5&nbsp;: Pic de trafic sur la console d'administration App&nbsp;Engine de WWM</figcaption>
+</figure>
+<p>L'utilisation d'App&nbsp;Engine comme répartiteur de charges a permis à WWM de gérer le pic de trafic qui a atteint 1&nbsp;000&nbsp;requêtes par seconde, comme le montre la figure&nbsp;5. Cela a été rendu possible en utilisant les fonctionnalités d'évolution automatique d'App&nbsp;Engine pour distribuer, de manière fluide, les sessions de jeu en temps réel vers les instances Compute&nbsp;Engine.</p>
+<h3><a name="h.3jrjcfu0g87k" id="h.3jrjcfu0g87k"></a>Utilisation de Compute&nbsp;Engine sur le serveur WebSocket</h3>
+<p>Au départ, les développeurs pensaient utiliser uniquement App&nbsp;Engine pour mettre en œuvre l'intégralité du service de jeu, et déterminer si l'<a href="https://developers.google.com/appengine/docs/java/channel/">API&nbsp;Channel</a> et l'<a href="https://developers.google.com/appengine/docs/java/sockets/">API&nbsp;Socket</a> d'App&nbsp;Engine étaient capables de satisfaire les exigences inhérentes à la communication en temps réel. Cependant, ils se sont rendu compte que ces API n'étaient pas adaptées à la connexion bidirectionnelle pour WWM qui peut transmettre des messages avec moins de 200&nbsp;ms de latence. Ils ont alors décidé de combiner App&nbsp;Engine avec Compute&nbsp;Engine pour mettre en œuvre la connexion avec les serveurs de WebSocket.</p>
+<figure><img src="/images/articles/real-time-gaming-with-node-js-websocket-on-gcp/webSocket-server.png" alt="">
+<figcaption>Figure&nbsp;6&nbsp;: Utilisation de Compute&nbsp;Engine pour le serveur WebSocket</figcaption>
+</figure>
+<p>Le serveur WebSocket est mis en œuvre par Node.js et Socket.IO exécutés sur les instances du Compute&nbsp;Engine. <a href="http://nodejs.org/">Node.js</a> est une plate-forme d'exécution JavaScript courante qui présente un modèle événementiel d'E/S non&nbsp;bloquant pour les applications en temps réel. <a href="http://socket.io/">Socket.IO</a> est une bibliothèque populaire pour Node.js qui fournit un transport en temps réel entre le navigateur et le serveur Node.js. Elle est compatible avec plusieurs protocoles et méthodes de transport en temps réel, y compris WebSocket, le socket Flash, <a href="http://en.wikipedia.org/wiki/Comet_(programming)">Comet</a> et la scrutation. Par défaut, la bibliothèque Socket.IO tente de se connecter au protocole WebSocket pour offrir de meilleures performances. Cependant, si elle détecte que le protocole n'est pas disponible sur le réseau, elle se rabat sur d'autres protocoles et tente d'établir une connexion en temps réel avec des performances potentiellement plus élevées.</p>
+<h3><a name="h.85altn8fe0xj" id="h.85altn8fe0xj"></a>Utilisation de Compute&nbsp;Engine pour Stage&nbsp;Builder</h3>
+<p>Autre caractéristique intéressante de WWM&nbsp;: tout site Web peut devenir un niveau jouable en utilisant un système de rendu à la demande.</p>
+<figure><img src="/images/articles/real-time-gaming-with-node-js-websocket-on-gcp/storage-builder.png" alt="">
+<figcaption>Figure&nbsp;7&nbsp;: Utilisation de Compute&nbsp;Engine pour Stage&nbsp;Builder</figcaption>
+</figure>
+<p>La génération de niveaux s'effectue à l'aide de Stage&nbsp;Builder, un outil qui s'exécute sur Compute&nbsp;Engine. La figure&nbsp;5 illustre ce processus de génération&nbsp;:</p>
+<figure><img src="/images/articles/real-time-gaming-with-node-js-websocket-on-gcp/generation-process.png" alt="">
+<figcaption>Figure&nbsp;8&nbsp;: Processus de génération de scènes</figcaption>
+</figure>
+<p>Les étapes du processus de génération de niveaux sont les suivantes&nbsp;:</p>
+<ol>
+<li>L'écran de jeu envoie l'URL du site Web spécifiée par l'utilisateur au serveur WebSocket via une connexion WebSocket.</li>
+<li>Le serveur WebSocket place un message de demande de rendu dans la file d'attente du serveur de&nbsp;base de données (MySQL). Le message est récupéré par l'un des constructeurs de niveaux<sup><a href="#ftnt3" name="ftnt_ref3" id="ftnt_ref3">[3]</a></sup>.</li>
+<li>Stage&nbsp;Builder effectue le rendu d'une image du site Web avec PhantomJS. Les positions des constructions, telles que les balises <span class="code">div</span> ou <span class="code">img</span>, sont générées par un document JSON.</li>
+<li>Stage&nbsp;Builder génère les données de structure du labyrinthe en utilisant le traitement d'image OpenCV et les données de position de construction.</li>
+<li>Stage&nbsp;Builder renvoie un document JSON, qui comprend les images et la structure du labyrinthe, à l'écran de jeu.</li>
+</ol>
+<p><a href="http://phantomjs.org/">PhantomJS</a> est un navigateur Web complet conçu pour les serveurs sans écran. L'outil automatise le rendu des pages Web à des fins diverses, y compris les tests automatisés, les captures d'écran, l'extraction de pages Web et le contrôle des performances des sites Web. Les développeurs peuvent écrire du code en JavaScript ou CoffeeScript pour indiquer à PhantomJS d'effectuer les processus nécessaires, tels que l'exécution d'une capture d'écran.</p>
+<p>L'image d'écran affichée par PhantomJS est traitée par <a href="http://opencv.org/">OpenCV</a>. Le processus comprend la suppression de la zone inutile, la création d'îlots et leur interconnexion à l'aide de ponts, la définition d'un objectif, etc. L'image Web d'origine est traitée par OpenCV afin de générer la structure du labyrinthe.</p>
+<h2><a name="h.tapi9ignkzp" id="h.tapi9ignkzp"></a>Problèmes liés à la création d'un cluster avec Compute&nbsp;Engine</h2>
+<p>Au cours du développement, deux difficultés majeures se présentent pour créer un cluster avec des instances Compute&nbsp;Engine. La première consiste à déterminer l'évolutivité du Stage&nbsp;Builder. La deuxième consiste à concevoir le basculement pour l'instance Compute&nbsp;Engine entre différentes zones.</p>
+<h3><a name="h.c1dbzf1ae2u5" id="h.c1dbzf1ae2u5"></a>Tests de charge de World&nbsp;Wide&nbsp;Maze</h3>
+<p>Pour déterminer l'évolutivité de Stage&nbsp;Builder, les développeurs ont soumis le cluster d'instances Stage&nbsp;Builder à une vaste série de tests de charge. Stage&nbsp;Builder gère la création de niveaux jouables en utilisant PhantomJS. De plus, il fait un usage intensif du processeur. Le nombre maximal de niveaux qui peuvent être créés par une seule instance est déterminé en fonction des tests de charge.</p>
+<p>La figure suivante illustre les résultats des tests de charge effectués sur Stage&nbsp;Builder, au cours desquels 36&nbsp;clients virtuels ont envoyé, en continu, des demandes de rendu à une seule instance. Le délai moyen pour chaque demande de création de niveaux était d'environ 12&nbsp;secondes.</p>
+<figure><img src="/images/articles/real-time-gaming-with-node-js-websocket-on-gcp/load-testing.png" alt="">
+<figcaption>Figure&nbsp;9&nbsp;: Résultat des tests de charge réalisés sur Stage&nbsp;Builder (utilisation du processeur)</figcaption>
+</figure>
+<p>Les limites des serveurs WebSocket ont été déterminées par les tests de charge. Les tests ont confirmé que les serveurs pouvaient gérer 360&nbsp;connexions WebSocket avec une latence moyenne de 175&nbsp;ms.</p>
+<p>Une augmentation soudaine du trafic a été observée après le lancement, mais les administrateurs ont rapidement alloué des instances Compute&nbsp;Engine de Stage&nbsp;Builder et du serveur WebSocket. Ce pic de trafic n'a donc posé aucun problème majeur.</p>
+<h3><a name="h.2jfpvn3lour7" id="h.2jfpvn3lour7"></a>Basculement entre des instances Compute&nbsp;Engine dans différentes zones</h3>
+<p>La deuxième difficulté consistait à gérer à la fois les temps d'arrêt planifiés et non&nbsp;planifiés des instances Compute&nbsp;Engine, depuis une seule instance jusqu'à une <a href="https://developers.google.com/compute/docs/zones?hl=en">zone de disponibilité</a> (un groupe d'instances dans différentes régions géographiques). Dans WWM, les développeurs ont appliqué les bonnes pratiques, déployant ainsi des instances sur plusieurs zones avec des systèmes en place, afin de répartir la charge et de garantir un basculement rapide entre les zones.</p>
+<p>Deux techniques sont utilisées par WWM pour gérer, comme il se doit, les défaillances planifiées et non planifiées&nbsp;:</p>
+<ul>
+<li>Disque persistant pour la sauvegarde de données</li>
+<li>Permutation d'adresses&nbsp;IP statiques externes entre des instances Compute&nbsp;Engine</li>
+</ul>
+<h4><a name="h.6rgxjfglm26h" id="h.6rgxjfglm26h"></a>Disque persistant pour la sauvegarde de données</h4>
+<p>Un disque persistant est un périphérique de stockage persistant pour Compute&nbsp;Engine, qui se distingue par une disponibilité et une évolutivité élevées. Lorsqu'un disque persistant est utilisé à des fins de sauvegarde et de récupération, les données sont sécurisées, et peuvent "survivre" à toute période d'arrêt planifiée ou non&nbsp;planifiée de Compute&nbsp;Engine. Le serveur de données de WWM utilise un disque persistant pour les sauvegardes périodiques de la base de données MySQL. Dans le cas d'une période de maintenance planifiée de Compute&nbsp;Engine, un opérateur de WWM appelle un processus de restauration avant l'interruption du service. L'opérateur utilise les données MySQL qui sont sauvegardées sur disque persistant et les restaure sur les instances Compute&nbsp;Engine qui sont réservées dans une autre zone.</p>
+<h4><a name="h.lo6e3zikdjpp" id="h.lo6e3zikdjpp"></a>Permutation d'adresses&nbsp;IP statiques externes entre des instances Compute&nbsp;Engine</h4>
+<p>La deuxième technique utilisée pour le basculement est la permutation d'adresses&nbsp;IP statiques. Compute&nbsp;Engine vous permet de permuter instantanément des <a href="https://developers.google.com/compute/docs/instances_and_network#externaladdresses">adresses&nbsp;IP statiques externes</a> d'instances Compute&nbsp;Engine en utilisant des commandes simples. Cette fonctionnalité permet d'effectuer une migration en douceur entre les zones d'une région, sans disposer d'un frontend tel qu'un proxy inverse ou un répartiteur de charges.</p>
+<p>La procédure utilisée par WWM pour sortir des instances d'une zone dont la maintenance est prévue est la suivante&nbsp;:</p>
+<ol>
+<li>Sur le frontend Web (App&nbsp;Engine), WWM fait passer la version de "production" à "maintenance" pour afficher l'écran de maintenance.</li>
+<li>Sauvegarde la base de données et place le fichier de sauvegarde sur le disque persistant.</li>
+<li>Copie les instances Compute&nbsp;Engine dans la zone de destination.<sup><a href="#ftnt4" name="ftnt_ref4" id="ftnt_ref4">[4]</a></sup> Faites passer l'attribution des adresses&nbsp;IP externes des instances Compute&nbsp;Engine de la zone d'origine vers la zone de destination.<sup><a href="#ftnt5" name="ftnt_ref5" id="ftnt_ref5">[5]</a></sup></li>
+<li>Restaure les dossiers du serveur de base de données à partir du fichier de sauvegarde stocké sur le disque persistant.</li>
+<li>Vérifie que les instances Compute&nbsp;Engine dans la zone de destination fonctionnent correctement en exécutant des tests.</li>
+<li>Fait passer la version du frontend Web de "maintenance" à "production".</li>
+</ol>
+<h2><a name="h.dpesh79vnb3z" id="h.dpesh79vnb3z"></a>Conclusion</h2>
+<p>Google&nbsp;Cloud&nbsp;Platform met à votre disposition la technologie nécessaire pour surmonter les difficultés liées à la création, avec App&nbsp;Engine et Compute&nbsp;Engine, d'un jeu en temps réel destiné à la production. Pour les développeurs, il est important de bien comprendre les contraintes de conception de ces deux technologies afin de tirer pleinement parti de chacune d'elles. Lors du lancement d'un service de production, il est essentiel de soumettre le système à des tests de charge étendus afin de réaliser une étude de faisabilité en termes de temps de latence, d'évolutivité et de disponibilité. L'utilisation de Google&nbsp;Cloud&nbsp;Platform et l'exécution de tests approfondis ont permis de lancer WWM à l'échelle planétaire et de faire face au pic de trafic consécutif à la vaste couverture médiatique dont le jeu a bénéficié.</p>
+<br>
+<br>
+<hr>
+<p><a href="#ftnt_ref1" name="ftnt1" id="ftnt1">[1]</a> <a href="http://prty.jp/">PARTY</a>, AID, <a href="http://katamari.co.jp/">katamari</a> et <a href="http://www.futurek.com/">Futurek</a></p>
+<p><a href="#ftnt_ref2" name="ftnt2" id="ftnt2">[2]</a> <a href="http://www.google.com/url?q=http%3A%2F%2Fnews.cnet.com%2F8301-17938_105-57575847-1%2Fplaying-crave-with-nifty-chrome-world-wide-maze%2F&amp;sa=D&amp;sntz=1&amp;usg=AFQjCNH1f4w2oXpZ10fCKE48944Oa-hLUQ">”</a><a href="http://www.google.com/url?q=http%3A%2F%2Fnews.cnet.com%2F8301-17938_105-57575847-1%2Fplaying-crave-with-nifty-chrome-world-wide-maze%2F&amp;sa=D&amp;sntz=1&amp;usg=AFQjCNH1f4w2oXpZ10fCKE48944Oa-hLUQ">‘</a><a href="http://news.cnet.com/8301-17938_105-57575847-1/playing-crave-with-nifty-chrome-world-wide-maze/">Playing' Crave with nifty Chrome World Wide Maze</a><a href="http://www.google.com/url?q=http%3A%2F%2Fnews.cnet.com%2F8301-17938_105-57575847-1%2Fplaying-crave-with-nifty-chrome-world-wide-maze%2F&amp;sa=D&amp;sntz=1&amp;usg=AFQjCNH1f4w2oXpZ10fCKE48944Oa-hLUQ">”</a> (CNET), <a href="http://www.google.com/url?q=http%3A%2F%2Fwww.pcmag.com%2Farticle2%2F0%2C2817%2C2416931%2C00.asp&amp;sa=D&amp;sntz=1&amp;usg=AFQjCNEt7BMEKNmbmDADR4CiSGuLL_3Zww">”</a><a href="http://www.pcmag.com/article2/0,2817,2416931,00.asp">Chrome 'World Wide Maze' Experiment Turns Websites Into Playgrounds</a><a href="http://www.google.com/url?q=http%3A%2F%2Fwww.pcmag.com%2Farticle2%2F0%2C2817%2C2416931%2C00.asp&amp;sa=D&amp;sntz=1&amp;usg=AFQjCNEt7BMEKNmbmDADR4CiSGuLL_3Zww">”</a> (PC&nbsp;Magazine), <a href="http://www.google.com/url?q=http%3A%2F%2Fwww.engadget.com%2F2013%2F03%2F21%2Fchrome-world-wide-maze-browser-game%2F&amp;sa=D&amp;sntz=1&amp;usg=AFQjCNEmLWAosWpZCXQbkaWeam63CmwA3w">”</a><a href="http://www.engadget.com/2013/03/21/chrome-world-wide-maze-browser-game/">Google Chrome's World Wide Maze turns your favorite website into 3D game for your phone</a><a href="http://www.google.com/url?q=http%3A%2F%2Fwww.engadget.com%2F2013%2F03%2F21%2Fchrome-world-wide-maze-browser-game%2F&amp;sa=D&amp;sntz=1&amp;usg=AFQjCNEmLWAosWpZCXQbkaWeam63CmwA3w">”</a> (Engadget), etc.</p>
+<p><a href="#ftnt_ref3" name="ftnt3" id="ftnt3">[3]</a> Pour mettre en œuvre ce type de mise en file d'attente, une autre solution consiste à utiliser l'API <a href="https://developers.google.com/appengine/docs/java/taskqueue/">Task&nbsp;Queue</a> sur App&nbsp;Engine.</p>
+<p><a href="#ftnt_ref4" name="ftnt4" id="ftnt4">[4]</a> La <a href="https://developers.google.com/compute/docs/gcutil/tips?hl=en#moving">commande gcutil moveinstances</a> est utile pour cette tâche.</p>
+<p><a href="#ftnt_ref5" name="ftnt5" id="ftnt5">[5]</a> La permutation d'adresses&nbsp;IP statiques externes n'est pas possible entre les zones de régions différentes. Pour mettre en œuvre un basculement entre différentes régions, vous pouvez utiliser le service DNS afin de permuter la correspondance du nom d'hôte et de l'adresse&nbsp;IP. Une autre solution consiste à établir des groupes d'adresses&nbsp;IP pour une autre région et de créer la logique d'application pour permuter les instances actives.</p>
+</div>
+<!-- /maia-main --></div>
+<div class="maia-col-3"><br>
+<img src="//www.google.com/images/icons/product/feedback-16.png" class="g-app-icon" alt=""> <a href="javascript:void(0);" class="google-feedback">Commentaires sur ce document</a><br>
+<br></div>
+</div>
+</div>
+<script>
+(function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+</script><script src="//www.gstatic.com/feedback/api.js">
+</script><script>
+$('body').delegate('.google-feedback', 'click', function() {
+      userfeedback.api.startFeedback({'productId': '94614'});
+  });
+</script><!-- Scripts to include both on Goro + Devsite --><script>
+window.___gcfg = {
+     lang: ''
+   };
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+</script><!-- GTM implementation --><!-- Start dataLayer --><script>
+dataLayer = [{
+        'country': 'fr',
+        'region': 'emea',
+        'language': 'fr'
+      }];
+</script><!-- End dataLayer --><!-- Start Google Tag Manager --><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5CVQBG" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript> <script>
+(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-5CVQBG');
+</script><!-- End Google Tag Manager --><!-- Global JS scripts to load; path will depend on whether we're on devsite or Goro --><script src="/js/base.min.js">
+</script><!-- Retina loader; Do not load if partners page because we need to wait until the Angular app runs --><script>
+new lfl.system.RetinaLoader();
+</script><!-- Secondary right-side scroll-nav --><script>
+new lfl.ui.ScrollNav({});
+</script>
+</body>
+</html>

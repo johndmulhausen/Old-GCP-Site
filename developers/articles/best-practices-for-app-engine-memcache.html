@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="en" class="maia">
+  <head>
+    <title>Best Practices for App Engine Memcache - Google Cloud Platform</title>
+    <meta charset="utf-8" />
+    <link rel="shortcut icon" href="/_static/images/favicon.ico">
+    <link rel="apple-touch-icon" href="/_static/images/apple-touch-icon.png">
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:300,400,600,700' rel='stylesheet' type='text/css'>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+
+    <!--[if lt IE 9]>
+    <script src="/js/html5.js"></script>
+    <![endif]-->
+
+    <title>Cloud Computing &amp; Cloud Hosting Services — Google Cloud Platform</title>
+    <meta name="google-site-verification" content="8dOEM3Xenm6yaBc83y2WKgqQG0iHI7Ph6Rl_YLIZLQ8" />
+
+    <!-- GSAP animation frameworks -->
+    <script src="//www.gstatic.com/external_hosted/gsap/TweenMax.min.js"></script>
+    <script src="//www.gstatic.com/external_hosted/gsap/TimelineMax.min.js"></script>
+    <script src="/js/floodlight.js"></script>
+    <meta name="viewport" content="initial-scale=1, minimum-scale=1, width=device-width">
+    <link href="//fonts.googleapis.com/css?family=Open+Sans:400italic,300,400,600,700" rel="stylesheet">
+
+    <link href="//www.google.com/css/maia.experimental.css" rel="stylesheet">
+    <link href="/css/maia-cloud.css" rel="stylesheet"/>
+    <link href="/css/default.css" rel="stylesheet">
+  </head>
+  <body>
+  <div id="maia-header">
+    <div class="maia-aux">
+      <h1><a href="/"><img src="/images/gcp-logo.png" alt="Cloud Platform" data-retina="383x48"></a></h1>
+
+<div class="search-container">
+  
+  <form action="/search" class="maia-search">
+    <input type="text" placeholder="Search this site" name="q">
+    <button class="maia-button" type="submit" data-g-event="Maia: Button" data-g-action="Maia: Primary – Header" data-g-label="Search">
+      <span class="maia-search-icon">Search</span>
+    </button>
+  </form>
+  <div class="cloud-social">
+    <div class="cloud-signed-out">
+      <!-- <a href="/console" class="cp-track" id="try-header">Sign in</a> -->
+    </div>
+  </div>
+</div>
+
+    </div>
+  </div>
+  <div id="maia-nav-x" class="maia-nav">
+    <div class="maia-aux">
+   <div class="cp-cta">
+   <a class="cp-track maia-button maia-button-secondary white-button" href="/contact/">Contact sales</a>
+   <a class="cp-track maia-button blue-button" href="https://console.developers.google.com?getstarted=https://cloud.google.com" style="color: #ffffff;">Try it now</a>
+   </div>
+      <ul>
+        <li id="home-nav"
+            
+              class="active"
+            >
+
+            <a 
+              class="active"
+             href="index.html" event="autotrack-data-g" data-g-event="Global Nav" data-g-action="Nav Bar" data-g-label="Home"> 
+            Home
+            </a>
+        </li>      
+        <li
+            >
+            <a href="/why-google/" event="autotrack-data-g" data-g-event="Global Nav" data-g-action="Nav Bar" data-g-label="Why Google"> 
+            Why Google
+            </a>
+        </li>
+        <li id="main-nav-product-dropdown" class="dropdown">
+            <a href="/products/" event="autotrack-data-g" data-g-event="Global Nav" data-g-action="Nav Bar" data-g-label="Products"> 
+            Products
+            </a>
+        </li>
+        <li
+            >
+            <a href="/solutions/" event="autotrack-data-g" data-g-event="Global Nav" data-g-action="Nav Bar" data-g-label="Solutions"> 
+            Solutions
+            </a>
+        </li>
+        <li
+            >
+            <a href="/customers/" event="autotrack-data-g" data-g-event="Global Nav" data-g-action="Nav Bar" data-g-label="Customers"> 
+            Customers
+            </a>
+        </li>
+        <li
+            >
+            <a href="/developers/" event="autotrack-data-g" data-g-event="Global Nav" data-g-action="Nav Bar" data-g-label="Developers"> 
+            Developers
+            </a>            
+        </li>
+        <li
+            >
+            <a href="/support/" event="autotrack-data-g" data-g-event="Global Nav" data-g-action="Nav Bar" data-g-label="Support"> 
+            Support
+            </a>            
+        </li>
+        <li>
+            <a href="/partners/" event="autotrack-data-g" data-g-event="Global Nav" data-g-action="Nav Bar" data-g-label="Partners"> 
+            Partners
+            </a>            
+        </li>
+        <li>
+            <a href="https://github.com/GoogleDevDocs/googledevdocs.github.io/edit/master/developers/articles/best-practices-for-app-engine-memcache.html" event="autotrack-data-g" data-g-event="Global Nav" data-g-action="Nav Bar" data-g-label="Edit Page"> 
+            Edit Page
+            </a>            
+        </li>
+      </ul>
+    </div>
+  </div>
+
+<!-- Products subnav -->
+<div id="maia-nav-x" class="maia-nav products-nav">
+  <div class="maia-aux">
+    <div class="products-nav-dropdown maia-cols">
+
+      <div id="compute-dropdown" class="products-column maia-col-2">
+        <span class="product-list-title">Compute</span>
+        <div class="dropdown-item-container">
+          <a href="/products/compute-engine/">
+            <span class="product-name">Compute Engine</span>
+          </a>
+        </div>
+        <div class="dropdown-item-container">
+          <a href="/products/app-engine/">
+            <span class="product-name">App Engine</span>
+          </a>
+        </div>
+      </div>
+
+      <div id="storage-dropdown" class="products-column maia-col-2">
+        <span class="product-list-title">Storage</span>
+        <div class="dropdown-item-container">
+          <a href="/products/cloud-sql/">
+            <span class="product-name">Cloud SQL</span>
+          </a>
+        </div>
+        <div class="dropdown-item-container">
+          <a href="/products/cloud-storage/">
+            <span class="product-name">Cloud Storage</span>
+          </a>
+        </div>
+        <div class="dropdown-item-container">
+          <a href="/products/cloud-datastore/">
+            <span class="product-name">Cloud Datastore</span>
+          </a>
+        </div>
+      </div>
+
+      <div id="big-data-dropdown" class="products-column maia-col-2">
+        <span class="product-list-title">Big Data</span>
+        <div class="dropdown-item-container">
+          <a href="/products/bigquery/">
+            <span class="product-name">BigQuery</span>
+          </a>
+        </div>
+      </div>
+
+      <div id="services-dropdown" class="products-column maia-col-2">
+        <span class="product-list-title">Services</span>
+        <div class="dropdown-item-container">
+          <a href="/products/cloud-dns/">
+            <span class="product-name">Cloud DNS</span>
+          </a>
+        </div>
+        <div class="dropdown-item-container">
+          <a href="/products/cloud-endpoints/">
+            <span class="product-name">Cloud Endpoints</span>
+          </a>
+        </div>
+        <div class="dropdown-item-container">
+          <a href="/products/translate-api/">
+            <span class="product-name">Translate API</span>
+          </a>
+        </div>
+        <div class="dropdown-item-container">
+          <a href="/products/prediction-api/">
+            <span class="product-name">Prediction API</span>
+          </a>
+        </div>
+      </div>
+
+      <div id="management-dropdown" class="products-column maia-col-2">
+        <span class="product-list-title">Management</span>
+        <div class="dropdown-item-container">
+          <span class="product-name"><a href="/products/cloud-deployment-manager/">Cloud Deployment Manager</a></span>
+        </div>
+      </div>
+
+      <div id="pricing-dropdown" class="products-column maia-col-2">
+        <span class="product-list-title">Pricing</span>
+        <div class="dropdown-item-container">
+          <span class="product-name"><a href="/products/pricing/">Overview</a></span>
+        </div>
+        <div class="dropdown-item-container">
+          <span class="product-name"><a href="/products/calculator/">Calculator</a></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="maia-main" class="cp-article">
+  <div class="maia-cols">
+    <div class="maia-col-9">
+      <div>
+        <div style="float:right">
+          <div class="g-plusone"></div>
+        </div>
+        <h1 class="title">Best Practices for App Engine Memcache</h1>
+      </div>
+      
+<div class="cp-article-tutorial">
+
+
+  <h2>For Thread Safety, Performance, and Code Migration</h2>
+
+  <p>This article outlines some best practices for using the Google App Engine Memcache feature. The main issues discussed are concurrency, performance, and migration. Developers using Memcache will benefit by becoming aware of pitfalls and considerations for making code more robust.</p>
+
+  <h2>Introduction</h2>
+
+  <p>Memcache is an App Engine feature that provides in-memory, temporary storage. It is provided primarily as a cache for rapid retrieval of data that is backed by some form of persistent storage, such as Google Cloud Datastore. Ideal use cases for Memcache include caching published data like blogs, news feeds, and other content that is read but not modified. Data stored in Memcache can be evicted at any time, so applications should be structured in a way that does not depend on the presence of entries. Memcache can serve concurrent requests to multiple, remote clients accessing the same data. For this reason, data consistency should be kept in mind. Memcache statistics, including hit rate, are shown on the App Engine console, and can aid in optimizing performance.</p>
+  <p>There are two classes of Memcache service, <a href="https://developers.google.com/appengine/docs/adminconsole/memcache?hl=en">shared and dedicated</a>. Shared Memcache is a no-cost, best-effort service, and data stored with this service can be evicted at any time. Dedicated Memcache is a paid service that enables you to reserve memory for an application. This provides developers with a more predictable level of service. However, data may still be evicted if more data needs to be stored than space reserved in Memcache, since keys are evicted when the cache is full. In addition, data may be evicted if the Memcache service is restarted for planned or unplanned maintenance. The API signatures and usage are identical for both shared and dedicated Memcache. The difference in use is a configuration change in the App Engine Administration Console.  Dedicated Memcache allows for a specific quantity of memory to be allocated for the application.</p>
+
+  <h3>Assumptions</h3>
+  <p>This paper assumes that readers have a basic knowledge of App Engine, including programming in one of the supported languages&mdash;Python, Java, Go, or PHP. The examples in this paper are provided in Python. Links to the documents introducing Memcache Python API in other supported languages are provided in the <a href="#h.hcpwxlh68lnh">Additional Resources</a> section.</p>
+
+  <h2>Contents</h2>
+  <p>
+    <a href="#h.jwc0hny6a890">Code Complexity and Concurrency</a><br>
+    <a class="indnt" href="#h.fwyqb8g2zy0t">Overview</a><br>
+    <a class="indnt" href="#h.wi5fzzzah4gw">Details/Discussion</a><br>
+    <a class="indnt" href="#h.sg7rpjnv4o06">Recommendations</a><br>
+    <a href="#h.uz3c4sf9ikok">Data Serialization and Migration</a><br>
+    <a class="indnt" href="#h.gwwz72j6awlr">Overview</a><br>
+    <a class="indnt" href="#h.d9xvsqr5m6ay">Details/Discussion</a><br>
+    <a class="indnt" href="#h.byozlhots0jm">Recommendations</a><br>
+    <a class="indnt" href="#h.qqajkpqh73lf">Example</a><br>
+    <a href="#h.s2hkym9v8ah7">Other Best Practices</a><br>
+    <a class="indnt" href="#h.wienob6xccso">Handling Memcache API Failures Gracefully</a><br>
+    <a class="indnt" href="#h.oh5pu6mleh70">Use Batch Capability when Possible</a><br>
+    <a class="indnt" href="#h.dvl6r64mnvyr">Distribute Load Across the Keyspace</a><br>
+    <a href="#h.4w4l8tnb9s7a">Additional Resources</a>
+  </p>
+
+  <h2><a name="h.jwc0hny6a890" id="h.jwc0hny6a890"></a>Code Complexity and Concurrency</h2>
+
+  <h3><a name="h.fwyqb8g2zy0t" id="h.fwyqb8g2zy0t"></a>Overview</h3>
+  <p>Memcache can be usefully leveraged to cache data persisted in Datastore or CloudSQL.  However, in some cases, writing code to keep Memcache synchronized with application data that is written and modified in a persistent datastore can be challenging.  In this section we collect some best practices gained from experience dealing with code complexity to avoid potential pitfalls in concurrent access:</p>
+  <ul class="c26 lst-kix_v1ggjnnvcueh-0 start">
+    <li>It is simpler to use Memcache where data is only read because there is no risk of inconsistency between Memcache and the data store.</li>
+    <li>When using Memcache for data that is both read and modified, use the Python NDB API. This is a good practice because the NDB API platform code handles concurrent access coordination and error conditions robustly. As a result, your application code will be simplified.</li>
+  </ul>
+
+  <h3><a name="h.wi5fzzzah4gw" id="h.wi5fzzzah4gw"></a>Details/Discussion</h3>
+  <p>Read-only data is ideal for storing in Memcache. Example use cases for this include serving blogs, RSS feeds, and other published data that is read, but not modified. </p>
+  <p>Memcache is a global cache service that is shared by multiple frontend instances and requests. Concurrency control is required when application logic requires read consistency to shared data that is updated by multiple clients. Transactional data sources, such as relational databases or Google Cloud Datastore, coordinate concurrent access by multiple clients. However, Memcache is not transactional.  This is an important point to be aware of when using Memcache. There is a possibility that two clients will read the same data in Memcache at the same time and modify it simultaneously. As a result, the data stored may be incorrect.  In contrast, if the application logic does not require read consistency to shared data, there is no need for special code to coordinate concurrent requests. An example of this is updating the timestamp for accessing a document.  If two clients try to update the last accessed date at the same time then the last one that does the update wins. This is an expected result.</p>
+  <p>One approach to solving concurrent access to shared data within the context of a simple, local execution environment is to synchronize threads so that only one thread can execute at a time within a critical section. With App Engine, in the context of code executing across multiple instances, the &ldquo;compare and set&rdquo; (<span class="code">Client.cas()</span>) function can be used to coordinate concurrent access. However, the disadvantage of this type of function is that, if it fails, the application must be prepared to do the error handling and retry.</p>
+  <p>Concurrency problems can be hard to detect. Problems do not usually appear until the application is under load from many users.</p>
+
+  <h3><a name="h.sg7rpjnv4o06" id="h.sg7rpjnv4o06"></a>Recommendations</h3>
+  <p>The <span class="code">incr()</span> and <span class="code">decr()</span> functions are provided for atomic execution of the increment and decrement operations.  Use the atomic Memcache functions where possible, including <span class="code">incr()</span>, <span class="code">decr()</span>, and use the <span class="code">cas()</span> function for coordinating concurrent access. Use the Python NDB API if the application uses Memcache as a way to optimize reading and writing to Google Cloud Datastore.</p>
+
+  <h2><a name="h.uz3c4sf9ikok" id="h.uz3c4sf9ikok"></a>Data Serialization and Migration</h2>
+
+  <h3><a name="h.gwwz72j6awlr" id="h.gwwz72j6awlr"></a>Overview</h3>
+  <p>App Engine comes with the tools needed to seamlessly deploy upgrades to the application without downtime or errors. However, careful planning for migration is still needed.</p>
+  <p>The App Engine Memcache feature includes language-specific libraries that each have a similar but slightly different flavor. In many cases, the Memcache libraries take care of data serialization in a transparent way. Python is used in this paper to illustrate the points about Memcache. However, Python is only one of the four languages supported by App Engine.  The Memcache API&rsquo;s for the different supported languages are similar but there are some differences. Language-specific serialization, such as <a href="http://docs.python.org/2/library/pickle.html">pickling</a> in Python, is used to serialize objects of most Python classes.  In Java, an implementation of the JCache API, which handles data values as byte arrays, is provided. So, it is the responsibility of Java application developers to code for serialization and deserialization of objects at the application level. In contrast, language independent serialization with protobuf, is used in other cases. In particular, protobuf is used for classes extending db.Model in Python. </p>
+  <p>Changing the versions of the objects stored or upgrading to a new API version may generate errors, depending on how deserialization is handled. Application code should be ready to handle errors gracefully to give users a seamless experience when new code is rolled out.</p>
+
+  <h3><a name="h.d9xvsqr5m6ay" id="h.d9xvsqr5m6ay"></a>Details/Discussion</h3>
+  <p>When rolling out new code, deserialization of the various serialized formats of old objects should be tested. App Engine was first released with Python 2.5 and later upgraded to 2.7. Errors in Python object serialization, called pickling, were a source of migration problems for applications that did not test this point. Python 2.5 objects were stored as pickled Python objects, code was upgraded to Python 2.7, and objects were retrieved from Memcache. However, the Python 2.5 objects could not be unmarshalled (&ldquo;unpickled&rdquo;) by the App Engine Python 2.7 runtime, which generated errors. Avoiding exceptions like this has been a frequent source of forum discussions.</p>
+  <p>Besides migration from one version of Python to the next, similar problems can happen with serialization in other languages as well. Also, the same thing can happen when migrating between different versions of application code. Testing is needed whenever making changes to classes where objects are serialized with an older structure.</p>
+  <p>There are four ways of avoiding problems like this: (1) make compatible changes to objects, (2) handle errors properly, (3) flush the cache before deploying new code, or (4) use namespaces to isolate data in a multitenant-like way.</p>
+  <p>If the application is using modules developed with multiple languages, use simple string keys of 250 bytes or less to avoid incompatibilities when looking up entities in Memcache by keys.</p>
+
+  <h3><a name="h.byozlhots0jm" id="h.byozlhots0jm"></a>Recommendations</h3>
+  <p>Make compatible changes to object structures, handle errors properly when reading objects from Memcache, and flush Memcache when deploying new code with major changes.</p>
+
+  <h3><a name="h.qqajkpqh73lf" id="h.qqajkpqh73lf"></a>Example</h3>
+  <p>This example demonstrates the problems that may occur when migrating code where objects are stored in Memcache. The code below defines the class Person and the function get_or_add_person to retrieve or add a person with the given name to Memcache.</p>
+
+<pre>
+<span style="color:#245dc1">class</span> Person(db.Model):
+  name = db.StringProperty(required=True)
+
+<span style="color:#245dc1">def</span> get_or_add_person(name):
+  person = memcache.get(name)
+  <span style="color:#245dc1">if</span> person <span style="color:#245dc1">is</span> None:
+    person = Person(name = name)
+    memcache.add(name, person)
+  <span style="color:#245dc1">else</span>:
+    logging.info('Found in cache: ' + name)
+  <span style="color:#245dc1">return</span> person
+</pre>
+
+<p>After running this code in production for some time, the new userid field for class Person is added. The following code shows the changes made:</p>
+
+<pre>
+<span style="color:#245dc1">class</span> Person(db.Model):
+  name = db.StringProperty(required=True)
+  userid = db.StringProperty(required=True)
+<span style="color:#245dc1">def</span> get_or_add_person(name, userid):
+  person = memcache.get(name)
+  <span style="color:#245dc1">if</span> person <span style="color:#245dc1">is</span> None:
+    person = Person(name = name, userid = userid)
+    memcache.add(name, person)
+  <span style="color:#245dc1">else</span>:
+    logging.info('Found in cache: ' + name + ', userid: ' + person.userid)
+  <span style="color:#245dc1">return</span> person
+</pre>
+
+  <p>The problem created by the upgrade is that objects with the old schema were stored in Memcache and are not compatible with the new structure of the object that has a required <span class="code">userid</span> field. When tested, the Memcache service successfully unmarshalled <span class="code">Person</span> objects with the old structure. It is surprising that the old objects can be successfully unmarshalled because the new <span class="code">userid</span> field is required. In general, do not rely on this kind of behavior when migrating code without testing. However, a problem was caused by the log statement, which generated an error by referring to the <span class="code">person.userid</span> field. After flushing Memcache from the console, no more errors were generated.</p>
+  <p>Java is somewhat different, but the same principle applies. A best practice in Java serialization is the use of a <span class="code">serialVersionUID</span> value in the serialized object. This gives application programmers a clean error when deserializing an older format and provides an opportunity to customize the deserialization.</p>
+
+  <h2><a name="h.s2hkym9v8ah7" id="h.s2hkym9v8ah7"></a>Other Best Practices</h2>
+  <p>Several other best practices are discussed in this section.</p>
+
+  <h3><a name="h.wienob6xccso" id="h.wienob6xccso"></a>Handling Memcache API Failures Gracefully</h3>
+  <p>Memcache errors must be handled properly for code to remain functionally correct. While the application can fall back on data stored in the Google Cloud Datastore when data is not found, it must make sure that values stored in Memcache are correct. Failure to update Memcache successfully can result in stale data that, if it is read later on, may result in incorrect program behavior. The following code fragment demonstrates this concept:</p>
+
+<pre>
+<span style="color:#245dc1">if</span> not memcache.set('counter', value):
+  handle_memcache_error('Memcache set failed')
+</pre>
+
+
+  <p>The <span class="code">set()</span> method returns False if an error is encountered when adding or setting data in Memcache. If the value cannot be set, the application could retry, clear the data from Memcache, flush Memcache, or raise an exception. Retrying may be the most graceful method, but it will depend on the particular case. In many cases, set and retry are not the correct semantics to use. The following is simple pseudo-code for a more robust write sequence that synchronizes Memcache and a persistent store:</p>
+
+  <ol class="code">
+    <li>memcache.delete(key, seconds) # clears cache</li>
+    <li>write-to-persistent</li>
+    <li># Do not attempt to put new value in cache, first reader will do that</li>
+  </ol>
+
+  <p>Pseudo-code for one simple read sequence is shown below.</p>
+
+  <ol class="code">
+    <li>v= memcache.get(key)</li>
+    <li>if v is None:</li>
+    <li style="padding-left:20px;">v = read-from-persistent</li>
+    <li style="padding-left:20px;">memcache.add(v)</li>
+    <li>return v</li>
+  </ol>
+
+  <p>Notice that <span class="code">memcache.set()</span> is not used in either sequence, in order to avoid the risk of stale data being left in the cache. However, this code has the risk of a race condition. If a second client reads when the first client is between the <span class="code">memcache.delete()</span> and the completion of <span class="code">write-to-persistent</span>, then the second client may get the old value from the persistent store and re-cache it. The seconds argument to <span class="code">memcache.delete()</span>, also known as "lock duration," has been be added here to reduce the risk of this race condition. In conclusion, when trying to synchronize between Memcache and Datastore, it is best to use a library like NDB, because robust handling of edge cases is required to keep data in sync.</p>
+
+  <h3><a name="h.oh5pu6mleh70" id="h.oh5pu6mleh70"></a>Use Batch Capability when Possible</h3>
+  <p>The use of batch capabilities is ideal for retrieving multiple related values. These functions avoid retrieving inconsistent values and provide faster performance. The following code fragment is an example of how batch capabilities can be used:</p>
+
+<pre>
+values = {'comment': 'I did not ... ', 'comment_by': 'Bill Holiday'}
+<span style="color:#245dc1">if</span> not memcache.set_multi(values):
+  handle_memcache_error('Unable to set Memcache values')
+tvalues = memcache.get_multi(('comment', 'comment_by'))
+</pre>
+
+  <p>The code fragment demonstrates setting multiple values with the function <span class="code">set_multi()</span> and getting multiple values with the <span class="code">get_multi()</span> function. Note that when setting multiple values, if two values are intrinsically related, then they may be best stored as a single value.</p>
+
+  <h3><a name="h.dvl6r64mnvyr" id="h.dvl6r64mnvyr"></a>Distribute Load Across the Keyspace</h3>
+  <p>The dedicated Memcache service can handle up to 10,000 operations per second per gigabyte. (See the <a href="https://developers.google.com/appengine/docs/adminconsole/memcache?hl=en">Memcache Documentation</a> for details of dedicated Memcache and its limitations.) Developers may need to be mindful of this limit for App Engine applications that handle a large number of requests. The 10k ops/s limit may be large enough to process several hundred HTTP requests per second, but some applications have a skewed distribution pattern for key usage. For example, 80 percent of Memcache access calls may be concentrated on only 20 keys. This may be a problem if the keys are concentrated on particular servers due to poor key name distribution, and can lead to errors and performance slowdowns.</p>
+  <p>To avoid performance delays, developers may spread data access across multiple keys and aggregate the data after it is read. For instance, when writing to a counter many times, spread the counter across many keys and then add up the values after the counter is read from Memcache. The Memcache viewer in the administration console now has a list of  top keys, which can be used to identify bottlenecks. A good rule of thumb is that the sum of the percentages shown for the top 10 keys should add up to less than 5% of the total traffic.</p>
+  <p>The Memcache operation rate varies by item size approximately according to the table on the <a href="https://developers.google.com/appengine/docs/adminconsole/memcache">Memcache documentation page</a>.  The maximum rate of operations per second drops off quickly for larger entry sizes. The solution to this is to shard large values into multiple items or to compress the large values.</p>
+
+  <h2><a name="h.4w4l8tnb9s7a" id="h.4w4l8tnb9s7a"></a>Additional Resources</h2>
+  <p>The following links reference additional resources that may also be useful:</p>
+  <ul>
+    <li><a href="https://developers.google.com/appengine/docs/adminconsole/memcache">Google App Engine Administration Console: Memcache</a></li>
+    <li><a href="https://developers.google.com/appengine/docs/python/memcache/">Memcache Python API</a></li>
+    <li><a href="https://developers.google.com/appengine/docs/java/memcache/">Memcache Java API</a></li>
+    <li><a href="https://developers.google.com/appengine/docs/go/memcache/">Memcache Go API</a></li>
+    <li><a href="https://developers.google.com/appengine/docs/php/memcache/">Memcache PHP API</a></li>
+    <li><a href="http://www.youtube.com/watch?feature=player_embedded&amp;v=TGl81wr8lz8">Memcache Basics Presentation Video</a></li>
+    <li><a href="https://developers.google.com/appengine/articles/scaling/memcache">Effective memcache</a></li>
+    <li><a href="https://developers.google.com/appengine/articles/scaling/overview">Best Practices for Writing Scalable Applications (series)</a></li>
+    <li><a href="http://neopythonic.blogspot.com/2011/08/compare-and-set-in-memcache.html">Compare-And-Set in Memcache</a></li>
+    <li><a href="https://developers.google.com/appengine/docs/python/python25/migrate27">Migrating to Python 2.7</a></li>
+    <li><a href="https://developers.google.com/appengine/docs/python/ndb/">Python NDB</a></li>
+    <li><a href="https://code.google.com/p/protobuf/">Protocol Buffers (Protobuf)</a></li>
+    <li><a href="https://code.google.com/p/memcached/wiki/NewStart">Memcached Wiki</a></li>
+  </ul>
+
+</div>
+<!-- /maia-main -->
+</div>
+</div>
+</div>
+
+
+ <!-- is this feedback sticky needed?
+  <div class="feedback-sticky"><a href="javascript:void(0);">Feedback</a></div>
+  <script type="text/javascript" src="//www.gstatic.com/feedback/api.js"></script>
+  <script>
+    jQuery('body').delegate('.feedback-sticky', 'click', function() {
+      _gaq.push(['_trackEvent', 'Feedback', 'User Feedback: ' + location.pathname]);
+      userfeedback.api.startFeedback({'productId': '96209'});
+    });
+  </script>
+  -->
+
+  <!-- Scripts to include both on Goro + Devsite -->
+  <script type="text/javascript">
+   window.___gcfg = {
+     lang: ''
+   };
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+  </script>
+
+  <!-- GTM implementation -->
+  
+  <!-- Start dataLayer -->
+    <script>
+      dataLayer = [{
+        'country': '',
+        'region': '',
+        'language': 'en'
+      }];
+    </script>
+  <!-- End dataLayer -->
+  
+  <!-- Start Google Tag Manager -->
+  <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5CVQBG"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-5CVQBG');</script>
+  <!-- End Google Tag Manager -->    
+
+
+
+<!-- Global JS scripts to load; path will depend on whether we're on devsite or Goro -->
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular-sanitize.js"></script>
+
+  <script src="/js/base.min.js"></script>
+
+
+
+
+<!-- Secondary right-side scroll-nav -->
+<script>
+  new lfl.ui.ScrollNav({});
+  new lfl.cloud.GlobalProductMenu();
+</script>
+
+<script>new cloud.SocialFeeds(document.getElementById('feeds'));</script>
+
+
+
+  <div id="maia-signature"></div>
+  <div id="maia-footer">
+
+    <!-- maia-footer-local -->
+    <div id="maia-footer-local">
+      <div class="maia-aux">
+        
+          <div class="ent-footer-top">
+  <div class="g-plus-wrapper">
+    <div class="g-plusone" data-href="http://cloud.google.com"></div>
+  </div>
+  <div class="g-plus-link"><a href="https://plus.google.com/+googlecloudplatform" rel="publisher">Google+</a></div>
+  <div class="search">
+    <form onsumbit="return false;" class="maia-search">
+    <input name="q" placeholder="Search this site" type="text">
+    <input name="hl" type="hidden" value="">
+    <input name="q" type="hidden" value="site:cloud.google.com/">
+    <button class="maia-button" event="autotrack-data-g" data-g-event="Footer" data-g-action="Site Search" data-g-label="Submit">
+      <span class="maia-search-icon">Search</span>
+    </button>
+    </form>
+  </div>
+
+</div>
+
+<div class="ent-footer-links">
+  <div class="ent-footer-unit">
+    <h4><a href="/why-google/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Why Google" data-g-label="Why Google">Why Google</a></h4>
+    <ul>
+      <li><a href="/why-google/#infrastructure" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Why Google" data-g-label="Infrastructure">Infrastructure</a></li>
+      <li><a href="/why-google/#product" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Why Google" data-g-label="Product">Product</a></li>
+      <li><a href="/why-google/#services" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Why Google" data-g-label="Services">Services</a></li>
+      <li><a href="/why-google/#scalability" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Why Google" data-g-label="Scalability">Scalability</a></li>
+      <li><a href="/why-google/#performance" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Why Google" data-g-label="Performance">Performance</a></li>
+      <li><a href="/why-google/#support" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Why Google" data-g-label="Support">Support</a></li>      
+    </ul>
+  </div>
+
+  <div class="ent-footer-unit">
+    <h4><a href="/products/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="Products">Products</a></h4>
+    <ul>
+      <li><a href="/products/app-engine/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="App Engine">App Engine</a></li>
+      <li><a href="/products/compute-engine/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="Compute Engine">Compute Engine</a></li>
+      <li><a href="/products/cloud-storage/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="Cloud Storage">Cloud Storage</a></li>
+      <li><a href="/products/cloud-sql/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="Cloud SQL">Cloud SQL</a></li>
+      <li><a href="/products/cloud-datastore/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="Cloud Datastore">Cloud Datastore</a></li>
+      <li><a href="/products/bigquery/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="BigQuery">BigQuery</a></li>
+      <li><a href="/products/prediction-api/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="Prediction API">Prediction API</a></li>
+      <li><a href="/products/translate-api/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="Translate API">Translate API</a></li>
+      <li><a href="/products/cloud-endpoints/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="Cloud Endpoints">Cloud Endpoints</a></li>
+      <li><a href="/products/calculator/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="Pricing Calculator">Pricing Calculator</a></li>
+      <li><a href="/pricing/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="Pricing">Pricing</a></li>
+    </ul>
+  </div>
+
+  <div class="ent-footer-unit">
+    <h4><a href="/solutions" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Solutions" data-g-label="Solutions">Solutions</a></h4>
+    <ul>
+      <li><a href="/solutions/mobile/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Solutions" data-g-label="Mobile">Mobile</a></li>
+      <li><a href="/solutions/gaming/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Solutions" data-g-label="Gaming">Gaming</a></li>
+      <li><a href="/solutions/hadoop/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Solutions" data-g-label="Hadoop">Hadoop</a></li>
+      <li><a href="/solutions/mongodb/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Solutions" data-g-label="mongodb">mongodb</a></li>
+
+    </ul>
+  </div>
+
+  <div class="ent-footer-unit">
+    <h4><a href="/customers/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Customers" data-g-label="Customers">Customers</a></h4>
+  </div>
+
+  <div class="ent-footer-unit">
+    <h4><a href="/developers/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Developers" data-g-label="Developers">Developers</a></h4>
+    <ul>
+      <li><a href="/developers#documentation" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Developers" data-g-label="Documentation">Documentation</a></li>
+      <li><a href="/developers#resources" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Developers" data-g-label="Resources">Resources</a></li>
+    </ul>
+  </div>
+
+  <div class="ent-footer-unit">
+    <h4><a href="/support/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Support" data-g-label="Support">Support</a></h4>
+    <ul>
+      <li><a href="https://support.google.com/" target="_blank" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Support" data-g-label="Google Cloud Platform Support Help Center">Platform Support Help Center</a></li>
+      <li><a href="https://support.google.com/cloudbilling/" target="_blank" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Support" data-g-label="Google Cloud Billing Help Center">Billing Help Center</a></li>
+      <li><a href="https://enterprise.google.com/supportcenter" target="_blank" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Support" data-g-label="Google Enterprise Support Center">Google Enterprise Support Center</a></li>      
+    </ul>
+    
+  </div>
+
+  
+  <div class="ent-footer-unit">
+    <h4><a href="/partners/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Partners" data-g-label="Partners">Partners</a></h4>
+    <ul>
+      <li><a href="/partners/technology-partners/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Partners" data-g-label="Find A Technology Partner">Technology Partners</a></li>
+      <li><a href="/partners/service-partners/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Partners" data-g-label="Find A Service Partner">Find a Service Partner</a></li>
+    </ul>
+  </div>
+ 
+</div>
+<br class="clear" />
+
+        
+      </div>
+    </div>
+    <!-- /maia-footer-local -->
+
+    <!-- maia-footer-global -->
+    <div id="maia-footer-global">
+      <div class="maia-aux">
+        <ul>
+          <li><a href="http://www.google.com/">Google</a></li>
+          <li><a href="https://developers.google.com/readme/terms">Terms of Service</a></li>
+          <li><a href="http://www.google.com/intlprivacy/">Privacy Policy</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <!-- /maia-footer-global -->
+  <script type="text/javascript" async="" defer="" src="//www.gstatic.com/feedback/api.js"></script>
+  <script id="jqueryui" src="//ajax.googleapis.com/ajax/libs/jqueryui/1.8.10/jquery-ui.min.js"></script>
+
+  <!--script src="/_static/js/script_foot.js"></script-->
+  
+  </body>
+</html>

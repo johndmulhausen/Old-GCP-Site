@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html devsite="">
+<head>
+<title>Big Data Articles &amp; Tutorials — Google Cloud Platform</title>
+<meta name="description" content="Read about technical big data articles and solutions with Google Cloud Platform. Big data articles unpack BigQuery data analytics, Hadoop clusters and more.">
+<meta name="hide_page_heading" value="true">
+<meta name="full_width" value="true">
+<meta name="top_category" value="developers">
+<meta name="subcategory" value="articles">
+<meta name="viewport" content="initial-scale=1, minimum-scale=1, width=device-width">
+<link rel="apple-touch-icon" href="/_static/images/apple-touch-icon.png">
+<link href="//fonts.googleapis.com/css?family=Open+Sans:400italic,300,400,600,700" rel="stylesheet">
+<link href="/css/default.css" rel="stylesheet"><!--[if lt IE 9]>
+    <link rel="stylesheet" media="screen" href='/c/cp-ie.css'>
+    <![endif]-->
+<script src="/js/floodlight.js">
+</script>
+</head>
+<body>
+<div id="maia-main" class="cp-article">
+<div class="maia-cols">
+<div class="maia-col-9">
+<div>
+<div style="float:right">
+<div class="g-plusone"></div>
+</div>
+<h1 class="title">Administración de agrupaciones de Hadoop en Google Compute Engine</h1>
+</div>
+<div class="cp-article-tutorial">
+<h2>Presentación</h2>
+<p>Google Compute Engine es una plataforma de <a href="http://www.mapr.com/press-release/mapr-and-google-compute-engine-set-new-world-record-for-hadoop-terasort">fiabilidad probada</a> para ejecutar Hadoop. Proporciona máquinas virtuales de rendimiento alto y fiable acompañadas de una red con ancho de banda alto y con latencia baja que las enlaza entre sí y con el resto de servicios de Google Cloud Platform. Este conjunto sirve como base de gran calidad para las arquitecturas de procesamiento de datos basadas en la nube. La capacidad de iniciar rápidamente numerosas máquinas virtuales a petición y la disponibilidad de obtener precios por minuto hacen que la plataforma Compute Engine sea muy adecuada y rentable para poner en marcha y para dejar fuera las agrupaciones adecuadas. Además, las funciones avanzadas de enrutamiento y de encriptación de datos que ofrece Compute Engine, junto con el rendimiento de la red global de Google, permiten crear soluciones híbridas atractivas y seguras.</p>
+<p>En este artículo se presentan varias técnicas para aquellas personas que quieran administrar sus propias instalaciones de Hadoop en Google Compute Engine. También se describen determinadas situaciones (la migración de una zona a otra, las recuperaciones tras fallos y la alta disponibilidad) que surgen cuando se trabaja con agrupaciones con un largo recorrido a sus espaldas y que se utilizan en varias zonas. Esta lista no pretende ser exhaustiva ni se quiere señalar como la única opción, ya que existen otras soluciones que quizá sean más adecuadas en determinadas situaciones. Sin embargo, en este artículo se intenta mostrar cómo algunas de las funciones que hacen que Compute Engine sea una plataforma de gran fiabilidad sobre la que se puede ejecutar Hadoop, cuando se combinan con la herramienta de línea de comandos <a href="https://developers.google.com/compute/docs/gcutil/"><span class="code">gcutil</span></a>, pueden servir de base para soluciones de administración de agrupaciones de Hadoop.</p>
+<h2>Situaciones</h2>
+<p>Todas las situaciones que se presentan en esta sección se basan en la premisa de que, en caso de que se produzca un evento de entorno adverso (por ejemplo, si se produce una interrupción imprevista en una zona), se debe hacer todo lo posible para conservar la agrupación en cuestión. Esta es una situación poco probable pero posible en el caso de las agrupaciones de largo recorrido utilizadas como complemento de pipelines de tareas y del procesamiento de transmisiones. La administración necesaria para las agrupaciones a petición<sup><a href="#ftnt1" name="ftnt_ref1" id="ftnt_ref1">[1]</a></sup> es mínima o inexistente y, por lo general, no se trata en este documento. Además, en las situaciones que se presentan se da por supuesto que los datos que la agrupación consume y genera se tienen que conservar de manera duradera en un HDFS<sup><a href="#ftnt2" name="ftnt_ref2" id="ftnt_ref2">[2]</a></sup> (Sistema de archivos distribuido de Hadoop) autoadministrado.</p>
+<p>Los administradores pueden planificar en consecuencia los eventos de mantenimiento y administrar la disponibilidad de la agrupación. Sin embargo, si se produce una situación imprevista, es probable que las tareas que se estén procesando se vean afectadas. Aunque los resultados específicos varían según la <a href="http://wiki.apache.org/hadoop/Distributions%20and%20Commercial%20Support">distribución</a> de Hadoop, en la mayoría de casos estas tareas se reinician en vez de seguir donde se quedaron y, además, existe la posibilidad de que se tengan que volver a enviar.</p>
+<h3>Migración entre zonas</h3>
+<p>En algún momento, puede ser recomendable o <a href="https://developers.google.com/compute/docs/faq#maintenance">necesario</a> trasladar o clonar una agrupación de una zona a otra. En esta sección se presentan dos situaciones diferentes para llevar a cabo esta tarea. El objetivo de la primera situación es minimizar el tiempo en el que la agrupación no está disponible para aceptar y para ejecutar tareas de MapReduce, a expensas de la complejidad operativa. En la segunda situación se sacrifica más disponibilidad en favor de una administración mucho más sencilla.</p>
+<h4>Situación 1: minimización del tiempo de no disponibilidad</h4>
+<p>A menudo, encontramos una agrupación en uso constante (sobre todo si solo hay una), por lo que cualquier período en el que los usuarios no puedan enviar su trabajo puede salir caro. En este primer método se intenta reducir todo lo posible esta duración en una implementación tradicional.<sup><a href="#ftnt3" name="ftnt_ref3" id="ftnt_ref3">[3]</a></sup> En primer lugar, se añaden nuevas instancias de los nodos <a href="http://wiki.apache.org/hadoop/DataNode">DataNodes</a> y <a href="http://wiki.apache.org/hadoop/TaskTracker">TaskTrackers</a> (o <a href="http://hadoop.apache.org/docs/current/hadoop-yarn/hadoop-yarn-site/YARN.html">NodeManagers de YARN</a>) a la agrupación en la zona de destino y, a continuación, también se cambian los nodos principales (por ejemplo, los nodos <a href="http://wiki.apache.org/hadoop/NameNode">NameNode</a>, <a href="http://wiki.apache.org/hadoop/JobTracker">JobTracker</a> o <a href="http://hadoop.apache.org/docs/current/hadoop-yarn/hadoop-yarn-site/YARN.html">ResourceManager de YARN</a>). Este método limita el tiempo de no disponibilidad de la agrupación a aproximadamente el intervalo definido entre el cierre de los servicios principales en la zona de origen y su puesta en marcha en la zona de destino.</p>
+<h5>Consideraciones</h5>
+<ol>
+<li>DataNodes utiliza <a href="https://developers.google.com/compute/docs/disks">discos persistentes</a> para HDFS. Los discos persistentes ofrecen una durabilidad superior a la vida útil de una instancia. Esto proporciona a los administradores la posibilidad de reducir el factor de replicación de HDFS a la vez que se aseguran de que no se perderán datos en caso de que una zona deje de estar disponible.</li>
+<li>En esta situación se utiliza el <a href="http://hadoop.apache.org/docs/stable/cluster_setup.html#Hadoop+Rack+Awareness">conocimiento de bastidor de HDFS</a> para permitir que la agrupación siga en funcionamiento mientras los grupos de DataNodes se desmantelan. El hecho de que el NameNode de HDFS <a href="https://issues.apache.org/jira/secure/attachment/12345251/Rack_aware_HDFS_proposal.pdf">organice</a> réplicas en bloque en diferentes bastidores se puede utilizar para asegurarse de que los datos se copien en las diferentes zonas durante este proceso. Un bastidor se simula como una colección de DataNodes en funcionamiento en la misma zona y se configuran exactamente dos por zona.</li>
+</ol>
+<figure><img src="/images/articles/managing-hadoop-clusters-on-gce/minimizing-unavailability.png" alt="">
+<figcaption>Figura 1. Reducción al mínimo del tiempo de no disponibilidad durante la migración de zona</figcaption>
+</figure>
+<h5>Método</h5>
+<ol>
+<li><span class="bld">Commission new DataNodes and TaskTrackers.</span> New instances for these nodes can be created programmatically using the <span class="code">gcutil</span> utility, REST API or Google client libraries, or manually via the <a href="http://cloud.google.com/console">Google Cloud Console</a>. The nodes must then be added into the Hadoop cluster in one of the following ways:
+<ol type="a">
+<li>Permite que estos nodos se unan automáticamente a la agrupación. Para ello, asegúrate de que sus nombres de host existan en los <span class="code">archivos esclavos, dfs.hosts/mapred.hosts</span> o <span class="code">dfs.include/mapred.include</span><sup><a href="#ftnt5" name="ftnt_ref5" id="ftnt_ref5">[5]</a></sup>, en el momento en el que la agrupación aparezca por primera vez. Este método implica que estos nombres se tienen que conocer antes de usarlos y es posible porque se puede utilizar el nombre de host<sup><a href="#ftnt6" name="ftnt_ref6" id="ftnt_ref6">[6]</a></sup> proporcionado por el usuario como dirección para las instancias de Google Compute Engine.</li>
+<li>Cuando ya estén en marcha, añade manualmente los nuevos nombres de instancia a estos archivos y ejecuta <span style="white-space:nowrap;" class="code">hadoop dfsadmin -refreshNodes</span> para notificar al nodo NameNode que debe encargar los DataNodes y <span style="white-space:nowrap;" class="code">hadoop mradmin -refreshNodes</span> para notificar a JobTracker sobre el nodo TaskTrackers.</li>
+</ol>
+Los nuevos nodos DataNodes deben identificarse a sí mismos con un par de identificadores de bastidor nuevos que no sean iguales que los de la zona de origen. Al organizar de este modo DataNodes como bastidores de HDFS, se puede establecer que, cuando un bastidor se desmantele, solo se elimine de la zona una copia a lo sumo de cualquier bloque de datos. Además, la replicación de HDFS se asegurará de que exista una copia de cada bloque de datos al menos en dos bastidores diferentes. Por lo tanto, este proceso garantiza que se realice al menos una copia de cada bloque de datos en el bastidor desmantelado y que esta copia se realice en un bastidor de la zona de destino.</li>
+<li><span class="bld">Migra NameNode y JobTracker.</span> Hay varias maneras de llevar a cabo este paso. El método automático simplifica el proceso en gran medida, mientras que el método manual puede ser necesario si se realizan configuraciones personalizadas.
+<p class="ital">Método automático</p>
+<ol type="a">
+<li>Asegúrate de que la agrupación esté en reposo y desactiva los servicios principales.</li>
+<li>Utiliza el comando <a class="code" href="https://developers.google.com/compute/docs/gcutil/tips#moving">gcutil moveinstances</a> para migrar los nodos a la zona de destino. Este comando copia las configuraciones de las instancias, hace capturas de los discos, elimina las instancias existentes y, después, vuelve a crear las instancias en la zona de destino.</li>
+<li>Una vez las nuevas instancias están dispuestas y los servicios en funcionamiento, la agrupación está disponible para aceptar tareas.</li>
+</ol>
+<p class="ital">Método manual</p>
+<ol type="a">
+<li>Asegúrate de que la agrupación esté en reposo y desactiva los servicios principales.</li>
+<li>Crea capturas de los discos raíz y de datos para su uso posterior.</li>
+<li>Desactiva los nodos en la zona de origen.</li>
+<li>Crea nuevos discos raíz y de datos a partir de las capturas creadas antes.</li>
+<li>Crea instancias de los nodos en la zona de destino (con los nuevos discos raíz y de datos creados en el paso anterior).</li>
+<li>Pon en marcha los servicios principales en los nodos nuevos.</li>
+<li>Una vez las nuevas instancias están dispuestas y los servicios están en funcionamiento, la agrupación está disponible para aceptar tareas.</li>
+</ol>
+</li>
+<li><span class="bld">Desmantela un bastidor de DataNodes y TaskTrackers.</span> Los pasos siguientes indican cómo desmantelar los nodos asignados a uno de los bastidores de la zona de origen:
+<ol type="a">
+<li>Elimina los nombres de host de los archivos enumerados en el anterior paso 1 y añádelos a los archivos <span class="code">dfs.hosts.exclude</span> y <span class="code">mapred.hosts.exclude</span>.</li>
+<li>Ejecuta <span class="code">hadoop dfsadmin -refreshNodes</span> y <span class="code">hadoop mradmin -refreshNodes</span>. Esta secuencia inicia la replicación de bloques de datos en la zona de destino. El proceso de desmantelamiento de DataNode no es instantáneo<sup><a href="#ftnt7" name="ftnt_ref7" id="ftnt_ref7">[7]</a></sup> y se tiene que supervisar el estado del proceso en cada nodo (por ejemplo, a través de la interfaz de usuario web de NameNode).</li>
+<li>Una vez que un nodo informe de un estado de desmantelamiento, se puede desactivar de manera segura.<br></li>
+</ol>
+</li>
+<li><span class="bld">Desmantela el resto de bastidores de DataNodes y de TaskTrackers.</span> Una vez que todos los nodos del <span class="code">bastidor 1</span> se hayan desmantelado, habrá por lo menos una copia de cada bloque en un DataNode de la zona de destino. Llegado este punto, se pueden desmantelar todas las instancias del <span class="code">bastidor 2</span> de la zona de origen, igual que en el paso anterior.</li>
+</ol>
+<h4>Situación 2: simplificación de la administración</h4>
+<p>En esta situación se describe cómo se puede realizar una migración con un solo comando, facilitando así las acciones de migración a expensas de un posible tiempo de inactividad de la agrupación más prolongado. Este proceso es casi idéntico a la migración automática de instancias de NameNode y de JobTracker, tal como se ha descrito en la situación anterior. El comando <span class="code">gcutil moveinstances</span> migra toda la agrupación de una zona a otra.</p>
+<figure><img src="/images/articles/managing-hadoop-clusters-on-gce/simplifying-management.png" alt="">
+<figcaption>Figura 2. Simplificación de la administración para la migración de zona</figcaption>
+</figure>
+<h5>Método</h5>
+<ol>
+<li><span class="bld">Migra la agrupación.</span> Utiliza el comando <span class="code">gcutil moveinstances</span> para clonar todos los nodos de la agrupación y sus discos en la zona de destino. Por ejemplo, imaginemos una pequeña agrupación con un único nodo principal (<span class="code">hadoop-hm</span>) y diez nodos de procesos de trabajo (<span class="code">hadoop-hw-000, …, hadoop-hw-009</span>). La siguiente llamada única se desplazará desde la zona <span class="code">us-central2-a</span> y reiniciará la agrupación en <span class="code">us-central1-a</span>:
+<p class="code">gcutil --project=&lt;project&gt; moveinstances hadoop-hm hadoop-hw-00\\d+ <span style="white-space:nowrap;">--source_zone=us-central2-a</span> --destination_zone=us-central1-a</p>
+</li>
+</ol>
+<h3>Recuperaciones tras fallos</h3>
+<p>Los fallos catastróficos de zonas enteras no se suelen producir, pero siempre es buena idea prepararse para lo inesperado.<sup><a href="#ftnt8" name="ftnt_ref8" id="ftnt_ref8">[8]</a></sup></p>
+<p>Una manera de abordar la recuperación tras fallos es realizar capturas periódicas de los discos. Las capturas se replican geográficamente y se encuentran fuera de las zonas de Google Compute Engine. Si es necesario, se pueden utilizar para crear nuevos discos de instancias de sustitución en una zona de recuperación.</p>
+<h5>Consideraciones</h5>
+<ol>
+<li>Si la zona en la que se encuentran los discos se ve afectada, los discos no se pierden. Sin embargo, no estarán disponibles hasta que la zona se restablezca. La creación de capturas es una técnica que puede acelerar la reconstitución de la agrupación.</li>
+</ol>
+<figure><img src="/images/articles/managing-hadoop-clusters-on-gce/persistent-disks.png" alt="">
+<figcaption>Figura 3. Discos persistentes para la recuperación tras fallos</figcaption>
+</figure>
+<h5>Método</h5>
+<ol>
+<li><span class="bld">Crea capturas a menudo.</span> Establece un mecanismo para crear capturas periódicas<sup><a href="#ftnt9" name="ftnt_ref9" id="ftnt_ref9">[9]</a></sup> para discos persistentes. Se recomienda encarecidamente que la agrupación esté en reposo cuando se creen capturas a fin de reducir la posibilidad de que los datos sean incoherentes.</li>
+<li><span class="bld">Vuelve a crear los discos a partir de las capturas.</span> En caso de que la zona que aloja la agrupación deje de estar disponible, se pueden crear discos persistentes nuevos a partir de las capturas.</li>
+<li><span class="bld">Obtén nodos sustitutos.</span> Los nuevos discos persistentes permiten obtener nuevas instancias de todos los nodos de la agrupación en una zona nueva.</li>
+<li><span class="bld">(Opcional) Vuelve a llenar de datos el HDFS.</span> Si no se utilizan discos persistentes (o si no se han realizado capturas) en DataNodes, el nuevo HDFS se tiene que volver a llenar de datos.</li>
+</ol>
+<a href="#" name="id.db8xgq3x77ts" id="id.db8xgq3x77ts"></a>
+<h4>Agrupación de varias zonas</h4>
+<p>Otra posibilidad<sup><a href="#ftnt10" name="ftnt_ref10" id="ftnt_ref10">[10]</a></sup> es implementar una agrupación que se extienda a varias zonas. Para ser más específicos, en una segunda zona se encarga un conjunto adicional de DataNodes y TaskTrackers y, si es necesario, se colocan nodos NameNode o JobTracker de reserva.</p>
+<h5>Consideraciones</h5>
+<ol>
+<li>Este patrón requiere que se implemente el doble de DataNodes y TaskTrackers de lo normal y requiere una comunicación considerable entre zonas. Aunque este patrón supone el doble de capacidad de procesamiento, los gastos operativos (almacenamiento de instancias y red) aumentan y el rendimiento general podría empeorar, sobre todo si se accede a los datos en varias zonas.</li>
+<li>Algunas distribuciones proporcionan funciones de alta disponibilidad para NameNode y para JobTracker. Consulta la sección sobre alta disponibilidad que encontrarás más adelante en este artículo para obtener más información sobre su implementación.</li>
+<li>Se pueden utilizar otras técnicas, por ejemplo, rsync, NFS u otros sistemas de archivos distribuidos, para sincronizar directorios de NameNode.<sup><a href="#ftnt11" name="ftnt_ref11" id="ftnt_ref11">[11]</a></sup></li>
+</ol>
+<figure><img src="/images/articles/managing-hadoop-clusters-on-gce/multi-zone-cluster.png" alt="">
+<figcaption>Figura 4. Una agrupación de varias zonas para la recuperación tras fallos</figcaption>
+</figure>
+<h5>Método</h5>
+<ol>
+<li><span class="bld">Distribuye la agrupación.</span> DataNodes y TaskTrackers se reparten por igual en las dos zonas y se encargan completamente. Los nodos DataNodes de dentro de una zona se tienen que identificar con el mismo bastidor y cada zona tiene que utilizar un identificador de bastidor diferente, de modo que se garantice que haya al menos una copia de cada bloque de datos en la segunda zona.</li>
+<li><span class="bld">Recupera NameNode tras los fallos.</span> El nodo NameNode se puede restablecer en la segunda zona de manera automática (en caso de distribuciones que ofrezcan estas funciones) o de manera manual, mediante la creación de una instancia sustituta (si aún no hay una en funcionamiento) y el inicio del servicio de HDFS.</li>
+<li><span class="bld">Recupera JobTracker tras los fallos.</span> El nodo JobTracker se puede restablecer en la segunda zona de manera automática (en caso de distribuciones que ofrezcan estas funciones) o de manera manual, mediante la creación de una instancia sustituta y el inicio del servicio. Ten en cuenta que, en el caso manual, el nodo JobTracker se tiene que sustituir por una instancia nueva. Si se cambian los nombres de host de la instancia, la configuración de la agrupación se tiene que actualizar y los nodos TaskTrackers se tienen que reiniciar. Por lo tanto, si no se exige otra solución, al crear la nueva instancia solo tienes que volver a utilizar el mismo nombre de host.</li>
+</ol>
+<h3>Alta disponibilidad</h3>
+<p>Tradicionalmente, la alta disponibilidad de una agrupación de Hadoop se entiende como la capacidad de recuperarse de la eliminación del nodo NameNode de HDFS activo (por ejemplo, debido a una fallo imprevisto) a través de la activación automática de un nodo de reserva. Algunos proveedores ofrecen estas funciones como una ventaja adicional de la versión 1.x de su distribución de Hadoop. La versión 2.x de Hadoop incorpora varios mecanismos como, por ejemplo, el <a href="http://hadoop.apache.org/docs/current/hadoop-yarn/hadoop-yarn-site/HDFSHighAvailabilityWithNFS.html">almacenamiento NFS compartido</a> y la <a href="http://hadoop.apache.org/docs/current/hadoop-yarn/hadoop-yarn-site/HDFSHighAvailabilityWithQJM.html">generación de diarios basada en quórum</a> para abordar esta situación.<sup><a href="#ftnt12" name="ftnt_ref12" id="ftnt_ref12">[12]</a></sup></p>
+<p>Tanto el nodo JobTracker de la versión 1.x de Hadoop como ResourceManager de YARN en la versión 2.x de Hadoop también se deben considerar puntos únicos de fallo. Si el servicio falla, MapReduce no estará disponible hasta que se reinicie. Aunque los resultados específicos varían según la distribución, en la mayoría de casos las tareas que siguen en funcionamiento se reiniciarán en vez de reanudarse. Sin embargo, si falla el propio nodo, se tiene que sustituir manualmente o se tiene que utilizar una distribución que sea compatible con la recuperación tras fallos con nodos de reserva.<sup><a href="#ftnt13" name="ftnt_ref13" id="ftnt_ref13">[13]</a></sup></p>
+<p>Aunque la implementación de una instalación de Hadoop de alta disponibilidad en Google Compute Engine es sencilla, algunas funciones del entorno requieren especial atención.</p>
+<h4>DNS de red de Google Compute Engine</h4>
+<p>Una de las ventajas de Google Compute Engine es la capacidad de referirse a una instancia en la red de cualquier zona y de cualquier región por su nombre de host proporcionado por el usuario. Además, estos nombres se pueden reutilizar al reciclar las instancias (es decir, al rechazar una instancia y poner en marcha otra con el mismo nombre). Esta posibilidad es muy práctica para las implementaciones que quieren depender del uso de direcciones basadas en nombres. También vale la pena destacar que no hay garantías en la asignación de direcciones IP internas. La capacidad de reutilizar de manera dinámica los nombres de host de instancias se debe a que las entradas DNS se borran casi de inmediato después de que una instancia se desactive.</p>
+<p>Actualmente, la versión 2.0 de Hadoop HDFS es <a href="https://issues.apache.org/jira/browse/HDFS-4957">susceptible</a> a fallos debido a este comportamiento cuando se configura para utilizar Quorum Journal Manager (QJM) para la alta disponibilidad. En concreto, si se desactiva la instancia activa del nodo NameNode, se producirá un error en el proceso automático de recuperación tras fallos porque no será capaz de resolver el nombre de host de ese nodo. Una solución temporal consiste en añadir los nombres de host y las direcciones IP de NameNode a los archivos <span class="code">/etc/hosts</span> en cada instancia, lo cual permite que la recuperación tras fallos automática surta efecto, ya que QJM parece gestionar bien los tiempos de espera de conexión. Ten en cuenta que esta solución temporal crea ciertos problemas de mantenimiento, debido a que los archivos se tienen que mantener al día cada vez que se pone en marcha un nodo NameNode nuevo.</p>
+<h4>ZooKeeper</h4>
+<p><a href="http://zookeeper.apache.org/">Apache ZooKeeper</a> se utiliza en Hadoop 2.0 para proporcionar funciones de recuperación tras fallos automática para la alta disponibilidad de HDFS mediante NFS y Quorum Journal Manager. Vale la pena señalar que se tienen que tomar consideraciones especiales con respecto a DNS a la hora de implementar ZooKeeper para Hadoop en Google Compute Engine.</p>
+<p>Actualmente, ZooKeeper resuelve los nombres DNS <a href="https://issues.apache.org/jira/browse/ZOOKEEPER-338">una vez</a> al inicio. Esto evita que se sustituya una instancia miembro sin tener que reiniciar el resto de miembros del conjunto. Por lo tanto, teniendo en cuenta la descripción anterior del comportamiento del DNS de Google Compute Engine, vale la pena señalar que cada vez que se reinicia o se sustituye un nodo que ejecuta ZooKeeper, se tiene que reiniciar el resto de servicios de ZooKeeper. En caso contrario, el conjunto existente tendrá un miembro menos y se ejecutará la nueva instancia, lo que equivaldría a una instancia de ZooKeeper huérfana.</p>
+<h4>Extensión a varias zonas</h4>
+<p>La alta disponibilidad también se puede considerar en términos de capacidad de resistencia de la agrupación ante fallos en la zona. Esto se podría aplicar en situaciones en las que la interrupción de tareas o de pipelines de largo recorrido pueda ser perjudicial o pueda provocar cuantiosos costes. Pongamos por caso una situación en la que la zona A esté programada para tareas de mantenimiento antes que la <span class="code">zona B</span>. Teniendo en cuenta esta información, es posible crear una agrupación que abarque ambas zonas de modo que siga funcionando en caso de que una de las zonas se encuentre inactiva.</p>
+<figure><img src="/images/articles/managing-hadoop-clusters-on-gce/straddling-multiple-zones.png" alt="">
+<figcaption>Figura 5. Extensión a varias zonas para alta disponibilidad</figcaption>
+</figure>
+<ol>
+<li><span class="bld">Distribuye la agrupación.</span> Como se ha descrito anteriormente, los nodos DataNodes y TaskTrackers se dividen por igual entre ambas zonas y se encargan como parte de la agrupación de HDFS; se utilizan varios bastidores HDFS para garantizar que los datos se repliquen por completo.</li>
+<li><span class="bld">Distribuye el conjunto de ZooKeeper.</span> La mayoría de nodos de ZooKeeper se tiene que implementar en la <span class="code">zona B</span> junto con el nodo NameNode <span class="ital">de reserva</span> y con el nodo JobTracker <span class="ital">activo</span>.</li>
+<li><span class="bld">Administra el nodo NameNode.</span> Si la <span class="code">zona A</span> deja de estar disponible, el conjunto de ZooKeeper sigue manteniendo el quórum y puede posibilitar automáticamente la recuperación tras fallos y el ascenso del nodo NameNode en espera a activo. Si, por el contrario, la <span class="code">zona B</span> deja de estar activa, el nodo NameNode activo seguirá funcionando. Sin embargo, la agrupación no será capaz de resistir ante un fallo en el nodo activo, ya que el conjunto no tiene quórum. Se tienen que añadir nodos de ZooKeeper de sustitución y se tiene que reiniciar el conjunto.<sup><a href="#ftnt14" name="ftnt_ref14" id="ftnt_ref14">[14]</a></sup></li>
+<li><span class="bld">Administra el nodo JobTracker.</span> El nodo JobTracker activo se implementa en la <span class="code">zona B</span>, de modo que, si la <span class="code">zona A</span> deja de estar disponible (como era de esperar), todas las tareas activas puedan seguir en funcionamiento hasta su finalización. Sin embargo, si la distribución depende de que ZooKeeper haga la recuperación de JobTracker tras fallos, o si estas funciones no son compatibles con la distribución, se tiene que obtener un sustituto y es probable que todas las tareas en funcionamiento se tengan que volver a enviar. Esta implementación se debería poder aumentar con cualquiera de las opciones señaladas en la situación de recuperación tras fallos de la <a href="#id.db8xgq3x77ts">agrupación de varias zonas</a>.</li>
+</ol>
+<h2>Conclusión</h2>
+<p>Google Cloud Platform no solo ofrece una plataforma de alto rendimiento como base para ejecutar Hadoop, sino que también proporciona funciones y herramientas que pueden ayudar en las tareas de mantenimiento de agrupaciones en varias zonas para mantener en funcionamiento las tareas esenciales para el negocio en situaciones de migración de zonas, de recuperación tras fallos y de alta disponibilidad. Los discos persistentes, Google Cloud Storage y la infraestructura de red permiten la migración eficiente de datos e instancias. Además, <span class="code">gcutil</span> proporciona un completo conjunto de comandos para ayudar a llevar a cabo las tareas de administración de agrupaciones.</p>
+<h2>Recursos adicionales</h2>
+<ul>
+<li>Consulta <a href="/resources/articles/apache-hadoop-hive-and-pig-on-google-compute-engine">Apache Hadoop, Hive y Pig en Google Compute Engine</a>, una solución de Google Cloud Platform, para obtener más información sobre cómo sacar provecho de las opciones de Google Compute Engine, con ayuda de Google Cloud Storage, para ejecutar una agrupación de Hadoop autoadministrada con Apache Hive y Apache Pig como parte de una solución de procesamiento de grandes volúmenes de datos (Big Data).</li>
+<li><a href="https://github.com/GoogleCloudPlatform/solutions-google-compute-engine-cluster-for-hadoop">google-compute-motor-cluster-for-hadoop</a>, una aplicación de ejemplo para ayudar a configurar agrupaciones de procesamiento de Hadoop y a ejecutar tareas de MapReduce. Ten en cuenta que esta aplicación no realiza ninguna de las tareas de administración de agrupaciones señaladas en este artículo.</li>
+</ul>
+<br>
+<hr>
+<p><a href="#ftnt_ref1" name="ftnt1" id="ftnt1">[1]</a> La rápida creación de máquinas virtuales y el modelo de facturación por fracciones de hora de Google Compute Engine permiten a los clientes realizar el procesamiento de datos mediante agrupaciones específicas, sin la sobrecarga que supone administrar los recursos con las restricciones impuestas por los precios fijos.</p>
+<p><a href="#ftnt_ref2" name="ftnt2" id="ftnt2">[2]</a> Al quedar liberado de esta restricción, se puede sacar provecho del método preferido de aprovechamiento de Google Cloud Storage como repositorio duradero.</p>
+<p><a href="#ftnt_ref3" name="ftnt3" id="ftnt3">[3]</a> Una implementación que no es compatible con características o con funciones de alta disponibilidad, como Apache Hadoop 1.1.2.</p>
+<p><a href="#ftnt_ref4" name="ftnt4" id="ftnt4">[4]</a> Desde julio de 2013, se pueden establecer hasta 10 TB de almacenamiento en disco persistente en los tipos de instancia estándar.</p>
+<p><a href="#ftnt_ref5" name="ftnt5" id="ftnt5">[5]</a> Aunque no es raro ignorar estos archivos en la mayoría de implementaciones, son necesarios para posibilitar una buena puesta en marcha y un buen desmantelamiento de estos nodos en la agrupación. Consulta la <a href="http://hadoop.apache.org/docs/stable/cluster_setup.html">instalación de agrupaciones</a> y las <a href="http://wiki.apache.org/hadoop/FAQ">Preguntas frecuentes</a> de Hadoop para obtener más detalles.</p>
+<p><a href="#ftnt_ref6" name="ftnt6" id="ftnt6">[6]</a> Los nombres de las instancias de Google Compute Engine no quedan determinados por la dirección IP interna y su dirección puede ser el nombre de host proporcionado en el momento de creación sin necesidad de utilizar una herramienta adicional de resolución de nombres.</p>
+<p><a href="#ftnt_ref7" name="ftnt7" id="ftnt7">[7]</a> Consulta el apartado 3.6 de las <a href="http://wiki.apache.org/hadoop/FAQ">Preguntas frecuentes de Hadoop</a> para obtener más detalles sobre el desmantelamiento de nodos.</p>
+<p><a href="#ftnt_ref8" name="ftnt8" id="ftnt8">[8]</a> <a href="https://developers.google.com/compute/docs/sla">Acuerdo de nivel de servicio de Google Compute Engine</a></p>
+<p><a href="#ftnt_ref9" name="ftnt9" id="ftnt9">[9]</a> Consulta la <a href="https://developers.google.com/compute/docs/disks#snapshots">documentación</a> para obtener más detalles sobre la creación de capturas.</p>
+<p><a href="#ftnt_ref10" name="ftnt10" id="ftnt10">[10]</a> Esta opción se presenta para mayor información y no se suele recomendar porque provoca costes adicionales y puede afectar al rendimiento.</p>
+<p><a href="#ftnt_ref11" name="ftnt11" id="ftnt11">[11]</a> El diseño y la implementación de estos mecanismos quedan fuera del ámbito de este documento y se deben someter a rigurosas pruebas antes de usarlos en situaciones de producción.</p>
+<p><a href="#ftnt_ref12" name="ftnt12" id="ftnt12">[12]</a> A julio de 2013, Apache Hadoop 2.0 sigue en versión alfa.</p>
+<p><a href="#ftnt_ref13" name="ftnt13" id="ftnt13">[13]</a> A julio de 2013, Apache Hadoop no es compatible con la alta disponibilidad para los nodos JobTracker o ResourceManager de YARN, aunque se ha presentado una <a href="https://issues.apache.org/jira/browse/YARN-149">propuesta</a> para el segundo.</p>
+<p><a href="#ftnt_ref14" name="ftnt14" id="ftnt14">[14]</a> Desde julio de 2013, aunque ZooKeeper 3.5 añade compatibilidad con la <a href="http://issues.apache.org/jira/browse/ZOOKEEPER-107">pertenencia dinámica</a>, Hadoop 2.0.5-alfa utiliza ZooKeeper 3.4.2.</p>
+</div>
+<!-- /maia-main --></div>
+<div class="maia-col-3"><br>
+<img src="//www.google.com/images/icons/product/feedback-16.png" class="g-app-icon" alt=""> <a href="javascript:void(0);" class="google-feedback">Comentarios sobre este documento</a><br>
+<br></div>
+</div>
+</div>
+<script>
+(function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+</script><script src="//www.gstatic.com/feedback/api.js">
+</script><script>
+$('body').delegate('.google-feedback', 'click', function() {
+      userfeedback.api.startFeedback({'productId': '94614'});
+  });
+</script><!-- Scripts to include both on Goro + Devsite --><script>
+window.___gcfg = {
+     lang: ''
+   };
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+</script><!-- GTM implementation --><!-- Start dataLayer --><script>
+dataLayer = [{
+        'country': 'es',
+        'region': 'emea',
+        'language': 'es'
+      }];
+</script><!-- End dataLayer --><!-- Start Google Tag Manager --><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5CVQBG" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript> <script>
+(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-5CVQBG');
+</script><!-- End Google Tag Manager --><!-- Global JS scripts to load; path will depend on whether we're on devsite or Goro --><script src="/js/base.min.js">
+</script><!-- Retina loader; Do not load if partners page because we need to wait until the Angular app runs --><script>
+new lfl.system.RetinaLoader();
+</script><!-- Secondary right-side scroll-nav --><script>
+new lfl.ui.ScrollNav({});
+</script>
+</body>
+</html>

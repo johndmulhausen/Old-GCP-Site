@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en" class="maia">
+  <head>
+    <title>Dedicated Server Gaming Solution - Google Cloud Platform</title>
+    <meta charset="utf-8" />
+    <link rel="shortcut icon" href="/_static/images/favicon.ico">
+    <link rel="apple-touch-icon" href="/_static/images/apple-touch-icon.png">
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:300,400,600,700' rel='stylesheet' type='text/css'>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+
+    <!--[if lt IE 9]>
+    <script src="/js/html5.js"></script>
+    <![endif]-->
+
+    <title>Cloud Computing &amp; Cloud Hosting Services — Google Cloud Platform</title>
+    <meta name="google-site-verification" content="8dOEM3Xenm6yaBc83y2WKgqQG0iHI7Ph6Rl_YLIZLQ8" />
+
+    <!-- GSAP animation frameworks -->
+    <script src="//www.gstatic.com/external_hosted/gsap/TweenMax.min.js"></script>
+    <script src="//www.gstatic.com/external_hosted/gsap/TimelineMax.min.js"></script>
+    <script src="/js/floodlight.js"></script>
+    <meta name="viewport" content="initial-scale=1, minimum-scale=1, width=device-width">
+    <link href="//fonts.googleapis.com/css?family=Open+Sans:400italic,300,400,600,700" rel="stylesheet">
+
+    <link href="//www.google.com/css/maia.experimental.css" rel="stylesheet">
+    <link href="/css/maia-cloud.css" rel="stylesheet"/>
+    <link href="/css/default.css" rel="stylesheet">
+  </head>
+  <body>
+  <div id="maia-header">
+    <div class="maia-aux">
+      <h1><a href="/"><img src="/images/gcp-logo.png" alt="Cloud Platform" data-retina="383x48"></a></h1>
+
+<div class="search-container">
+  
+  <form action="/search" class="maia-search">
+    <input type="text" placeholder="Search this site" name="q">
+    <button class="maia-button" type="submit" data-g-event="Maia: Button" data-g-action="Maia: Primary – Header" data-g-label="Search">
+      <span class="maia-search-icon">Search</span>
+    </button>
+  </form>
+  <div class="cloud-social">
+    <div class="cloud-signed-out">
+      <!-- <a href="/console" class="cp-track" id="try-header">Sign in</a> -->
+    </div>
+  </div>
+</div>
+
+    </div>
+  </div>
+  <div id="maia-nav-x" class="maia-nav">
+    <div class="maia-aux">
+   <div class="cp-cta">
+   <a class="cp-track maia-button maia-button-secondary white-button" href="/contact/">Contact sales</a>
+   <a class="cp-track maia-button blue-button" href="https://console.developers.google.com?getstarted=https://cloud.google.com" style="color: #ffffff;">Try it now</a>
+   </div>
+      <ul>
+        <li id="home-nav"
+            
+              class="active"
+            >
+
+            <a 
+              class="active"
+             href="index.html" event="autotrack-data-g" data-g-event="Global Nav" data-g-action="Nav Bar" data-g-label="Home"> 
+            Home
+            </a>
+        </li>      
+        <li
+            >
+            <a href="/why-google/" event="autotrack-data-g" data-g-event="Global Nav" data-g-action="Nav Bar" data-g-label="Why Google"> 
+            Why Google
+            </a>
+        </li>
+        <li id="main-nav-product-dropdown" class="dropdown">
+            <a href="/products/" event="autotrack-data-g" data-g-event="Global Nav" data-g-action="Nav Bar" data-g-label="Products"> 
+            Products
+            </a>
+        </li>
+        <li
+            >
+            <a href="/solutions/" event="autotrack-data-g" data-g-event="Global Nav" data-g-action="Nav Bar" data-g-label="Solutions"> 
+            Solutions
+            </a>
+        </li>
+        <li
+            >
+            <a href="/customers/" event="autotrack-data-g" data-g-event="Global Nav" data-g-action="Nav Bar" data-g-label="Customers"> 
+            Customers
+            </a>
+        </li>
+        <li
+            >
+            <a href="/developers/" event="autotrack-data-g" data-g-event="Global Nav" data-g-action="Nav Bar" data-g-label="Developers"> 
+            Developers
+            </a>            
+        </li>
+        <li
+            >
+            <a href="/support/" event="autotrack-data-g" data-g-event="Global Nav" data-g-action="Nav Bar" data-g-label="Support"> 
+            Support
+            </a>            
+        </li>
+        <li>
+            <a href="/partners/" event="autotrack-data-g" data-g-event="Global Nav" data-g-action="Nav Bar" data-g-label="Partners"> 
+            Partners
+            </a>            
+        </li>
+        <li>
+            <a href="https://github.com/GoogleDevDocs/googledevdocs.github.io/edit/master/developers/articles/dedicated-server-gaming-solution.html" event="autotrack-data-g" data-g-event="Global Nav" data-g-action="Nav Bar" data-g-label="Edit Page"> 
+            Edit Page
+            </a>            
+        </li>
+      </ul>
+    </div>
+  </div>
+
+<!-- Products subnav -->
+<div id="maia-nav-x" class="maia-nav products-nav">
+  <div class="maia-aux">
+    <div class="products-nav-dropdown maia-cols">
+
+      <div id="compute-dropdown" class="products-column maia-col-2">
+        <span class="product-list-title">Compute</span>
+        <div class="dropdown-item-container">
+          <a href="/products/compute-engine/">
+            <span class="product-name">Compute Engine</span>
+          </a>
+        </div>
+        <div class="dropdown-item-container">
+          <a href="/products/app-engine/">
+            <span class="product-name">App Engine</span>
+          </a>
+        </div>
+      </div>
+
+      <div id="storage-dropdown" class="products-column maia-col-2">
+        <span class="product-list-title">Storage</span>
+        <div class="dropdown-item-container">
+          <a href="/products/cloud-sql/">
+            <span class="product-name">Cloud SQL</span>
+          </a>
+        </div>
+        <div class="dropdown-item-container">
+          <a href="/products/cloud-storage/">
+            <span class="product-name">Cloud Storage</span>
+          </a>
+        </div>
+        <div class="dropdown-item-container">
+          <a href="/products/cloud-datastore/">
+            <span class="product-name">Cloud Datastore</span>
+          </a>
+        </div>
+      </div>
+
+      <div id="big-data-dropdown" class="products-column maia-col-2">
+        <span class="product-list-title">Big Data</span>
+        <div class="dropdown-item-container">
+          <a href="/products/bigquery/">
+            <span class="product-name">BigQuery</span>
+          </a>
+        </div>
+      </div>
+
+      <div id="services-dropdown" class="products-column maia-col-2">
+        <span class="product-list-title">Services</span>
+        <div class="dropdown-item-container">
+          <a href="/products/cloud-dns/">
+            <span class="product-name">Cloud DNS</span>
+          </a>
+        </div>
+        <div class="dropdown-item-container">
+          <a href="/products/cloud-endpoints/">
+            <span class="product-name">Cloud Endpoints</span>
+          </a>
+        </div>
+        <div class="dropdown-item-container">
+          <a href="/products/translate-api/">
+            <span class="product-name">Translate API</span>
+          </a>
+        </div>
+        <div class="dropdown-item-container">
+          <a href="/products/prediction-api/">
+            <span class="product-name">Prediction API</span>
+          </a>
+        </div>
+      </div>
+
+      <div id="management-dropdown" class="products-column maia-col-2">
+        <span class="product-list-title">Management</span>
+        <div class="dropdown-item-container">
+          <span class="product-name"><a href="/products/cloud-deployment-manager/">Cloud Deployment Manager</a></span>
+        </div>
+      </div>
+
+      <div id="pricing-dropdown" class="products-column maia-col-2">
+        <span class="product-list-title">Pricing</span>
+        <div class="dropdown-item-container">
+          <span class="product-name"><a href="/products/pricing/">Overview</a></span>
+        </div>
+        <div class="dropdown-item-container">
+          <span class="product-name"><a href="/products/calculator/">Calculator</a></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="maia-main" class="cp-article">
+  <div class="maia-cols">
+    <div class="maia-col-9">
+      <div>
+        <div style="float:right">
+          <div class="g-plusone"></div>
+        </div>
+        <h1 class="title">Dedicated Server Gaming Solution</h1>
+      </div>
+      
+
+      <h2>Introduction</h2>
+      <p>As the number of people who play games continues to increase, a massive amount of computing resources will be required to power the compelling gaming experiences. This paper presents a highly scalable and reliable gaming implementation that leverages Google App Engine and Google Compute Engine for real-time player interactions. Core game elements, such as game matchmaking and player customization, are powered by App Engine while Compute Engine is utilized for running <span title="Dedicated game servers refers to the custom binaries responsible for handling real time player interaction">dedicated game servers</span> and common game engines.</p>
+      <p>Key points covered in this solution are:</p>
+      <ul>
+        <li>Scaling to serve hundreds to millions of players.</li>
+        <li>Utilizing the Google Cloud Platform to build a fully featured game experience.</li>
+        <li>Leveraging App Engine for front-end interactions and maintaining game state in the datastore.</li>
+        <li>Orchestrating and autoscaling Compute Engine dedicated game servers with App Engine.</li>
+        <li>Gaining business insights by analyzing massive user and game datasets.</li>
+      </ul>
+      <p>Online gaming has grown from just a few people running game servers in their garages to millions of players enjoying a seamless online experience with matchmaking, in-game stores, and friend lists. These common game components have resulted in the development of sophisticated distributed systems which rival high performance computing and large scale web implementations. The fierce competition to develop and deliver the next “blockbuster” game or viral social sensation requires game developers to carefully manage their resources in order to focus on critical game components. Overprovisioning a cloud platform or focusing on unnecessary complexities results in significantly less human and financial resources to focus on gameplay or graphic assets. By utilizing Google Cloud Platform, game developers can focus on creating unique game experiences while taking advantage of Google’s extensive experience in developing distributed systems.</p>
+      <p>This solution leverages the scalability and reliability of App Engine to match players with game sessions running on fully managed Compute Engine game servers. App Engine is an extensible platform that can be used to provide required features such as user profiles, game matchmaking, in-game store, social communities, and mobile engagement. Ideally, App Engine can be utilized for to powering all aspects of the online game, but developers often require access to virtual machines for running common game engines and software development kits (SDKs). Many aspects of this solution can also be used for a pure App Engine implementation, but the primary focus of this solution is the use case that requires dedicated game servers on Compute Engine.</p>
+      <p>The products used in this solution are:</p>
+      <ul>
+        <li>Google App Engine
+          <ul>
+            <li>Powers the main graphical user interface to provide game and user settings</li>
+            <li>Provides Matchmaking and server browsing</li>
+            <li>Distributes load to Compute Engine instances</li>
+            <li>Maintains clusters to handle player gameplay load</li>
+          </ul>
+        </li>
+        <li>Google Compute Engine
+          <ul>
+            <li>Runs custom game servers</li>
+          </ul>
+        </li>
+        <li>Google BigQuery
+          <ul>
+            <li>Analyzes massive game and user data sets</li>
+          </ul>
+        </li>
+        <li>Google Cloud Storage
+          <ul>
+            <li>Stores game server binaries</li>
+            <li>Distributes game client binaries and game assets</li>
+            <li>Stores backup logs to process and ingest into BigQuery</li>
+          </ul>
+        </li>
+      </ul>
+      <h2>Scenario</h2>
+      <p>Dora has a spare moment and wants to play a few rounds of her favorite online game, Giant Robot Smash 5000. She opens her laptop, launches the game, and signs into her custom profile.</p>
+      <p>Before starting a competitive multiplayer match, Dora notices there are new missile launchers available for purchase in the game’s store. After a few quick clicks, she purchases new equipment through Google Wallet and configures her favorite giant walking robot.</p>
+      <p>Now Dora is ready to start a new game and save the galaxy (again) and she joins an alliance with a few of her friends who are currently online. The group requests to join a server running their favorite game mode and within a few seconds they are sitting in their mech’s cockpits, ready to accept any challenge.</p>
+      <h2>Overview of the Solution</h2>
+      <p>The reference architecture diagram, shown in Figure 1 below, provides a high-level overview of how Compute Engine and App Engine integrate to create a scalable and reliable online gaming solution.</p>
+      <figure>
+        <img src="/images/articles/dedicated-2.png" alt="Implementation Details" />
+        <figcaption>Figure 1. Reference architecture diagram for an online gaming solution</figcaption>
+      </figure>
+      <h2>Key Components of the Proposed Online Gaming Solution</h2>
+      <ol>
+        <li>Game Server Selection</li>
+        <li>Player’s Game Client Connecting to Dedicated Game Server</li>
+        <li>In-Game Requests and Google Compute Engine Instance Health Checks</li>
+        <li>Autoscale Game Servers</li>
+        <li>Store Logs for Analysis and MapReduce</li>
+        <li>Google BigQuery Analysis of Massive User and Game Datasets</li>
+      </ol>
+      <p>A user starts playing a match of their favorite game by loading the local application or navigating to the game’s website. If it is their first time playing, all client binaries and game assets can be download from Cloud Storage. Although game clients for mobile devices and personal computers will vary, the core game features can be provided for all devices. Core features include updating user profiles, managing player configurations, and checking friends’ achievements. App Engine can be utilized for all these devices by directly serving websites or providing a RESTful API for accessing all the required information.</p>
+      <p>The following section describes each of the key components of the proposed gaming solution (Fig. 1) in more detail:</p>
+      <ol>
+        <li><strong>Game Server Selection</strong>
+          <p>Allowing players to join a game server and interact with other players is one of the most important components of the main interface. Matchmaking is an integral part of this gaming solution because it matches players with people in the same region and game modes. Depending on the search, performance, and scalability requirements, this solution can also be extended to include a full featured server browser and search capability by leveraging Google Cloud SQL, Search API, or Datastore.</p>
+        </li>
+        <li><strong>Player’s Game Client Connecting to Dedicated Game Server</strong>
+          <p>Once the player selects a server to join and the game client receives the dedicated server’s IP address, the player’s game client establishes a connection to the dedicated server running on Compute Engine and loads in-game assets.</p>
+          <p>The Compute Engine game servers are responsible for handling all player interactions through low latency client server communication. Information about designing a multiplayer game server is beyond the scope of this paper. When designing multiplayer game servers, it is recommended to leverage existing game servers and software development kits.</p>
+        </li>
+        <li><strong>In-Game Requests and Compute Engine Instance Health Checks</strong>
+          <p>When a dedicated game server is running on Compute Engine, it may need to send in-game requests to App Engine. If a player has purchased items from a store or created custom game configurations, App Engine can serve as the source of truth for this information. Additionally, the dedicated game server can communicate back to App Engine to update player scores, statistics, and experience.</p>
+          <p>After a game match has completed, players can either remain on a game server for a new round or be redirected towards server matchmaking. Player’s scores, match statistics, and in-game store recommendations can be displayed between matches. If a dedicated game server terminates unexpectedly, the game client must handle this event and redirect players towards server matchmaking for a new session.</p>
+        </li>
+        <li><strong>Autoscale Game Servers</strong>
+          <p>Autoscaling is one of the first background tasks that does not significantly affect gameplay, but is critical to building a scalable, fully featured game. This step indicates the dedicated game server autoscaling logic implemented by a developer in App Engine. As the number of players increases, virtual machine orchestration logic creates new dedicated servers to handle the increased load. Similarly, if the number of players decreases during the day, unused dedicated servers can be terminated to eliminate unnecessary expense.</p>
+        </li>
+        <li><strong>Store Logs for Analysis and MapReduce</strong>
+          <p>Google Cloud Storage is recommended for storing files, such as server logs and output from MapReduce pipelines. The dedicated game servers on Compute Engine produce a significant amount of valuable data for understanding player behavior and troubleshooting software bugs. In order to store this data long-term, files should be regularly uploaded to Google Cloud Storage from Compute Engine Instances using a background process. If MapReduce pipelines are required for transforming and aggregating data, the relevant files can be downloaded from Google Cloud Storage and processed on additional Compute Engine instances. Output from the MapReduce jobs can be stored in Google Cloud Storage where it can be used as input for additional pipelines, ingested into Google BigQuery, or compiled into reports.</p>
+        </li>
+        <li><strong>Google BigQuery Analysis of Massive User and Game Datasets</strong>
+          <p>Integrated into this solution is Google BigQuery, an ad-hoc query tool for analyzing massive datasets in real-time. When dedicated game servers are hosting millions of active players, billions of rows of useful data can be produced. Whether it is raw game logs or MapReduce output, the data can be ingested into Google BigQuery from Google Cloud Storage with a predefined schema. After ingestion has finished, SQL-like queries complete within seconds and can be used to obtain valuable information such as user engagement and the impact of game incentives.</p>
+        </li>
+      </ol>
+      <h2>Implementation Details</h2>
+      <p>The following section provides implementation details for distributing player load and providing core game functionality required for creating a full-featured game experience. The primary focus of this solution is on the core scenario of distributing game servers to handle real time player interactions. This solution can be expanded to provide additional features as a full store and social community model, but they are outside of the scope of this paper.</p>
+      <p>The following architecture diagram (Fig. 2)  is an overview which describe how a scalable, dedicated server gaming solution can be implemented.</p>
+      <figure>
+        <img src="/images/articles/dedicated-1.png" alt="Reference architecture diagram" />
+        <figcaption>Figure 2. Implementation Details for an dedicated server gaming solution</figcaption>
+      </figure>
+      <h2>Walkthrough and Implementation Details</h2>
+      <ol>
+        <li><strong>Game Server Selection Request</strong>
+          <p>Players use the game server browser to request a list of recommended game servers based on matchmaking criteria. This request is submitted through Cloud Endpoints which provide an authenticated RESTful API powered by App Engine.</p>
+        </li>
+        <li><strong>Game Server Matchmaking Logic</strong>
+          <p>Server matchmaking logic provides users with a list of recommended servers. Depending on the scale and frequency of server matchmaking requests, there are different techniques to implement this solution. One approach is to use App Engine background tasks to maintain a list of recommended servers in each datacenter and store the list in Memcache for quick retrieval. The logic for recommending servers depends on the type of game. Some games, for example, are lowest load to minimize latency, while other games need to put people in servers so there are a good number of people to play against. Although Memcache provides a high performance, distributed memory object caching system, the recommendations must also be stored in App Engine Datastore in order to handle Memcache evictions. The recommendation background tasks can be scheduled to run every minute by the App Engine Cron service. It is important for the background tasks to maintain a list of recommended servers for each region since players usually want to connect to the lowest latency server. Other server selection techniques may round-robin through available servers or provide a reasonably sized list to the client so it can identify the lowest latency servers. More complex solutions can include tasks that maintain player counts, load, latency, and states for all servers. Solutions can also be designed to query dynamically for each request.</p>
+        </li>
+        <li><strong>Game Server Matchmaking Results Returned</strong>
+          <p>The results from game server matchmaking are returned to the client where the player either selects from a list or the client automatically determines the ideal server.</p>
+        </li>
+        <li><strong>Game Client Connects to Dedicated Game Server</strong>
+          <p>The game client attempts to connect to the IP address of the selected dedicated game server. If the connection fails or the server is full, the client can attempt to connect to other servers provided or direct the player back to server matchmaking.</p>
+        </li>
+        <li><strong>Game Server In-Game Requests</strong>
+          <p>After players establish a connection to the dedicated game server, the server is responsible for handling all events from the player and providing information about other players currently in the match. App Engine is utilized to maintain a consistent game experience across all dedicated servers by handing important events and providing player information. For example, if the player has a custom configuration, a request to App Engine will provide information about the configuration and allow the player to access all purchased items. As players gain experience and important in-game events occur, details can be sent to App Engine in order to maintain a complete view of all players. An authenticated request to Cloud Endpoints and the provided RESTful API is an easy way to connect the game servers to App Engine.</p>
+        </li>
+        <li><strong>Request Player Configuration</strong>
+          <p>When games allow a player to purchase items or create a custom character configuration, the information must be maintained in a reliable and scalable database. The App Engine Datastore is designed to scale for web applications that serve millions of users and the underlying Google Megastore technology is leveraged across Google. The App Engine Datastore is recommended for storing all player information because it seamlessly scales as a game grows from hundred to millions of players. Memcache can also be leveraged to store results from frequent App Engine Datastore queries in order to improve performance. Since Memcache is a finite resource, smart usage is encouraged. If complex SQL queries are required or MySQL must be utilized for other reasons, Google Cloud SQL provides a fully managed and highly available relational database-as-a-service. Although it is tightly integrated with App Engine, Google Cloud SQL is not designed to scale infinitely and load testing is highly recommended in order to understand real-world database performance.</p>
+        </li>
+        <li><strong>Store Important In-Game Events</strong>
+          <p>Handling and storing important events, such as players gaining experience after in-game actions, is a critical part of creating an addictive and engaging game. Similar to requests for player configuration, these requests are handled by App Engine and key information can be stored in the App Engine Datastore. The major difference between these two types of requests is that in-game events can occur at a higher frequency for all active players. For example, a player’s configuration may only be obtained at the start of the match whereas in-game events can happen every time a player’s character gains experience. Although the App Engine Datastore can scale to handle thousands of events from millions of users, entity groups, NoSQL and eventual consistency must be understood in order to eliminate potential scalability concerns. Detailed technical discussions about these topics are located in the App Engine developer documentation.</p>
+        </li>
+        <li><strong>Server Heartbeat Process</strong>
+          <p>A critical component of maintaining a healthy cluster of dedicated game servers is continual tracking of each server’s statistics and health. Once again, Cloud Endpoints are leveraged to provide an authenticated RESTful API where a process running on each Compute Engine instance can provide utilization statistics. Hardware related information, such as CPU and RAM utilization, can be provided along with game specific information, such as average player latency and number of players active on the server.</p>
+        </li>
+        <li><strong>Store Server Health and Statistics</strong>
+          <p>The Heartbeat process running on each Compute Engine instance can provide a large amount of valuable information. Server heartbeat logic is required to parse and store relevant data. Information directly relevant for autoscaling, such as the number of players active on servers and average latency, should be cached in Memcache for quick retrieval by the autoscaling backend processes. Any important values should also be stored in the App Engine Datastore to protect against Memcache eviction. If this information is also relevant for analytics and maintaining server history, it is recommended to store all historical values in a separate table which is utilized independently of autoscaling.</p>
+        </li>
+        <li><strong>Autoscale Dedicated Game Servers and Maintain a Healthy Cluster</strong>
+          <p>Although there are many approaches to autoscaling Compute Engine resources with respect to player load, the common component involves running a scheduled task every minute with App Engine Cron service. The ideal number of virtual machines can be calculated by a predetermined schedule or by analyzing the number of available positions in game servers or player latency. The other important input to autoscaling is determining the currently active healthy machine count by pulling recent heartbeat process data from Memcache or the App Engine Datastore. The difference between the ideal and current number of game servers can be utilized to create or delete instances. Additionally, any unhealthy servers should be configured to eliminate them from server selection and delete the instances once there are no players on the server. If game servers need to be migrated between different Compute Engine zones, the autoscaling logic can be used to create instances in the new zone while terminating vacant instances in the old zone. This is a very high-level overview of autoscaling game servers and it is strongly recommended to carefully implement the scaling algorithms. Focus on avoiding issues such as overshoot and noisy responses. Compute Engine servers are billed hourly, so in order to reduce unnecessary costs from unused Compute Engine instances, avoid the constant creation and deletion of instances.</p>
+        </li>
+        <li><strong>Create and Delete Dedicated Game Servers</strong>
+          <p>Once a game server must be deleted or created, a task is added to an App Engine task queue. A separate background task is responsible for pulling server maintenance tasks and executing Compute Engine API calls. Additional backends can be added if the number of required API calls increases beyond the limits of a single backend. If there are few Compute Engine API calls, the server maintenance can be handled by a scheduled tasks to reduce App Engine resource utilization. It is recommended to include a timestamp with every server maintenance task in order to create alerts if a backlog develops in the system. Push queues can be used as an alternative to pull queues and it is recommend to run load tests in order to understand how each autoscaling system responds under heavy utilization. Although Google does not provide a load testing service, common open source technology can be run on Compute Engine or third party services can be utilized for extensive load testing.</p>
+        </li>
+        <li><strong>Store Logs in Google Cloud Storage</strong>
+          <p>From in-game server logs recording every player’s actions and movements to end-game statistics, many log files are generated on each game server, from in-game server logs recording every player’s actions and movements to end-game statistics. These files can be copied to Google Cloud Storage using a background process running at regular intervals. If critical data is stored in the files, they should be stored on persistent disk in order to prevent data loss if an instance terminates before the copy process has completed. Otherwise, storing files on ephemeral disk provides a lower cost alternative, but the disk will be deleted immediately after an instance terminates. Regardless of disk choice, it is always recommended to have an automated copy process for maintaining all logs and statistics in Google Cloud Storage.</p>
+        </li>
+        <li><strong>Transform and Process Log Files</strong>
+          <p>After collecting a large amount of raw log data from servers, the log files need to be cleaned, augmented with additional data, and aggregated to different levels. MapReduce or Extract, Transform, and Load tools can be leveraged to create data that can either be used for user facing features, such as store item recommendations, or ingested into Google BigQuery for analysis.</p>
+        </li>
+        <li><strong>Reporting and Analytics</strong>
+          <p>Google BigQuery is an important part of a gaming solution as it allows ad-hoc analysis of massive datasets containing user and game information. For example, it can be used to determine the impact of gameplay incentives, such as store sales or double experience weekends, on user retention and engagement. Additionally, Google BigQuery maintains consistent performance as data scales to terabytes and billions of rows.</p>
+        </li>
+      </ol>
+      <h2>Sample App</h2>
+      <p>A sample application which demonstrates the high level concepts of this solution is available and it can be utilized as working reference. The core functionality of the sample application is as follows:</p>
+      <ul>
+        <li>Client queries App Engine for an IP address of a dedicated game server</li>
+        <li>Client starts a new game by connecting to a game server running on Compute Engine</li>
+        <li>Administrators can create and delete game servers from App Engine Administration UI</li>
+        <li>Compute Engine instances report load levels to App Engine periodically</li>
+        <li>Administrators can view load levels of all game server Compute Engine instances</li>
+        <li>App Engine automatically adds new instances to the cluster if the cluster exceeds a max load threshold</li>
+      </ul>
+      <p>Get the source on <a href="https://github.com/GoogleCloudPlatform/solutions-load-balanced-gaming-server-on-google-compute-engine" target="_blank">Github</a>.</p>
+      <h2>Conclusion</h2>
+      <p>This solution demonstrates how developers can scale their online game to support millions of players while providing a full-featured gaming experience. By leveraging multiple components of the Google Cloud Platform, developers gain the scalability and reliability of App Engine while running industry standard game servers on Compute Engine. This allows game developers to quickly launch, iterate, and scale while simultaneously focusing on delivering a great game.</p>
+
+    </div>
+    <div class="maia-col-3">
+      <br><br>
+      <img src="//www.google.com/images/icons/thirdparty/pdf-16.png" class="g-app-icon">
+      <a href="../../../files/articles/google-cloud_technical-article_dedicated-server.pdf" class="cp-pdf" onclick="javascript: _gaq.push(['_trackPageview', '../../../files/articles/google-cloud_technical-article_dedicated-server.pdf']);">Download PDF</a>
+
+    </div>
+  </div>
+</div>
+
+
+ <!-- is this feedback sticky needed?
+  <div class="feedback-sticky"><a href="javascript:void(0);">Feedback</a></div>
+  <script type="text/javascript" src="//www.gstatic.com/feedback/api.js"></script>
+  <script>
+    jQuery('body').delegate('.feedback-sticky', 'click', function() {
+      _gaq.push(['_trackEvent', 'Feedback', 'User Feedback: ' + location.pathname]);
+      userfeedback.api.startFeedback({'productId': '96209'});
+    });
+  </script>
+  -->
+
+  <!-- Scripts to include both on Goro + Devsite -->
+  <script type="text/javascript">
+   window.___gcfg = {
+     lang: ''
+   };
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+  </script>
+
+  <!-- GTM implementation -->
+  
+  <!-- Start dataLayer -->
+    <script>
+      dataLayer = [{
+        'country': '',
+        'region': '',
+        'language': 'en'
+      }];
+    </script>
+  <!-- End dataLayer -->
+  
+  <!-- Start Google Tag Manager -->
+  <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5CVQBG"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-5CVQBG');</script>
+  <!-- End Google Tag Manager -->    
+
+
+
+<!-- Global JS scripts to load; path will depend on whether we're on devsite or Goro -->
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular-sanitize.js"></script>
+
+  <script src="/js/base.min.js"></script>
+
+
+
+
+<!-- Secondary right-side scroll-nav -->
+<script>
+  new lfl.ui.ScrollNav({});
+  new lfl.cloud.GlobalProductMenu();
+</script>
+
+<script>new cloud.SocialFeeds(document.getElementById('feeds'));</script>
+
+
+
+  <div id="maia-signature"></div>
+  <div id="maia-footer">
+
+    <!-- maia-footer-local -->
+    <div id="maia-footer-local">
+      <div class="maia-aux">
+        
+          <div class="ent-footer-top">
+  <div class="g-plus-wrapper">
+    <div class="g-plusone" data-href="http://cloud.google.com"></div>
+  </div>
+  <div class="g-plus-link"><a href="https://plus.google.com/+googlecloudplatform" rel="publisher">Google+</a></div>
+  <div class="search">
+    <form onsumbit="return false;" class="maia-search">
+    <input name="q" placeholder="Search this site" type="text">
+    <input name="hl" type="hidden" value="">
+    <input name="q" type="hidden" value="site:cloud.google.com/">
+    <button class="maia-button" event="autotrack-data-g" data-g-event="Footer" data-g-action="Site Search" data-g-label="Submit">
+      <span class="maia-search-icon">Search</span>
+    </button>
+    </form>
+  </div>
+
+</div>
+
+<div class="ent-footer-links">
+  <div class="ent-footer-unit">
+    <h4><a href="/why-google/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Why Google" data-g-label="Why Google">Why Google</a></h4>
+    <ul>
+      <li><a href="/why-google/#infrastructure" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Why Google" data-g-label="Infrastructure">Infrastructure</a></li>
+      <li><a href="/why-google/#product" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Why Google" data-g-label="Product">Product</a></li>
+      <li><a href="/why-google/#services" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Why Google" data-g-label="Services">Services</a></li>
+      <li><a href="/why-google/#scalability" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Why Google" data-g-label="Scalability">Scalability</a></li>
+      <li><a href="/why-google/#performance" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Why Google" data-g-label="Performance">Performance</a></li>
+      <li><a href="/why-google/#support" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Why Google" data-g-label="Support">Support</a></li>      
+    </ul>
+  </div>
+
+  <div class="ent-footer-unit">
+    <h4><a href="/products/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="Products">Products</a></h4>
+    <ul>
+      <li><a href="/products/app-engine/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="App Engine">App Engine</a></li>
+      <li><a href="/products/compute-engine/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="Compute Engine">Compute Engine</a></li>
+      <li><a href="/products/cloud-storage/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="Cloud Storage">Cloud Storage</a></li>
+      <li><a href="/products/cloud-sql/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="Cloud SQL">Cloud SQL</a></li>
+      <li><a href="/products/cloud-datastore/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="Cloud Datastore">Cloud Datastore</a></li>
+      <li><a href="/products/bigquery/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="BigQuery">BigQuery</a></li>
+      <li><a href="/products/prediction-api/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="Prediction API">Prediction API</a></li>
+      <li><a href="/products/translate-api/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="Translate API">Translate API</a></li>
+      <li><a href="/products/cloud-endpoints/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="Cloud Endpoints">Cloud Endpoints</a></li>
+      <li><a href="/products/calculator/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="Pricing Calculator">Pricing Calculator</a></li>
+      <li><a href="/pricing/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="Pricing">Pricing</a></li>
+    </ul>
+  </div>
+
+  <div class="ent-footer-unit">
+    <h4><a href="/solutions" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Solutions" data-g-label="Solutions">Solutions</a></h4>
+    <ul>
+      <li><a href="/solutions/mobile/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Solutions" data-g-label="Mobile">Mobile</a></li>
+      <li><a href="/solutions/gaming/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Solutions" data-g-label="Gaming">Gaming</a></li>
+      <li><a href="/solutions/hadoop/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Solutions" data-g-label="Hadoop">Hadoop</a></li>
+      <li><a href="/solutions/mongodb/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Solutions" data-g-label="mongodb">mongodb</a></li>
+
+    </ul>
+  </div>
+
+  <div class="ent-footer-unit">
+    <h4><a href="/customers/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Customers" data-g-label="Customers">Customers</a></h4>
+  </div>
+
+  <div class="ent-footer-unit">
+    <h4><a href="/developers/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Developers" data-g-label="Developers">Developers</a></h4>
+    <ul>
+      <li><a href="/developers#documentation" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Developers" data-g-label="Documentation">Documentation</a></li>
+      <li><a href="/developers#resources" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Developers" data-g-label="Resources">Resources</a></li>
+    </ul>
+  </div>
+
+  <div class="ent-footer-unit">
+    <h4><a href="/support/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Support" data-g-label="Support">Support</a></h4>
+    <ul>
+      <li><a href="https://support.google.com/" target="_blank" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Support" data-g-label="Google Cloud Platform Support Help Center">Platform Support Help Center</a></li>
+      <li><a href="https://support.google.com/cloudbilling/" target="_blank" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Support" data-g-label="Google Cloud Billing Help Center">Billing Help Center</a></li>
+      <li><a href="https://enterprise.google.com/supportcenter" target="_blank" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Support" data-g-label="Google Enterprise Support Center">Google Enterprise Support Center</a></li>      
+    </ul>
+    
+  </div>
+
+  
+  <div class="ent-footer-unit">
+    <h4><a href="/partners/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Partners" data-g-label="Partners">Partners</a></h4>
+    <ul>
+      <li><a href="/partners/technology-partners/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Partners" data-g-label="Find A Technology Partner">Technology Partners</a></li>
+      <li><a href="/partners/service-partners/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Partners" data-g-label="Find A Service Partner">Find a Service Partner</a></li>
+    </ul>
+  </div>
+ 
+</div>
+<br class="clear" />
+
+        
+      </div>
+    </div>
+    <!-- /maia-footer-local -->
+
+    <!-- maia-footer-global -->
+    <div id="maia-footer-global">
+      <div class="maia-aux">
+        <ul>
+          <li><a href="http://www.google.com/">Google</a></li>
+          <li><a href="https://developers.google.com/readme/terms">Terms of Service</a></li>
+          <li><a href="http://www.google.com/intlprivacy/">Privacy Policy</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <!-- /maia-footer-global -->
+  <script type="text/javascript" async="" defer="" src="//www.gstatic.com/feedback/api.js"></script>
+  <script id="jqueryui" src="//ajax.googleapis.com/ajax/libs/jqueryui/1.8.10/jquery-ui.min.js"></script>
+
+  <!--script src="/_static/js/script_foot.js"></script-->
+  
+  </body>
+</html>

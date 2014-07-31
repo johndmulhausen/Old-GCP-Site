@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en" class="maia">
+  <head>
+    <title>RabbitMQ - Google Cloud Platform</title>
+    <meta charset="utf-8" />
+    <link rel="shortcut icon" href="/_static/images/favicon.ico">
+    <link rel="apple-touch-icon" href="/_static/images/apple-touch-icon.png">
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:300,400,600,700' rel='stylesheet' type='text/css'>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+
+    <!--[if lt IE 9]>
+    <script src="/js/html5.js"></script>
+    <![endif]-->
+
+    <title>Cloud Computing &amp; Cloud Hosting Services — Google Cloud Platform</title>
+    <meta name="google-site-verification" content="8dOEM3Xenm6yaBc83y2WKgqQG0iHI7Ph6Rl_YLIZLQ8" />
+
+    <!-- GSAP animation frameworks -->
+    <script src="//www.gstatic.com/external_hosted/gsap/TweenMax.min.js"></script>
+    <script src="//www.gstatic.com/external_hosted/gsap/TimelineMax.min.js"></script>
+    <script src="/js/floodlight.js"></script>
+    <meta name="viewport" content="initial-scale=1, minimum-scale=1, width=device-width">
+    <link href="//fonts.googleapis.com/css?family=Open+Sans:400italic,300,400,600,700" rel="stylesheet">
+
+    <link href="//www.google.com/css/maia.experimental.css" rel="stylesheet">
+    <link href="/css/maia-cloud.css" rel="stylesheet"/>
+    <link href="/css/default.css" rel="stylesheet">
+  </head>
+  <body>
+  <div id="maia-header">
+    <div class="maia-aux">
+      <h1><a href="/"><img src="/images/gcp-logo.png" alt="Cloud Platform" data-retina="383x48"></a></h1>
+
+<div class="search-container">
+  
+  <form action="/search" class="maia-search">
+    <input type="text" placeholder="Search this site" name="q">
+    <button class="maia-button" type="submit" data-g-event="Maia: Button" data-g-action="Maia: Primary – Header" data-g-label="Search">
+      <span class="maia-search-icon">Search</span>
+    </button>
+  </form>
+  <div class="cloud-social">
+    <div class="cloud-signed-out">
+      <!-- <a href="/console" class="cp-track" id="try-header">Sign in</a> -->
+    </div>
+  </div>
+</div>
+
+    </div>
+  </div>
+  <div id="maia-nav-x" class="maia-nav">
+    <div class="maia-aux">
+   <div class="cp-cta">
+   <a class="cp-track maia-button maia-button-secondary white-button" href="/contact/">Contact sales</a>
+   <a class="cp-track maia-button blue-button" href="https://console.developers.google.com?getstarted=https://cloud.google.com" style="color: #ffffff;">Try it now</a>
+   </div>
+      <ul>
+        <li id="home-nav"
+            
+              class="active"
+            >
+
+            <a 
+              class="active"
+             href="index.html" event="autotrack-data-g" data-g-event="Global Nav" data-g-action="Nav Bar" data-g-label="Home"> 
+            Home
+            </a>
+        </li>      
+        <li
+            >
+            <a href="/why-google/" event="autotrack-data-g" data-g-event="Global Nav" data-g-action="Nav Bar" data-g-label="Why Google"> 
+            Why Google
+            </a>
+        </li>
+        <li id="main-nav-product-dropdown" class="dropdown">
+            <a href="/products/" event="autotrack-data-g" data-g-event="Global Nav" data-g-action="Nav Bar" data-g-label="Products"> 
+            Products
+            </a>
+        </li>
+        <li
+            >
+            <a href="/solutions/" event="autotrack-data-g" data-g-event="Global Nav" data-g-action="Nav Bar" data-g-label="Solutions"> 
+            Solutions
+            </a>
+        </li>
+        <li
+            >
+            <a href="/customers/" event="autotrack-data-g" data-g-event="Global Nav" data-g-action="Nav Bar" data-g-label="Customers"> 
+            Customers
+            </a>
+        </li>
+        <li
+            >
+            <a href="/developers/" event="autotrack-data-g" data-g-event="Global Nav" data-g-action="Nav Bar" data-g-label="Developers"> 
+            Developers
+            </a>            
+        </li>
+        <li
+            >
+            <a href="/support/" event="autotrack-data-g" data-g-event="Global Nav" data-g-action="Nav Bar" data-g-label="Support"> 
+            Support
+            </a>            
+        </li>
+        <li>
+            <a href="/partners/" event="autotrack-data-g" data-g-event="Global Nav" data-g-action="Nav Bar" data-g-label="Partners"> 
+            Partners
+            </a>            
+        </li>
+        <li>
+            <a href="https://github.com/GoogleDevDocs/googledevdocs.github.io/edit/master/solutions/rabbitmq/index.html" event="autotrack-data-g" data-g-event="Global Nav" data-g-action="Nav Bar" data-g-label="Edit Page"> 
+            Edit Page
+            </a>            
+        </li>
+      </ul>
+    </div>
+  </div>
+
+<!-- Products subnav -->
+<div id="maia-nav-x" class="maia-nav products-nav">
+  <div class="maia-aux">
+    <div class="products-nav-dropdown maia-cols">
+
+      <div id="compute-dropdown" class="products-column maia-col-2">
+        <span class="product-list-title">Compute</span>
+        <div class="dropdown-item-container">
+          <a href="/products/compute-engine/">
+            <span class="product-name">Compute Engine</span>
+          </a>
+        </div>
+        <div class="dropdown-item-container">
+          <a href="/products/app-engine/">
+            <span class="product-name">App Engine</span>
+          </a>
+        </div>
+      </div>
+
+      <div id="storage-dropdown" class="products-column maia-col-2">
+        <span class="product-list-title">Storage</span>
+        <div class="dropdown-item-container">
+          <a href="/products/cloud-sql/">
+            <span class="product-name">Cloud SQL</span>
+          </a>
+        </div>
+        <div class="dropdown-item-container">
+          <a href="/products/cloud-storage/">
+            <span class="product-name">Cloud Storage</span>
+          </a>
+        </div>
+        <div class="dropdown-item-container">
+          <a href="/products/cloud-datastore/">
+            <span class="product-name">Cloud Datastore</span>
+          </a>
+        </div>
+      </div>
+
+      <div id="big-data-dropdown" class="products-column maia-col-2">
+        <span class="product-list-title">Big Data</span>
+        <div class="dropdown-item-container">
+          <a href="/products/bigquery/">
+            <span class="product-name">BigQuery</span>
+          </a>
+        </div>
+      </div>
+
+      <div id="services-dropdown" class="products-column maia-col-2">
+        <span class="product-list-title">Services</span>
+        <div class="dropdown-item-container">
+          <a href="/products/cloud-dns/">
+            <span class="product-name">Cloud DNS</span>
+          </a>
+        </div>
+        <div class="dropdown-item-container">
+          <a href="/products/cloud-endpoints/">
+            <span class="product-name">Cloud Endpoints</span>
+          </a>
+        </div>
+        <div class="dropdown-item-container">
+          <a href="/products/translate-api/">
+            <span class="product-name">Translate API</span>
+          </a>
+        </div>
+        <div class="dropdown-item-container">
+          <a href="/products/prediction-api/">
+            <span class="product-name">Prediction API</span>
+          </a>
+        </div>
+      </div>
+
+      <div id="management-dropdown" class="products-column maia-col-2">
+        <span class="product-list-title">Management</span>
+        <div class="dropdown-item-container">
+          <span class="product-name"><a href="/products/cloud-deployment-manager/">Cloud Deployment Manager</a></span>
+        </div>
+      </div>
+
+      <div id="pricing-dropdown" class="products-column maia-col-2">
+        <span class="product-list-title">Pricing</span>
+        <div class="dropdown-item-container">
+          <span class="product-name"><a href="/products/pricing/">Overview</a></span>
+        </div>
+        <div class="dropdown-item-container">
+          <span class="product-name"><a href="/products/calculator/">Calculator</a></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="site-wrapper solution-details rabbitmq">
+  <div class="maia-stage page-header gray-header primary">
+    <div class="maia-aux page-header-inner">
+      <div class="page-header-inner-inner">
+        <h1 class="headline">
+        <div class="scroll-section rabbitmq-headline" data-section-label="RabbitMQ scales fast on Google Cloud Platform">
+  <div class="maia-cols">
+      <div class="maia-col-8">
+      RabbitMQ on Google Cloud Platform
+      </div>
+      <div class="maia-col-4 rabbitmq-image-container">
+        <img class="rabbitmq-image" src="../../images/solutions/rabbitmq/rabbitmq-header.png" alt="RabbitMQ on Google Cloud Platform" data-retina="301x49">
+      </div>
+  </div>
+</div>
+        </h1>
+        <p class="subheadline">
+        RabbitMQ is a fast, dependable and easy to use open source messaging broker that supports a wide range of message-oriented middleware use cases
+        </p>
+        <p class="cta">
+          <a href="https://console.developers.google.com?getstarted=https://cloud.google.com/solutions/rabbitmq" class="maia-button  try-it cp-track" id="try-body" event="autotrack-data-g" data-g-event="Solutions: RabbitMQ: Canvas" data-g-action="Project CTA" data-g-label="Solutions: RabbitMQ">Try it now</a> or <a href="../../contact" class="contact-sales" event="autotrack-data-g" data-g-event="Solutions: RabbitMQ: Canvas " data-g-action="Contact Sales" data-g-label="Solutions: RabbitMQ">Contact sales</a>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div id="maia-main">
+
+    <div class="generic-section section-1">
+      <div class="maia-cols">
+        <div class="maia-col-12">
+  <h2 class="headline" style="margin-bottom: 1em;">
+<span class="scroll-section" data-section-label="Over 1 million messages per second">
+  Click to Deploy RabbitMQ cluster handles over 1 million messages per second
+</span>
+  </h2>
+  <p>
+    RabbitMQ is an open source messaging system that serves a variety of use cases. Through Click to Deploy feature, Google Cloud Platform makes it easy to <a href="https://console.developers.google.com?getstarted=https://cloud.google.com/solutions/rabbitmq"  data-g-event="Solutions: RabbitMQ: Benefits" data-g-action="Project CTA" data-g-label="Solutions: RabbitMQ" event="autotrack-data-g">instantiate a dedicated RabbitMQ cluster</a> in a matter of few minutes. Our RabbitMQ test clusters were able to sustain a throughput of over <a href="http://googlecloudplatform.blogspot.com/2014/06/rabbitmq-on-google-compute-engine.html" data-g-event="Solutions: RabbitMQ: Benefits" data-g-action="Text Link: Devsite" data-g-label="Solutions: RabbitMQ: Benefits" event="autotrack-data-g">1 million messages published and consumed per second</a> (a sustained combined ingress/egress of over two million messages per second), validating it as a great fit for high throughput and low latency scenarios.
+  </p>
+</div>
+
+<div class="maia-col-12">
+  <h3 class="subheadline">Benefits of RabbitMQ on Google Cloud Platform:</h3>
+  <ul class="benefits maia-cols">
+    <li class="icon-item maia-col-4">
+      <img class="icon" src="/images/solutions/rabbitmq/icon_flexible.png">
+      <h4 class="icon-item-headline">Robustness and Flexibility</h4>
+      <p class="icon-item-detail">RabbitMQ supports messaging over a variety of messaging protocols. There are RabbitMQ clients for almost any language you can think of.</p>
+    </li>
+    <li class="icon-item maia-col-4">
+      <img class="icon" src="/images/solutions/cassandra/icon_fast.png">
+      <h4 class="icon-item-headline">High Throughput</h4>
+      <p class="icon-item-detail">Google Cloud Platform automatically deploys a suitably clustered RabbitMQ configuration capable of sustaining higher loads and throughputs than a single broker.</p>
+    </li>
+    <li class="icon-item maia-col-4">
+      <img class="icon" src="/images/solutions/cassandra/icon_redundancy.png">
+      <h4 class="icon-item-headline">High Availability</h4>
+      <p class="icon-item-detail">Easily take advantage of RabbitMQ’s mirrored queue HA feature on Google Cloud Platform.</p>
+    </li>
+  </ul>
+</div>
+      </div>
+    </div>
+
+    <div class="generic-section section-2">
+      <div class="maia-cols">
+        <h2 class="headline maia-col-12">
+            <span class="scroll-section space-bottom" data-section-label="How to Get Started">
+How to Get Started</span>
+        </h2>
+       <div class="maia-col-6">
+  <h3 class="subheadline">Use RabbitMQ</h3>
+  <p><a href="https://developers.google.com/compute/docs/rabbitmq-cluster-on-compute-engine?hl=en" target="_blank" data-g-event="Solutions: RabbitMQ: How To" data-g-action="Text Link: Devsite" data-g-label="Solutions: RabbitMQ: How To" event="autotrack-data-g">Follow our tutorial</a> to learn how to quickly deploy and configure RabbitMQ cluster on Google Compute Engine. The tutorial leaves you with a running RabbitMQ cluster configured to your specifications while incorporating best practices.</p>
+  <h3 class="subheadline" style="margin-top:20px;">Documentation and code</h3>
+  <ul class="resource-list">
+    <li><a href="http://www.rabbitmq.com/getstarted.html" target="_blank" data-g-event="Solutions: RabbitMQ: How To" data-g-action="Text Link: RabbitMQ.com" data-g-label="Messaging Patterns Tutorial" event="autotrack-data-g">Messaging Patterns Tutorial</a></li>
+    <li><a href="http://www.rabbitmq.com/management.html" target="_blank" data-g-event="Solutions: RabbitMQ: How To" data-g-action="Text Link: RabbitMQ.com" data-g-label="Management Plugin UI" event="autotrack-data-g">Management Plugin UI</a></li>
+    <li><a href="http://www.rabbitmq.com/clients.html" target="_blank" data-g-event="Solutions: RabbitMQ: How To" data-g-action="Text Link: RabbitMQ.com" data-g-label="Clients for Java, .NET and Erlang" event="autotrack-data-g">Clients for Java, .NET and Erlang</a></li>
+    <li><a href="http://www.rabbitmq.com/devtools.html" target="_blank" data-g-event="Solutions: RabbitMQ: How To" data-g-action="Text Link: RabbitMQ.com" data-g-label="Developer Tools" event="autotrack-data-g">Developer Tools</a></li>
+    <li><a href="http://www.rabbitmq.com/clustering.html" target="_blank" data-g-event="Solutions: RabbitMQ: How To" data-g-action="Text Link: RabbitMQ.com" data-g-label="Clustering Guide" event="autotrack-data-g">Clustering Guide</a></li>
+    <li><a href="http://www.rabbitmq.com/ha.html" target="_blank" data-g-event="Solutions: RabbitMQ: How To" data-g-action="Text Link: RabbitMQ.com" data-g-label="HA and Mirrored Queues Guide" event="autotrack-data-g">HA and Mirrored Queues Guide</a></li>
+  </ul>
+</div>
+
+<div class="maia-col-6">
+  <h3 class="subheadline">Video</h3>
+  <p>See the demo on RabbitMQ deployment</p>
+  <a class="maia-media ltd-vid-a lb" data-lightbox-height="360" data-lightbox-width="640" href="//www.youtube.com/watch?v=P65VBG04opw&autoplay=1" data-lightbox-index="0" data-g-event="Solutions: RabbitMQ: How To" data-g-action="Watch Video" data-g-label="Deploying RabbitMQ" event="autotrack-data-g">
+    <img class="ltd-video-img" alt="Video Image" src="../../images/solutions/rabbitmq-video.png" style="width: 100%;">
+  </a>
+</div>
+      </div>
+    </div>
+    
+    <div class="generic-section section-3">
+      <div class="maia-cols">
+        <h2 class="headline maia-col-12">
+            <span class="scroll-section" data-section-label="Get in Touch">
+Get in Touch</span>
+        </h2>
+        <div class="maia-col-6">
+  <h3 class="subheadline">Contact sales</h3>
+  <p>Let our sales team help you determine the best way to begin using RabbitMQ on Google Cloud Platform.</p>
+  <p><a href="../../contact" data-g-event="Solutions: RabbitMQ: Get In Touch" data-g-action="Contact Sales" data-g-label="Solutions: RabbitMQ: Get In Touch" event="autotrack-data-g">Contact sales</a></p>
+</div>
+
+<div class="maia-col-6">
+  <h3 class="subheadline">Get RabbitMQ Support from Pivotal</h3>
+  <p>Pivotal Software provides commercial support for RabbitMQ in cloud and on-premise environments. </p>
+  <p><a href="http://www.gopivotal.com/support/oss" target="_blank" data-g-event="Solutions: RabbitMQ: Get In Touch" data-g-action="Text Link: Pivotal" data-g-label="Pivotal" event="autotrack-data-g">Learn more about RabbitMQ Support</a></p>
+</div>
+
+<div class="maia-col-6">
+  <h3 class="subheadline">Managed RabbitMQ with CloudAMQP</h3>
+  <p>With RabbitMQ-as-a-Service, CloudAMQP will manage, monitor and scale your RabbitMQ on Google Cloud Platform.</p>
+  <p><a href="http://www.cloudamqp.com/gce.html" target="_blank" data-g-event="Solutions: RabbitMQ: Get In Touch" data-g-action="Text Link: CloudAMQP" data-g-label="CloudAMQP" event="autotrack-data-g">Learn more about RabbitMQ-as-a-Service</a></p>
+</div>
+      </div>
+    </div>
+    
+   
+    <div class="generic-section section-4">
+      <div class="maia-cols">
+        <h2 class="headline maia-col-12">
+            
+        </h2>
+        
+      </div>
+    </div>
+     </div>
+  </div>
+
+
+ <!-- is this feedback sticky needed?
+  <div class="feedback-sticky"><a href="javascript:void(0);">Feedback</a></div>
+  <script type="text/javascript" src="//www.gstatic.com/feedback/api.js"></script>
+  <script>
+    jQuery('body').delegate('.feedback-sticky', 'click', function() {
+      _gaq.push(['_trackEvent', 'Feedback', 'User Feedback: ' + location.pathname]);
+      userfeedback.api.startFeedback({'productId': '96209'});
+    });
+  </script>
+  -->
+
+  <!-- Scripts to include both on Goro + Devsite -->
+  <script type="text/javascript">
+   window.___gcfg = {
+     lang: ''
+   };
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+  </script>
+
+  <!-- GTM implementation -->
+  
+  <!-- Start dataLayer -->
+    <script>
+      dataLayer = [{
+        'country': '',
+        'region': '',
+        'language': 'en'
+      }];
+    </script>
+  <!-- End dataLayer -->
+  
+  <!-- Start Google Tag Manager -->
+  <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5CVQBG"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-5CVQBG');</script>
+  <!-- End Google Tag Manager -->    
+
+
+
+<!-- Global JS scripts to load; path will depend on whether we're on devsite or Goro -->
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular-sanitize.js"></script>
+
+  <script src="/js/base.min.js"></script>
+
+
+
+
+<!-- Secondary right-side scroll-nav -->
+<script>
+  new lfl.ui.ScrollNav({});
+  new lfl.cloud.GlobalProductMenu();
+</script>
+
+<script>new cloud.SocialFeeds(document.getElementById('feeds'));</script>
+
+
+
+  <div id="maia-signature"></div>
+  <div id="maia-footer">
+
+    <!-- maia-footer-local -->
+    <div id="maia-footer-local">
+      <div class="maia-aux">
+        
+          <div class="ent-footer-top">
+  <div class="g-plus-wrapper">
+    <div class="g-plusone" data-href="http://cloud.google.com"></div>
+  </div>
+  <div class="g-plus-link"><a href="https://plus.google.com/+googlecloudplatform" rel="publisher">Google+</a></div>
+  <div class="search">
+    <form onsumbit="return false;" class="maia-search">
+    <input name="q" placeholder="Search this site" type="text">
+    <input name="hl" type="hidden" value="">
+    <input name="q" type="hidden" value="site:cloud.google.com/">
+    <button class="maia-button" event="autotrack-data-g" data-g-event="Footer" data-g-action="Site Search" data-g-label="Submit">
+      <span class="maia-search-icon">Search</span>
+    </button>
+    </form>
+  </div>
+
+</div>
+
+<div class="ent-footer-links">
+  <div class="ent-footer-unit">
+    <h4><a href="/why-google/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Why Google" data-g-label="Why Google">Why Google</a></h4>
+    <ul>
+      <li><a href="/why-google/#infrastructure" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Why Google" data-g-label="Infrastructure">Infrastructure</a></li>
+      <li><a href="/why-google/#product" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Why Google" data-g-label="Product">Product</a></li>
+      <li><a href="/why-google/#services" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Why Google" data-g-label="Services">Services</a></li>
+      <li><a href="/why-google/#scalability" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Why Google" data-g-label="Scalability">Scalability</a></li>
+      <li><a href="/why-google/#performance" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Why Google" data-g-label="Performance">Performance</a></li>
+      <li><a href="/why-google/#support" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Why Google" data-g-label="Support">Support</a></li>      
+    </ul>
+  </div>
+
+  <div class="ent-footer-unit">
+    <h4><a href="/products/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="Products">Products</a></h4>
+    <ul>
+      <li><a href="/products/app-engine/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="App Engine">App Engine</a></li>
+      <li><a href="/products/compute-engine/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="Compute Engine">Compute Engine</a></li>
+      <li><a href="/products/cloud-storage/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="Cloud Storage">Cloud Storage</a></li>
+      <li><a href="/products/cloud-sql/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="Cloud SQL">Cloud SQL</a></li>
+      <li><a href="/products/cloud-datastore/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="Cloud Datastore">Cloud Datastore</a></li>
+      <li><a href="/products/bigquery/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="BigQuery">BigQuery</a></li>
+      <li><a href="/products/prediction-api/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="Prediction API">Prediction API</a></li>
+      <li><a href="/products/translate-api/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="Translate API">Translate API</a></li>
+      <li><a href="/products/cloud-endpoints/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="Cloud Endpoints">Cloud Endpoints</a></li>
+      <li><a href="/products/calculator/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="Pricing Calculator">Pricing Calculator</a></li>
+      <li><a href="/pricing/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="Pricing">Pricing</a></li>
+    </ul>
+  </div>
+
+  <div class="ent-footer-unit">
+    <h4><a href="/solutions" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Solutions" data-g-label="Solutions">Solutions</a></h4>
+    <ul>
+      <li><a href="/solutions/mobile/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Solutions" data-g-label="Mobile">Mobile</a></li>
+      <li><a href="/solutions/gaming/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Solutions" data-g-label="Gaming">Gaming</a></li>
+      <li><a href="/solutions/hadoop/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Solutions" data-g-label="Hadoop">Hadoop</a></li>
+      <li><a href="/solutions/mongodb/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Solutions" data-g-label="mongodb">mongodb</a></li>
+
+    </ul>
+  </div>
+
+  <div class="ent-footer-unit">
+    <h4><a href="/customers/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Customers" data-g-label="Customers">Customers</a></h4>
+  </div>
+
+  <div class="ent-footer-unit">
+    <h4><a href="/developers/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Developers" data-g-label="Developers">Developers</a></h4>
+    <ul>
+      <li><a href="/developers#documentation" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Developers" data-g-label="Documentation">Documentation</a></li>
+      <li><a href="/developers#resources" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Developers" data-g-label="Resources">Resources</a></li>
+    </ul>
+  </div>
+
+  <div class="ent-footer-unit">
+    <h4><a href="/support/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Support" data-g-label="Support">Support</a></h4>
+    <ul>
+      <li><a href="https://support.google.com/" target="_blank" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Support" data-g-label="Google Cloud Platform Support Help Center">Platform Support Help Center</a></li>
+      <li><a href="https://support.google.com/cloudbilling/" target="_blank" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Support" data-g-label="Google Cloud Billing Help Center">Billing Help Center</a></li>
+      <li><a href="https://enterprise.google.com/supportcenter" target="_blank" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Support" data-g-label="Google Enterprise Support Center">Google Enterprise Support Center</a></li>      
+    </ul>
+    
+  </div>
+
+  
+  <div class="ent-footer-unit">
+    <h4><a href="/partners/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Partners" data-g-label="Partners">Partners</a></h4>
+    <ul>
+      <li><a href="/partners/technology-partners/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Partners" data-g-label="Find A Technology Partner">Technology Partners</a></li>
+      <li><a href="/partners/service-partners/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Partners" data-g-label="Find A Service Partner">Find a Service Partner</a></li>
+    </ul>
+  </div>
+ 
+</div>
+<br class="clear" />
+
+        
+      </div>
+    </div>
+    <!-- /maia-footer-local -->
+
+    <!-- maia-footer-global -->
+    <div id="maia-footer-global">
+      <div class="maia-aux">
+        <ul>
+          <li><a href="http://www.google.com/">Google</a></li>
+          <li><a href="https://developers.google.com/readme/terms">Terms of Service</a></li>
+          <li><a href="http://www.google.com/intlprivacy/">Privacy Policy</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <!-- /maia-footer-global -->
+  <script type="text/javascript" async="" defer="" src="//www.gstatic.com/feedback/api.js"></script>
+  <script id="jqueryui" src="//ajax.googleapis.com/ajax/libs/jqueryui/1.8.10/jquery-ui.min.js"></script>
+
+  <!--script src="/_static/js/script_foot.js"></script-->
+  
+  </body>
+</html>

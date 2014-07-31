@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="en" class="maia">
+  <head>
+    <title>Why Google Cloud Platform - Google Cloud Platform</title>
+    <meta charset="utf-8" />
+    <link rel="shortcut icon" href="/_static/images/favicon.ico">
+    <link rel="apple-touch-icon" href="/_static/images/apple-touch-icon.png">
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:300,400,600,700' rel='stylesheet' type='text/css'>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+
+    <!--[if lt IE 9]>
+    <script src="/js/html5.js"></script>
+    <![endif]-->
+
+    <title>Cloud Computing &amp; Cloud Hosting Services — Google Cloud Platform</title>
+    <meta name="google-site-verification" content="8dOEM3Xenm6yaBc83y2WKgqQG0iHI7Ph6Rl_YLIZLQ8" />
+
+    <!-- GSAP animation frameworks -->
+    <script src="//www.gstatic.com/external_hosted/gsap/TweenMax.min.js"></script>
+    <script src="//www.gstatic.com/external_hosted/gsap/TimelineMax.min.js"></script>
+    <script src="/js/floodlight.js"></script>
+    <meta name="viewport" content="initial-scale=1, minimum-scale=1, width=device-width">
+    <link href="//fonts.googleapis.com/css?family=Open+Sans:400italic,300,400,600,700" rel="stylesheet">
+
+    <link href="//www.google.com/css/maia.experimental.css" rel="stylesheet">
+    <link href="/css/maia-cloud.css" rel="stylesheet"/>
+    <link href="/css/default.css" rel="stylesheet">
+  </head>
+  <body>
+  <div id="maia-header">
+    <div class="maia-aux">
+      <h1><a href="/"><img src="/images/gcp-logo.png" alt="Cloud Platform" data-retina="383x48"></a></h1>
+
+<div class="search-container">
+  
+  <form action="/search" class="maia-search">
+    <input type="text" placeholder="Search this site" name="q">
+    <button class="maia-button" type="submit" data-g-event="Maia: Button" data-g-action="Maia: Primary – Header" data-g-label="Search">
+      <span class="maia-search-icon">Search</span>
+    </button>
+  </form>
+  <div class="cloud-social">
+    <div class="cloud-signed-out">
+      <!-- <a href="/console" class="cp-track" id="try-header">Sign in</a> -->
+    </div>
+  </div>
+</div>
+
+    </div>
+  </div>
+  <div id="maia-nav-x" class="maia-nav">
+    <div class="maia-aux">
+   <div class="cp-cta">
+   <a class="cp-track maia-button maia-button-secondary white-button" href="/contact/">Contact sales</a>
+   <a class="cp-track maia-button blue-button" href="https://console.developers.google.com?getstarted=https://cloud.google.com" style="color: #ffffff;">Try it now</a>
+   </div>
+      <ul>
+        <li id="home-nav"
+            
+              class="active"
+            >
+
+            <a 
+              class="active"
+             href="index.html" event="autotrack-data-g" data-g-event="Global Nav" data-g-action="Nav Bar" data-g-label="Home"> 
+            Home
+            </a>
+        </li>      
+        <li
+            >
+            <a href="/why-google/" event="autotrack-data-g" data-g-event="Global Nav" data-g-action="Nav Bar" data-g-label="Why Google"> 
+            Why Google
+            </a>
+        </li>
+        <li id="main-nav-product-dropdown" class="dropdown">
+            <a href="/products/" event="autotrack-data-g" data-g-event="Global Nav" data-g-action="Nav Bar" data-g-label="Products"> 
+            Products
+            </a>
+        </li>
+        <li
+            >
+            <a href="/solutions/" event="autotrack-data-g" data-g-event="Global Nav" data-g-action="Nav Bar" data-g-label="Solutions"> 
+            Solutions
+            </a>
+        </li>
+        <li
+            >
+            <a href="/customers/" event="autotrack-data-g" data-g-event="Global Nav" data-g-action="Nav Bar" data-g-label="Customers"> 
+            Customers
+            </a>
+        </li>
+        <li
+            >
+            <a href="/developers/" event="autotrack-data-g" data-g-event="Global Nav" data-g-action="Nav Bar" data-g-label="Developers"> 
+            Developers
+            </a>            
+        </li>
+        <li
+            >
+            <a href="/support/" event="autotrack-data-g" data-g-event="Global Nav" data-g-action="Nav Bar" data-g-label="Support"> 
+            Support
+            </a>            
+        </li>
+        <li>
+            <a href="/partners/" event="autotrack-data-g" data-g-event="Global Nav" data-g-action="Nav Bar" data-g-label="Partners"> 
+            Partners
+            </a>            
+        </li>
+        <li>
+            <a href="https://github.com/GoogleDevDocs/googledevdocs.github.io/edit/master/why-google/index.html" event="autotrack-data-g" data-g-event="Global Nav" data-g-action="Nav Bar" data-g-label="Edit Page"> 
+            Edit Page
+            </a>            
+        </li>
+      </ul>
+    </div>
+  </div>
+
+<!-- Products subnav -->
+<div id="maia-nav-x" class="maia-nav products-nav">
+  <div class="maia-aux">
+    <div class="products-nav-dropdown maia-cols">
+
+      <div id="compute-dropdown" class="products-column maia-col-2">
+        <span class="product-list-title">Compute</span>
+        <div class="dropdown-item-container">
+          <a href="/products/compute-engine/">
+            <span class="product-name">Compute Engine</span>
+          </a>
+        </div>
+        <div class="dropdown-item-container">
+          <a href="/products/app-engine/">
+            <span class="product-name">App Engine</span>
+          </a>
+        </div>
+      </div>
+
+      <div id="storage-dropdown" class="products-column maia-col-2">
+        <span class="product-list-title">Storage</span>
+        <div class="dropdown-item-container">
+          <a href="/products/cloud-sql/">
+            <span class="product-name">Cloud SQL</span>
+          </a>
+        </div>
+        <div class="dropdown-item-container">
+          <a href="/products/cloud-storage/">
+            <span class="product-name">Cloud Storage</span>
+          </a>
+        </div>
+        <div class="dropdown-item-container">
+          <a href="/products/cloud-datastore/">
+            <span class="product-name">Cloud Datastore</span>
+          </a>
+        </div>
+      </div>
+
+      <div id="big-data-dropdown" class="products-column maia-col-2">
+        <span class="product-list-title">Big Data</span>
+        <div class="dropdown-item-container">
+          <a href="/products/bigquery/">
+            <span class="product-name">BigQuery</span>
+          </a>
+        </div>
+      </div>
+
+      <div id="services-dropdown" class="products-column maia-col-2">
+        <span class="product-list-title">Services</span>
+        <div class="dropdown-item-container">
+          <a href="/products/cloud-dns/">
+            <span class="product-name">Cloud DNS</span>
+          </a>
+        </div>
+        <div class="dropdown-item-container">
+          <a href="/products/cloud-endpoints/">
+            <span class="product-name">Cloud Endpoints</span>
+          </a>
+        </div>
+        <div class="dropdown-item-container">
+          <a href="/products/translate-api/">
+            <span class="product-name">Translate API</span>
+          </a>
+        </div>
+        <div class="dropdown-item-container">
+          <a href="/products/prediction-api/">
+            <span class="product-name">Prediction API</span>
+          </a>
+        </div>
+      </div>
+
+      <div id="management-dropdown" class="products-column maia-col-2">
+        <span class="product-list-title">Management</span>
+        <div class="dropdown-item-container">
+          <span class="product-name"><a href="/products/cloud-deployment-manager/">Cloud Deployment Manager</a></span>
+        </div>
+      </div>
+
+      <div id="pricing-dropdown" class="products-column maia-col-2">
+        <span class="product-list-title">Pricing</span>
+        <div class="dropdown-item-container">
+          <span class="product-name"><a href="/products/pricing/">Overview</a></span>
+        </div>
+        <div class="dropdown-item-container">
+          <span class="product-name"><a href="/products/calculator/">Calculator</a></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="site-wrapper why">
+  <div class="maia-stage page-header gray-header scroll-section" data-section-label="Why Google Platform">
+    <div class="maia-aux page-header-inner">
+      <div class="page-header-inner-inner">
+        <h1 class="headline">
+          Why Google Cloud Platform
+        </h1>
+        <p class="subheadline">
+          Google Cloud Platform enables developers to build, test and deploy applications on Google’s highly-scalable and reliable infrastructure. Choose from computing, storage and application services for your web, mobile and backend solutions.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div id="maia-main">
+    <div id="infrastructure" class="case-section generic-section scroll-section" data-section-label="Run on Google's infrastructure">
+      <div class="maia-cols">
+        <div class="maia-col-8">
+          <div class="intro-block">
+            <h2 class="headline">
+              Run on Google’s infrastructure
+            </h2>
+            <p>Build on the same <a href="http://www.google.com/about/datacenters/" target="_blank" event="autotrack-data-g" data-g-event="Why Google" data-g-action="Infrastructure" data-g-label="Infrastructer: Data centers">infrastructure</a> that allows Google to return billions of search results in milliseconds, serve 6 billion hours of YouTube video per month and provide storage for 425 million Gmail users.</p>
+          </div>
+
+          <div class="details maia-cols">
+            <div class="why-section maia-col-12">
+              <div class="section-headline-img image-wrapper maia-col-1">
+                <img src="/images/why-google/icon-network.png" alt="">
+              </div>
+              <div class="section-headline maia-col-8">
+                <p><em>Global network</em></p>
+              </div>
+              <div class="featr-txt maia-col-12">
+                <p>Google has one of the largest and most advanced computer networks.  Google’s backbone network has thousands of miles of fiber optic cable, uses advanced software-defined networking and has edge caching services to deliver fast, consistent and scalable performance. In fact, we even laid our own fiber optic cable under the Pacific Ocean.</p>
+              </div>
+            </div>
+
+            <div class="why-section maia-col-12">
+              <div class="section-headline-img image-wrapper maia-col-1">
+                <img src="/images/why-google/icon-redund.png" alt="">
+              </div>
+              <div class="section-headline maia-col-8">
+                <p><em>Redundancy</em></p>
+              </div>
+              <div class="featr-txt maia-col-12">
+                <p>Multiple points of presence across the globe provides strong redundancy. Your data is automatically mirrored across storage devices in multiple locations.</p>
+              </div>
+            </div>
+
+            <div class="why-section maia-col-12">
+              <div class="section-headline-img image-wrapper maia-col-1">
+                <img src="/images/why-google/icon-compsc.png" alt="">
+              </div>
+              <div class="section-headline maia-col-8">
+                <p><em>Cutting-edge computer science</em></p>
+              </div>
+              <div class="featr-txt maia-col-12">
+                <p>Infrastructure innovation isn’t just about hardware. Google has led the industry with innovations in software infrastructure such as <a href="http://static.googleusercontent.com/media/research.google.com/en/us/archive/mapreduce-osdi04.pdf" target="_blank" event="autotrack-data-g" data-g-event="Why Google" data-g-action="Infrastructure" data-g-label="MapReduce">MapReduce</a>, <a href="http://static.googleusercontent.com/media/research.google.com/en/us/archive/bigtable-osdi06.pdf" target="_blank" event="autotrack-data-g" data-g-event="Why Google" data-g-action="Infrastructure" data-g-label="BigTable">BigTable</a> and <a href="http://static.googleusercontent.com/media/research.google.com/en/us/pubs/archive/36632.pdf" target="_blank" event="autotrack-data-g" data-g-event="Why Google" data-g-action="Infrastructure" data-g-label="Dremel">Dremel</a>.  Today, Google is pushing the next generation of innovation with products such as <a href="http://www.wired.com/wiredenterprise/2012/11/google-spanner-time/" target="_blank" event="autotrack-data-g" data-g-event="Why Google" data-g-action="Infrastructure" data-g-label="Spanner">Spanner</a> and <a href="http://pages.cs.wisc.edu/~akella/CS838/F12/838-CloudPapers/FlumeJava.pdf" targt="_blank" event="autotrack-data-g" data-g-event="Why Google" data-g-action="Infrastructure" data-g-label="Flume">Flume</a>. When you build on Cloud Platform, you get access to Google’s technology innovations faster.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="why-author maia-col-4">
+          <img src="/images/why-google/whyggl-infrust.jpg" alt="Google Infrastructure"/>
+          <div class="author-header">
+            <blockquote>"[Google's] ability to build, organize, and operate a huge network of servers and fiber-optic cables with an efficiency and speed that rocks physics on its heels...This is what makes Google Google: its physical network, its thousands of fiber miles, and those many thousands of servers that, in aggregate, add up to the mother of all clouds."</blockquote>
+          </div>
+          <div class="author-content">
+            <ul class="link-list why-google-list">
+            <li><a href="http://www.wired.com/wiredenterprise/2012/10/ff-inside-google-data-center/all/" target="_blank" event="autotrack-data-g" data-g-event="Why Google" data-g-action="Infrastructure" data-g-label="Wired Magazine">Wired Magazine</a></li>
+            <a href="http://www.google.com/about/datacenters/" target="_blank" event="autotrack-data-g" data-g-event="Why Google" data-g-action="Infrastructure" data-g-label="Take a virtual tour of our data centers">Take a virtual tour of our data centers
+</a>
+          </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="product" class="case-section generic-section scroll-section" data-section-label="Focus on your product">
+      <div class="maia-cols">
+
+        <div class="maia-col-8">
+          <div class="intro-block">
+            <h2 class="headline">
+              Focus on your product
+            </h2>
+            <p>Rapidly develop, deploy and iterate your applications without worrying about system administration. Google manages your application, database and storage servers so you don’t have to.</p>
+          </div>
+
+          <div class="details maia-cols">
+            <div class="why-section maia-col-12">
+              <div class="section-headline-img image-wrapper maia-col-1">
+                <img src="/images/why-google/icon-gears.png" alt="">
+              </div>
+              <div class="section-headline maia-col-8">
+                <p><em>Managed services</em></p>
+              </div>
+              <div class="featr-txt maia-col-12">
+                <p>Let Google worry about database administration, server configuration, sharding and load balancing while you focus on your code. No need to carry a pager or write boilerplate code.</p>
+              </div>
+            </div>
+
+            <div class="why-section maia-col-12">
+              <div class="section-headline-img image-wrapper maia-col-1">
+                <img src="/images/why-google/icon-tools.png" alt="">
+              </div>
+              <div class="section-headline maia-col-8">
+                <p><em>Developer tools and SDKs</em></p>
+              </div>
+              <div class="featr-txt maia-col-12">
+                <p>Google integrates with familiar development tools like Eclipse and provides API client libraries and a command-line interface, which makes it easy to build the way you want.</p>
+              </div>
+            </div>
+
+            <div class="why-section maia-col-12">
+              <div class="section-headline-img image-wrapper maia-col-1">
+                <img src="/images/why-google/icon-admin.png" alt="">
+              </div>
+              <div class="section-headline maia-col-8">
+                <p><em>Console and administration</em></p>
+              </div>
+              <div class="featr-txt maia-col-12">
+                <p>See and manage all of your applications from a single console. View the performance of your applications and manage your account and billing with a simple interface.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="why-author maia-col-4">
+          <div class="author-header">
+            <blockquote>"If we didn’t have Google App Engine, we’d be spending a lot more time figuring out server setup and working on routers. Our ability to focus on the actual product is the benefit of Google App Engine."</blockquote>
+          </div>
+          <div class="author-content">
+            <ul class="link-list why-google-list">
+            <li><a href="https://www.khanacademy.org/" target="_blank" event="autotrack-data-g" data-g-event="Why Google" data-g-action="Infrastructure" data-g-label="Wired Magazine">Khan Academy</a></li>
+            <a href="" target="_blank" event="autotrack-data-g" data-g-event="Why Google" data-g-action="Infrastructure" data-g-label="Take a virtual tour of our data centers">Read about Khan Academy</a>
+          </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <div id="scalability" class="case-section generic-section scroll-section" data-section-label="Scale to millions of users">
+      <div class="maia-cols">
+        <div class="maia-col-8">
+          <div class="intro-block">
+            <h2 class="headline">
+            Scale to millions of users (and back)
+            </h2>
+            <p>Applications hosted on Cloud Platform can automatically scale up to handle the most demanding workloads and scale down when traffic subsides. You pay only for what you use.</p>
+          </div>
+
+          <div class="details maia-cols">
+            <div class="why-section maia-col-12">
+              <div class="section-headline-img image-wrapper maia-col-1">
+                <img src="/images/why-google/icon-scaleup.png" alt="">
+              </div>
+              <div class="section-headline maia-col-8">
+                <p><em>Scale-up</em></p>
+              </div>
+              <div class="featr-txt maia-col-12">
+                <p>Cloud Platform is designed to scale like Google’s own products, even when you experience a huge traffic spike. Managed services such as App Engine or Cloud Datastore give you auto-scaling that enables your application to grow with your users.</p>
+              </div>
+            </div>
+
+            <div class="why-section maia-col-12">
+              <div class="section-headline-img image-wrapper maia-col-1">
+                <img src="/images/why-google/icon-scaledn.png" alt="">
+              </div>
+              <div class="section-headline maia-col-8">
+                <p><em>Scale-down</em></p>
+              </div>
+              <div class="featr-txt maia-col-12">
+                <p>Just as Cloud Platform allows you to scale-up, managed services also scale down. You don’t pay for computing resources that you don’t need.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="why-author maia-col-4">
+          <div class="author-header">
+            <blockquote>"Google App Engine has allowed us to benefit from instant scalability. We haven’t had anything to worry about as the site grows."</blockquote>
+          </div>
+          <div class="author-content">
+            <ul class="link-list why-google-list">
+            <li><a href="" target="_blank" event="autotrack-data-g" data-g-event="Why Google" data-g-action="Infrastructure" data-g-label="Wired Magazine">Met Office</a></li>
+            <a href="" target="_blank" event="autotrack-data-g" data-g-event="Why Google" data-g-action="Infrastructure" data-g-label="Take a virtual tour of our data centers">Read about Met Office
+</a>
+          </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+
+    <div id="services" class="case-section generic-section scroll-section" data-section-label="Mix and match services">
+      <div class="maia-cols">
+        <div class="maia-col-8">
+          <div class="intro-block">
+            <h2 class="headline">
+              Mix and match services
+            </h2>
+            <p>Virtual machines. Managed platform. Blob storage. Block storage. NoSQL datastore. MySQL database. Big Data analytics. Google Cloud Platform has all the services your application architecture needs.</p>
+          </div>
+
+          <div class="details maia-cols">
+            <div class="why-section maia-col-12">
+              <div class="section-headline-img image-wrapper maia-col-1">
+                <img src="/images/why-google/icon-compute.png" alt="">
+              </div>
+              <div class="section-headline maia-col-8">
+                <p><em>Compute</em></p>
+              </div>
+              <div class="featr-txt maia-col-12">
+                <p>Cloud Platform offers both a fully managed platform and flexible virtual machines, allowing you to choose a system that meets your needs. Use <a href="../products/app-engine" event="autotrack-data-g" data-g-event="Why Google" data-g-action="Services" data-g-label="App Engine">App Engine</a>, our Platform-as-a-Service, when you just want to focus on your code and not worry about patching or maintenance. Get access to raw virtual machines with <a href="../products/compute-engine" event="autotrack-data-g" data-g-event="Why Google" data-g-action="Services" data-g-label="Compute Engine">Compute Engine</a> and have the flexibility to build anything you need.</p>
+              </div>
+            </div>
+
+            <div class="why-section maia-col-12">
+              <div class="section-headline-img image-wrapper maia-col-1">
+                <img src="/images/why-google/icon-storage.png" alt="">
+              </div>
+              <div class="section-headline maia-col-8">
+                <p><em>Storage</em></p>
+              </div>
+              <div class="featr-txt maia-col-12">
+                <p>Google Cloud Platform provides a range of storage services that allow you to maintain easy and quick access to your data. With <a href="../products/cloud-sql" event="autotrack-data-g" data-g-event="Why Google" data-g-action="Services" data-g-label="Cloud SQL">Cloud SQL</a> and <a href="../products/cloud-datastore" event="autotrack-data-g" data-g-event="Why Google" data-g-action="Services" data-g-label="Datastore">Datastore</a> you get MySQL or schemaless NoSQL databases, while <a href="../products/cloud-storage" event="autotrack-data-g" data-g-event="Why Google" data-g-action="Services" data-g-label="Cloud Storage">Cloud Storage</a> provides flexible object storage with global edge caching.</p>
+              </div>
+            </div>
+
+            <div class="why-section maia-col-12">
+              <div class="section-headline-img image-wrapper maia-col-1">
+                <img src="/images/why-google/icon-cloud.png" alt="">
+              </div>
+              <div class="section-headline maia-col-8">
+                <p><em>Services</em></p>
+              </div>
+              <div class="featr-txt maia-col-12">
+                <p>Use Google APIs and services to quickly enable a wide range of functionality for your application. You don’t need to build these from scratch, just take advantage of easy integration within Cloud Platform.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+
+    <div id="performance" class="case-section generic-section scroll-section" data-section-label="Performance you can count on">
+      <div class="maia-cols">
+
+        <div class="maia-col-8">
+          <div class="intro-block">
+            <h2 class="headline">
+              Performance you can count on
+            </h2>
+            <p>Every millisecond of latency matters. Google’s compute infrastructure gives you consistent CPU, memory and disk performance. Our network and edge cache serve responses rapidly to your users across the world.</p>
+          </div>
+
+          <div class="details maia-cols">
+            <div class="why-section maia-col-12">
+              <div class="section-headline-img image-wrapper maia-col-1">
+                <img src="/images/why-google/icon-cpu.png" alt="">
+              </div>
+              <div class="section-headline maia-col-8">
+                <p><em>CPU, memory, disk</em></p>
+              </div>
+              <div class="featr-txt maia-col-12">
+                <p>Google Cloud Platform provides fast and consistent performance across the range of computing, storage and application services. With powerful processing, access to the memory you need and high IOPS, your application will deliver consistent performance to your users. You enjoy the benefits of reduced latency and avoid noisy-neighbor problems.</p>
+              </div>
+            </div>
+
+            <div class="why-section maia-col-12">
+              <div class="section-headline-img image-wrapper maia-col-1">
+                <img src="/images/why-google/icon-network.png" alt="">
+              </div>
+              <div class="section-headline maia-col-8">
+                <p><em>Global network</em></p>
+              </div>
+              <div class="featr-txt maia-col-12">
+                <p>Google uses software-defined networking technology to route packets across the globe and enable fast edge-caching so that your data is where it needs to be to serve your users. When every millisecond of latency counts, Google makes sure that your content is delivered quickly.</p>
+              </div>
+            </div>
+
+            <div class="why-section maia-col-12">
+              <div class="section-headline-img image-wrapper maia-col-1">
+                <img src="/images/why-google/icon-tools.png" alt="">
+              </div>
+              <div class="section-headline maia-col-8">
+                <p><em>Transparent maintenance</em></p>
+              </div>
+              <div class="featr-txt maia-col-12">
+                <p>JVirtual machines never go down for scheduled maintenance with new, built-in live-migration technology.  Get the peace of mind of knowing hosts are patched and data centers are maintained without the headaches of downtime.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+
+    <div id="support" class="case-section generic-section scroll-section" data-section-label="Get the support you need">
+      <div class="maia-cols">
+        <div class="maia-col-8">
+          <div class="intro-block">
+            <h2 class="headline">
+              Get the support you need
+            </h2>
+            <p>Google Cloud Platform is backed up by a robust support offering providing you with varying levels of support options depending on your needs.</p>
+          </div>
+
+          <div class="details maia-cols">
+
+            <div class="why-section maia-col-12">
+              <div class="section-headline-img image-wrapper maia-col-1">
+                <img src="/images/why-google/icon-bubble.png" alt="">
+              </div>
+              <div class="section-headline maia-col-8">
+                <p><em>Free community based support</em></p>
+              </div>
+              <div class="featr-txt maia-col-12">
+                <p>All customers have access to free community based support including <a href="https://support.google.com/cloud">resources</a>, training content, and <a href="http://developers.google.com/cloud">documentation</a>. We also utilize first and third party resources to actively monitor and answer questions on Stackoverflow which helps build out a highly curated, reliable source of public support information. You can also reach us on <a href="http://twitter.com/googlecloud">Twitter</a>, <a href="http://google.com/+googlecloudplatform">G+</a>, or our <a href="https://plus.google.com/u/1/communities/105461889719084929003">G+ Community page</a>.</p>
+              </div>
+            </div>
+
+            <div class="why-section maia-col-12">
+              <div class="section-headline-img image-wrapper maia-col-1">
+                <img src="/images/why-google/icon-phone.jpg" alt="">
+              </div>
+              <div class="section-headline maia-col-8">
+                <p><em>24x7 Phone Support</em></p>
+              </div>
+              <div class="featr-txt maia-col-12">
+                <p>Access trained experts 24x7 over the phone, in English or Japanese with your comprehensive 24x7 Gold Support package.  Get rapid response times to make sure your issues are addressed with the highest priorities.  We also offer consultation on application development, best practices, and architecture reviews for your specific use cases. For the most mission-critical applications secure direct access to our  Technical Account Management team for an even higher level of service.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+       </div>
+       </div>
+       </div>
+
+ <!-- is this feedback sticky needed?
+  <div class="feedback-sticky"><a href="javascript:void(0);">Feedback</a></div>
+  <script type="text/javascript" src="//www.gstatic.com/feedback/api.js"></script>
+  <script>
+    jQuery('body').delegate('.feedback-sticky', 'click', function() {
+      _gaq.push(['_trackEvent', 'Feedback', 'User Feedback: ' + location.pathname]);
+      userfeedback.api.startFeedback({'productId': '96209'});
+    });
+  </script>
+  -->
+
+  <!-- Scripts to include both on Goro + Devsite -->
+  <script type="text/javascript">
+   window.___gcfg = {
+     lang: ''
+   };
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+  </script>
+
+  <!-- GTM implementation -->
+  
+  <!-- Start dataLayer -->
+    <script>
+      dataLayer = [{
+        'country': '',
+        'region': '',
+        'language': 'en'
+      }];
+    </script>
+  <!-- End dataLayer -->
+  
+  <!-- Start Google Tag Manager -->
+  <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5CVQBG"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-5CVQBG');</script>
+  <!-- End Google Tag Manager -->    
+
+
+
+<!-- Global JS scripts to load; path will depend on whether we're on devsite or Goro -->
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular-sanitize.js"></script>
+
+  <script src="/js/base.min.js"></script>
+
+
+
+
+<!-- Secondary right-side scroll-nav -->
+<script>
+  new lfl.ui.ScrollNav({});
+  new lfl.cloud.GlobalProductMenu();
+</script>
+
+<script>new cloud.SocialFeeds(document.getElementById('feeds'));</script>
+
+
+
+  <div id="maia-signature"></div>
+  <div id="maia-footer">
+
+    <!-- maia-footer-local -->
+    <div id="maia-footer-local">
+      <div class="maia-aux">
+        
+          <div class="ent-footer-top">
+  <div class="g-plus-wrapper">
+    <div class="g-plusone" data-href="http://cloud.google.com"></div>
+  </div>
+  <div class="g-plus-link"><a href="https://plus.google.com/+googlecloudplatform" rel="publisher">Google+</a></div>
+  <div class="search">
+    <form onsumbit="return false;" class="maia-search">
+    <input name="q" placeholder="Search this site" type="text">
+    <input name="hl" type="hidden" value="">
+    <input name="q" type="hidden" value="site:cloud.google.com/">
+    <button class="maia-button" event="autotrack-data-g" data-g-event="Footer" data-g-action="Site Search" data-g-label="Submit">
+      <span class="maia-search-icon">Search</span>
+    </button>
+    </form>
+  </div>
+
+</div>
+
+<div class="ent-footer-links">
+  <div class="ent-footer-unit">
+    <h4><a href="/why-google/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Why Google" data-g-label="Why Google">Why Google</a></h4>
+    <ul>
+      <li><a href="/why-google/#infrastructure" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Why Google" data-g-label="Infrastructure">Infrastructure</a></li>
+      <li><a href="/why-google/#product" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Why Google" data-g-label="Product">Product</a></li>
+      <li><a href="/why-google/#services" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Why Google" data-g-label="Services">Services</a></li>
+      <li><a href="/why-google/#scalability" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Why Google" data-g-label="Scalability">Scalability</a></li>
+      <li><a href="/why-google/#performance" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Why Google" data-g-label="Performance">Performance</a></li>
+      <li><a href="/why-google/#support" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Why Google" data-g-label="Support">Support</a></li>      
+    </ul>
+  </div>
+
+  <div class="ent-footer-unit">
+    <h4><a href="/products/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="Products">Products</a></h4>
+    <ul>
+      <li><a href="/products/app-engine/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="App Engine">App Engine</a></li>
+      <li><a href="/products/compute-engine/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="Compute Engine">Compute Engine</a></li>
+      <li><a href="/products/cloud-storage/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="Cloud Storage">Cloud Storage</a></li>
+      <li><a href="/products/cloud-sql/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="Cloud SQL">Cloud SQL</a></li>
+      <li><a href="/products/cloud-datastore/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="Cloud Datastore">Cloud Datastore</a></li>
+      <li><a href="/products/bigquery/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="BigQuery">BigQuery</a></li>
+      <li><a href="/products/prediction-api/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="Prediction API">Prediction API</a></li>
+      <li><a href="/products/translate-api/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="Translate API">Translate API</a></li>
+      <li><a href="/products/cloud-endpoints/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="Cloud Endpoints">Cloud Endpoints</a></li>
+      <li><a href="/products/calculator/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="Pricing Calculator">Pricing Calculator</a></li>
+      <li><a href="/pricing/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="Pricing">Pricing</a></li>
+    </ul>
+  </div>
+
+  <div class="ent-footer-unit">
+    <h4><a href="/solutions" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Solutions" data-g-label="Solutions">Solutions</a></h4>
+    <ul>
+      <li><a href="/solutions/mobile/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Solutions" data-g-label="Mobile">Mobile</a></li>
+      <li><a href="/solutions/gaming/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Solutions" data-g-label="Gaming">Gaming</a></li>
+      <li><a href="/solutions/hadoop/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Solutions" data-g-label="Hadoop">Hadoop</a></li>
+      <li><a href="/solutions/mongodb/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Solutions" data-g-label="mongodb">mongodb</a></li>
+
+    </ul>
+  </div>
+
+  <div class="ent-footer-unit">
+    <h4><a href="/customers/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Customers" data-g-label="Customers">Customers</a></h4>
+  </div>
+
+  <div class="ent-footer-unit">
+    <h4><a href="/developers/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Developers" data-g-label="Developers">Developers</a></h4>
+    <ul>
+      <li><a href="/developers#documentation" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Developers" data-g-label="Documentation">Documentation</a></li>
+      <li><a href="/developers#resources" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Developers" data-g-label="Resources">Resources</a></li>
+    </ul>
+  </div>
+
+  <div class="ent-footer-unit">
+    <h4><a href="/support/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Support" data-g-label="Support">Support</a></h4>
+    <ul>
+      <li><a href="https://support.google.com/" target="_blank" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Support" data-g-label="Google Cloud Platform Support Help Center">Platform Support Help Center</a></li>
+      <li><a href="https://support.google.com/cloudbilling/" target="_blank" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Support" data-g-label="Google Cloud Billing Help Center">Billing Help Center</a></li>
+      <li><a href="https://enterprise.google.com/supportcenter" target="_blank" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Support" data-g-label="Google Enterprise Support Center">Google Enterprise Support Center</a></li>      
+    </ul>
+    
+  </div>
+
+  
+  <div class="ent-footer-unit">
+    <h4><a href="/partners/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Partners" data-g-label="Partners">Partners</a></h4>
+    <ul>
+      <li><a href="/partners/technology-partners/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Partners" data-g-label="Find A Technology Partner">Technology Partners</a></li>
+      <li><a href="/partners/service-partners/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Partners" data-g-label="Find A Service Partner">Find a Service Partner</a></li>
+    </ul>
+  </div>
+ 
+</div>
+<br class="clear" />
+
+        
+      </div>
+    </div>
+    <!-- /maia-footer-local -->
+
+    <!-- maia-footer-global -->
+    <div id="maia-footer-global">
+      <div class="maia-aux">
+        <ul>
+          <li><a href="http://www.google.com/">Google</a></li>
+          <li><a href="https://developers.google.com/readme/terms">Terms of Service</a></li>
+          <li><a href="http://www.google.com/intlprivacy/">Privacy Policy</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <!-- /maia-footer-global -->
+  <script type="text/javascript" async="" defer="" src="//www.gstatic.com/feedback/api.js"></script>
+  <script id="jqueryui" src="//ajax.googleapis.com/ajax/libs/jqueryui/1.8.10/jquery-ui.min.js"></script>
+
+  <!--script src="/_static/js/script_foot.js"></script-->
+  
+  </body>
+</html>

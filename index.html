@@ -1,3119 +1,1557 @@
+<!DOCTYPE html>
+<html lang="en" class="maia">
+  <head>
+    <title>Cloud Computing - Google Cloud Platform</title>
+    <meta charset="utf-8" />
+    <link rel="shortcut icon" href="/_static/images/favicon.ico">
+    <link rel="apple-touch-icon" href="/_static/images/apple-touch-icon.png">
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:300,400,600,700' rel='stylesheet' type='text/css'>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
 
+    <!--[if lt IE 9]>
+    <script src="/js/html5.js"></script>
+    <![endif]-->
 
+    <title>Cloud Computing &amp; Cloud Hosting Services — Google Cloud Platform</title>
+    <meta name="google-site-verification" content="8dOEM3Xenm6yaBc83y2WKgqQG0iHI7Ph6Rl_YLIZLQ8" />
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <!-- /-->
-    <title>Google Cloud Documentation - Tech Demo for GH-Pages + Markdown + Jekyll + DevSite theme</title>
-    
-    <link rel="stylesheet" href="/css/style.css" type="text/css">
-    
-    <link rel="stylesheet" href="/css/pygments.css" type="text/css">
-    <link rel="stylesheet" href="/css/custom.css" type="text/css">
-    <!-- jQuery and jQuery UI -->
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.0/themes/smoothness/jquery-ui.css" />
-    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.0/jquery-ui.min.js"></script>
-    <!-- Prettify -->
-    <script src="/js/prettify/prettify.js" defer="defer"></script>
-    <script src="/js/prettify/run_prettify.js" defer="defer"></script>
-    <script type="text/javascript" src="/js/sidebar.js"></script>
-    <link rel="top" title="Tech Demo for GH-Pages + Markdown + Jekyll + DevSite theme" href="/">
-    <link rel="next" title="Tech Demo for GH-Pages + Markdown + Jekyll + DevSite theme" href="/">
-    <link rel="shortcut icon" href="/images/gcp-favicon.ico">
-    <link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
-    
-    <meta name="google-translate-customization" content="d17d135473e35496-0499b4c25cd86e87-g63ff5752eb1455f2-17"></meta>
-    </head>
-  <body role="document" class="two-column docs"><a href="https://github.com/GoogleDevDocs/googledevdocs.github.io/edit/master/index.md"><img style="position: absolute; top: 0; right: 0; border: 0; z-index: 999;" src="/images/forkme.png" alt="Fork me on GitHub"></a>
-    <div id="sandbar">
-      <header id="gc-googlebar">
-      <a id="gc-logo" href="/"><img src="/images/cloudplatform-horizontal.png" alt="Google Cloud Platform logo"></a>
-          <form class="gc-search" action="/search" method="get">
-            <div class="searchbox" style="width: 429px;">
-            <span class="button button-blue mini">Google Cloud Platform</span>
-            <input type="text" name="q" class="q" id="q" value="" placeholder="Search" autocomplete="on" style="width: 263px;">
-          </div>
-          <button class="button button-blue" style="top: 0px; left: 444px;">
-          <img src="/images/search.png" alt="Search">
-         </button>
-         </form>
-      </header>
-    </div>
-<div id="gc-appnav">
-  <ol class="breadcrumbs">
-    <li><a href="/products/">Products</a></li>
-    <li><img src="/images/breadcrumbs-right.png" class="separator"></li>
-    <li><a href="/cloud">Google Cloud Platform</a></li>
-    <li><img src="/images/breadcrumbs-right.png" class="separator"></li>
-    <li><a href="/appengine/">Google App Engine</a></li>
-    <li><img src="/images/breadcrumbs-right.png" class="separator"></li>
-    <li><a href="/appengine/docs/python">Python</a></li>
-  </ol>
-</div>    
-<div id="gc-wrapper">
-  <div id="gc-appbar">
+    <!-- GSAP animation frameworks -->
+    <script src="//www.gstatic.com/external_hosted/gsap/TweenMax.min.js"></script>
+    <script src="//www.gstatic.com/external_hosted/gsap/TimelineMax.min.js"></script>
+    <script src="/js/floodlight.js"></script>
+    <meta name="viewport" content="initial-scale=1, minimum-scale=1, width=device-width">
+    <link href="//fonts.googleapis.com/css?family=Open+Sans:400italic,300,400,600,700" rel="stylesheet">
+
+    <link href="//www.google.com/css/maia.experimental.css" rel="stylesheet">
+    <link href="/css/maia-cloud.css" rel="stylesheet"/>
+    <link href="/css/default.css" rel="stylesheet">
+  </head>
+  <body>
+  <div id="maia-header">
+    <div class="maia-aux">
+      <h1><a href="/"><img src="/images/gcp-logo.png" alt="Cloud Platform" data-retina="383x48"></a></h1>
+
+<div class="search-container">
   
-  <div style="float:right;margin-right:100px;">
-  
-<div id="google_translate_element"></div><script type="text/javascript">
-function googleTranslateElementInit() {
-  new google.translate.TranslateElement({pageLanguage: 'en', layout: google.translate.TranslateElement.InlineLayout.HORIZONTAL}, 'google_translate_element');
-}
-</script><script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script> 
-        
+  <form action="/search" class="maia-search">
+    <input type="text" placeholder="Search this site" name="q">
+    <button class="maia-button" type="submit" data-g-event="Maia: Button" data-g-action="Maia: Primary – Header" data-g-label="Search">
+      <span class="maia-search-icon">Search</span>
+    </button>
+  </form>
+  <div class="cloud-social">
+    <div class="cloud-signed-out">
+      <!-- <a href="/console" class="cp-track" id="try-header">Sign in</a> -->
     </div>
-    
-    <h1><a href="/">Google Cloud Documentation</a></h1>
   </div>
-    <div id="gc-main" class="main">
-      <div id="gc-sidebar" class="sphinxsidebar" role="navigation" aria-label="main navigation">
+</div>
 
-<nav class="gc-toc">
-<!-- book -->
-
-
-<ul >
-  
-    
-    
-      
-    
-    
-    
-      
-    
-    
-    
-    
-      
-        
-      
-      <li style="color:red;"><a href="/" title="Home" data-title="Home - /"><span>Home </span></a></li>
-    
-    
-    
-    
-    
-  
-    
-    
-      
-    
-    
-    
-      
-    
-    
-    
-    
-      
-        
-      
-      <li style="color:red;"><a href="/appengine/whatisgoogleappengine" title="What is App Engine?" data-title="What is App Engine? - /appengine/whatisgoogleappengine"><span>What is App Engine? </span></a></li>
-    
-    
-    
-    
-    
-  
-    
-    
-      
-    
-    
-    
-      
-    
-    
-    
-    
-      
-        
-      
-      <li style="color:red;"><a href="/appengine/features" title="App Engine Features" data-title="App Engine Features - /appengine/features"><span>App Engine Features </span></a></li>
-    
-    
-    
-    
-    
-  
-    
-    
-      
-    
-    
-    
-      
-    
-    
-    
-    
-      
-        <li><a class="tlw-control tlw-collapsed">▸</a><span class="tlw-title tlw-control-title" data-title="Pricing and Quotas">Pricing and Quotas</span></li>
-      
-    
-    
-    
-    
-    
-      
-      
-      
-<ul style="display: none; opacity: 0; margin-left: 15px;">
-  
-    
-    
-      
-    
-    
-    
-      
-    
-    
-    
-    
-      
-        
-      
-      <li style="color:red;"><a href="/appengine/pricing" title="Pricing" data-title="Pricing - /appengine/pricing"><span>Pricing </span></a></li>
-    
-    
-    
-    
-    
-  
-    
-    
-      
-    
-    
-    
-      
-    
-    
-    
-    
-      
-        
-      
-      <li style="color:red;"><a href="/appengine/quotas" title="Quotas" data-title="Quotas - /appengine/quotas"><span>Quotas </span></a></li>
-    
-    
-    
-    
-    
-  
-</ul>
-
-    
-  
-    
-    
-      
-    
-    
-    
-      
-    
-    
-    
-    
-      
-        
-      
-      <li style="color:red;"><a href="/appengine/downloads" title="Downloads" data-title="Downloads - /appengine/downloads"><span>Downloads </span></a></li>
-    
-    
-    
-    
-    
-  
-    
-    
-      
-    
-    
-    
-      
-    
-    
-    
-    
-      
-        <li><span class="tlw-title tlw-control-title" data-title=""></span></li>
-      
-    
-    
-    
-      <hr>
-    
-    
-    
-  
-    
-    
-      
-    
-    
-    
-      
-    
-    
-    
-    
-      
-        <li><a class="tlw-control tlw-collapsed">▸</a><span class="tlw-title tlw-control-title" data-title="Python">Python</span></li>
-      
-    
-    
-    
-    
-    
-      
-      
-      
-<ul style="display: none; opacity: 0; margin-left: 15px;">
-  
-    
-    
-      
-    
-    
-    
-      
-    
-    
-    
-    
-      
-        
-        
-        
-<ul >
-  
-    
-    
-      
-    
-    
-    
-      
-    
-    
-    
-    
-      
-        
-      
-      <li style="color:red;"><a href="/" title="Test include node" data-title="Test include node - /"><span>Test include node </span></a></li>
-    
-    
-    
-    
-    
-  
-</ul>
-
-      
-    
-    
-    
-    
-    
-  
-</ul>
-
-    
-  
-    
-    
-      
-    
-    
-    
-      
-    
-    
-    
-    
-      
-        <li><a class="tlw-control tlw-collapsed">▸</a><span class="tlw-title tlw-control-title" data-title="Java">Java</span></li>
-      
-    
-    
-    
-    
-    
-      
-      
-      
-<ul style="display: none; opacity: 0; margin-left: 15px;">
-  
-    
-    
-      
-    
-    
-    
-      
-    
-    
-    
-    
-      
-        
-        
-        
-<ul >
-  
-    
-    
-      
-    
-    
-    
-      
-    
-    
-    
-    
-      
-        
-      
-      <li style="color:red;"><a href="/" title="Test include node" data-title="Test include node - /"><span>Test include node </span></a></li>
-    
-    
-    
-    
-    
-  
-</ul>
-
-      
-    
-    
-    
-    
-    
-  
-</ul>
-
-    
-  
-    
-    
-      
-    
-    
-    
-      
-    
-    
-    
-    
-      
-        <li><a class="tlw-control tlw-collapsed">▸</a><span class="tlw-title tlw-control-title" data-title="PHP">PHP <sup style="color: red">Preview</sup></span></li>
-      
-    
-    
-    
-    
-    
-      
-      
-      
-<ul style="display: none; opacity: 0; margin-left: 15px;">
-  
-    
-    
-      
-    
-    
-    
-      
-    
-    
-    
-    
-      
-        
-        
-        
-<ul >
-  
-    
-    
-      
-    
-    
-    
-      
-    
-    
-    
-    
-      
-        
-      
-      <li style="color:red;"><a href="/" title="Test include node" data-title="Test include node - /"><span>Test include node </span></a></li>
-    
-    
-    
-    
-    
-  
-</ul>
-
-      
-    
-    
-    
-    
-    
-  
-</ul>
-
-    
-  
-    
-    
-      
-    
-    
-    
-      
-    
-    
-    
-    
-      
-        <li><a class="tlw-control tlw-collapsed">▸</a><span class="tlw-title tlw-control-title" data-title="Go">Go <sup style="color: red">Experimental</sup></span></li>
-      
-    
-    
-    
-    
-    
-      
-      
-      
-<ul style="display: none; opacity: 0; margin-left: 15px;">
-  
-    
-    
-      
-    
-    
-    
-      
-    
-    
-    
-    
-      
-        
-        
-        
-<ul >
-  
-    
-    
-      
-    
-    
-    
-      
-    
-    
-    
-    
-      
-        
-      
-      <li style="color:red;"><a href="/" title="Test include node" data-title="Test include node - /"><span>Test include node </span></a></li>
-    
-    
-    
-    
-    
-  
-</ul>
-
-      
-    
-    
-    
-    
-    
-  
-</ul>
-
-    
-  
-    
-    
-      
-    
-    
-    
-      
-    
-    
-    
-    
-      
-        <li><a class="tlw-control tlw-collapsed">▸</a><span class="tlw-title tlw-control-title" data-title="Managing Your App">Managing Your App</span></li>
-      
-    
-    
-    
-    
-    
-      
-      
-      
-<ul style="display: none; opacity: 0; margin-left: 15px;">
-  
-    
-    
-      
-    
-    
-    
-      
-    
-    
-    
-    
-      
-        <li><a class="tlw-control tlw-collapsed">▸</a><span class="tlw-title tlw-control-title" data-title="Admin Console">Admin Console</span></li>
-      
-    
-    
-    
-    
-    
-      
-      
-      
-<ul style="display: none; opacity: 0; margin-left: 15px;">
-  
-    
-    
-      
-    
-    
-    
-      
-    
-    
-    
-    
-      
-        
-      
-      <li style="color:red;"><a href="/appengine/adminconsole/" title="Overview" data-title="Overview - /appengine/adminconsole/"><span>Overview </span></a></li>
-    
-    
-    
-    
-    
-  
-    
-    
-      
-    
-    
-    
-      
-    
-    
-    
-    
-      
-        
-      
-      <li style="color:red;"><a href="/appengine/adminconsole/usagecharts" title="Usage Charts" data-title="Usage Charts - /appengine/adminconsole/usagecharts"><span>Usage Charts </span></a></li>
-    
-    
-    
-    
-    
-  
-    
-    
-      
-    
-    
-    
-      
-    
-    
-    
-    
-      
-        
-      
-      <li style="color:red;"><a href="/appengine/adminconsole/instances" title="Instances" data-title="Instances - /appengine/adminconsole/instances"><span>Instances </span></a></li>
-    
-    
-    
-    
-    
-  
-    
-    
-      
-    
-    
-    
-      
-    
-    
-    
-    
-      
-        
-      
-      <li style="color:red;"><a href="/appengine/adminconsole/roles" title="Roles" data-title="Roles - /appengine/adminconsole/roles"><span>Roles </span></a></li>
-    
-    
-    
-    
-    
-  
-    
-    
-      
-    
-    
-    
-      
-    
-    
-    
-    
-      
-        
-      
-      <li style="color:red;"><a href="/appengine/adminconsole/applicationsettings" title="Application Settings" data-title="Application Settings - /appengine/adminconsole/applicationsettings"><span>Application Settings </span></a></li>
-    
-    
-    
-    
-    
-  
-    
-    
-      
-    
-    
-    
-      
-    
-    
-    
-    
-      
-        
-      
-      <li style="color:red;"><a href="/appengine/adminconsole/migration" title="Migrating to the High Replication Datastore" data-title="Migrating to the High Replication Datastore - /appengine/adminconsole/migration"><span>Migrating to the High Replication Datastore </span></a></li>
-    
-    
-    
-    
-    
-  
-    
-    
-      
-    
-    
-    
-      
-    
-    
-    
-    
-      
-        
-      
-      <li style="color:red;"><a class="tlw-control tlw-collapsed">▸</a><a href="/appengine/adminconsole/datastoreconsole" title="Datastore" data-title="Datastore - /appengine/adminconsole/datastoreconsole"><span>Datastore </span></a></li>
-    
-    
-    
-    
-    
-      
-      
-      
-<ul style="display: none; opacity: 0; margin-left: 15px;">
-  
-    
-    
-      
-    
-    
-    
-      
-    
-    
-    
-    
-      
-        
-      
-      <li style="color:red;"><a href="/appengine/adminconsole/datastoreadmin" title="Backup/Restore, Copy, and Delete" data-title="Backup/Restore, Copy, and Delete - /appengine/adminconsole/datastoreadmin"><span>Backup/Restore, Copy, and Delete </span></a></li>
-    
-    
-    
-    
-    
-  
-    
-    
-      
-    
-    
-    
-      
-    
-    
-    
-    
-      
-        
-      
-      <li style="color:red;"><a href="/appengine/adminconsole/datastorestats" title="Statistics" data-title="Statistics - /appengine/adminconsole/datastorestats"><span>Statistics </span></a></li>
-    
-    
-    
-    
-    
-  
-</ul>
-
-    
-  
-    
-    
-      
-    
-    
-    
-      
-    
-    
-    
-    
-      
-        
-      
-      <li style="color:red;"><a href="/appengine/adminconsole/performancesettings" title="Performance Settings" data-title="Performance Settings - /appengine/adminconsole/performancesettings"><span>Performance Settings </span></a></li>
-    
-    
-    
-    
-    
-  
-    
-    
-      
-    
-    
-    
-      
-    
-    
-    
-    
-      
-        
-      
-      <li style="color:red;"><a href="/appengine/adminconsole/pagespeed" title="PageSpeed" data-title="PageSpeed - /appengine/adminconsole/pagespeed"><span>PageSpeed </span></a></li>
-    
-    
-    
-    
-    
-  
-    
-    
-      
-    
-    
-    
-      
-    
-    
-    
-    
-      
-        
-      
-      <li style="color:red;"><a href="/appengine/adminconsole/trafficsplitting" title="Traffic Splitting" data-title="Traffic Splitting - /appengine/adminconsole/trafficsplitting"><span>Traffic Splitting </span></a></li>
-    
-    
-    
-    
-    
-  
-    
-    
-      
-    
-    
-    
-      
-    
-    
-    
-    
-      
-        
-      
-      <li style="color:red;"><a href="/appengine/adminconsole/memcache" title="Memcache" data-title="Memcache - /appengine/adminconsole/memcache"><span>Memcache </span></a></li>
-    
-    
-    
-    
-    
-  
-</ul>
-
-    
-  
-    
-    
-      
-    
-    
-    
-      
-    
-    
-    
-    
-      
-        
-      
-      <li style="color:red;"><a href="/appengine/appcfg" title="The App Config Tool" data-title="The App Config Tool - /appengine/appcfg"><span>The App Config Tool </span></a></li>
-    
-    
-    
-    
-    
-  
-    
-    
-      
-    
-    
-    
-      
-    
-    
-    
-    
-      
-        
-      
-      <li style="color:red;"><a href="/appengine/premier" title="Premier Accounts" data-title="Premier Accounts - /appengine/premier"><span>Premier Accounts </span></a></li>
-    
-    
-    
-    
-    
-  
-    
-    
-      
-    
-    
-    
-      
-    
-    
-    
-    
-      
-        <li><a class="tlw-control tlw-collapsed">▸</a><span class="tlw-title tlw-control-title" data-title="Custom Domains">Custom Domains</span></li>
-      
-    
-    
-    
-    
-    
-      
-      
-      
-<ul style="display: none; opacity: 0; margin-left: 15px;">
-  
-    
-    
-      
-    
-    
-    
-      
-    
-    
-    
-    
-      
-        
-      
-      <li style="color:red;"><a href="/appengine/domain" title="Using a Custom Domain" data-title="Using a Custom Domain - /appengine/domain"><span>Using a Custom Domain </span></a></li>
-    
-    
-    
-    
-    
-  
-    
-    
-      
-    
-    
-    
-      
-    
-    
-    
-    
-      
-        
-      
-      <li style="color:red;"><a href="/appengine/ssl" title="SSL for a Custom Domain" data-title="SSL for a Custom Domain - /appengine/ssl"><span>SSL for a Custom Domain </span></a></li>
-    
-    
-    
-    
-    
-  
-</ul>
-
-    
-  
-    
-    
-      
-    
-    
-    
-      
-    
-    
-    
-    
-      
-        
-      
-      <li style="color:red;"><a href="/appengine/managing-resources" title="Managing App Resources" data-title="Managing App Resources - /appengine/managing-resources"><span>Managing App Resources </span></a></li>
-    
-    
-    
-    
-    
-  
-    
-    
-      
-    
-    
-    
-      
-    
-    
-    
-    
-      
-        
-      
-      <li style="color:red;"><a href="/appengine/push-to-deploy" title="Using Git to Push and Deploy" data-title="Using Git to Push and Deploy - /appengine/push-to-deploy"><span>Using Git to Push and Deploy </span></a></li>
-    
-    
-    
-    
-    
-  
-    
-    
-      
-    
-    
-    
-      
-    
-    
-    
-    
-      
-        
-      
-      <li style="color:red;"><a href="/appengine/google-analytics" title="Integrating with Google Analytics" data-title="Integrating with Google Analytics - /appengine/google-analytics"><span>Integrating with Google Analytics </span></a></li>
-    
-    
-    
-    
-    
-  
-</ul>
-
-    
-  
-    
-    
-      
-    
-    
-    
-      
-    
-    
-    
-    
-      
-        <li><a class="tlw-control tlw-collapsed">▸</a><span class="tlw-title tlw-control-title" data-title="Sample Code, Tutorials and Videos">Sample Code, Tutorials and Videos</span></li>
-      
-    
-    
-    
-    
-    
-      
-      
-      
-<ul style="display: none; opacity: 0; margin-left: 15px;">
-  
-    
-    
-      
-    
-    
-    
-      
-    
-    
-    
-    
-      
-        <li><a class="tlw-control tlw-collapsed">▸</a><span class="tlw-title tlw-control-title" data-title="Sample Code">Sample Code</span></li>
-      
-    
-    
-    
-    
-    
-      
-      
-      
-<ul style="display: none; opacity: 0; margin-left: 15px;">
-  
-    
-    
-      
-    
-    
-    
-      
-    
-    
-    
-    
-      
-        
-      
-      <li style="color:red;"><a href="http://code.google.com/p/google/appengine/" title="SDK Code" data-title="SDK Code - http://code.google.com/p/google/appengine/"><span>SDK Code </span></a></li>
-    
-    
-    
-    
-    
-  
-    
-    
-      
-    
-    
-    
-      
-    
-    
-    
-    
-      
-        
-      
-      <li style="color:red;"><a href="http://code.google.com/p/datanucleus-/appengine/" title="JDO/JPA Code" data-title="JDO/JPA Code - http://code.google.com/p/datanucleus-/appengine/"><span>JDO/JPA Code </span></a></li>
-    
-    
-    
-    
-    
-  
-    
-    
-      
-    
-    
-    
-      
-    
-    
-    
-    
-      
-        
-      
-      <li style="color:red;"><a href="https://github.com/GoogleCloudPlatform/" title="Sample Apps Code" data-title="Sample Apps Code - https://github.com/GoogleCloudPlatform/"><span>Sample Apps Code </span></a></li>
-    
-    
-    
-    
-    
-  
-    
-    
-      
-    
-    
-    
-      
-    
-    
-    
-    
-      
-        <li><a class="tlw-control tlw-collapsed">▸</a><span class="tlw-title tlw-control-title" data-title="Launcher Code">Launcher Code</span></li>
-      
-    
-    
-    
-    
-    
-      
-      
-      
-<ul style="display: none; opacity: 0; margin-left: 15px;">
-  
-    
-    
-      
-    
-    
-    
-      
-    
-    
-    
-    
-      
-        
-      
-      <li style="color:red;"><a href="http://code.google.com/p/google-appengine-mac-launcher/" title="Mac" data-title="Mac - http://code.google.com/p/google-appengine-mac-launcher/"><span>Mac </span></a></li>
-    
-    
-    
-    
-    
-  
-    
-    
-      
-    
-    
-    
-      
-    
-    
-    
-    
-      
-        
-      
-      <li style="color:red;"><a href="http://code.google.com/p/google-appengine-wx-launcher/" title="Windows/wx" data-title="Windows/wx - http://code.google.com/p/google-appengine-wx-launcher/"><span>Windows/wx </span></a></li>
-    
-    
-    
-    
-    
-  
-</ul>
-
-    
-  
-</ul>
-
-    
-  
-    
-    
-      
-    
-    
-    
-      
-    
-    
-    
-    
-      
-        
-      
-      <li style="color:red;"><a href="/appengine/videoresources" title="Videos" data-title="Videos - /appengine/videoresources"><span>Videos </span></a></li>
-    
-    
-    
-    
-    
-  
-    
-    
-      
-    
-    
-    
-      
-    
-    
-    
-    
-      
-        
-      
-      <li style="color:red;"><a href="/academy/apis/cloud/appengine" title="Tutorials and Training" data-title="Tutorials and Training - /academy/apis/cloud/appengine"><span>Tutorials and Training </span></a></li>
-    
-    
-    
-    
-    
-  
-</ul>
-
-    
-  
-    
-    
-      
-    
-    
-    
-      
-    
-    
-    
-    
-      
-        <li><a class="tlw-control tlw-collapsed">▸</a><span class="tlw-title tlw-control-title" data-title="Further Reading">Further Reading</span></li>
-      
-    
-    
-    
-    
-    
-      
-      
-      
-<ul style="display: none; opacity: 0; margin-left: 15px;">
-  
-    
-    
-      
-    
-    
-    
-      
-    
-    
-    
-    
-      
-        <li><a class="tlw-control tlw-collapsed">▸</a><span class="tlw-title tlw-control-title" data-title="Articles">Articles</span></li>
-      
-    
-    
-    
-    
-    
-      
-      
-      
-<ul style="display: none; opacity: 0; margin-left: 15px;">
-  
-    
-    
-      
-    
-    
-    
-      
-    
-    
-    
-    
-      
-        
-      
-      <li style="color:red;"><a href="/appengine/articles" title="Overview" data-title="Overview - /appengine/articles"><span>Overview </span></a></li>
-    
-    
-    
-    
-    
-  
-    
-    
-      
-    
-    
-    
-      
-    
-    
-    
-    
-      
-        
-      
-      <li style="color:red;"><a href="/appengine/articles/efficient_use_of_discovery_based_apis" title="Discovery Based APIs" data-title="Discovery Based APIs - /appengine/articles/efficient_use_of_discovery_based_apis"><span>Discovery Based APIs </span></a></li>
-    
-    
-    
-    
-    
-  
-    
-    
-      
-    
-    
-    
-      
-    
-    
-    
-    
-      
-        
-      
-      <li style="color:red;"><a href="/appengine/articles/scalability" title="Designing for Scale" data-title="Designing for Scale - /appengine/articles/scalability"><span>Designing for Scale </span></a></li>
-    
-    
-    
-    
-    
-  
-    
-    
-      
-    
-    
-    
-      
-    
-    
-    
-    
-      
-        
-      
-      <li style="color:red;"><a href="/appengine/articles/spring_optimization" title="Optimizing Spring Framework" data-title="Optimizing Spring Framework - /appengine/articles/spring_optimization"><span>Optimizing Spring Framework </span></a></li>
-    
-    
-    
-    
-    
-  
-    
-    
-      
-    
-    
-    
-      
-    
-    
-    
-    
-      
-        
-      
-      <li style="color:red;"><a href="/appengine/articles/using_jpa_tool" title="JPA facets & Cloud SQL" data-title="JPA facets & Cloud SQL - /appengine/articles/using_jpa_tool"><span>JPA facets & Cloud SQL </span></a></li>
-    
-    
-    
-    
-    
-  
-    
-    
-      
-    
-    
-    
-      
-    
-    
-    
-    
-      
-        
-      
-      <li style="color:red;"><a href="/appengine/articles/prediction_service_accounts" title="Service Accounts & Google Prediction API" data-title="Service Accounts & Google Prediction API - /appengine/articles/prediction_service_accounts"><span>Service Accounts & Google Prediction API </span></a></li>
-    
-    
-    
-    
-    
-  
-    
-    
-      
-    
-    
-    
-      
-    
-    
-    
-    
-      
-        
-      
-      <li style="color:red;"><a href="/appengine/articles/indexselection" title="Datastore Index Selection & Advanced Search" data-title="Datastore Index Selection & Advanced Search - /appengine/articles/indexselection"><span>Datastore Index Selection & Advanced Search </span></a></li>
-    
-    
-    
-    
-    
-  
-    
-    
-      
-    
-    
-    
-      
-    
-    
-    
-    
-      
-        
-      
-      <li style="color:red;"><a href="/appengine/articles/python/getting_started_with_tasks_api" title="Tasks API" data-title="Tasks API - /appengine/articles/python/getting_started_with_tasks_api"><span>Tasks API </span></a></li>
-    
-    
-    
-    
-    
-  
-    
-    
-      
-    
-    
-    
-      
-    
-    
-    
-    
-      
-        
-      
-      <li style="color:red;"><a href="/appengine/articles/fantasm" title="Workflows with Fantasm" data-title="Workflows with Fantasm - /appengine/articles/fantasm"><span>Workflows with Fantasm </span></a></li>
-    
-    
-    
-    
-    
-  
-    
-    
-      
-    
-    
-    
-      
-    
-    
-    
-    
-      
-        
-      
-      <li style="color:red;"><a href="/appengine/articles/django-nonrel" title="Pure Django Projects" data-title="Pure Django Projects - /appengine/articles/django-nonrel"><span>Pure Django Projects </span></a></li>
-    
-    
-    
-    
-    
-  
-    
-    
-      
-    
-    
-    
-      
-    
-    
-    
-    
-      
-        
-      
-      <li style="color:red;"><a href="/appengine/articles/mr/mapper" title="Modern Funnel Analytics Using Mapper" data-title="Modern Funnel Analytics Using Mapper - /appengine/articles/mr/mapper"><span>Modern Funnel Analytics Using Mapper </span></a></li>
-    
-    
-    
-    
-    
-  
-    
-    
-      
-    
-    
-    
-      
-    
-    
-    
-    
-      
-        
-      
-      <li style="color:red;"><a href="/appengine/articles/openid" title="Federated Authentication" data-title="Federated Authentication - /appengine/articles/openid"><span>Federated Authentication </span></a></li>
-    
-    
-    
-    
-    
-  
-    
-    
-      
-    
-    
-    
-      
-    
-    
-    
-    
-      
-        
-      
-      <li style="color:red;"><a href="/appengine/articles/python/recording_exceptions_with_ereporter" title="Recording Exceptions with ereporter" data-title="Recording Exceptions with ereporter - /appengine/articles/python/recording_exceptions_with_ereporter"><span>Recording Exceptions with ereporter </span></a></li>
-    
-    
-    
-    
-    
-  
-    
-    
-      
-    
-    
-    
-      
-    
-    
-    
-    
-      
-        
-      
-      <li style="color:red;"><a href="/appengine/articles/life_of_write" title="Life of a Datastore Write" data-title="Life of a Datastore Write - /appengine/articles/life_of_write"><span>Life of a Datastore Write </span></a></li>
-    
-    
-    
-    
-    
-  
-    
-    
-      
-    
-    
-    
-      
-    
-    
-    
-    
-      
-        
-      
-      <li style="color:red;"><a href="/appengine/articles/storage_breakdown" title="Storing Entities & Indexes" data-title="Storing Entities & Indexes - /appengine/articles/storage_breakdown"><span>Storing Entities & Indexes </span></a></li>
-    
-    
-    
-    
-    
-  
-    
-    
-      
-    
-    
-    
-      
-    
-    
-    
-    
-      
-        
-      
-      <li style="color:red;"><a href="/appengine/articles/handling_datastore_errors" title="Handling Datastore Errors" data-title="Handling Datastore Errors - /appengine/articles/handling_datastore_errors"><span>Handling Datastore Errors </span></a></li>
-    
-    
-    
-    
-    
-  
-    
-    
-      
-    
-    
-    
-      
-    
-    
-    
-    
-      
-        
-      
-      <li style="color:red;"><a href="/appengine/articles/deferred" title="Deferred Library" data-title="Deferred Library - /appengine/articles/deferred"><span>Deferred Library </span></a></li>
-    
-    
-    
-    
-    
-  
-    
-    
-      
-    
-    
-    
-      
-    
-    
-    
-    
-      
-        
-      
-      <li style="color:red;"><a href="/appengine/articles/using_xmpp" title="XMPP Service" data-title="XMPP Service - /appengine/articles/using_xmpp"><span>XMPP Service </span></a></li>
-    
-    
-    
-    
-    
-  
-    
-    
-      
-    
-    
-    
-      
-    
-    
-    
-    
-      
-        
-      
-      <li style="color:red;"><a href="/appengine/articles/polymodel" title="Effective PolyModel" data-title="Effective PolyModel - /appengine/articles/polymodel"><span>Effective PolyModel </span></a></li>
-    
-    
-    
-    
-    
-  
-    
-    
-      
-    
-    
-    
-      
-    
-    
-    
-    
-      
-        
-      
-      <li style="color:red;"><a href="/appengine/articles/load_test" title="Load Testing" data-title="Load Testing - /appengine/articles/load_test"><span>Load Testing </span></a></li>
-    
-    
-    
-    
-    
-  
-    
-    
-      
-    
-    
-    
-      
-    
-    
-    
-    
-      
-        
-      
-      <li style="color:red;"><a href="/appengine/articles/scaling/minimize" title="Minimizing Work" data-title="Minimizing Work - /appengine/articles/scaling/minimize"><span>Minimizing Work </span></a></li>
-    
-    
-    
-    
-    
-  
-    
-    
-      
-    
-    
-    
-      
-    
-    
-    
-    
-      
-        
-      
-      <li style="color:red;"><a href="/appengine/articles/scaling/contention" title="Avoiding Datastore Contention" data-title="Avoiding Datastore Contention - /appengine/articles/scaling/contention"><span>Avoiding Datastore Contention </span></a></li>
-    
-    
-    
-    
-    
-  
-    
-    
-      
-    
-    
-    
-      
-    
-    
-    
-    
-      
-        
-      
-      <li style="color:red;"><a href="/appengine/articles/scaling/memcache" title="Effective Memcache" data-title="Effective Memcache - /appengine/articles/scaling/memcache"><span>Effective Memcache </span></a></li>
-    
-    
-    
-    
-    
-  
-    
-    
-      
-    
-    
-    
-      
-    
-    
-    
-    
-      
-        
-      
-      <li style="color:red;"><a href="/appengine/articles/app-engine-patch" title="Django & app-engine-patch" data-title="Django & app-engine-patch - /appengine/articles/app-engine-patch"><span>Django & app-engine-patch </span></a></li>
-    
-    
-    
-    
-    
-  
-    
-    
-      
-    
-    
-    
-      
-    
-    
-    
-    
-      
-        
-      
-      <li style="color:red;"><a href="/appengine/articles/remote_api" title="Datastore Access with remote_api" data-title="Datastore Access with remote_api - /appengine/articles/remote_api"><span>Datastore Access with remote_api </span></a></li>
-    
-    
-    
-    
-    
-  
-    
-    
-      
-    
-    
-    
-      
-    
-    
-    
-    
-      
-        
-      
-      <li style="color:red;"><a href="/appengine/articles/overheard" title="Voting and Decay Example App" data-title="Voting and Decay Example App - /appengine/articles/overheard"><span>Voting and Decay Example App </span></a></li>
-    
-    
-    
-    
-    
-  
-    
-    
-      
-    
-    
-    
-      
-    
-    
-    
-    
-      
-        
-      
-      <li style="color:red;"><a href="/appengine/articles/paging" title="Paging Through Large Datasets" data-title="Paging Through Large Datasets - /appengine/articles/paging"><span>Paging Through Large Datasets </span></a></li>
-    
-    
-    
-    
-    
-  
-    
-    
-      
-    
-    
-    
-      
-    
-    
-    
-    
-      
-        
-      
-      <li style="color:red;"><a href="/appengine/articles/sharding_counters" title="Sharding Counters" data-title="Sharding Counters - /appengine/articles/sharding_counters"><span>Sharding Counters </span></a></li>
-    
-    
-    
-    
-    
-  
-    
-    
-      
-    
-    
-    
-      
-    
-    
-    
-    
-      
-        
-      
-      <li style="color:red;"><a href="/appengine/articles/index_building" title="Index Building" data-title="Index Building - /appengine/articles/index_building"><span>Index Building </span></a></li>
-    
-    
-    
-    
-    
-  
-    
-    
-      
-    
-    
-    
-      
-    
-    
-    
-    
-      
-        
-      
-      <li style="color:red;"><a href="/appengine/articles/pure_django" title="Running Applications on Django" data-title="Running Applications on Django - /appengine/articles/pure_django"><span>Running Applications on Django </span></a></li>
-    
-    
-    
-    
-    
-  
-    
-    
-      
-    
-    
-    
-      
-    
-    
-    
-    
-      
-        
-      
-      <li style="color:red;"><a href="http://wiki.opensocial.org.php?title=Building_an_OpenSocial_App_with_Google_App_Engine" title="OpenSocial App" data-title="OpenSocial App - http://wiki.opensocial.org.php?title=Building_an_OpenSocial_App_with_Google_App_Engine"><span>OpenSocial App </span></a></li>
-    
-    
-    
-    
-    
-  
-    
-    
-      
-    
-    
-    
-      
-    
-    
-    
-    
-      
-        
-      
-      <li style="color:red;"><a href="/appengine/articles/django10_zipimport" title="Django 1.0 & Zipimport" data-title="Django 1.0 & Zipimport - /appengine/articles/django10_zipimport"><span>Django 1.0 & Zipimport </span></a></li>
-    
-    
-    
-    
-    
-  
-    
-    
-      
-    
-    
-    
-      
-    
-    
-    
-    
-      
-        
-      
-      <li style="color:red;"><a href="/appengine/articles/extending_models" title="Extending Model Properties" data-title="Extending Model Properties - /appengine/articles/extending_models"><span>Extending Model Properties </span></a></li>
-    
-    
-    
-    
-    
-  
-    
-    
-      
-    
-    
-    
-      
-    
-    
-    
-    
-      
-        
-      
-      <li style="color:red;"><a href="/appengine/articles/modeling" title="Modeling Entity Relationships" data-title="Modeling Entity Relationships - /appengine/articles/modeling"><span>Modeling Entity Relationships </span></a></li>
-    
-    
-    
-    
-    
-  
-    
-    
-      
-    
-    
-    
-      
-    
-    
-    
-    
-      
-        
-      
-      <li style="color:red;"><a href="/appengine/articles/eclipse" title="Configuring Eclipse on Windows" data-title="Configuring Eclipse on Windows - /appengine/articles/eclipse"><span>Configuring Eclipse on Windows </span></a></li>
-    
-    
-    
-    
-    
-  
-    
-    
-      
-    
-    
-    
-      
-    
-    
-    
-    
-      
-        
-      
-      <li style="color:red;"><a href="/appengine/articles/update_schema" title="Updating Your Model's Schema" data-title="Updating Your Model's Schema - /appengine/articles/update_schema"><span>Updating Your Model's Schema </span></a></li>
-    
-    
-    
-    
-    
-  
-    
-    
-      
-    
-    
-    
-      
-    
-    
-    
-    
-      
-        
-      
-      <li style="color:red;"><a href="/appengine/articles/appengine_helper_for_django" title="Helper for Django" data-title="Helper for Django - /appengine/articles/appengine_helper_for_django"><span>Helper for Django </span></a></li>
-    
-    
-    
-    
-    
-  
-    
-    
-      
-    
-    
-    
-      
-    
-    
-    
-    
-      
-        
-      
-      <li style="color:red;"><a href="/appengine/articles/rietveld" title="Rietveld Code Review Tool" data-title="Rietveld Code Review Tool - /appengine/articles/rietveld"><span>Rietveld Code Review Tool </span></a></li>
-    
-    
-    
-    
-    
-  
-    
-    
-      
-    
-    
-    
-      
-    
-    
-    
-    
-      
-        
-      
-      <li style="color:red;"><a href="/appengine/articles/transaction_isolation" title="Transaction Isolation" data-title="Transaction Isolation - /appengine/articles/transaction_isolation"><span>Transaction Isolation </span></a></li>
-    
-    
-    
-    
-    
-  
-    
-    
-      
-    
-    
-    
-      
-    
-    
-    
-    
-      
-        
-      
-      <li style="color:red;"><a href="/appengine/articles/auth" title="Configuring Authentication" data-title="Configuring Authentication - /appengine/articles/auth"><span>Configuring Authentication </span></a></li>
-    
-    
-    
-    
-    
-  
-    
-    
-      
-    
-    
-    
-      
-    
-    
-    
-    
-      
-        
-      
-      <li style="color:red;"><a href="/appengine/articles/python/serving_dynamic_images" title="Serving Dynamic Images" data-title="Serving Dynamic Images - /appengine/articles/python/serving_dynamic_images"><span>Serving Dynamic Images </span></a></li>
-    
-    
-    
-    
-    
-  
-    
-    
-      
-    
-    
-    
-      
-    
-    
-    
-    
-      
-        
-      
-      <li style="color:red;"><a href="/appengine/articles/logging" title="Logging Events" data-title="Logging Events - /appengine/articles/logging"><span>Logging Events </span></a></li>
-    
-    
-    
-    
-    
-  
-    
-    
-      
-    
-    
-    
-      
-    
-    
-    
-    
-      
-        
-      
-      <li style="color:red;"><a href="/appengine/articles/django" title="Running Django" data-title="Running Django - /appengine/articles/django"><span>Running Django </span></a></li>
-    
-    
-    
-    
-    
-  
-</ul>
-
-    
-  
-    
-    
-      
-    
-    
-    
-      
-    
-    
-    
-    
-      
-        
-      
-      <li style="color:red;"><a href="http://googlecloudplatform.blogspot.com/" title="Blog" data-title="Blog - http://googlecloudplatform.blogspot.com/"><span>Blog </span></a></li>
-    
-    
-    
-    
-    
-  
-    
-    
-      
-    
-    
-    
-      
-    
-    
-    
-    
-      
-        
-      
-      <li style="color:red;"><a href="/appengine/tools_tips" title="Tools and Tips" data-title="Tools and Tips - /appengine/tools_tips"><span>Tools and Tips </span></a></li>
-    
-    
-    
-    
-    
-  
-    
-    
-      
-    
-    
-    
-      
-    
-    
-    
-    
-      
-        
-      
-      <li style="color:red;"><a href="https://cloud.google.com/customers/" title="Case Studies" data-title="Case Studies - https://cloud.google.com/customers/"><span>Case Studies </span></a></li>
-    
-    
-    
-    
-    
-  
-    
-    
-      
-    
-    
-    
-      
-    
-    
-    
-    
-      
-        
-      
-      <li style="color:red;"><a href="/appengine/glossary" title="Glossary" data-title="Glossary - /appengine/glossary"><span>Glossary </span></a></li>
-    
-    
-    
-    
-    
-  
-</ul>
-
-    
-  
-    
-    
-      
-    
-    
-    
-      
-    
-    
-    
-    
-      
-        <li><span class="tlw-title tlw-control-title" data-title=""></span></li>
-      
-    
-    
-    
-      <hr>
-    
-    
-    
-  
-    
-    
-      
-    
-    
-    
-      
-    
-    
-    
-    
-      
-        <li><a class="tlw-control tlw-collapsed">▸</a><span class="tlw-title tlw-control-title" data-title="Support">Support</span></li>
-      
-    
-    
-    
-    
-    
-      
-      
-      
-<ul style="display: none; opacity: 0; margin-left: 15px;">
-  
-    
-    
-      
-    
-    
-    
-      
-    
-    
-    
-    
-      
-        
-      
-      <li style="color:red;"><a href="/appengine/community" title="Community" data-title="Community - /appengine/community"><span>Community </span></a></li>
-    
-    
-    
-    
-    
-  
-    
-    
-      
-    
-    
-    
-      
-    
-    
-    
-    
-      
-        
-      
-      <li style="color:red;"><a href="https://code.google.com/p/google/appengine/wiki/FilingIssues?tm=3" title="Submit Bugs or Feature Requests" data-title="Submit Bugs or Feature Requests - https://code.google.com/p/google/appengine/wiki/FilingIssues?tm=3"><span>Submit Bugs or Feature Requests </span></a></li>
-    
-    
-    
-    
-    
-  
-    
-    
-      
-    
-    
-    
-      
-    
-    
-    
-    
-      
-        
-      
-      <li style="color:red;"><a href="https://support.google.com/cloud/#topic=3473162" title="Contact Support" data-title="Contact Support - https://support.google.com/cloud/#topic=3473162"><span>Contact Support </span></a></li>
-    
-    
-    
-    
-    
-  
-    
-    
-      
-    
-    
-    
-      
-    
-    
-    
-    
-      
-        
-      
-      <li style="color:red;"><a href="/appengine/kb/" title="FAQ" data-title="FAQ - /appengine/kb/"><span>FAQ </span></a></li>
-    
-    
-    
-    
-    
-  
-</ul>
-
-    
-  
-    
-    
-      
-    
-    
-    
-      
-    
-    
-    
-    
-      
-        
-      
-      <li style="color:red;"><a href="https://appengine.google.com/" title="Admin Console" data-title="Admin Console - https://appengine.google.com/"><span>Admin Console </span></a></li>
-    
-    
-    
-    
-    
-  
-    
-    
-      
-    
-    
-    
-      
-    
-    
-    
-    
-      
-        
-      
-      <li style="color:red;"><a href="http://code.google.com/status/appengine" title="System Status" data-title="System Status - http://code.google.com/status/appengine"><span>System Status </span></a></li>
-    
-    
-    
-    
-    
-  
-    
-    
-      
-    
-    
-    
-      
-    
-    
-    
-    
-      
-        <li><span class="tlw-title tlw-control-title" data-title=""></span></li>
-      
-    
-    
-    
-      <hr>
-    
-    
-    
-  
-    
-    
-      
-    
-    
-    
-      
-    
-    
-    
-    
-      
-        <li><a class="tlw-control tlw-collapsed">▸</a><span class="tlw-title tlw-control-title" data-title="Other Cloud Platform Services">Other Cloud Platform Services</span></li>
-      
-    
-    
-    
-    
-    
-      
-      
-      
-<ul style="display: none; opacity: 0; margin-left: 15px;">
-  
-    
-    
-      
-    
-    
-    
-      
-    
-    
-    
-    
-      
-        
-      
-      <li style="color:red;"><a href="/bigquery/" title="BigQuery" data-title="BigQuery - /bigquery/"><span>BigQuery </span></a></li>
-    
-    
-    
-    
-    
-  
-    
-    
-      
-    
-    
-    
-      
-    
-    
-    
-    
-      
-        
-      
-      <li style="color:red;"><a href="/datastore/" title="Cloud Datastore" data-title="Cloud Datastore - /datastore/"><span>Cloud Datastore </span></a></li>
-    
-    
-    
-    
-    
-  
-    
-    
-      
-    
-    
-    
-      
-    
-    
-    
-    
-      
-        
-      
-      <li style="color:red;"><a href="/cloud-sql/" title="Cloud SQL" data-title="Cloud SQL - /cloud-sql/"><span>Cloud SQL </span></a></li>
-    
-    
-    
-    
-    
-  
-    
-    
-      
-    
-    
-    
-      
-    
-    
-    
-    
-      
-        
-      
-      <li style="color:red;"><a href="/storage/" title="Cloud Storage" data-title="Cloud Storage - /storage/"><span>Cloud Storage </span></a></li>
-    
-    
-    
-    
-    
-  
-    
-    
-      
-    
-    
-    
-      
-    
-    
-    
-    
-      
-        
-      
-      <li style="color:red;"><a href="/compute/" title="Compute Engine" data-title="Compute Engine - /compute/"><span>Compute Engine </span></a></li>
-    
-    
-    
-    
-    
-  
-    
-    
-      
-    
-    
-    
-      
-    
-    
-    
-    
-      
-        
-      
-      <li style="color:red;"><a href="/prediction/" title="Prediction API" data-title="Prediction API - /prediction/"><span>Prediction API </span></a></li>
-    
-    
-    
-    
-    
-  
-    
-    
-      
-    
-    
-    
-      
-    
-    
-    
-    
-      
-        
-      
-      <li style="color:red;"><a href="/translate/" title="Translate API" data-title="Translate API - /translate/"><span>Translate API </span></a></li>
-    
-    
-    
-    
-    
-  
-</ul>
-
-    
-  
-    
-    
-      
-    
-    
-    
-      
-    
-    
-    
-    
-      
-        <li><a class="tlw-control tlw-collapsed">▸</a><span class="tlw-title tlw-control-title" data-title="Legal">Legal</span></li>
-      
-    
-    
-    
-    
-    
-      
-      
-      
-<ul style="display: none; opacity: 0; margin-left: 15px;">
-  
-    
-    
-      
-    
-    
-    
-      
-    
-    
-    
-    
-      
-        
-      
-      <li style="color:red;"><a href="/cloud/terms/" title="Terms of Service" data-title="Terms of Service - /cloud/terms/"><span>Terms of Service </span></a></li>
-    
-    
-    
-    
-    
-  
-    
-    
-      
-    
-    
-    
-      
-    
-    
-    
-    
-      
-        
-      
-      <li style="color:red;"><a href="/appengine/sla" title="Service Level Agreement" data-title="Service Level Agreement - /appengine/sla"><span>Service Level Agreement </span></a></li>
-    
-    
-    
-    
-    
-  
-</ul>
-
-    
-  
-</ul>
-
-
-            </nav>
+    </div>
+  </div>
+  <div id="maia-nav-x" class="maia-nav">
+    <div class="maia-aux">
+   <div class="cp-cta">
+   <a class="cp-track maia-button maia-button-secondary white-button" href="/contact/">Contact sales</a>
+   <a class="cp-track maia-button blue-button" href="https://console.developers.google.com?getstarted=https://cloud.google.com" style="color: #ffffff;">Try it now</a>
+   </div>
+      <ul>
+        <li id="home-nav"
             
-            
+              class="active"
+            >
+
+            <a 
+              class="active"
+             href="index.html" event="autotrack-data-g" data-g-event="Global Nav" data-g-action="Nav Bar" data-g-label="Home"> 
+            Home
+            </a>
+        </li>      
+        <li
+            >
+            <a href="/why-google/" event="autotrack-data-g" data-g-event="Global Nav" data-g-action="Nav Bar" data-g-label="Why Google"> 
+            Why Google
+            </a>
+        </li>
+        <li id="main-nav-product-dropdown" class="dropdown">
+            <a href="/products/" event="autotrack-data-g" data-g-event="Global Nav" data-g-action="Nav Bar" data-g-label="Products"> 
+            Products
+            </a>
+        </li>
+        <li
+            >
+            <a href="/solutions/" event="autotrack-data-g" data-g-event="Global Nav" data-g-action="Nav Bar" data-g-label="Solutions"> 
+            Solutions
+            </a>
+        </li>
+        <li
+            >
+            <a href="/customers/" event="autotrack-data-g" data-g-event="Global Nav" data-g-action="Nav Bar" data-g-label="Customers"> 
+            Customers
+            </a>
+        </li>
+        <li
+            >
+            <a href="/developers/" event="autotrack-data-g" data-g-event="Global Nav" data-g-action="Nav Bar" data-g-label="Developers"> 
+            Developers
+            </a>            
+        </li>
+        <li
+            >
+            <a href="/support/" event="autotrack-data-g" data-g-event="Global Nav" data-g-action="Nav Bar" data-g-label="Support"> 
+            Support
+            </a>            
+        </li>
+        <li>
+            <a href="/partners/" event="autotrack-data-g" data-g-event="Global Nav" data-g-action="Nav Bar" data-g-label="Partners"> 
+            Partners
+            </a>            
+        </li>
+        <li>
+            <a href="https://github.com/GoogleDevDocs/googledevdocs.github.io/edit/master/index.html" event="autotrack-data-g" data-g-event="Global Nav" data-g-action="Nav Bar" data-g-label="Edit Page"> 
+            Edit Page
+            </a>            
+        </li>
+      </ul>
+    </div>
+  </div>
+
+<!-- Products subnav -->
+<div id="maia-nav-x" class="maia-nav products-nav">
+  <div class="maia-aux">
+    <div class="products-nav-dropdown maia-cols">
+
+      <div id="compute-dropdown" class="products-column maia-col-2">
+        <span class="product-list-title">Compute</span>
+        <div class="dropdown-item-container">
+          <a href="/products/compute-engine/">
+            <span class="product-name">Compute Engine</span>
+          </a>
+        </div>
+        <div class="dropdown-item-container">
+          <a href="/products/app-engine/">
+            <span class="product-name">App Engine</span>
+          </a>
+        </div>
       </div>
 
-    <div class="document">
-      <div class="documentwrapper">
-        <div class="bodywrapper">
-          <div class="body" role="main" id="gc-content">
-          <h1>Tech Demo for GH-Pages + Markdown + Jekyll + DevSite theme</h1>
-          <div id="mainContent">
-          
-<iframe id="related-bigvid" src="//www.youtube.com/embed/ytT2-kL9v2o?autohide=1&amp;showinfo=0" frameborder="0" allowfullscreen="">
- 
-</iframe>
+      <div id="storage-dropdown" class="products-column maia-col-2">
+        <span class="product-list-title">Storage</span>
+        <div class="dropdown-item-container">
+          <a href="/products/cloud-sql/">
+            <span class="product-name">Cloud SQL</span>
+          </a>
+        </div>
+        <div class="dropdown-item-container">
+          <a href="/products/cloud-storage/">
+            <span class="product-name">Cloud Storage</span>
+          </a>
+        </div>
+        <div class="dropdown-item-container">
+          <a href="/products/cloud-datastore/">
+            <span class="product-name">Cloud Datastore</span>
+          </a>
+        </div>
+      </div>
 
-<div id="related-sidebar">
-  <nav id="related-info">
-    <header>
-Related videos
-    </header>
-    <iframe src="//www.youtube.com/embed/22n06z0rq4c?autohide=1" frameborder="0" allowfullscreen="" data-category="Sidebar" data-action="Related video" data-label="22n06z0rq4c">
- 
-    </iframe>
-    <iframe src="//www.youtube.com/embed/9rlMOb93HDE?autohide=1" frameborder="0" allowfullscreen="" data-category="Sidebar" data-action="Related video" data-label="9rlMOb93HDE">
- 
-    </iframe>
-    <header>
-Related topics
-    </header>
-    <ul>
-      <li><a href="https://developers.google.com/appengine/articles/deferred" data-category="Sidebar" data-action="Related topic" data-label="Background work with the deferred library"> Background work with the deferred library </a></li>
-      <li><a href="http://www.google.com/events/io/2010/sessions/high-throughput-data-pipelines-appengine.html" data-category="Sidebar" data-action="Related topic" data-label="Building high-throughput data pipelines with Google App Engine"> Building high-throughput data pipelines with Google App Engine </a></li>
-      <li><a href="https://code.google.com/p/appengine-pipeline/" data-category="Sidebar" data-action="Related topic" data-label="Google App Engine Pipeline API"> Google App Engine Pipeline API </a></li>
-    </ul>
-    <header>
-Related samples
-    </header>
-    <ul>
-      <li><a href="https://github.com/GoogleCloudPlatform/appengine-last-across-the-finish-line-python" data-category="Sidebar" data-action="Related sample" data-label="Last Across the Finish Line (Python)"> Last Across the Finish Line (Python) </a></li>
-    </ul>
-  </nav>
-  <script language="javascript">
-    function parseRSS(url, callback) {
-      $.ajax({
-        url: document.location.protocol + '//ajax.googleapis.com/ajax/services/feed/load?v=1.0&num=10&callback=?&q=' + encodeURIComponent(url),
-        dataType: 'json',
-        success: function(data) {
-          var feedLimit = 5;
-          if (data.responseData.feed.entries.length<5) feedLimit = data.responseData.feed.entries.length;
-          for(i=0;i<feedLimit;i++) {
-            $("#soquestions").append('<li><a href="'+ data.responseData.feed.entries[i].link +'">' + data.responseData.feed.entries[i].title + '</a></li>');
-          }
-        }
-      });
-    }
-    $(document).ready(function(){
-      parseRSS("http://stackoverflow.com/feeds/tag?tagnames=google-app-engine+task-queue&sort=votes")
-    });
-    </script>
-  <div id="related-stackoverflow">
-<a href="http://stackoverflow.com/questions/tagged/google-app-engine+task-queue"><img src="/images/stack_overflow_questions.png" width="240" height="53" title="Stack Overflow Questions" border="0" id="soimage" /></a>     <ul id="soquestions" class="feed hfeed">
-    </ul>
-    <div class="more">
-<a href="http://stackoverflow.com/questions/tagged/google-app-engine+task-queue?sort=votes">See more...</a>
+      <div id="big-data-dropdown" class="products-column maia-col-2">
+        <span class="product-list-title">Big Data</span>
+        <div class="dropdown-item-container">
+          <a href="/products/bigquery/">
+            <span class="product-name">BigQuery</span>
+          </a>
+        </div>
+      </div>
+
+      <div id="services-dropdown" class="products-column maia-col-2">
+        <span class="product-list-title">Services</span>
+        <div class="dropdown-item-container">
+          <a href="/products/cloud-dns/">
+            <span class="product-name">Cloud DNS</span>
+          </a>
+        </div>
+        <div class="dropdown-item-container">
+          <a href="/products/cloud-endpoints/">
+            <span class="product-name">Cloud Endpoints</span>
+          </a>
+        </div>
+        <div class="dropdown-item-container">
+          <a href="/products/translate-api/">
+            <span class="product-name">Translate API</span>
+          </a>
+        </div>
+        <div class="dropdown-item-container">
+          <a href="/products/prediction-api/">
+            <span class="product-name">Prediction API</span>
+          </a>
+        </div>
+      </div>
+
+      <div id="management-dropdown" class="products-column maia-col-2">
+        <span class="product-list-title">Management</span>
+        <div class="dropdown-item-container">
+          <span class="product-name"><a href="/products/cloud-deployment-manager/">Cloud Deployment Manager</a></span>
+        </div>
+      </div>
+
+      <div id="pricing-dropdown" class="products-column maia-col-2">
+        <span class="product-list-title">Pricing</span>
+        <div class="dropdown-item-container">
+          <span class="product-name"><a href="/products/pricing/">Overview</a></span>
+        </div>
+        <div class="dropdown-item-container">
+          <span class="product-name"><a href="/products/calculator/">Calculator</a></span>
+        </div>
+      </div>
     </div>
   </div>
 </div>
 
-<link rel="stylesheet" href="/css/sidebar.css" type="text/css" />
+<div class="site-wrapper home">
 
-<script language="javascript">
-// credit to: http://jsfiddle.net/s8m2t/8/
-var buildRec;
-
-buildRec = function(headingNodes, $elm, lv) {
-  var cnt, curLv, li, node;
-  node = headingNodes.splice(0, 1);
-  if (node && node.length > 0) {
-    curLv = parseInt(node[0].tagName.substring(1));
-    if (curLv === lv) {
-      cnt = 0;
-    } else if (curLv < lv) {
-      cnt = 0;
-      while (true) {
-        $elm = $elm.parent().parent();
-        cnt--;
-        if (!(cnt > (curLv - lv))) {
-          break;
-        }
-      }
-    } else if (curLv > lv) {
-      cnt = 0;
-      while (true) {
-        li = $elm.children().last();
-        if (!($elm.children().last().length > 0)) {
-          $elm.append($("<li>"));
-            li = $elm.children().last();
-        }
-        li.append($('<ul style="list-style-type: none;">'));
-          $elm = li.children().last();
-        cnt++;
-        if (!(cnt < (curLv - lv))) {
-          break;
-        }
-      }
-    }
-    $elm.append($("<li>"));
-      li = $elm.children().last();
-    li.html("<a href=#" + node[0].id + ">" + node[0].innerHTML + "</a>");
-    return buildRec(headingNodes, $elm, lv + cnt);
-  }
-};
-$(document).ready(function(){
-  var headingNodes = $('#mainContent').children().filter(":header");
-  var result = $('<ul style="list-style-type: none; padding-left:0px;">');
-  buildRec(headingNodes,result,1);
-  $("#pageTOC").append(result);
-});
-</script>
-
-<div id="pageTOC" style="padding-top:15px; font-weight: bold; width: auto;"></div>
-
-<h2 id="included-markdown-content">Included Markdown content</h2>
-
-<p>Testing Markdown, Includes, and Submoduled templates.</p>
-
-<h3 id="testing">Testing</h3>
-
-<p>This content was included!</p>
-
-<p>Page path: index.md</p>
-
-<p>Testing fork flow. From master &gt; fork. #2</p>
-
-<h2 id="css-tests">CSS Tests</h2>
-
-<h3 id="buttons">Buttons</h3>
-
-<p><a href="http://www.google.com" class="button">Grey Button</a>
-<a href="http://www.google.com" class="button button-red">Red Button</a>
-<a href="http://www.google.com" class="button button-blue">Blue Button</a>
-<a href="http://www.google.com" class="button button-green">Green Button</a></p>
-
-<h3 id="asides">Asides</h3>
-
-<p class="note">This is a note.</p>
-
-<p class="warning">This is a warning</p>
-
-<p class="special">This is special.</p>
-
-<p class="caution">This warrants caution.</p>
-
-<h2 id="code-snippets">Code snippets</h2>
-
-<h3 id="pre-using-codeblock">pre-using codeblock</h3>
-
-<pre class="prettyprint lang-yaml"><code>toc:
-- title: "Testing"
-  path: "/docs/test"
-</code></pre>
-
-<h3 id="indent-using-codeblock">Indent-using codeblock</h3>
-<pre class="prettyprint lang-javascript"><code>var s = "JavaScript syntax highlighting";
-alert(s);
-</code></pre>
-
-<h3 id="fenced-codeblock">Fenced codeblock</h3>
-<pre class="prettyprint lang-python"><code>s = "Python syntax highlighting"
-print s
-</code></pre>
-
-<h3 id="git-sample">Git sample</h3>
-
-<script language="javascript">
-$(document).ready(function(){
-  var gitAccount = "GoogleCloudPlatform";
-  var gitRepo = "appengine-guestbook-python";
-  var gitFile = "guestbook.py";
-  var gitCommit = "c9f4e90b07f13e3bda886c20cb824e1fa3cf7d0f";
-  var regionTag = "region";
-  var lang="python";
-  $.ajax({
-    url: "https://cdn.rawgit.com/GoogleCloudPlatform/appengine-guestbook-python/c9f4e90b07f13e3bda886c20cb824e1fa3cf7d0f/guestbook.py",
-    context: document.body,
-    dataType: "text",
-  }).done(function(data) {
-    $("#testSnippet").html(data);
-    $("#testSnippet").addClass("lang-python");
-    prettyPrint();
-  });
-});
-</script>
-
-<pre class="prettyprint lang-python" id="testSnippet"><code>
-</code></pre>
-
-<h2 id="tables">Tables</h2>
-
-<table>
-  <thead>
-    <tr>
-      <th>Tables</th>
-      <th style="text-align: center">Are</th>
-      <th style="text-align: right">Cool</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>col 3 is</td>
-      <td style="text-align: center">right-aligned</td>
-      <td style="text-align: right">$1600</td>
-    </tr>
-    <tr>
-      <td>col 2 is</td>
-      <td style="text-align: center">centered</td>
-      <td style="text-align: right">$12</td>
-    </tr>
-    <tr>
-      <td>zebra stripes</td>
-      <td style="text-align: center">are neat</td>
-      <td style="text-align: right">$1</td>
-    </tr>
-  </tbody>
-</table>
-
-<h2 id="tabs">Tabs</h2>
-
-<h3 id="horizontal-tabs">Horizontal Tabs</h3>
-
-<div class="horizontalTabs">
-  <ul>
-    <li><a href="#tabs-1">Nunc tincidunt</a></li>
-    <li><a href="#tabs-2">Proin dolor</a></li>
-    <li><a href="#tabs-3">Aenean lacinia</a></li>
-  </ul>
-  <div id="tabs-1">
-    <p>Proin elit arcu, rutrum commodo, vehicula tempus, commodo a, risus. Curabitur nec arcu. Donec sollicitudin mi sit amet mauris. Nam elementum quam ullamcorper ante. Etiam aliquet massa et lorem. Mauris dapibus lacus auctor risus. Aenean tempor ullamcorper leo. Vivamus sed magna quis ligula eleifend adipiscing. Duis orci. Aliquam sodales tortor vitae ipsum. Aliquam nulla. Duis aliquam molestie erat. Ut et mauris vel pede varius sollicitudin. Sed ut dolor nec orci tincidunt interdum. Phasellus ipsum. Nunc tristique tempus lectus.</p>
+  <div class="maia-stage page-header primary scroll-section" data-section-label="Tools for modern applications">
+    <div class="maia-aux page-header-inner">
+      <div class="page-header-inner-inner">
+        <h1 class="headline"><span>Tools for modern applications</span></h1>
+        <p class="subheadline">Google Cloud Platform enables developers to build, test and deploy applications on Google’s highly-scalable and reliable infrastructure. Choose from computing, storage and application services for your web, mobile and backend solutions.</p>
+        <p class="cta"><a href="https://console.developers.google.com?getstarted=https://cloud.google.com" class="maia-button try-it cp-track" id="try-body" event="autotrack-data-g" data-g-event="Home" data-g-action="Try It Now" data-g-label="Home Canvas: Click">Try it now</a></p>
+      </div>
+    </div>
   </div>
-  <div id="tabs-2">
-    <p>Morbi tincidunt, dui sit amet facilisis feugiat, odio metus gravida ante, ut pharetra massa metus id nunc. Duis scelerisque molestie turpis. Sed fringilla, massa eget luctus malesuada, metus eros molestie lectus, ut tempus eros massa ut dolor. Aenean aliquet fringilla sem. Suspendisse sed ligula in ligula suscipit aliquam. Praesent in eros vestibulum mi adipiscing adipiscing. Morbi facilisis. Curabitur ornare consequat nunc. Aenean vel metus. Ut posuere viverra nulla. Aliquam erat volutpat. Pellentesque convallis. Maecenas feugiat, tellus pellentesque pretium posuere, felis lorem euismod felis, eu ornare leo nisi vel felis. Mauris consectetur tortor et purus.</p>
-  </div>
-  <div id="tabs-3">
-    <p>Mauris eleifend est et turpis. Duis id erat. Suspendisse potenti. Aliquam vulputate, pede vel vehicula accumsan, mi neque rutrum erat, eu congue orci lorem eget lorem. Vestibulum non ante. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Fusce sodales. Quisque eu urna vel enim commodo pellentesque. Praesent eu risus hendrerit ligula tempus pretium. Curabitur lorem enim, pretium nec, feugiat nec, luctus a, lacus.</p>
-    <p>Duis cursus. Maecenas ligula eros, blandit nec, pharetra at, semper at, magna. Nullam ac lacus. Nulla facilisi. Praesent viverra justo vitae neque. Praesent blandit adipiscing velit. Suspendisse potenti. Donec mattis, pede vel pharetra blandit, magna ligula faucibus eros, id euismod lacus dolor eget odio. Nam scelerisque. Donec non libero sed nulla mattis commodo. Ut sagittis. Donec nisi lectus, feugiat porttitor, tempor ac, tempor vitae, pede. Aenean vehicula velit eu tellus interdum rutrum. Maecenas commodo. Pellentesque nec elit. Fusce in lacus. Vivamus a libero vitae lectus hendrerit hendrerit.</p>
-  </div>
+
+  <div id="maia-main">
+
+      <!-- General Announcement Space (gnode's are misnamed, may want to fix at some point -->
+     <div id="HPP" class="generic-section announcement-section">
+      <div class="maia-cols">
+        <div class="maia-col-7">
+          <h1 class="headline">
+            Did you know - Google Compute Engine can power any of your Linux Virtual Machines?
+          </h1>
+          <p>
+            <p>Want the most control and flexibility when building your application?  Use Google Compute Engine to boot a Linux VM in seconds and get started by SSHing into that machine directly from the browser. <a href="products/compute-engine">Learn more about Compute Engine</a> or <a href="https://console.developers.google.com/?getstarted=https://cloud.google.com&_ga=1.244515008.47819545.1406304957">try it today</a>.</p>
+          </p>
+        </div>
+        <div class="maia-col-5 ce-image">
+            <a href="products/compute-engine"><img src="/images/products/landing/compute-engine.png" alt="Google Compute Engine" style="height:120px; width:auto;"/></a>
+        </div>
+      </div>
+    </div>
+    <!-- END HPP Section -->
+    
+   <!-- HGCPW section -->
+    <div id="hgcpw" class="generic-section" data-ng-controller="HgcpwController as ctrl">
+
+      <div class="maia-cols">
+        <div class="maia-col-7">
+          <h1 class="headline">
+            How Google Cloud Platform works
+          </h1>
+          <p>
+            Google Cloud Platform is set of modular cloud-based services that allow you to create anything from simple websites to complex applications.
+          </p>
+        </div>
+        <div class="maia-col-12">
+          
+          <div class="hgcpw maia-cols"
+               data-ng-class="{'highlight':ctrl.highlightActive}"
+               data-tabs
+               data-active-tab="ctrl.activeTab"
+               data-tab-classes="maia-col-4"
+               data-content-classes="maia-col-8"
+               data-ng-cloak>
+            
+              <div class="platform-tab all"
+                   data-pane
+                   data-title="All Cloud Platform products"
+                   data-tab-content="&lt;p&gt;Cloud Platform provides the building blocks so you can quickly develop everything from simple websites to complex applications. Explore how you can make Cloud Platform work for you.  &lt;/p&gt;">
+                <div data-animation-timeline="all"
+                     data-playing="ctrl.activeTab === 'All Cloud Platform products'">
+                  <div class="gcp-categories">
+                    
+                    <div class="gcp-category all-hosting-compute">
+                      <h3 class="gcp-category-label">Hosting + Compute</h3>
+                      <div class="gcp-product-container">
+                        <div class="gcp-product-inner-container">
+                          
+                          <div class="gcp-product app-engine"
+                               data-ng-class="{'active':ctrl.itemHighlighted('all-app-engine')}">
+                            <a href="products/app-engine"
+                               data-ng-mouseover="ctrl.activateItem({tooltipText:'Run your applications on a fully-managed Platform-as-a-Service (PaaS) using built-in services that make you more productive. Just download the SDK and start building immediately.', highlight:'all-app-engine'})"
+                               data-ng-mouseout="ctrl.deactivateItems()"
+                               data-product-animation
+                               data-slug="app-engine">
+                              <span class="gcp-anim-icon app-engine">
+  <span class="logo-shadow"><!--icon--></span>
+  <span class="logo-main"><!--icon--></span>
+  <span class="logo-circle"><!--icon--></span>
+  <span class="logo-inner"><!--icon--></span>
+  <span class="code"><!--icon--></span>
+</span>
+                              <p><em>App Engine</em></p>
+                            </a>
+                          </div>
+                          
+                          <div class="gcp-product compute-engine"
+                               data-ng-class="{'active':ctrl.itemHighlighted('all-compute-engine')}">
+                            <a href="products/compute-engine"
+                               data-ng-mouseover="ctrl.activateItem({tooltipText:'Run large-scale workloads on virtual machines hosted on Google\&#39;s infrastructure. Choose a VM that fits your needs and gain the performance of Google\&#39;s worldwide fiber network.', highlight:'all-compute-engine'})"
+                               data-ng-mouseout="ctrl.deactivateItems()"
+                               data-product-animation
+                               data-slug="compute-engine">
+                              <span class="gcp-anim-icon compute-engine">
+  <span class="logo-shadow"><!--icon--></span>
+  <span class="logo-line left one"><!--icon--></span>
+  <span class="logo-line left two"><!--icon--></span>
+  <span class="logo-line right one"><!--icon--></span>
+  <span class="logo-line right two"><!--icon--></span>
+  <span class="logo-line top one"><!--icon--></span>
+  <span class="logo-line top two"><!--icon--></span>
+  <span class="logo-line bottom one"><!--icon--></span>
+  <span class="logo-line bottom two"><!--icon--></span>
+  <span class="logo-main"><!--icon--></span>
+</span>
+                              <p><em>Compute Engine</em></p>
+                            </a>
+                          </div>
+                          
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div class="gcp-category all-storage">
+                      <h3 class="gcp-category-label">Storage</h3>
+                      <div class="gcp-product-container">
+                        <div class="gcp-product-inner-container">
+                          
+                          <div class="gcp-product cloud-storage"
+                               data-ng-class="{'active':ctrl.itemHighlighted('all-cloud-storage')}">
+                            <a href="products/cloud-storage"
+                               data-ng-mouseover="ctrl.activateItem({tooltipText:'Use a durable and highly available object storage service. With global edge-caching, your users have fast access to your app’s data from any location.', highlight:'all-cloud-storage'})"
+                               data-ng-mouseout="ctrl.deactivateItems()"
+                               data-product-animation
+                               data-slug="cloud-storage">
+                              <span class="gcp-anim-icon cloud-storage">
+  <span class="logo-shadow"><!--icon--></span>
+  <span class="logo-document"><!--icon--></span>
+  <span class="logo-main"><!--icon--></span>
+</span>
+                              <p><em>Cloud Storage</em></p>
+                            </a>
+                          </div>
+                          
+                          <div class="gcp-product cloud-datastore"
+                               data-ng-class="{'active':ctrl.itemHighlighted('all-cloud-datastore')}">
+                            <a href="products/cloud-datastore"
+                               data-ng-mouseover="ctrl.activateItem({tooltipText:'Use a managed, NoSQL, schemaless database for storing non-relational data. Cloud Datastore automatically scales as you need it and supports transactions as well as robust, SQL-like queries.', highlight:'all-cloud-datastore'})"
+                               data-ng-mouseout="ctrl.deactivateItems()"
+                               data-product-animation
+                               data-slug="cloud-datastore">
+                              <span class="gcp-anim-icon cloud-datastore">
+  <span class="logo-shadow"><!--icon--></span>
+  <span class="logo-main">
+    <span class="logo-square one"><!--icon--></span>
+    <span class="logo-square two"><!--icon--></span>
+    <span class="logo-square three"><!--icon--></span>
+    <span class="logo-square four"><!--icon--></span>
+    <span class="logo-square five"><!--icon--></span>
+    <span class="logo-square six"><!--icon--></span>
+  </span>
+</span>
+                              <p><em>Cloud Datastore</em></p>
+                            </a>
+                          </div>
+                          
+                          <div class="gcp-product cloud-sql"
+                               data-ng-class="{'active':ctrl.itemHighlighted('all-cloud-sql')}">
+                            <a href="products/cloud-sql"
+                               data-ng-mouseover="ctrl.activateItem({tooltipText:'Store and manage data using a fully-managed, relational MySQL database. Google handles replication, patch management and database management to ensure availability and performance.', highlight:'all-cloud-sql'})"
+                               data-ng-mouseout="ctrl.deactivateItems()"
+                               data-product-animation
+                               data-slug="cloud-sql">
+                              <span class="gcp-anim-icon cloud-sql">
+  <span class="logo-shadow"><!--icon--></span>
+  <span class="logo-main"><!--icon--></span>
+  <span class="s-1"><!--icon --></span>
+  <span class="s-2"><!--icon --></span>
+  <span class="s-3"><!--icon --></span>
+  <span class="s-4"><!--icon --></span>
+  <span class="s-5"><!--icon --></span>
+  <span class="s-6"><!--icon --></span>
+  <span class="s-7"><!--icon --></span>
+  <span class="s-8"><!--icon --></span>
+  <span class="s-9"><!--icon --></span>
+  <span class="s-10"><!--icon --></span>
+  <span class="s-11"><!--icon --></span>
+  <span class="q-1"><!--icon --></span>
+  <span class="q-2"><!--icon --></span>
+  <span class="q-3"><!--icon --></span>
+  <span class="q-4"><!--icon --></span>
+  <span class="q-5"><!--icon --></span>
+  <span class="q-6"><!--icon --></span>
+  <span class="q-7"><!--icon --></span>
+  <span class="q-8"><!--icon --></span>
+  <span class="q-9"><!--icon --></span>
+  <span class="q-10"><!--icon --></span>
+  <span class="q-11"><!--icon --></span>
+  <span class="q-12"><!--icon --></span>
+  <span class="q-13"><!--icon --></span>
+  <span class="l-1"><!--icon --></span>
+  <span class="l-2"><!--icon --></span>
+  <span class="l-3"><!--icon --></span>
+  <span class="l-4"><!--icon --></span>
+  <span class="l-5"><!--icon --></span>
+  <span class="l-6"><!--icon --></span>
+  <span class="l-7"><!--icon --></span>
+  <span class="drop-1"><!--icon --></span>
+  <span class="drop-2"><!--icon --></span>
+  <span class="drop-3"><!--icon --></span>
+  <span class="drop-4"><!--icon --></span>
+  <span class="drop-5"><!--icon --></span>
+  <span class="drop-6"><!--icon --></span>
+</span>
+                              <p><em>Cloud SQL</em></p>
+                            </a>
+                          </div>
+                          
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div class="gcp-category all-big-data">
+                      <h3 class="gcp-category-label">Big Data</h3>
+                      <div class="gcp-product-container">
+                        <div class="gcp-product-inner-container">
+                          
+                          <div class="gcp-product bigquery"
+                               data-ng-class="{'active':ctrl.itemHighlighted('all-bigquery')}">
+                            <a href="products/bigquery"
+                               data-ng-mouseover="ctrl.activateItem({tooltipText:'Analyze Big Data in the cloud with BigQuery. Run fast, SQL-like queries against multi-terabyte datasets in seconds. Scalable and easy to use, BigQuery gives you real-time insights about your data.', highlight:'all-bigquery'})"
+                               data-ng-mouseout="ctrl.deactivateItems()"
+                               data-product-animation
+                               data-slug="bigquery">
+                              <span class="gcp-anim-icon big-query">
+  <span class="logo-shadow"><!--icon--></span>
+  <span class="logo-main"><!--icon--></span>
+  <span class="logo-bar-wrapper">
+    <span class="logo-bar one"><!--icon--></span>
+    <span class="logo-bar two"><!--icon--></span>
+    <span class="logo-bar three"><!--icon--></span>
+  </span>
+</span>
+                              <p><em>BigQuery</em></p>
+                            </a>
+                          </div>
+                          
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div class="gcp-category all-services">
+                      <h3 class="gcp-category-label">Services</h3>
+                      <div class="gcp-product-container">
+                        <div class="gcp-product-inner-container">
+                          
+                          <div class="gcp-product cloud-endpoints"
+                               data-ng-class="{'active':ctrl.itemHighlighted('all-cloud-endpoints')}">
+                            <a href="products/cloud-endpoints"
+                               data-ng-mouseover="ctrl.activateItem({tooltipText:'Create RESTful services and make them accessible to iOS, Android and Javascript clients. Automatically generate client libraries to make wiring up the frontend easy. Built-in features include denial-of-service protection, OAuth 2.0 support and client key management. ', highlight:'all-cloud-endpoints'})"
+                               data-ng-mouseout="ctrl.deactivateItems()"
+                               data-product-animation
+                               data-slug="cloud-endpoints">
+                              <span class="gcp-anim-icon cloud-endpoints">
+  <span class="logo-shadow"><!--icon--></span>
+  <span class="logo-secondary"><!--icon--></span>
+  <span class="logo-main"><!--icon--></span>
+  <span class="logo-left-arrow"><!--icon--></span>
+  <span class="logo-right-arrow"><!--icon--></span>
+</span>
+                              <p><em>Cloud Endpoints</em></p>
+                            </a>
+                          </div>
+                          
+                          <div class="gcp-product translate-api"
+                               data-ng-class="{'active':ctrl.itemHighlighted('all-translate-api')}">
+                            <a href="products/translate-api"
+                               data-ng-mouseover="ctrl.activateItem({tooltipText:'Quickly and dynamically translate between thousands of available language pairs within your app, integrating with Google Translate.', highlight:'all-translate-api'})"
+                               data-ng-mouseout="ctrl.deactivateItems()"
+                               data-product-animation
+                               data-slug="translate-api">
+                              <span class="gcp-anim-icon translate-api">
+  <span class="logo-shadow"><!--icon--></span>
+  <span class="logo-from"><!--icon--></span>
+  <span class="logo-arrow"><!--icon--></span>
+  <span class="logo-to one"><!--icon--></span>
+  <span class="logo-to two"><!--icon--></span>
+</span>
+                              <p><em>Translate API</em></p>
+                            </a>
+                          </div>
+                          
+                          <div class="gcp-product prediction-api"
+                               data-ng-class="{'active':ctrl.itemHighlighted('all-prediction-api')}">
+                            <a href="products/prediction-api"
+                               data-ng-mouseover="ctrl.activateItem({tooltipText:'Use Google’s machine learning algorithms to analyze data and predict future outcomes using a familiar RESTful interface. ', highlight:'all-prediction-api'})"
+                               data-ng-mouseout="ctrl.deactivateItems()"
+                               data-product-animation
+                               data-slug="prediction-api">
+                              <span class="gcp-anim-icon prediction-api">
+  <span class="logo-shadow"><!--icon--></span>
+  <span class="logo-line one"><!--icon--></span>
+  <span class="logo-line two"><!--icon--></span>
+  <span class="logo-line three"><!--icon--></span>
+  <span class="logo-dot one"><!--icon--></span>
+  <span class="logo-dot two"><!--icon--></span>
+</span>
+                              <p><em>Prediction API</em></p>
+                            </a>
+                          </div>
+                          
+                        </div>
+                      </div>
+                    </div>
+                    
+                  </div>
+                  <div class="gcp-arrow-container">
+                    
+                  </div>
+                  <div class="tooltip" data-ng-class="{'active':ctrl.tooltipActive}">
+                    <p data-ng-bind="ctrl.tooltipText"></p>
+                  </div>
+                </div>
+              </div>
+            
+              <div class="platform-tab gaming"
+                   data-pane
+                   data-title="Gaming solutions"
+                   data-tab-content="&lt;p&gt;Google Cloud Platform makes it easy to build a massively scalable game, without having to worry about underlying infrastructure.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;solutions/gaming&quot;&gt;&lt;em&gt;Read more about gaming solutions&lt;/em&gt;&lt;/a&gt;&lt;/p&gt;">
+                <div data-animation-timeline="gaming"
+                     data-playing="ctrl.activeTab === 'Gaming solutions'">
+                  <div class="gcp-categories">
+                    
+                    <div class="gcp-category gaming-services">
+                      <h3 class="gcp-category-label">Services</h3>
+                      <div class="gcp-product-container">
+                        <div class="gcp-product-inner-container">
+                          
+                          <div class="gcp-product cloud-endpoints"
+                               data-ng-class="{'active':ctrl.itemHighlighted('gaming-cloud-endpoints')}">
+                            <a href="products/cloud-endpoints"
+                               data-ng-mouseover="ctrl.activateItem({tooltipText:'Create RESTful services and make them accessible to iOS, Android and Javascript clients. Automatically generate client libraries to make wiring up the frontend easy. Built-in features include denial-of-service protection, OAuth 2.0 support and client key management. ', highlight:'gaming-cloud-endpoints'})"
+                               data-ng-mouseout="ctrl.deactivateItems()"
+                               data-product-animation
+                               data-slug="cloud-endpoints">
+                              <span class="gcp-anim-icon cloud-endpoints">
+  <span class="logo-shadow"><!--icon--></span>
+  <span class="logo-secondary"><!--icon--></span>
+  <span class="logo-main"><!--icon--></span>
+  <span class="logo-left-arrow"><!--icon--></span>
+  <span class="logo-right-arrow"><!--icon--></span>
+</span>
+                              <p><em>Cloud Endpoints</em></p>
+                            </a>
+                          </div>
+                          
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div class="gcp-category gaming-hosting-compute">
+                      <h3 class="gcp-category-label">Hosting + Compute</h3>
+                      <div class="gcp-product-container">
+                        <div class="gcp-product-inner-container">
+                          
+                          <div class="gcp-product app-engine"
+                               data-ng-class="{'active':ctrl.itemHighlighted('gaming-app-engine')}">
+                            <a href="products/app-engine"
+                               data-ng-mouseover="ctrl.activateItem({tooltipText:'Run your applications on a fully-managed Platform-as-a-Service (PaaS) using built-in services that make you more productive. Just download the SDK and start building immediately.', highlight:'gaming-app-engine'})"
+                               data-ng-mouseout="ctrl.deactivateItems()"
+                               data-product-animation
+                               data-slug="app-engine">
+                              <span class="gcp-anim-icon app-engine">
+  <span class="logo-shadow"><!--icon--></span>
+  <span class="logo-main"><!--icon--></span>
+  <span class="logo-circle"><!--icon--></span>
+  <span class="logo-inner"><!--icon--></span>
+  <span class="code"><!--icon--></span>
+</span>
+                              <p><em>App Engine</em></p>
+                            </a>
+                          </div>
+                          
+                          <div class="gcp-product compute-engine"
+                               data-ng-class="{'active':ctrl.itemHighlighted('gaming-compute-engine')}">
+                            <a href="products/compute-engine"
+                               data-ng-mouseover="ctrl.activateItem({tooltipText:'Run large-scale workloads on virtual machines hosted on Google\&#39;s infrastructure. Choose a VM that fits your needs and gain the performance of Google\&#39;s worldwide fiber network.', highlight:'gaming-compute-engine'})"
+                               data-ng-mouseout="ctrl.deactivateItems()"
+                               data-product-animation
+                               data-slug="compute-engine">
+                              <span class="gcp-anim-icon compute-engine">
+  <span class="logo-shadow"><!--icon--></span>
+  <span class="logo-line left one"><!--icon--></span>
+  <span class="logo-line left two"><!--icon--></span>
+  <span class="logo-line right one"><!--icon--></span>
+  <span class="logo-line right two"><!--icon--></span>
+  <span class="logo-line top one"><!--icon--></span>
+  <span class="logo-line top two"><!--icon--></span>
+  <span class="logo-line bottom one"><!--icon--></span>
+  <span class="logo-line bottom two"><!--icon--></span>
+  <span class="logo-main"><!--icon--></span>
+</span>
+                              <p><em>Compute Engine</em></p>
+                            </a>
+                          </div>
+                          
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div class="gcp-category gaming-storage">
+                      <h3 class="gcp-category-label">Storage</h3>
+                      <div class="gcp-product-container">
+                        <div class="gcp-product-inner-container">
+                          
+                          <div class="gcp-product cloud-storage"
+                               data-ng-class="{'active':ctrl.itemHighlighted('gaming-cloud-storage')}">
+                            <a href="products/cloud-storage"
+                               data-ng-mouseover="ctrl.activateItem({tooltipText:'Use a durable and highly available object storage service. With global edge-caching, your users have fast access to your app’s data from any location.', highlight:'gaming-cloud-storage'})"
+                               data-ng-mouseout="ctrl.deactivateItems()"
+                               data-product-animation
+                               data-slug="cloud-storage">
+                              <span class="gcp-anim-icon cloud-storage">
+  <span class="logo-shadow"><!--icon--></span>
+  <span class="logo-document"><!--icon--></span>
+  <span class="logo-main"><!--icon--></span>
+</span>
+                              <p><em>Cloud Storage</em></p>
+                            </a>
+                          </div>
+                          
+                          <div class="gcp-product cloud-datastore"
+                               data-ng-class="{'active':ctrl.itemHighlighted('gaming-cloud-datastore')}">
+                            <a href="products/cloud-datastore"
+                               data-ng-mouseover="ctrl.activateItem({tooltipText:'Use a managed, NoSQL, schemaless database for storing non-relational data. Cloud Datastore automatically scales as you need it and supports transactions as well as robust, SQL-like queries.', highlight:'gaming-cloud-datastore'})"
+                               data-ng-mouseout="ctrl.deactivateItems()"
+                               data-product-animation
+                               data-slug="cloud-datastore">
+                              <span class="gcp-anim-icon cloud-datastore">
+  <span class="logo-shadow"><!--icon--></span>
+  <span class="logo-main">
+    <span class="logo-square one"><!--icon--></span>
+    <span class="logo-square two"><!--icon--></span>
+    <span class="logo-square three"><!--icon--></span>
+    <span class="logo-square four"><!--icon--></span>
+    <span class="logo-square five"><!--icon--></span>
+    <span class="logo-square six"><!--icon--></span>
+  </span>
+</span>
+                              <p><em>Cloud Datastore</em></p>
+                            </a>
+                          </div>
+                          
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div class="gcp-category gaming-big-data">
+                      <h3 class="gcp-category-label">Big Data</h3>
+                      <div class="gcp-product-container">
+                        <div class="gcp-product-inner-container">
+                          
+                          <div class="gcp-product bigquery"
+                               data-ng-class="{'active':ctrl.itemHighlighted('gaming-bigquery')}">
+                            <a href="products/bigquery"
+                               data-ng-mouseover="ctrl.activateItem({tooltipText:'Analyze Big Data in the cloud with BigQuery. Run fast, SQL-like queries against multi-terabyte datasets in seconds. Scalable and easy to use, BigQuery gives you real-time insights about your data.', highlight:'gaming-bigquery'})"
+                               data-ng-mouseout="ctrl.deactivateItems()"
+                               data-product-animation
+                               data-slug="bigquery">
+                              <span class="gcp-anim-icon big-query">
+  <span class="logo-shadow"><!--icon--></span>
+  <span class="logo-main"><!--icon--></span>
+  <span class="logo-bar-wrapper">
+    <span class="logo-bar one"><!--icon--></span>
+    <span class="logo-bar two"><!--icon--></span>
+    <span class="logo-bar three"><!--icon--></span>
+  </span>
+</span>
+                              <p><em>BigQuery</em></p>
+                            </a>
+                          </div>
+                          
+                        </div>
+                      </div>
+                    </div>
+                    
+                  </div>
+                  <div class="gcp-arrow-container">
+                    
+                      <div class="gcp-arrow arrow-1"
+                           data-ng-class="{'active':ctrl.itemHighlighted('gaming-arrow-1')}"
+                           data-ng-mouseenter="ctrl.activateItem({tooltipText:'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sapien diam, tincidunt tincidunt molestie at, placerat tempus justo. In vitae ligula gravida, egestas ante et, consectetur turpis. Nulla ut sollicitudin ligula, ac molestie libero.', highlight:'gaming-arrow-1 gaming-cloud-endpoints gaming-app-engine '})"
+                           data-ng-mouseleave="ctrl.deactivateItems()"
+                           data-arrow-animation
+                           data-slug="arrow-1">
+                        <span class="arrow-segment arrow-segment-1"><!--icon--></span>
+<span class="arrow-segment arrow-segment-2"><!--icon--></span>
+<span class="arrow-head"><!--icon--></span>
+                        <span class="arrow-label">1</span>
+                      </div>
+                    
+                      <div class="gcp-arrow arrow-2"
+                           data-ng-class="{'active':ctrl.itemHighlighted('gaming-arrow-2')}"
+                           data-ng-mouseenter="ctrl.activateItem({tooltipText:'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sapien diam, tincidunt tincidunt molestie at, placerat tempus justo. In vitae ligula gravida, egestas ante et, consectetur turpis. Nulla ut sollicitudin ligula, ac molestie libero.', highlight:'gaming-arrow-2 gaming-cloud-endpoints gaming-compute-engine '})"
+                           data-ng-mouseleave="ctrl.deactivateItems()"
+                           data-arrow-animation
+                           data-slug="arrow-2">
+                        <span class="arrow-segment arrow-segment-1"><!--icon--></span>
+<span class="arrow-segment arrow-segment-2"><!--icon--></span>
+<span class="arrow-head"><!--icon--></span>
+                        <span class="arrow-label">2</span>
+                      </div>
+                    
+                      <div class="gcp-arrow arrow-3"
+                           data-ng-class="{'active':ctrl.itemHighlighted('gaming-arrow-3')}"
+                           data-ng-mouseenter="ctrl.activateItem({tooltipText:'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sapien diam, tincidunt tincidunt molestie at, placerat tempus justo. In vitae ligula gravida, egestas ante et, consectetur turpis. Nulla ut sollicitudin ligula, ac molestie libero.', highlight:'gaming-arrow-3 gaming-app-engine gaming-cloud-storage gaming-cloud-datastore '})"
+                           data-ng-mouseleave="ctrl.deactivateItems()"
+                           data-arrow-animation
+                           data-slug="arrow-3">
+                        <span class="arrow-segment arrow-segment-1"><!--icon--></span>
+<span class="arrow-segment arrow-segment-2" data-group-anim-with-next="true"><!--icon--></span>
+<span class="arrow-segment arrow-segment-3"><!--icon--></span>
+<span class="arrow-head arrow-head-1"><!--icon--></span>
+<span class="arrow-head arrow-head-2"><!--icon--></span>
+                        <span class="arrow-label">3</span>
+                      </div>
+                    
+                      <div class="gcp-arrow arrow-4"
+                           data-ng-class="{'active':ctrl.itemHighlighted('gaming-arrow-4')}"
+                           data-ng-mouseenter="ctrl.activateItem({tooltipText:'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sapien diam, tincidunt tincidunt molestie at, placerat tempus justo. In vitae ligula gravida, egestas ante et, consectetur turpis. Nulla ut sollicitudin ligula, ac molestie libero.', highlight:'gaming-arrow-4 gaming-app-engine gaming-compute-engine '})"
+                           data-ng-mouseleave="ctrl.deactivateItems()"
+                           data-arrow-animation
+                           data-slug="arrow-4">
+                        <span class="arrow-segment arrow-segment-1"><!--icon--></span>
+<span class="arrow-segment arrow-segment-2"><!--icon--></span>
+<span class="arrow-segment arrow-segment-3"><!--icon--></span>
+<span class="arrow-head"><!--icon--></span>
+                        <span class="arrow-label">4</span>
+                      </div>
+                    
+                      <div class="gcp-arrow arrow-5"
+                           data-ng-class="{'active':ctrl.itemHighlighted('gaming-arrow-5')}"
+                           data-ng-mouseenter="ctrl.activateItem({tooltipText:'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sapien diam, tincidunt tincidunt molestie at, placerat tempus justo. In vitae ligula gravida, egestas ante et, consectetur turpis. Nulla ut sollicitudin ligula, ac molestie libero.', highlight:'gaming-arrow-5 gaming-compute-engine gaming-cloud-storage '})"
+                           data-ng-mouseleave="ctrl.deactivateItems()"
+                           data-arrow-animation
+                           data-slug="arrow-5">
+                        <span class="arrow-segment arrow-segment-1"><!--icon--></span>
+<span class="arrow-segment arrow-segment-2"><!--icon--></span>
+<span class="arrow-segment arrow-segment-3"><!--icon--></span>
+<span class="arrow-segment arrow-segment-4"><!--icon--></span>
+<span class="arrow-segment arrow-segment-5"><!--icon--></span>
+<span class="arrow-head"><!--icon--></span>
+                        <span class="arrow-label">5</span>
+                      </div>
+                    
+                      <div class="gcp-arrow arrow-6"
+                           data-ng-class="{'active':ctrl.itemHighlighted('gaming-arrow-6')}"
+                           data-ng-mouseenter="ctrl.activateItem({tooltipText:'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sapien diam, tincidunt tincidunt molestie at, placerat tempus justo. In vitae ligula gravida, egestas ante et, consectetur turpis. Nulla ut sollicitudin ligula, ac molestie libero.', highlight:'gaming-arrow-6 gaming-cloud-storage gaming-bigquery '})"
+                           data-ng-mouseleave="ctrl.deactivateItems()"
+                           data-arrow-animation
+                           data-slug="arrow-6">
+                        <span class="arrow-segment arrow-segment-1"><!--icon--></span>
+<span class="arrow-segment arrow-segment-2"><!--icon--></span>
+<span class="arrow-head"><!--icon--></span>
+                        <span class="arrow-label">6</span>
+                      </div>
+                    
+                  </div>
+                  <div class="tooltip" data-ng-class="{'active':ctrl.tooltipActive}">
+                    <p data-ng-bind="ctrl.tooltipText"></p>
+                  </div>
+                </div>
+              </div>
+            
+              <div class="platform-tab mobile"
+                   data-pane
+                   data-title="Mobile Applications"
+                   data-tab-content="&lt;p&gt;Build and host the backend for any mobile app. With an infrastructure that is managed automatically, you can focus on your app.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;solutions/mobile&quot;&gt;&lt;em&gt;Read more about mobile applications&lt;/em&gt;&lt;/a&gt;&lt;/p&gt;">
+                <div data-animation-timeline="mobile"
+                     data-playing="ctrl.activeTab === 'Mobile Applications'">
+                  <div class="gcp-categories">
+                    
+                    <div class="gcp-category mobile-services">
+                      <h3 class="gcp-category-label">Services</h3>
+                      <div class="gcp-product-container">
+                        <div class="gcp-product-inner-container">
+                          
+                          <div class="gcp-product cloud-endpoints"
+                               data-ng-class="{'active':ctrl.itemHighlighted('mobile-cloud-endpoints')}">
+                            <a href="products/cloud-endpoints"
+                               data-ng-mouseover="ctrl.activateItem({tooltipText:'Create RESTful services and make them accessible to iOS, Android and Javascript clients. Automatically generate client libraries to make wiring up the frontend easy. Built-in features include denial-of-service protection, OAuth 2.0 support and client key management. ', highlight:'mobile-cloud-endpoints'})"
+                               data-ng-mouseout="ctrl.deactivateItems()"
+                               data-product-animation
+                               data-slug="cloud-endpoints">
+                              <span class="gcp-anim-icon cloud-endpoints">
+  <span class="logo-shadow"><!--icon--></span>
+  <span class="logo-secondary"><!--icon--></span>
+  <span class="logo-main"><!--icon--></span>
+  <span class="logo-left-arrow"><!--icon--></span>
+  <span class="logo-right-arrow"><!--icon--></span>
+</span>
+                              <p><em>Cloud Endpoints</em></p>
+                            </a>
+                          </div>
+                          
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div class="gcp-category mobile-hosting-compute">
+                      <h3 class="gcp-category-label">Hosting + Compute</h3>
+                      <div class="gcp-product-container">
+                        <div class="gcp-product-inner-container">
+                          
+                          <div class="gcp-product app-engine"
+                               data-ng-class="{'active':ctrl.itemHighlighted('mobile-app-engine')}">
+                            <a href="products/app-engine"
+                               data-ng-mouseover="ctrl.activateItem({tooltipText:'Run your applications on a fully-managed Platform-as-a-Service (PaaS) using built-in services that make you more productive. Just download the SDK and start building immediately.', highlight:'mobile-app-engine'})"
+                               data-ng-mouseout="ctrl.deactivateItems()"
+                               data-product-animation
+                               data-slug="app-engine">
+                              <span class="gcp-anim-icon app-engine">
+  <span class="logo-shadow"><!--icon--></span>
+  <span class="logo-main"><!--icon--></span>
+  <span class="logo-circle"><!--icon--></span>
+  <span class="logo-inner"><!--icon--></span>
+  <span class="code"><!--icon--></span>
+</span>
+                              <p><em>App Engine</em></p>
+                            </a>
+                          </div>
+                          
+                          <div class="gcp-product compute-engine"
+                               data-ng-class="{'active':ctrl.itemHighlighted('mobile-compute-engine')}">
+                            <a href="products/compute-engine"
+                               data-ng-mouseover="ctrl.activateItem({tooltipText:'Run large-scale workloads on virtual machines hosted on Google\&#39;s infrastructure. Choose a VM that fits your needs and gain the performance of Google\&#39;s worldwide fiber network.', highlight:'mobile-compute-engine'})"
+                               data-ng-mouseout="ctrl.deactivateItems()"
+                               data-product-animation
+                               data-slug="compute-engine">
+                              <span class="gcp-anim-icon compute-engine">
+  <span class="logo-shadow"><!--icon--></span>
+  <span class="logo-line left one"><!--icon--></span>
+  <span class="logo-line left two"><!--icon--></span>
+  <span class="logo-line right one"><!--icon--></span>
+  <span class="logo-line right two"><!--icon--></span>
+  <span class="logo-line top one"><!--icon--></span>
+  <span class="logo-line top two"><!--icon--></span>
+  <span class="logo-line bottom one"><!--icon--></span>
+  <span class="logo-line bottom two"><!--icon--></span>
+  <span class="logo-main"><!--icon--></span>
+</span>
+                              <p><em>Compute Engine</em></p>
+                            </a>
+                          </div>
+                          
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div class="gcp-category mobile-storage">
+                      <h3 class="gcp-category-label">Storage</h3>
+                      <div class="gcp-product-container">
+                        <div class="gcp-product-inner-container">
+                          
+                          <div class="gcp-product cloud-storage"
+                               data-ng-class="{'active':ctrl.itemHighlighted('mobile-cloud-storage')}">
+                            <a href="products/cloud-storage"
+                               data-ng-mouseover="ctrl.activateItem({tooltipText:'Use a durable and highly available object storage service. With global edge-caching, your users have fast access to your app’s data from any location.', highlight:'mobile-cloud-storage'})"
+                               data-ng-mouseout="ctrl.deactivateItems()"
+                               data-product-animation
+                               data-slug="cloud-storage">
+                              <span class="gcp-anim-icon cloud-storage">
+  <span class="logo-shadow"><!--icon--></span>
+  <span class="logo-document"><!--icon--></span>
+  <span class="logo-main"><!--icon--></span>
+</span>
+                              <p><em>Cloud Storage</em></p>
+                            </a>
+                          </div>
+                          
+                          <div class="gcp-product cloud-datastore"
+                               data-ng-class="{'active':ctrl.itemHighlighted('mobile-cloud-datastore')}">
+                            <a href="products/cloud-datastore"
+                               data-ng-mouseover="ctrl.activateItem({tooltipText:'Use a managed, NoSQL, schemaless database for storing non-relational data. Cloud Datastore automatically scales as you need it and supports transactions as well as robust, SQL-like queries.', highlight:'mobile-cloud-datastore'})"
+                               data-ng-mouseout="ctrl.deactivateItems()"
+                               data-product-animation
+                               data-slug="cloud-datastore">
+                              <span class="gcp-anim-icon cloud-datastore">
+  <span class="logo-shadow"><!--icon--></span>
+  <span class="logo-main">
+    <span class="logo-square one"><!--icon--></span>
+    <span class="logo-square two"><!--icon--></span>
+    <span class="logo-square three"><!--icon--></span>
+    <span class="logo-square four"><!--icon--></span>
+    <span class="logo-square five"><!--icon--></span>
+    <span class="logo-square six"><!--icon--></span>
+  </span>
+</span>
+                              <p><em>Cloud Datastore</em></p>
+                            </a>
+                          </div>
+                          
+                        </div>
+                      </div>
+                    </div>
+                    
+                  </div>
+                  <div class="gcp-arrow-container">
+                    
+                      <div class="gcp-arrow arrow-1"
+                           data-ng-class="{'active':ctrl.itemHighlighted('mobile-arrow-1')}"
+                           data-ng-mouseenter="ctrl.activateItem({tooltipText:'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sapien diam, tincidunt tincidunt molestie at, placerat tempus justo. In vitae ligula gravida, egestas ante et, consectetur turpis. Nulla ut sollicitudin ligula, ac molestie libero.', highlight:'mobile-arrow-1 mobile-cloud-endpoints mobile-app-engine '})"
+                           data-ng-mouseleave="ctrl.deactivateItems()"
+                           data-arrow-animation
+                           data-slug="arrow-1">
+                        <span class="arrow-segment arrow-segment-1"><!--icon--></span>
+<span class="arrow-head"><!--icon--></span>
+                        <span class="arrow-label">1</span>
+                      </div>
+                    
+                      <div class="gcp-arrow arrow-2"
+                           data-ng-class="{'active':ctrl.itemHighlighted('mobile-arrow-2')}"
+                           data-ng-mouseenter="ctrl.activateItem({tooltipText:'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sapien diam, tincidunt tincidunt molestie at, placerat tempus justo. In vitae ligula gravida, egestas ante et, consectetur turpis. Nulla ut sollicitudin ligula, ac molestie libero.', highlight:'mobile-arrow-2 mobile-app-engine mobile-cloud-storage '})"
+                           data-ng-mouseleave="ctrl.deactivateItems()"
+                           data-arrow-animation
+                           data-slug="arrow-2">
+                        <span class="arrow-segment arrow-segment-1"><!--icon--></span>
+<span class="arrow-segment arrow-segment-2"><!--icon--></span>
+<span class="arrow-head"><!--icon--></span>
+                        <span class="arrow-label">2</span>
+                      </div>
+                    
+                      <div class="gcp-arrow arrow-3"
+                           data-ng-class="{'active':ctrl.itemHighlighted('mobile-arrow-3')}"
+                           data-ng-mouseenter="ctrl.activateItem({tooltipText:'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sapien diam, tincidunt tincidunt molestie at, placerat tempus justo. In vitae ligula gravida, egestas ante et, consectetur turpis. Nulla ut sollicitudin ligula, ac molestie libero.', highlight:'mobile-arrow-3 mobile-app-engine mobile-cloud-datastore '})"
+                           data-ng-mouseleave="ctrl.deactivateItems()"
+                           data-arrow-animation
+                           data-slug="arrow-3">
+                        <span class="arrow-segment arrow-segment-1"><!--icon--></span>
+<span class="arrow-segment arrow-segment-2"><!--icon--></span>
+<span class="arrow-head"><!--icon--></span>
+                        <span class="arrow-label">3</span>
+                      </div>
+                    
+                      <div class="gcp-arrow arrow-4"
+                           data-ng-class="{'active':ctrl.itemHighlighted('mobile-arrow-4')}"
+                           data-ng-mouseenter="ctrl.activateItem({tooltipText:'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sapien diam, tincidunt tincidunt molestie at, placerat tempus justo. In vitae ligula gravida, egestas ante et, consectetur turpis. Nulla ut sollicitudin ligula, ac molestie libero.', highlight:'mobile-arrow-4 mobile-app-engine mobile-compute-engine '})"
+                           data-ng-mouseleave="ctrl.deactivateItems()"
+                           data-arrow-animation
+                           data-slug="arrow-4">
+                        <span class="arrow-segment arrow-segment-1"><!--icon--></span>
+<span class="arrow-segment arrow-segment-2"><!--icon--></span>
+<span class="arrow-segment arrow-segment-3"><!--icon--></span>
+<span class="arrow-head"><!--icon--></span>
+                        <span class="arrow-label">4</span>
+                      </div>
+                    
+                  </div>
+                  <div class="tooltip" data-ng-class="{'active':ctrl.tooltipActive}">
+                    <p data-ng-bind="ctrl.tooltipText"></p>
+                  </div>
+                </div>
+              </div>
+            
+              <div class="platform-tab hadoop"
+                   data-pane
+                   data-title="Hadoop on Google Compute Engine"
+                   data-tab-content="&lt;p&gt;Experience the speed of the open-source Apache Hadoop on Google Compute Engine virtual machines. Increase job performance with per-minute billing and scale to thousands of cores to get the business insights you need fast.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;solutions/hadoop&quot;&gt;&lt;em&gt;Read more about Hadoop&lt;/em&gt;&lt;/a&gt;&lt;/p&gt;">
+                <div data-animation-timeline="hadoop"
+                     data-playing="ctrl.activeTab === 'Hadoop on Google Compute Engine'">
+                  <div class="gcp-categories">
+                    
+                    <div class="gcp-category hadoop-master">
+                      <h3 class="gcp-category-label">Master</h3>
+                      <div class="gcp-product-container">
+                        <div class="gcp-product-inner-container">
+                          
+                          <div class="gcp-product compute-engine"
+                               data-ng-class="{'active':ctrl.itemHighlighted('hadoop-compute-engine')}">
+                            <a href="products/compute-engine"
+                               data-ng-mouseover="ctrl.activateItem({tooltipText:'Run large-scale workloads on virtual machines hosted on Google\&#39;s infrastructure. Choose a VM that fits your needs and gain the performance of Google\&#39;s worldwide fiber network.', highlight:'hadoop-compute-engine'})"
+                               data-ng-mouseout="ctrl.deactivateItems()"
+                               data-product-animation
+                               data-slug="compute-engine">
+                              <span class="gcp-anim-icon compute-engine">
+  <span class="logo-shadow"><!--icon--></span>
+  <span class="logo-line left one"><!--icon--></span>
+  <span class="logo-line left two"><!--icon--></span>
+  <span class="logo-line right one"><!--icon--></span>
+  <span class="logo-line right two"><!--icon--></span>
+  <span class="logo-line top one"><!--icon--></span>
+  <span class="logo-line top two"><!--icon--></span>
+  <span class="logo-line bottom one"><!--icon--></span>
+  <span class="logo-line bottom two"><!--icon--></span>
+  <span class="logo-main"><!--icon--></span>
+</span>
+                              <p><em>Compute Engine</em></p>
+                            </a>
+                          </div>
+                          
+                          <div class="gcp-product cloud-storage"
+                               data-ng-class="{'active':ctrl.itemHighlighted('hadoop-cloud-storage')}">
+                            <a href="products/cloud-storage"
+                               data-ng-mouseover="ctrl.activateItem({tooltipText:'Use a durable and highly available object storage service. With global edge-caching, your users have fast access to your app’s data from any location.', highlight:'hadoop-cloud-storage'})"
+                               data-ng-mouseout="ctrl.deactivateItems()"
+                               data-product-animation
+                               data-slug="cloud-storage">
+                              <span class="gcp-anim-icon cloud-storage">
+  <span class="logo-shadow"><!--icon--></span>
+  <span class="logo-document"><!--icon--></span>
+  <span class="logo-main"><!--icon--></span>
+</span>
+                              <p><em>Cloud Storage</em></p>
+                            </a>
+                          </div>
+                          
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div class="gcp-category hadoop-workers">
+                      <h3 class="gcp-category-label">Workers</h3>
+                      <div class="gcp-product-container">
+                        <div class="gcp-product-inner-container">
+                          
+                          <div class="gcp-product compute-engine-workers"
+                               data-ng-class="{'active':ctrl.itemHighlighted('hadoop-compute-engine-workers')}">
+                            <a href="products/compute-engine"
+                               data-ng-mouseover="ctrl.activateItem({tooltipText:'The easiest, most reliable and most cost-effective way to use Hadoop on Google Cloud Platform is by using Google Cloud Storage as your default file system. The Google Cloud Storage connector for Hadoop lets you access data directly, without needing to first transfer it from Google Cloud Storage into HDFS. Additional benefits include interoperability with other Google services, automatic capacity scaling, high data availability, and more.', highlight:'hadoop-compute-engine-workers'})"
+                               data-ng-mouseout="ctrl.deactivateItems()"
+                               data-product-animation
+                               data-slug="compute-engine-workers">
+                              <div class="half one">
+<span class="gcp-anim-icon compute-engine">
+  <span class="logo-shadow"><!--icon--></span>
+  <span class="logo-line left one"><!--icon--></span>
+  <span class="logo-line left two"><!--icon--></span>
+  <span class="logo-line right one"><!--icon--></span>
+  <span class="logo-line right two"><!--icon--></span>
+  <span class="logo-line top one"><!--icon--></span>
+  <span class="logo-line top two"><!--icon--></span>
+  <span class="logo-line bottom one"><!--icon--></span>
+  <span class="logo-line bottom two"><!--icon--></span>
+  <span class="logo-main"><!--icon--></span>
+</span>
+<span class="gcp-anim-icon compute-engine">
+  <span class="logo-shadow"><!--icon--></span>
+  <span class="logo-line left one"><!--icon--></span>
+  <span class="logo-line left two"><!--icon--></span>
+  <span class="logo-line right one"><!--icon--></span>
+  <span class="logo-line right two"><!--icon--></span>
+  <span class="logo-line top one"><!--icon--></span>
+  <span class="logo-line top two"><!--icon--></span>
+  <span class="logo-line bottom one"><!--icon--></span>
+  <span class="logo-line bottom two"><!--icon--></span>
+  <span class="logo-main"><!--icon--></span>
+</span>
 </div>
-
-<h4 id="synchronized-horizontal-tabs">Synchronized Horizontal Tabs</h4>
-
-<p>Just use the same <code>href</code> and <code>id</code> values and then clicking one clicks them all.</p>
-
-<div class="horizontalTabs">
-  <ul>
-    <li><a href="#tabs-1">Nunc tincidunt</a></li>
-    <li><a href="#tabs-2">Proin dolor</a></li>
-    <li><a href="#tabs-3">Aenean lacinia</a></li>
-  </ul>
-  <div id="tabs-1">
-    <p>Proin elit arcu, rutrum commodo, vehicula tempus, commodo a, risus. Curabitur nec arcu. Donec sollicitudin mi sit amet mauris. Nam elementum quam ullamcorper ante. Etiam aliquet massa et lorem. Mauris dapibus lacus auctor risus. Aenean tempor ullamcorper leo. Vivamus sed magna quis ligula eleifend adipiscing. Duis orci. Aliquam sodales tortor vitae ipsum. Aliquam nulla. Duis aliquam molestie erat. Ut et mauris vel pede varius sollicitudin. Sed ut dolor nec orci tincidunt interdum. Phasellus ipsum. Nunc tristique tempus lectus.</p>
-  </div>
-  <div id="tabs-2">
-    <p>Morbi tincidunt, dui sit amet facilisis feugiat, odio metus gravida ante, ut pharetra massa metus id nunc. Duis scelerisque molestie turpis. Sed fringilla, massa eget luctus malesuada, metus eros molestie lectus, ut tempus eros massa ut dolor. Aenean aliquet fringilla sem. Suspendisse sed ligula in ligula suscipit aliquam. Praesent in eros vestibulum mi adipiscing adipiscing. Morbi facilisis. Curabitur ornare consequat nunc. Aenean vel metus. Ut posuere viverra nulla. Aliquam erat volutpat. Pellentesque convallis. Maecenas feugiat, tellus pellentesque pretium posuere, felis lorem euismod felis, eu ornare leo nisi vel felis. Mauris consectetur tortor et purus.</p>
-  </div>
-  <div id="tabs-3">
-    <p>Mauris eleifend est et turpis. Duis id erat. Suspendisse potenti. Aliquam vulputate, pede vel vehicula accumsan, mi neque rutrum erat, eu congue orci lorem eget lorem. Vestibulum non ante. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Fusce sodales. Quisque eu urna vel enim commodo pellentesque. Praesent eu risus hendrerit ligula tempus pretium. Curabitur lorem enim, pretium nec, feugiat nec, luctus a, lacus.</p>
-    <p>Duis cursus. Maecenas ligula eros, blandit nec, pharetra at, semper at, magna. Nullam ac lacus. Nulla facilisi. Praesent viverra justo vitae neque. Praesent blandit adipiscing velit. Suspendisse potenti. Donec mattis, pede vel pharetra blandit, magna ligula faucibus eros, id euismod lacus dolor eget odio. Nam scelerisque. Donec non libero sed nulla mattis commodo. Ut sagittis. Donec nisi lectus, feugiat porttitor, tempor ac, tempor vitae, pede. Aenean vehicula velit eu tellus interdum rutrum. Maecenas commodo. Pellentesque nec elit. Fusce in lacus. Vivamus a libero vitae lectus hendrerit hendrerit.</p>
-  </div>
+<div class="half two">
+<span class="gcp-anim-icon compute-engine">
+  <span class="logo-shadow"><!--icon--></span>
+  <span class="logo-line left one"><!--icon--></span>
+  <span class="logo-line left two"><!--icon--></span>
+  <span class="logo-line right one"><!--icon--></span>
+  <span class="logo-line right two"><!--icon--></span>
+  <span class="logo-line top one"><!--icon--></span>
+  <span class="logo-line top two"><!--icon--></span>
+  <span class="logo-line bottom one"><!--icon--></span>
+  <span class="logo-line bottom two"><!--icon--></span>
+  <span class="logo-main"><!--icon--></span>
+</span>
+<span class="gcp-anim-icon compute-engine">
+  <span class="logo-shadow"><!--icon--></span>
+  <span class="logo-line left one"><!--icon--></span>
+  <span class="logo-line left two"><!--icon--></span>
+  <span class="logo-line right one"><!--icon--></span>
+  <span class="logo-line right two"><!--icon--></span>
+  <span class="logo-line top one"><!--icon--></span>
+  <span class="logo-line top two"><!--icon--></span>
+  <span class="logo-line bottom one"><!--icon--></span>
+  <span class="logo-line bottom two"><!--icon--></span>
+  <span class="logo-main"><!--icon--></span>
+</span>
 </div>
-
-<h3 id="vertical-tabs">Vertical Tabs</h3>
-
-<div class="verticalTabs">
-  <ul>
-    <li><a href="#tabs-1">Nunc tincidunt</a></li>
-    <li><a href="#tabs-2">Proin dolor</a></li>
-    <li><a href="#tabs-3">Aenean lacinia</a></li>
-  </ul>
-  <div id="tabs-1">
-    <h2 id="content-heading-1">Content heading 1</h2>
-    <p>Proin elit arcu, rutrum commodo, vehicula tempus, commodo a, risus. Curabitur nec arcu. Donec sollicitudin mi sit amet mauris. Nam elementum quam ullamcorper ante. Etiam aliquet massa et lorem. Mauris dapibus lacus auctor risus. Aenean tempor ullamcorper leo. Vivamus sed magna quis ligula eleifend adipiscing. Duis orci. Aliquam sodales tortor vitae ipsum. Aliquam nulla. Duis aliquam molestie erat. Ut et mauris vel pede varius sollicitudin. Sed ut dolor nec orci tincidunt interdum. Phasellus ipsum. Nunc tristique tempus lectus.</p>
-  </div>
-  <div id="tabs-2">
-    <h2 id="content-heading-2">Content heading 2</h2>
-    <p>Morbi tincidunt, dui sit amet facilisis feugiat, odio metus gravida ante, ut pharetra massa metus id nunc. Duis scelerisque molestie turpis. Sed fringilla, massa eget luctus malesuada, metus eros molestie lectus, ut tempus eros massa ut dolor. Aenean aliquet fringilla sem. Suspendisse sed ligula in ligula suscipit aliquam. Praesent in eros vestibulum mi adipiscing adipiscing. Morbi facilisis. Curabitur ornare consequat nunc. Aenean vel metus. Ut posuere viverra nulla. Aliquam erat volutpat. Pellentesque convallis. Maecenas feugiat, tellus pellentesque pretium posuere, felis lorem euismod felis, eu ornare leo nisi vel felis. Mauris consectetur tortor et purus.</p>
-  </div>
-  <div id="tabs-3">
-    <h2 id="content-heading-3">Content heading 3</h2>
-    <p>Mauris eleifend est et turpis. Duis id erat. Suspendisse potenti. Aliquam vulputate, pede vel vehicula accumsan, mi neque rutrum erat, eu congue orci lorem eget lorem. Vestibulum non ante. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Fusce sodales. Quisque eu urna vel enim commodo pellentesque. Praesent eu risus hendrerit ligula tempus pretium. Curabitur lorem enim, pretium nec, feugiat nec, luctus a, lacus.</p>
-    <p>Duis cursus. Maecenas ligula eros, blandit nec, pharetra at, semper at, magna. Nullam ac lacus. Nulla facilisi. Praesent viverra justo vitae neque. Praesent blandit adipiscing velit. Suspendisse potenti. Donec mattis, pede vel pharetra blandit, magna ligula faucibus eros, id euismod lacus dolor eget odio. Nam scelerisque. Donec non libero sed nulla mattis commodo. Ut sagittis. Donec nisi lectus, feugiat porttitor, tempor ac, tempor vitae, pede. Aenean vehicula velit eu tellus interdum rutrum. Maecenas commodo. Pellentesque nec elit. Fusce in lacus. Vivamus a libero vitae lectus hendrerit hendrerit.</p>
-  </div>
-</div>
-
-<h4 id="synchronized-vertical-tabs">Synchronized Vertical Tabs</h4>
-
-<div class="verticalTabs">
-  <ul>
-    <li><a href="#tabs-1">Nunc tincidunt</a></li>
-    <li><a href="#tabs-2">Proin dolor</a></li>
-    <li><a href="#tabs-3">Aenean lacinia</a></li>
-  </ul>
-  <div id="tabs-1">
-    <h2 id="content-heading-1-1">Content heading 1</h2>
-    <p>Proin elit arcu, rutrum commodo, vehicula tempus, commodo a, risus. Curabitur nec arcu. Donec sollicitudin mi sit amet mauris. Nam elementum quam ullamcorper ante. Etiam aliquet massa et lorem. Mauris dapibus lacus auctor risus. Aenean tempor ullamcorper leo. Vivamus sed magna quis ligula eleifend adipiscing. Duis orci. Aliquam sodales tortor vitae ipsum. Aliquam nulla. Duis aliquam molestie erat. Ut et mauris vel pede varius sollicitudin. Sed ut dolor nec orci tincidunt interdum. Phasellus ipsum. Nunc tristique tempus lectus.</p>
-  </div>
-  <div id="tabs-2">
-    <h2 id="content-heading-2-1">Content heading 2</h2>
-    <p>Morbi tincidunt, dui sit amet facilisis feugiat, odio metus gravida ante, ut pharetra massa metus id nunc. Duis scelerisque molestie turpis. Sed fringilla, massa eget luctus malesuada, metus eros molestie lectus, ut tempus eros massa ut dolor. Aenean aliquet fringilla sem. Suspendisse sed ligula in ligula suscipit aliquam. Praesent in eros vestibulum mi adipiscing adipiscing. Morbi facilisis. Curabitur ornare consequat nunc. Aenean vel metus. Ut posuere viverra nulla. Aliquam erat volutpat. Pellentesque convallis. Maecenas feugiat, tellus pellentesque pretium posuere, felis lorem euismod felis, eu ornare leo nisi vel felis. Mauris consectetur tortor et purus.</p>
-  </div>
-  <div id="tabs-3">
-    <h2 id="content-heading-3-1">Content heading 3</h2>
-    <p>Mauris eleifend est et turpis. Duis id erat. Suspendisse potenti. Aliquam vulputate, pede vel vehicula accumsan, mi neque rutrum erat, eu congue orci lorem eget lorem. Vestibulum non ante. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Fusce sodales. Quisque eu urna vel enim commodo pellentesque. Praesent eu risus hendrerit ligula tempus pretium. Curabitur lorem enim, pretium nec, feugiat nec, luctus a, lacus.</p>
-    <p>Duis cursus. Maecenas ligula eros, blandit nec, pharetra at, semper at, magna. Nullam ac lacus. Nulla facilisi. Praesent viverra justo vitae neque. Praesent blandit adipiscing velit. Suspendisse potenti. Donec mattis, pede vel pharetra blandit, magna ligula faucibus eros, id euismod lacus dolor eget odio. Nam scelerisque. Donec non libero sed nulla mattis commodo. Ut sagittis. Donec nisi lectus, feugiat porttitor, tempor ac, tempor vitae, pede. Aenean vehicula velit eu tellus interdum rutrum. Maecenas commodo. Pellentesque nec elit. Fusce in lacus. Vivamus a libero vitae lectus hendrerit hendrerit.</p>
-  </div>
-</div>
-
-<h2 id="last-build">Last Build</h2>
-
-<p><a href="https://travis-ci.org/GoogleDevDocs/googledevdocs.github.io"><img src="https://travis-ci.org/GoogleDevDocs/googledevdocs.github.io.svg?branch=master" alt="Build Status" /></a></p>
-</div>
+                              <p><em>Compute Engine</em></p>
+                            </a>
+                          </div>
+                          
+                        </div>
+                      </div>
+                    </div>
+                    
+                  </div>
+                  <div class="gcp-arrow-container">
+                    
+                      <div class="gcp-arrow arrow-1"
+                           data-ng-class="{'active':ctrl.itemHighlighted('hadoop-arrow-1')}"
+                           data-ng-mouseenter="ctrl.activateItem({tooltipText:'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sapien diam, tincidunt tincidunt molestie at, placerat tempus justo. In vitae ligula gravida, egestas ante et, consectetur turpis. Nulla ut sollicitudin ligula, ac molestie libero.', highlight:'hadoop-arrow-1 hadoop-cloud-storage hadoop-compute-engine '})"
+                           data-ng-mouseleave="ctrl.deactivateItems()"
+                           data-arrow-animation
+                           data-slug="arrow-1">
+                        <span class="arrow-segment arrow-segment-1"><!--icon--></span>
+<span class="arrow-head"><!--icon--></span>
+                        <span class="arrow-label">1</span>
+                      </div>
+                    
+                      <div class="gcp-arrow arrow-2"
+                           data-ng-class="{'active':ctrl.itemHighlighted('hadoop-arrow-2')}"
+                           data-ng-mouseenter="ctrl.activateItem({tooltipText:'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sapien diam, tincidunt tincidunt molestie at, placerat tempus justo. In vitae ligula gravida, egestas ante et, consectetur turpis. Nulla ut sollicitudin ligula, ac molestie libero.', highlight:'hadoop-arrow-2 hadoop-compute-engine hadoop-compute-engine-workers '})"
+                           data-ng-mouseleave="ctrl.deactivateItems()"
+                           data-arrow-animation
+                           data-slug="arrow-2">
+                        <span class="arrow-segment arrow-segment-1"><!--icon--></span>
+<span class="arrow-head"><!--icon--></span>
+                        <span class="arrow-label">2</span>
+                      </div>
+                    
+                  </div>
+                  <div class="tooltip" data-ng-class="{'active':ctrl.tooltipActive}">
+                    <p data-ng-bind="ctrl.tooltipText"></p>
+                  </div>
+                </div>
+              </div>
+            
           </div>
         </div>
       </div>
-      <div class="clearer"></div>
+
     </div>
+
+    <!-- End HGCPW Section -->
+    <div id="applications" class="generic-section">
+      <div class="maia-cols">
+        <div class="maia-col-12">
+          <h1 class="headline"><em>Google Cloud Platform is used and trusted by over 4 million applications</em></h1>
+          <ul class="apps-list link-list">
+            <li><a href="http://gigaom.com/2013/05/07/snapchats-act-of-faith-in-building-on-google-compute-engine/" target="_blank" event="autotrack-data-g" data-g-event="Home" data-g-action="Case Study" data-g-label="Snapchat" rel="canonical"><img class="logo" src="/images/home/customer-snapchat.png" alt="Snapchat" data-retina="44x52" /></a></li>
+            <li><a href="files/KhanAcademy.pdf" event="autotrack-data-g" data-g-event="Home" data-g-action="Case Study" data-g-label="Khan Academy" rel="canonical"><img class="logo" src="/images/home/customer-khanacademy.png" alt="Khan Academy" data-retina="211x49" style="margin-top: -24px;" /></a></li>
+            <li><a href="files/Pulse.pdf" event="autotrack-data-g" data-g-event="Home" data-g-action="Case Study" data-g-label="Pulse" rel="canonical"><img class="logo" src="/images/home/customer-pulse.png" alt="Pulse" data-retina="92x41" /></a></li>
+            <li><a href="files/Rovio.pdf" event="autotrack-data-g" data-g-event="Home" data-g-action="Case Study" data-g-label="Rovio" rel="canonical"><img class="logo" src="/images/home/customer-rovio.png" alt="Rovio" data-retina="37x58" /></a></li>
+            <li><a href="files/Gigya.pdf" event="autotrack-data-g" data-g-event="Home" data-g-action="Case Study" data-g-label="Gigya" rel="canonical"><img class="logo" src="/images/home/customer-gigya.png" alt="Gigya" data-retina="102x38" /></a></li>
+            <li><a href="files/DNANexus.pdf" event="autotrack-data-g" data-g-event="Home" data-g-action="Case Study" data-g-label="DNA Nexus" rel="canonical"><img class="logo" src="/images/home/customer-dnanexus.png" alt="DNA Nexus" data-retina="173x33" style="margin-top: -7px;" /></a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div id="advantages" class="generic-section scroll-section" data-section-label="Why Google">
+
+      <div class="header">
+        <div class="maia-cols">
+          <h2 class="headline maia-col-8">Why Google</h2>
+          <p class="subheadline maia-col-8"></p>
+        </div>
+      </div>
+
+      <div class="maia-cols">
+        <div class="inner-block maia-col-6">
+          <h3 class="headline"><img class="inline-icon" src="/images/home/icon-1.png" alt="Infrastructure" />Run on Google’s infrastructure</h3>
+          <p>Build on the same <a href="http://www.google.com/about/datacenters/" target="_blank">infrastructure</a> that allows Google to return billions of search results in milliseconds, serve 6 billion hours of YouTube video per month and provide storage for 425 million Gmail users.</p>
+          <a href="./why-google#infrastructure" class="read-more" event="autotrack-data-g" data-g-event="Home" data-g-action="Advantages Of Cloud Platform" data-g-label="Infrastructure">Find out more</a>
+        </div>
+        <div class="inner-block maia-col-6">
+          <h3 class="headline"><img class="inline-icon" src="/images/home/icon-2.png" alt="Focus" />Focus on your product</h3>
+          <p>Rapidly develop, deploy and iterate your applications without worrying about system administration. Google manages your application, database and storage servers so you don’t have to.</p>
+          <a href="./why-google#product" class="read-more" event="autotrack-data-g" data-g-event="Home" data-g-action="Advantages Of Cloud Platform" data-g-label="Product">Find out more</a>
+        </div>
+      </div>
+
+      <div class="maia-cols">
+        <div class="inner-block maia-col-6">
+          <h3 class="headline"><img class="inline-icon" src="/images/home/icon-3.png" alt="Mix" />Mix and match services</h3>
+          <p>Virtual machines. Managed platform. Blob storage. Block storage. NoSQL datastore. MySQL database. Big Data analytics. Google Cloud Platform has all the services your application architecture needs.</p>
+          <a href="./why-google#services" class="read-more" event="autotrack-data-g" data-g-event="Home" data-g-action="Advantages Of Cloud Platform" data-g-label="Services">Find out more</a>
+        </div>
+
+        <div class="inner-block maia-col-6">
+          <h3 class="headline"><img class="inline-icon" src="/images/home/icon-4.png" alt="Scale" />Scale to millions of users</h3>
+          <p>Applications hosted on Cloud Platform can automatically scale up to handle the most demanding Internet-scale workloads and scale down when traffic subsides. You pay only for what you use.</p>
+          <a href="./why-google#scalability" class="read-more" event="autotrack-data-g" data-g-event="Home" data-g-action="Advantages Of Cloud Platform" data-g-label="Scalability">Find out more</a>
+        </div>
+      </div>
+
+      <div class="maia-cols">
+        <div class="inner-block maia-col-6">
+          <h3 class="headline"><img class="inline-icon" src="/images/home/icon-5.png" alt="Performance" />Performance you can count on</h3>
+          <p>Every millisecond of latency matters. Google’s compute infrastructure gives you consistent CPU, memory and disk performance. Our network and edge cache serve responses rapidly to your users across the world.</p>
+          <a href="./why-google#performance" class="read-more" event="autotrack-data-g" data-g-event="Home" data-g-action="Advantages Of Cloud Platform" data-g-label="Performance">Find out more</a>
+        </div>
+        <div class="inner-block maia-col-6">
+          <h3 class="headline"><img class="inline-icon" src="/images/home/icon-6.png" alt="Support" />Get the support you need</h3>
+          <p>With our worldwide community of users, partner ecosystem and premium support packages, Google provides a full range of resources to help you get started and grow.</p>
+          <a href="./why-google#support" class="read-more" event="autotrack-data-g" data-g-event="Home" data-g-action="Advantages Of Cloud Platform" data-g-label="Support">Find out more</a>
+        </div>
+      </div>
+
+      <div class="maia-cols">
+        <div class="section-footer maia-col-12">
+          <a href="./why-google" class="bounce-link" event="autotrack-data-g" data-g-event="Home" data-g-action="Advantages Of Cloud Platform" data-g-label="View All Advantages">View all advantages</a>
+        </div>
+      </div>
+
+    </div>
+
+    <div id="customers" class="generic-section scroll-section" data-section-label="Our customers">
+
+      <div class="header">
+        <div class="maia-cols">
+          <h2 class="headline maia-col-8">Some of our customers</h2>
+          <p class="subheadline maia-col-8"><a href="customers" class="bounce-link" event="autotrack-data-g" data-g-event="Home" data-g-action="Customer Case Study" data-g-label="View All Case Studies">View all case studies</a></p>
+        </div>
+      </div>
+
+      <div class="customer-stories">
+        <div class="maia-cols">
+          <div class="inner-block maia-col-6">
+            <div class="maia-cols">
+              <div class="image-wrapper maia-col-4">
+                <img src="/images/home/casestudy-snapchat.png" alt="SnapChat" data-retina="139x123" />
+              </div>
+              <div class="details maia-col-8">
+                <h3 class="headline">Snapchat</h3>
+                <p class="subheadline">“App Engine enabled us to focus on developing the application. We wouldn’t have gotten here without the ease of development that App Engine gave us.”</p>
+                <p><span class="case-study-author">Bobby Murphy</span><span class="case-study-role">CTO and co-Founder</span></p>
+                <a href="http://gigaom.com/2013/05/07/snapchats-act-of-faith-in-building-on-google-compute-engine/" class="read-more" target="_blank" event="autotrack-data-g" data-g-event="Home" data-g-action="Customer Case Study" data-g-label="Snapchat">Read Snapchat's story</a>
+              </div>
+            </div>
+          </div>
+          <div class="inner-block maia-col-6">
+            <div class="maia-cols">
+              <div class="image-wrapper maia-col-4">
+                <img src="/images/home/casestudy-webfilings.png" alt="Webfilings" data-retina="139x123" />
+              </div>
+              <div class="details maia-col-8">
+                <h3 class="headline">Webfilings</h3>
+                <p class="subheadline">“Google App Engine has the breadth and the depth to grow with you. Every 6 months, it gets better. The Google App Engine team knows what you need to make a competitive application.”</p>
+                <p><span class="case-study-author">Brett Harper</span><span class="case-study-role">Director of Product Development</span></p>
+                <a href="files/WebFilings.pdf" class="read-more" event="autotrack-data-g" data-g-event="Home" data-g-action="Customer Case Study" data-g-label="Web Filings">Read Webfilings' story</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="maia-cols">
+          <div class="inner-block maia-col-6">
+            <div class="maia-cols">
+              <div class="image-wrapper maia-col-4">
+                <img src="/images/home/casestudy-khanacademy.png" alt="Khan Academy" data-retina="139x123" />
+              </div>
+              <div class="details maia-col-8">
+                <h3 class="headline">Khan Academy</h3>
+                <p class="subheadline">“If we didn’t have Google App Engine, we’d be spending a lot more time figuring out server setup and working on routers. Our ability to focus on the actual product is the benefit of Google App Engine.”</p>
+                <p><span class="case-study-author">Ben Kamens</span><span class="case-study-role">Lead Developer</span></p>
+                <a href="files/KhanAcademy.pdf" class="read-more" event="autotrack-data-g" data-g-event="Home" data-g-action="Customer Case Study" data-g-label="Khan Academy">Read Khan Academy's story</a>
+              </div>
+            </div>
+          </div>
+          <div class="inner-block maia-col-6">
+            <div class="maia-cols">
+              <div class="image-wrapper maia-col-4">
+                <img src="/images/home/casestudy-rovio.png" alt="Rovio" data-retina="139x123" />
+              </div>
+              <div class="details maia-col-8">
+                <h3 class="headline">Rovio</h3>
+                <p class="subheadline">“Google App Engine allows us to launch games very quickly with teams of one or two developers per game. Because Google manages all the servers, there is little required of us in terms of maintenance.”</p>
+                <p><span class="case-study-author">Stefan Hauk</span><span class="case-study-role">lead server developer for web games</span></p>
+                <a href="files/Rovio.pdf" class="read-more" event="autotrack-data-g" data-g-event="Home" data-g-action="Customer Case Study" data-g-label="Rovio ">Read Rovio's story</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="maia-cols">
+          <div class="inner-block maia-col-6">
+            <div class="maia-cols">
+              <div class="image-wrapper maia-col-4">
+                <img src="/images/home/casestudy-mag.png" alt="MAG Interactive" data-retina="139x123" />
+              </div>
+              <div class="details maia-col-8">
+                <h3 class="headline">MAG Interactive</h3>
+                <p class="subheadline">"Our rapid growth to 5M Ruzzle players in less than six months required a highly scalable server solution. Google App Engine transformed this huge challenge into a picnic."</p>
+                <p><span class="case-study-author">Roger Skagerwall</span><span class="case-study-role">CEO</span></p>
+
+                <a href="files/MAG.pdf" class="read-more" event="autotrack-data-g" data-g-event="Home" data-g-action="Customer Case Study" data-g-label="Mag Interactive ">Read MAG Interactive's story</a>
+              </div>
+            </div>
+          </div>
+          <div class="inner-block maia-col-6">
+            <div class="maia-cols">
+              <div class="image-wrapper maia-col-4">
+                <img src="/images/home/casestudy-interactions.png" alt="Interactions Marketing" data-retina="139x123" />
+              </div>
+              <div class="details maia-col-8">
+                <h3 class="headline">Interactions Marketing</h3>
+                <p class="subheadline">"We are always looking for ways to maximize return and minimize investment. BigQuery is the perfect combination. It’s an on-demand, scalable resource."</p>
+
+                <p><span class="case-study-author">Giovanni DeMeo</span><span class="case-study-role">Vice President of Global Marketing and Analytics</span></p>
+
+                <a href="files/interactions_marketing.pdf" class="read-more" event="autotrack-data-g" data-g-event="Home" data-g-action="Customer Case Study" data-g-label="Interaction Marketing">Read Interactions Marketing's story</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="community" class="generic-section last scroll-section" data-section-label="Cloud Platform community">
+
+      <div class="header">
+        <div class="maia-cols">
+          <h2 class="headline maia-col-12">Engage with the Cloud Platform community</h2>
+          <p class="subheadline maia-col-12">Join the Google Cloud Platform developer community and learn how to get the most out of Google Cloud Platform</p>
+        </div>
+      </div>
+
+      <div id="feeds">
+        <div class="feeds-container maia-cols">
+          <!-- BlogSpot feeds -->
+          <div class="blogspot maia-col-8">
+
+            <div class="content">
+              <div>Follow us on Blogger</div>
+            </div>
+          </div>
+
+          <!-- YouTube feed -->
+          <div class="youtube maia-col-4">
+            <div class="content">
+              <div>Follow us on YouTube</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="maia-cols">
+
+        <div class="inner-block maia-col-6">
+          <h3 class="headline">Sign up for the Cloud Platform newsletter</h3>
+          <p class="subheadline">Stay updated on Google Cloud Platform and get the latest news, announcements, special offers and event information. You never know when it will come up at a dinner party. You can thank us later.</p>
+          <iframe class="cp-nsl-201308-ifrm" src="https://gcloudplatformemail.appspot.com/" frameborder="0"></iframe>
+        </div>
+
+        <div class="inner-block maia-col-6">
+          <h3 class="headline">Join the conversation on Stack Overflow</h3>
+          <p class="subheadline">Get your questions answered and share your knowledge with other developers.</p>
+          <ul class="link-list">
+            <li><a href="http://stackoverflow.com/questions/tagged/google-app-engine" class="link-out" target="_blank" event="autotrack-data-g" data-g-event="Home" data-g-action="Stack Overflow Conversation" data-g-label="App Engine">App Engine</a></li>
+            <li><a href="http://stackoverflow.com/questions/tagged/google-compute-engine" class="link-out" target="_blank" event="autotrack-data-g" data-g-event="Home" data-g-action="Stack Overflow Conversation" data-g-label="Compute Engine">Compute Engine</a></li>
+            <li><a href="http://stackoverflow.com/questions/tagged/google-cloud-sql" class="link-out" target="_blank" event="autotrack-data-g" data-g-event="Home" data-g-action="Stack Overflow Conversation" data-g-label="Cloud SQL">Cloud SQL</a></li>
+            <li><a href="http://stackoverflow.com/questions/tagged/google-bigquery" class="link-out" target="_blank" event="autotrack-data-g" data-g-event="Home" data-g-action="Stack Overflow Conversation" data-g-label="Big Query">BigQuery</a></li>
+            <li><a href="http://stackoverflow.com/questions/tagged/google-cloud-storage" class="link-out" target="_blank" event="autotrack-data-g" data-g-event="Home" data-g-action="Stack Overflow Conversation" data-g-label="Cloud Storage">Cloud Storage</a></li>
+            <li><a href="http://stackoverflow.com/questions/tagged/google-cloud-datastore" class="link-out" target="_blank" event="autotrack-data-g" data-g-event="Home" data-g-action="Stack Overflow Conversation" data-g-label="Cloud Datastore">Cloud Datastore</a></li>
+            <li><a href="http://stackoverflow.com/questions/tagged/google-prediction-api" class="link-out" target="_blank" event="autotrack-data-g" data-g-event="Home" data-g-action="Stack Overflow Conversation" data-g-label="Prediction API">Prediction API</a></li>
+            <li><a href="http://stackoverflow.com/questions/tagged/google-translate-api" class="link-out" target="_blank" event="autotrack-data-g" data-g-event="Home" data-g-action="Stack Overflow Conversation" data-g-label="Translate API">Translate API</a></li>
+            <li><a href="http://stackoverflow.com/questions/tagged/google-cloud-endpoints" class="link-out" target="_blank" event="autotrack-data-g" data-g-event="Home" data-g-action="Stack Overflow Conversation" data-g-label="Cloud Endpoints">Cloud Endpoints</a></li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+
+ <!-- is this feedback sticky needed?
+  <div class="feedback-sticky"><a href="javascript:void(0);">Feedback</a></div>
+  <script type="text/javascript" src="//www.gstatic.com/feedback/api.js"></script>
+  <script>
+    jQuery('body').delegate('.feedback-sticky', 'click', function() {
+      _gaq.push(['_trackEvent', 'Feedback', 'User Feedback: ' + location.pathname]);
+      userfeedback.api.startFeedback({'productId': '96209'});
+    });
+  </script>
+  -->
+
+  <!-- Scripts to include both on Goro + Devsite -->
+  <script type="text/javascript">
+   window.___gcfg = {
+     lang: ''
+   };
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+  </script>
+
+  <!-- GTM implementation -->
+  
+  <!-- Start dataLayer -->
+    <script>
+      dataLayer = [{
+        'country': '',
+        'region': '',
+        'language': 'en'
+      }];
+    </script>
+  <!-- End dataLayer -->
+  
+  <!-- Start Google Tag Manager -->
+  <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5CVQBG"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-5CVQBG');</script>
+  <!-- End Google Tag Manager -->    
+
+
+
+<!-- Global JS scripts to load; path will depend on whether we're on devsite or Goro -->
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular-sanitize.js"></script>
+
+  <script src="/js/base.min.js"></script>
+
+
+
+
+<!-- Secondary right-side scroll-nav -->
+<script>
+  new lfl.ui.ScrollNav({});
+  new lfl.cloud.GlobalProductMenu();
+</script>
+
+<script>new cloud.SocialFeeds(document.getElementById('feeds'));</script>
+
+
+
+  <div id="maia-signature"></div>
+  <div id="maia-footer">
+
+    <!-- maia-footer-local -->
+    <div id="maia-footer-local">
+      <div class="maia-aux">
+        
+          <div class="ent-footer-top">
+  <div class="g-plus-wrapper">
+    <div class="g-plusone" data-href="http://cloud.google.com"></div>
+  </div>
+  <div class="g-plus-link"><a href="https://plus.google.com/+googlecloudplatform" rel="publisher">Google+</a></div>
+  <div class="search">
+    <form onsumbit="return false;" class="maia-search">
+    <input name="q" placeholder="Search this site" type="text">
+    <input name="hl" type="hidden" value="">
+    <input name="q" type="hidden" value="site:cloud.google.com/">
+    <button class="maia-button" event="autotrack-data-g" data-g-event="Footer" data-g-action="Site Search" data-g-label="Submit">
+      <span class="maia-search-icon">Search</span>
+    </button>
+    </form>
+  </div>
+
+</div>
+
+<div class="ent-footer-links">
+  <div class="ent-footer-unit">
+    <h4><a href="/why-google/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Why Google" data-g-label="Why Google">Why Google</a></h4>
+    <ul>
+      <li><a href="/why-google/#infrastructure" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Why Google" data-g-label="Infrastructure">Infrastructure</a></li>
+      <li><a href="/why-google/#product" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Why Google" data-g-label="Product">Product</a></li>
+      <li><a href="/why-google/#services" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Why Google" data-g-label="Services">Services</a></li>
+      <li><a href="/why-google/#scalability" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Why Google" data-g-label="Scalability">Scalability</a></li>
+      <li><a href="/why-google/#performance" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Why Google" data-g-label="Performance">Performance</a></li>
+      <li><a href="/why-google/#support" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Why Google" data-g-label="Support">Support</a></li>      
+    </ul>
+  </div>
+
+  <div class="ent-footer-unit">
+    <h4><a href="/products/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="Products">Products</a></h4>
+    <ul>
+      <li><a href="/products/app-engine/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="App Engine">App Engine</a></li>
+      <li><a href="/products/compute-engine/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="Compute Engine">Compute Engine</a></li>
+      <li><a href="/products/cloud-storage/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="Cloud Storage">Cloud Storage</a></li>
+      <li><a href="/products/cloud-sql/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="Cloud SQL">Cloud SQL</a></li>
+      <li><a href="/products/cloud-datastore/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="Cloud Datastore">Cloud Datastore</a></li>
+      <li><a href="/products/bigquery/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="BigQuery">BigQuery</a></li>
+      <li><a href="/products/prediction-api/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="Prediction API">Prediction API</a></li>
+      <li><a href="/products/translate-api/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="Translate API">Translate API</a></li>
+      <li><a href="/products/cloud-endpoints/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="Cloud Endpoints">Cloud Endpoints</a></li>
+      <li><a href="/products/calculator/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="Pricing Calculator">Pricing Calculator</a></li>
+      <li><a href="/pricing/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="Pricing">Pricing</a></li>
+    </ul>
+  </div>
+
+  <div class="ent-footer-unit">
+    <h4><a href="/solutions" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Solutions" data-g-label="Solutions">Solutions</a></h4>
+    <ul>
+      <li><a href="/solutions/mobile/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Solutions" data-g-label="Mobile">Mobile</a></li>
+      <li><a href="/solutions/gaming/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Solutions" data-g-label="Gaming">Gaming</a></li>
+      <li><a href="/solutions/hadoop/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Solutions" data-g-label="Hadoop">Hadoop</a></li>
+      <li><a href="/solutions/mongodb/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Solutions" data-g-label="mongodb">mongodb</a></li>
+
+    </ul>
+  </div>
+
+  <div class="ent-footer-unit">
+    <h4><a href="/customers/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Customers" data-g-label="Customers">Customers</a></h4>
+  </div>
+
+  <div class="ent-footer-unit">
+    <h4><a href="/developers/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Developers" data-g-label="Developers">Developers</a></h4>
+    <ul>
+      <li><a href="/developers#documentation" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Developers" data-g-label="Documentation">Documentation</a></li>
+      <li><a href="/developers#resources" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Developers" data-g-label="Resources">Resources</a></li>
+    </ul>
+  </div>
+
+  <div class="ent-footer-unit">
+    <h4><a href="/support/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Support" data-g-label="Support">Support</a></h4>
+    <ul>
+      <li><a href="https://support.google.com/" target="_blank" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Support" data-g-label="Google Cloud Platform Support Help Center">Platform Support Help Center</a></li>
+      <li><a href="https://support.google.com/cloudbilling/" target="_blank" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Support" data-g-label="Google Cloud Billing Help Center">Billing Help Center</a></li>
+      <li><a href="https://enterprise.google.com/supportcenter" target="_blank" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Support" data-g-label="Google Enterprise Support Center">Google Enterprise Support Center</a></li>      
+    </ul>
+    
+  </div>
+
+  
+  <div class="ent-footer-unit">
+    <h4><a href="/partners/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Partners" data-g-label="Partners">Partners</a></h4>
+    <ul>
+      <li><a href="/partners/technology-partners/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Partners" data-g-label="Find A Technology Partner">Technology Partners</a></li>
+      <li><a href="/partners/service-partners/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Partners" data-g-label="Find A Service Partner">Find a Service Partner</a></li>
+    </ul>
+  </div>
+ 
+</div>
+<br class="clear" />
+
+        
+      </div>
+    </div>
+    <!-- /maia-footer-local -->
+
+    <!-- maia-footer-global -->
+    <div id="maia-footer-global">
+      <div class="maia-aux">
+        <ul>
+          <li><a href="http://www.google.com/">Google</a></li>
+          <li><a href="https://developers.google.com/readme/terms">Terms of Service</a></li>
+          <li><a href="http://www.google.com/intlprivacy/">Privacy Policy</a></li>
+        </ul>
+      </div>
     </div>
   </div>
-    <footer id="gc-footer" class="footer" role="contentinfo">
-    <div id="gc-copyright">
-        For the purposes of copyright, this document is © Copyright 2014, Google.
-      </div>
-    </footer>
-</body></html>
+  <!-- /maia-footer-global -->
+  <script type="text/javascript" async="" defer="" src="//www.gstatic.com/feedback/api.js"></script>
+  <script id="jqueryui" src="//ajax.googleapis.com/ajax/libs/jqueryui/1.8.10/jquery-ui.min.js"></script>
+
+  <!--script src="/_static/js/script_foot.js"></script-->
+  
+  </body>
+</html>
