@@ -25,11 +25,12 @@
     <link href="//www.google.com/css/maia.experimental.css" rel="stylesheet">
     <link href="/css/maia-cloud.css" rel="stylesheet"/>
     <link href="/css/default.css" rel="stylesheet">
+    
   </head>
   <body>
   <div id="maia-header">
     <div class="maia-aux">
-      <h1><a href="{{page.siteroot}}"><img src="/images/gcp-logo.png" alt="Cloud Platform" data-retina="383x48"></a></h1>
+      <h1><a href="/"><img src="/images/gcp-logo.png" alt="Cloud Platform" data-retina="383x48"></a></h1>
 
 <div class="search-container">
   <form action="/search" class="maia-search">
@@ -53,41 +54,37 @@
      {% endif %}
    </div>
       <ul>
-        <li>
+        <li {% if page.url contains '/why-google/' %} class="active" {% endif %}>
             <a href="{{page.siteroot}}/why-google/" event="autotrack-data-g" data-g-event="Global Nav" data-g-action="Nav Bar" data-g-label="Why Google">
             {{page.whygoogle_string}}
             </a>
         </li>
-        <li id="main-nav-product-dropdown" class="dropdown">
+        <li {% if page.url contains '/products/' %} class="active" {% endif %} id="main-nav-product-dropdown" class="dropdown">
             <a href="{{page.siteroot}}/products/" event="autotrack-data-g" data-g-event="Global Nav" data-g-action="Nav Bar" data-g-label="Products">
             {{page.products_string}}
             </a>
         </li>
-        <li
-            >
+        <li {% if page.url contains '/solutions/' %} class="active" {% endif %}>
             <a href="{{page.siteroot}}/solutions/" event="autotrack-data-g" data-g-event="Global Nav" data-g-action="Nav Bar" data-g-label="Solutions">
             {{page.solutions_string}}
             </a>
         </li>
-        <li
-            >
+        <li {% if page.url contains '/customers/' %} class="active" {% endif %}>
             <a href="{{page.siteroot}}/customers/" event="autotrack-data-g" data-g-event="Global Nav" data-g-action="Nav Bar" data-g-label="Customers">
             {{page.customers_string}}
             </a>
         </li>
-        <li
-            >
+        <li {% if page.url contains '/developers/' %} class="active" {% endif %}>
             <a href="{{page.siteroot}}/developers/" event="autotrack-data-g" data-g-event="Global Nav" data-g-action="Nav Bar" data-g-label="Developers">
           {{page.developers_string}}
             </a>
         </li>
-        <li
-            >
+        <li {% if page.url contains '/support/' %} class="active" {% endif %}>
             <a href="{{page.siteroot}}/support/" event="autotrack-data-g" data-g-event="Global Nav" data-g-action="Nav Bar" data-g-label="Support">
             {{page.support_string}}
             </a>
         </li>
-        <li>
+        <li {% if page.url contains '/partners/' %} class="active" {% endif %}>
             <a href="{{page.siteroot}}/partners/" event="autotrack-data-g" data-g-event="Global Nav" data-g-action="Nav Bar" data-g-label="Partners">
             {{page.partners_string}}
             </a>
