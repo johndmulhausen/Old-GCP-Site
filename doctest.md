@@ -91,6 +91,61 @@ print s
 | col 2 is      | centered      |   $12 |
 | zebra stripes | are neat      |    $1 |
 
+## Lists
+
+### Unordered
+
++ Plus symbols
++ Lorem
++ Ipsum
++ Dolar
+
+* Asterick symbols
+* Lorem
+* Ipsum
+
+### Ordered
+
+1. All ones
+1. Lorem
+1. Ipsum
+
+1. Sequential
+2. Two
+3. Three
+
+### Nested
+
++ Unordered
+    + Nested unordered
+    + unordered
++ Unordered
+    1. Nested ordered
+    1. Nested ordered
+
+1. Odered
+    + Unordered with codeblock
+
+                This should be a code block by its indent level
+
+    + Unordered
+2. Ordered
+    + Unordered
+    + Unordered
+
+### Definition lists
+
+Term
+: Definition goes here
+
+    Additional paragraphs for the definition should be allowed here.
+
+Term2
+: definition 2
+
+        This should be a codeblock by its indent level
+
+
 ## Tabs
 
 ### Horizontal Tabs
