@@ -1,0 +1,263 @@
+---
+layout: phase2-ko
+title: Cloud Computing &amp; Cloud Hosting Services
+---
+<!DOCTYPE html>
+<html devsite="">
+<head>
+<title>Big Data Articles &amp; Tutorials — Google Cloud Platform</title>
+<meta name="description" content="Read about technical big data articles and solutions with Google Cloud Platform. Big data articles unpack BigQuery data analytics, Hadoop clusters and more.">
+<meta name="hide_page_heading" value="true">
+<meta name="full_width" value="true">
+<meta name="top_category" value="developers">
+<meta name="subcategory" value="articles">
+<meta name="viewport" content="initial-scale=1, minimum-scale=1, width=device-width">
+<link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
+<link href="//fonts.googleapis.com/css?family=Open+Sans:400italic,300,400,600,700" rel="stylesheet">
+<link href="/css/default.css" rel="stylesheet"><!--[if lt IE 9]>
+    <link rel="stylesheet" media="screen" href='/css/cp-ie.css'>
+    <![endif]-->
+<script src="/js/floodlight.js">
+</script>
+</head>
+<body>
+<div id="maia-main" class="cp-article">
+<div class="maia-cols">
+<div class="maia-col-9">
+<div>
+<div style="float:right">
+<div class="g-plusone"></div>
+</div>
+<h1 class="title">Google BigQuery 시작하기</h1>
+</div>
+<h2>핵심 요약</h2>
+<p>이 문서는 현재의 IT 환경에서 Google BigQuery의 사용 방법을 이해하고자 하는 데이터 분석가 및 IT 담당자를 대상으로 합니다. 이 문서에서는 BigQuery의 기본적인 작동 원리와 시각화를 위해 데이터를 BigQuery로 로드하는 엔드 투 엔드 프로세스에 대한 개요, 그리고 BigQuery 사용 시 고려해야 하는 설계 사례에 대해 설명합니다.</p>
+<p>BigQuery는 SQL형 쿼리 언어 및 REST 기반 API와 같은 공개 표준 및 프로토콜을 지원합니다. 또한 이 솔루션은 데이터 처리를 위한 기존의 ETL(추출, 변환 및 로드) 도구와 데이터 시각화를 위한 BI(비즈니스 인텔리전스) 도구를 제공하므로 BigQuery를 조직의 기존 IT 환경에 쉽게 통합할 수 있습니다.</p>
+<h2>빅 데이터의 현황</h2>
+<p>데이터 분석 업계는 최근 몇 년 동안 빠르게 변화하고 있습니다. 점점 더 많은 조직에서 의사 결정을 위해 데이터를 활용하고 있으며, 데이터가 생성되는 속도 또한 그 어느 때보다 빨라지고 있습니다. 조직 내에서 빅 데이터로 전환하는 데에는 여러 가지 이유가 있으며 이러한 추세에 영향을 미치는 몇 가지 요인은 다음과 같습니다.</p>
+<ol>
+<li>저장소 비용이 낮아져 조직에서 그 어느 때보다 방대한 양의 데이터를 저렴한 비용으로 수집하여 사용할 수 있습니다.</li>
+<li>기술이 발전함에 따라 이제 프로세스 각 지점에서의 데이터 수집 작업을 자동화할 수 있으며, 이에 따라 더욱 거대한 데이터세트를 캡처할 수 있습니다. 또한 주문 관리 등의 프로세스를 통해 기존 데이터세트를 캡처하는 능력과 기술에 기반한 RFID 태그, 센서, 머신 로그, 모바일 기기 상호작용과 같은 자동화된 프로세스가 결합되어 방대한 양의 데이터 증가로 이어지고 있습니다.</li>
+<li>데이터 분석 기술의 혁신에 힘입어 이제 대규모 데이터세트를 분석할 수 있게 되었습니다. Google에서 개발한 MapReduce, BigTable 및 Dremel과 같은 기술이 업계에서 사용되기 시작했으며, 이러한 기술을 사용하면 과거의 더 오랜 기간에 대한 데이터 분석을 더욱 상세하게 수행할 수 있습니다. 이를 통해 전에는 불가능했던 새로운 비즈니스 통찰력을 얻을 수 있게 되었습니다.</li>
+</ol>
+<p>하지만 이러한 변화에 따라 새로운 일련의 도전 과제 또한 나타나고 있습니다. 대부분의 기업에서는 대규모 데이터세트를 보관, 처리 및 분석하는 데 필요한 확장 가능한 인프라와 컴퓨팅 리소스를 찾아야 하는 등의 문제에 직면하기 시작했습니다. 기존의 IT 인프라와 프로세스는 대규모 데이터세트를 처리하고 관리하는데 그다지 적합하지 않습니다. 예를 들어 기업에서 빅 데이터 분석을 실시하는 경우 대개 수없이 많은 실험을 거친 후에만 지속 가능한 통찰력을 얻을 수 있습니다. 데이터로 실험을 해야 한다는 것은 투자수익률(ROI)을 미리 파악하기가 어렵다는 의미일 수도 있습니다. 따라서 IT 조직에서 대규모 데이터세트 관리에 필요한 용량을 계획하기가 힘들어지게 됩니다. 비즈니스 상황이 변화하는 속도를 고려하며 기업 사용자는 자신의 가설을 빠르게 확인하고 싶어 합니다. 오랜 주기의 데이터 모델링, 데이터 아키텍처 및 용량 계획을 특징으로 하는 기존의 비즈니스 인텔리전스(BI)/데이터 보관(DW) 프로세스는 기업 사용자의 요구에 부합하지 못하고 있습니다.</p>
+<h2><a name="h.fqmgu7liax2h" id="h.fqmgu7liax2h"></a>Google BigQuery</h2>
+<p>BigQuery는 클라우드에서 제공되는 완벽하게 관리되는 데이터 분석 서비스로 오늘날 빠르게 변화하는 비즈니스 환경에 맞는 민첩한 비즈니스 분석을 가능하게 해 줍니다. BigQuery를 처음 시작할 때에는 하드웨어나 소프트웨어 구매 및 구성을 위한 추가적인 자본 비용(CAPEX)이 필요하지 않습니다. BigQuery 서비스는 즉시 사용이 가능하며 관련 서비스 수준 계약은 99.9% 이상의 가동 시간을 보장합니다<sup><a href="#ftnt1" name="ftnt_ref1" id="ftnt_ref1">[1]</a></sup>. 저장소 및 컴퓨팅 리소스는 데이터 크기 및 분석 요구사항에 따라 자동으로 확장됩니다. '사용한 만큼만 지불'<sup><a href="#ftnt2" name="ftnt_ref2" id="ftnt_ref2">[2]</a></sup>이 가능한 모델, '빛과 같이 빠른'<sup><a href="#ftnt3" name="ftnt_ref3" id="ftnt_ref3">[3]</a></sup> 성능, 친숙한 SQL형 쿼리 언어와 복잡한 데이터 아키텍처 없이도 BigQuery에 데이터를 손쉽게 공급할 수 있는 기능을 통해 조직에서는 임시 쿼리를 신속하게 실행하고 가설을 확인하고 분석을 반복할 수 있으며 이를 통해 민첩하고 비용 효율적인 방식으로 데이터를 파악할 수 있습니다. 쿼리 결과는 몇 시간이 아닌 단 몇 초 만에 얻을 수 있습니다.</p>
+<p>데이터 분석 인프라를 구축하는 데 필요한 비용과 시간이 더 이상 장애물이 될 수 없으므로 비즈니스 팀과 개발자는 분석 프로젝트를 신속하게 준비하여 수행할 수 있습니다. 이렇게 단축된 시간을 통해 영업 팀과 마케팅 책임자는 턴키(turn-key) 분석 솔루션을 신속하게 배치하여 비즈니스 수익 증대에 기여할 수 있습니다.</p>
+<h3><a name="h.2rinulxarntz" id="h.2rinulxarntz"></a>BigQuery의 활용</h3>
+<p>이미 여러 기업에서 BigQuery의 비용, 성능, 규모 및 가용성 측면의 강점을 성공적으로 활용하고 있다는 사실이 광범위한 사용 사례 전반에서 입증되었습니다. 아래에는 BigQuery가 어떻게 효과적으로 사용되었는지를 보여주는 몇 가지 예가 나와 있습니다.</p>
+<p><b>Gmail 로그 검색(Gmail Log Search)</b><sup><a href="#ftnt4" name="ftnt_ref4" id="ftnt_ref4">[4]</a></sup>: Google Apps 팀은 관리자 제어 패널(Administrator Control Panel)의 양방향 기능인 Gmail 로그 검색을 보다 강력하게 실행하기 위해 BigQuery의 뛰어난 성능을 활용합니다. 이들이 BigQuery를 사용하기로 결정한 이유는 수십 억 개의 헤더가 포함된 수 테라바이트 단위의 데이터세트를 분석하고 단 몇 초 내에 정확한 결과를 제공해 주기 때문입니다. Gmail 로그 검색 기능을 통해 도메인 앱 관리자는 다음과 같은 질문에 답할 수 있습니다.</p>
+<ol>
+<li>수신 또는 발신 메시지의 상태는 어떠한가?</li>
+<li>메시지가 내 도메인으로 발송되어 스팸으로 표시되었는가?</li>
+<li>특정 메시지를 발송하거나 수신한 사용자는 누구인가?</li>
+</ol>
+<p><b>여가 산업에서의 온라인 광고 매출 최적화</b>: 암스테르담 소재의 분석 기업인 Crystalloids에서는 온라인 광고 매출 향상을 위해 유럽 최고의 캠핑 가이드 발행업체인 Auto Camper Service International(ACSI)과 협력했습니다. ACSI의 광고 영업 팀에서는 BigQuery를 사용하여 같은 수준의 시설을 갖춘 동일한 지역 내의 캠핑지 중에서 홍보가 이루어진 곳과 그렇지 않은 곳의 평균적인 예약 요청 횟수를 비교할 수 있었습니다. 이 데이터를 통해 팀에서는 광고를 더욱 효율적으로 판매할 수 있었습니다.</p>
+<p><b>여행사 예매 및 노선 관리</b><sup><a href="#ftnt5" name="ftnt_ref5" id="ftnt_ref5">[5]</a></sup>: 인도에 인터넷 버스 티켓팅 시스템을 도입한 온라인 여행사인 redBus.in은 10,000개 이상의 노선에 서비스를 제공 중인 수백 개의 버스 운영업체에 대한 시스템 전반의 예약 및 인벤토리 데이터를 분석하기 위해 BigQuery를 선택했습니다. 이들은 최대 2테라바이트에 달하는 데이터세트를 30초 내에 분석하고 Hadoop<sup><a href="#ftnt6" name="ftnt_ref6" id="ftnt_ref6">[6]</a></sup> 인프라를 사용했을 때에 비해 80%의 비용을 절감할 수 있었습니다.</p>
+<h3><a name="h.mkp51z51i6ue" id="h.mkp51z51i6ue"></a>BigQuery의 작동 방식</h3>
+<p>BigQuery는 Google에서 개발하여 내부적으로 광범위하게 사용하고 있는 Dremel<sup><a href="#ftnt7" name="ftnt_ref7" id="ftnt_ref7">[7]</a></sup> 기술에 기반을 두고 있습니다. BigQuery는 수 테라바이트 단위의 데이터세트에 대한 쿼리의 양방향 성능을 얻기 위해 열 형식 저장소와 여러 수준의 실행 트리를 사용합니다. 기술적 구현에서는 관계형 데이터베이스 관리 시스템(RDBMS) 및 기존의 데이터 보관 솔루션과는 차이가 있습니다. BigQuery는 데이터 입력 및 삭제(테이블 제거) 기능을 지원하며 데이터가 이미 로드된 후에는 테이블 스키마에 열을 추가하는 기능을 제공합니다. 저장된 데이터를 직접 업데이트하는 기능은 지원하지 않습니다. 행 수준에 대한 직접 업데이트는 지원되지 않지만 대부분의 고객은 대규모 데이터세트를 완료된 테이블 및 미완료 테이블로 구분하고 미완료 테이블을 필요한 만큼 교체하여 업데이트를 수행할 수 있습니다. 그러면 최종 분석 시 데이터 업데이트 결과가 반영됩니다.</p>
+<p>BigQuery의 성능적 우위는 병렬 처리 아키텍처에 기인합니다. 쿼리는 여러 수준의 실행 트리 구조에 포함된 수천 개의 서버에 의해 처리되며 최종 결과가 루트에서 통합됩니다. BigQuery는 쿼리 중인 열의 데이터만 읽을 수 있도록 데이터를 열 형식 형식으로 저장합니다. 이 아키텍처를 사용하면 각 쿼리에 대해 전체 기록이 읽히지 않으므로 기존의 관계형 데이터베이스/데이터 보관 모델에 비해 I/O 성능 면에서 큰 이득을 얻을 수 있습니다.</p>
+<h2><a name="h.mfg0xvd0va3d" id="h.mfg0xvd0va3d"></a>BigQuery의 빅 데이터 솔루션 구축: 분석 파이프라인</h2>
+<p>BigQuery에서 엔드 투 엔드 솔루션을 구축하는 일은 어렵지 않습니다. 이 문서에는 데이터 처리 및 시각화를 위한 몇 가지 접근 방식에 제시되어 있습니다. 또한 효과적인 BigQuery 활용을 위한 설계 권장사항이 포함되어 있습니다.</p>
+<p>이 솔루션에 사용되는 Google Cloud Platform 제품은 다음과 같습니다.</p>
+<ol>
+<li><a href="/ko/products/big-query">BigQuery</a>: 이벤트 데이터 분석</li>
+<li><a href="/ko/products/cloud-storage">Google Cloud Storage</a>: 통합된 이벤트 데이터 저장(선택사항)</li>
+<li><a href="/ko/products/">Google App Engine</a>: App Engine MapReduce 프레임워크 실행(선택사항)</li>
+<li><a href="/ko/products/compute-engine">Google Compute Engine</a>: Hadoop MapReduce 프레임워크 실행(선택사항)</li>
+</ol>
+<h3><a name="h.m0lzn3ypbfsm" id="h.m0lzn3ypbfsm"></a>참조용 아키텍처 다이어그램</h3>
+<p>다음 아키텍처 다이어그램(그림 1)은 이 문서에서 제안하는 파이프라인(데이터 로드 및 시각화)의 핵심 구성요소를 보여줍니다.</p>
+<p><img height="460" src="getting-started-with-google-bigquery/image03.png" width="676" alt="BigQuery를 위한 빅 데이터 분석 파이프라인의 구성요소"><br>
+그림 1. BigQuery를 위한 빅 데이터 분석 파이프라인의 구성요소</p>
+<h3><a name="h.65ys2qd7plma" id="h.65ys2qd7plma"></a>파이프라인 설명</h3>
+<p>그림 1에 보이는 것처럼 데이터 분석에는 다음과 같은 두 가지 기본적인 흐름이 있습니다.</p>
+<ol>
+<li>데이터 파이프라인 - 데이터를 변환하여 BigQuery에 로드</li>
+<li>데이터 시각화 - BigQuery에서의 데이터 분석 수행 및 결과 시각화</li>
+</ol>
+<h4><a name="h.w2l4th88blpf" id="h.w2l4th88blpf"></a>데이터 파이프라인</h4>
+<p>BigQuery에 데이터를 로드하는 프로세스는 다음 단계에 따라 이루어집니다.</p>
+<ol>
+<li>발신 시스템에서 보낸 소스 데이터를 추출합니다.</li>
+<li>JOIN의 수가 적을수록 BigQuery 성능이 개선되므로 데이터를 비정규화합니다(선택사항).</li>
+<li>CSV(쉼표로 구분된 값)<sup><a href="#ftnt8" name="ftnt_ref8" id="ftnt_ref8">[8]</a></sup> 파일이나 JSON(자바스크립트 객체 표기) 파일로 데이터를 변환합니다.</li>
+<li>CSV 또는 JSON 파일을 Google Cloud Storage에 업로드합니다. 이 작업은 Google Cloud Storage의 gsutil 명령줄 유틸리티를 사용하여 수행할 수 있습니다. 일부 제3자 ETL 도구의 경우 BigQuery에 직접 업로드할 수 있습니다.</li>
+<li>bq<sup><a href="#ftnt9" name="ftnt_ref9" id="ftnt_ref9">[9]</a></sup> 명령줄 유틸리티 또는 BigQuery REST API를 사용하여 CSV 또는 JSON 파일을 Google Cloud Storage에서 BigQuery로 로드합니다.</li>
+</ol>
+<h5><a name="h.qn10gbavzisc" id="h.qn10gbavzisc"></a>데이터 파이프라인의 Google Cloud Platform 사용</h5>
+<p>Google Cloud Platform을 사용하여 데이터를 BigQuery에 업로드하는 과정에는 BigQuery에 데이터를 로드하기에 앞서 CSV 파일이나 JSON(자바스크립트 객체 표기) 파일을 Google Cloud Storage에 업로드하는 일도 포함됩니다. Cloud Storage 및 BigQuery 모두에서 사용이 간편한 명령줄 도구를 사용하여 데이터를 업로드할 수 있습니다. 아니면 REST API를 사용하여 현재의 컴퓨팅 환경에 대한 프로그래밍 방식의 통합 기능을 제공할 수도 있습니다.</p>
+<p>ETL 도구를 Google Compute Engine에서 실행하면 소스 데이터를 BigQuery에 즉시 내보낼 수 있는 형식으로 변환할 수 있습니다.</p>
+<p>App Engine MapReduce 프레임워크 및 Google Compute Engine에서 실행되는 Hadoop는 ETL 수행을 위한 두 가지 옵션입니다. 아래의 요약 내용은 App Engine 애플리케이션을 사용하여 두 방식을 조정하는 방법을 제시해 줍니다.</p>
+<ol>
+<li>소스 데이터를 Google Cloud Storage에 업로드합니다. 이 작업을 수행하려면 gsutil 명령줄 도구 또는 Cloud Storage REST API를 사용해야 합니다.<br></li>
+<li>Google App Engine 애플리케이션에서 이러한 파일의 존재 여부를 자동으로 감지합니다. 자동 감지는 다음 두 가지 방식으로 구현할 수 있습니다.
+<ol>
+<li>App Engine Cron Service를 사용하여 Cloud Storage 버킷을 주기적으로 폴링하고, 이때 REST API를 사용하여 새로 업로드된 객체를 감지합니다.</li>
+<li>Cloud Storage Bucket Change Notification API를 사용합니다.<br>
+이 API는 Cloud Storage가 게시자로 기능하고 애플리케이션이 수신자 역할을 하는 게시/구독 모델입니다. 애플리케이션이 실행되면 새 파일이나 업데이트된 파일이 있을 경우 메시지를 수신할 수 있도록 콜백 메소드가 등록됩니다.<br></li>
+</ol>
+</li>
+<li>App Engine 애플리케이션은 다음 MapReduce 파이프라인 중 하나를 호출할 수 있습니다.
+<ol>
+<li>App Engine MapReduce 프레임워크를 사용합니다.</li>
+<li>프로세스를 시작하여 Google Compute Engine에서 Hadoop을 실행합니다. 애플리케이션은 Google Compute Engine의 REST API를 사용하여 인스턴스를 설정하고 MapReduce 작업을 시작합니다. 처리된 파일은 Cloud Storage에 다시 기록됩니다.<br></li>
+</ol>
+</li>
+<li>그러면 애플리케이션에서 REST API를 사용하여 처리된 로그 데이터를 BigQuery에 업로드할 수 있습니다.<br></li>
+<li>App Engine Mail API가 작업 완료 알림을 생성하기 위해 이 프로세스의 특정 부분에서 사용될 수 있습니다.</li>
+</ol>
+<h5><a name="h.cb8xji59oiym" id="h.cb8xji59oiym"></a>데이터 파이프라인의 제3자 제공업체 사용</h5>
+<p>현재 시장에는 BigQuery용 ETL(추출, 변환 및 로드) 도구를 제공하는 수많은 제3자 공급업체가 있습니다. 이러한 도구는 데이터 변환 및 비정규화를 위해 사용이 간편한 '드래그 앤 드롭' 사용자 인터페이스를 제공하며 데이터를 BigQuery에 바로 로드할 수 있게 해 주고 기본적으로 위에서 설명한 모든 단계를 완벽하게 수행합니다. 이러한 도구는 여러 출처에서 파생된 기업 데이터가 있는 경우 특히 유용합니다. BigQuery로 자체 소프트웨어를 통합한 기업의 최신 목록을 확인하려면 <a href="https://developers.google.com/bigquery/docs/third_party_tools">제3자 도구</a> 페이지를 방문해 주세요.</p>
+<h4><a name="h.win4wmvvsml0" id="h.win4wmvvsml0"></a>데이터 시각화</h4>
+<p>BigQuery 인터페이스</p>
+<p>BigQuery는 쿼리 수행을 위한 여러 인터페이스를 지원합니다. 양방향 쿼리 시에는 웹 인터페이스 및 명령줄 도구를 사용할 수 있으며 마찬가지로 REST API를 프로그래밍 방식으로 사용할 수도 있습니다. 쿼리는 SQL의 간소화된 하위 집합으로 표시되므로 표준 SQL에 이미 익숙한 사용자라면 어렵지 않게 배울 수 있습니다.</p>
+<h5><a name="h.ax95rounvxyb" id="h.ax95rounvxyb"></a>Google Cloud Platform 기술을 사용한 시각화</h5>
+<p>BigQuery REST API를 사용하면 Google App Engine에 맞춤형 웹 기반 대시보드를 구축하여 쿼리를 실행하고 <a href="https://developers.google.com/chart/">Google Chart Tools</a><a href="https://developers.google.com/chart/"></a>를 사용하여 결과를 시각화할 수 있습니다. 아래의 단계는 이를 수행할 수 있는 방법을 간략하게 설명합니다.</p>
+<ol>
+<li>App Engine 애플리케이션을 작성합니다.</li>
+<li>Google API 프로젝트를 생성하고 BigQuery API를 사용 설정합니다.</li>
+<li>애플리케이션에서 BigQuery에 액세스할 수 있도록 OAuth 2.0 클라이언트 ID를 생성합니다.</li>
+<li>BigQuery API 및 Charts API를 사용하는 Google App Engine 애플리케이션을 작성하여 대시보드를 생성합니다.</li>
+</ol>
+<p>맞춤 대시보드를 구축하는 방법에 대한 자세한 내용은 코드 실험실(<a href="http://developers.google.com">developers.google.com</a>: '<a href="https://developers.google.com/bigquery/articles/dashboard">코드 실험실: BigQuery 대시보드 만들기</a>')를 참조하세요.</p>
+<h5><a name="h.kdj5xvm5l9tn" id="h.kdj5xvm5l9tn"></a>제3자 시각화 제공업체의 사용</h5>
+<p>Google에는 BigQuery를 자체 제품에 이미 통합한 기업의 목록이 있습니다. 이러한 제품은 SQL 구문을 따로 지정하지 않고도 데이터를 쿼리하고 보고용 대시보드를 구축할 수 있도록 사용이 간편한 '드래그 앤 드롭' 인터페이스를 제공합니다. BigQuery로 자체 소프트웨어를 통합한 기업의 최신 목록을 확인하려면 <a href="https://developers.google.com/bigquery/docs/third_party_tools">제3자 도구</a> 페이지를 방문해 주세요.</p>
+<h2><a name="h.h7dmxw21ml5g" id="h.h7dmxw21ml5g"></a>설계 사례</h2>
+<p>BigQuery에 데이터를 로드하는 경우에는 빅 데이터 분석 프로젝트를 성공적으로 전개할 수 있도록 몇 가지 설계 사례를 미리 고려해 보아야 합니다.</p>
+<h3><a name="h.p1i0bmel8gcm" id="h.p1i0bmel8gcm"></a>A 솔루션의 아키텍처 구성 시의 할댱량 정책 사용 고려</h3>
+<p>고려해야 하는 할당량 정책에는 여러 가지가 있습니다. 이 중에서도 <a href="https://developers.google.com/bigquery/quota-policy#import">로드 작업당 최대 파일 크기</a>를 초과하지 않는 것이 중요한 데이터 처리와 관련된 경우를 예로 들 수 있습니다. 파일이 한도를 초과하는 경우 이 파일을 더 작은 파일로 나누어 따로 로드해야 하기 때문에 한도를 아는 것은 매우 중요합니다. BigQuery와 관련된 최신 할당량 정책은 <a href="https://developers.google.com/bigquery/docs/quota-policy#import">Google BigQuery 개발자 사이트</a>에 문서화되어 있습니다.</p>
+<h3><a name="h.gctgul14rasn" id="h.gctgul14rasn"></a>데이터 로드 이전의 데이터 비정규화</h3>
+<p>BigQuery의 기술적 구현은 RDBMS와는 차이가 있습니다. BigQuery는 열 형식 저장소 및 여러 수준의 실행 트리<sup><a href="#ftnt10" name="ftnt_ref10" id="ftnt_ref10">[10]</a></sup>를 사용하여 확장성과 성능을 달성합니다. 부록 1에는 테이블 비정규화 프로세스에 대한 자세한 내용이 나와 있습니다.</p>
+<h3><a name="h.9s787yspk7x4" id="h.9s787yspk7x4"></a>JSON 및 CSV 비교</h3>
+<p>BigQuery는 CSV 및 JSON(자바스크립트 객체 표기) 형식을 통한 데이터 로드 기능을 모두 지원합니다. JSON은 중첩/반복 구조를 지원하고 CSV보다는 좀 더 객체 지향적인 데이터 보기를 제공합니다. 또한 JSON을 사용하면 평활화된 기록을 CSV에 입력하는 데 필요한 데이터 복제 과정을 생략할 수 있습니다.</p>
+<p>BigQuery는 특수 SQL 함수인 FLATTEN 및 WITHIN을 제공하여 반복/중첩된 데이터를 쿼리할 수 있도록 지원합니다. 모든 BI 도구가 이러한 특수 SQL 함수를 지원하는 것은 아닙니다. 따라서 JSON 형식에 사용하려는 제3자 도구를 통해 소규모의 하위 데이터세트를 테스트해 보는 것이 좋습니다.</p>
+<h3><a name="h.gjtnx5oq49k2" id="h.gjtnx5oq49k2"></a>테이블 파티션</h3>
+<p>테이블 파티션 나누기란 특정 용도의 동일한 스키마를 사용하여 테이블을 하나 이상으로 나누는 것을 의미합니다.</p>
+<h4><a name="h.c8z4l1689q1v" id="h.c8z4l1689q1v"></a>정적 데이터 및 가변 데이터 비교</h4>
+<p>앞서 언급한 것처럼 BigQuery는 이미 로드된 데이터에 대한 업데이트를 지원하지 않습니다. 변경될 가능성이 높은 데이터를 그렇지 않은 데이터와 구분하면 단순히 테이블을 삭제하고 여기에 업데이트된 데이터를 다시 채우는 것만으로도 업데이트를 수행할 수 있으므로 전체 데이터세트를 다시 로드할 필요가 없습니다.</p>
+<h4><a name="h.lrp4j2ahcftx" id="h.lrp4j2ahcftx"></a>비용 효율성</h4>
+<p>양방향 및 일괄 쿼리에 대한 가격 책정은 처리된 데이터의 양을 기준으로 이루어집니다. 사용 패턴에 따라 테이블을 파티션으로 나누면 비용을 최적화할 수 있습니다. 예를 들어 대부분의 쿼리는 월간 추세에 초점을 맞추고 있으므로 테이블을 월 단위의 파티션으로 나누면 쿼리 비용이 줄어들게 됩니다. 여러 개월에 걸친 데이터를 쿼리해야 하는 경우에는 그림 2에 보이는 것처럼 테이블 결합을 사용하여 작업을 수행할 수 있습니다.</p>
+<pre>
+// Find suspicious activity over several months<br>SELECT FORMAT_UTC_USEC(event.timestamp_in_usec) AS time, request_url<br>FROM [applogs.events_201205], [applogs.events_201206], [applogs.events_201207]<br>WHERE event.username = 'root' AND NOT event.source_ip.is_internal;
+</pre>
+<p>그림 2. 파티션으로 나누어진 테이블의 예</p>
+<p>테이블 결합이 필요한 경우 지정 가능한 테이블의 수에는 제한이 없지만 쿼리 길이 제한(현재 10KB)은 적용됩니다.</p>
+<h3><a name="h.a9gxvp1x3w09" id="h.a9gxvp1x3w09"></a>Google Cloud Storage의 백업용 데이터 저장</h3>
+<p>데이터를 BigQuery에 로드한 후에는 데이터를 BigQuery 입력용 데이터로 Google Cloud Storage에 저장하는 것을 고려해 보세요.</p>
+<h3><a name="h.r1kiddsl771o" id="h.r1kiddsl771o"></a>JOIN 연산</h3>
+<p>BigQuery는 두 가지 유형의 JOIN 연산을 지원합니다. 각 연산의 사용 여부는 JOIN 오른쪽 테이블의 크기에 따라 결정되며 왼쪽 테이블에는 크기 제한이 적용되지 않습니다. 기본적인 JOIN 구문의 경우 오른쪽 테이블에 포함되는 압축 데이터의 크기가 8MB<sup><a href="#ftnt11" name="ftnt_ref11" id="ftnt_ref11">[11]</a></sup>를 초과해서는 안 됩니다. 이 JOIN 연산은 오른쪽 테이블의 최대 크기 제한이 적용되기 전에 신속히 수행되도록 설계되어 있습니다.</p>
+<p>두 테이블의 크기가 모두 지나치게 큰 경우(수십 기가바이트에서 테라 바이트 단위)에는 JOIN EACH 연산을 사용할 수 있습니다. JOIN EACH는 BigQuery에서 두 개의 큰 테이블을 보다 효율적으로 동시에 처리할 수 있을 정도의 작은 단위로 분할하는 내부 연산을 수행할 수 있게 해 줍니다. 이 단계에서는 JOIN 절에서보다 더 많은 처리 작업이 발생합니다.</p>
+<h4><a name="h.dr7gwxqhiv3i" id="h.dr7gwxqhiv3i"></a>하위 선택 구문을 사용한 성능 최적화</h4>
+<p>경우에 따라서는 하위 선택 구문을 사용함으로써 그림 3에 보이는 것과 같이 JOIN EACH를 사용하지 않고도 8MB 제한을 준수할 수 있도록 오른쪽 테이블의 데이터 양을 줄일 수 있습니다.</p>
+<pre>
+// Limit number of fields and rows.<br>SELECT purchases.amount, users.email_address<br>FROM PurchaseData AS purchases<br>AS users<br>ON purchases.user_id = users.user_id<br>WHERE purchases.amount &gt; 500
+</pre>
+<p>그림 3. 데이터 크기를 줄이기 위한 하위 선택 구문 사용의 예</p>
+<h4><a name="h.2ljovxji7xdk" id="h.2ljovxji7xdk"></a>과도하게 왜곡된 데이터의 회피</h4>
+<p>JOIN EACH가 사용되었고 쿼리 응답 시 평소보다 더 많은 시간이 소요되는 것으로 보인다면 데이터가 불균형하게 분산된 것입니다. 데이터를 균등하게 분산하지 않으면 일부 데이터 조각이 다른 조각에 비해 과도하게 클 수 있으므로 전체 쿼리 실행이 지연됩니다. 그림 4를 참조하면 이를 이해하는 데 도움을 얻을 수 있습니다. 그림 4는 이메일 캠페인의 효과를 분석하기 위해 작성된 것입니다.</p>
+<pre>
+select date_of_visit, page, sum(time_spent_on_page)<br>from weblog_20130301 w<br>join each<br>(select user_id from email_campaign) e<br>on w.user_id = e.user_id<br>group by date_of_visit, page
+</pre>
+<p>그림 4. 불균형하게 분산된 데이터가 포함되었을 가능성이 있는 쿼리의 예</p>
+<p>그러나 웹 로그의 많은 부분에 로그인하지 않은 사용자의 트래픽이 포함되어 있고 시스템에서 익명 user_id를 사용하는 경우 이 쿼리가 익명의 사용자를 처리하는 데 드는 시간이 필요 이상으로 길어지게 됩니다. 그림 5에 보이는 것과 같이 간단한 필터를 사용하면 쿼리 결과를 개선할 수 있습니다.</p>
+<pre>
+select date_of_visit, page, sum(time_spent_on_page)<br>from weblog_20130301 w<br>join each<br>(select user_id from email_campaign) e<br>on w.user_id = e.user_id<br>where w.user_id != '&lt;anonymous_user_id&gt;'<br>group by time_of_visit, page
+</pre>
+<p>그림 5. 필터를 사용하여 불균형하게 분산된 데이터의 원인이 된 데이터를 제거하는 예</p>
+<h2><a name="h.ef1i4f8n4ss5" id="h.ef1i4f8n4ss5"></a>샘플 애플리케이션</h2>
+<h4><a name="h.yv6q5armjpvp" id="h.yv6q5armjpvp"></a>BigQuery용 자동 파일 로더</h4>
+<p>이 샘플 자바 App Engine 애플리케이션은 Google Cloud Storage에서 BigQuery로의 데이터 로드를 자동화하는 방법을 보여줍니다. 이 애플리케이션은 Cloud Storage 객체 표기 API를 사용하여 파일이 Cloud Storage 버킷에 업로드되었다는 알림을 수신합니다. 그런 다음 BigQuery API를 사용하여 파일의 데이터를 BigQuery에 로드합니다. <a href="https://github.com/GoogleCloudPlatform/solutions-automated-file-loader-for-bigquery">GitHub</a>에서 이 샘플을 다운로드할 수 있습니다.</p>
+<p><a href="#" name="id.hdiyxbxcxwmx" id="id.hdiyxbxcxwmx"></a></p>
+<h4><a name="h.yl5dzmy8845k" id="h.yl5dzmy8845k"></a>Google Compute Engine에서의 ETL 도구 사용</h4>
+<p>이 샘플 스크립트는 Google Compute Engine에 가상 머신 인스턴스를 제공하고 오픈 소스 ETL 도구를 실행하는 데 필요한 소프트웨어를 설치합니다. 다른 관련 문서에서는 최신 ETL 도구를 사용하는 방법에 대한 단계별 가이드를 제공합니다. <a href="https://github.com/GoogleCloudPlatform/Solutions-Using-ETL-tool-on-Google-Compute-Engine">GitHub</a>에서 이 샘플을 다운로드할 수 있습니다.</p>
+<h2><a name="h.a21uo0g0v18x" id="h.a21uo0g0v18x"></a>맺음말</h2>
+<p>BigQuery는 민첩한 비즈니스 분석에 매우 적합한 완벽하게 관리되는 호스팅 서비스입니다. 이 문서에서 설명한 접근 방식을 따르면 데이터를 쉽게 로드하고 즉시 쿼리하여 비즈니스 통찰력을 얻을 수 있습니다. 또한 값비싼 소프트웨어를 구매하고 컴퓨팅 인프라를 구축하기 위한 추가적인 자본 지출 없이도 이를 달성할 수 있습니다. BigQuery는 표준 SQL형 쿼리 언어 및 성장을 거듭하고 있는 제3자 도구의 생태계를 제공하므로 기술 부문에 대한 기존의 투자와 기술 모음을 활용할 수 있습니다.</p>
+<h2><a name="h.jl0wzalkeolu" id="h.jl0wzalkeolu"></a>추가 리소스</h2>
+<ol>
+<li><a href="/files/BigQueryTechnicalWP.pdf">Google BigQuery 세부정보</a></li>
+<li><a href="/ko/customers/#cp-interactive">Google BigQuery 사례 연구</a></li>
+<li><a href="/bigquery-tour">Google BigQuery 활용 - BigQuery 둘러보기</a></li>
+<li><a href="https://developers.google.com/bigquery/docs/browser_tool">Google BigQuery 브라우저</a></li>
+<li><a href="https://developers.google.com/bigquery/docs/third_party_tools">Google BigQuery용 제3자 도구</a></li>
+<li><a href="https://developers.google.com/bigquery/articles/ingestionbestpractices">BigQuery 권장사항</a></li>
+<li><a href="https://developers.google.com/bigquery/docs/reference/v2/">Google BigQuery API 참조 자료</a></li>
+<li><a href="https://developers.google.com/storage/docs/gsutil">Google Cloud Storage gsutil 도구</a></li>
+<li><a href="https://developers.google.com/bigquery/docs/cli_tool">Google Bigquery bq 도구</a></li>
+</ol>
+<p><a href="#" name="id.60g9gyxi6n4f" id="id.60g9gyxi6n4f"></a></p>
+<h2><a name="h.66ttc9wlit26" id="h.66ttc9wlit26"></a>부록 1 - 데이터 비정규화</h2>
+<p>BigQuery는 열 형식 저장소 및 여러 수준의 실행 트리<sup><a href="#ftnt12" name="ftnt_ref12" id="ftnt_ref12">[12]</a></sup>를 사용하여 양방향 쿼리의 확장성 및 성능을 달성합니다. 기술적 구현은 RDBMS와는 차이가 있습니다. BigQuery는 테이블 JOIN의 수가 최소화될수록 성능이 개선됩니다. 경우에 따라 테이블을 비정규화한 후에 BigQuery에 로드해야 합니다.</p>
+<p>아래에 예로 제시된 간단한 주문 시스템은 비정규화 프로세스를 보여줍니다. 일반적인 RDBMS 데이터베이스에는 다음과 같은 RDBMS 테이블(주문, 상품, 고객, 제품)이 포함됩니다. 주문은 고객 테이블에 대한 외래 키 참조, 상품 테이블의 상품 수 및 상품 자체로 구성되며, 각 항목은 제품 테이블의 제품을 참조합니다. 이 관계는 아래의 향상된 항목 관계 다이어그램에 묘사되어 있습니다(그림6).</p>
+<p><img height="134" src="getting-started-with-google-bigquery/image00.png" width="582" alt="향상된 항목 관계 다이어그램"><br>
+그림 6. 향상된 항목 관계 다이어그램</p>
+<p>그림 7에는 테이블이 다음과 같은 레이아웃의 단일 테이블로 비정규화되는 방식을 보여주는 예가 나와 있습니다.</p>
+<p><img height="186" src="getting-started-with-google-bigquery/image02.png" width="169" alt="단일 테이블로 비정규화된 테이블"><br>
+그림 7. 단일 테이블로 비정규화된 테이블</p>
+<hr>
+<p><a href="#ftnt_ref1" name="ftnt1" id="ftnt1">[1]</a> https://developers.google.com/bigquery/docs/sla</p>
+<p><a href="#ftnt_ref2" name="ftnt2" id="ftnt2">[2]</a> https://developers.google.com/bigquery/docs/pricing</p>
+<p><a href="#ftnt_ref3" name="ftnt3" id="ftnt3">[3]</a> 위키피디아에서 상위 열 개의 수정된 항목을 찾기 위한 샘플 쿼리는 대개 10초 이내에 완료됩니다. 데이터세트의 크기는 36GB이며 3억 1천 300만 개의 행으로 구성되어 있습니다.</p>
+<p><a href="#ftnt_ref4" name="ftnt4" id="ftnt4">[4]</a> 자세한 내용은 <a href="http://googleenterprise.blogspot.com/2012/07/gmail-log-search-feature-enhances.html">Gmail 로그 검색 기능을 통한 도메인 관리자의 가시성 향상</a>을 참조하세요.</p>
+<p><a href="#ftnt_ref5" name="ftnt5" id="ftnt5">[5]</a> 자세한 내용은 <a href="/files/Redbus.pdf">Redbus 비즈니스 사례 연구</a>를 참조하세요.</p>
+<p><a href="#ftnt_ref6" name="ftnt6" id="ftnt6">[6]</a> Hadoop은 Apache 소프트웨어 재단에서 소유한 등록 상표입니다.</p>
+<p><a href="#ftnt_ref7" name="ftnt7" id="ftnt7">[7]</a> 자세한 내용은 <a href="http://static.googleusercontent.com/external_content/untrusted_dlcp/research.google.com/en/us/pubs/archive/36632.pdf">Dremel: 웹 규모 데이터세트의 양방향 분석</a><a href="http://static.googleusercontent.com/external_content/untrusted_dlcp/research.google.com/en/us/pubs/archive/36632.pdf">을 참조하세요.</a></p>
+<p><a href="#ftnt_ref8" name="ftnt8" id="ftnt8">[8]</a> 필드 구분 문자는 쉼표로 제한되지 않습니다. BigQuery는 모든 단일 바이트 문자를 구분 문자로 지원합니다.</p>
+<p><a href="#ftnt_ref9" name="ftnt9" id="ftnt9">[9]</a> https://developers.google.com/bigquery/docs/cli_tool</p>
+<p><a href="#ftnt_ref10" name="ftnt10" id="ftnt10">[10]</a> 자세한 내용은 <a href="http://static.googleusercontent.com/external_content/untrusted_dlcp/research.google.com/en/us/pubs/archive/36632.pdf">Dremel: 웹 규모 데이터세트의 양방향 분석</a>을 참조하세요.</p>
+<p><a href="#ftnt_ref11" name="ftnt11" id="ftnt11">[11]</a> Google은 개선을 위해 끊임 없이 노력하고 있습니다. <a href="https://developers.google.com/bigquery/docs/query-reference#joins"></a><a href="https://developers.google.com/bigquery/docs/query-reference#joins">JOIN 절</a>과 관련된 온라인 문서를 통해 최신 제한사항을 확인하세요.</p>
+<p><a href="#ftnt_ref12" name="ftnt12" id="ftnt12">[12]</a> 자세한 내용은 <a href="http://static.googleusercontent.com/external_content/untrusted_dlcp/research.google.com/en/us/pubs/archive/36632.pdf">Dremel: 웹 규모 데이터세트의 양방향 분석</a>을 참조하세요.</p>
+</div>
+<div class="maia-col-3"><br>
+<img src="//www.google.com/images/icons/product/feedback-16.png" class="g-app-icon" alt=""> <a href="javascript:void(0);" class="google-feedback">이 문서에 대한 의견 보내기</a><br>
+<br>
+<img src="//www.google.com/images/icons/thirdparty/pdf-16.png" class="g-app-icon" alt=""> <a href="/files/articles/google-cloud_technical-article_bigquery.pdf" class="cp-pdf" onclick="javascript: _gaq.push(['_trackPageview', '../../../files/articles/google-cloud_technical-article_bigquery.pdf']);">PDF 다운로드</a>
+<hr>
+<h4>샘플 앱</h4>
+<ul>
+<li><a href="https://github.com/GoogleCloudPlatform/solutions-automated-file-loader-for-bigquery" target="github">BigQuery용 자동 파일 로더 <img src="/images/ext-link-8px.png" height="8px" width="8px" alt=""></a></li>
+<li><a href="https://github.com/GoogleCloudPlatform/Solutions-Using-ETL-tool-on-Google-Compute-Engine" target="github">Google Compute Engine 샘플 스크립트에서의 ETL 도구 사용<img src="/images/ext-link-8px.png" height="8px" width="8px" alt=""></a></li>
+</ul>
+<hr></div>
+</div>
+</div>
+<script>
+(function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+</script><script src="//www.gstatic.com/feedback/api.js">
+</script><script>
+$('body').delegate('.google-feedback', 'click', function() {
+      userfeedback.api.startFeedback({'productId': '94614'});
+  });
+</script><!-- Scripts to include both on Goro + Devsite --><script>
+window.___gcfg = {
+     lang: ''
+   };
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+</script><!-- GTM implementation --><!-- Start dataLayer --><script>
+dataLayer = [{
+        'country': 'ko',
+        'region': 'japac',
+        'language': 'ko'
+      }];
+</script><!-- End dataLayer --><!-- Start Google Tag Manager --><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5CVQBG" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript> <script>
+(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-5CVQBG');
+</script><!-- End Google Tag Manager --><!-- Global JS scripts to load; path will depend on whether we're on devsite or Goro --><script src="/js/base.min.js">
+</script><!-- Retina loader; Do not load if partners page because we need to wait until the Angular app runs --><script>
+new lfl.system.RetinaLoader();
+</script><!-- Secondary right-side scroll-nav --><script>
+new lfl.ui.ScrollNav({});
+</script>
+</body>
+</html>

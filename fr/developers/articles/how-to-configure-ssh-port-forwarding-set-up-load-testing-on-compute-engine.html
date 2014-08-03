@@ -1,0 +1,338 @@
+---
+layout: phase2-fr
+title: Cloud Computing &amp; Cloud Hosting Services
+---
+<!DOCTYPE html>
+<html devsite="">
+<head>
+<title>Load Testing Articles &amp; Tutorials — Google Cloud Platform</title>
+<meta name="description" content="Read technical articles about load testing and solutions with Google Cloud Platform, specifically using Google's Compute Engine for load testing.">
+<meta name="hide_page_heading" value="true">
+<meta name="full_width" value="true">
+<meta name="top_category" value="developers">
+<meta name="subcategory" value="articles">
+<meta name="viewport" content="initial-scale=1, minimum-scale=1, width=device-width">
+<link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
+<link href="//fonts.googleapis.com/css?family=Open+Sans:400italic,300,400,600,700" rel="stylesheet">
+<link href="/css/default.css" rel="stylesheet"><!--[if lt IE 9]>
+    <link rel="stylesheet" media="screen" href='/css/cp-ie.css'>
+    <![endif]-->
+<script src="/js/floodlight.js">
+</script>
+</head>
+<body>
+<div id="maia-main" class="cp-article">
+<div class="maia-cols">
+<div class="maia-col-9">
+<div>
+<div style="float:right">
+<div class="g-plusone"></div>
+</div>
+<h1 class="title">How to Configure SSH Port Forwarding and Set Up Load Testing on Google Compute Enginee</h1>
+</div>
+<div class="cp-article-tutorial"><a name="intro" id="intro"></a>
+<h2>Présentation</h2>
+<p>Google Compute&nbsp;Engine fournit des machines virtuelles à la demande. Avec Compute&nbsp;Engine, vous pouvez effectuer des calculs à grande échelle et obtenir un niveau de performances élevé. La communication bidirectionnelle entre les machines virtuelles sur Compute&nbsp;Engine et les machines distantes telles qu'un ordinateur personnel local, peut s'avérer utile.</p>
+<p>Pour illustrer ce scénario, ce document utilise l'exemple JMeter. En outre, il vous explique comment configurer un transfert de port SSH afin d'activer les connexions bidirectionnelles. Avec cette technique, nous pouvons configurer le cluster de serveurs JMeter sur Compute&nbsp;Engine pour le test de charge et les contrôler à partir d'un client JMeter s'exécutant sur votre ordinateur personnel local.</p>
+<p><a href="http://jmeter.apache.org/">JMeter</a> est une infrastructure de test de charge Open&nbsp;Source issue d'un projet Apache. Lorsque vous développez un serveur ou déployez un système, le test de charge constitue une étape critique par laquelle vous devez passer avant de mettre un système en ligne. Le test de charge est important à plusieurs titres&nbsp;:</p>
+<ul>
+<li>Il vérifie que votre système traite le nombre d'utilisateurs/de requêtes attendu.</li>
+<li>Il vous permet de contrôler le comportement et la réactivité du serveur dans des conditions de stress élevé.</li>
+<li>Il expose les goulets d'étranglement potentiels dans votre système.</li>
+</ul>
+<p>Ce document présente une manière efficace de configurer un environnement de test de charge distribué avec JMeter sur des instances Compute&nbsp;Engine.</p>
+<h3>Hypothèses</h3>
+<p>Ce document vous fournit une description détaillée de la manière de configurer un environnement de test de charge <a href="http://jmeter.apache.org/">JMeter</a> en vue d'effectuer des tests de charge sur Compute&nbsp;Engine. Il présuppose une connaissance technique des réseaux et requiert aussi une certaine connaissance de <a href="https://developers.google.com/compute/">Compute&nbsp;Engine</a> et de son outil de ligne de commande <a href="https://developers.google.com/compute/docs/gcutil/">gcutil</a>.</p>
+<p>Bien qu'il décrive la manière de configurer un environnement de test JMeter, ce document ne s'attache pas à décrire JMeter. Ainsi, il n'explique pas comment élaborer un plan de test ou exécuter des tests avec JMeter.</p>
+<h3>Contenu</h3>
+<ul>
+<li><a href="#intro">Présentation</a></li>
+<li><a href="#loadtest">Principes de base des tests de charge et de JMeter</a></li>
+<li><a href="#server-config">Configuration serveur JMeter sur Google Compute Engine</a></li>
+<li><a href="#resources">Autres sources d'information</a></li>
+</ul>
+<a name="loadtest" id="loadtest"></a>
+<h2>Principes de base des tests de charge et de JMeter</h2>
+<p>La section suivante présente les principes de base des tests de charge et de JMeter tandis que celle qui la suit nous présente certaines spécificités propres à l'utilisation de JMeter avec Google Compute Engine.</p>
+<h3>Principes de base des tests de charge</h3>
+<p>L'une des caractéristiques standards des logiciels de test de charge est leur capacité à générer automatiquement des charges sur le serveur. Le système de test de charge peut simuler un grand nombre de requêtes utilisateur simultanées. Il peut également enregistrer les réponses du serveur et collecter des statistiques sur ces dernières.</p>
+<p>Le défi du test de charge constitue à créer un nombre de requêtes suffisamment élevé pour "stresser" le serveur testé. Dans bon nombre de cas, les tests de charge exécutés sur un seul ordinateur ne permettent pas de générer assez de charge. Il convient donc d'utiliser plusieurs ordinateurs afin d'augmenter la charge au niveau du serveur.</p>
+<p>Cet article vous explique comment configurer un cluster de serveurs JMeter sur des instances Compute&nbsp;Engine. Lorsque vous mettez en place un cluster de serveurs JMeter sur des machines virtuelles fournies par Compute&nbsp;Engine, vous n'avez plus à vous soucier de la maintenance des serveurs physiques. En outre, vous avez toute latitude quant au nombre d'instances que vous souhaitez démarrer pour votre test de charge. JMeter est une infrastructure générique et le système cible du test de charge peut résider sur n'importe quel emplacement&nbsp;accessible par le cluster JMeter. Il peut s'agir d'une application Google App Engine, de tout système résidant sur Compute&nbsp;Engine, de serveurs sur site ou d'une autre plate-forme cloud. Les performances réelles peuvent être affectées par de nombreux facteurs, y compris les performances réseaux. Afin de pouvoir mesurer avec précision les performances, vous devez donc disposer d'un système isolé. De ce fait, le système n'est pas considéré comme un environnement de test des performances.</p>
+<h3>JMeter</h3>
+<p>JMeter s'exécute sous Windows, Mac et Linux. Il est compatible avec divers protocoles de test et propose une interface utilisateur visuelle pour la configuration des tests de charge. La Figure&nbsp;1 illustre une capture d'écran de l'interface utilisateur de JMeter&nbsp;:</p>
+<figure><img src="/images/articles/config-ssh-port-forw-tut/jmeter-ui.png" alt="">
+<figcaption>Figure&nbsp;1. Capture d'écran de l'interface utilisateur de JMeter</figcaption>
+</figure>
+<p>JMeter accepte différents tests distribués dans lesquels le système de test de charge se compose des éléments suivants&nbsp;:</p>
+<ul>
+<li>Des serveurs JMeter qui envoient les requêtes au serveur testé</li>
+<li>Un client JMeter qui contrôle le niveau de charge et rassemble les résultats de tests issus des serveurs JMeter</li>
+</ul>
+<p>Le client JMeter est la station de travail qui exécute l'interface utilisateur de JMeter. Les serveurs JMeter peuvent se trouver ailleurs, sur des serveurs distants (Fig.&nbsp;2). Vous pouvez mélanger différents types de serveur dans la configuration. Par exemple, votre Mac peut être configuré en tant que client JMeter et les serveurs Linux en tant que serveurs JMeter.</p>
+<p>Bien qu'il simule des requêtes HTTP dans lesquelles chaque fil de serveur JMeter agit comme un client HTTP, JMeter ne procède pas au rendu de la page et n'exécute pas JavaScript. C'est pourquoi les fichiers intégrés, tels que les images ou les données téléchargées par Ajax, ne sont pas téléchargés automatiquement.</p>
+<p>Pour simuler une véritable situation de charge, le scénario de test doit être élaboré avec soin de sorte que le système reproduise le comportement d'utilisateurs réels aussi fidèlement que possible.</p>
+<figure><img src="/images/articles/config-ssh-port-forw-tut/load-testing.jpg" alt="">
+<figcaption>Figure 2. Utilisation de JMeter pour les tests de charge</figcaption>
+</figure>
+<p>Pour utiliser une configuration JMeter distribuée, commencez par répertorier tous les serveurs JMeter dans le fichier de configuration de votre client JMeter (entrée <span class="code">remote_hosts</span> dans bin/jmeter.properties). Pour démarrer les tests, utilisez <span class="code">Tout démarrer à distance</span> au lieu de <span class="code">Démarrer</span>. Lorsque vous utilisez la commande <span class="code">Tout démarrer à distance</span>, le client JMeter se connecte à tous les serveurs distants répertoriés pour lancer les tests, et reçoit tous les résultats.</p>
+<p>Pendant le test de charge, les résultats de tous les serveurs du cluster JMeter sont envoyés au client. Les résultats sont consolidés et affichés sur l'écran du client JMeter (Fig. 3).</p>
+<figure><img src="/images/articles/config-ssh-port-forw-tut/apache-jmeter.png" alt="">
+<figcaption>Figure&nbsp;3. Capture d'écran des résultats consolidés du test de charge sur le client JMeter</figcaption>
+</figure>
+<p>N'oubliez pas que JMeter dispose d'autres types de gestionnaires de résultats que celui illustré.</p>
+<a name="server-config" id="server-config"></a>
+<h2>Configuration serveur JMeter sur Google Compute Engine</h2>
+<p>La suite de cet article traite de la façon de configurer les serveurs JMeter sur Compute&nbsp;Engine. Pour les besoins de cet article, supposons que nous configurions plusieurs serveurs JMeter sur des instances Linux de Compute&nbsp;Engine et que nous exécutions le client JMeter sur un Mac.star</p>
+<h3>Connexions entre le client JMeter et les serveurs JMeter</h3>
+<p>Lorsque le client JMeter démarre le test à distance, la communication entre le client JMeter et le serveur JMeter est établie via la connexion JMeter et un appel RMI. La connexion JMeter est toujours initiée par le client JMeter. D'autre part, la connexion TCP pour l'appel RMI est lancée dans les deux directions. Trois connexions sont donc créées (Fig. 4).</p>
+<figure><img src="/images/articles/config-ssh-port-forw-tut/jmeter-connections.png" alt="">
+<figcaption>Figure 4. Connexions entre le client JMeter et le serveur JMeter</figcaption>
+</figure>
+<p>Lorsque le client JMeter s'exécute derrière un pare-feu, à l'aide de la fonction NAT 1:N (NAT, Network Address Translation), et qu'il est connecté à des serveurs JMeter sur Compute&nbsp;Engine, eux aussi derrière un pare-feu, la configuration des connexions peut constituer un véritable défi.</p>
+<p>Compute&nbsp;Engine utilise la fonction NAT 1:1 pour son adresse IP externe. Chaque instance Compute&nbsp;Engine utilise son adresse interne privée comme adresse IP. De ce fait, le serveur distant JMeter ne parvient pas à se connecter au client JMeter, car ce dernier se trouve derrière un pare-feu et n'a pas d'adresse publique. D'autre part, le client ne peut pas se connecter au serveur distant, car celui-ci indique son adresse interne privée en tant qu'adresse publique (Fig. 5).</p>
+<figure><img src="/images/articles/config-ssh-port-forw-tut/firewalls.jpg" alt="">
+<figcaption>Figure&nbsp;5. Les pare-feu constituent un réel défi en matière de communication entre le client et les serveurs JMeter.</figcaption>
+</figure>
+<h3>Technique de transfert de port SSH</h3>
+<p>Secure Shell (SSH) dispose d'une fonctionnalité appelée le transfert de port SSH (ou tunnels SSH) avec laquelle une connexion est transférée vers un port différent alors que la communication réelle s'effectue sur la connexion SSH. Le transfert de port peut soit être effectué sur le client SSH, soit sur le serveur SSH. Avec le transfert de port, vous pouvez configurer des ports qui permettent au client et au serveur JMeter de se connecter l'un à l'autre.</p>
+<figure><img src="/images/articles/config-ssh-port-forw-tut/forw-connections.jpg" alt="">
+<figcaption>Figure&nbsp;6. Transfert des connexions vers un port différent</figcaption>
+</figure>
+<p>Notez que dans les exemples de la Figure&nbsp;6, "A" et "B" correspondent aux numéros des ports.</p>
+<p>Pour configurer le transfert de port SSH côté serveur, comme illustré dans les exemples ci-dessus, vous devriez exécuter la commande suivante sur votre machine client (-L correspond à "local" et -R à "remote" ou distant, en français).</p>
+<pre>
+ssh -L A:127.0.0.1:B &lt;username&gt;@&lt;server&gt;
+</pre>
+<p>De même, la commande suivante permettrait de configurer le transfert de port côté client.</p>
+<pre>
+ssh -R  B:127.0.0.1: A &lt;username&gt;@&lt;server&gt;
+</pre>
+<p>Sous Windows, vous pouvez également configurer le transfert de port SSH en utilisant la fonction PuTTY à partir de "Connexion" - "SSH" - "Tunnels", dans la configuration PuTTY.</p>
+<h3>Configuration du transfert de port SSH pour JMeter</h3>
+<p>JMeter utilise trois connexions&nbsp;: la première, du client vers le serveur à l'aide de JMeter Connection, et deux autres, une dans chaque direction, entre le client et le serveur pour l'appel RMI. Nous devons donc configurer trois transferts de port afin de couvrir toutes les connexions. Pour cet exemple, nous utiliserons les numéros de ports suivants, tel qu'indiqué à la Figure&nbsp;7&nbsp;:</p>
+<p>Port 24000 pour la connexion JMeter</p>
+<ul>
+<li>Port 25000 pour l'appel RMI du serveur vers le client</li>
+<li>Port 26000 pour l'appel RMI du client vers le serveur</li>
+</ul>
+<figure><img src="/images/articles/config-ssh-port-forw-tut/forw-config.png" alt="">
+<figcaption>Figure&nbsp;7. Exemple de configuration de transfert de port avec trois connexions</figcaption>
+</figure>
+<p>La commande suivante configure le transfert pour trois&nbsp;ports&nbsp;:</p>
+<pre>
+ssh -L 24000:127.0.0.1:24000   \
+-R 25000:127.0.0.1:25000   \
+-L 26000:127.0.0.1:26000 &lt;username&gt;@&lt;server&gt;
+</pre>
+<p>Comme vous devez seulement configurer le transfert de port SSH, et que vous ne devrez pas exécuter de commandes à distance, vous pourriez également ajouter les options -N et -f.</p>
+<pre>
+ssh -L 24000:127.0.0.1:24000   \
+-R 25000:127.0.0.1:25000   \
+-L 26000:127.0.0.1:26000 -N -f &lt;username&gt;@&lt;server&gt;
+</pre>
+<p>Pour utiliser les numéros de port appropriés, il ne vous reste plus qu'à configurer le client et le serveur JMeter.</p>
+<p>Configurer le client</p>
+<p>Dans la configuration du client JMeter, <span class="code">bin/jmeter.properties</span>, modifiez les éléments suivants&nbsp;:</p>
+<pre>
+remote_hosts=127.0.0.1:24000
+client.rmi.localport=25000
+mode=Statistical
+</pre>
+<p>Voici quelques détails de la configuration&nbsp;:</p>
+<ul>
+<li><span class="bld">remote_hosts</span> indique au client JMeter quel serveur JMeter utiliser.</li>
+<li><span class="bld">client.rmi.localport</span> renseigne le numéro du port de connexion JMeter pour le client.</li>
+<li><span class="bld">mode</span> précise comment les résultats sont renvoyés du serveur vers le client.</li>
+</ul>
+<p>Dans la section précédente, nous avons abordé le sujet du transfert de port pour la connexion JMeter. Ici, nous définissons le port 24000 de l'hôte local (127.0.0.1) comme hôte distant et le port 25000 comme port d'écoute de l'appel RMI client, étant donné qu'il s'agit du numéro de port vers lequel la connexion RMI du serveur JMeter est transférée.</p>
+<p>Comme nous prévoyons d'envoyer un nombre très important de requêtes depuis les serveurs JMeter vers le système cible, nous ne souhaitons pas renvoyer un nombre équivalent de résultats vers le client JMeter. Nous devons donc définir le mode de transfert de données sur "Statistical". Ce mode indique que des informations statistiques sont envoyées depuis le serveur JMeter et permet donc de réduire le transfert entre le serveur et le client JMeter. Autrement, le client JMeter constituerait un goulot d'étranglement pour le test de charge. Pour plus de détails sur la configuration, consultez le <a href="http://jmeter.apache.org/usermanual/remote-test.html#sendermode">document JMeter</a>.</p>
+<h6 class="ital">Configurer le serveur</h6>
+<p>Nous devons également définir la configuration du serveur JMeter distant. Pour ce faire, vous devez modifier le fichier bin/jmeter.property comme suit&nbsp;:</p>
+<pre>
+server_port=24000
+server.rmi.localhostname=127.0.0.1
+server.rmi.localport=26000
+</pre>
+<p>Ces paramètres indiquent au serveur JMeter d'associer le port 24000 de la connexion JMeter au port 26000 pour l'écoute de l'appel RMI côté serveur.</p>
+<h6 class="ital">Démarrer le serveur distant</h6>
+<p>Finalement, lorsque vous démarrez le serveur JMeter sur une marchine Linux, vous devez indiquer à JMeter qu'il doit utiliser l'hôte local (127.0.0.1) en tant que serveur RMI.</p>
+<pre>
+bin/jmeter-server -Djava.rmi.server.hostname=127.0.0.1
+</pre>
+<p>Cette commande démarre le serveur JMeter sur la machine Linux et accepte une connexion du client JMeter. Nous pouvons ensuite démarrer le client JMeter en définissant de nouveau l'hôte local en tant que serveur RMI.</p>
+<pre>
+bin/jmeter.sh -Djava.rmi.server.hostname=127.0.0.1
+</pre>
+<p>Veuillez noter que, sous Windows, vous devrez utiliser bin/jmeter.bat.</p>
+<p>Vous pouvez créer des scénarios de test à l'aide de l'interface utilisateur JMeter, comme vous le faites habituellement. Le client JMeter reconnaît automatiquement le serveur JMeter distant, envoie la commande <span class="code">tout démarrer à distance</span> pour initier la connexion avec le serveur JMeter et commence à envoyer des requêtes du serveur JMeter distant vers le système cible qui fait l'objet du test.</p>
+<h4>Configuration de serveurs JMeter sur Google Compute Engine</h4>
+<p>Etant donné qu'une instance Compute&nbsp;Engine fonctionne comme une machine Linux standard, aucune configuration spéciale n'est requise. Toutefois, la façon la plus simple d'utiliser <span class="code">ssh</span> est d'employer la commande <a href="https://developers.google.com/compute/docs/instances#sshing">gcutil ssh</a> plutôt que la commande Vanilla <span class="code">ssh</span>, car gcutil <span class="code">ssh</span> prédéfinit certaines options pour la connexion à Compute&nbsp;Engine.</p>
+<p>Avec la commande <span class="code">gcutil ssh</span>, vous devez spécifier l'option <span class="code">--ssh_arg</span> en vue de passer les paramètres à ssh.</p>
+<p>Pour configurer le transfert de port SSH pour Compute&nbsp;Engine, utilisez la commande suivante&nbsp;:</p>
+<pre>
+gcutil ssh  \
+--ssh_arg -L24000:127.0.0.1:24000  \
+--ssh_arg -R25000:127.0.0.1:25000  \
+--ssh_arg -L26000:127.0.0.1:26000  \
+--ssh_arg -N --ssh_arg -f &lt;instance name&gt;
+</pre>
+<p>Notez que <span class="code">-L</span> ou <span class="code">-R</span>, qui correspondent aux arguments de la commande <span class="code">ssh</span>, doivent être combinés au paramètre qui les suivent afin d'être transférés vers <span class="code">ssh</span> en tant que paramètre unique. Dans le cas contraire, la partie paramètre est interprétée comme un paramètre de <span class="code">gcutil</span>.</p>
+<h3>Configuration de plusieurs serveurs JMeter</h3>
+<p>Jusqu'à présent, nous vous avons présenté un exemple de configuration réussie d'un serveur JMeter sur une instance Compute&nbsp;Engine. Cependant, l'utilisation de serveurs JMeter distants a pour principal but d'activer un seul client JMeter afin d'utiliser plusieurs serveurs JMeter pour "stresser" le serveur testé, comme il serait impossible de le faire avec un seul ordinateur.</p>
+<p>Si le client JMeter et les serveurs JMeter sont du même côté d'un pare-feu (s'ils se trouvent, par exemple, tous deux sur le site d'une entreprise), tous les serveurs JMeter peuvent utiliser le même port. Toutefois, dans notre exemple, nous avons activé le transfert de port SSH de sorte que chaque serveur doive être configuré pour utiliser un port de transfert différent et le port d'écoute local de l'appel RMI correspondant.</p>
+<p>Tous les serveurs peuvent tout de même utiliser le même numéro de port RMI pour se connecter au client&nbsp;; le port 25000, comme ci-dessus, par exemple.</p>
+<p>Supposons que le deuxième serveur utilise respectivement les ports 24001 et 26001 pour la connexion JMeter et l'appel RMI du client au serveur. Dans ce cas, la commande de configuration du transfert de port SSH pour le deuxième serveur devrait être&nbsp;:</p>
+<pre>
+gcutil ssh  \
+--ssh_arg -L24001:127.0.0.1:24001  \
+--ssh_arg -R25000:127.0.0.1:25000  \
+--ssh_arg -L26001:127.0.0.1:26001  \
+--ssh_arg -N --ssh_arg -f &lt;instance name&gt;
+</pre>
+<p>Le deuxième serveur doit avoir la configuration JMeter suivante&nbsp;:</p>
+<pre>
+server_port=24001
+server.rmi.localhostname=127.0.0.1
+server.rmi.localport=26001
+</pre>
+<p>Et, enfin, la commande de configuration du client JMeter avec deux serveurs doit être&nbsp;:</p>
+<pre>
+remote_hosts=127.0.0.1:24000,127.0.0.1:24001
+client.rmi.localport=25000
+mode=Statistical
+</pre>
+<p>Notez que, dans cet article, l'exemple utilise les numéros de port 24000, 25000 et 26000, avec un nombre maximal de serveurs égal à 1000, de sorte que les numéros de port ne se chevauchent pas. Si votre cluster compte plus de 1000 serveurs, vous devez utiliser des numéros de port différents avec un écart plus grand entre eux.</p>
+<h2>Mise à l'échelle pour plusieurs serveurs distants</h2>
+<p>Jusqu'à présent, nous vous avons expliqué comment configurer JMeter pour utiliser des instances Google Compute Engine comme serveurs JMeter. Toutefois, la configuration manuelle de plus de quelques instances n'est pas une solution idéale. Etant donné que Compute&nbsp;Engine permet un accès via API et que chaque instance Compute&nbsp;Engine peut être configurée en démarrant des scripts, nous pouvons créer un script automatisé pour effectuer les tâches suivantes&nbsp;:</p>
+<ul>
+<li>Démarrer des instances Compute&nbsp;Engine</li>
+<li>Les configurer en tant que cluster de serveurs JMeter</li>
+<li>Activer le transfert de port SSH à partir d'un ordinateur local</li>
+<li>Démarrer le client JMeter</li>
+<li>Désassembler le cluster de serveurs JMeter lorsqu'il n'est plus utile</li>
+</ul>
+<p>Voici une introduction pour un exemple de mise en oeuvre d'un tel script, <span class="code">“jmeter_cluster.py”</span>. L'exemple d'application est disponible sur <a href="https://github.com/GoogleCloudPlatform/solutions-google-compute-engine-cluster-for-jmeter">GitHub</a>.</p>
+<h4>Conception du script automatisé</h4>
+<p>"jmeter_cluster.py" utilise&nbsp;:</p>
+<ul>
+<li>La <a href="https://developers.google.com/api-client-library/python/">bibliothèque cliente pour Python des API Google</a> pour contrôler les instances Compute&nbsp;Engine</li>
+<li>L'outil de ligne de commande <a href="https://developers.google.com/compute/docs/gcutil/">gcutil</a> pour configurer le transfert de port SSH</li>
+<li><a href="https://developers.google.com/storage/">Google Cloud Storage</a> pour stocker le script de démarrage de l'instance Compute&nbsp;Engine et le package de serveurs JMeter</li>
+</ul>
+<p>Le package de serveurs JMeter inclut un fichier jmeter.properties préconfiguré dans le sous-répertoire "bin". Néanmoins, les numéros de port doivent être personnalisés par instance. Le script de démarrage remplacera les numéros de port à votre place.</p>
+<p>Voici un aperçu de ce que fait le script&nbsp;:</p>
+<ol>
+<li>Démarrer le cluster
+<ul style="list-style-type:circle;">
+<li>Il démarre les instances Compute&nbsp;Engine.</li>
+<li>Le script de démarrage télécharge le package de serveurs JMeter depuis Cloud&nbsp;Storage.</li>
+<li>Le script de démarrage modifie les numéros de port dans la configuration JMeter sur la base de son ID de serveur dans le cluster (0, 1, 2, …). L'ID de serveur est passé à chaque instance en tant que <a href="https://developers.google.com/compute/docs/metadata">métadonnée</a> de l'instance Compute&nbsp;Engine.</li>
+<li>Le script de démarrage lance le processus du serveur JMeter.</li>
+</ul>
+</li>
+<li>Définir le transfert de port SSH
+<ul style="list-style-type:circle;">
+<li>Il exécute les commandes <span class="code">gcutil ssh</span> pour configurer le transfert de port SSH.</li>
+<li>Il met à jour la liste des serveurs vers une configuration JMeter <span class="code">remote_host</span>.</li>
+</ul>
+</li>
+<li>Démarrer le client JMeter
+<ul style="list-style-type:circle;">
+<li>Il démarre le client JMeter sur la machine locale du package client JMeter.</li>
+</ul>
+</li>
+<li>Désassembler le cluster
+<ul>
+<li>Il supprime les instances serveur JMeter.</li>
+</ul>
+</li>
+</ol>
+<h3>Utilisation</h3>
+<h6 class="ital">Pour démarrer un cluster et définir le transfert de port SSH</h6>
+<p class="code">./jmeter_cluster.py start [cluster size] [--project &lt;project name&gt;] [--prefix &lt;prefix&gt;] [--image &lt;image&gt;] [--zone &lt;zone&gt;] [--machinetype &lt;machine type&gt;]</p>
+<ul>
+<li>Il démarre un cluster qui consiste en [taille du cluster] nombre d'instances Compute&nbsp;Engine.</li>
+<li>Il définit également le transfert de port SSH.</li>
+</ul>
+<p>Après exécution de la commande de démarrage pour démarrer le serveur JMeter, exécutez la commande client pour démarrer le client JMeter.</p>
+<h6 class="ital">Pour définir le transfert de port SSH si le terminal est interrompu</h6>
+<p class="code">./jmeter_cluster.py portforward [cluster size] [--project &lt;project name&gt;] [--prefix &lt;prefix&gt;]</p>
+<ul>
+<li>Il définit le transfert de port SSH pour [taille du cluster] nombre d'instances.</li>
+<li>Cela ne s'avère nécessaire que lorsque le terminal qui a démarré le cluster perd la connexion avec les instances qui, à leur tour, annulent le transfert de port SSH.</li>
+</ul>
+<p>Après avoir exécuté la commande portforward pour rétablir le transfert de port, exécutez la commande client pour redémarrer le client JMeter.</p>
+<h6 class="ital">Pour démarrer le client JMeter</h6>
+<p class="code">./jmeter_cluster.py client [paramètres supplémentaires pour JMeter]</p>
+<ul>
+<li>Démarre le client JMeter sur la machine locale.</li>
+</ul>
+<h6 class="ital">Pour éteindre le système JMeter</h6>
+<p class="code">./jmeter_cluster.py shutdown [--project &lt;project name&gt;] [--prefix &lt;prefix&gt;]</p>
+<ul>
+<li>Désassemble le cluster de serveurs JMeter.</li>
+</ul>
+<h6 class="ital">Pour obtenir de l'aide sur l'utilisation du script</h6>
+<p class="code">./jmeter_cluster.py -h</p>
+<ul>
+<li>Illustre l'utilisation des commandes.</li>
+</ul>
+<p class="code">./jmeter_cluster [start|shutdown|portforward|client] -h</p>
+<ul>
+<li>Illustre l'utilisation de la sous-commande.</li>
+</ul>
+<a name="resources" id="resources"></a>
+<h2>Autres sources d'information</h2>
+<ul>
+<li><a href="https://developers.google.com/compute/">Documentation Google Compute Engine à l'intention des développeurs</a></li>
+<li><a href="https://developers.google.com/compute/docs/instances#sshing">Connexion à Google Compute Engine avec SSH</a></li>
+<li><a href="http://jmeter.apache.org/">JMeter</a></li>
+<li><a href="http://www.google.com/url?q=http%3A%2F%2Fionelmc.wordpress.com%2F2012%2F02%2F16%2Fhow-to-run-jmeter-over-ssh-tunnel%2F&amp;sa=D&amp;sntz=1&amp;usg=AFQjCNG8dqQYCuEU-RITYdHZoFcLR3JWeQ">Comment exécuter JMeter sur un tunnel SSH</a></li>
+</ul>
+</div>
+<!-- /maia-main --></div>
+<div class="maia-col-3"><br>
+<img src="//www.google.com/images/icons/product/feedback-16.png" class="g-app-icon" alt=""> <a href="javascript:void(0);" class="google-feedback">Commentaires sur ce document</a><br>
+<br></div>
+</div>
+</div>
+<script>
+(function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+</script><script src="//www.gstatic.com/feedback/api.js">
+</script><script>
+$('body').delegate('.google-feedback', 'click', function() {
+      userfeedback.api.startFeedback({'productId': '94614'});
+  });
+</script><!-- Scripts to include both on Goro + Devsite --><script>
+window.___gcfg = {
+     lang: ''
+   };
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+</script><!-- GTM implementation --><!-- Start dataLayer --><script>
+dataLayer = [{
+        'country': 'fr',
+        'region': 'emea',
+        'language': 'fr'
+      }];
+</script><!-- End dataLayer --><!-- Start Google Tag Manager --><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5CVQBG" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript> <script>
+(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-5CVQBG');
+</script><!-- End Google Tag Manager --><!-- Global JS scripts to load; path will depend on whether we're on devsite or Goro --><script src="/js/base.min.js">
+</script><!-- Retina loader; Do not load if partners page because we need to wait until the Angular app runs --><script>
+new lfl.system.RetinaLoader();
+</script><!-- Secondary right-side scroll-nav --><script>
+new lfl.ui.ScrollNav({});
+</script>
+</body>
+</html>

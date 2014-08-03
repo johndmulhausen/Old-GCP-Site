@@ -1,0 +1,239 @@
+---
+layout: phase2-fr
+title: Cloud Computing &amp; Cloud Hosting Services
+---
+<!DOCTYPE html>
+<html devsite="">
+<head>
+<title>Web Apps Articles &amp; Tutorials — Google Cloud Platform</title>
+<meta name="description" content="Read technical articles about web applications and solutions with Google Cloud Platform, including auto scaling and how to manage complex applications in the cloud.">
+<meta name="hide_page_heading" value="true">
+<meta name="full_width" value="true">
+<meta name="top_category" value="developers">
+<meta name="subcategory" value="articles">
+<meta name="viewport" content="initial-scale=1, minimum-scale=1, width=device-width">
+<link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
+<link href="//fonts.googleapis.com/css?family=Open+Sans:400italic,300,400,600,700" rel="stylesheet">
+<link href="/css/default.css" rel="stylesheet"><!--[if lt IE 9]>
+    <link rel="stylesheet" media="screen" href='/css/cp-ie.css'>
+    <![endif]-->
+<script src="/js/floodlight.js">
+</script>
+</head>
+<body>
+<div id="maia-main" class="cp-article">
+<div class="maia-cols">
+<div class="maia-col-9">
+<div>
+<div style="float:right">
+<div class="g-plusone"></div>
+</div>
+<h1 class="title">AngularJS&nbsp;+&nbsp;Cloud&nbsp;Endpoints&nbsp;: les deux ingrédients de base pour créer des applications Web modernes</h1>
+</div>
+<div class="cp-article-tutorial">
+<h2>Présentation</h2>
+<p>Les progrès réalisés au niveau des technologies côté client modifient le rôle du serveur d'applications Web tel que nous le connaissons. Android, iOS et les clients entièrement intégrés au navigateur constituent de puissantes plates-formes informatiques. Leur succès a conduit à une réévaluation des applications Web dites classiques. Des frameworks MVC, tels que <a href="http://angularjs.org/">AngularJS</a>, ont été conçus pour permettre aux développeurs côté client de créer des interfaces utilisateur qui allient puissance et élégance.</p>
+<p>AngularJS est un framework MVC JavaScript Open&nbsp;Source côté client très répandu au sein de la communauté des développeurs. Il permet de développer rapidement des applications côté client. La mise en œuvre côté client de la majorité des fonctionnalités MVC permet non seulement de réduire la complexité du serveur, mais aussi d'élaborer des applications développées autour d'API bien définies qui devraient se révéler plus faciles à gérer et à appliquer.</p>
+<p>Cet article s'adresse aux développeurs Web intéressés par AngularJS ou d'autres technologies MVC côté&nbsp;client, et désireux d'optimiser leur backend serveur pour ces technologies. Ils y trouveront les bonnes pratiques à appliquer, ainsi que de nombreux conseils. Ils y apprendront également comment utiliser AngularJS avec Google&nbsp;Cloud&nbsp;Platform et, en particulier, <a href="https://developers.google.com/appengine/docs/java/endpoints/">Google&nbsp;Cloud&nbsp;Endpoints</a>, une technologie qui leur permet de présenter les API de backend d'applications Google&nbsp;App&nbsp;Engine via une API basée sur les services, et ce, instantanément et avec de simples annotations.</p>
+<p>La technologie Google&nbsp;Cloud&nbsp;Endpoints simplifie la création d'une API côté serveur et l'encapsulation de la logique standard du backend. L'intégration de la bibliothèque cliente JavaScript de Google&nbsp;Cloud&nbsp;Endpoints dans AngularJS est tellement simple que vous pouvez rédiger une seule ligne de code pour appeler la logique serveur et une fonction de rappel pour mettre à jour les propriétés du modèle avec le résultat obtenu.</p>
+<p>Cet article s'adresse principalement aux développeurs Java qui possèdent une certaine expérience d'App&nbsp;Engine et une connaissance élémentaire du langage JavaScript. Divers liens vers les sites Web AngularJS et Cloud&nbsp;Endpoints sont fournis dans une autre section. Pour obtenir des conseils de dépannage, consultez l'annexe. Si c'est la première fois que vous développez des applications Java pour App&nbsp;Engine, la section <a href="https://developers.google.com/appengine/docs/java/gettingstarted/introduction">Premiers pas</a> du site Web d'App&nbsp;Engine constitue une excellente introduction.</p>
+<h2>Défi à relever</h2>
+<p>Les frameworks d'application Web ont récemment fait l'objet d'une modification majeure, à savoir le passage d'un schéma modèle-vue-contrôleur (MVC) sur le serveur à un schéma MVC sur le client. Cette migration est le fruit des avancées technologiques effectuées côté client. Cela se traduit cependant par la difficulté de créer des applications à l'architecture soignée qui couvrent plusieurs appareils hébergés dans le cloud.</p>
+<p>Android, iOS et les clients intégrés au navigateur constituent de puissantes plates-formes de développement. Chacune d'elles permet d'exécuter un framework MVC parfaitement opérationnel. Le développement d'interfaces utilisateur (à l'aide du schéma MVC) sur le client donne lieu à une architecture plus naturelle, qui exploite mieux les compétences des développeurs. Le succès grandissant des frameworks MVC, tels que <a href="http://backbonejs.org/">Backbone.js</a> et AngularJS, illustre parfaitement cette migration vers le client. Outre une simplicité accrue, ces frameworks permettent une réutilisation plus importante dans les applications, même les plus simples.</p>
+<p>À mesure que l'interface utilisateur migre vers le client, le serveur s'en trouve simplifié. Pour pouvoir générer du contenu dynamique, les développeurs côté serveur ne doivent pas se soucier des mécanismes de création de pages HTML à l'aide de modèles. Il leur suffit de se concentrer sur la mise en œuvre de la logique métier et de la persistance des données à l'aide de technologies telles que l'accès au magasin de données App&nbsp;Engine et l'authentification&nbsp;OAuth2, puis d'utiliser un framework pour présenter les services aux clients de leurs applications.</p>
+<p>Cependant, une question subsiste&nbsp;: Comment concevoir et mettre en œuvre ces applications Web modernes&nbsp;? La section suivante fournit des conseils à l'intention des architectes et des développeurs d'applications Web désireux d'en savoir plus sur l'intégration de clients intégrés au navigateur au sein d'une architecture basée sur les services.</p>
+<h2>Présentation&nbsp;: MVC&nbsp;+&nbsp;Google&nbsp;Cloud&nbsp;Endpoints côté client</h2>
+<p>La réponse à cette question tient en trois mots&nbsp;: Google&nbsp;Cloud&nbsp;Endpoints, une fonctionnalité de Google&nbsp;App&nbsp;Engine qui fournit un framework&nbsp;RPC&nbsp;:</p>
+<figure><img src="/images/articles/angularjs-cloud-endpoints-recipe/cloud-endpoints.jpg" alt="">
+<figcaption>Figure&nbsp;1&nbsp;: Google&nbsp;Cloud&nbsp;Endpoints</figcaption>
+</figure>
+<p>Vous trouverez une description détaillée du flux ci-dessous.</p>
+<p>Google&nbsp;Cloud&nbsp;Endpoints permet aux développeurs de présenter les méthodes publiques de n'importe quelle classe sous la forme d'un point de terminaison de service, en ajoutant de simples annotations Java. Prenons l'exemple d'une simple application de livre d'or qui comporte une seule classe "GuestbookEndpointV1" avec deux méthodes <span class="code">insert()</span> pour ajouter une entrée "Nouveaux messages" sur le livre d'or et une méthode <span class="code">list()</span> pour les répertorier. Pour afficher la classe sous la forme d'un point de terminaison de service, placez l'annotation "@Api" sur sa définition&nbsp;:</p>
+<pre>
+<span class="bld">@Api</span>(name = "guestbook")
+public class <span class="bld">GuestbookEndpointV1</span> {
+  ...
+}
+</pre>
+<p>Ce code sera déployé sur le serveur Google&nbsp;App&nbsp;Engine, comme illustré dans la figure&nbsp;1 ci-dessus. Vous devrez également placer des annotations "@ApiMethod" sur toute méthode que vous souhaitez publier sur le client.</p>
+<pre>
+@<span class="bld">ApiMethod</span>(name = "messages.insert")
+public void <span class="bld">insert</span>(Message message) {
+  // store a Message on Datastore
+  Entity e = new Entity("<span class="bld">Message</span>");
+  e.setProperty("<span class="bld">createdAt</span>", message.getCreatedAt());
+  e.setProperty("<span class="bld">createdBy</span>", message.getCreatedBy());
+  e.setProperty("<span class="bld">content</span>", message.getContent());
+  datastore.put(e);
+}
+</pre>
+<p>Un objet Java et un message sont envoyés à la méthode <span class="code">insert()</span>, laquelle intègre des propriétés telles que <span class="code">createdAt</span> (horodatage de création), <span class="code">createdBy</span> (propriétaire du message) et "content" (le contenu). Une entité Magasin de données "e" est ensuite créée avec ces valeurs de propriété, puis est enregistrée dans le magasin de données Google&nbsp;App&nbsp;Engine.</p>
+<p>Ces points de terminaison de service sont automatiquement affichés via l'API&nbsp;REST et peuvent être visualisés à l'aide de <a href="https://developers.google.com/apis-explorer/#p/">Google&nbsp;APIs&nbsp;Explorer</a>. Il est également conseillé d'émettre des demandes test afin de confirmer les réponses au format JSON. Dans l'écran ci-dessous, <span class="code">guestbook.messages.insert</span> provient directement des annotations de la classe Java.</p>
+<figure><img src="/images/articles/angularjs-cloud-endpoints-recipe/api-explorer.png" alt="">
+<figcaption>Figure&nbsp;2&nbsp;: Test de vos points de terminaison de service avec Google&nbsp;APIs&nbsp;Explorer</figcaption>
+</figure>
+<h2>Combinaison des technologies AngularJS et Cloud&nbsp;Endpoints</h2>
+<p>L'étape suivante consiste à intégrer Cloud&nbsp;Endpoints dans des frameworks MVC côté client, tels que <a href="http://angularjs.org/">AngularJS</a>. Un tel système présente une architecture semblable à celle décrite à la figure&nbsp;4&nbsp;:</p>
+<figure><img src="/images/articles/angularjs-cloud-endpoints-recipe/endpoints-architecture.png" alt="">
+<figcaption>Figure&nbsp;4&nbsp;: Architecture de points de terminaison de service et MVC côté client</figcaption>
+</figure>
+<p>Bien que relativement simple, l'intégration des deux technologies présente des pièges et des risques dont il convient de tenir compte avant d'entreprendre le codage. Examinons la partie gauche de la figure&nbsp;4 ci-dessus&nbsp;: le code JavaScript proprement dit qui intègre le schéma MVC côté client dans les points de terminaison illustrés dans la partie droite de la figure. Prenons comme exemple la création d'une interface Web basée sur AngularJS pour le point de terminaison de service "Livre d'or" que nous venons de définir. La figure suivante constitue une capture d'écran de l'interface utilisateur&nbsp;:</p>
+<figure><img src="/images/articles/angularjs-cloud-endpoints-recipe/guestbook-app.png" alt="">
+<figcaption>Figure&nbsp;3&nbsp;: Application "Livre d'or" avec AngularJS&nbsp;+&nbsp;Cloud&nbsp;Endpoints</figcaption>
+</figure>
+<h3>Création d'une vue et d'un modèle</h3>
+<p>Le formulaire de message peut être créé à l'aide d'un formulaire AngularJS standard qui appelle la méthode <span class="code">insert()</span> du contrôleur. Deux propriétés de modèle sont spécifiées, "createdBy" et "content", comme illustré dans le script ci-dessous&nbsp;:</p>
+<pre>
+&lt;h2&gt;Guestbook&lt;/h2&gt;
+&lt;form <span class="bld">ng-submit</span>="<span class="bld">insert()</span>"&gt;
+  &lt;input type="text" <span class="bld">ng-model</span>="<span class="bld">createdBy</span>" size="50"&gt;&lt;br&gt;
+  &lt;input type="text" <span class="bld">ng-model</span>="<span class="bld">content</span>" size="50"&gt;&lt;br&gt;
+  &lt;input type="submit" class="btn" value="Post"&gt;
+&lt;/form&gt;
+</pre>
+<p>Le code suivant illustre l'utilisation d'un itérateur AngularJS pour itérer les messages qui seront renvoyés au client en réponse à un appel vers la méthode "list" sur le point de terminaison&nbsp;:</p>
+<pre>
+&lt;ul&gt;
+  &lt;li <span class="bld">ng-repeat</span>="<span class="bld">message</span> in <span class="bld">messages</span>"&gt;
+  <span class="bld">message.createdAt</span>|date:'short'&gt; <span class="bld">message.createdBy</span>&gt;: <span class="bld">message.content</span>&gt;
+&lt;/ul&gt;
+</pre>
+<h3>Création d'un contrôleur</h3>
+<p>La fonction <span class="code">insert</span> du contrôleur (définie sur la variable <span class="code">$scope.insert</span>) correspond à la méthode <span class="code">insert</span> du point de terminaison que nous avons défini. Elle crée un objet qui contient le message et les propriétés <span class="code">createdAt/createdBy</span> copiées à partir des propriétés du modèle. Elle appelle ensuite la méthode <span class="code">insert</span> du point de terminaison. Cela est illustré dans le fragment JavaScript ci-dessous&nbsp;:</p>
+<pre>
+function GuestbookCtrl($scope) {
+  $scope.<span class="bld">insert</span>= function() {
+    <span class="bld">message</span> = {
+      "createdAt" : new Date(),
+      "createdBy" : $scope.<span class="bld">createdBy</span>,
+      "content" : $scope.<span class="bld">content</span>
+    };
+  ...
+</pre>
+<p>Vous pouvez ensuite envoyer l'objet en le transmettant à la fonction <span class="code">insert</span> de la bibliothèque cliente de Cloud&nbsp;Endpoints. Pour rappel, il s'agit de l'une des deux méthodes présentées comme point de terminaison Cloud&nbsp;Endpoint avec l'ajout d'annotations à la classe "GuestbookEndpointV1".</p>
+<pre>
+gapi.client.guestbook.messages. <span class="bld">insert(message)</span>.execute();
+</pre>
+<p>De la même manière, vous pouvez appeler la méthode <span class="code">list()</span> du point de terminaison de service pour récupérer des messages sur le livre d'or&nbsp;:</p>
+<pre>
+$scope.list = function() {
+  gapi.client.guestbook.messages.list().execute(function(<span class="bld">resp</span>) {
+    $scope.<span class="bld">messages</span> = <span class="bld">resp.items</span>;
+    $scope.<span class="bld">$apply()</span>;
+  });
+}
+</pre>
+<p>Notez que la fonction anonyme transmise en tant que rappel à la méthode <span class="code">execute()</span> est appelée lorsque des messages sont envoyés par le serveur. Ces messages sont affectés à la propriété "messages" du modèle. Vous devrez appeler <span class="code">$apply()</span> pour appliquer le changement de modèle à l'interface utilisateur, dans la mesure où l'appel à la fonction de rappel s'effectue depuis l'extérieur du fil du contrôleur. De plus, la bibliothèque cliente de Cloud&nbsp;Endpoints n'accepte pas l'API <a href="http://docs.angularjs.org/api/ng.$q">Promise</a> d'AngularJS pour décrire ce type de traitement asynchrone.</p>
+<p>La séquence d'initialisation constitue un point délicat lors de l'intégration d'AngularJS dans Cloud&nbsp;Endpoints. Il est important de connaître l'ordre de chargement et d'initialisation des bibliothèques. Si vous ne prêtez pas attention à l'ordre de chargement et d'initialisation des bibliothèques requises, vous risquez de provoquer des problèmes particulièrement longs à résoudre. Pour en savoir plus, reportez-vous à l'annexe.</p>
+<p>Au vu des exemples présentés, il apparaît clairement que Cloud&nbsp;Endpoints et AngularJS permettent un modèle de conception relativement simple qui allie MVC côté client et points de terminaison de service côté serveur. En fait, vous constaterez qu'il est plus facile d'utiliser Cloud&nbsp;Endpoints pour les appels&nbsp;RPC que de mettre en œuvre le mécanisme d'<a href="http://docs.angularjs.org/tutorial/step_05">injection de dépendances et XHR</a> dans AngularJS pour la communication serveur. Cloud&nbsp;Endpoints fournit également de nombreux autres avantages, dont une sécurité OAuth2 intégrée et une compatibilité avec les plates-formes multiclients pour Android et iOS à l'aide d'une API cliente partagée et standardisée.</p>
+<h2>Conclusion</h2>
+<p>Pour conclure, voici un résumé de certains des principaux avantages que présente l'utilisation du tandem AngularJS&nbsp;+&nbsp;Cloud Endpoints dont il a été question dans cet article&nbsp;:</p>
+<ul>
+<li>Cloud&nbsp;Endpoints permet d'afficher facilement une API côté serveur en ajoutant des annotations à des classes et des méthodes dans le but de générer des bibliothèques clientes compatibles avec JavaScript.</li>
+<li>Cloud&nbsp;Endpoints intègre le mécanisme d'authentification OAuth2, de définition d'URI et d'acheminement des requêtes, ainsi que la sérialisation JSON et les appels&nbsp;RPC. Ce service offre en outre une gestion transparente des erreurs, ainsi que de nombreuses autres fonctionnalités. Ces tâches peuvent se révéler particulièrement complexes si vous n'utilisez pas Cloud&nbsp;Endpoints pour leur mise en œuvre.</li>
+<li>Le framework MVC côté client AngularJS basé sur le langage JavaScript permet de développer rapidement des applications côté client. En outre, les langages HTML5 et JavaScript permettent une mise en œuvre aisée d'interfaces utilisateur riches. Dès lors, cela rend inutile le rendu HTML côté serveur.</li>
+<li>L'intégration de la bibliothèque cliente JavaScript de Google&nbsp;Cloud&nbsp;Endpoints dans AngularJS est tellement simple que vous pouvez rédiger une seule ligne de code pour appeler la logique serveur et une fonction de rappel pour mettre à jour les propriétés du modèle avec le résultat obtenu.</li>
+</ul>
+<h2>Références</h2>
+<p>Google&nbsp;App&nbsp;Engine, <a href="https://developers.google.com/appengine/">https://developers.google.com/appengine/</a></p>
+<p>AngularJS, <a href="http://angularjs.org/">http://angularjs.org/</a></p>
+<p>Cloud&nbsp;Endpoints, <a href="https://developers.google.com/appengine/docs/java/endpoints/">https://developers.google.com/appengine/docs/java/endpoints/</a></p>
+<h2>Annexe&nbsp;: Conseils d'initialisation d'AngularJS&nbsp;+&nbsp;Cloud Endpoints</h2>
+<h3>Conseil n°&nbsp;1&nbsp;: Faire attention à la séquence d'initialisation</h3>
+<p>L'application "Livre d'or" charge trois bibliothèques JS différentes dans l'ordre suivant&nbsp;:</p>
+<ol>
+<li>AngularJS</li>
+<li>Application "Livre d'or"</li>
+<li>Client de l'API&nbsp;Google, qui intègre les fonctionnalités de Cloud&nbsp;Endpoints</li>
+</ol>
+<p>Afin de suivre cette séquence, les balises <span class="code">suivantes sont intégrées au fichier</span> index.html <span class="code">dans la balise</span> &lt;head&gt; pour le chargement de chacune des bibliothèques JS&nbsp;:</p>
+<pre>
+&lt;script src="/js/angular.min.js"&gt;&lt;/script&gt;
+&lt;script src="/js/guestbook.js"&gt;&lt;/script&gt;
+&lt;script src="<a href="https://apis.google.com/js/client.js?onload=init">https://apis.google.com/js/client.js?onload=init</a>"&gt;&lt;/script&gt;
+</pre>
+<p>Une fois chargée, la troisième bibliothèque (client de l'API&nbsp;Google) appelle la fonction d'initialisation spécifiée par son paramètre "onload". Dans ce cas, la fonction <span class="code">init()</span> est attendue et appelée.</p>
+<h3>Conseil n°&nbsp;2&nbsp;: Pénétrer le plus rapidement possible dans l'environnement AngularJS</h3>
+<p>Deux fonctions sont utilisées dans la séquence d'initialisation&nbsp;:</p>
+<ul>
+<li>Fonction <span class="code">init()</span></li>
+<li>Fonction <span class="code">window.init()</span></li>
+</ul>
+<p>Cette fonction <span class="code">init()</span> est définie dans <span class="code">guestbook.js</span> comme suit&nbsp;:</p>
+<pre>
+function init() {
+  window.init();
+}
+</pre>
+<p>Comme vous pouvez le constater dans le code ci-dessus, la fonction ne fait qu'appeler la fonction <span class="code">window.init()</span> (c'est-à-dire, la fonction <span class="code">init()</span> définie dans l'objet "window" global). La fonction <span class="code">window.init()</span> est définie comme suit dans le contrôleur AngularJS&nbsp;:</p>
+<pre>
+$window.init= function() {
+  $scope.$apply($scope.<span class="bld">load_guestbook_lib</span>);
+};
+</pre>
+<p>Dans AngularJS, l'accès à l'objet "window" global s'effectue avec la notation "$window" qui fait office de fonction wrapper. <a href="http://docs-angularjs-org-dev.appspot.com/api/ng.$window">Dans AngularJS, il est conseillé</a> de ne pas accéder directement à l'objet "window" global afin d'améliorer la testabilité.</p>
+<p>Ne pas exécuter l'initialisation dans la première méthode "init()" peut se justifier par la possibilité de placer autant de code que possible dans l'environnement AngularJS, comme des contrôleurs, des services et des directives. Vous pouvez ainsi tirer parti de toute la puissance du framework AngularJS et effectuer tous vos tests d'unité, d'intégration, etc.</p>
+<h3>Conseil n°&nbsp;3&nbsp;: Utiliser un indicateur pour montrer que le backend est prêt</h3>
+<p>Pour terminer, la fonction <span class="code">$window.init()</span> est appelée, et vous pouvez y rédiger n'importe quelle logique d'initialisation d'application. Dans le cas présent, l'objectif principal est d'utiliser le paramètre "onload" du client de l'API&nbsp;Google pour appeler une fonction d'initialisation définie à l'intérieur du contrôleur AngularJS, de telle sorte que toutes les tâches d'initialisation puissent être exécutées dans un ordre prévisible. Dans le script du livre d'or, <span class="code">$window.init()</span> appelle la fonction <span class="code">load_guestbook_lib()</span>. Elle se définit comme suit&nbsp;:</p>
+<pre>
+$scope.load_guestbook_lib = function() {
+  gapi.client.load('guestbook', 'v1', function() {
+    $scope.<span class="bld">is_backend_ready</span> = true;
+    $scope.list();
+  }, '/_ah/api');
+};
+</pre>
+<p>Aucun appel&nbsp;RPC ne doit être effectué tant que le backend n'est pas prêt pour la diffusion. L'état de préparation du backend est indiqué par la propriété "is_backend_ready" définie dans le rappel de fonction du gestionnaire, après le chargement de la bibliothèque cliente des points de terminaison du livre d'or. Pour éviter que la logique d'application n'appelle des points de terminaison avant qu'ils ne soient prêts, le livre d'or utilise un indicateur nommé <span class="code">is_backend_ready</span> dans le fichier index.html.</p>
+<pre>
+&lt;div ng-controller="GuestbookCtrl" class="container" <span class="bld">ng-show</span>="<span class="bld">is_backend_ready</span>"&gt;
+…. guestbook UI...
+&lt;/div&gt;
+</pre>
+<p>L'attribut <span class="code">ng-show</span> étant contrôlé avec la valeur de l'indicateur, il n'est pas nécessaire d'afficher l'interface utilisateur de l'application "Livre d'or" tant qu'elle n'est pas prête à effectuer des appels vers les points de terminaison.</p>
+</div>
+<!-- /maia-main --></div>
+<div class="maia-col-3"><br>
+<img src="//www.google.com/images/icons/product/feedback-16.png" class="g-app-icon" alt=""> <a href="javascript:void(0);" class="google-feedback">Commentaires sur ce document</a><br>
+<br></div>
+</div>
+</div>
+<script>
+(function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+</script><script src="//www.gstatic.com/feedback/api.js">
+</script><script>
+$('body').delegate('.google-feedback', 'click', function() {
+      userfeedback.api.startFeedback({'productId': '94614'});
+  });
+</script><!-- Scripts to include both on Goro + Devsite --><script>
+window.___gcfg = {
+     lang: ''
+   };
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+</script><!-- GTM implementation --><!-- Start dataLayer --><script>
+dataLayer = [{
+        'country': 'fr',
+        'region': 'emea',
+        'language': 'fr'
+      }];
+</script><!-- End dataLayer --><!-- Start Google Tag Manager --><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5CVQBG" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript> <script>
+(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-5CVQBG');
+</script><!-- End Google Tag Manager --><!-- Global JS scripts to load; path will depend on whether we're on devsite or Goro --><script src="/js/base.min.js">
+</script><!-- Retina loader; Do not load if partners page because we need to wait until the Angular app runs --><script>
+new lfl.system.RetinaLoader();
+</script><!-- Secondary right-side scroll-nav --><script>
+new lfl.ui.ScrollNav({});
+</script>
+</body>
+</html>

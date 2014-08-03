@@ -1,0 +1,253 @@
+---
+layout: phase2-ko
+title: Cloud Computing &amp; Cloud Hosting Services
+---
+<!DOCTYPE html>
+<html devsite="">
+<head>
+<title>Web Apps Articles &amp; Tutorials — Google Cloud Platform</title>
+<meta name="description" content="Read technical articles about web applications and solutions with Google Cloud Platform, including auto scaling and how to manage complex applications in the cloud.">
+<meta name="hide_page_heading" value="true">
+<meta name="full_width" value="true">
+<meta name="top_category" value="developers">
+<meta name="subcategory" value="articles">
+<meta name="viewport" content="initial-scale=1, minimum-scale=1, width=device-width">
+<link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
+<link href="//fonts.googleapis.com/css?family=Open+Sans:400italic,300,400,600,700" rel="stylesheet">
+<link href="/css/default.css" rel="stylesheet"><!--[if lt IE 9]>
+    <link rel="stylesheet" media="screen" href='/css/cp-ie.css'>
+    <![endif]-->
+<script src="/js/floodlight.js">
+</script>
+</head>
+<body>
+<div id="maia-main" class="cp-article">
+<div class="maia-cols">
+<div class="maia-col-9">
+<div>
+<div style="float:right">
+<div class="g-plusone"></div>
+</div>
+<h1 class="title">디지털 미디어 애셋 관리 및 공유</h1>
+</div>
+<h2>소개</h2>
+<p>디지털 미디어는 인터넷에서 가장 빠르게 성장하고 있는 영역 중 하나입니다. Informa Telecoms &amp; Media에서 2012년에 실시한 시장 조사에 따르면 전 세계 온라인 동영상 시장 하나만 해도 그 규모가 2017년<sup><a href="#r-1" name="ref-1" id="ref-1">1</a></sup>에는 370억 달러에 달할 것이라고 합니다. 이외에 다른 일반적인 미디어 유형으로 이미지, 음악 및 디지털 문서도 있습니다. 이러한 경이적인 성장을 이끄는 요인 중 하나는 고해상도 카메라, 대형 화면 및 빠른 데이터 연결을 갖춘 다양한 기능의 휴대기기<sup><a href="#r-2" name="ref-2" id="ref-2">2</a></sup>가 인기에 있으며, 이러한 인기는 엄청난 규모의 미디어 콘텐츠 제작과 소비로 이어졌습니다. 또한 많은 소셜 네트워크에서 미디어 공유를 시스템<sup><a href="#r-2">2</a></sup>의 핵심 기능으로 통합하려는 추세가 또 다른 요인으로 작용하기도 했습니다. 한편 여러 스타트업 회사는 현재 시장에서 틈새 영역을 만들기 위해 노력하고 있습니다.</p>
+<p>이 문서에서는 예제 시나리오를 통해 Google Cloud Platform을 사용하여 디지털 미디어 애셋 관리 및 공유 시스템을 구축하는 방법과 관련된 기술적으로 상세한 내용을 설명합니다.</p>
+<h3>예제 시나리오 - Photofeed</h3>
+<p>Photofeed는 가상의 신생 회사입니다. 이 회사는 사용자가 서로 간에 사진을 업로드하고 공유할 수 있는 사진 공유 애플리케이션을 제작하고자 합니다. 이 애플리케이션은 소셜 기능을 포함하고 사용자가 사진에 대한 댓글을 남기는 것도 허용하려고 합니다. Photofeed의 제품 팀은 이러한 시장에서 경쟁력을 갖추기 위해서는 사용자가 사진을 빠르고 안전하게 업로드, 확인 및 수정할 수 있어야 하며, 동시에 만족스러운 사용자 경험을 제공할 수 있어야 한다고 믿고 있습니다. 또한 팀은 사용자와 사진의 수가 증가하면 애플리케이션도 쉽게 확장되도록 만들고 싶어 합니다. 이러한 목표를 달성하기 위해서는, 시스템에서 크기 조절, 자르기, 썸네일 이미지 생성과 같은 사진 처리 기능을 위한 효율적인 파이프라인도 갖추고 있어야 하며, 비즈니스가 성장하면 개발 팀이 빠르게 새 기능을 도입하는 것이 시스템에서 가능해야 합니다.</p>
+<h3>확장 가능한 디지털 미디어 시스템 구축의 과제</h3>
+<p>대규모의 사용자를 지원하고 엄청난 양의 미디어 콘텐츠를 저장할 수 있는 확장 가능한 디지털 미디어 시스템을 처음부터 구축하는 것은 간단한 작업이 아닙니다. 다음 목록은 확장 가능한 디지털 미디어 시스템을 구축하는 것과 관련된 일반적인 기술 과제에 대한 개요를 제시해 줍니다.</p>
+<ul>
+<li>내부 데이터화
+<ul>
+<li>시스템에서는 최종 사용자가 빠르고 안전하게 미디어 개체를 업로드할 수 있도록 하는 동시에 흥미진진한 사용자 경험을 제공해야 합니다.</li>
+<li>메타데이터 개체가 수정되었거나 다시 내부 데이터화된 경우 미디어 개체의 메타데이터가 내부 데이터화되고 동기화되어야 합니다.</li>
+<li>관련된 모든 구성요소 간 통신을 정의하는 내부 데이터화 워크플로가 관리되어야 합니다.</li>
+</ul>
+</li>
+<li>저장소
+<ul>
+<li>미디어 콘텐츠를 위한 거의 무제한적인 저장소가 있어야 하며, 이 저장소는 신뢰할 수 있고 어디에서나 액세스할 수 있으며 비용 효과적이어야 합니다<sup><a href="#r-3" name="ref-3" id="ref-3">3</a></sup>.</li>
+</ul>
+</li>
+<li>처리
+<ul>
+<li>문서 형식 변환, 이미지 처리 및 미디어 트랜스코딩과 같은 미디어 처리에 확장 가능한 컴퓨팅 리소스가 필요합니다.</li>
+<li>미디어 처리 워크플로가 관리되어야 합니다.</li>
+</ul>
+</li>
+<li>제공
+<ul>
+<li>시스템에서는 최종 사용자가 빠르고 안전하게 미디어 콘텐츠를 다운로드할 수 있도록 하는 동시에 만족스러운 사용자 경험을 제공해야 합니다.</li>
+<li>제공 워크플로가 관리되어야 합니다.</li>
+</ul>
+</li>
+<li>미디어 애플리케이션
+<ul>
+<li>시스템에서는 미디어 메타데이터와 애플리케이션 특정 도메인 데이터 간의 통합을 지원해야 합니다. 또한 이러한 데이터와 함께 애셋 관리 및 콘텐츠 공유와 같은 확장 가능한 애플리케이션을 개발할 수 있어야 합니다.</li>
+</ul>
+</li>
+<li>최종 사용자 경험
+<ul>
+<li>시스템에서는 브라우저, 휴대기기 및 데스크톱 애플리케이션과 같은 여러 클라이언트에 흥미진진한 사용자 환경을 제공해야 합니다.</li>
+</ul>
+</li>
+</ul>
+<p>이 문서에 제시된 솔루션은 Google Cloud Platform을 통해 위에 나와 있는 각 과제를 어떻게 해결할 수 있는지를 보여줍니다. 제시된 시스템 아키텍처는 일반적으로 모든 미디어 유형에 적용할 수 있습니다. 이 솔루션은 Google Cloud Platform에서 자체 디지털 미디어 시스템을 구축하는 소프트웨어 설계자 및 개발자를 위한 참고자료 역할을 합니다.</p>
+<h2>솔루션 개요</h2>
+<p>Google App Engine, Google Cloud Storage 및 Google Compute Engine은 Google Cloud Platform의 세 가지 제품입니다. 그림 1에 나와 있듯이, 이러한 모든 제품이 함께 작동하여 디지털 미디어 애셋 관리 및 공유 솔루션의 기반을 형성합니다.</p>
+<figure><img src="/images/articles/scalable-digital-media-1.png" alt="제시된 솔루션의 핵심 구성요소">
+<figcaption>그림 1. 제시된 디지털 미디어 애셋 관리 및 공유 시스템의 핵심 구성요소</figcaption>
+</figure>
+<h3>내부 데이터화</h3>
+<p>Google Cloud Storage와 Google App Engine 모두 미디어 콘텐츠의 내부 데이터화에서 중요한 역할을 합니다. 업로드 중에는 미디어 콘텐츠가 전 세계 Google 네트워크를 통해 클라이언트에서 Google Cloud Storage로 바로 전송됩니다. 전 세계적인 도달범위, 엄청난 대역폭 및 Google Cloud Storage와의 통합을 통해, Google 네트워크는 거의 모든 지역에서 지연 시간을 낮게 유지하면서 콘텐츠를 저장소로 내부 데이터화할 수 있도록 해 줍니다. Google Cloud Storage에서는 <a href="https://developers.google.com/storage/docs/accesscontrol">서명된 URL</a>을 사용하는 HTTP POST 및 <a href="https://developers.google.com/storage/docs/developer-guide">RESTful API</a>, 이렇게 두 가지의 주요 업로드 메커니즘을 지원합니다.</p>
+<p>Google App Engine은 수백만 명의 사용자를 처리하는 확장 가능한 웹 애플리케이션을 구동하도록 설계되었으므로, 콘텐츠 내부 데이터화를 위한 프론트엔드 애플리케이션을 App Engine에서 개발할 수 있습니다. 이 애플리케이션은 인증을 담당하며 승인된 사용자만 콘텐츠를 업로드할 수 있게 해 줍니다. 동시에 이 애플리케이션은 내부 데이터화 워크플로를 관리하고 클라이언트와 조정하여 콘텐츠를 Google Cloud Storage에 업로드합니다. 브라우저 클라이언트의 경우 애플리케이션은 콘텐츠 업로드를 위한 웹 사용자 인터페이스도 구현합니다. 모바일 또는 데스크톱 클라이언트의 경우 사용자 인터페이스가 클라이언트 애플리케이션 내에 유지되지만, App Engine 애플리케이션에서는 <a href="https://developers.google.com/appengine/docs/java/endpoints/overview">Google Cloud Endpoints</a>를 사용하여 관련 기능을 RESTful API로 노출합니다. 클라이언트 측 애플리케이션은 인증과 Google Cloud Storage에 대한 액세스 권한을 얻기 위해 API를 호출합니다.</p>
+<p>App Engine 애플리케이션의 또 다른 중요한 역할은 메타데이터를 내부 데이터화하고 이 데이터와 미디어 콘텐츠 간의 동기화 상태를 유지하는 것입니다. 메타데이터는 애플리케이션 데이터와 함께 App Engine Datastore 또는 Google Cloud SQL 데이터베이스에 저장됩니다. 저장소 옵션 선택은 애플리케이션의 특성에 따라 결정됩니다. 메타데이터와 미디어 콘텐츠의 내부 데이터화를 동기화하는 데에는 여러 가지 방법이 있습니다. 예를 들면 (1) <a href="https://developers.google.com/appengine/docs/java/blobstore/overview">Blobstore 업로드 콜백 URL</a>을 사용하거나 (2) Cloud Storage 개체 변경 알림을 사용하거나 (3) 간단히 <a href="http://www.youtube.com/watch?v=NU_wNR_UUn4">Google Cloud Endpoints</a>를 사용하여 App Engine 애플리케이션에서 적절한 API를 노출할 수 있습니다.</p>
+<h3>저장소</h3>
+<p>Google Cloud Storage는 미디어 콘텐츠를 위한 거의 무제한적인 저장소를 저렴한 비용으로 제공합니다. 미디어 데이터는 중복을 위해 여러 데이터 센터에서 복제됩니다. Google 네트워크를 활용하면 Google Cloud Storage의 콘텐츠를 Google App Engine, Google Compute Engine 및 Google Cloud Platform 외부의 공용 인터넷을 통해 전 세계 어디에서나 액세스할 수 있습니다.</p>
+<p>또한 Google Cloud Storage에서는 더욱 낮은 비용으로 <a href="https://developers.google.com/storage/docs/durable-reduced-availability">DRA(가용성을 낮춘 지속성 있는)</a> 저장소 옵션을 제공합니다. 더욱 저렴한 비용으로 이용할 수 있는 대신 표준 Google Cloud Storage에 비해 가용성이 낮아집니다. 항상 바로 필요하지는 않은 애셋 또는 다시 생성할 수 있는 애셋을 저장하는 경우 DRA 옵션을 유용하게 사용할 수 있습니다. 미디어 처리 파이프라인의 출력 콘텐츠와 같은 경우를 한 가지 예를 들 수 있습니다.</p>
+<h3>처리</h3>
+<p>Google Compute Engine은 일괄 컴퓨팅에 탁월한 성능을 제공합니다. 문서 형식 변환, 트랜스코딩 및 이미지 조작과 같은 미디어 처리 작업은 Compute Engine을 사용하면 가장 좋은 작업입니다. 이 경우 Google Cloud Storage는 미디어 처리 파이프라인의 입력 소스와 출력 대상, 두 가지 역할을 모두 수행합니다. Google Cloud Storage는 Google Compute Engine과 원활하게 통합되기 때문에(예: 서비스 계정을 통한 자동 인증) Compute Engine에서 쉽게 액세스할 수 있습니다.</p>
+<p>또한 미디어 처리 워크플로는 이전에 언급된 App Engine 애플리케이션에 의해서도 관리됩니다. 미디어 콘텐츠가 저장소에 업로드되면 App Engine 애플리케이션에서 미디어 처리 작업을 생성하여 <a href="https://developers.google.com/appengine/docs/java/taskqueue/">TaskQueue</a>에 추가합니다. Compute Engine에서 실행되는 미디어 처리 소프트웨어가 RESTful API를 사용하여 대기열에 추가된 작업을 가져오면, 적절한 방식으로 작업을 처리합니다. 또한 Compute Engine 인스턴스가 자동으로 확장할 수 있도록 App Engine 애플리케이션에서 미디어 콘텐츠의 처리 상태와 가상 머신의 로드 정보를 유지관리합니다.</p>
+<h3>제공</h3>
+<p>Google Cloud Storage는 낮은 지연 시간과 높은 가용성을 유지하면서 미디어 콘텐츠를 인터넷에 제공할 수 있도록 하기 위해 Google 네트워크를 활용합니다. Google 네트워크에서는 공개 콘텐츠에 에지 캐싱 기능을 자동으로 제공하며, 이를 통해 제공 관련 비용을 크게 줄일 수 있습니다.</p>
+<p>내부 데이터화 경우와 마찬가지로, Google App Engine 애플리케이션은 사용자 인증 및 승인을 처리하며 클라이언트의 Google Cloud Storage 액세스를 조정합니다. 브라우저 클라이언트의 경우 App Engine 애플리케이션은 미디어 콘텐츠 다운로드를 위해 웹 사용자 인터페이스를 구동합니다. 모바일 또는 데스크톱 클라이언트의 경우 클라이언트 측 애플리케이션은 사용자 인터페이스를 구현하고 <a href="http://www.youtube.com/watch?v=NU_wNR_UUn4">Google Cloud Endpoints</a>으로 노출된 API를 통해 App Engine 애플리케이션과 통신합니다.</p>
+<h3>미디어 애플리케이션</h3>
+<p>메타데이터와 애플리케이션 데이터의 가용성을 사용하여 다양한 미디어 애플리케이션을 제작할 수 있습니다. 애플리케이션 도메인에 따른 미디어 애플리케이션의 몇 가지 일반적인 예에는 애셋 관리, 콘텐츠 공유 및 소셜 게임이 있습니다. Google App Engine은 미디어 애플리케이션 제작을 위한 확장 가능한 플랫폼을 제공합니다. App Engine 애플리케이션은 제작 및 유지관리가 쉬우며, 트래픽과 데이터 저장소의 요구사항이 증가함에 따라 쉽게 확장할 수 있습니다. 이를 통해 개발자는 핵심적인 비즈니스를 구축하고 새로운 기능을 시장에 빠르게 선보이는 데 집중할 수 있습니다.</p>
+<h3>사용자 경험</h3>
+<p>이 솔루션에서 App Engine 애플리케이션은 시스템의 사용자 경험을 정의하는 데 중요한 역할을 합니다. 앞서 언급한 것처럼 브라우저 클라이언트의 경우 App Engine 애플리케이션은 내부 데이터화, 제공 및 미디어 애플리케이션을 위한 웹 사용자 인터페이스를 구현합니다. 모바일 및 데스크톱 클라이언트의 경우 App Engine 애플리케이션은 <a href="http://www.youtube.com/watch?v=NU_wNR_UUn4">Google Cloud Endpoints</a>를 사용하여 관련 기능을 API로 노출합니다. 클라이언트 측의 기본 사용자 인터페이스는 이러한 API에 의해 구동됩니다.</p>
+<h2>구현 세부정보</h2>
+<p>다음 섹션에서는 제시된 미디어 솔루션의 구현 관련 세부정보를 안내해 드립니다. 섹션은 시스템의 핵심 구성요소 목록으로 시작하여, 시스템의 중요한 세 가지 워크플로인 미디어 데이터화 플로, 미디어 처리 플로 및 미디어 제공 플로를 자세히 설명하는 것으로 끝납니다.</p>
+<h3>시스템 구성요소</h3>
+<ul>
+<li>Google App Engine에서 실행되는 프론트엔드 및 미디어 애플리케이션
+<ul>
+<li>사용자를 인증 및 승인하고 Google Cloud Storage 액세스를 조정합니다.</li>
+<li>브라우저 클라이언트를 위해 사용자 인터페이스를 구현하고, <a href="http://www.youtube.com/watch?v=NU_wNR_UUn4">Google Cloud Endpoints</a>를 사용하여 API를 모바일 및 데스크톱 클라이언트에 노출합니다.</li>
+<li>시스템 컨트롤러의 역할을 하며, 미디어의 내부 데이터화, 제공 및 처리를 위한 워크플로 관리를 담당합니다.</li>
+<li>확장 가능한 미디어 애플리케이션이 App Engine에 의해 구동되며, 부하 분산 및 자동 확장 기능이 내장되어 있습니다.</li>
+</ul>
+</li>
+<li>Google Datastore
+<ul>
+<li>미디어 콘텐츠 메타데이터와 애플리케이션 데이터 모델을 저장합니다.</li>
+</ul>
+</li>
+<li>Google Cloud SQL
+<ul>
+<li>Google Datastore의 대안으로, 미디어 콘텐츠 메타데이터와 애플리케이션 데이터 모델을 저장합니다.</li>
+</ul>
+</li>
+<li>App Engine 작업 대기열
+<ul>
+<li>App Engine 애플리케이션을 Google Compute Engine에서 실행되는 미디어 처리 소프트웨어와 통합합니다.</li>
+</ul>
+</li>
+<li>이미지 서비스
+<ul>
+<li>App Engine 애플리케이션에 썸네일 이미지 생성, 크기 조절 및 자르기 등의 동적 이미지 처리 서비스를 제공합니다.</li>
+</ul>
+</li>
+<li>Google Cloud Storage
+<ul>
+<li>미디어 콘텐츠를 위한 확장 가능하며 가용성이 높은 저장소를 제공합니다. RESTful API 사용하거나 서명된 URL을 통해 저장소에 액세스할 수 있습니다.</li>
+<li>Google 네트워크를 활용하면 다음과 같은 장점이 있습니다. (1) 저장소로 콘텐츠를 빠르고 안전하게 내부 데이터하고, 같은 방식으로 저장소에서 이를 제공할 수 있습니다. (2) 공개 콘텐츠에 에지 캐싱 기능을 사용하여 제공 비용을 줄일 수 있습니다.</li>
+</ul>
+</li>
+<li>미디어 처리 서버
+<ul>
+<li>Google Compute Engine에서 미디어 처리 작업을 실행합니다.</li>
+</ul>
+</li>
+</ul>
+<h3>미디어 내부 데이터화 워크플로 및 미디어 처리 워크플로</h3>
+<p>미디어 내부 데이터화 워크플로와 미디어 처리 워크플로는 서로 연결되는 경우가 자주 있습니다. 두 워크플로 모두 그림 2의 구성요소 통신 다이어그램에 나와 있습니다.</p>
+<figure><img src="/images/articles/scalable-digital-media-2.png" alt="미디어 내부 데이터화 및 미디어 처리 워크플로">
+<figcaption>그림 2. 미디어 내부 데이터화 및 미디어 처리 워크플로</figcaption>
+</figure>
+<ol>
+<li>클라이언트가 Google App Engine 애플리케이션에 액세스하여 업로드를 시작합니다. 클라이언트 유형에 따라 이 요청은 (1) 브라우저의 단순한 HTTP 요청이거나 (2) App Engine 애플리케이션에 의해 구현된 엔드포인트에 대한 모바일 또는 데스크톱 애플리케이션의 요청(예: 일괄 업로더)일 수 있습니다. App Engine 애플리케이션은 클라이언트/사용자 인증을 담당하고 Cloud Storage에 대한 액세스를 조정합니다.</li>
+<li>클라이언트가 웹브라우저인 경우 애플리케이션은 HTTP POST 양식에 삽입된 Cloud Storage로 연결되는 서명된 업로드 URL을 생성할 수 있습니다. 또는 클라이언트가 모바일 또는 데스크톱 애플리케이션인 경우 웹 애플리케이션에서 Cloud Storage 액세스 정보를 엔드포인트 호출 응답으로 반환합니다.</li>
+<li>클라이언트와 상관없이 미디어 파일은 웹 양식이나 Cloud Storage RESTful API 중 하나를 사용하여 Google Cloud Storage에 직접 업로드됩니다.</li>
+<li>Google Cloud Storage는 클라이언트에 응답을 반환합니다. 3단계에서 사용된 업로드 메커니즘에 따라 응답은 양식 기반 업로드를 위한 <a href="https://developers.google.com/storage/docs/reference-methods#postobject">HTTP 응답</a>이거나 <a href="https://developers.google.com/storage/docs/reference-methods#putobject">RESTful API 응답</a>이 될 수 있습니다.</li>
+<li>업로드가 정상적으로 완료되면 미디어 메타데이터를 App Engine 애플리케이션으로 푸시해야 합니다. 이 과정을 간소화할 수 있는 다음과 같은 몇 가지 방법이 있습니다.
+<ol>
+<li>업로드 양식을 사용하는 브라우저 클라이언트의 경우 업로드 URL 내에 콜백 URL을 지정할 수 있습니다. 응답에 따라 브라우저가 이 URL로 리디렉션될 수 있지만, 콜백 URL에 삽입되는 메타데이터 정보가 제한됩니다.</li>
+<li>Google Cloud Storage는 업로드 완료 시 개체 변경사항 알림<sup>[<a href="#fn-1" name="ref-4" id="ref-4">1</a>]</sup>이라는 Cloud Storage 기능을 사용하여 App Engine 애플리케이션에 알림을 전송할 수 있습니다. 알림에는 업로드된 미디어 개체의 메타데이터가 포함됩니다.</li>
+<li>Cloud Storage의 콘텐츠 업로드 응답에 따라 클라이언트는 App Engine 애플리케이션 Google Cloud Endpoints를 바로 호출하여 모든 메타데이터를 업로드할 수도 있습니다.</li>
+</ol>
+</li>
+<li>애플리케이션은 영구 저장소에 메타데이터를 저장합니다. 애플리케이션 설정에 따라 (1) App Engine NoSQL Datastore 또는 (2) Google Cloud SQL, 이렇게 두 가지의 데이터 저장소 옵션을 사용할 수 있습니다.</li>
+<li>미디어 처리가 필요한 경우 App Engine 애플리케이션은 미디어 처리 워크플로를 시작하기 위해 작업 대기열에 작업을 생성합니다. 또한 App Engine 애플리케이션은 요청된 작업량에 따라 가상 머신을 가동하거나 중지할 수 있습니다.</li>
+<li>Google Compute Engine에서 실행되는 미디어 처리 소프트웨어가 대기열에서 작업을 가져오고 필요한 절차를 실행합니다.</li>
+<li>미디어 처리 소프트웨어가 Cloud Storage에서 미디어 콘텐츠를 읽고 처리한 다음, 출력 데이터를 다시 Cloud Storage에 저장합니다.</li>
+</ol>
+<h3>미디어 제공 및 다운로드 워크플로</h3>
+<p>그림 3은 미디어 제공 및 다운로드 워크플로를 보여주며, 이어서 자세한 설명 목록이 나와 있습니다.</p>
+<figure><img src="/images/articles/scalable-digital-media-3.png" alt="미디어 제공 및 다운로드 플로">
+<figcaption>그림 3. 미디어 제공 및 다운로드 플로</figcaption>
+</figure>
+<ol>
+<li>클라이언트는 App Engine 애플리케이션과 통신하여 미디어를 다운로드하기 시작합니다. App Engine 애플리케이션은 클라이언트를 인증하고 승인하며 특정 미디어 콘텐츠를 탐색하고 검색할 수 있도록 해 줍니다. 이는 브라우저 클라이언트에 웹 사용자 인터페이스를 제시하거나 App Engine 애플리케이션에서 Google Cloud Endpoints를 사용하여 제공하는 RESTful API를 통해 수행할 수 있습니다.</li>
+<li>Datastore 또는 Cloud SQL의 미디어 메타데이터 또는 애플리케이션 데이터에 따라 App Engine 애플리케이션은 애플리케이션에 정의된 콘텐츠 공유 규칙을 확인하고, Google Cloud Storage에 저장된 콘텐츠의 액세스 정보를 조회할 수 있습니다.</li>
+<li>Google Cloud Storage에서 콘텐츠를 안전하게 다운로드할 수 있도록, App Engine 애플리케이션은 Cloud Storage 버킷 및 개체 이름과 함께 서명된 URL을 생성하거나 OAuth 액세스 토큰을 클라이언트에 제공할 수 있습니다. 브라우저의 경우 이 정보가 웹 사용자 인터페이스에 삽입됩니다. 모바일 및 데스크톱 클라이언트의 경우 1단계에서 언급한 RESTful API의 응답으로 정보가 반환됩니다.</li>
+<li>클라이언트는 HTTP를 전송하거나 RESTful API를 호출하여 Google Cloud Storage에 콘텐츠 다운로드 요청을 합니다. Google Cloud Storage는 공개 콘텐츠에 Google 네트워크의 <a href="https://developers.google.com/storage/docs/developer-guide">캐싱 기능</a>을 활용할 수 있습니다. 콘텐츠가 캐시에 있으면 이 콘텐츠는 캐시에서 반환됩니다. 그렇지 아니면 다음 작업이 수행됩니다.
+<ol>
+<li>Google Cloud Storage에서 콘텐츠가 검색되고 캐시가 채워집니다.</li>
+<li>App Engine 애플리케이션이 Cloud Storage에서 검색된 콘텐츠를 '실시간' 크기 조절 및 이미지 자르기를 위해 App Engine <a href="https://developers.google.com/appengine/docs/java/images/overview">이미지 서비스</a>를 거치도록 합니다.</li>
+</ol>
+</li>
+<li>미디어 콘텐츠가 클라이언트에 제공됩니다.</li>
+</ol>
+<h3>구현 관련 고려사항</h3>
+<ul>
+<li>미디어 콘텐츠의 메타데이터는 애플리케이션 데이터와 함께 Google App Datastore 또는 Google Cloud SQL에 저장할 수 있습니다. 어떤 저장소를 선택할지는 데이터의 크기, 전반적인 데이터 모델의 특성 및 개발 팀의 전문 기술 정도에 따라 결정합니다. 예를 들어 높은 수준의 관계형 데이터가 있는 경우 Cloud SQL을 선택하는 것이 좋습니다. 또는 정규화되지 않은 데이터를 대규모 데이터세트로 확장하는 경우에는 Datastore를 선택하는 것이 좋습니다. 두 옵션의 장단점은 Google IO 2012 세션, <a href="http://www.youtube.com/watch?v=rRoy6I4gKWU">SQL와 NoSQL 비교: 백엔드 차이점</a>에서 자세하게 설명되어 있습니다.</li>
+<li>제시된 솔루션은 미디어 처리에 Google Compute Engine을 사용합니다. Compute Engine을 사용하면 지원되는 운영체제에서 맞춤 소프트웨어와 패키지를 실행할 수 있습니다. 이 플랫폼은 일반적인 용도의 미디어 처리에 적합합니다. 간단한 이미지와 사진을 조작해야 하는 경우에는, Google App Engine에서 제공하는 이미지 서비스를 사용하여 실시간으로 이미지 처리를 수행할 수 있습니다.</li>
+</ul>
+<h2>샘플 애플리케이션</h2>
+<p>Google은 미디어 애셋 관리 및 공유 솔루션을 구현하는 방법을 보여주기 위해 사진 공유 애플리케이션<sup><a href="#r-4" name="ref-5" id="ref-5">4</a></sup> 샘플을 개발했습니다. 이 샘플은 이전 시나리오에서 설명한 애플리케이션과 유사합니다. 사진 공유 애플리케이션을 사용하면 사용자는 사진을 업로드하여 다른 사용자가 보게 할 수 있으며, 업로드된 사진에 댓글을 남길 수도 있습니다. 다음 목록에서는 이러한 사용 사례 시나리오의 핵심 요소를 자세하게 설명합니다.</p>
+<ul>
+<li>사용자가 애플리케이션을 사용하려면 유효한 Google 계정으로 로그인해야 합니다.</li>
+<li>사용자가 로컬 디스크에서 사진과 설명을 업로드합니다.</li>
+<li>사진 공유 애플리케이션에 업로드된 모든 사진이 시간순으로 표시됩니다.</li>
+<li>사용자가 사진에 모든 사용자가 볼 수 있는 댓글을 추가합니다.</li>
+<li>사진이 표시되면 사용자 인터페이스에 맞도록 이미지를 자르고 크기를 조절할 수 있습니다.</li>
+</ul>
+<p>요구사항 및 설계에 대한 자세한 내용이 담긴 문서는 <a href="https://developers.google.com/samples/">여기</a>에서 확인할 수 있습니다. 소스 코드는 <a href="https://github.com/GoogleCloudPlatform/solutions-photo-sharing-demo-java">Github</a>에서 호스팅됩니다.</p>
+<h2>맺음말</h2>
+<p>Google Cloud Platform을 사용하면 개발자는 수백만 명의 사용자와 페타바이트 단위의 데이터에 맞게 확장되는 디지털 미디어 애셋 관리 및 공유 솔루션을 빠르게 구축할 수 있습니다. 이 문서에 제시된 솔루션은 Google App Engine, Google Compute Engine 및 Google Cloud Storage의 강력한 기능을 조합하여 디지털 미디어 시스템에서 접하게 되는 기술적인 과제를 해결합니다.</p>
+<br>
+<h2>참고사항</h2>
+<p id="fn-1"><sup>[<a href="#ref-4">1</a>]</sup> 개체 변경사항 알림은 아직 '신뢰할 수 있는 테스터' 프로그램의 기능에 해당합니다.</p>
+<h2>참고자료</h2>
+<p id="r-1"><sup><a href="#ref-1">1</a></sup> <a href="https://commerce.informatm.com/reports/ott-video-revenue-forecasts.html">OTT 동영상 수익 예측</a>, 2011~2017, Informa Telecoms &amp; Media 제공, 2012년 11월</p>
+<p id="r-2"><sup><a href="#ref-2">2</a></sup> <a href="http://www.kajashi.com/?q=content/key-trends-and-takeaways-digital-media-market">디지털 미디어 시장의 핵심 동향 및 요점</a>, 작성자: Abhay Paliwal, 2012년 3월</p>
+<p id="r-3"><sup><a href="#ref-3">3</a></sup> <a href="http://www.datacenterknowledge.com/archives/2012/07/02/gartner-consumers-will-store-more-in-the-cloud/">Garnter: 소비자가 이끄는 클라우드 저장소의 거대한 성장</a>, 작성자: Colleen Miller, 2012년 7월</p>
+<p id="r-4"><sup><a href="#ref-5">4</a></sup> <a href="https://github.com/GoogleCloudPlatform/solutions-photo-sharing-demo-java">사진 공유 애플리케이션 샘플</a>, 작성자: Michael Tang, 2012년 10월</p>
+</div>
+<div class="maia-col-3"><br>
+<img src="//www.google.com/images/icons/product/feedback-16.png" class="g-app-icon" alt=""> <a href="javascript:void(0);" class="google-feedback">이 문서에 대한 의견 보내기</a><br>
+<br>
+<img src="//www.google.com/images/icons/thirdparty/pdf-16.png" class="g-app-icon" alt=""> <a href="/files/articles/google-cloud_technical-article_digital-media-asset-management.pdf" class="cp-pdf" onclick="javascript: _gaq.push(['_trackPageview', '../../../files/articles/google-cloud_technical-article_digital-media-asset-management.pdf']);">PDF 다운로드</a></div>
+</div>
+</div>
+<script>
+(function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+</script><script src="//www.gstatic.com/feedback/api.js">
+</script><script>
+$('body').delegate('.google-feedback', 'click', function() {
+      userfeedback.api.startFeedback({'productId': '94614'});
+  });
+</script><!-- Scripts to include both on Goro + Devsite --><script>
+window.___gcfg = {
+     lang: ''
+   };
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+</script><!-- GTM implementation --><!-- Start dataLayer --><script>
+dataLayer = [{
+        'country': 'ko',
+        'region': 'japac',
+        'language': 'ko'
+      }];
+</script><!-- End dataLayer --><!-- Start Google Tag Manager --><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5CVQBG" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript> <script>
+(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-5CVQBG');
+</script><!-- End Google Tag Manager --><!-- Global JS scripts to load; path will depend on whether we're on devsite or Goro --><script src="/js/base.min.js">
+</script><!-- Retina loader; Do not load if partners page because we need to wait until the Angular app runs --><script>
+new lfl.system.RetinaLoader();
+</script><!-- Secondary right-side scroll-nav --><script>
+new lfl.ui.ScrollNav({});
+</script>
+</body>
+</html>

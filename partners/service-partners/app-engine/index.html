@@ -1,0 +1,96 @@
+---
+layout: phase2
+title: App Engine Service Partners
+---
+<script>
+var techJson = "../techPartnersData.json";
+var serviceJson = "../servicePartnersData.json";
+</script>
+
+<script src="../../../js/base.min.js"></script>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
+
+<script src="../../../js/partners.min.js"></script>
+
+<script>
+$(window).on('scopeReady', function() {
+  console.log('scope');
+  new lfl.system.RetinaLoader();
+});
+
+</script>
+
+<!-- variables to be addressed per page -->
+
+
+
+
+
+
+
+
+
+<!-- page variables -->
+
+<div class="site-wrapper partners" ng-app="lflApp" ng-controller="ServicePartnersCtrl" data-status="{[{data.status}]}">
+  <div class="maia-stage page-header tertiary">
+    <div class="maia-aux page-header-inner">
+      <div class="page-header-inner-inner">
+        <h1 class="headline">App Engine Service Partners</h1>
+        <p class="subheadline">Find help getting your project up and running</p>
+      </div>
+    </div>
+  </div>
+  <div id="maia-main" ng-cloak>
+
+    <div id="app-engine" class="generic-section">
+      <div class="maia-cols">
+        <h2 class="headline maia-col-8"><span class="icon app-engine"></span>App Engine</h2>
+        <div class="partners-wrapper maia-col-12">
+
+          
+            
+          <div class="maia-cols" ng-repeat="partnerG in appEnginePartners">
+            <div class="inner-block maia-col-6" ng-repeat="partner in partnerG">
+              <div class="maia-cols">
+                <div class="image-wrapper maia-col-4">
+                  <img src="/images/partners/{[{partner.name|slugify}]}.png" alt="{[{partner.name}]}'s logo" data-retina="139x123">
+                </div>
+                <div class="details maia-col-8">
+                  <h3 class="headline" ng-bind="partner.name"></h3>
+                  <p class="subheadline" ng-bind="partner.description | characters:250">
+                  </p>
+                  <ul class="partner-links">
+                    <li class="phone">
+                      <a href="tel:{[{partner.phone}]}" event="autotrack-data-g" data-g-event="Service" data-g-action="Service App Engine Partners" data-g-label="{[{partner.name}]} Phone" ng-bind="partner.phone"></a>
+                    </li>
+                    <li class="location">
+                      <a href="http://maps.google.com/?q={[{partner.address}]}" event="autotrack-data-g" data-g-event="Service" data-g-action="Service App Engine  Partners" data-g-label="{[{partner.name}]} Location">Location</a>
+                    </li>
+                    <li class="email">
+                      <a href="mailto:{[{partner.contactUsEmail}]}" event="autotrack-data-g" data-g-event="Service" data-g-action="Service App Engine  Partners" data-g-label="{[{partner.name}]} Contact">Contact Us</a>
+                    </li>
+                    <li class="website">
+                      <a href="{[{partner.url}]}" target="_blank" event="autotrack-data-g" data-g-event="Service" data-g-action="Service App Engine  Partners" data-g-label="{[{partner.name}]}: Visit the site">Visit the site</a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>            
+            
+          
+
+        
+
+        
+
+        
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

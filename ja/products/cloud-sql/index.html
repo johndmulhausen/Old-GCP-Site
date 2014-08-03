@@ -1,0 +1,338 @@
+---
+layout: phase2-ja
+title: Cloud Computing &amp; Cloud Hosting Services
+---
+<!DOCTYPE html>
+<html devsite="">
+<head>
+<title>Google Cloud SQL - SQL Server, Cloud Database &amp; Online Database — Google Cloud Platform</title>
+<meta name="description" content="Run MySQL databases using Google's Cloud SQL. Use Cloud SQL to maintain and administer your online databases and servers for efficient application development.">
+<meta name="hide_page_heading" value="true">
+<meta name="full_width" value="true">
+<meta name="top_category" value="/ja/products">
+<meta name="subcategory" value="cloud-sql">
+<meta name="viewport" content="initial-scale=1, minimum-scale=1, width=device-width">
+<link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
+<link href="//fonts.googleapis.com/css?family=Open+Sans:400italic,300,400,600,700" rel="stylesheet">
+<link href="/css/default.css" rel="stylesheet"><!--[if lt IE 9]>
+    <link rel="stylesheet" media="screen" href='/css/cp-ie.css'>
+    <![endif]-->
+<script src="/js/floodlight.js">
+</script>
+</head>
+<body>
+<div class="site-wrapper product cloud-sql">
+<div class="maia-stage page-header secondary scroll-section" data-section-label="Cloud SQL">
+<div id="intro" class="maia-aux page-header-inner">
+<div class="page-header-inner-inner">
+<h1 class="headline"><span class="app-icon cloud-sql"><!-- --></span> <span>Cloud SQL</span></h1>
+<p class="subheadline">データの保存や管理に利用できる、フルマネージドの MySQL データベースです。レプリケーション、パッチ管理、データベース管理は Google が行うため、高い可用性とパフォーマンスが得られます。</p>
+<a href="https://console.developers.google.com/?getstarted=https://cloud.google.com" class="maia-button try-it cp-track" id="try-body" event="autotrack-data-g" data-g-event="/ja/products: Cloud SQL" data-g-action="Try It Now" data-g-label="Cloud SQL Canvas: Click">今すぐ試す</a></div>
+</div>
+</div>
+<div id="maia-main">
+<div id="features" class="generic-section scroll-section" data-section-label="特長">
+<div class="maia-cols">
+<div class="header">
+<h2 class="headline maia-col-8">特長</h2>
+<p class="subheadline maia-col-8">MySQL データベースをクラウド上で簡単に利用できます。高速かつ強力なデータベース機能を提供し、容量が不足することもありません。アプリケーションに必要な冗長性と信頼性を備えるストレージとしてご利用いただけます。</p>
+</div>
+</div>
+<div class="maia-cols">
+<div class="maia-col-4 inner-block">
+<h3 class="headline">使いやすいインフラストラクチャ</h3>
+<p>Cloud SQL は、世界中で幅広く利用されているオープンソース データベースである標準の MySQL データベースを備えているため、クラウドでのすばやい開発が可能です。インスタンスでは、最大 16 GB の RAM と 100 GB のデータ ストレージを使用できます。</p>
+</div>
+<div class="maia-col-4 inner-block">
+<h3 class="headline">柔軟な料金体系</h3>
+<p>従量制であるため、手軽に使い始められます。実際にデータアクセスした時間に対してのみ請求が発生するため、データベースの使用頻度が高くない場合のコストを抑えられます。より高負荷のインスタンスのコストを節約できるパッケージ オプションも利用できます。</p>
+</div>
+<div class="maia-col-4 inner-block">
+<h3 class="headline">安全性、可用性、耐久性</h3>
+<p>データはデフォルトで複数の地域で複製され、フェイルオーバーも自動的に行われます。このため、データは厳重に保管され、重大な障害が発生した場合でもデータベースにアクセスできます。バックアップの管理も Google が行うため、必要に応じて簡単に復元できます。</p>
+</div>
+</div>
+<div class="maia-cols">
+<div class="maia-col-4 inner-block">
+<h3 class="headline">ロックインのない簡単なマイグレーション</h3>
+<p>mysqldump、MySQL ワイヤ プロトコル、JDBC などの標準的な接続やツールをサポートし、Google Cloud Platform と他プラットフォーム間の移行を簡単かつ柔軟に行えます。</p>
+</div>
+<div class="maia-col-4 inner-block">
+<h3 class="headline">制御</h3>
+<p>Cloud Console や JSON API を使用して、インスタンスの管理やインスタンスへのアクセスを簡単に行えます。</p>
+</div>
+<div class="maia-col-4 inner-block">
+<h3 class="headline">完全管理</h3>
+<p>複製、パッチ管理、データベース管理などの作業を Googleにお任せください！</p>
+</div>
+</div>
+</div>
+<div id="case-studies" class="generic-section scroll-section" data-section-label="事例紹介">
+<div class="header">
+<div class="maia-cols">
+<h2 class="headline maia-col-8">事例紹介</h2>
+<p class="subheadline maia-col-8">各社のデータベース アプリケーションをより効果的に活用するためのCloud SQL の活用事例です。</p>
+</div>
+</div>
+<!-- maia-cols row for every 2 case studies -->
+<div class="maia-cols">
+<div class="inner-block maia-col-6">
+<div class="maia-cols">
+<div class="image-wrapper maia-col-4"><a href="/files/codefutures.pdf" class="read-more" event="autotrack-data-g" data-g-event="/ja/products: Cloud SQL" data-g-action="Case Study" data-g-label="CodeFutures"><img src="/images/case-studies/landing/codefutures.png" alt="CodeFutures の事例紹介の画像" data-retina="139x123"></a></div>
+<div class="details maia-col-8">
+<h3 class="headline">CodeFutures</h3>
+<p class="subheadline">「従来の方法ではディザスタ リカバリ対応だけで年に数百万ドルを要することもあります。Google Cloud SQL ならばずっと短時間にコスト効率よく移行できます。」</p>
+<a href="/files/codefutures.pdf" class="read-more" event="autotrack-data-g" data-g-event="/ja/products: Cloud SQL" data-g-action="Case Study" data-g-label="CodeFutures">CodeFutures の事例紹介を読む</a></div>
+</div>
+</div>
+<div class="inner-block maia-col-6">
+<div class="maia-cols">
+<div class="image-wrapper maia-col-4"><a href="/files/kissflow.pdf" class="read-more" event="autotrack-data-g" data-g-event="/ja/products: Cloud SQL" data-g-action="Case Study" data-g-label="KiSSFLOW"><img src="/images/case-studies/landing/kissflow.png" alt="KiSSFLOW の事例紹介の画像" data-retina="139x123"></a></div>
+<div class="details maia-col-8">
+<h3 class="headline">KiSSFLOW</h3>
+<p class="subheadline">「独立したデータベースの導入と運用を手軽なコストで実現できるのは Google のソリューションだけです。」</p>
+<a href="/files/kissflow.pdf" class="read-more" event="autotrack-data-g" data-g-event="/ja/products: Cloud SQL" data-g-action="Case Study" data-g-label="KiSSFLOW">KiSSFLOW の事例紹介を読む</a></div>
+</div>
+</div>
+</div>
+<div class="maia-cols">
+<div class="inner-block maia-col-6">
+<div class="maia-cols">
+<div class="image-wrapper maia-col-4"><a href="/files/daffodil.pdf" class="read-more" event="autotrack-data-g" data-g-event="/ja/products: Cloud SQL" data-g-action="Case Study" data-g-label="Daffodil"><img src="/images/case-studies/landing/daffodil.png" alt="Daffodil の事例紹介の画像" data-retina="139x123"></a></div>
+<div class="details maia-col-8">
+<h3 class="headline">Daffodil</h3>
+<p class="subheadline">「当社では Google App Engine と Google Cloud SQL を使うことで半分の時間でアプリケーションを公開でき、すべてのプロセスでわずらわしさから解放されました。Google Cloud SQL に移行したことで、これまで以上にアプリケーション開発に集中できるようになりました。」</p>
+<a href="/files/daffodil.pdf" class="read-more" event="autotrack-data-g" data-g-event="/ja/products: Cloud SQL" data-g-action="Case Study" data-g-label="Daffodil">Daffodil の事例紹介を読む</a></div>
+</div>
+</div>
+<!-- close off the maia-cols row if we don't have evens --></div>
+</div>
+<div id="pricing" class="generic-section scroll-section" data-section-label="料金">
+<div class="header">
+<div class="maia-cols">
+<h2 class="headline maia-col-8">料金</h2>
+<p class="subheadline maia-col-8"></p>
+<h3 class="maia-col-8">Cloud SQL では次の 2 つのお支払いプランを利用できます:</h3>
+<ul class="maia-col-8" style="margin-left: 35px;">
+<li>トラフィック量の多いアプリケーション向けには、ディスカウント付きのパッケージ プランを用意しています。コストの事前見積もりが容易です。</li>
+<li>軽量なアプリケーション向けには、より柔軟な従量制の料金体系を用意しています。データにアクセスした場合にのみ料金が発生し、クラウド上の MySQL データベースを月額約 $1 から使い始めることができます。</li>
+</ul>
+</div>
+</div>
+<div class="pricing-tables">
+<div class="pricing-table">
+<div class="pricing-table-head">
+<h3>パッケージ</h3>
+</div>
+<div class="pricing-table-content">
+<table>
+<thead>
+<tr>
+<th>階層</th>
+<th>RAM</th>
+<th>ストレージの上限</th>
+<th>I/O 上限<br>
+（1 日あたり）</th>
+<th>料金<br>
+（1 日あたり）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>D0</td>
+<td>0.125 GB</td>
+<td>0.5 GB</td>
+<td>20 万回</td>
+<td>$0.36</td>
+</tr>
+<tr>
+<td>D1</td>
+<td>0.5 GB</td>
+<td>1 GB</td>
+<td>85 万回</td>
+<td>$1.46</td>
+</tr>
+<tr>
+<td>D2</td>
+<td>1 GB</td>
+<td>2 GB</td>
+<td>170 万回</td>
+<td>$2.93</td>
+</tr>
+<tr>
+<td>D4</td>
+<td>2 GB</td>
+<td>5 GB</td>
+<td>400 万回</td>
+<td>$5.86</td>
+</tr>
+<tr>
+<td>D8</td>
+<td>4 GB</td>
+<td>10 GB</td>
+<td>800 万回</td>
+<td>$11.71</td>
+</tr>
+<tr>
+<td>D16</td>
+<td>8 GB</td>
+<td>10 GB</td>
+<td>1600 万回</td>
+<td>$23.42</td>
+</tr>
+<tr>
+<td>D32</td>
+<td>16 GB</td>
+<td>10 GB</td>
+<td>3200 万回</td>
+<td>$46.84</td>
+</tr>
+<tr>
+<td colspan="5">
+<div class="cp-footnote">
+<p>追加ストレージ（最大 100 GB）は月額 $0.24/GB です。</p>
+<p>外部ネットワーク（下り）は $0.12/GB です。</p>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="pricing-table">
+<div class="pricing-table-head">
+<h3>従量制</h3>
+</div>
+<div class="pricing-table-content">
+<table>
+<thead>
+<tr>
+<th>リソース</th>
+<th>料金</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>D0 データベース インスタンス（0.125 GB RAM）</td>
+<td>$0.025/時間</td>
+</tr>
+<tr>
+<td>D1 データベース インスタンス（0.5 GB RAM）</td>
+<td>$0.10/時間</td>
+</tr>
+<tr>
+<td>D2 データベース インスタンス（1 GB RAM）</td>
+<td>$0.19/時間</td>
+</tr>
+<tr>
+<td>D4 データベース インスタンス（2 GB RAM）</td>
+<td>$0.38/時間</td>
+</tr>
+<tr>
+<td>D8 データベース インスタンス（4 GB RAM）</td>
+<td>$0.77/時間</td>
+</tr>
+<tr>
+<td>D16 データベース インスタンス（8 GB RAM）</td>
+<td>$1.54/時間</td>
+</tr>
+<tr>
+<td>D32 データベース インスタンス（16 GB RAM）</td>
+<td>$3.08/時間</td>
+</tr>
+<tr>
+<td>1 GB ストレージ</td>
+<td>$0.24/月</td>
+</tr>
+<tr>
+<td>I/O</td>
+<td>100 万回あたり $0.10</td>
+</tr>
+<tr>
+<td>アイドル IP アドレス</td>
+<td>$0.01/時間</td>
+</tr>
+<tr>
+<td>外部ネットワーク（下り）</td>
+<td>$0.12/GB</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="cp-msg"></div>
+</div>
+</div>
+<div id="documentation" class="generic-section scroll-section last" data-section-label="ドキュメントと関連情報">
+<div class="header">
+<div class="maia-cols">
+<h2 class="headline maia-col-8">ドキュメントと関連情報</h2>
+<p class="subheadline maia-col-8">Cloud SQL を最大限に活用するうえで役立つサンプル プロジェクトやチュートリアル、包括的なドキュメントをご覧いただけます。どこにいてもインターネットでアプリケーションからデータベースにアクセスできる仕組みについて解説しています。</p>
+</div>
+</div>
+<div class="maia-cols">
+<div class="inner-block maia-col-4 docs">
+<h3 class="headline">Cloud SQL ドキュメント</h3>
+<ul>
+<li><a href="https://developers.google.com/cloud-sql/docs/getting-started" class="link-out" event="autotrack-data-g" data-g-event="/ja/products: Cloud SQL" data-g-action="Cloud SQL Documentation" data-g-label="Getting Started">スタート ガイド</a></li>
+<li><a href="https://developers.google.com/cloud-sql/docs/instances" class="link-out" event="autotrack-data-g" data-g-event="/ja/products: Cloud SQL" data-g-action="Cloud SQL Documentation" data-g-label="Managing your instances">インスタンスの管理</a></li>
+<li><a href="https://developers.google.com/cloud-sql/docs/mysql-client" class="link-out" event="autotrack-data-g" data-g-event="/ja/products: Cloud SQL" data-g-action="Cloud SQL Documentation" data-g-label="Using your instances">インスタンスの使用</a></li>
+</ul>
+</div>
+<div class="inner-block maia-col-8 resources">
+<h3 class="headline">リソース</h3>
+<ul>
+<li class="resource-block">
+<h3 class="headline"><a href="https://developers.google.com/cloud-sql/docs/introduction" event="autotrack-data-g" data-g-event="/ja/products: Cloud SQL" data-g-action="Resources" data-g-label="About Google Cloud SQL">Google Cloud SQL について</a></h3>
+<div class="details">
+<p>Google Cloud SQL は Google クラウド上で運用される MySQL データベースです。MySQL のほぼすべての機能を備えていますが、多少の相違点（追加の機能とサポートされていない機能）について、以下で説明します。Google Cloud SQL は簡単に利用でき、ソフトウェアをインストールする必要はありません。メンテナンスも不要で、小中規模のアプリケーションに最適です。</p>
+</div>
+</li>
+<li class="resource-block">
+<h3 class="headline"><a href="https://developers.google.com/appengine/docs/python/cloud-sql/" event="autotrack-data-g" data-g-event="/ja/products: Cloud SQL" data-g-action="Resources" data-g-label="Using Google Cloud SQL with App Engine Python SDK">App Engine Python SDK での Google Cloud SQL の使用</a></h3>
+<div class="details">
+<p>このドキュメントでは、Google Cloud SQL インスタンスを App Engine Python SDK で使用する方法について解説しています。</p>
+</div>
+</li>
+<li class="resource-block">
+<h3 class="headline"><a href="https://developers.google.com/cloud-sql/faq" event="autotrack-data-g" data-g-event="/ja/products: Cloud SQL" data-g-action="Resources" data-g-label="Frequently Asked Questions (FAQ)">よくある質問</a></h3>
+<div class="details">
+<p>「Cloud SQL を使用するメリットは何ですか」、「Google Cloud SQL では MySQL のすべての機能をサポートしていますか」、「Google Cloud SQL が使用するデータベース エンジンは何ですか」など、よくある質問への回答をご覧いただけます。</p>
+</div>
+</li>
+</ul>
+<a href="../../developers" class="bounce-link" event="autotrack-data-g" data-g-event="/ja/products: Cloud SQL" data-g-action="Resources" data-g-label="View All Resources">すべての関連情報を表示</a></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Scripts to include both on Goro + Devsite -->
+<script>
+window.___gcfg = {
+     lang: ''
+   };
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+</script><!-- GTM implementation --><!-- Start dataLayer --><script>
+dataLayer = [{
+        'country': 'ja',
+        'region': 'japac',
+        'language': 'ja'
+      }];
+</script><!-- End dataLayer --><!-- Start Google Tag Manager --><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5CVQBG" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript> <script>
+(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-5CVQBG');
+</script><!-- End Google Tag Manager --><!-- Global JS scripts to load; path will depend on whether we're on devsite or Goro --><script src="/js/base.min.js">
+</script><!-- Retina loader; Do not load if partners page because we need to wait until the Angular app runs --><script>
+new lfl.system.RetinaLoader();
+</script><!-- Secondary right-side scroll-nav --><script>
+new lfl.ui.ScrollNav({});
+</script>
+</body>
+</html>

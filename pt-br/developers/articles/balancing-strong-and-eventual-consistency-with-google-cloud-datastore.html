@@ -1,0 +1,356 @@
+---
+layout: phase2-pt-br
+title: Cloud Computing &amp; Cloud Hosting Services
+---
+<!DOCTYPE html>
+<html devsite="">
+<head>
+<title>Web Apps Articles &amp; Tutorials — Google Cloud Platform</title>
+<meta name="description" content="Read technical articles about web applications and solutions with Google Cloud Platform, including auto scaling and how to manage complex applications in the cloud.">
+<meta name="hide_page_heading" value="true">
+<meta name="full_width" value="true">
+<meta name="top_category" value="developers">
+<meta name="subcategory" value="articles">
+<meta name="viewport" content="initial-scale=1, minimum-scale=1, width=device-width">
+<link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
+<link href="//fonts.googleapis.com/css?family=Open+Sans:400italic,300,400,600,700" rel="stylesheet">
+<link href="/css/default.css" rel="stylesheet"><!--[if lt IE 9]>
+    <link rel="stylesheet" media="screen" href='/css/cp-ie.css'>
+    <![endif]-->
+<script src="/js/floodlight.js">
+</script>
+</head>
+<body>
+<div id="maia-main" class="cp-article">
+<div class="maia-cols">
+<div class="maia-col-9">
+<div>
+<div style="float:right">
+<div class="g-plusone"></div>
+</div>
+<h1 class="title">Equilíbrio da consistência forte e da eventual com o Google Cloud Datastore</h1>
+</div>
+<div class="cp-article-tutorial">
+<h2><a name="h.4n3hcboreol0" id="h.4n3hcboreol0"></a>Como oferecer uma experiência do usuário consistente e aproveitar o modelo de consistência eventual para fazer o escalonamento para conjuntos de dados grandes</h2>
+<p>Este documento discute sobre como atingir a consistência forte para uma experiência do usuário positiva, enquanto é adotado o modelo de consistência eventual do Google Cloud Datastore para manipular grandes quantidades de dados e usuários.</p>
+<p>Este documento é destinado a engenheiros e arquitetos de software que desejam criar soluções no Google Cloud Datastore. Para ajudar os leitores mais acostumados com bancos de dados relacionais do que com sistemas não relacionais como o Google Cloud Datastore, este artigo aponta conceitos análogos em bancos de dados relacionais. Ele considera que você está um pouco familiarizado com o Google Cloud Datastore. A maneira mais fácil de começar a usar o Google Cloud Datastore é no Google App Engine, usando uma das linguagens suportadas, Python, Java, Go ou PHP. Caso você ainda não tenha usado o App Engine, sugerimos ler primeiro o <a href="https://developers.google.com/appengine/">Guia de primeiros passos</a> e a seção sobre o <a href="https://developers.google.com/appengine/docs/python/storage">Armazenamento de dados</a> de uma dessas linguagens. O Python é usado nos fragmentos de código de exemplo, mas não é necessário ter experiência com Python para acompanhar este documento.</p>
+<h4>Conteúdo</h4>
+<p><a class="indnt" href="#h.w3kz4fze562t">NoSQL e consistência eventual</a><br>
+<a class="indnt" href="#h.tf76fya5nqk8">Consistência eventual no Google Cloud Datastore</a><br>
+<a class="indnt" href="#h.3loc7ynqbw6i">Consulta de ancestral e grupo de entidades</a><br>
+<a class="indnt" href="#h.ooaauy74mue8">Limitações do grupo de entidades e da consulta de ancestral</a><br>
+<a class="indnt" href="#h.k31yisins6ul">Alternativas às consultas de ancestral</a><br>
+<a class="indnt" href="#h.buvz7spe7ytk">Como minimizar o tempo para atingir a consistência completa</a><br>
+<a class="indnt" href="#h.njxgygqflg9k">Conclusão</a><br>
+<a class="indnt" href="#h.ywh7cedcuhkk">Recursos adicionais</a></p>
+<h2><a name="h.w3kz4fze562t" id="h.w3kz4fze562t"></a>NoSQL e consistência eventual</h2>
+<p>Os bancos de dados não relacionais, também conhecidos como bancos de dados NoSQL,surgiram nos últimos anos como uma alternativa aos bancos de dados relacionais. O Google Cloud Datastore é um dos bancos de dados não relacionais mais usados no setor. Em 2013, o Google Cloud Datastore processou 4,5 trilhões de transações por mês, segundo <a href="http://googlecloudplatform.blogspot.com/2013/05/reducing-app-engine-datastore-pricing-by-up-to-25-percent.html">postagem do blog do Google Cloud Platform</a>. Ele oferece aos desenvolvedores uma maneira simplificada de armazenar e acessar dados. O esquema flexível gera o mapeamento para linguagens de script e orientadas a objeto de maneira natural. O Google Cloud Datastore também oferece diversos recursos que os bancos de dados relacionais não são totalmente adequados para oferecer, incluindo o alto desempenho em uma escala muito grande e a alta confiabilidade.</p>
+<p>Para desenvolvedores mais habituados com os bancos de dados relacionais, pode ser desafiador projetar um sistema que utiliza bancos de dados não relacionais, já que algumas características e práticas dos bancos de dados não relacionais podem ser relativamente desconhecidas para eles. O modelo de programação do Google Cloud Datastore é simples, mas é importante conhecer essas características. A consistência eventual é uma dessas características e sua programação é o assunto principal deste documento.</p>
+<h3><a name="h.86naen3bqe0" id="h.86naen3bqe0"></a>O que é a consistência eventual?</h3>
+<p><span class="bld">Consistência eventual</span> é uma garantia teórica de que, desde que não sejam feitas novas atualizações em uma entidade, todas as leituras da entidade eventualmente retornarão o último valor atualizado. O Sistema de Nome de Domínio (DNS, na sigla em inglês) da Internet é um exemplo bem conhecido de sistema com um modelo de consistência eventual. Os servidores DNS não necessariamente refletem os valores mais recentes, mas os valores são armazenados em cache e replicados em muitos diretórios na Internet. É necessário um certo tempo para replicar os valores modificados em todos os servidores e clientes DNS. No entanto, o sistema DNS é extremamente bem-sucedido e se tornou uma das bases da Internet. Ele é altamente disponível e provou ser extremamente escalável, permitindo pesquisas de nome para mais cem milhões de dispositivos em toda a Internet.</p>
+<p>A Figura 1 ilustra o conceito de replicação com consistência eventual. O diagrama ilustra que, embora as réplicas estejam sempre disponíveis para leitura, algumas delas podem estar inconsistentes com a última gravação no nó de origem, em um determinado momento. No diagrama, o nó A é o nó de origem e os nós B e C são as réplicas.</p>
+<figure><img src="/images/articles/balancing-strong-and-eventual-consistency-with-gcd/eventual-consistency.png" alt="">
+<figcaption>Figura 1: representação conceitual da replicação com consistência eventual</figcaption>
+</figure>
+<p>Em contraste, os bancos de dados relacionais tradicionais foram projetados com base no conceito de consistência forte, também chamado de consistência imediata. Isso significa que os dados visualizados imediatamente após a atualização serão consistentes para todos os observadores da entidade. Essa característica tem sido uma pressuposição fundamental para muitos desenvolvedores que usam bancos de dados relacionais. Porém, para atingir a consistência forte, os desenvolvedores precisam comprometer a escalabilidade e o desempenho dos seus aplicativos. Em outras palavras, os dados precisam ser bloqueados durante o período de atualização ou processo de replicação para garantir que nenhum outro processo atualize os mesmos dados.</p>
+<p>A Figura 2 mostra uma visualização conceitual da topologia de implantação e processo de replicação com consistência forte. Nesse diagrama, é possível ver como as réplicas sempre têm valores consistentes com o nó de origem, mas não podem ser acessadas até que a atualização seja concluída.</p>
+<figure><img src="/images/articles/balancing-strong-and-eventual-consistency-with-gcd/strong-consistency.png" alt="">
+<figcaption>Figura 2: representação conceitual da replicação com consistência forte</figcaption>
+</figure>
+<h3><a name="h.rcbsdmar23fq" id="h.rcbsdmar23fq"></a>Como equilibrar a consistência forte e a eventual</h3>
+<p>Os bancos de dados não relacionais se tornaram populares recentemente, especialmente para aplicativos da Web que exigem alta escalabilidade e desempenho com alta disponibilidade. Os bancos de dados não relacionais permitem que os desenvolvedores selecionem um equilíbrio ideal entre a consistência forte e a ideal para cada aplicativo. Isso concede aos desenvolvedores a possibilidade de combinar os benefícios dos dois mundos. Por exemplo, informações como "saber quem na sua lista de amigos está on-line em um determinado momento" ou "saber quantos usuários marcaram sua postagem com +1" são casos de uso em que a consistência forte não é necessária. É possível fornecer escalabilidade e desempenho para esses casos de uso utilizando a consistência eventual. Casos de uso que exigem consistência forte incluem informações como "se um usuário concluiu ou não o processo de faturamento" ou "o número de pontos que um jogador fez durante uma sessão de combate".</p>
+<p>Para generalizar os exemplos dados, casos de uso com números de entidades muito grandes geralmente sugerem que a consistência eventual é o melhor modelo. Se houver um número de resultados muito grande em uma consulta, a experiência do usuário pode não ser afetada pela inclusão ou exclusão de entidades específicas. Por outro lado, casos de uso com um número de entidades pequeno e um contexto limitado sugerem que a consistência forte é necessária. A experiência do usuário será afetada, pois o contexto deixará os usuários cientes de quais entidades devem ser incluídas ou excluídas.</p>
+<p>Por essas razões, é importante para os desenvolvedores entenderem as características não relacionais do Google Cloud Datastore. As seções a seguir discutem como os modelos de consistência forte e eventual podem ser combinados para criar um aplicativo escalável, altamente disponível e de alto desempenho. Ao fazer isso, os requisitos de consistência para uma experiência do usuário positiva ainda serão atendidos.</p>
+<h2><a name="h.tf76fya5nqk8" id="h.tf76fya5nqk8"></a>Consistência eventual no Google Cloud Datastore</h2>
+<p>É necessário selecionar a API correta quando a visualização de dados fortemente consistente for exigida. Os diferentes tipos de APIs de consulta do Google Cloud Datastore e seus modelos de consistência correspondentes são mostrados na Tabela 1.</p>
+<a href="#" name="73aa40d03f7c0cd78a8b69d986cc7d802f3e49eb" id="73aa40d03f7c0cd78a8b69d986cc7d802f3e49eb"></a><a href="#" name="2" id="2"></a>
+<figure>
+<table class="brdr-table" style="text-align:left;">
+<tbody>
+<tr>
+<th>
+<p>Google Cloud Datastore API</p>
+</th>
+<th>
+<p>Leitura do valor de entidade</p>
+</th>
+<th>
+<p>Leitura de índice</p>
+</th>
+</tr>
+<tr>
+<td>
+<p><a href="https://developers.google.com/appengine/docs/python/datastore/queries">Consulta global</a></p>
+</td>
+<td>
+<p>Consistência eventual</p>
+</td>
+<td>
+<p>Consistência eventual</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="https://developers.google.com/appengine/docs/python/datastore/queries#Python_Keys_only_queries">Consulta global apenas de chaves</a></p>
+</td>
+<td>
+<p>N/D</p>
+</td>
+<td>
+<p>Consistência eventual</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="https://developers.google.com/appengine/docs/python/datastore/queries#Python_Ancestor_queries">Consulta de ancestral</a></p>
+</td>
+<td>
+<p>Consistência forte</p>
+</td>
+<td>
+<p>Consistência forte</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="https://developers.google.com/appengine/docs/python/datastore/entities#Python_Retrieving_an_entity">Pesquisa por chave</a> (get())</p>
+</td>
+<td>
+<p>Consistência forte</p>
+</td>
+<td>
+<p>N/D</p>
+</td>
+</tr>
+</tbody>
+</table>
+<figcaption>Tabela 1: chamadas de queries/get do Google Cloud Datastore e possíveis comportamentos de consistência</figcaption>
+</figure>
+<p>As consultas do Google Cloud Datastore sem um ancestral são chamadas de <span class="bld">consultas globais</span> e são projetadas para funcionar com um modelo de consistência eventual. Isso não garante a consistência forte. Uma consulta global <span class="bld">apenas de chaves</span> é uma <span class="bld">consulta global</span> que retorna apenas as chaves das entidades que correspondem à consulta, não os valores de atributo das entidades. Uma <span class="bld">consulta de ancestral</span> determina o âmbito da consulta com base em uma entidade de ancestral. As seções a seguir abordam cada comportamento de consistência mais detalhadamente.</p>
+<h3><a name="h.cb1okox563r3" id="h.cb1okox563r3"></a>Consistência eventual ao ler valores de entidade</h3>
+<p>Com exceção das consultas de ancestral, pode não ser possível visualizar o valor de entidade atualizado imediatamente ao executar uma consulta. Para entender o impacto da consistência eventual ao ler os valores de entidade, considere um cenário em que uma entidade, Jogador, possui uma propriedade, Pontuação. Considere, por exemplo, que a Pontuação inicial tem o valor de 100. Após um tempo, o valor de Pontuação é atualizado para 200. Se uma consulta global for executada e incluir a mesma entidade Jogador no resultado, é possível que o valor da propriedade Pontuação da entidade retornada apareça inalterado, em 100.</p>
+<p>Esse comportamento é causado pela replicação entre os servidores do Google Cloud Datastore. A replicação é gerenciada pelo Bigtable e o Megastore, as tecnologias subjacentes do Google Cloud Datastore (consulte a seção <a href="#h.ywh7cedcuhkk">Recursos adicionais</a> para encontrar mais detalhes sobre o Bigtable e o Megastore). A replicação é realizada com o algoritmo de <a href="http://en.wikipedia.org/wiki/Paxos_(computer_science)">Paxos</a>,que espera de maneira síncrona até que a maioria das réplicas reconheça a solicitação de atualização. A réplica é atualizada com os dados da solicitação após um período de tempo. Esse período normalmente é curto, mas não há garantias quanto à duração real. A consulta pode ler os dados desatualizados caso seja executada antes da conclusão da atualização.</p>
+<p>Em muitos casos, a atualização atingirá todas as réplicas muito rapidamente. No entanto, há diversos fatores que, quando combinados, podem aumentar o tempo necessário para atingir a consistência. Esses fatores incluem quaisquer incidentes que afetem todo o datacenter que envolvam a comutação de uma grande quantidade de servidores entre datacenters. Considerando a variação desses fatores, é impossível fornecer quaisquer requisitos de tempo definitivos para o estabelecimento da consistência completa.</p>
+<p>O tempo necessário para uma consulta retornar o valor mais recente normalmente é bastante curto. Porém, em raras situações em que a latência de replicação aumenta, o tempo pode ser muito maior. Os aplicativos que usam as consultas globais do Google Cloud Datastore devem ser desenvolvidos cuidadosamente para lidar com esses casos suavemente.</p>
+<p>A consistência eventual ao ler os valores de entidade pode ser evitada com o uso de uma consulta apenas de chaves, uma consulta de ancestral ou a pesquisa por chave (o método get()). Discutiremos sobre esses diferentes tipos de consultas mais detalhadamente a seguir.</p>
+<h3><a name="h.4xdytk3hj44" id="h.4xdytk3hj44"></a>Consistência eventual ao ler um índice</h3>
+<p>É possível que um índice ainda não esteja atualizado no momento da execução de uma consulta global. Isso significa que, embora seja possível ler os valores de propriedade mais recentes das entidades, a "lista de entidades" incluída no resultado da consulta pode ser filtrada com base em valores de índice antigos.</p>
+<p>Para entender o impacto da consistência eventual ao ler um índice, imagine um cenário em que uma nova entidade, Jogador, é inserida no Google Cloud Datastore. A entidade tem uma propriedade, Pontuação, que possui o valor inicial de 300. Imediatamente após a inserção, você executa uma consulta apenas de chaves para buscar todas as entidades com um valor de Pontuação maior que 0. Seria esperado que a entidade Jogador, recentemente inserida, fosse exibida nos resultados da consulta. Em vez disso, talvez inesperadamente, você pode descobrir que a entidade Jogador não aparece nos resultados. Essa situação pode ocorrer quando a tabela de índice da propriedade Pontuação ainda não tiver sido atualizada com o valor recém-inserido no momento da execução da consulta.</p>
+<p>Lembre-se de que todas as consultas no Google Cloud Datastore são executadas em relação às <a href="https://developers.google.com/appengine/docs/python/datastore/indexes#Python_Index_definition_and_structure">tabelas de índice</a> e também que <a href="https://developers.google.com/appengine/articles/life_of_write">as atualizações das tabelas de índice são assíncronas</a>. Por essência, todas as atualizações de entidade são compostas por duas fases. Na primeira fase, a fase de realização, é realizada uma gravação no registro de transação. Na segunda fase, os dados são gravados e os índices são atualizados. Se a fase de realização for realizada corretamente, o sucesso da fase de gravação é garantido, mas não deve ocorrer imediatamente. Se você consultar uma entidade antes da atualização dos índices, poderá visualizar dados que ainda não estão consistentes.</p>
+<p>Como resultado desse processo de duas fases, há um tempo de espera antes que as últimas atualizações das entidades se tornem visíveis em consultas globais. Assim como para a consistência eventual do valor de entidade, o tempo de espera normalmente é pequeno, mas pode ser maior (até mesmo vários minutos, em circunstâncias excepcionais).</p>
+<p>O mesmo também pode acontecer após as atualizações. Por exemplo, suponha que você atualize uma entidade existente, Jogador, com um novo valor de propriedade Pontuação de 0 e execute a mesma consulta imediatamente após. Seria esperado que a entidade não aparecesse nos resultados da consulta, pois o novo valor 0 de Pontuação iria excluí-la. No entanto, devido ao mesmo comportamento de atualização de índice assíncrono, a entidade ainda pode ser incluída no resultado.</p>
+<p>É possível evitar a consistência eventual na leitura de um índice apenas com o uso de uma consulta de ancestral ou do método de pesquisa por chave. Uma consulta apenas de chaves não pode evitar esse comportamento.</p>
+<h3><a name="h.ubkfi6o13a4f" id="h.ubkfi6o13a4f"></a>Consistência forte ao ler valores de entidade e índices</h3>
+<p>No Google Cloud Datastore, há apenas duas APIs que oferecem uma visualização fortemente consistente para a leitura de valores de entidade e índices: (1) o método de pesquisa por chave e (2) a consulta de ancestral. Se a lógica do aplicativo exigir consistência forte, o desenvolvedor deverá usar um desses métodos para ler as entidades do Google Cloud Datastore.</p>
+<p>O Google Cloud Datastore foi projetado especialmente para oferecer consistência forte nessas APIs. Ao chamar qualquer uma delas, ele descarregará todas as atualizações pendentes em uma das réplicas e tabelas de índice e executará a consulta de ancestral ou a pesquisa. Dessa forma, o valor mais recente da entidade, baseado na tabela de índice atualizada, sempre será retornado com os valores baseados nas últimas atualizações.</p>
+<p>A chamada da pesquisa por chave, em contraste com as consultas, retorna apenas uma entidade ou um conjunto de entidades especificado por uma chave ou conjunto de chaves. Isso significa que uma consulta de ancestral é a única maneira no Google Cloud Datastore de satisfazer o requisito de consistência forte em conjunto com um requisito de filtragem. No entanto, as consultas de ancestral não funcionam sem especificar um <span class="bld">grupo de entidades</span>.</p>
+<h2><a name="h.3loc7ynqbw6i" id="h.3loc7ynqbw6i"></a>Consulta de ancestral e grupo de entidades</h2>
+<p>Conforme discutido no início deste documento, um dos benefícios do Google Cloud Datastore é que os desenvolvedores podem encontrar o equilíbrio ideal entre a consistência forte e a eventual. No Google Cloud Datastore, um <a href="https://developers.google.com/appengine/docs/python/datastore/structuring_for_strong_consistency">grupo de entidades</a> é uma unidade com consistência forte, transacionalidade e localidade. Ao utilizar os grupos de entidades, os desenvolvedores podem definir o escopo da consistência forte entre as entidades em um aplicativo. Dessa maneira, o aplicativo pode manter a consistência dentro do grupo de entidades, ao mesmo tempo que atinge alta escalabilidade, disponibilidade e desempenho como um sistema completo.</p>
+<p>Um grupo de entidades é uma hierarquia composta por uma entidade raiz e suas filhas ou sucessoras.<sup><a href="#ftnt1" name="ftnt_ref1" id="ftnt_ref1">[1]</a></sup> Para criar um grupo de entidades, o desenvolvedor especifica um caminho de ancestral, que é, basicamente, uma série de chaves mãe que atribuem prefixo à chave filha. O conceito do grupo de entidades é ilustrado na Figura 3. Nesse caso, a entidade raiz com a chave "ateam" tem duas filhas com as chaves "ateam/098745" e "ateam/098746".</p>
+<figure><img src="/images/articles/balancing-strong-and-eventual-consistency-with-gcd/croup-concept.png" alt="">
+<figcaption>Figura 3: visualização esquemática do conceito de grupo de entidades</figcaption>
+</figure>
+<p>Dentro do grupo de entidades, estas características são garantidas:</p>
+<ul>
+<li>Consistência forte
+<ul>
+<li>Uma consulta de ancestral no grupo de entidades retornará um resultado fortemente consistente. Dessa forma, ela reflete os valores de entidade mais recentes filtrados pelo último estado de índice.</li>
+</ul>
+</li>
+<li>Transacionalidade
+<ul>
+<li>Ao demarcar uma transação de maneira programática, o grupo de entidades fornece as características de ACID (atomicidade, consistência, isolamento e durabilidade) na transação.</li>
+</ul>
+</li>
+<li>Localidade
+<ul>
+<li>As entidades de um grupo de entidades são armazenadas em lugares fisicamente próximos nos servidores do Google Cloud Datastore, pois todas as entidades são classificadas e armazenadas pela ordem lexicográfica das chaves. Isso permite que uma consulta de ancestral analise rapidamente o grupo de entidades com o mínimo de E/S.</li>
+</ul>
+</li>
+</ul>
+<p>Uma consulta de ancestral é uma forma especial de consulta executada apenas em relação a um grupo de entidades especificado. Ela é executada com consistência forte. Nos bastidores, o Google Cloud Datastore garante que todas as atualizações de índice e replicações pendentes sejam aplicadas antes da execução da consulta.</p>
+<h3><a name="h.pyro8j6ki6tn" id="h.pyro8j6ki6tn"></a>Exemplo de consulta de ancestral</h3>
+<p>Esta seção descreve como usar os grupos de entidades e as consultas de ancestral na prática. No exemplo a seguir, examinamos o problema do gerenciamento de registros de dados para pessoas. Suponha que temos um código que adiciona uma entidade de um tipo específico seguido imediatamente por uma consulta sobre aquele tipo. Esse conceito é demonstrado pelo código Python de exemplo a seguir.</p>
+<pre>
+# Define the Person entity
+class Person(db.Model):
+    given_name = db.StringProperty()
+    surname = db.StringProperty()
+    organization = db.StringProperty()
+# Add a person and retrieve the list of all people
+class MainPage(webapp2.RequestHandler):
+    def post(self):
+        person = Person(given_name='GI', surname='Joe', organization='ATeam')
+        person.put()
+        q = db.GqlQuery("SELECT * FROM Person")
+        people = []
+        for p in q.run():
+            people.append({'given_name': p.given_name,
+                        'surname': p.surname,
+                        'organization': p.organization})
+</pre>
+<p>O problema com esse código é que, na maioria dos casos, a consulta não retornará a entidade adicionada na instrução acima dele. Visto que a consulta está na linha imediatamente após a inserção, o índice não estará atualizado quando a consulta for executada. No entanto, há também um problema com a validade desse caso de uso: realmente existe a necessidade de retornar uma lista de todas as pessoas em uma página sem nenhum contexto? E se houver um milhão de pessoas? A página demoraria muito para retornar.</p>
+<p>A natureza do caso de uso sugere que devemos fornecer contexto para restringir a consulta. Neste exemplo, o contexto que usaremos será a organização. Com isso, poderemos usar a organização como o grupo de entidades e executar uma consulta de ancestral, que resolve nosso problema de consistência. Isso é demonstrado pelo código Python abaixo.</p>
+<pre>
+class Organization(db.Model):
+    name = db.StringProperty()
+class Person(db.Model):
+    given_name = db.StringProperty()
+    surname = db.StringProperty()
+class MainPage(webapp2.RequestHandler):
+    def post(self):
+        org = Organization.get_or_insert('ateam', name='ATeam')
+        person = Person(parent=org)
+        person.given_name='GI'
+        person.surname='Joe'
+        person.put()
+        q = db.GqlQuery("SELECT * FROM Person WHERE ANCESTOR IS :1 ", org)
+        people = []
+        for p in q.run():
+            people.append({'given_name': p.given_name,
+                        'surname': p.surname})
+</pre>
+<p>Dessa vez, com o ancestral org especificado em GqlQuery, a consulta retorna a entidade recém-inserida. O exemplo poderia ser estendido para detalhar uma pessoa específica consultando o nome dela com o ancestral como parte da consulta. De maneira alternativa, isso também poderia ter sido feito salvando a chave da entidade e usando-a para o detalhamento com uma pesquisa por chave.</p>
+<h3><a name="h.l10xxpfjg70q" id="h.l10xxpfjg70q"></a>Como manter a consistência entre o Memcache e o Google Cloud Datastore</h3>
+<p>Também é possível usar os grupos de entidades como uma unidade para manter a consistência entre as entradas do Memcache e as entidades do Google Cloud Datastore. Por exemplo, considere um cenário em que você conta o número de pessoas em cada equipe e armazena no Memcache. Para certificar-se de que os dados armazenados em cache estejam consistentes com os valores mais recentes no Google Cloud Datastore, é possível usar os <a href="https://developers.google.com/appengine/docs/python/datastore/metadataqueries#Python_Entity_group_metadata">metadados do grupo de entidades</a>. Os metadados retornam o número da versão mais recente do grupo de entidades especificado. É possível comparar o número da versão com o número armazenado no Memcache. Ao usar esse método, é possível detectar uma alteração em qualquer uma das entidades em todo o grupo de entidades ao realizar a leitura de um conjunto de metadados, em vez de verificar todas as entidades individuais no grupo.</p>
+<h2><a name="h.ooaauy74mue8" id="h.ooaauy74mue8"></a>Limitações do grupo de entidades e da consulta de ancestral</h2>
+<p>A abordagem do uso de grupos de entidades e consultas de ancestral não é uma solução milagrosa. Há dois desafios na prática que dificultam a aplicação da técnica em geral, conforme indicado a seguir.</p>
+<ol class="c28 lst-kix_qyusimaqza9q-0 start" start="1">
+<li>Há um limite de uma atualização por segundo de gravação para cada grupo de entidades.</li>
+<li>A relação do grupo de entidades não pode ser alterada após a criação da entidade.</li>
+</ol>
+<h3><a name="h.8yrg89iapdjp" id="h.8yrg89iapdjp"></a>Limite de gravação</h3>
+<p>Um desafio considerável é projetar o sistema para conter o número de atualizações ou transações em cada grupo de entidades. O limite suportado é de uma atualização por segundo por grupo de entidades.<sup><a href="#ftnt2" name="ftnt_ref2" id="ftnt_ref2">[2]</a></sup> Se o número de atualizações precisar ultrapassar esse limite, o grupo de entidades poderá representar um afunilamento de desempenho.</p>
+<p>No exemplo acima, cada organização pode precisar atualizar o registro de qualquer pessoa da organização. Considere um cenário em que há 1.000 pessoas em "ateam" e cada uma delas pode realizar uma atualização por segundo em qualquer uma das propriedades. Como resultado, podem haver até 1.000 atualizações por segundo em todo o grupo de entidades, algo que não seria possível em virtude do limite de atualizações. Isso ilustra que é importante escolher um design de grupo de entidades adequado que considere os requisitos de desempenho. Esse é um dos desafios de encontrar o equilíbrio ideal entre a consistência forte e a eventual.</p>
+<h3><a name="h.slap2zz3i3rk" id="h.slap2zz3i3rk"></a>Imutabilidade das relações do grupo de entidades</h3>
+<p>O segundo desafio é a imutabilidade das relações do grupo de entidades. A relação do grupo de entidades é criada estaticamente com base na nomenclatura da chave. Ela não pode ser alterada após a criação da entidade. A única opção disponível para alterar a relação é excluir as entidades em um grupo de entidades e criá-las novamente. Esse desafio impede o uso de grupos de entidades para definir escopos ad hoc para consistência ou transacionalidade de maneira dinâmica. Em vez disso, o escopo de consistência e transacionalidade são intimamente ligados ao grupo de entidades estático definido no momento do design.</p>
+<p>Por exemplo, considere um cenário em que você deseja implementar uma transferência eletrônica entre duas contas bancárias. Esse cenário de negócios requer consistência forte e transacionalidade. Porém, não é possível reunir as duas contas em um grupo de entidades de última hora ou se basear em uma mãe global. Esse grupo de entidades criaria um afunilamento para todo o sistema que impediria a execução de outras solicitações de transferência eletrônica. Portanto, não é possível usar os grupos de entidades dessa maneira.</p>
+<p>No entanto, há uma maneira alternativa de implementar uma transferência eletrônica de uma forma altamente escalável e disponível. Um método para satisfazer esse requisito é usar as <a href="https://developers.google.com/appengine/docs/python/datastore/#Python_Cross_group_transactions">transações entre grupos (XG, na sigla em inglês)</a> para a transacionalidade e o método de pesquisa por chave do Google Cloud Datastore ou uma consulta de ancestral para a consistência. As transações entre grupos são um recurso do Google Cloud Datastore com o qual é possível ter características de ACID para até cinco grupos de entidades ou entidades em uma transação. Com as transações XG, é possível criar um escopo de transação de forma dinâmica com as duas contas bancárias no momento do processamento da solicitação.</p>
+<p>As transações XG garantem apenas a transacionalidade. Para garantir a consistência forte ao ler as duas contas bancárias, use o método de pesquisa por chave ou uma consulta de ancestral. Você receberá um erro se tentar executar uma consulta que não seja uma consulta de ancestral na transação.</p>
+<h2><a name="h.k31yisins6ul" id="h.k31yisins6ul"></a>Alternativas às consultas de ancestral</h2>
+<p>Caso você já tenha um aplicativo com uma grande quantidade de entidades armazenadas no Google Cloud Datastore, pode ser difícil incorporar grupos de entidades posteriormente em um exercício de refatoração. Seria necessário excluir todas as entidades e adicioná-las em uma relação de grupo de entidades. Portanto, na modelagem de dados para o Google Cloud Datastore, é importante tomar uma decisão sobre o design do grupo de entidades na fase inicial do design do aplicativo. Caso contrário, você pode ser limitado na refatoração por outras alternativas para atingir um determinado nível de consistência, como uma consulta apenas de chaves seguida por uma pesquisa por chave ou usando o Memcache.</p>
+<h3><a name="h.56geqhlrqja4" id="h.56geqhlrqja4"></a>Consulta global apenas de chaves seguida pela pesquisa por chave</h3>
+<p>Uma consulta global apenas de chaves é um tipo especial de consulta global que retorna apenas chaves, sem os valores de propriedade das entidades. Como os valores retornados são apenas chaves, a consulta não envolve um valor de entidade com um possível problema de consistência. A combinação da consulta global apenas de chaves com o método de pesquisa lê os valores de entidade mais recentes. Porém, a consulta global apenas de chaves não é capaz de excluir a possibilidade do índice ainda não estar consistente no momento da consulta, o que pode fazer com que a entidade não seja recuperada de nenhuma forma. O resultado da consulta poderia ser gerado com base na filtragem de valores de índice antigos. Em resumo, o desenvolvedor pode usar a consulta global apenas de chaves seguida pela pesquisa por chave somente quando o requisito do aplicativo permitir que o valor de índice ainda não seja consistente no momento da pesquisa.</p>
+<h3><a name="h.kzvtug7i4vlw" id="h.kzvtug7i4vlw"></a>Uso do Memcache</h3>
+<p>O serviço do Memcache é volátil, mas fortemente consistente. Portanto, ao combinar as pesquisas do Memcache com as consultas do Google Cloud Datastore, é possível criar um sistema que minimizará os problemas de consistência na maioria das vezes.</p>
+<p>Por exemplo, considere o cenário de um aplicativo de jogo que mantém uma lista de entidades Jogador, cada uma com a pontuação maior que zero.</p>
+<ul>
+<li>Para solicitações de inserção ou atualização, aplique-as na lista de entidades Jogador no Memcache e no Google Cloud Datastore</li>
+<li>Para solicitações de consulta, leia a lista de entidades Jogador do Memcache e execute uma consulta apenas de chaves no Google Cloud Datastore quando a lista não estiver presente no Memcache</li>
+</ul>
+<p>A lista retornada será consistente sempre que a lista armazenada em cache estiver presente no Memcache. Se a entrada tiver sido removida ou o serviço de Memcache estiver temporariamente indisponível, o sistema precisará ler o valor de uma consulta do Google Cloud Datastore, que pode retornar um resultado inconsistente. Essa técnica pode ser aplicada a qualquer aplicativo que tenha tolerância a um pouco de inconsistência.</p>
+<p>Existem algumas práticas recomendadas ao usar o Memcache como uma camada de armazenamento em cache para o Google Cloud Datastore:</p>
+<ul>
+<li>Capturar exceções e erros do Memcache para manter a consistência entre o valor do Memcache e o do Google Cloud Datastore. Se você receber uma exceção ao atualizar a entrada no Memcache, valide a entrada antiga nele. Caso contrário, poderão haver valores diferentes para uma entidade, ou seja, um valor antigo no Memcache e um novo no Google Cloud Datastore.</li>
+<li>Definir um <a href="https://developers.google.com/appengine/docs/python/memcache/#Python_How_cached_data_expires">período de validade</a> nas entradas do Memcache. É recomendável definir períodos curtos para a validade de cada entrada para minimizar a possibilidade de inconsistência no caso de exceções do Memcache.</li>
+<li>Usar o recurso de <a href="https://developers.google.com/appengine/docs/python/memcache/#Python_Using_compare_and_set_in_Python">comparar e definir</a> ao atualizar as entradas para o controle de simultaneidade. Isso ajudará a garantir que atualizações simultâneas na mesma entrada não interfiram umas nas outras.</li>
+</ul>
+<h3><a name="h.ooddikjhrygc" id="h.ooddikjhrygc"></a>Migração gradual para grupos de entidades</h3>
+<p>As sugestões apresentadas na seção anterior apenas diminuem a possibilidade do comportamento inconsistente. Quando a consistência forte for necessária, é melhor projetar o aplicativo com base em grupos de entidades e consultas de ancestral. No entanto, pode não ser possível migrar um aplicativo existente, o que pode incluir a mudança da lógica do aplicativo e do modelo de dados existente de consultas globais para consultas de ancestral. Uma maneira de conseguir isso é adotar um processo de transição gradual, como este:</p>
+<ol class="c28 lst-kix_gkyism9dw6ma-0 start" start="1">
+<li>Identificar e priorizar as funções do aplicativo que exijam consistência forte.</li>
+<li>Escrever a nova lógica para as funções insert() ou update() usando grupos de entidades juntamente com a lógica existente, em vez de substitui-la. Dessa forma, todas as novas inserções ou atualizações nos novos grupos de entidades e nas entidades antigas podem ser tratadas pela função adequada.</li>
+<li>Modificar a lógica existente para as funções de consulta ou leitura. As consultas de ancestral são executadas primeiro se houver um novo grupo de entidades para a solicitação. Executar a consulta global antiga como a lógica substitua se o grupo de entidades não existir.</li>
+</ol>
+<p>Essa estratégia permite a migração gradual de um modelo de dados existente para um novo modelo com base em grupos de entidades que minimiza o risco de problemas causados pela consistência eventual. Na prática, essa abordagem depende dos requisitos e casos de uso específicos para sua aplicação a um sistema real.</p>
+<h3><a name="h.gj5afnup3sr9" id="h.gj5afnup3sr9"></a>Substituição pelo modo degradado</h3>
+<p>Atualmente, é difícil detectar uma situação de maneira programática quando um aplicativo apresenta consistência deteriorada. Porém, em alguns casos, como ao monitorar casos de suporte ao cliente, isso pode ser possível. Se esse for o caso, é possível implementar um modo degradado que pode ser habilitado e desabilitado para desativar algumas áreas da lógica do aplicativo que exijam consistência forte. Por exemplo, em vez de mostrar um resultado de consulta inconsistente em uma tela de relatório de faturamento, é possível exibir uma mensagem de manutenção para essa tela específica. Dessa forma, os outros serviços do aplicativo podem continuar em funcionamento e, assim, reduzir o impacto na experiência do usuário.</p>
+<h2><a name="h.buvz7spe7ytk" id="h.buvz7spe7ytk"></a>Como minimizar o tempo para atingir a consistência completa</h2>
+<p>Em um aplicativo grande com milhões de usuários ou terabytes de entidades do Google Cloud Datastore, o uso inadequado do Google Cloud Datastore pode levar à consistência deteriorada. Essas práticas incluem:</p>
+<ul>
+<li>Numeração sequencial em chaves de entidade</li>
+<li>Muitos índices</li>
+</ul>
+<p>Essas práticas não afetam aplicativos pequenos. Porém, uma vez que o aplicativo fique muito grande, essas práticas aumentam a possibilidade de tempos maiores necessários para a consistência. Portanto, é melhor evitá-las nos estágios iniciais do design do aplicativo.</p>
+<h3><a name="h.rwk0fv57jze5" id="h.rwk0fv57jze5"></a>Antipadrão 1: numeração sequencial de chaves de entidade</h3>
+<p>Antes do lançamento do App Engine SDK 1.8.1, o Google Cloud Datastore usava uma sequência de pequenos IDs de números inteiros, com padrões geralmente consecutivos, como os nomes de chave padrão gerados automaticamente. Em alguns documentos, isso é chamado de "política de legado" para a criação de quaisquer entidades que não possuam um aplicativo especificado no nome da chave. Essa política de legado gera nomes de chave de entidade com numeração sequencial, como 1000, 1001, 1002, por exemplo. No entanto, como vimos anteriormente, o Google Cloud Datastore armazena as entidades pela ordem lexicográfica dos nomes das chaves, de forma que é bastante provável que essas entidades sejam armazenadas nos mesmos servidores do Google Cloud Datastore. Se um aplicativo atrair um tráfego muito alto, essa numeração sequencial poderá causar a concentração de operações em um servidor específico, o que pode resultar em uma latência maior para a consistência.</p>
+<p>No App Engine SDK 1.8.1, o Google Cloud Datastore introduziu um novo método de numeração de ID com uma política padrão que usa IDs dispersos (consulte a documentação de <a href="https://developers.google.com/appengine/docs/python/datastore/entities#Python_Assigning_identifiers">referência</a>). Essa política padrão gera uma sequência aleatória de IDs com até 16 dígitos que são distribuídos de maneira quase uniforme. Com o uso dessa política, é provável que o tráfego de um aplicativo grande seja melhor distribuído entre um conjunto de servidores do Google Cloud Datastore, com um tempo menor para atingir a consistência. A menos que seu aplicativo exija especificamente a compatibilidade com a política de legado, a política padrão é recomendada.</p>
+<p>Se você definir explicitamente nomes de chave nas entidades, deverá projetar o esquema de nomenclatura para acessar as entidades de maneira uniforme em todo intervalo de nomes de chave. Em outras palavras, não concentre o acesso em um intervalo específico, uma vez que a classificação é feita de acordo com a ordem lexicográfica dos nomes das chaves. Caso contrário, pode ocorrer o mesmo problema apresentado pela numeração sequencial.</p>
+<p>Para entender a distribuição irregular do acesso no keyspace, considere um exemplo em que as entidades são criadas com nomes de chave sequenciais, conforme mostrado neste código:</p>
+<pre>
+p1 = Person(key_name='0001')
+p2 = Person(key_name='0002')
+p3 = Person(key_name='0003')
+...
+</pre>
+<p>O padrão de acesso do aplicativo pode criar um "hot spot" em um determinado intervalo de nomes de chave, como no caso da concentração do acesso nas entidades Person recém-criadas. Nesse caso, todas as chaves acessadas com frequência terão IDs mais altos. Dessa forma, a carga pode ser concentrada em um servidor específico do Google Cloud Datastore.</p>
+<p>De maneira alternativa, para entender a distribuição uniforme no keyspace, considere o uso de strings longas e aleatórias para os nomes de chave. Isso é ilustrado no exemplo abaixo:</p>
+<pre>
+p1 = Person(key_name='t9P776g5kAecChuKW4JKCnh44uRvBDhU')
+p2 = Person(key_name='hCdVjL2jCzLqRnPdNNcPCAN8Rinug9kq')
+p3 = Person(key_name='PaV9fsXCdra7zCMkt7UX3THvFmu6xsUd')
+...
+</pre>
+<p>Agora, as entidades Person recém-criadas estão dispersas no keyspace e em diversos servidores. Isso pressupõe que há um número suficientemente grande de entidades Person.</p>
+<h3><a name="h.ou9y4doeg7dm" id="h.ou9y4doeg7dm"></a>Antipadrão 2: Muitos índices</h3>
+<p>No Google Cloud Datastore, uma atualização em uma entidade levará à atualização de todos os índices definidos para esse tipo de entidade. Consulte o artigo <a href="https://developers.google.com/appengine/articles/life_of_write">Vida de uma gravação no armazenamento de dados</a> para encontrar detalhes. Se um aplicativo usar diversos índices personalizados, uma atualização poderá envolver dezenas, centenas ou até mesmo milhares de atualizações nas tabelas de índice. Em um aplicativo grande, o uso excessivo de índices personalizados pode resultar em uma carga maior no servidor, além de aumentar a latência para atingir a consistência.</p>
+<p>Na maioria dos casos, os índices personalizados são adicionados para oferecer suporte a requisitos como tarefas de análise de dados, solução de problemas e suporte ao cliente. O Google <a href="/pt-br/products/big-query">BigQuery</a> é um mecanismo de consulta imensamente escalável que pode executar consultas ad hoc em grandes conjuntos de dados sem os índices criados previamente. Ele é mais adequado para os casos de uso como suporte ao cliente, solução de problemas ou análises de dados que exijam consultas complexas do que o Google Cloud Datastore.</p>
+<p>Uma prática é combinar o Google Cloud Datastore com o BigQuery para atender a diferentes requisitos de negócios. Use o Google Cloud Datastore para o processamento transacional on-line (OLTP, na sigla em inglês) necessário para a lógica central do aplicativo e use o Google BigQuery para o processamento analítico on-line (OLAP, na sigla em inglês) para operações de back-end. Pode ser necessário implementar um fluxo de exportação de dados contínuo do Google Cloud Datastore para o BigQuery para transferir os dados para as consultas necessárias.</p>
+<p>Além de uma implementação alternativa para os índices personalizados, outra recomendação é especificar explicitamente as propriedades não indexadas. Consulte as <a href="https://developers.google.com/appengine/docs/python/ndb/properties#options">Opções de propriedade</a> na documentação de referência. Por padrão, o Google Cloud Datastore cria uma tabela de índice diferente para cada propriedade indexável de um tipo de entidade. Se você tiver 100 propriedades em um tipo, haverá 100 tabelas de índice para ele, além de 100 atualizações adicionais em cada atualização de uma entidade. Dessa forma, é uma prática recomendada definir as propriedades não indexadas onde for possível, caso elas não sejam necessárias para uma condição de consulta.</p>
+<p>Além de reduzir a possibilidade de haver aumentos de tempo para atingir a consistência, essas otimizações de índice podem resultar em uma grande redução dos custos do Google Cloud Datastore em um aplicativo grande que use os índices com frequência.</p>
+<h2><a name="h.njxgygqflg9k" id="h.njxgygqflg9k"></a>Conclusão</h2>
+<p>A consistência eventual é um elemento essencial dos bancos de dados não relacionais que permite que os desenvolvedores encontrem o equilíbrio ideal entre a escalabilidade, o desempenho e a consistência. É importante entender como lidar com o equilíbrio entre a consistência forte e a eventual para projetar um modelo de dados ideal para seu aplicativo. No Google Cloud Datastore, o uso de grupos de entidades e consultas de ancestral é a melhor maneira de garantir a consistência forte em um escopo de entidades. Caso seu aplicativo não possa incorporar grupos de entidades em virtude das limitações descritas anteriormente, considere outras opções, como o uso de consultas apenas de chaves ou do Memcache. Para aplicativos grandes, aplique práticas recomendadas, como o uso de IDs dispersos e da indexação reduzida para diminuir o tempo necessário para atingir a consistência. Também pode ser importante combinar o Google Cloud Datastore com o BigQuery para atender aos requisitos de negócios para consultas complexas e reduzir o uso de índices do Google Cloud Datastore o máximo possível.</p>
+<h2><a name="h.ywh7cedcuhkk" id="h.ywh7cedcuhkk"></a>Recursos adicionais</h2>
+<p>Estes recursos oferecem mais informações sobre os tópicos discutidos neste documento:</p>
+<ul>
+<li><a href="https://developers.google.com/appengine/docs/python/datastore/">Google App Engine: armazenamento de dados</a></li>
+<li><a href="https://developers.google.com/appengine/articles/datastore/overview">Como dominar o armazenamento de dados (série)</a></li>
+<li><a href="http://googlecloudplatform.blogspot.com/">Blog do Google Cloud Platform</a></li>
+<li><a href="https://developers.google.com/cloud-sql/">Google Cloud SQL</a></li>
+<li><a href="https://developers.google.com/appengine/training/cloud-sql/">Uso do App Engine Python com o Google Cloud SQL</a></li>
+<li><a href="http://static.googleusercontent.com/external_content/untrusted_dlcp/research.google.com/en/us/archive/bigtable-osdi06.pdf">Bigtable: um sistema de armazenamento distribuído para dados estruturados</a></li>
+<li><a href="http://googleappengine.blogspot.com/2011/07/app-engine-152-sdk-released.html">Lançamento do SDK do App Engine 1.5.2</a></li>
+<li><a href="http://www.cidrdb.org/cidr2011/Papers/CIDR11_Paper32.pdf">Megastore: oferecendo armazenamento escalável e altamente disponível para serviços interativos</a></li>
+</ul>
+<br>
+<br>
+<hr>
+<p><a href="#ftnt_ref1" name="ftnt1" id="ftnt1">[1]</a> Um grupo de entidades pode ser formado até mesmo ao especificar apenas uma chave da entidade mãe ou raiz, sem armazenar as entidades reais da mãe ou raiz, pois todas as funções do grupo de entidades são implementadas com base nas relações entre as chaves.</p>
+<p><a href="#ftnt_ref2" name="ftnt2" id="ftnt2">[2]</a> O limite suportado é de uma atualização por segundo por grupo de entidades fora das transações ou uma transação por segundo por grupo de entidades. Se você agregar várias atualizações em uma transação, estará limitado ao tamanho de transação máximo de 10 MB e à taxa de gravação máxima do servidor do Datastore.</p>
+</div>
+<!-- /maia-main --></div>
+<div class="maia-col-3"><br>
+<img src="//www.google.com/images/icons/product/feedback-16.png" class="g-app-icon" alt=""> <a href="javascript:void(0);" class="google-feedback">Feedback sobre este documento</a><br>
+<br></div>
+</div>
+</div>
+<script>
+(function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+</script><script src="//www.gstatic.com/feedback/api.js">
+</script><script>
+$('body').delegate('.google-feedback', 'click', function() {
+      userfeedback.api.startFeedback({'productId': '94614'});
+  });
+</script><!-- Scripts to include both on Goro + Devsite --><script>
+window.___gcfg = {
+     lang: ''
+   };
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+</script><!-- GTM implementation --><!-- Start dataLayer --><script>
+dataLayer = [{
+        'country': 'None',
+        'region': 'None',
+        'language': 'pt-br'
+      }];
+</script><!-- End dataLayer --><!-- Start Google Tag Manager --><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5CVQBG" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript> <script>
+(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-5CVQBG');
+</script><!-- End Google Tag Manager --><!-- Global JS scripts to load; path will depend on whether we're on devsite or Goro --><script src="/js/base.min.js">
+</script><!-- Retina loader; Do not load if partners page because we need to wait until the Angular app runs --><script>
+new lfl.system.RetinaLoader();
+</script><!-- Secondary right-side scroll-nav --><script>
+new lfl.ui.ScrollNav({});
+</script>
+</body>
+</html>

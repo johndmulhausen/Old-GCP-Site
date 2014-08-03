@@ -1,0 +1,446 @@
+---
+layout: phase2
+title: Google Cloud Endpoints for Android
+---
+<div id="maia-main" class="cp-article">
+  <div class="maia-cols">
+    <div class="maia-col-9">
+      <div>
+        <div style="float:right">
+          <div class="g-plusone"></div>
+        </div>
+        <h1 class="title">Google Cloud Endpoints for Android</h1>
+      </div>
+      
+<div class="cp-article-tutorial">
+
+  <h3><a name="h.k8r0kpj0p22n" id="h.k8r0kpj0p22n"></a>A Java Developer&rsquo;s Tips and Good Practices</h3>
+  <h2><a name="h.w16jd8tvbxs" id="h.w16jd8tvbxs"></a>Introduction</h2>
+
+  <p>You want to develop a world-class mobile application. You turn to Google Cloud Endpoints because you hear that it will save you a lot of time and coding. It is a fairly new feature, and you&rsquo;ve read some of the great existing documentation, papers, and tutorials out there.</p>
+  <p>Though armed with this information, you&rsquo;re not quite sure of some of the finer points. When you try to generate your Cloud Endpoint Library, you don&rsquo;t understand which part of your code is throwing the error. How do you annotate your methods so that there will be no conflicts between REST paths? Color-coded mappings between the generated code and the annotations would sure help!</p>
+  <p>Find answers to these questions and more in this article. If you&rsquo;re not stuck, but would like some tips anyway, then this is still an excellent place to start. If you&rsquo;re a complete beginner and still might be asking questions like, &ldquo;What is Cloud Endpoints?&rdquo;, reread the Overview and <a href="https://developers.google.com/appengine/docs/python/endpoints/overview">Python</a> or <a href="https://developers.google.com/appengine/docs/java/endpoints/overview">Java</a> sections. They are short&mdash;a quick skim will suffice until you need to reference them later while developing your app.</p>
+  <p>The following sections discuss some general tips, handy details, issues that you might run into, and solutions for them. It is assumed that you know a little about Cloud Endpoints, because this is not a comprehensive &ldquo;guide,&rdquo; &ldquo;tutorial,&rdquo; or even &ldquo;handbook.&rdquo; Think of it more as a very useful addendum to the main developer documentation. If you are unsure of where to even begin, go back and read the Overview <a href="https://developers.google.com/appengine/docs/java/endpoints/overview">here</a>.</p>
+
+  <h4><a name="h.1wcbbrj9ibmf" id="h.1wcbbrj9ibmf"></a>Contents</h4>
+  <p>
+    <a href="#h.hl6cwmm8921n">Cloud Endpoints in a Nutshell</a><br>
+    <a href="#h.30w0sum7onat">Setup: A Quick Review</a><br>
+    <a href="#h.mvx1eqsso26q">Snippets of Endpoint Code</a><br>
+    <a href="#h.tb58w1ama1mo">Designing Your API</a><br>
+    <a href="#h.f7irpyw3cics">Generating Your Library</a><br>
+    <a href="#h.o64qp3kxmvbo">Designing Your Model for the Datastore</a><br>
+    <a href="#h.4blcldx52y6m">Google Cloud Messaging</a><br>
+    <a href="#h.ergctzatsr0">For First-time Android Developers</a><br>
+    <a href="#h.vf1kryhr5nza">Final Word</a><br>
+    <a href="#h.jihi5o477liv">Appendix</a><br>
+  </p>
+
+  <h2><a name="h.hl6cwmm8921n" id="h.hl6cwmm8921n"></a>Cloud Endpoints in a Nutshell</h2>
+  <p>Cloud Endpoints is a service for building and exposing custom APIs with which your client applications can interact.</p>
+  <p>It exists to make your life as a developer much easier. Google engineers have already put in an enormous amount of effort to write and optimize it for you, freeing  you from the worry of writing the bulk of the server-client interactions and protocols yourself.</p>
+  <p>One of the benefits of being able to easily build your own API is that you can design it any way you want. Cloud Endpoints gives you this flexibility&mdash;it allows REST- or RPC-style APIs, or a combination of both. Even better, you can change the design as often as you like and implement those changes quickly. This is perfect for agile style of development.</p>
+
+  <h3><a name="h.u3eovjymoqi5" id="h.u3eovjymoqi5"></a>A Bit About Basic REST</h3>
+  <p>In REST, the basic idea is to expose the state of the system as a collection of individually addressable resources.  You perform operations by manipulating these resources. A resource is an entity that has a state, as well as a name or id. Resources are stored in your backend&mdash;whether that is the Google Cloud Datastore, or something else.</p>
+  <p>As a general rule with REST, the client sees representations of the resources through requests made to the server. It can also update the resources by manipulating the representations, and sending the updated representations to the server via subsequent requests. Resources may be represented in a variety of ways: XML, JSON, CSV, or more. At this time, Cloud Endpoints only supports JSON, which tends to be less verbose and  less vulnerable to human error than XML is.</p>
+  <p>You may have heard of CRUD (Create, Retrieve, Update, Delete), or variants of it. This is at the root of REST. When you use the Google Plugin for Eclipse to generate an Endpoint class, these types of basic methods are generated in the Endpoint class for you.</p>
+  <p>You are certainly not limited to those basic actions. Adding custom methods gives you much more flexibility, allowing you to perform complex operations. For example, checkForVictory might perform several queries, plus a write, to a database.</p>
+
+  <h2><a name="h.30w0sum7onat" id="h.30w0sum7onat"></a>Setup: A Quick Review</h2>
+  <p>This section provides a quick review on how to generate your project and build Endpoints on Eclipse. For more information, refer to the developer documentation.</p>
+
+  <ol>
+      <li>
+        Make sure the following are downloaded and set up on your computer:
+        <ol>
+            <li>Eclipse</li>
+            <li>Google Plugin for your version of Eclipse</li>
+            <li>App Engine SDK</li>
+            <li>Android SDK</li>
+        </ol>
+        <p>At the time of writing, the latest versions were Eclipse 4.2, App Engine SDK 1.8.0, and Android SDK r21.01.1.</p>
+      </li>
+      <li>If you do not already have an Android client application, create one in Eclipse.</li>
+      <li>Create your App Engine backend by right-clicking your Android Application and selecting <span class="bld">Google &gt; Create App Engine Backend.</span></li>
+      <li>You can generate basic Endpoints classes by right-clicking your data object java class and selecting <span class="bld">Google &gt; Generate Cloud Endpoint Class</span>. You can always further modify these classes.</li>
+      <li>Generate your library by right-clicking your App Engine backend application and selecting <span class="bld">Google &gt; Generate Cloud Endpoint Library.</span></li>
+  </ol>
+  <p>If you&rsquo;re an IntelliJ user, another option for an Android development environment is the <a href="http://developer.android.com/sdk/installing/studio.html">Android Studio on IntelliJ</a>. Although this article does not cover that option, you can read more about it on the Android developer site. Because this option is an <a href="http://blogs.jetbrains.com/idea/2013/05/intellij-idea-and-android-studio-faq/">early-access preview</a> at the moment, bear in mind that bugs or changes may pop up from time to time. However, it is extremely versatile and has great existing and planned features, so keep an eye on it, especially if you&rsquo;re an avid IntelliJ user.</p>
+  <h2><a name="h.mvx1eqsso26q" id="h.mvx1eqsso26q"></a>Snippets of Endpoint Code</h2>
+  <h3><a name="h.p8k706n6rk9o" id="h.p8k706n6rk9o"></a>Defining Endpoints in the Backend</h3>
+  <p>The App Engine application Endpoints code can be grouped into two categories: model and API.</p>
+  <p>The first type is  your model. These classes represent the objects in the world of your application&mdash;in other words, they represent the resources that will be manipulated by your API. For example, if your application world contains lobsters with whiskers, you might have a data object such as this:</p>
+
+<pre>
+public class Lobster {
+  private int whiskerLength;
+  public int getWhiskerLength() {
+    return whiskerLength;
+  }
+  public void setWhiskerLength(int whiskerLength) {
+    this.whiskerLength = whiskerLength;
+  }
+}
+</pre>
+
+
+  <p>The second type is your API code. The API part of your code provides the methods that may be accessed in a client application. These methods manipulate the objects in your model.  There are two ways to start writing API code:</p>
+  <ul>
+      <li>You may right-click on Lobster.java and select <span class="bld">Google &gt; Generate Endpoint Class</span>, whereupon Eclipse will generate a new class for you called LobsterEndpoint.java. This class will be filled with pre-generated <a href="https://developers.google.com/appengine/docs/java/endpoints/annotations">annotations</a> and code, ready to be called from your client. These generated methods insert, update, and delete your Lobster objects from your Datastore. You can further modify this class by adding or removing methods.</li>
+      <li>You may create your own Java class and call it whatever you want. As long as it is annotated properly, Cloud Endpoints will recognise it as being part of your API. Please note that private instance methods will not become part of your API.</li>
+  </ul>
+  <p>An example of an endpoint class might look like this:</p>
+
+<pre>
+@Api(name = "lobster")
+public class LobsterEndpoint {
+  @ApiMethod(name = "lobster.growWhisker", httpMethod = HttpMethod.POST)
+  public void growWhisker(Lobster lobster) {
+    // grows the lobster&rsquo;s whisker
+    // calculates growth, updates the Lobster in Datastore
+  }
+  private int calculateWhiskerGrowth(Lobster lobster) {
+    // this method is a private utility method
+    // it will NOT be visible in your API
+  }
+}
+</pre>
+
+
+  <p>One general tip: Don&rsquo;t get stuck on the generated endpoint code. It is useful, yes, and contains great starting point patterns, but don&rsquo;t be afraid to modify it for your specific project. The code is as malleable as you want it to be. For example, the auto-generated DeviceInfo entities use Registration IDs as keys. You can still add new fields to a DeviceInfo entity, or use a different field for the key instead.</p>
+
+  <h3><a name="h.yf5waeq61xd" id="h.yf5waeq61xd"></a>Consuming Endpoints from the Client</h3>
+  <p>After you <a href="https://developers.google.com/appengine/docs/java/endpoints/gen_clients">generate</a> your Cloud Endpoint Library, the new code that appears in your client (usually under some folder with endpoint-libs in the filepath) corresponds to the functionality you provided in your backend code.</p>
+  <p>The difference in the model is that new classes extend the <a href="http://javadoc.google-http-java-client.googlecode.com/hg/1.12.0-beta/com/google/api/client/json/GenericJson.html">GenericJson</a> class, so that they can be sent as JSON. This is what your newly-generated Lobster class might look like:</p>
+
+<pre>
+public final class Lobster extends GenericJson {
+  private int whiskerLength;
+  public int getWhiskerLength() {
+    return whiskerLength;
+  }
+  public Lobster setWhiskerLength(int whiskerLength) {
+    this.whiskerLength = whiskerLength;
+    return this;
+  }
+}
+</pre>
+
+  <p>The API client code is a series of methods and JSON request classes, which make it very easy for you to use in an Android client. This is what the result of your LobsterEndpoint.java class might look like:</p>
+
+<pre>
+public Lobster lobster() {...}
+public class Lobster {
+  public GrowWhisker growWhisker(Lobster lobster) {...}
+  public class GrowWhisker extends LobsterRequest {
+    private static final String REST_PATH = &ldquo;growWhisker&rdquo;
+    protected GrowWhisker(Lobster lobster) {...}
+    ...
+  }
+}
+</pre>
+
+  <p>You can then consume this exposed endpoint with the following code:</p>
+
+<pre>
+service.lobster().growWhisker(lobster).execute();
+</pre>
+
+  <p>If you are at all familiar with HTTP requests, you will know that, for any given REST path, you can only provide one definition of POST, one of GET, <a href="https://developers.google.com/appengine/docs/java/javadoc/com/google/appengine/api/urlfetch/HTTPMethod">and so on</a>. You can certainly create multiple POSTs in the same endpoint API, but make sure that their REST paths are different, or you will run into conflicts. For more information on @ApiMethod annotations, see the relevant section in the <a href="#h.pga0m919sg4m">appendix</a>.</p>
+  <p>Ideally, once the library is generated in your client application, you should leave the generated client code alone. Any changes you may want to make to your model or API should be done in the backend.</p>
+
+  <h2><a name="h.tb58w1ama1mo" id="h.tb58w1ama1mo"></a>Designing Your API</h2>
+  <h3><a name="h.59ur83gz03xh" id="h.59ur83gz03xh"></a>Model</h3>
+  <ul>
+      <li>
+        <span class="bld">The classes in your model must have certain characteristics.</span><br> If you want to use a class in your API, these are the characteristics that are required:
+        <ul>
+          <li>Be serializable</li>
+          <li>Have a zero-argument constructor</li>
+          <li>Implement getters and setters for its fields</li>
+        </ul>
+      </li>
+      <li><span class="bld">The classes in your model may contain other instance methods as well.</span> <br>Keep in mind that any methods that are not getters or setters  will never see the light of day on the client side.</li>
+      <li>
+        <span class="bld">How does an object class definition in the model get flagged for inclusion in the generated client model?</span><br> Say you have a Clam.java class and some fields and getters and setters (get/setPearl, get/setColor, for example), but when you generate the Endpoint Library, no Clam.java appears in your generated code. What happened to it? How you use the Clam object in the rest of your model and in your backend API determines this behavior.
+        <ul>
+          <li>
+            Using the entity in your API will force Cloud Endpoints to recognize that Clams, as objects, exist.
+<pre>
+@ApiMethod(name = "clam.producePearl", httpMethod = HttpMethod.POST)
+public void producePearl(Clam clam) {
+  // adds a pearl to the clam
+}
+</pre>
+          </li>
+          <li>Using Clams properly in your model forces Cloud Endpoints to recognize them and generate a client-side Clam.java for you. In order to make Cloud Endpoints recognize Clams as objects, write a setClam (Clam clam) setter method, which can be public, protected, or private.
+            <ul>
+              <li>
+                &ldquo;Setter&rdquo; methods must have the following properties:
+                  <ul>
+                    <li>The method name must begin with &ldquo;set&rdquo;</li>
+                    <li>
+                      The object that you want to set must be in the parameters<br>For example:
+                      <p>setClam(Tree tree) is clearly setting a Tree, not a Clam &ndash; despite the method name claiming otherwise. This method will actually generate a Tree.java class in the client, as well as getTree() and setTree(Tree) methods. It will not generate a setClam(Clam) method.</p>
+                    </li>
+                  </ul>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+  </ul>
+
+  <h4><a name="h.81ofeyalqugy" id="h.81ofeyalqugy"></a>About Supported Types</h4>
+  <ul>
+      <li><span class="bld">Enums.</span> Enums in your backend are generated as String representations in the client code. In other words, if you are making use of the enum functionality in both the backend and client, you will need to define the enum in both places.</li>
+      <li><span class="bld">Boolean</span> &ndash; Getters often appear in a form such as &ldquo;isLobster&rdquo; in Java code, and Eclipse uses that convention when you right-click the field and go to Source &gt; Generate Getters/Setters. However, be aware that Cloud Endpoints will generate &ldquo;getLobster&rdquo; in the client model.</li>
+  </ul>
+
+  <h3><a name="h.2wd8p0vkyhzy" id="h.2wd8p0vkyhzy"></a>API Methods</h3>
+  <ul>
+      <li><span class="bld">The attribute &ldquo;name&rdquo; for @Api annotation should start with a lowercase character.</span> It should be formatted like a Java variable name&mdash;camel case, alphanumeric.</li>
+      <li><span class="bld">Static methods are not supported in your Endpoints classes.</span> If you must have a static method, it should be made private.</li>
+      <li><span class="bld">If you do not specify the httpMethod attribute in @ApiMethod signature, Cloud Endpoints will make an educated guess for you, based on your method name.</span></li>
+      <li><span class="bld">Use the @ApiNamespace annotation</span> for more control over your the package names of your library. Otherwise, your API will use the default package names.</li>
+      <li><span class="bld">Method parameters in the generated client library are in alphabetical order</span>, regardless of the original order in the backend method. As a result, you should be careful when editing your methods, especially if there are several parameters of the same type. The compiler will not be able to catch parameter-ordering errors for you.</li>
+      <li><span class="bld">Empty Lists that are returned will arrive as nulls on the client-side.</span> Remember to check for those.</li>
+      <li><span class="bld">Overloaded methods in a class are not supported.</span></li>
+  </ul>
+
+  <h4><a name="h.2vyv9hju4ls9" id="h.2vyv9hju4ls9"></a>About Supported Parameter Types</h4>
+  <ul>
+      <li>
+        <span class="bld">Most parameter types must be serializable</span> because JSON requires that the objects be serializable.
+        <ul>
+          <li>You may also use any JavaBean, which includes anything from your model, since your model objects should conform to the JavaBean standard as described above.</li>
+        </ul>
+      </li>
+      <li><span class="bld">A limited set of types need not be serializable, but must be annotated with @Named.</span> These are the types: String, int/Integer, boolean/Boolean, long/Long.</li>
+  </ul>
+
+  <h4><a name="h.mz544pd5nvxv" id="h.mz544pd5nvxv"></a>About Supported Return Types</h4>
+  <ul>
+      <li><span class="bld">Return types must be serializable.</span> The supported <span class="code">@Named</span> method parameters (such as Strings and Booleans) are not supported as return types. One exception is that you can return a <span class="code">void</span>, in which case the generated client-side method will return a <span class="code">Void.class.</span></li>
+      <li><span class="bld">Lists of serializable types.</span> Actually, what Endpoints generates is a new &ldquo;Collection&rdquo; JSON class that is similar to every other client model class. For example, if you have an object in your model that is represented by <span class="code">Lobster.java</span>, and you want to return a <span class="code">List&lt;Lobster&gt;</span>, the library will have a <span class="code">LobsterCollection.java</span>. You can retrieve the list of Lobsters in your client by calling getItems().</li>
+      <li><span class="bld">Maps of serializable types.</span> Similar to the way it deals with Lists, Endpoints generates a &ldquo;JsonMap&rdquo; for Maps.</li>
+      <li><span class="bld">Subclass types will generate the interface type.</span> For example, if your backend method returns an <span class="code">ArrayList</span>, it will be a List in your client. Of course, you should probably be using the interface to define your variables and return types anyway, but be aware of this in cases where you want to use the subclass.</li>
+  </ul>
+
+  <h2><a name="h.f7irpyw3cics" id="h.f7irpyw3cics"></a>Generating Your Library</h2>
+  <p>As you begin to generate your Cloud Endpoints API library, here are a few features that the Google Plugin for Eclipse can help you with:</p>
+  <ul>
+      <li><span class="bld">Starting from scratch is very easy.</span> When you first generate your App Engine backend from your Android project, Eclipse sets up the configurations to link the the two. These configurations tell Eclipse to put the new generated library code into the correct folder in your Android project. For more details, see the <a href="#h.denl7ubxn3hc">Generating Endpoints</a> sections.</li>
+      <li>
+        <span class="bld">If you already have an App Engine application that you want to link</span> up to your Android frontend, you&rsquo;ll need to edit your Eclipse project settings.
+        <ul>
+          <li>In your Eclipse project for your Android client, there is a hidden folder called &ldquo;.settings/&rdquo;. The <span class="code">com.google.gdt.eclipse.appengine.swarm.prefs</span> file in the settings folder should contain a line: <span class="code">&ldquo;connectedProject=YourAppEngineBackend&rdquo;, where &ldquo;YourAppEngineBackend&rdquo;</span> is the name of your backend.</li>
+          <li>In your Eclipse project for your App Engine backend, there is also a hidden folder called &ldquo;.settings/&rdquo;. The <span class="code">com.google.gdt.eclipse.appengine.swarm.prefs</span> file in the settings folder should contain a line: <span class="code">&ldquo;connectedProject=YourAndroidClient&rdquo;, where &ldquo;YourAndroidClient&rdquo;</span> is the name of your frontend client.</li>
+        </ul>
+      </li>
+      <li><span class="bld">Resolve errors when generating the Cloud Endpoint Library by looking at Eclipse&rsquo;s Error Log.</span> As you start developing with Cloud Endpoints, you might run into problems <a href="https://developers.google.com/appengine/docs/java/endpoints/gen_clients">generating</a> the library at first. You may encounter the error, &ldquo;Generating Cloud Endpoint has encountered errors and is not complete.&rdquo;  You can see a much more complete description of the error by selecting <span class="bld">Window &gt; Show View &gt; Error Log.</span> Double-click on each error for a nice verbose output.</li>
+      <li><span class="bld">Make sure your Eclipse version has a Google Plugin that is compatible with the version of App Engine SDK.</span> If you&rsquo;re still running into odd errors such as &ldquo;method not found&rdquo; after reading the Error Log, it may be due to incompatibility between versions. When in doubt, update to the latest versions of the Google Plugin, App Engine SDK, and Android SDK. If there are still problems, try switching to newer versions of Eclipse.</li>
+      <li><span class="bld">Re-generate your library periodically, or after every major change.</span> When you change your @ApiMethod name attribute, or anything else that causes client-side changes, you should update your library. Think of it this way:  You are the engineer for both server code and client code. Sometimes you, the backend engineer, will make breaking changes, and you, the frontend engineer, will have to adapt.</li>
+      <li><span class="bld">Set up a local development environment if you want to test locally.</span> When you generate the endpoint library, a class is automatically created for you, named <span class="code">CloudEndpointUtils</span>. If you want to do local testing, remember to set <span class="code">LOCAL_ANDROID_RUN = true</span>, and call <span class="code">CloudEndpointUtils.updateBuilder(builder)</span> in every place that instantiates an endpoint service. This way, you can easily switch between local versus deployed versions by toggling the <span class="code">LOCAL_ANDROID_RUN</span> variable.</li>
+  </ul>
+
+  <h2><a name="h.o64qp3kxmvbo" id="h.o64qp3kxmvbo"></a>Designing Your Model for the Datastore</h2>
+  <p>Remember to make your model Datastore-compliant if you wish to use the easily-accessible persistent storage that Datastore offers, which plays so nicely with Cloud Endpoints. Take a look <a href="https://developers.google.com/appengine/docs/java/datastore/entities#Properties_and_Value_Types">here</a> for the full list of Datastore Properties and Types. The following describes some of the highlights and ambiguities of Datastore in more detail:</p>
+
+  <ul>
+    <li><span class="bld">You have several choices for interacting with the Datastore.</span> JPA/JDO provides an excellent abstraction layer for when your saved model is simple. The low-level Datastore API gives you more control over how your objects persist. If you use the low-level Datastore API, you can, and will need to, manually control changes to your model.  This has upsides and downsides.</li>
+    <li><span class="bld">Empty lists persist as plain old nulls.</span>  It is worth noting that even if you check for these nulls and attach an empty List to the object that gets sent to the client, it will still arrive as null on the client.</li>
+    <li><span class="bld">For persisting groups of objects, remember that Datastore only takes objects of type Collection or its subclasses.</span> The items in the Collection must be of one of the other supported types, or they must be serializable into a <a href="https://developers.google.com/appengine/docs/java/javadoc/com/google/appengine/api/datastore/Blob">Blob</a>.</li>
+    <li><span class="bld">No arrays.</span> As mentioned above, Datastore will take values of type Collection, so make use of those instead of arrays.</li>
+    <li><span class="bld">Datastore does not distinguish between the sizes of the numbers, such as  int32 and int64.</span> For example, if you persist a List of Integers, it is stored as <span class="code">List&lt;Long&gt;</span>.</li>
+  </ul>
+  <p>Of course, you do not have to use the Datastore. One of the benefits of App Engine is that you can mix and match many Cloud services. Cloud SQL,  JPA for example (which would be a great option)  is available for you to use. Alternatively,  you could explore Google BigQuery, if that is the type of data storage you need. And Google Cloud Storage is a good way to store a wide variety of types of data, as well.</p>
+
+  <h2><a name="h.4blcldx52y6m" id="h.4blcldx52y6m"></a>Google Cloud Messaging</h2>
+  <p>Google Cloud Messaging is pretty straightforward to use for basic purposes. Any known issues are documented <a href="https://code.google.com/p/gcm/issues/list">here</a>.</p>
+
+  <h2><a name="h.ergctzatsr0" id="h.ergctzatsr0"></a>For First-time Android Developers</h2>
+  <p>If you&rsquo;re new to Android, you&rsquo;ll find that Cloud Endpoints makes everything much simpler and allows you to focus your energies on the app itself, such as:</p>
+  <ul>
+      <li>
+        <span class="bld">Make calls to your API asynchronously on non-UI threads.</span> Android has one main thread (often referred to as the &ldquo;UI thread&rdquo;) running, so you do not want it to be bogged down and waiting for responses.
+        <ul>
+          <li><a href="http://developer.android.com/reference/android/os/AsyncTask.html">AsyncTask</a>s are your friends. Note that AsyncTasks that are tied to an Activity can be destroyed when the Activity is destroyed, so it is up to you to make sure that all such behavior is intended. Search for articles regarding &ldquo;AsyncTasks screen rotation,&rdquo; for example, and you should find many ideas out there for dealing with this.</li>
+          <li>If you need to use an object that should be returned by the task, make use of the task&rsquo;s <a href="http://developer.android.com/reference/android/os/AsyncTask.html#onPostExecute(Result)">onPostExecute</a> override method. If you request a Lobster object from your API using an AsyncTask, and then immediately try to use it in your next line of code (for example, <span class="code">Lobster lobster = new GetLobsterAsyncTask().execute(lobsterName); lobster.dance()</span>;), you will receive an exception. So, not only will your lobster &ldquo;not dance,&rdquo; it will &ldquo;throw a <span class="code">NullPointerException</span> at you&rdquo;.</li>
+          <li>If you want the UI to wait until the task returns, use a <a href="http://developer.android.com/reference/android/app/ProgressDialog.html">ProgressDialog</a> in the <a href="http://developer.android.com/reference/android/os/AsyncTask.html#onPreExecute()">onPreExecute</a> and onPostExecute methods.</li>
+        </ul>
+      </li>
+      <li>
+        <span class="bld">Keep track of Activity and Fragment lifecycles.</span> If you&rsquo;re having trouble with this at first, override a number of the <a href="http://developer.android.com/reference/android/app/Activity.html#ActivityLifecycle">important lifecycle methods</a> and put debug Log statements in them, just to see whether and when your Activities are getting Paused, Resumed, Destroyed, and so on. Here is a <a href="http://developer.android.com/reference/android/app/Activity.html#promethods">full list</a> of these methods, if you need them.
+        <ul>
+          <li>For example, when you start a second Activity with startActivityForResult, you&rsquo;ll be able to see that the very first thing the lifecycle hits, when that second Activity finishes, is the <span class="code">onActivityResult</span> in the first Activity &ndash; even before <span class="code">onCreate/Resume.</span></li>
+        </ul>
+      </li>
+      <li><span class="bld">Starting a new Activity in the middle of a method does not excuse the rest of the line of logic from executing.</span> This applies to <span class="code">startActivity, startActivityForResult</span>, or anything else. Even though you cannot see it, the method will complete, as well as any other methods that it calls. The Activity containing the executing method does not go away until you destroy it or pop it off the stack.</li>
+      <li><span class="bld">Sometimes, you should just delete the R.java file.</span> Or, in other words: Clean and rebuild your project. Occasionally you&rsquo;ll run into some issues where &ldquo;you can&rsquo;t cast Lobster into Tree.&rdquo; &ldquo;But I&rsquo;m not trying to,&rdquo; you say, &ldquo;because that that&rsquo;s silly&mdash;Lobsters and Trees aren&rsquo;t even part of the same Kingdom!&rdquo; It might mean that your R.java file, which holds pointers to values defined in your res/ folder, got a little mixed up. Rebuilding should fix it.</li>
+      <li><span class="bld">Android layouts rules are not CSS rules.</span> They can often be very similar, so you should feel very much at ease. However, sometimes there are minor differences. For example, margins do not collapse in Android, so check your facts before investing a lot of effort into your layout.</li>
+      <li><span class="bld">Dalvik is not really Java.</span> Dalvik does use Java syntax, however, and Android supports a very large subset of the Standard Java libraries, such as java.util and java.io. You cannot import just any third-party Java library and expect it to play well with Android.</li>
+      <li>
+        <span class="bld">Creating a new Activity</span> with Eclipse&rsquo;s &ldquo;Create a New&rdquo; wizard generates/modifies five files:
+        <ul>
+          <li><span class="code">AndroidManifest.xml </span>(adds a new &lt;activity&gt; entry)</li>
+          <li><span class="code">res/values/strings.xml</span> (adds a title string for the activity)</li>
+          <li><span class="code">res/menu/your_activity.xml</span> (creates this file)</li>
+          <li><span class="code">res/layout/your_activity.xml</span> (creates this file)</li>
+          <li><span class="code">YourActivity.java</span> (creates this file with some starter methods, such as onCreate override)</li>
+        </ul>
+      </li>
+      <li><span class="bld">Use the standard Logger class for logging on App Engine.</span> The output can be viewed in the App Engine console. Android uses its own logging, and its output can be seen in one of the Eclipse views called &ldquo;LogCat&rdquo;.</li>
+      <li><span class="bld">If you&rsquo;re hitting occasional EOFException errors</span>, it is likely due to keepAlive connections on Android. You can find various solutions on <a href="http://stackoverflow.com/questions/15411213/android-httpsurlconnection-eofexception">StackOverflow</a>.</li>
+  </ul>
+
+  <h2><a name="h.vf1kryhr5nza" id="h.vf1kryhr5nza"></a>Final Word</h2>
+  <p>You&rsquo;ve read through a lot of the specifics you may encounter, but the best way to learn is to jump right in. Cloud Endpoints is extremely flexible and intuitive. It takes on the burden of developing client-server interactions and protocols, and allows you to focus on developing your application logic. Best of all, it&rsquo;s not in the way&mdash;after you begin to develop your application, getting your client to talk to your server is so easy that you forget that it was not always so simple.</p>
+
+  <p>Good luck!</p>
+  <h2><a name="h.jihi5o477liv" id="h.jihi5o477liv"></a>Appendix</h2>
+  <h3><a name="h.pga0m919sg4m" id="h.pga0m919sg4m"></a>@ApiMethod usage</h3>
+  <p>There is a wonderful <a href="https://developers.google.com/appengine/docs/java/endpoints/annotations#Method-Scoped-Annotations">table</a> here to guide you through annotating your Java API methods. Here are a few additional, in-depth details:</p>
+  <p>The REST URI path of your endpoint prefers to use these attributes, in the following order:</p>
+
+  <ol>
+    <li>
+      Your <span class="code">path</span> attribute.
+      <ul>
+        <li>In <span class="code">path = lobsters: <span class="span">&ldquo;lobsters&rdquo;</span></span> will become your REST path.</li>
+      </ul>
+    </li>
+    <li>
+      The 2nd part of your <span class="code">&ldquo;name&rdquo;</span> attribute.
+      <ul>
+        <li>In name = <span class="code">lobsters.assignName:</span> <span class="span">&ldquo;assignName&rdquo;</span> will become your REST path.</li>
+      </ul>
+    </li>
+    <li>
+      Your method name.
+      <ul>
+        <li>In <span class="code">public void assignName(Lobster lobster)</span>: <span class="span">&ldquo;assignName&rdquo;</span> will become your REST path.</li>
+      </ul>
+    </li>
+  </ol>
+
+  <p>Regarding your <span class="code">name</span> attribute, think of the first part of this attribute as your resource class. Think of the second part as the method you want to perform. Here are a couple examples of the name attribute:</p>
+
+  <ul>
+      <li><span class="code">name = lobsters.assignName</span> on your backend will be consumed with <span class="code">service.lobsters().assignName(param)</span>in your client code.</li>
+      <li><span class="code">name = lobsters</span> on your backend will be consumed with <span class="code">service.lobsters(param)</span>in your client code.</li>
+  </ul>
+
+  <h4><a name="h.9cloxwwufxup" id="h.9cloxwwufxup"></a>Example 1</h4>
+
+  <p>With those rules in mind, here is a typical example of what a method might look like in your App Engine backend. Notice that the resource, lobster, is pluralized:</p>
+
+<pre>
+@ApiMethod(path = &ldquo;lobsters/assign/{<sup><a href="#cmnt1" name="cmnt_ref1" id="cmnt_ref1">[a]</a></sup>name}<sup><a href="#cmnt1" name="cmnt_ref1" id="cmnt_ref1">[a]</a></sup>&rdquo;, name = "lobsters.assignName",
+httpMethod = HttpMethod.POST)
+public void makeLobsterANewName(String name) {...}
+</pre>
+
+  <p>Then the client library will generate the following code to use on your client:</p>
+
+<pre>
+public Lobsters lobsters() {...}
+  public class Lobsters {
+  public AssignName assignName(String name) {...}
+  public class AssignName extends CloudmazeRequest {
+    private static final String REST_PATH = &ldquo;lobsters/assign/{name}&rdquo;
+    protected AssignName(String name) {...}
+  }
+}
+</pre>
+
+  <p>And to consume the endpoint, you can write the following code:</p>
+
+<pre>
+String name = &ldquo;Bob the Lobster&rdquo;;
+service.lobsters().assignName(name).execute();
+</pre>
+
+  <h4><a name="h.lem9o0hrhs34" id="h.lem9o0hrhs34"></a>Example 2</h4>
+  <p>Here is a typical example of a simpler CRUD-type method for a Lobster resource in your App Engine backend. Notice that the resource, lobster, is pluralized, and that there is no HttpMethod attribute because the &ldquo;update&rdquo; method defaults to <span class="code">HttpMehod.PUT:</span></p>
+
+<pre>
+@ApiMethod(path = &ldquo;lobsters&rdquo;, name = "lobsters.update")
+public void updateLobster(Lobster lobster) {...}
+</pre>
+
+  <p>The client library then generates the following code  to use on your client:</p>
+
+<pre>
+public Lobsters lobsters() {...}
+  public class Lobsters {
+  public Update update(String name) {...}
+  public class Update extends CloudmazeRequest {
+    private static final String REST_PATH = &ldquo;lobsters&rdquo;
+    protected Update(String name) {...}
+  }
+}
+</pre>
+
+  <p>To consume the endpoint, you can write the following code:</p>
+
+<pre>
+Lobster bobLobster = new Lobster();
+service.lobsters().update(bobLobster).execute();
+</pre>
+
+  <h3><a name="h.6vx27edzunlr" id="h.6vx27edzunlr"></a>HttpMethod Defaults</h3>
+  <p>Cloud Endpoints will make some smart decisions on which HttpMethod to use when a method name begins with certain key words. For example, <span class="code">setLobster</span> defaults to <span class="code">httpMethod = HttpMethod.POST</span>, unless otherwise specified.</p>
+  <a href="#" name="5f528a27aac83a12ba45a0026c538f5f336a7a6c"></a><a href="#" name="2"></a>
+
+  <table class="brdr-table">
+    <tbody>
+      <tr>
+        <td align="center">
+          <p class="bld">Method Name</p>
+        </td>
+        <td align="center">
+          <p class="bld">HttpMethod</p>
+        </td>
+      </tr>
+      <tr>
+        <td align="center">
+          <p class="code">get, list</p>
+        </td>
+        <td align="center">
+          <p class="code">GET</p>
+        </td>
+      </tr>
+      <tr>
+        <td align="center">
+          <p class="code">set, insert</p>
+        </td>
+        <td align="center">
+          <p class="code">POST</p>
+        </td>
+      </tr>
+      <tr>
+        <td align="center">
+          <p class="code">update</p>
+        </td>
+        <td align="center">
+          <p class="code">PUT</p>
+        </td>
+      </tr>
+      <tr>
+        <td align="center">
+          <p class="code">remove</p>
+        </td>
+        <td align="center">
+          <p class="code">DELETE</p>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+</div>
+<!-- /maia-main -->
+</div>
+</div>
+</div>

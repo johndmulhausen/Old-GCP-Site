@@ -1,0 +1,215 @@
+---
+layout: phase2
+title: Real-time Gaming with Node.js + WebSocket on Google Cloud Platform
+---
+<div id="maia-main" class="cp-article">
+  <div class="maia-cols">
+    <div class="maia-col-9">
+      <div>
+        <div style="float:right">
+          <div class="g-plusone"></div>
+        </div>
+        <h1 class="title">Real-time Gaming with Node.js + WebSocket on Google Cloud Platform</h1>
+      </div>
+      
+<div class="cp-article-tutorial">
+
+  <h3><a name="h.oi7tucgvvupn" id="h.oi7tucgvvupn"></a>How to Build a Real-time Interactive Game with Google App Engine and Google Compute Engine</h3>
+
+  <h2><a name="h.mxzvmqm6770x" id="h.mxzvmqm6770x"></a>Challenges of Scalable Real-time Game Development</h2>
+  <p>Can you imagine the challenges associated with building a real-time game that has the potential to receive global media attention and a large number of simultaneous players? Those challenges would include integrating various hardware, software, and platforms to satisfy common requirements of such a game, including the following:</p>
+  <ul>
+    <li>Scalability to handle a large number of simultaneous users</li>
+    <li>High availability to be tolerant of a datacenter-wide downtime</li>
+    <li>Low latency to process player actions within a few hundred milliseconds</li>
+  </ul>
+  <p>The easiest way to overcome these challenges is to learn from an existing production service. World Wide Maze has solved these challenges by utilizing the Google Cloud Platform and cutting-edge web technologies.</p>
+
+  <h3><a name="h.wciq2otu8ut" id="h.wciq2otu8ut"></a>Chrome Experiments: World Wide Maze</h3>
+  <p><a href="http://www.chromeexperiments.com/">Chrome Experiments</a> is a website created by Google to showcase applications that demonstrate creative web applications built with the latest HTML5 technologies. One of those web applications is an interactive 3D maze game called <a href="http://www.chromeexperiments.com/detail/world-wide-maze/">World Wide Maze</a> (WWM), developed by the Chrome team in cooperation with third-party partners.<sup ><a href="#ftnt1" name="ftnt_ref1" id="ftnt_ref1">[1]</a></sup></p>
+  <p>In WWM, players specify a web site and a 3D maze is generated from the visual layout of the web page. The player uses an Android/iOS device as a game controller to roll a ball on the maze by tilting the device.</p>
+
+  <figure>
+    <img src="/images/articles/real-time-gaming-with-node-js-websocket-on-gcp/world-wide-maze.png">
+    <figcaption>Figure 1: World Wide Maze: Real-time 3D maze game playable with Chrome and mobile devices</figcaption>
+  </figure>
+
+  <p>One of the unique features of WWM is that all real-time interactions are orchestrated by Google Cloud Platform, specifically, <a href="/products/compute-engine">Google Compute Engine</a> and <a href="/products/">Google App Engine</a>. In order to create a playable game experience, low latency between controller input and game screen is a key requirement.</p>
+  <p>When it was released, WWM was featured in many major online media outlets<sup><a href="#ftnt2" name="ftnt_ref2" id="ftnt_ref2">[2]</a></sup> and attracted a large increase in users. This resulted in a huge spike of traffic (as shown in Figure 2) with 6,600 simultaneous users across the world, 7,000 page views per minutes, and 1,000 requests per second. As the system was designed to utilize the massive scalability of Google Cloud Platform, it handled the large traffic spike by smoothly scaling out the Compute Engine and App Engine instances.</p>
+
+  <figure>
+    <img src="/images/articles/real-time-gaming-with-node-js-websocket-on-gcp/traffic-analysis.png">
+    <figcaption>Figure 2: Google Analytics Report for WWM Traffic Analysis</figcaption>
+  </figure>
+
+  <p>One of the biggest challenges when building a real-time game is being able to handle the persistent connections between the clients and servers. In WWM, the game controller and game screen real-time communication needs to be handled within 200 ms. This real-time communication includes:</p>
+  <ul>
+    <li>The request from the controller received by the server</li>
+    <li>The request routed to the screen from the server</li>
+    <li>The maze rendered on the screen based on the request</li>
+  </ul>
+  <p>This paper focuses on how WWM is designed and developed to overcome these challenges by utilizing unique features of Google Cloud Platform.</p>
+
+  <h2><a name="h.hxaxg4tq3bcq" id="h.hxaxg4tq3bcq"></a>Architecture Overview</h2>
+
+  <h3><a name="h.50ijektnspqp" id="h.50ijektnspqp"></a>Orchestrating Google Compute Engine Instances with Google App Engine</h3>
+  <p>The architecture of the World Wide Maze utilizes many components of the Google Cloud Platform as highlighted in Figure 3:</p>
+
+  <figure>
+    <img src="/images/articles/real-time-gaming-with-node-js-websocket-on-gcp/client-server.png">
+    <figcaption>Figure 3: Client and server components of World Wide Maze</figcaption>
+  </figure>
+
+  <ol>
+    <li>
+      Clients
+      <ul>
+        <li>Game Screen</li>
+        <li>Game Controller</li>
+      </ul>
+    </li>
+    <li>
+      Servers
+      <ul>
+        <li>Web Frontend Server (App Engine)</li>
+        <li>
+          WebSocket Server (Compute Engine)
+          <ul>
+            <li>Node.js + Socket.IO (handles WebSocket communication)</li>
+          </ul>
+        </li>
+        <li>
+          Stage Builder (Compute Engine)
+          <ul>
+            <li>PhantomJS (responsible for game stage rendering)</li>
+            <li>OpenCV (responsible for game stage image processing)</li>
+          </ul>
+        </li>
+        <li>
+          Database Server (Compute Engine)
+          <ul>
+            <li>MySQL (handles request queuing)</li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ol>
+
+  <p>The client side has two components: the Game Screen (Chrome browser on PC/Mac/Linux that displays the game screen) and the Game Controller (Chrome on Android/iOS). Both client side components are HTML5 applications running on Chrome.</p>
+  <p>On the server side, WWM uses a combination of App Engine and Compute Engine. Compute Engine accepts <a href="http://en.wikipedia.org/wiki/WebSocket">WebSocket</a> connections that are used to implement the bi-directional low latency communication between the controller and the screen. Compute Engine is also used to host the database servers and to build game stages.  App Engine accepts HTTP requests, orchestrates Compute Engine instances, and connects the clients with available Compute Engine instances.</p>
+  <p>One of the interesting aspects of the architecture is how the strengths of both App Engine and Compute Engine are combined to create a scalable solution for real-time gaming. It is important to understand the various design considerations for each platform in order to &ldquo;place the right person in the right job&rdquo; when designing the architecture.</p>
+
+  <h3><a name="h.niw6sokgh88z" id="h.niw6sokgh88z"></a>Using Google App Engine for Web Frontend</h3>
+  <p>App Engine is used for the Web Frontends and connects Game Screens with available Compute Engine instances. App Engine takes HTTP requests, serves static files to the clients, and dispatches each game session to available WebSocket Servers.</p>
+
+  <figure>
+    <img src="/images/articles/real-time-gaming-with-node-js-websocket-on-gcp/ae-web-frontend.png">
+    <figcaption>Figure 4: Using App Engine for Web Frontend</figcaption>
+  </figure>
+
+  <p>The biggest advantages of App Engine are its automatic scalability and availability. App Engine applications must follow the design guidelines related to each <a href="https://developers.google.com/appengine/docs/whatisgoogleappengine">unique App Engine runtime environment</a> and various <a href="https://developers.google.com/appengine/docs/java/apis">App Engine service</a> <a href="https://developers.google.com/appengine/docs/java/apis">APIs</a>. The runtime and APIs are carefully designed to abstract datacenters as one massive parallel computer that powers your application and isolates it from single machine failures. As a result of these powerful features, developers can access a platform that is highly tolerant to events such as huge traffic spikes, rapid change in the number of users and services, and datacenter-wide downtime.</p>
+
+  <figure>
+    <img src="/images/articles/real-time-gaming-with-node-js-websocket-on-gcp/traffic-peak.png">
+    <figcaption>Figure 5: Traffic peak on WWM&rsquo;s App Engine admin console</figcaption>
+  </figure>
+
+  <p>By using App Engine as a load distributer, WWM was able to handle peak traffic, which reached 1,000 requests per second as shown in Figure 5. This was made possible by using the auto-scaling features of App Engine to smoothly dispatch the real-time game sessions to the Compute Engine instances.</p>
+
+  <h3><a name="h.3jrjcfu0g87k" id="h.3jrjcfu0g87k"></a>Using Compute Engine for WebSocket Server</h3>
+  <p>Initially, the developers were considering using only App Engine to implement the whole game service, and evaluating <a href="https://developers.google.com/appengine/docs/java/channel/">Channel API</a> and <a href="https://developers.google.com/appengine/docs/java/sockets/">Socket API</a> of App Engine if they are capable of supporting the real-time communication requirements. But they found those APIs are not suited for implementing the bi-directional connection for WWM that can transmit messages less than 200 ms. So they decided to combine App Engine with Compute Engine to implement the connection with  WebSocket Servers.</p>
+
+  <figure>
+    <img src="/images/articles/real-time-gaming-with-node-js-websocket-on-gcp/webSocket-server.png">
+    <figcaption>Figure 6: Using Compute Engine for WebSocket Server</figcaption>
+  </figure>
+
+  <p>The WebSocket Server is implemented by Node.js and Socket.IO running on the Compute Engine instances. <a href="http://nodejs.org/">Node.js</a> is a popular JavaScript runtime platform that features an event-driven, non-blocking I/O model for real-time applications. <a href="http://socket.io/">Socket.IO</a> is a popular library for Node.js that provides a real-time transport between the web browser and the Node.js server. It supports various protocols and methods for real-time transport, including WebSocket, Flash socket, <a href="http://en.wikipedia.org/wiki/Comet_(programming)">Comet</a>, and polling. By default, Socket.IO tries to connect with WebSocket protocol for better performance. But if it detects that the protocol is not available on the particular network, it falls back to other protocols and tries to establish a real-time connection with potentially higher performance.</p>
+
+  <h3><a name="h.85altn8fe0xj" id="h.85altn8fe0xj"></a>Using Compute Engine for Stage Builder</h3>
+  <p>Another interesting feature of WWM is that any website can be turned into a playable stage by using an on-demand rendering system.</p>
+
+  <figure>
+    <img src="/images/articles/real-time-gaming-with-node-js-websocket-on-gcp/storage-builder.png">
+    <figcaption>Figure 7: Using Compute Engine for Stage Builder</figcaption>
+  </figure>
+
+  <p>Stage generation is completed by the Stage Builder, which runs on Compute Engine. Figure 5 shows how the stage generation process works:</p>
+
+  <figure>
+    <img src="/images/articles/real-time-gaming-with-node-js-websocket-on-gcp/generation-process.png">
+    <figcaption>Figure 8: Stage generation process</figcaption>
+  </figure>
+
+  <p>The steps for stage generation are as follows:</p>
+  <ol>
+    <li>Game Screen sends the user specified URL of web site to WebSocket Server via WebSocket connection</li>
+    <li>WebSocket Server adds a rendering request message on the Database Server (MySQL) queue. The message is fetched by one of the Stage Builders<sup><a href="#ftnt3" name="ftnt_ref3" id="ftnt_ref3">[3]</a></sup></li>
+    <li>Stage Builder renders an image of the web site with PhantomJS. The positions of constructs such as <span class="code">div</span> or <span class="code">img</span> tags are generated as a JSON document</li>
+    <li>Stage Builder generates maze structure data by using OpenCV image processing and the construct position data</li>
+    <li>Stage Builder returns a JSON document, that includes the maze structure and images, to the Game Screen.</li>
+  </ol>
+  <p><a href="http://phantomjs.org/">PhantomJS</a> is a full stack web browser designed for servers without screens. The tool automates web page rendering for various purposes, including automated testing, screen capture, web page scraping and web site performance monitoring. Developers can write JavaScript or CoffeeScript to instruct PhantomJS to execute required processes, such as taking a screenshot.</p>
+  <p>The screen image rendered by PhantomJS is processed by <a href="http://opencv.org/">OpenCV</a>. The process includes removing unnecessary area, creating the islands, connecting them with bridges, and placing a goal, etc. The original web image is processed by OpenCV to generate the maze structure.</p>
+
+  <h2><a name="h.tapi9ignkzp" id="h.tapi9ignkzp"></a>Challenges in Building a Cluster with Compute Engine</h2>
+  <p>During the development, there are two major challenges when building a cluster of Compute Engine instances. The first challenge is to determine the scalability the Stage Builder. The second challenge is to design fail-over for the Compute Engine instance across different zones.</p>
+
+  <h3><a name="h.c1dbzf1ae2u5" id="h.c1dbzf1ae2u5"></a>Load Testing of World Wide Maze</h3>
+  <p>To determine the scalability of Stage Builder, the developers conducted an extensive load testing on the cluster of Stage Builder instances. Stage Builder handles the creation of playable levels by using PhantomJS and is very CPU intensive. The upper rate limit of stages that can be created by a single instance is determined based on the load testing.</p>
+  <p>The following figure depicts the measurements resulting from load testing the Stage Builder, where 36 virtual clients continually sent rendering requests to a single instance. The average turnaround time for each stage building request was about 12 sec.
+
+  <figure>
+    <img src="/images/articles/real-time-gaming-with-node-js-websocket-on-gcp/load-testing.png">
+    <figcaption>Figure 9: Load Testing result of Stage Builder (CPU usage)</figcaption>
+  </figure>
+
+  <p>The limits of the WebSocket Servers were determined by load testing. The tests confirmed that the servers can handle 360 WebSocket connections with average latency 175 ms.</p>
+  <p>A sudden increase in traffic occurred after launch, but the administrators quickly provisioned Compute Engine instances of Stage Builder and WebSocket Server smoothly. As a result, the traffic spike did not pose any serious problems.</p>
+
+  <h3><a name="h.2jfpvn3lour7" id="h.2jfpvn3lour7"></a>Fail-over Between Compute Engine Instances in Different Zones</h3>
+  <p>The second challenge was to handle both planned and unplanned downtime of Compute Engine instances, from a single instance all the way up to an <a href="https://developers.google.com/compute/docs/zones?hl=en">availability zone</a> (a group of instances in different geographical regions). In WWM, the developers followed the best practices, deploying instances across multiple zones with systems in place to distribute load and quickly fail-over between zones.</p>
+  <p>Two techniques are utilized by WWM to handle the planned and unplanned failures gracefully:</p>
+
+  <ul>
+    <li>Persistent Disk for data backup</li>
+    <li>Switching external static IP addresses between Compute Engine instances</li>
+  </ul>
+
+  <h4><a name="h.6rgxjfglm26h" id="h.6rgxjfglm26h"></a>Persistent Disk for Data Backup</h4>
+  <p>Persistent Disk is a highly scalable and available persistent storage device for Compute Engine. By utilizing Persistent  Disk for backup and recovery, data is secure and survives any unplanned or planned downtime of Compute Engine. WWM&rsquo;s Database Server uses Persistent Disk for periodic backups of the MySQL database. In the case of Compute Engine&rsquo;s planned maintenance window, an operator of WWM invokes a restoration process before the downtime. The operator uses MySQL data that is backed-up on Persistent Disk, and restores it on Compute Engine instances which are reserved in another zone.</p>
+
+  <h4><a name="h.lo6e3zikdjpp" id="h.lo6e3zikdjpp"></a>Switching External Static IP Addresses Between Compute Engine Instances</h4>
+  <p>The second technique used for fail-over is static IP address switching. With Compute Engine, you can switch <a href="https://developers.google.com/compute/docs/instances_and_network#externaladdresses">external static IP addresses</a> of Compute Engine instances instantly by using simple commands. This feature enables smooth migration between the zones within a region without having a frontend such as reverse proxy or load balancer.</p>
+  <p>WWM uses the following procedure to move instances out of a zone with an upcoming maintenance window:</p>
+
+  <ol>
+    <li>On the Web Frontend (App Engine), switches from &ldquo;production&rdquo; version to &ldquo;maintenance&rdquo; version to show the maintenance screen</li>
+    <li>Backs-up the Database and put the backup file on Persistent Disk</li>
+    <li>Copies the Compute Engine instances to the destination zone.<sup><a href="#ftnt4" name="ftnt_ref4" id="ftnt_ref4">[4]</a></sup> Switch the assignment of external IP addresses for Compute Engine instances from the original zone to the destination zone<sup><a href="#ftnt5" name="ftnt_ref5" id="ftnt_ref5">[5]</a></sup></li>
+    <li>Restores the Database Server records from the backup file on Persistent Disk.</li>
+    <li>Checks that the Compute Engine instances in the destination zone works properly by running tests</li>
+    <li>Switches the Web Frontend&rsquo;s version from &ldquo;maintenance&rdquo; to &ldquo;production&rdquo;</li>
+  </ol>
+
+  <h2><a name="h.dpesh79vnb3z" id="h.dpesh79vnb3z"></a>Conclusion</h2>
+  <p>Google Cloud Platform provides compelling technology to solve the challenges of building a production quality real-time gaming with App Engine and Compute Engine. It is important for developers to understand the design constraints of these two technologies to fully leverage each technology to its full capabilities. When launching a production service, it is critical to conduct an extensive load testing on the system to do a feasibility study in terms of the latency, scalability and availability. By building on the Google Cloud Platform and thoroughly testing, WWM was able to launch worldwide and survive the massive user spike that resulted from all the media attention.</p>
+
+
+
+
+  <br>
+  <br>
+  <hr>
+  <p><a href="#ftnt_ref1" name="ftnt1" id="ftnt1">[1]</a> <a href="http://prty.jp/">PARTY</a>, AID, <a href="http://katamari.co.jp/">katamari</a> and <a href="http://www.futurek.com/">Futurek</a></p>
+  <p><a href="#ftnt_ref2" name="ftnt2" id="ftnt2">[2]</a> <a href="http://www.google.com/url?q=http%3A%2F%2Fnews.cnet.com%2F8301-17938_105-57575847-1%2Fplaying-crave-with-nifty-chrome-world-wide-maze%2F&amp;sa=D&amp;sntz=1&amp;usg=AFQjCNH1f4w2oXpZ10fCKE48944Oa-hLUQ">&rdquo;</a><a href="http://www.google.com/url?q=http%3A%2F%2Fnews.cnet.com%2F8301-17938_105-57575847-1%2Fplaying-crave-with-nifty-chrome-world-wide-maze%2F&amp;sa=D&amp;sntz=1&amp;usg=AFQjCNH1f4w2oXpZ10fCKE48944Oa-hLUQ">&lsquo;</a><a href="http://news.cnet.com/8301-17938_105-57575847-1/playing-crave-with-nifty-chrome-world-wide-maze/">Playing' Crave with nifty Chrome World Wide Maze</a><a href="http://www.google.com/url?q=http%3A%2F%2Fnews.cnet.com%2F8301-17938_105-57575847-1%2Fplaying-crave-with-nifty-chrome-world-wide-maze%2F&amp;sa=D&amp;sntz=1&amp;usg=AFQjCNH1f4w2oXpZ10fCKE48944Oa-hLUQ">&rdquo;</a> (CNET), <a href="http://www.google.com/url?q=http%3A%2F%2Fwww.pcmag.com%2Farticle2%2F0%2C2817%2C2416931%2C00.asp&amp;sa=D&amp;sntz=1&amp;usg=AFQjCNEt7BMEKNmbmDADR4CiSGuLL_3Zww">&rdquo;</a><a href="http://www.pcmag.com/article2/0,2817,2416931,00.asp">Chrome 'World Wide Maze' Experiment Turns Websites Into Playgrounds</a><a href="http://www.google.com/url?q=http%3A%2F%2Fwww.pcmag.com%2Farticle2%2F0%2C2817%2C2416931%2C00.asp&amp;sa=D&amp;sntz=1&amp;usg=AFQjCNEt7BMEKNmbmDADR4CiSGuLL_3Zww">&rdquo;</a> (PC Magazine), <a href="http://www.google.com/url?q=http%3A%2F%2Fwww.engadget.com%2F2013%2F03%2F21%2Fchrome-world-wide-maze-browser-game%2F&amp;sa=D&amp;sntz=1&amp;usg=AFQjCNEmLWAosWpZCXQbkaWeam63CmwA3w">&rdquo;</a><a href="http://www.engadget.com/2013/03/21/chrome-world-wide-maze-browser-game/">Google Chrome's World Wide Maze turns your favorite website into 3D game for your phone</a><a href="http://www.google.com/url?q=http%3A%2F%2Fwww.engadget.com%2F2013%2F03%2F21%2Fchrome-world-wide-maze-browser-game%2F&amp;sa=D&amp;sntz=1&amp;usg=AFQjCNEmLWAosWpZCXQbkaWeam63CmwA3w">&rdquo;</a> (Engadget) and more.</p>
+  <p><a href="#ftnt_ref3" name="ftnt3" id="ftnt3">[3]</a> An alternative option for implementing this kind of queuing is the use of <a href="https://developers.google.com/appengine/docs/java/taskqueue/">Task Queue</a> on App Engine.</p>
+  <p><a href="#ftnt_ref4" name="ftnt4" id="ftnt4">[4]</a> The <a href="https://developers.google.com/compute/docs/gcutil/tips?hl=en#moving">gcutil moveinstances command</a> is useful for this task.</p>
+  <p><a href="#ftnt_ref5" name="ftnt5" id="ftnt5">[5]</a> The external static IP addresses cannot be switched between zones in different regions. To implement a fail-over between different regions, you may use DNS to switch the host name and IP address mapping. Another option is to have groups of IPs for different region and build in the application logic for toggling active instances.</p>
+
+</div>
+<!-- /maia-main -->
+
+    </div>
+  </div>
+</div>

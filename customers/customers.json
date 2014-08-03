@@ -1,0 +1,389 @@
+{
+"platforms": [
+  {
+    "name": "App Engine",
+    "inactive": true
+  },
+
+  {
+    "name": "Cloud Datastore",
+    "inactive": true
+  },
+
+  {
+    "name": "App Engine",
+    "inactive": false
+  },
+
+  {
+    "name": "Big Query",
+    "inactive": false
+  },
+
+  {
+    "name": "Cloud SQL",
+    "inactive": false
+  },
+
+  {
+    "name": "Cloud Storage",
+    "inactive": false
+  }
+],
+"industries": [
+  {
+    "name": "Manufacturing",
+    "inactive": true
+  },
+  {
+    "name": "Education",
+    "inactive": true
+  },
+  {
+    "name": "Marketing",
+    "inactive": true
+  }],
+"caseStudies": [
+
+  {
+    "name": "Best Buy",
+    "blurb": "\"Developing apps on Google App Engine takes one-fourth to one-tenth of the resources and one-fourth of the time compared to building something ourselves.\"",
+    "slug": "best-buy",
+    "platformTypes": ["App Engine"],
+    "industries": [],
+    "blurbAuthor": "",
+    "blurbAuthorRole": ""
+  },
+
+  {
+    "name": "Blossom.io",
+    "blurb": "\"Cloud Endpoints certainly has enabled us to offer an API that is on par with the best APIs out there... Building all of that without Google Cloud Endpoints would have been unthinkable.\"",
+    "slug": "blossomio",
+    "platformTypes": [],
+    "industries": [],
+    "blurbAuthor": "",
+    "blurbAuthorRole": ""
+  },
+
+  {
+    "name": "Bugsense",
+    "blurb": "\"Our customers love that we have a very predictable service. They love that we've never had downtime. Google App Engine has helped us accomplish this.\"",
+    "slug": "bugsense",
+    "platformTypes": ["App Engine"],
+    "industries": [],
+    "blurbAuthor": "",
+    "blurbAuthorRole": ""
+  },
+
+  {
+    "name": "Boo-Box",
+    "blurb": "\"We can now provide our customers information that we couldn't in the past. This improves their engagement with the service and has even increased their ad spend.\"",
+    "slug": "boo-box",
+    "platformTypes": ["Big Query"],
+    "industries": [],
+    "blurbAuthor": "",
+    "blurbAuthorRole": ""
+  },
+
+  {
+    "name": "Claritics",
+    "blurb": "\"Using the big-data analytics infrastructure from Google BigQuery Service has significant time-to-market and performance advantages.\"",
+    "slug": "claritics",
+    "platformTypes": [],
+    "industries": [],
+    "blurbAuthor": "",
+    "blurbAuthorRole": ""
+  },
+
+  {
+    "name": "CaptureToCloud",
+    "blurb": "\"Being able to focus on features that add value to customers, instead of solving infrastructure problems, has been a key advantage. It allows us to respond to feedback quickly and improve our service.\"",
+    "slug": "capturetocloud",
+    "platformTypes": ["App Engine"],
+    "industries": [],
+    "blurbAuthor": "",
+    "blurbAuthorRole": ""
+  },
+
+  {
+    "name": "CodeFutures",
+    "blurb": "\"You can spend millions of dollars a year on a disaster recovery site alone. With these new approaches, you can migrate in much less time and much more cost-effectively with Google Cloud SQL.\"",
+    "slug": "codefutures",
+    "platformTypes": ["Cloud SQL"],
+    "industries": [],
+    "blurbAuthor": "",
+    "blurbAuthorRole": ""
+  },
+
+  {
+    "name": "CloudLock",
+    "blurb": "\"When I present CloudLock to prospective customers, I always say it's powered by Google App Engine. Having Google as a key part of our service gives people confidence.\"",
+    "slug": "cloudlock",
+    "platformTypes": ["App Engine"],
+    "industries": [],
+    "blurbAuthor": "",
+    "blurbAuthorRole": ""
+  },
+
+  {
+    "name": "floreysoft",
+    "blurb": "\"The Google App Engine APIs have enabled us to rapidly develop a lot of exciting functionality in our products.\"",
+    "slug": "floreysoft",
+    "platformTypes": ["App Engine"],
+    "industries": [],
+    "blurbAuthor": "",
+    "blurbAuthorRole": ""
+  },
+
+  {
+    "name": "DNANexus",
+    "blurb": "\"Rather than building your own infrastructure and taking time and resources away from your company, you can use Google's infrastructure and know that it's scalable and secure.\"",
+    "slug": "dnanexus",
+    "platformTypes": ["Cloud Storage"],
+    "industries": [],
+    "blurbAuthor": "",
+    "blurbAuthorRole": ""
+  },
+
+  {
+    "name": "Daffodil",
+    "blurb": "â€œUsing Google App Engine and Google Cloud SQL make our applications go live in half the time and have provided us with hassle-free control over all processes. The shift to Google Cloud SQL has allowed us to focus on making our applications even better.â€",
+    "slug": "daffodil",
+    "platformTypes": ["App Engine","Cloud SQL"],
+    "industries": [],
+    "blurbAuthor": "",
+    "blurbAuthorRole": ""
+  },
+
+  {
+    "name": "Gigya",
+    "blurb": "\"If you don't want to buy machines and just want to write code and not worry about anything else, Google App Engine is an amazing service.\"",
+    "slug": "gigya",
+    "platformTypes": ["App Engine"],
+    "industries": [],
+    "blurbAuthor": "",
+    "blurbAuthorRole": ""
+  },
+
+  {
+    "name": "Getaround",
+    "blurb": "\"App Engine has allowed us to do many things that would have been difficult otherwise. For startups that are looking to stay lean and move quickly, App Engine should be the top choice.\"",
+    "slug": "getaround",
+    "platformTypes": ["App Engine"],
+    "industries": [],
+    "blurbAuthor": "",
+    "blurbAuthorRole": ""
+  },
+
+  {
+    "name": "Hudora",
+    "blurb": "\"Google App Engine has allowed us to build high-quality software in a more agile way than we could before, without devoting resources to infrastructure issues. In my mind, there is no competition.\"",
+    "slug": "hudora",
+    "platformTypes": ["App Engine"],
+    "industries": [],
+    "blurbAuthor": "",
+    "blurbAuthorRole": ""
+  },
+
+  {
+    "name": "Khan Academy",
+    "blurb": "\"If we didn't have Google App Engine, we'd be spending a lot more time figuring out server setup and working on routers. Our ability to focus on the actual product is the benefit of Google App Engine.\"",
+    "slug": "khan-academy",
+    "platformTypes": ["App Engine"],
+    "industries": [],
+    "blurbAuthor": "",
+    "blurbAuthorRole": ""
+  },
+
+  {
+    "name": "Interactions Marketing",
+    "blurb": "We are always looking for ways to maximize return and minimize investment. BigQuery is the perfect combination. It's an on-demand, scalable resource.\"",
+    "slug": "interactions-marketing",
+    "platformTypes": ["Big Query"],
+    "industries": [],
+    "blurbAuthor": "",
+    "blurbAuthorRole": ""
+  },
+
+  {
+    "name": "Kahuna",
+    "blurb": "\"Our goal has been to be insanely reliable, easy and quick to implement, and very robust. Google App Engine is how we've been able to achieve that.\"",
+    "slug": "kahuna",
+    "platformTypes": ["App Engine"],
+    "industries": [],
+    "blurbAuthor": "",
+    "blurbAuthorRole": ""
+  },
+
+  {
+    "name": "MetOffice",
+    "blurb": "\"Google App Engine has allowed us to benefit from instant scalability. We haven't had anything to worry about as the site grows.\"",
+    "slug": "metoffice",
+    "platformTypes": ["App Engine"],
+    "industries": [],
+    "blurbAuthor": "",
+    "blurbAuthorRole": ""
+  },
+
+  {
+    "name": "KiSSFLOW",
+    "blurb": "\"The Google solution is the only one that gives you the ability to have independent databases, and to provision them affordably.\"",
+    "slug": "kissflow",
+    "platformTypes": ["App Engine","Cloud SQL"],
+    "industries": [],
+    "blurbAuthor": "",
+    "blurbAuthorRole": ""
+  },
+
+  {
+    "name": "Mimiboard",
+    "blurb": "\"Whenever I speak with potential partners, I have to assure them we won't fall down because we're suddenly adding a lot of people to our service. Running on Google App Engine gives me that confidence.\"",
+    "slug": "mimiboard",
+    "platformTypes": ["App Engine"],
+    "industries": [],
+    "blurbAuthor": "",
+    "blurbAuthorRole": ""
+  },
+
+  {
+    "name": "MokiMobility",
+    "blurb": "\"Google App Engine created a scenario where we didn't need a platform expert or network person. We simply had to create our application and upload it to the cloud.\"",
+    "slug": "mokimobility",
+    "platformTypes": ["App Engine"],
+    "industries": [],
+    "blurbAuthor": "",
+    "blurbAuthorRole": ""
+  },
+
+  {
+    "name": "News Limited",
+    "blurb": "\"With the cloud and Google App Engine, performance becomes a given, so we can focus on our Customers more than anything else. Google App Engine has put us light years ahead of where I thought we'd ever be.\"",
+    "slug": "news-limited",
+    "platformTypes": [],
+    "industries": [],
+    "blurbAuthor": "",
+    "blurbAuthorRole": ""
+  },
+
+  {
+    "name": "Nubbius",
+    "blurb": "\"We love how easy it is to add features with Google App Engine. It makes us responsive to users and helps us continuously improve our service.\"",
+    "slug": "nubbius",
+    "platformTypes": [],
+    "industries": [],
+    "blurbAuthor": "",
+    "blurbAuthorRole": ""
+  },
+
+  {
+    "name": "Pulse",
+    "blurb": "\"As we've grown, App Engine has scaled with us. We've been able to scale to many orders of magnitude without having to re-architect our systems.\"",
+    "slug": "pulse",
+    "platformTypes": ["App Engine"],
+    "industries": [],
+    "blurbAuthor": "",
+    "blurbAuthorRole": ""
+  },
+
+  {
+    "name": "PocketGems",
+    "blurb": "\"Google App Engine lets us focus on what we do best: making hit games that are enjoyable and fun.\"",
+    "slug": "pocketgems",
+    "platformTypes": ["App Engine"],
+    "industries": [],
+    "blurbAuthor": "",
+    "blurbAuthorRole": ""
+  },
+
+  {
+    "name": "Sightly",
+    "blurb": "\"We're able to see and act on trends to help us target the right consumer with the right video at the right time. This has helped increase engagement with our ads by 300%. We are delivering more value to our customers, and growing faster and more profitably as a result.\"",
+    "slug": "sightly",
+    "platformTypes": ["Big Query"],
+    "industries": [],
+    "blurbAuthor": "",
+    "blurbAuthorRole": ""
+  },
+
+  {
+    "name": "Rovio",
+    "blurb": "\"Google App Engine allows us to launch games very quickly with teams of one or two developers per game. Because Google manages all the servers, there is little required of us in terms of maintenance.\"",
+    "slug": "rovio",
+    "platformTypes": ["App Engine"],
+    "industries": [],
+    "blurbAuthor": "",
+    "blurbAuthorRole": ""
+  },
+
+  {
+    "name": "Redbus",
+    "blurb": "\"We explored several data analytics solutions. Nothing comes remotely close to the sheer power of Google BigQuery. It made large-scale data collection and crunching possible with little effort, which has translated to a significant business advantage.\"",
+    "slug": "redbus",
+    "platformTypes": ["Big Query"],
+    "industries": [],
+    "blurbAuthor": "",
+    "blurbAuthorRole": ""
+  },
+
+  {
+    "name": "Simperium",
+    "blurb": "\"You don't have to buy servers. You don't have to hire people with the experience required to configure and maintain those servers. Google App Engine handles all that for you so you can focus on developing your product.\"",
+    "slug": "simperium",
+    "platformTypes": ["App Engine"],
+    "industries": [],
+    "blurbAuthor": "",
+    "blurbAuthorRole": ""
+  },
+
+  {
+    "name": "Ubisoft",
+    "blurb": "\"It was a huge challenge and a great achievement to get the game up and running on the web browser. Google App Engine and Google Cloud Storage played a significant part in our success.\"",
+    "slug": "ubisoft",
+    "platformTypes": ["App Engine","Cloud Storage"],
+    "industries": [],
+    "blurbAuthor": "",
+    "blurbAuthorRole": ""
+  },
+
+  {
+    "name": "Streak",
+    "blurb": "\"Google App Engine has allowed us to be quick and nimble, which has been a huge advantage to us as a startup. It's been perfect for what we want to accomplish.\"",
+    "slug": "streak",
+    "platformTypes": ["App Engine","Big Query"],
+    "industries": [],
+    "blurbAuthor": "",
+    "blurbAuthorRole": ""
+  },
+
+  {
+    "name": "WebFilings",
+    "blurb": "Google App Engine has the breadth and the depth to grow with you. Every 6 months, it gets better. The Google App Engine team knows what you need to make a competitive application.\"",
+    "slug": "webfilings",
+    "platformTypes": [],
+    "industries": [],
+    "blurbAuthor": "",
+    "blurbAuthorRole": ""
+  },
+
+  {
+    "name": "Webydo",
+    "blurb": "\"Leveraging Google Cloud Platform's great scalability and flexibility, our experts migrated the Webydo environment in a matter of weeks.\"",
+    "slug": "webydo",
+    "platformTypes": [],
+    "industries": [],
+    "blurbAuthor": "",
+    "blurbAuthorRole": ""
+  },
+
+  {
+    "name": "Appogee",
+    "blurb": "\"Compared with a solution on a traditional computing platform, App Engine is infinitely easier. There's no need to procure and set up hardware and install software. We could just get started on our application.\"",
+    "slug": "appogee",
+    "platformTypes": ["App Engine"],
+    "industries": [],
+    "blurbAuthor": "",
+    "blurbAuthorRole": ""
+  }
+
+
+]}

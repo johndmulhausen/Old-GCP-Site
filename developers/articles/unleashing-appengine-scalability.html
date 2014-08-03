@@ -1,0 +1,343 @@
+---
+layout: phase2
+title: Unleashing App Engine Scalability
+---
+<div id="maia-main" class="cp-article">
+  <div class="maia-cols">
+    <div class="maia-col-9">
+      <div>
+        <div style="float:right">
+          <div class="g-plusone"></div>
+        </div>
+        <h1 class="title">Unleashing App Engine Scalability</h1>
+      </div>
+      
+<div class="cp-article-tutorial">
+
+  <p><em>How to leverage App Engine to create scalable and cost-effective applications.</em></p>
+  <h2>Building a Scalable Website</h2>
+
+  <p>Imagine you were asked to build a website that tens of thousands, or even millions of people will be accessing—sometimes all at the same time. You would be challenged to provide a fast, reliable service, and it would be essential for the website to scale appropriately to demand.</p>
+
+  <p>Does your team have sufficient experience to build a scalable and reliable cluster of web servers? Can you easily and accurately estimate the cost of developing, operating, and maintaining your servers? Do you have domain expertise to hire the best people for the job?</p>
+
+  <p>Google App Engine offers excellent solutions for these challenges. In this document, we will look at how App Engine handles incoming user requests and how it scales your application as traffic increases and decreases. You will learn how to configure App Engine's scaling behavior to find the optimal balance between performance and cost, so that you can successfully harness the power and flexibility of Google App Engine for your projects. </p>
+
+  <h2>Life of a Request in the App Engine Architecture</h2>
+
+  <p>To begin, you need to understand how user requests are handled inside App Engine, how they are delivered to your application instance, and how the response is returned to the user. Understanding this overall flow will help you determine how to optimize your application. Figure 1 shows how service requests and responses flow through App Engine’s internal architecture.</p>
+</div>
+
+  <figure>
+    <img src="/images/articles/unleashing-appengine-scalability/image05.png">
+    <figcaption>Figure 1: How user requests are routed to application instances</figcaption>
+  </figure>
+
+  <p>A user request is routed to the geographically closest Google data center, which may be in the United States, the European Union, or the Asia-Pacific region. In that data center, an HTTP server known as the Google front end receives the request and routes it through the Google-owned fiber backbone to an App Engine data center that runs your application.</p>
+
+  <p>The App Engine architecture includes the following components:</p>
+
+  <ul>
+    <li><strong>App Engine front end</strong> servers are responsible for load balancing and failover of App Engine applications. As shown in Figure 1, the App Engine front end receives user requests from the Google front end and dispatches each request either to an app server for dynamic content or to a static server for static content.</li>
+    <li><p><strong>App servers</strong> are containers for App Engine applications. An app server creates <a href="https://developers.google.com/appengine/docs/adminconsole/instances">application instances</a> and distributes requests based on traffic load. The application instances contain your code—the request handlers that implement your application.</p>
+      <p>The app server runtime environment includes APIs to access the full suite of <a href="https://developers.google.com/appengine/features/#generally_available_ga_features">App Engine services</a>, allowing you to easily build scalable and highly available web applications.</p>
+    </li>
+    <li><strong>Static servers</strong> are dedicated to serving static files for App Engine applications; they are optimized to provide the content rapidly with minimal latency. (To further reduce latency, Google may move high-volume public content to an edge cache.)</li>
+    <li>The <strong>app master</strong> is the conductor of the whole App Engine orchestra. When you deploy a new version of an App Engine application, the app master uploads your program code to app servers and your static content to static servers.</li>
+  </ul>
+
+  <p>The App Engine front end and the app servers work together, tracking the available application instances as your application uses more or fewer instances.</p>
+
+  <h2>App Engine is a Container Technology</h2>
+
+  <p>App Engine is a container-based platform as a service (PaaS) offering. An application instance, running in an app server, is the container that isolates resources between applications. Each application instance is guaranteed to receive dedicated server resources, such as CPU time and memory, as well as strict security isolation.</p>
+
+  <p>Application instances are created and managed like Linux processes, so they can be started quickly and consume minimal system resources. In contrast, the unit of allocation and management in a typical infrastructure as a service (IaaS) offering is a <a href="http://en.wikipedia.org/wiki/Hypervisor">hypervisor-based</a> virtual machine (VM). Figure 2 illustrates the differences in the amount of resources that need to be initialized for a new VM instance compared to a new App Engine instance.</p>
+
+  <figure>
+    <img src="/images/articles/unleashing-appengine-scalability/image03.png">
+    <figcaption>Figure 2: Comparing VMs to application instances</figcaption>
+  </figure>
+
+  <p>The most significant difference between VMs and App Engine is in how the operating system overhead is managed. Each VM deployment hosts its own image of an operating system, which requires memory resources in the host machine. The developer is typically responsible for creating, storing, and managing that image. This may include applying security patches, installing device drivers, and performing administrative and maintenance tasks.</p>
+
+  <p>It can take tens of seconds to boot up an operating system each time a new VM is added to handle more requests. In contrast, an application instance can be created in a few seconds.</p>
+
+  <p>Application instances operate against high-level APIs, eliminating the need to communicate through layers of code with virtual device drivers.</p>
+
+  <p>In summary, application instances are the computing units that App Engine uses to scale your application. Compared to VMs, application instances are fast to initialize, lightweight, memory efficient, and cost effective.</p>
+
+  <p>Overall, App Engine scales easily because its lightweight-container architecture can spin up application instances far more quickly than VMs can be started.</p>
+
+  <p>The next section describes how you can design your application to take advantage of that architecture.</p>
+
+  <h2>Optimizing your App Engine Application</h2>
+
+  <p>When you design and deploy your App Engine application, strive to minimize the following two related factors:</p>
+
+  <ul>
+    <li>The response time to user requests</li>
+    <li>The overall cost of application instances running inside the app servers</li>
+  </ul>
+
+  <p>To reduce the response time, App Engine automatically increases the number of instances based on the current load and developer-specific configuration parameters. However, additional instances cost more. To minimize additional cost, you need to understand how and when instances are created or deleted by App Engine in response to changes in the traffic load.</p>
+
+  <p>The following sections explain what an instance is and how to configure its parameters to balance responsiveness and cost effectiveness for your application.</p>
+
+  <h2>Best Practices for Optimizing Scalability</h2>
+
+  <p>Web applications are typically partitioned into two types of processing: immediate, real-time, interactive processing for a user request, and longer-term processing, such as complex database updates, batch processing, or integration with other, slower systems.</p>
+
+  <p>App Engine recognizes this distinction by providing frontend instance classes (F1, F2, F4) for low-latency interactive responses and backend instance classes (B1, B2, B4, B8) for high-latency background processing.</p>
+
+  <p>Code modules deployed to a frontend instance receive requests from clients and process them quickly, typically in the range of tens of milliseconds up to a few seconds. App Engine requires that frontend instances respond to each request within 60 seconds. If your application logic cannot fully process a request in that time, you can use task queues to defer the processing.</p>
+
+  <p>Code modules deployed to a backend instance do not have a limit on processing time and can be used to process tasks from a task queue, do long-running computations, run MapReduce jobs or implement other data-processing pipelines.</p>
+
+  <p>There are <a href="https://developers.google.com/appengine/docs/java/modules/#Java_Instance_scaling_and_class">three types of instance scaling</a> available. For modules on backend instance classes, you use either:</p>
+
+  <ul>
+    <li><strong>Manual scaling</strong>—App Engine creates the number of instances that you specify in a configuration file. The number of instances you configure depends on the desired throughput, the speed of the instances, and the size of your dataset balanced against cost considerations. Manually scaled instances run continuously, so complex initializations and other in-memory data is preserved across requests.</li>
+    <li><strong>Basic scaling</strong>—App Engine creates instances to handle requests and releases the instances when they becomes idle. Basic scaling is ideal and cost effective if your workload is intermittent or driven by user activity.</li>
+  </ul>
+
+  <p>For modules on frontend instance classes, you use <strong>automatic scaling</strong>: App Engine adjusts the number of instances based on the request rate, response latencies, and other application metrics. You can control the scaling of your instances to meet your performance requirements.</p>
+
+  <p>Overall, the dynamic scalability and cost effectiveness of an App Engine application is primarily controlled by the design and configuration of the frontend instances. Follow these important best practices to optimize their scalability:</p>
+
+  <ol>
+    <li>Design for reduced latency and more queries per second (QPS).</li>
+    <li>Optimize idle instances and pending latency.</li>
+  </ol>
+
+  <p>The rest of this paper will focus on applying these practices to automatic-scaling frontend instance classes. Refer to the App Engine Modules documentation (<a href="https://developers.google.com/appengine/docs/java/modules/">Java</a>, <a href="https://developers.google.com/appengine/docs/python/modules/">Python</a>, <a href="https://developers.google.com/appengine/docs/go/modules/">Go</a>, <a href="https://developers.google.com/appengine/docs/php/modules/">PHP</a>) for information on managing backend instance classes.</p>
+
+  <h2>Less Latency, More QPS</h2>
+
+  <p>Queries per second (QPS) characterizes the capacity of an instance. QPS is defined as the number of HTTP requests one instance can process in one second<sup>1</sup>. For example, peak traffic in the Open for Questions application was about 700 QPS, and when App Engine hosted <a href="http://googleappengine.blogspot.jp/2011/05/royal-wedding-bells-in-cloud.html">the Royal Wedding website</a>, the worldwide media coverage generated around 32,000 QPS at its peak.</p>
+
+  <p>To handle more QPS, add more instances, as expressed by this formula:</p>
+
+  <pre>Total QPS = Average QPS x Number of Instances</pre>
+
+  <p>You can find the total number of instances and average QPS for your application on the Instances page of the <a href="https://appengine.google.com">App Engine Admin Console</a>, as shown in Figure 3.</p>
+
+  <figure>
+    <img src="/images/articles/unleashing-appengine-scalability/image04.png">
+    <figcaption>Figure 3: Instances page of the Admin Console</figcaption>
+  </figure>
+
+  <p>In this example, the average QPS is 10.479. Because there is a total of seven instances running for this application, the site is processing 73.353 QPS in total.<sup>2</sup></p>
+
+  <p>As a best practice, strive to minimize the time required to process each request. You can check on the total processing time for requests on the Logs page of the Admin Console (Figure 4).</p>
+
+  <figure>
+    <img src="/images/articles/unleashing-appengine-scalability/image02.png">
+    <figcaption>Figure 4: Latency shown in the log</figcaption>
+  </figure>
+
+  <p>The example request in Figure 4 shows a latency of 402 ms. This time is important for two reasons:</p>
+
+  <ul>
+    <li>A slow response directly impacts the user experience.</li>
+    <li>Your instance is busy during that time, so App Engine may create another instance to handle additional requests. If you can optimize your code to execute in 200 ms, the user experience is improved, and your QPS may be doubled without running extra instances.</li>
+  </ul>
+
+  <p><a href="https://developers.google.com/appengine/docs/python/tools/appstats">Appstats</a> is a powerful tool you can use to understand, optimize, and improve your application’s QPS. As shown in Figure 5,  it shows the number of RPC calls that are invoked inside each request, the duration of each RPC call (such as Datastore or Memcache access), and the contribution of each RPC call to the overall latency of the request. This information gives you hints for finding bottlenecks in your application.</p>
+
+  <figure>
+    <img src="/images/articles/unleashing-appengine-scalability/image06.png">
+    <figcaption>Figure 5: Example timeline from Appstats</figcaption>
+  </figure>
+
+  <p>If the Appstats graphs indicate that your application’s bottleneck is in CPU-intensive tasks, rather than waiting for RPC calls to return, you could try a <a href="https://developers.google.com/appengine/docs/adminconsole/performancesettings#Setting_the_Frontend_Instance_Class">higher CPU class for the frontend instances</a> to reduce the latency. While this increases the CPU cost of each instance, the number of instances required to support the load will decrease, and the user experience improves without a major shift in the total cost.</p>
+
+  <p>You can also increase the QPS by letting App Engine assign multiple requests to each instance simultaneously. By default, one instance can run only one thread to prevent unexpected behavior or errors caused by concurrent processing. If your application code is thread-safe and implements proper concurrency control, you can increase the QPS of each instance without additional cost by <a href="https://developers.google.com/appengine/docs/python/config/appconfig#Python_app_yaml_Using_concurrent_requests">specifying the threadsafe element in the configuration file</a>.</p>
+
+  <h2>Optimize Idle Instances and Pending Latency</h2>
+
+  <p>While QPS represents the total throughput of your application, other parameters, such as idle instances and pending latency, determine the elasticity of your application scalability. Configure these parameters on the Application Settings page of the Admin Console<sup>3</sup> (Figure 6).</p>
+
+  <figure>
+    <img src="/images/articles/unleashing-appengine-scalability/image00.png">
+    <figcaption>Figure 6: Idle instances and pending latency parameters</figcaption>
+  </figure>
+
+  <h3>Idle Instances</h3>
+
+  <p>Idle instances help your site handle a sudden influx of requests. Usually, requests are handled by existing, active, available application instances. If a request arrives and there are no available application instances, App Engine may need to activate an application instance to handle that request (called a <a href="https://developers.google.com/appengine/docs/adminconsole/instances?hl=en#Loading_Requests">loading request</a>). A loading request takes longer to respond, because it must wait while the new instance is initialized.</p>
+
+  <p>Idle instances (also called resident instances) represent the number of instances that App Engine keeps loaded and initialized, even when the application is not receiving any requests. The default is to have zero idle instances, which means requests will be delayed every time your application scales up to more instances.</p>
+
+  <p>You can <a href="https://developers.google.com/appengine/docs/adminconsole/performancesettings#scheduler">adjust the minimum and maximum number of idle instances</a> independently with sliders in the Admin Console.</p>
+
+  <p>We recommend that you maintain idle instances if you do not want requests to wait for instance creation and initialization. For example, if you specify a minimum of ten idle instances, your application will be able to service a burst of requests immediately on those ten instances. We recommend that you allocate idle instances carefully because they will always be resident and incur some cost.</p>
+
+  <p>You can also set an upper limit to the number of idle instances. This parameter is designed to control how gradually App Engine reduces the number of idle instances as load levels return to normal after a spike. This helps your application maintain steady performance through fluctuations in request load, but it also raises the number of idle instances (and consequently running cost) during periods of heavy load. Lowering the maximum number of idle instances can reduce cost.</p>
+
+  <h3>Pending Latency</h3>
+
+  <p>Pending latency is the time that a request spends in a pending queue for an app server. You can set minimum and maximum values for this parameter.</p>
+
+  <p>When an App Engine front end receives a request from a user and no instance is available to service that request, the request is added to a pending queue until an instance becomes available. App Engine tracks how long requests are held in this queue. If requests are held for too long, App Engine creates another instance to distribute the load. Figure 7 shows how instances are added or deleted based on traffic volume.</p>
+
+  <figure>
+    <img src="/images/articles/unleashing-appengine-scalability/image01.png">
+    <figcaption>Figure 7: Busy instances, pending queue and pending latency</figcaption>
+  </figure>
+
+  <p>The minimum pending latency is the expected and acceptable latency for the pending queue. App Engine will always wait the specified minimum pending latency for an instance to become available. Once the minimum is reached, App Engine applies heuristics to determine whether and when to start an additional instance.<sup>4</sup> (Waiting for an existing instance to become available may be faster, and it is certainly cheaper, than starting a new one.)</p>
+
+  <p>The maximum pending latency is the threshold of unacceptable latency. If a request is still pending when the specified maximum latency is reached, App Engine immediately starts a new instance to serve it. For example, if you set the the maximum pending latency to one second, App Engine will create a new instance if a request has been waiting in the pending queue for more than one second. Adding more instances results in increased throughput and incurs more cost.</p>
+
+  <p><strong>Note</strong>: If you have specified a minimum number of idle instances, the pending latency parameters will have little or no effect (unless there is a sustained traffic spike that grows to exhaust the idle instances faster than they can be initialized).</p>
+
+  <h2>Best Practices and Anti-Patterns</h2>
+
+  <p>Table 1 describes what it means to set the minimum and maximum values on idle instances and pending latency. Based on this matrix, you can optimize these parameters for your requirements.</p>
+
+
+  <table class="brdr-table">
+    <caption>Table 1: Semantics of idle instances and pending latency</caption>
+    <tbody>
+      <tr>
+        <td>
+
+        </td>
+        <td>
+          Idle Instances Minimum <sup>5</sup>
+        </td>
+        <td>
+          Idle Instances Maximum
+        </td>
+        <td>
+          Pending Latency Minimum
+        </td>
+        <td>
+          Pending Latency Maximum <sup>6</sup>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          Specifies
+        </td>
+        <td>
+          Minimum number of resident instances
+        </td>
+        <td>
+          Maximum number of resident instances
+        </td>
+        <td>
+          Time to hold requests on Pending Queues
+        </td>
+        <td>
+          Time to wait before creating new instances
+        </td>
+      </tr>
+      <tr>
+        <td>
+          Low settings
+        </td>
+        <td>
+          - Fewer instances before spike<br/>
+          - Lower cost
+        </td>
+        <td>
+          - Fewer instances after spike<br/>
+          - Lower cost
+        </td>
+        <td>
+          - More instance creation<br/>
+          - Higher cost
+        </td>
+        <td>
+          - More instance creation<br/>
+          - Higher cost
+        </td>
+      </tr>
+      <tr>
+        <td>
+          High settings
+        </td>
+        <td>
+          - More instances before spike<br/>
+          - Higher cost
+        </td>
+        <td>
+          - More instances after spike<br/>
+          - Higher cost
+        </td>
+        <td>
+          - Slower response<br/>
+          - Lower cost
+        </td>
+        <td>
+          - Slower response<br/>
+          - Lower cost
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p>For example, if you expect high traffic to your site because you have scheduled an event or expect major media coverage related to a product release, you could increase the minimum number of idle instances and decrease the maximum pending latency shortly before and during the event to smoothly handle traffic spikes.</p>
+
+  <p>Known anti-patterns are to set the minimum and maximum idle instances close to each other or specify a very small pending latency gap. Either of these may cause unexpected scaling behavior in your application.</p>
+
+  <p>We recommend the following configurations:</p>
+
+  <ul>
+    <li><strong>Best performance</strong>—Increase the value for the minimum number of idle instances and lower the maximum pending latency while leaving the other settings on automatic.</li>
+    <li><strong>Lowest cost</strong>—Keep the number of maximum idle instances low and increase the minimum pending latency while leaving the other settings on automatic.</li>
+  </ul>
+
+  <p>We also recommend that you conduct a <a href="https://developers.google.com/live/shows/6969158">load test</a> of your application before trying out the recommended settings. This will help you choose the best values for idle instances and pending latency.</p>
+
+  <h3>Minimizing Loading Request Time</h3>
+
+  <p>It is also important to reduce the time it takes for a <a href="https://developers.google.com/appengine/docs/adminconsole/instances?hl=en#Loading_Requests">loading request</a> to complete. Loading requests take a long time to complete and result in a poor user experience for the users who happen to trigger them. In extreme cases, the user request may time out.</p>
+
+  <p>Do the following to minimize the time required for loading requests:</p>
+
+  <ul>
+    <li>Load only the minimum amount of code required for startup.</li>
+    <li>Access the disk as little as possible.</li>
+    <li>Load code from a zip or jar file, which is faster than loading from many separate files.</li>
+  </ul>
+
+  <p>If you cannot decrease the time required for a loading request to complete, you may need to have more idle instances to ensure responsiveness when the load increases. Reducing the loading request time increases the elasticity of your application and lowers the cost.</p>
+
+  <h2>Conclusion</h2>
+
+  <p>One of the biggest advantages of Google App Engine is that lightweight application instances can be added within a few seconds. This enables highly elastic scaling which adapts to sudden increases in traffic volume. To benefit from this power, you have to understand how requests are distributed to application instances, how to maximize the QPS of your application by increasing the throughput per instance, and how to control elasticity. By following best practices, you can build web applications that scale smoothly when traffic increases rapidly. In addition, following best practices helps you tune your application for an optimal balance of cost and performance.</p>
+
+  <h4>Notes</h4>
+  <ol>
+    <li>The term QPS is Google’s terminology to express requests per second. It includes all HTTP requests to the servers and is not restricted to search queries.</li>
+    <li>For the mathematically precise: QPS is computed over the past 60 seconds. The seven instances handled 4401 requests in 60 seconds for 4401 / 60 = 74.35 QPS, so the average is 74.35 / 7 = 10.479 QPS. For the first instance: 13.133 QPS implies that the instance processed 13.333 * 60 = 787 requests.</li>
+    <li>If you <a href="https://developers.google.com/appengine/docs/python/modules/converting">convert your application to use modules</a>, this graphical interface is replaced by parameter settings in the per-module configuration files.</li>
+    <li><a href="https://developers.google.com/appengine/docs/adminconsole/instances#How_Applications_Scale">App Engine</a> knows what requests are outstanding, how long those requests are likely to take (from past statistics), and how loaded the various app servers are. This means it can predict whether an instance will be available in time to service a request before the maximum pending latency is reached.</li>
+    <li>The minimum idle instances is enabled using the Console for a <a href="https://developers.google.com/appengine/pricing#Enabling_Paid_Apps">paid app</a>.</li>
+    <li>The maximum pending latency is enabled using the Console for a <a href="https://developers.google.com/appengine/pricing#Enabling_Paid_Apps">paid app</a>.</li>
+  </ol>
+
+  <h2>References</h2>
+
+  <p>App Engine Documents</p>
+  <ul>
+    <li><a href="https://developers.google.com/appengine/docs/adminconsole/">Instances in the Admin Console</a></li>
+    <li><a href="https://developers.google.com/appengine/docs/adminconsole/performancesettings">Adjusting Application Performance</a></li>
+    <li><a href="https://developers.google.com/appengine/docs/adminconsole/performancesettings#scheduler">Configuring the Scheduler</a></li>
+    <li><a href="https://developers.google.com/appengine/docs/adminconsole/instances#How_Applications_Scale">How Applications Scale</a></li>
+  </ul>
+
+  <p>Further Reading</p>
+  <ul>
+    <li><a href="https://developers.google.com/appengine/docs/python/modules/">App Engine Modules in Python</a></li>
+    <li><a href="https://developers.google.com/appengine/docs/java/modules/">App Engine Modules in Java</a></li>
+  </ul>
+
+<!-- /maia-main -->
+
+    </div>
+  </div>
+</div>

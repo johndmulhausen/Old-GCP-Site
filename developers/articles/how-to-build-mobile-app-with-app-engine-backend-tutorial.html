@@ -1,0 +1,762 @@
+---
+layout: phase2
+title: How to build a mobile app with an App Engine backend (Tutorial)
+---
+<div id="maia-main" class="cp-article">
+  <div class="maia-cols">
+    <div class="maia-col-9">
+
+      <div>
+        <div style="float:right"><div class="g-plusone"></div></div>
+        <h1 class="title">How to build a mobile app with an App Engine backend (Tutorial)</h1>
+      </div>
+
+      
+<div class="cp-article-tutorial">
+
+	<h1>Overview</h1>
+	<p>This tutorial describes how to develop a mobile application powered by Google Cloud Platform. The application includes an Android client and an App Engine backend.</p>
+	<p>The example app is called the <a href="https://github.com/GoogleCloudPlatform/solutions-mobile-shopping-assistant-backend-java">Mobile Shopping Assistant</a>. The app lets users get information on products at the store they are in, as well as find nearby stores.</p>
+
+	<p>You will write custom code to wire the basic Android app client to the App Engine cloud backend, using Google cloud endpoints, so it can determine user location, locate nearby stores, and allow the user to obtain relevant offers and recommendations.</p>
+
+	<p>The following figure shows the main components of such application. Notice that the example in this tutorial only applies to the Android platform.</p>
+
+	<figure>
+		<img src="/images/articles/app-engine-backend-tutorial/cloud-endpoints.jpg">
+		<figcaption>Figure 1 Mobile Assistant Components</figcaption>
+	</figure>
+
+	<h1>Target Audience</h1>
+	<p>This tutorial is directed to any developer interested in learning how to build services in the cloud and use them from mobile applications which give to the customers a more engaging environment and better experience.</p>
+
+	<p>You need to know how to program in Java and use Eclipse. Also, you should be familiar with building Android mobile apps. A basic knowledge of App Engine technology is not required but is a plus.</p>
+
+	<h1>Tools and Packages Required</h1>
+
+	<p>Make sure you have installed the following tools and packages for the tutorial:</p>
+
+	<h2>Eclipse</h2>
+
+	<ul>
+		<li><span class="bld">Eclipse</span> version 3.8 or higher. Install the tool from <a href="http://www.eclipse.org/downloads">here</a>.</li>
+	</ul>
+
+	<h2>App Engine</h2>
+	<ul>
+		<li><span class="bld">Google Plugin for Eclipse</span>. You can download the necessary plugin <a href="https://developers.google.com/eclipse/docs/download">here</a>. Note that if you install the GPE includes you do not have to install the App Engine SDK s eparately.</li>
+	</ul>
+
+	<h2>Android</h2>
+
+	<ul>
+		<li>
+			<span class="bld">Android Development Tools</span> (ADT). Install the Android tools (plugin) for the Eclipse IDE by following the steps described here: <a href="http://developer.android.com/sdk/installing/installing-adt.html">Installing the Eclipse Plugin</a>.<br>
+			<p>From within Eclipse, open the Android SDK manager to install the latest SDK platform tools. It is recommended that you install the latest Google API. The example shown in this tutorial were verified using API level 17.</p>
+		</li>
+	</ul>
+
+
+	<h1>Phase 1: Setup Mobile Assistant Application </h1>
+	<p>In this phase you&rsquo;ll learn how to set the development environment to build the mobile application. You&rsquo;ll also learn how to allow the client to communicate with the mobile backend.</p>
+	<p>The application will contain the following projects:</p>
+
+	<ul>
+		<li><span class="bld ital">MobileAssistant</span>. This is the Android client that provides the UI. I n the background, the client interacts with the App Engine to gather stored information requested by the customer.</li>
+		<li><span class="bld ital">MobileAssistant-AppEngine</span>. This is the backend project which provides the service in the cloud.</li>
+	</ul>
+
+	<p>By following the steps described in this section, you will create an Android project with a n App Engine backend. The Android client will be able to call the backend.</p>
+	<p>As you progress, the tutorial will show you how to test what you have built up to that point.</p>
+
+	<h2>Download Sample Code</h2>
+	<p>Download the code from the MobileAssistant-Tutorial folder in <a href="https://github.com/GoogleCloudPlatform/solutions-mobile-shopping-assistant-backend-java">Mobile Shopping Assistant</a>. The archive contains phase 1 and phase 2 snippets that you need for the tutorial. It also contains a basic project that you might use as a reference.</p>
+
+	<h2>Setup Android Development Environment</h2>
+	<p>If you already know how to setup an Android development environment and create an Android client application project, you can skip to <a class="ital" href="#saeba">Setup App Engine Backend Application Project</a> after you c reate a client application project called <span class="ital">MobileAssistant</span>. </p>
+
+	<ol>
+		<li>After you have downloaded the SDK, follow the instructions described in: <a href="http://developer.android.com/sdk/installing/index.html">Setting Up an Existing IDE</a>. Remember that the tutorial assumes that you have already installed Eclipse.</li>
+		<li>To develop Android applications, you also need to download at least one Android platform and the latest SDK Platform-tools. Follow the steps described in:<a href="http://developer.android.com/sdk/installing/adding-packages.html">Adding Platforms and Packages</a>.</li>
+		<li>In the <span class="bld">Eclipse</span> toolbar menu, click <span class="bld">Help</span>.</li>
+		<li>In the drop-down menu, click <span class="bld">Install New Software</span>. The <span class="bld">Install</span> wizard is displayed.</li>
+		<li>In the <span class="bld">Work with</span>: box enter<br>
+			<span class="ital">Google Update Site for Eclipse 4.2 - <a href="http://dl.google.com/eclipse/plugin/4.2">http://dl.google.com/eclipse/plugin/4.2</a></span><br>
+			Notice that the version of the plugin depends on the version of your Eclipseinstallation.
+		</li>
+		<li>Read and accept the license agreement and click <span class="bld">Finish</span>.</li>
+		<li>Click <span class="bld">Next</span>.</li>
+	</ol>
+
+	<h2>Create Android Client Application Project</h2>
+	<p>This section shows you how to create a mobile client application project. The application provides the interface which allows the customer to interact with the backend, for example to obtain sales information.</p>
+		<ol>
+		<li>In Eclipse, click <span class="bld">File</span> then select <span class="bld">New</span>.</li></li>
+		<li>Click <span class="bld">Android Application Project</span>.</li>
+		<li>The <span class="bld">New Android Application</span> wizard window is displayed.</li>
+		<li>In the <span class="bld">Application Name</span> box, enter the name of your application, for example <span class="ital">MobileAssistant</span>.</li>
+		<li>In the <span class="bld">Package Name</span> box, enter the name of your application&rsquo;s package, for example <span class="ital">com.google.samplesolutions.mobileassistant</span>.</li>
+		<li>In the <span class="bld">Target SDK</span> drop-down list box, select the API version you want to use. In the example this value is: <span class="ital">API 17: Android 4.2.</span></li>
+		<li>In the <span class="bld">Compile With</span> drop-down list box, select the same API version you used in the previous step.</li>
+		<li>In the <span class="bld">Theme</span> drop-down list box, select a theme that is supported by the API version you chose in the previous steps. You can accept the default value.</li>
+	</ol>
+
+	<figure>
+		<img src="/images/articles/app-engine-backend-tutorial/new-android-app.png">
+		<figcaption>Figure 2 Android Application wizard</figcaption>
+	</figure>
+
+	<ol>
+		<li>Click <span class="bld">Next</span>.</li>
+		<li>In the next window that is displayed, accept the default values and click <span class="bld">Next</span>. The <span class="bld">Configure Launcher Icon</span> wizard window is displayed.</li>
+		<li>Make the icon selections or accept the default values, click <span class="bld">Next</span>. The <span class="bld">Create Activity</span> wizard window is displayed.</li>
+		<li>In the activity list box, select <span class="bld">BlankActivity</span>.</li>
+		<li>Click <span class="bld">Next</span>. The <span class="bld">New Blank Activity</span> wizard window is displayed.</li>
+		<li>If prompted, install the dependencies. Accept the default values and click <span class="bld">Next</span>.</li>
+		<li>
+			Click <span class="bld">Finish</span>.
+			<p>The <span class="bld">MobileAssistant</span> project is created. The project contains several generated classes that belong to the <span class="ital">com.google.samplesolutions.mobileassistant</span> package.</p>
+		</li>
+	</ol>
+
+	<a name="saeba"></a>
+	<h2>Setup App Engine Backend Application Project</h2>
+	<p>This section shows you how to set up the project to create the mobile backend application which runs on Google Cloud Platform (App Engine). The application contains the data repository and the business logic to support the mobile client requests.</p>
+
+	<ol>
+		<li>In the <span class="bld">Package Explorer</span>, right-click on the project name <span class="ital">MobileAssistant</span>.</li>
+		<li>In the drop-down menu, click <span class="bld">Google</span>.</li>
+		<li>In the side menu click <span class="bld">Generate App Engine Backend</span>...<br>
+			In the displayed wizard, y ou can skip the steps for entering the Project Number and API key, unless you plan on using the generated sample code (described in the <a href="https://developers.google.com/eclipse/docs/endpoints-androidconnected-gae">Creating App Engine Connected Android Project</a> ).
+		</li>
+		<li>Click <span class="bld">Create</span> and let the operation finish. The <span class="bld">MobileAssistant-AppEngine</span> project is created along with an <span class="bld">endpoint library</span> in the client application. For more details about endpoints, see <a href="#eclb">EndPoint Client Library Basics</a>. The project contains several generated classes that belong to the <span class="ital">com.google.samplesolutions.mobileassistant</span> package.</li>
+	</ol>
+
+	<p>So fa r you have created the environment for the development of the mobile assistant application, for both client and backend. In the next section you&rsquo;ll start building the application and then test the communication between the mobile device and the App Engine cloud service.</p>
+
+	<h2>Start Building the Application</h2>
+	<p>In this section you will start building the application by creating a simple CheckIn entity class that allows the customer to check in a store, using her mobile device. </p>
+	<p>An entity class provides an &ldquo;object-relational interface&rdquo; between your application and the backend data repository. </p>
+	<p>After the customer checks in, the class insert s the store information in the backend datastore. </p>
+	<p>Now, let&rsquo;s create the class in the <span class="ital">MobileAssistant-Appengine</span> backend application by following these steps : </p>
+
+	<h3>Create an Entity Class</h3>
+	<ol>
+		<li>In the <span class="bld">Package Explorer</span>, under the AppEngine project <span class="bld">src</span> folder, right-click the package, then select <span class="bld">-&gt;New-&gt;Class</span>. The <span class="bld">New Java Class</span> wizard is displayed.</li>
+		<li>In the <span class="bld">Name:</span> box enter <span class="ital">CheckIn</span>.</li>
+		<li>Click <span class="bld">Finish</span>.<br>
+			For more information about the kind of class created, see the App Engine <a href="https://developers.google.com/appengine/docs/java/datastore/overview">DataStore Overview</a>.
+		</li>
+		<li>In the editor, replace the boiler plate code with the code for the <span class="ital">CheckIn.java</span> class that you can obtain from the snippets archive downloaded earlier. Notice that the code shown provides a &ldquo;ready to run&rdquo; class. The most important things you must pay attention to are the 3 properties and the annotations.</li>
+		<li>Save the class.</li>
+	</ol>
+
+	<h3>Generate a Cloud Endpoints Class and Library</h3>
+	<ol>
+		<li value="6">Create the <span class="ital">CheckInEndpoint.java</span> class and related client library by following the steps described in: <a href="#ecdp">Entity Class Design Pattern</a>. The following figure shows the entry for the client library in the <span class="ital">MobileAssistant</span> client project.<br>
+
+			<figure>
+				<img src="/images/articles/app-engine-backend-tutorial/source-view.png">
+				<figcaption>Figure 3 CheckIn Endpoint Client Library</figcaption>
+			</figure>
+		</li>
+	</ol>
+
+	<p>Open the class in the editor. Then, in the <span class="ital">insertCheckIn</span> method delete the following lines:</p>
+<pre>
+if (containsCheckIn(checkin)) {
+throw new EntityExistsException("Object already exists");
+}
+</pre>
+	<p>This is because the <span class="ital">CheckIn</span> class is configured to use auto-generated key s. This is defined by the attribute <span class="ital">@GeneratedValue(strategy = GenerationType.IDENTITY)</span>.</p>
+	<p>Using the endpoint design pattern and with minimal custom code, you have created the infrastructure that allows the communication between the client and the backend. </p>
+	<p>Before going forward, you&rsquo;ll test the current minimal code and verify that the client and backend applications can communicate.</p>
+
+	<h2>Modify the Client Application</h2>
+	<p>In this section you&rsquo;ll add some code to the <span class="ital">MainActivity</span> class to test if the client communicates with the backend. The code contains a <span class="bld">CheckInTask</span> class. At power-up this class sends a fictitious store ID to the backend endpoint to indicate that the customer has checked in.</p>
+	<p>Follow these steps to add the code:</p>
+
+	<ol>
+		<li>In the <span class="bld">Package Explorer</span>, in the <span class="ital">MobileAssistant</span> project, expand the <span class="bld">MainActivity.java</span> file.</li>
+		<li>In the editor, open the <span class="ital">MainActivity</span> class.</li>
+		<li>Replace the boiler plate code with the code find in the <span class="ital">MainActivity.01.java</span> file that you can obtain from the snippets archive downloaded earlier.</li>
+		<li>Save the class.</li>
+	</ol>
+
+	<p>This code sets the store ID to the arbitrary value <span class="ital">StoreNo123</span>. This ID is assigned to the <span class="ital">CheckIn</span> variable <span class="ital">setPlaceId</span> that will be stored in the App Engine datastore. You will see this value displayed in the Datastore viewer during testing described in the next section.</p>
+
+	<a name="tcbc"></a>
+	<h2>Test Client and Backend Communication</h2>
+	<p>The goal of this test is to verify that the code written so far is working and that the infrastructure is in place so the client and backend can communicate. Specifically, you must verify that the fictitious store ID sent by the client is stored in the App Engine datastore.</p>
+	<p>The following snippet, from the <span class="ital">Android MainActivity.java</span> class, shows the code that calls the backend:</p>
+
+
+
+<pre>
+Checkinendpoint.Builder builder = new Checkinendpoint.Builder(
+AndroidHttp.newCompatibleTransport(), new JacksonFactory(), null);
+Checkinendpoint endpoint = builder.build();
+&hellip;.......
+endpoint.checkInEndpoint().insertCheckIn(checkin).execute();
+</pre>
+
+
+	<table class="alert-box">
+		<tbody>
+			<tr>
+				<td>
+					<p><span class="bld">Note</span>. This test runs on your local development server, so you first must start the backend and then the client application.</p>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<ol>
+		<li>In the <span class="bld">Package Explorer</span>, in the <span class="ital">MobileAssistant</span> project, expand the <span class="ital">CloudEndPointUtils.java</span> class.</li>
+		<li>In the editor, open the <span class="ital">CloudEndPointUtils</span> and set LOCAL_ANDROID_RUN = true as shown next.<br>
+			<figure>
+				<img src="/images/articles/app-engine-backend-tutorial/cloud-endpoints-utils.png">
+			</figure>
+			<p>This indicates that the <span class="ital">MobileAssistant</span> client application connects to the local d evelopment server.</p>
+		</li>
+		<li>In the <span class="bld">Package Explorer</span>, right-click on the <span class="ital">MobileAssistant-AppEngine</span> project.</li>
+		<li>Select <span class="bld">Debug As -&gt;Web Application</span>.<br>
+				The application <span class="ital">MobileAssistant-AppEngine</span> starts on the local server.
+		</li>
+		<li>In the <span class="bld">Package Explorer</span>, right-click on <span class="ital">MobileAssistant</span> project.</li>
+		<li>In the drop-down menu, select <span class="bld">Debug As</span>.</li>
+		<li>In the side menu click <span class="bld">Android Application</span>.<br>
+			<p>This starts the <span class="ital">MobileAssistant</span> client Android application simulation. The application will communicate with the backend <span class="ital">MobileAssistant-Appengine</span>.</p>
+			<p>If you have not selected a device for the emulation, you &rsquo; ll be asked to do so now. Follow the steps indicated by the wizard. The model 4.0&rdquo;WVGA (480x800:hdpi) was selected for the example in this tutorial.</p>
+			<p>If you get errors with 'R' being undefined and this is the first time you've tried to compile the project, it's likely that you've incorrectly installed the SDK.</p>
+			<p>If you receive this error on subsequent builds, try deleting "R.java" (a generated class) and see whether you can regenerate it successfully. If this step fails, some error exists in the files of the "res" (resources) directory. Look for Eclipse warnings particularly in the XML files.</p>
+			<p>To complete the test, you must verify that the store ID is stored in the App Engine datastore by performing the following steps:</p>
+		</li>
+		<li>In the browser of your development server, enter the following URL <a href="http://localhost:8888/_ah/admin">http://localhost:8888/_ah/admin</a>. You will get a display similar to the following:<br>
+			<figure>
+				<img src="/images/articles/app-engine-backend-tutorial/no-app-id-console3.png">
+				<figcaption>Figure 4 Datastore viewer</figcaption>
+			</figure>
+		</li>
+		<li>Click <span class="bld">List Entities</span>. This displays the <span class="ital">CheckIn</span> entity instance that contains the fictitious store ID. You should look for an entity with <span class="ital">placeid = StoreNo123</span>, as shown in the following figure. T his proves that the client communicates with the backend.<br>
+			<figure>
+				<img src="/images/articles/app-engine-backend-tutorial/no-app-id-console4.png">
+				<figcaption>Figure 5 CheckIn entity list</figcaption>
+			</figure>
+			<p>With this, you have completed the preliminary steps in creating the mobile a pplication infrastructure.</p>
+			<p>In the next steps, you &rsquo; ll add logic to the backend that allows the customer to obtain information about places (stores) contained in the backend data repository.</p>
+		</li>
+	</ol>
+
+	<h2>Obtain Store Information</h2>
+	<p>This section shows how to add more logic to the application to allow the customer to obtain information about stores contained in the backend repository. To achieve this goal, you must add a new entity class to the <span class="ital">MobileAssistant-Appengine</span> backend application called <span class="ital">Place</span>. In a real world application the information would be about places near to the customer&rsquo;s location obtained in real time through GPS. The example uses simulated information contained in the App Engine datastore. Refer to the test section shown later to see how to populate the datastore.</p>
+
+	<ol>
+		<li>In the <span class="bld">Package Explorer</span>, under the <span class="ital">MobileAssistant-AppEngine</span> project in the <span class="bld">src</span> folder, right-click the package, then select <span class="bld">-&gt;New-&gt;Class</span>.<br>
+			The <span class="bld">New Java Class</span> wizard is displayed.
+		</li>
+		<li>In the <span class="bld">Name</span>: box enter <span class="ital">Place</span>.</li>
+		<li>Click <span class="bld">Finish</span>.</li>
+		<li>In the editor, replace the boiler plate code with the code contained in the file <span class="ital">Place.java</span> that you can obtain from the snippets archive downloaded earlier.</li>
+		<li>Save the class.</li>
+		<li>Create the <span class="ital">PlaceEndpoint.java</span> class and related client library by following the steps described in: <a href="#ecdp">Entity Class Design Pattern</a>.</li>
+	</ol>
+
+	<p>You have created the infrastructure that allows the client application to retrieve places information that is in the backend datastore.</p>
+
+	<h2>Modify the Client Application</h2>
+	<p>Let&rsquo;s now modify the client application again. This will allow you to obtain information from the the backend and display it in your Android client application.</p>
+
+	<ol>
+		<li>In the <span class="bld">Package Explorer</span>, in the <span class="ital">MobileAssistant</span> project, expand the MainActivity.java file.</li>
+		<li>In the editor, open the <span class="ital">MainActivity</span> class.</li>
+		<li>Replace the existing code with the version in the file <span class="ital">MainActivity.02.java</span> that you can obtain from the snippets archive downloaded earlier.</li>
+	</ol>
+
+	<p>In this new version of the code, t he global <span class="ital">resultsList</span> variable contains the information obtained from the backend. </p>
+	<p>The client application instantiates the <span class="bld">ListOfPlacesAsyncRetriever</span> class at the creation time and calls its execute method (in the onCreate method).</p>
+	<p>The class makes asynchronous Mobile Assistant API calls when the customer check into a place. In the example code, it retrieves places information from the backend.</p>
+	<p>You will see this information displayed in the Android client application.</p>
+
+	<h3>Modify Activity_main.xml</h3>
+	<ol>
+		<li>In the <span class="bld">Package Explorer</span>, in the <span class="ital">MobileAssistant</span> project, expand the <span class="bld">res</span> folder and then the layout folder.</li>
+		<li>Open the <span class="ital">Activity_main.xml</span> file. A dd the line of code shown next (to modify the existing TextView). This assures that the information retrieved from the backend is displayed by the Android client. R efer to the next test section to learn more about the information to be retrieved.</li>
+	</ol>
+
+<pre>
+&lt;TextView
+android:id="@+id/results"
+.../&gt;
+</pre>
+
+	<p>This defines a single layout covering the whole screen (the width and height values are &ldquo;match_parent&rdquo;). Inside the layout there is a single &ldquo;TextView&rdquo; element. This text box is initialized with the string literal &ldquo;@+id/results&rdquo; which identifies the list of the stores.</p>
+	<p>The <span class="bld">results</span> identifier is used in the <span class="ital">OnCreate</span> routine as follows :</p><a href="#" name="7af03a2a404fff3540ee3c254379b91df51b2801"></a><a href="#" name="4"></a>
+
+	<table>
+		<tbody>
+			<tr>
+				<td>
+					<p>resultsList = (TextView) findViewById(R.id.results);</p>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<p>This allows access to the widget so you can set new content (the list of stores). Notice, you can open the <span class="ital">Activity_main.xml</span> file using the Android XML (visual) editor and you can assign the value <span class="ital">@+id/results</span> to the Id property.</p>
+
+	<h2>Test Display of Store Information</h2>
+	<p>The purpose of the test is to retrieve the list of places from the backend. The test is performed on local development server. Refer to the steps performed in the case of the <span class="ital">CheckIn</span> entity class to enable local testing. Before you can proceed with testing, you must populate the backend repository with data, as shown next.</p>
+
+	<a name="cus"></a>
+	<h3>Create Upload Script</h3>
+	<p>This is the script that actually uploads the simulated information into the backend datastore.</p>
+	<p>For information about the bulkloader.yaml and more, refer to the App Engine documentation in: <a href="https://developers.google.com/appengine/docs/python/tools/uploadingdata">Uploading and Downloading Data</a>. Also, you can find the bulkloader.yaml file and the test data here <a href="https://github.com/GoogleCloudPlatform/solutions-mobile-shopping-assistant-backend-java/tree/master/MobileAssistant-Data">MobileAssistant-Data</a>.</p>
+	<ol>
+		<li>Create a new directory and make it your current directory.</li>
+		<li>In your editor, create a script file and call it upload_data.sh.</li>
+		<li>Copy and paste the following code into the file.
+<pre>
+#!/bin/sh
+appcfg.py upload_data
+--config_file bulkloader.yaml --url=http://localhost:8888/remote_api --filename $1 --kind=$2 -e
+nobody@nowhere.com
+</pre>
+
+			<p>The previous script accepts two arguments separated by a blank space: </p>
+			<p class="bld">./upload_data.sh&lt;data.csv&gt; &lt;class entity name&gt;</p>
+			<p>The first argument is the name of the csv file that contains the data you want to upload, The second is the name of the entity class to handle the data.</p>
+		</li>
+		<li>Close and save the file. Notice that the script at this time is intended to be used on local server. It must be modified when the backend application is deployed to the cloud. For example, e-mail &ldquo;<a href="https://github.com/GoogleCloudPlatform/solutions-mobile-shopping-assistant-backend-java/tree/master/MobileAssistant-Data">nobody@nowhere.com</a> &rdquo; will be changed to an actual e-mail address of the App Engine administrator before deployment.</li>
+	</ol>
+
+	<h3>Places Simulated Data</h3>
+	<p>The simulated data is contained in the file <span class="ital">places.csv</span> that you downloaded earlier from the MobileAssistant-Data directory in <a href="https://github.com/GoogleCloudPlatform/solutions-mobile-shopping-assistant-backend-java">Mobile Shopping Assistant</a>.</p>
+	<p>The file contains the following comma separated fields:</p>
+	<ul>
+		<li>name: &lt;place&rsquo;s name&gt;</li>
+		<li>placeId: &lt;number that identifies the place&gt;</li>
+		<li>location: &lt;place&rsquo;s latitude and longitude coordinates (two values separated by a comma) &gt;</li>
+		<li>key: &lt;unique key associated with the place&gt;</li>
+		<li>address: &lt;the place&rsquo;s address &gt;</li>
+	</ul>
+
+	<h3>Modify Web.xml</h3>
+	<p>To upload data to the datastore, reference the &ldquo;remote API servlet&rdquo; and associate it with a URL. You&rsquo;ll define these mappings in the Web.xml file of the MobileAssistant-Appengine application, as shown next. The web server uses this configuration to identify the servlet to handle a given request.</p>
+
+	<table class="alert-box">
+		<tbody>
+			<tr>
+				<td>
+					<p><span class="bld">Note</span>. Notice, you might need to restart Eclipse. if you skip th e Web.xml modification you will get <a href="https://github.com/GoogleCloudPlatform/solutions-mobile-shopping-assistant-backend-java/tree/master/MobileAssistant-Data">Error 404 Not Found</a>.
+					</p>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<p></a>
+
+<pre>
+&lt;servlet&gt;
+&lt;display-name&gt;Remote API Servlet&lt;/display-name&gt;
+&lt;servlet-name&gt;RemoteApiServlet&lt;/servlet-name&gt;
+&lt;servlet-class&gt;com.google.apphosting.utils.remoteapi.RemoteApiServlet&lt;/servlet-class&gt;
+&lt;load-on-startup&gt;1&lt;/load-on-startup&gt;
+&lt;/servlet&gt;
+&lt;servlet-mapping&gt;
+&lt;servlet-name&gt;RemoteApiServlet&lt;/servlet-name&gt;
+&lt;url-pattern&gt;/remote_api&lt;/url-pattern&gt;
+&lt;/servlet-mapping&gt;
+</pre>
+
+	<a name="upsd"></a>
+	<h3>Upload Places Simulated Data</h3>
+	<p>To upload the test data to the data store, run the script that uploads the data from your script directory.</p>
+	<p>Before you upload your data, make sure to start MobileAssistant-AppEngine as a Web Application (in Debug mode) in Eclipse.</p>
+
+	<ol>
+		<li><span class="bld">./upload_data.sh &lt;places.csv&gt; Place</span></li>
+		<li>At the password request, just press enter.</li>
+	</ol>
+
+	<p>To ensure that the data has been uploaded in the datastore, perform the same steps you followed in the case of the <span class="ital">Checkin</span> class. Refer to <a href="#tcbc">Test Client and Backend Communication</a> section from step 3 forward.</p>
+	<p>In the browser of your development machine, open the App Engine administration dashboard at: <span class="c15 c8"><a href="http://localhost:8888/_ah/admin">http://localhost:8888/_ah/admin</a>,</p>
+
+	<ol>
+		<li>Select <span class="bld">Place</span> in the drop-down list a shown in the next figure.</li>
+		<li>Click <span class="bld">List Entities</span>. This displays the places information you uploaded.</li>
+	</ol>
+
+	<h3>Display Store Information</h3>
+
+	<ol>
+		<li>In the Package Explorer, in debug mode, first start the <span class="ital">MobileAssistant-AppEngine</span> as a Web application then the <span class="ital">MobileAssistant-AppEngine</span> as an Android application, as you did when testing the CheckIn class.</li>
+		<li>Unlock the emulator to display the places information, as shown next.<br>
+			<figure>
+				<img src="/images/articles/app-engine-backend-tutorial/mobile-assistant-sm.jpg">
+				<figcaption>Figure 6 Android Emulator Display Store Information</figcaption>
+			</figure>
+		</li>
+	</ol>
+
+	<hr>
+
+	<h1>Phase 2: Building the Business Logic</h1>
+	<p>Now that the application infrastructure is in place, let&rsquo;s proceed with the second phase of this tutorial. You &rsquo;ll add the logic that allows the customer to perform the actual tasks of checking in a place and obtaining relevant information such as sales that are in progress, offers, and so on.</p>
+
+	<table class="alert-box">
+		<tbody>
+			<tr>
+				<td>
+					<p> <span class="bld">Note</span>. In this phase, the tutorial will describe the logic of key points without showing all the code involved. For that you can refer to the provided downloadable examples.</p>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<h2>Create Client User Interface</h2>
+	<p>This section shows the steps to add the user interface to the client application so the customer can interact with the backend.</p>
+	<p>In order to build the UI you are going to add a few files to the <span class="ital">MobileAssistant</span> project and modify the <span class="ital">MainActivity.java</span> class as described next. The simple UI provides the following control buttons : <span class="ital">Price Check, Online Shopping</span> and <span class="ital">My Account</span>. The buttons are not yet functional in this phase.</p>
+
+	<ol>
+		<li>Modify <span class="bld">MainActivity.java</span> as follows:
+				<ol type="a">
+					<li>Replace t he <span class="ital">TextView</span> with a <span class="ital">ListView</span> which contains the list of the nearby places.</li>
+					<li>In the <span class="ital">onPostExecute</span> method, instead of using a simple text output, use <span class="ital">ListAdapter</span> to display information with icons and better formatting on the Android device. For more information, see Android <a href="http://developer.android.com/reference/android/widget/ListAdapter.html">documentation</a>.</li>
+					<li>Add t he <span class="ital">placesListClickListener</span> event handler to process the customer &rsquo;s button click event. This event activates the logic that performs the check-in tasks.<br>
+						<span class="bld">You will find the modified MainActivity.javaclass in the snippets archive downloaded earlier.</span>
+					</li>
+				</ol>
+		</li>
+		<li>Add the following new files you obtained from the snippets archive downloaded earlier:
+			<ol type="a">
+				<li><span class="ital">activity_main.xml</span>. This file is in the <span class="ital">res/layout</span> folder and defines the UI layout for buttons, and places list.</li>
+				<li><span class="ital">place_item.xml</span>. This file is in the <span class="ital">res/layout</span> folder and contains information about display format and position for the places.</li>
+				<li><span class="ital">strings.xml</span>. This file is in the <span class="ital">res/values</span> folder and contains predefined strings to display on various occasions.</li>
+			</ol>
+		</li>
+		<li>After you have made the previous changes, recompile the <span class="ital">MobileAssistant</span> project.</li>
+		<li>Run the backend if it is not running.</li>
+		<li>Run the client (emulator). Refer to similar steps you followed in the previous section.</li>
+		<li>Unlock the emulator (click on the lock icon and drag it to the right, outside the emulator image). This displays the UI and places information, as shown next. Notice that the buttons are not functional.
+			<figure>
+				<img src="/images/articles/app-engine-backend-tutorial/mobile-assistant2.png">
+				<figcaption>Figure 7 Android Emulator UI and Places</figcaption>
+			</figure>
+		</li>
+	</ol>
+
+	<h2>Add Offers and Recommendations Logic to the Backend</h2>
+	<p>In order for the application to do something meaningful you must add two more entity classes to the M<span class="ital">obileAssistant-AppEngine</span> application. The classes allow the customer to obtain information about offers and shopping recommendations.</p>
+	<p>The following are the classes you must add that you can obtain from the snippets archive downloaded earlier:</p>
+
+	<ol>
+		<li><span class="ital">Offer.java</span> entity class. This class is responsible for gathering the offers available for each store.</li>
+		<li>Follow the pattern as in the case of the <span class="ital">Checkin.java</span> class to create the related <span class="ital">OfferEndpoint.java</span> class.</li>
+		<li>Recommendation.java entity class. This class is responsible for gathering shopping recommendations available.</li>
+		<li>Create the related <span class="ital">RecommendationsEndpoint.java</span> class and the client library as you have done for the <span class="ital">Offer.java</span> entity class.</li>
+	</ol>
+
+	<p>The classes you have just added rely on data information stored in the backend data repository. This means that you must populate the repository with meaningful data as shown in the test section later. </p>
+
+	<h2>Add Offers and Recommendations Logic to the Client</h2>
+	<p>This section describes the logic to be added to the client. This logic supports the display of offers and shopping recommendations. Moreover, the code adds formatting logic to properly display text and images applicable to the store selected by the customer. </p>
+
+	<ol>
+		<li>
+			Modify <span class="ital">MainActivity.java</span>. R efer to the code for phase 2 downloaded earlier.
+			<ol type="a">
+				<li>
+					Add the <span class="bld">placesListClickListener</span> event handler. This handler is invoked when the customer clicks on an item in the list of nearby places. It asynchronously checks the customer into the selected place and navigates to the activity that will present details about this place. Make sur e that t he following code is contained in the downloaded snippet :<br>
+<pre>
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+private OnItemClickListener placesListClickListener = new OnItemClickListener() {
+@Override
+public void onItemClick(AdapterView&lt;?&gt; arg0, View arg1, int arg2, long arg3) {
+Place selectedPlace = places.get((int) arg3);
+new CheckInTask().execute();
+}
+};
+</pre>
+					<p>In the <span class="ital">onCreate</span> method enter the following line to enlist the handler:</p>
+<pre>
+placesList.setOnItemClickListener(placesListClickListener);
+</pre>
+				</li>
+				<li>
+					To the <span class="ital">placesListClickListener</span> event handler you must add the logic that starts the collection of offers and recommendations for the store selected by the customer. Perform these steps: :
+					<ol type="i">
+						<li>
+							Add the following to the import list:<br>
+<pre>
+<p>import android.content.Intent;</p>
+</pre>
+						</li>
+						<li>In the <span class="ital">placesListClickListener</span> event handler and in the public void onItemClick(....) function, after the new CheckInTask().execute() ; statement, add the following code:
+							<a href="#" name="77bed4711e5055191534d74f2f63fafcc9d79988"></a><a href="#" name="12"></a>
+<pre>
+PlaceDetailsActivity.currentPlace = selectedPlace;
+Intenti = newIntent(MainActivity.this, PlaceDetailsActivity.class);
+startActivity(i);
+</pre>
+						</li>
+					</ol>
+				</li>
+			</ol>
+		</li>
+		<li>
+			Modify <span class="ital">AndroidManifest.xml</span>.
+			<ol type="a">
+				<li>
+					Add the configuration <span class="ital">&lt;activity&gt;</span> entry for the <span class="ital">PlaceDetailsActivity</span> as shown next:<br>
+<pre>
+&lt;activity android:name=
+"com.google.samplesolutions.mobileassistant.PlaceDetailsActivity" &gt;
+&lt;/activity&gt;
+</pre>
+				</li>
+			</ol>
+		</li>
+		<li>
+			Add the following new files that you can obtain from the snippets archive downloaded earlier:<br>
+			<ol type="a">
+				<li><span class="ital">offer_item.xml</span>. This file is in the <span class="ital">res/layout</span> folder and contains information about the display layout for the offer information.</li>
+				<li><span class="ital">activity_single_place.xml</span>. This file is in the <span class="ital">res/layout</span> folder and contains information about the display layout for recommendation information.</li>
+				<li><span class="ital">ImageUriViewBinder.java</span>. This class handles store related images to be displayed.</li>
+				<li>
+					<span class="ital">PlaceDetailsActivity.java</span>. This class performs tasks such as retrieving offers and recommendations asynchronously. You can find the class in the snippets archive downloaded earlier. The class asynchronously retrieves the list of offers and recommendations through the appropriate endpoints and update the corresponding ListView and label for each. Make sure that t he following code snippet for the offer collection is contained in the downloaded snippet:
+<pre>
+import com.google.api.client.extensions.android.http.AndroidHttp;
+import com.google.api.client.json.jackson2.JacksonFactory;
+import java.io.IOException;
+import com.google.samplesolutions.mobileassistant.offerendpoint.Offerendpoint;
+</pre>
+
+<pre>
+/**
+* Retrieves the list of offers through appropriate CloudEndpoint.
+* @param params the place for which to retrieve offers.
+* @return collection of retrieved offers.
+*/
+@Override
+protected CollectionResponseOffer doInBackground(Place... params) {
+Offerendpoint.Builder endpointBuilder = new Offerendpoint.Builder(AndroidHttp.newCompatibleTransport(), new JacksonFactory(), null);
+endpointBuilder = CloudEndpointUtils.updateBuilder(endpointBuilder);
+CollectionResponseOffer result;
+Offerendpoint endpoint = endpointBuilder.build();
+try {
+result = endpoint.listOffer().execute();
+} catch (IOException e){
+e.printStackTrace();
+result=null;
+}
+return result;
+}
+}
+</pre>
+
+					<p>Similar code applies to the recommendations collection.</p>
+				</li>
+			</ol>
+		</li>
+	</ol>
+
+	<hr style="margin-top: 60px;">
+
+	<h2>Test Display of Offers and Recommendations</h2>
+	<p>The purpose of the test is to retrieve the offers and the recommendations from the backend. The test is performed on local development server. Refer to the step performed in the case of CheckIn entity class to enable local testing.</p>
+	<p>Before, you can proceed with testing, you must populate the backend repository with data, as shown next.</p>
+	<h3>Offers and Recommendations Simulated Data</h3>
+	<p>In this section you are going to define test data following the same steps as in the ca se of the places simulated data.</p>
+	<p>The simulated data is contained in the fle <span class="ital">offers.csv</span> and <span class="ital">recommendations.csv</span> that you downloaded earlier from the MobileAssistant-Data directory in <a href="https://github.com/GoogleCloudPlatform/solutions-mobile-shopping-assistant-backend-java">Mobile Shopping Assistant</a>.</p>
+	<p><span class="ital">The offers.csv</span> file contains the following comma separated fields:</p>
+
+	<ul>
+		<li>description: &lt;string that describes the offer&gt;</li>
+		<li>key: &lt;unique key associated with the offer&gt;</li>
+		<li>title: &lt;the title associated with the offer&gt;</li>
+		<li>imageUrl : &lt;the URL of the image to be displayed &gt;</li>
+	</ul>
+
+	<p>The <span class="ital">recommendations.csv</span> file contains the following comma separated fields:</p>
+
+	<ul>
+		<li>description: &lt;string that describes the recommendation&gt;</li>
+		<li>key: &lt;unique key associated with the recommendation &gt;</li>
+		<li>title: &lt;the title associated with the offer&gt;</li>
+		<li>imageUrl : &lt;the URL of the image to be displayed &gt;</li>
+		<li>expiration: &lt;the recommendation expiration date&gt;</li>
+	</ul>
+
+	<h3>Upload Offers and Recommendations Simulated Data</h3>
+	<p>To upload the test data to the datastore, you are going to use the same script described in <a href="#cus">Create Upload Script</a> and follow the same steps described in <a href="#upsd">Upload Places Simulation Data</a>. From your script directory, where the offers.csv and recommendations.csv files are, execute the following steps: </p>
+
+	<ol>
+		<li><span class="bld">./upload_data.sh offers.csv Offer</span></li>
+		<li>At the password request, just press enter.<br>
+		If there are no errors, you should get a successful transfer message.</li>
+	</ol>
+
+	<p>Repeat the same steps for the recommendations data, as follows:</p>
+
+	<ol>
+		<li><span class="bld">./upload_data.sh recommendations.csv Recommendation</span></li>
+		<li>At the password request, just press enter.</li>
+	</ol>
+
+	<p>If there are no errors, you should get a successful transfer message.</p>
+	<p>To assure that the test data has been uploaded in the datastore, perform the following steps:</p>
+
+	<ol>
+		<li>In Package Explorer, right-click on <span class="ital">MobileAssistant-AppEngine</span> server application.</li>
+		<li>In the drop-down menu, select <span class="bld">Debug As</span>.</li>
+		<li>In the side menu click <span class="bld">Web Application</span>.<br>The application <span class="ital">MobileAssistant-AppEngine</span> starts on the local server.</li>
+		<li>In the browser of your development machine, enter the following URL <span class="c8 c15"><a href="http://localhost:8888/_ah/admin">http://localhost:8888/_ah/admin</a>.</li>
+		<li>
+			Select <span class="bld">Offer</span> in the drop-down list as shown in the next figure.
+			<figure>
+				<img src="/images/articles/app-engine-backend-tutorial/no-app-id-console2.png">
+				<figcaption>Figure 8 Offer entity class</figcaption>
+			</figure>
+		</li>
+		<li>
+			Click <span class="bld">List Entities</span>. This displays the offers information you uploaded, as shown in the following figure. This assures that the test data has been uploaded in the datastore.<br>
+			<figure>
+				<img src="/images/articles/app-engine-backend-tutorial/no-app-id-console.png">
+				<figcaption>Figure 9 Offers information</figcaption>
+			</figure>
+		</li>
+	</ol>
+
+	<h3>Display Offers and Recommendations</h3>
+
+	<ol>
+		<li>In the Package Explorer, in debug mode, first start the <span class="ital">MobileAssistant-AppEngine</span> as a Web application then the <span class="ital">MobileAssistant</span> as an Android application, as you did when testing the UI.</li>
+		<li>Unlock the emulator (click on the lock icon and drag it to the right, outside the emulator image). You will get a display of the store information.</li>
+		<li>
+			Click on any store location. You should get the display of the offers and recommendations as shown in the next figure. Notice that at this stage of the implementation the information is the same for each store.
+			<figure>
+				<img src="/images/articles/app-engine-backend-tutorial/mobile-assis.png">
+				<figcaption>Figure 10 Android Emulator Offers and Recommendations</figcaption>
+			</figure>
+		</li>
+	</ol>
+
+	<h2>Run Deployed Application</h2>
+	<p>This section describes how to run the application using the MobileAssistant-AppEngine backend deployed in the cloud.</p>
+
+	<ol>
+		<li>Make sure that you have created your App Engine application to deploy the <span class="ital">MobileAssistant-AppEngine</span> backend. You create an App Engine application using the <a href="https://appengine.google.com/">App Engine console</a>. For more information, see <a href="https://developers.google.com/appengine/docs/adminconsole/?hl=en">administration console</a>.</li>
+		<li>
+			In your test data directory, create a file named upload_data_deploy.sh. Copy and paste the following code into the file.<br>
+<pre>
+#!/bin/sh
+appcfg.py upload_data --config_file bulkloader.yaml --url=http://yourappid.appspot.com/remote_api --filename $1 --kind=$2 -e your_email
+</pre>
+			<p>In <span class="ital">yourappid.appspot.com</span> replace yourappid with your App Engine application ID and replace your_email with the e-mail of the administrator for the application. You get this information from the <a href="https://appengine.google.com/">App Engine console</a>.</p>
+			<p>The previous script accepts two arguments separated by a blank space: </p>
+			<p><span class="bld">./upload_data_deploy.sh&lt;data.csv&gt; &lt;class entity name&gt;</span></p>
+			<p>The first argument is the name of the csv file that contains the data you want to upload, The second is the name of the entity class to handle the data.</p>
+		</li>
+		<li>Save the file.</li>
+		<li>
+			In the Eclipse, in the <span class="ital">MobileAssistant-AppEngine</span> project, open the appengine-web.xml file and add your App Engine application ID as follows:<br>
+			<p style="margin-left:30px;"><span class="ital">&lt;application&gt;yourappid&lt;/application&gt;</span></p>
+		</li>
+		<li>Save the file.</li>
+		<li>In the Package Explorer, right-click the <span class="ital">MobileAssistant-AppEngine</span> project.</li>
+		<li>In the drop-down menu select select <span class="bld">Google</span> then, in the side menu, click <span class="bld">Deploy to App Engine</span>. If there are no error, you will get a successful deployment message in the Console window.</li>
+		<li>Now we are ready to upload the data. Bring up a terminal window and switch to the directory where you have the test data and the upload script.</li>
+		<li>
+			Upload the three files: <span class="ital">offers.csv</span>, <span class="ital">places.csv</span> and <span class="ital">recommendations.csv</span> separately. The following shows how to do it for the offers data:
+			<p style="margin-left:30px;">./upload_data_deploy.sh offers.csv Offer</p>
+			<p>You might be asked to enter your account password. Run the script for the other two files.</p>
+		</li>
+		<li>In the <a href="https://appengine.google.com/">App Engine console</a>, in the left panel, click the link <span class="bld">DataStore Viewer</span> and verify that the test data and entities are loaded.</li>
+		<li>In Eclipse, in the <span class="ital">MobileAssistant</span> (client) project, open the file <span class="ital">CloudEndPointUtils.java</span>.</li>
+		<li>Switch the LOCAL_ADROID_RUN variable to <span class="bld">false</span>. This specifies that the <span class="ital">MobileAssistant-AppEngine</span> backend is running remotely.</li>
+		<li>Save the file.</li>
+		<li>Finally, in the Package Explorer, right click the <span class="ital">MobileAssistant</span> project.</li>
+		<li>In the drop-down menu select Run As then, in the side menu, click Android Application. If everything worked, you should be getting the same results described in the previous sections.</li>
+	</ol>
+
+	<h1>Conclusions
+	</h1>
+	<p>In this tutorial, you have created an app that allows users to &ldquo; shop smart &rdquo; by getting information on products they are looking for at the store they are in, as well as find stores nearby.</p>
+	<p>You used some custom code to wire a basic Android app to the App Engine cloud backend, using Google cloud endpoints, so it can determine customer location, locate nearby stores, and allow the customer to obtain relevant offers and recommendations.</p>
+	<p>The following are the highlights of the areas you must focus on to create your own application:</p>
+
+	<ul>
+		<li>Establishing the connection between the Android client and the App Engine backend through the use of endpoints.</li>
+		<li>Creating the App Engine entity classes for the data you are interested in. In the tutorials you have seen this kind of classes, for example CheckIn, Places and so on.</li>
+		<li>Populating the App Engine backend datastore with the necessary data to associate with the entity classes.</li>
+		<li>Creating the client UI to allow the customer to retrieve the desired information from the backend datastore such as offers or purchase recommendations.</li>
+	</ul>
+
+	<p>Y ou can use the example code in this tutorial as a starting point for your mobile application, powered by the App Engine cloud backend. </p>
+
+	<h1>Additional Resources</h1>
+	<p>If you need more information about the technology behind the tutorial, check out these resources.</p>
+	<h2>Mobile Solutions</h2>
+
+	<ul>
+		<li><a href="../articles/mobile-application-solutions.html">Mobile Solutions on Google Cloud Platform</a>. This document describes how to leverage the power of Google Cloud Platform to easily create scalable backends in the cloud for your mobile applications that can run on platforms such as Android and iOS.</li>
+		<li><a href="https://github.com/GoogleCloudPlatform/solutions-mobile-shopping-assistant-backend-java">Sample Application: Mobile Assistant - Java Backend.</a></li>
+    <li><a href="https://github.com/GoogleCloudPlatform/solutions-mobile-shopping-assistant-android-client">Sample Application: Mobile Assistant - Android Client.</a></li>
+	</ul>
+
+	<h2>App Engine</h2>
+
+	<ul>
+		<li><span class="bld">Google Cloud Endpoints</span> allow you to define business logic on App Engine and access it via RESTful or RPC APIs on multiple platforms including Android, IOS and JavaScript. For more information, see: <a href="https://developers.google.com/appengine/docs/java/endpoints/overview">Overview of Google Cloud Endpoints</a>.</li>
+	</ul>
+
+	<ul>
+		<li><span class="bld">Getting started</span>. Google App Engine lets you run web applications on Google's infrastructure. For beginner&rsquo;s information, see: <a href="https://developers.google.com/appengine/docs/whatisgoogleappengine">What is Google App Engine</a> ?</li>
+	</ul>
+
+	<h2>Android</h2>
+
+	<ol>
+		<li><span class="bld">Getting started</span>. If you need introductory information, see <a href="http://developer.android.com/training/index.html">Getting Started</a>. You'll find instructions that describe how to accomplish a specific task with code samples you can reuse in your application.</li>
+	</ol>
+
+	<h1>Appendix</h1>
+  <a name="eclb"></a>
+	<h2>EndPoint Client Library Basics</h2>
+	<p>Google Cloud Endpoints allow you to define business logic on App Engine and access them via RESTful APIs on multiple platforms including Android, IOS and JavaScript. Cloud Endpoints are built using Google&rsquo;s API infrastructure. For more information, see <a href="https://developers.google.com/appengine/docs/java/endpoints/overview">Overview of Google Cloud Endpoints</a>.</p>
+	<p>The Google Plugin for Eclipse (GPE), that you have installed when setting the development environment, allows you to create and consume Cloud Endpoints. </p>
+	<p>In particular, it allows the automatic <span class="bld">generation of askeleton Endpoint class</span> that contains code to create, get, list, update and delete your entity classes.</p>
+	<p>An entity class is a POJO (Plain Old Java Object) with JPA/JDO persistence annotations. This is an ordinary Java class that is marked (annotated) as having the ability to represent objects in the database.For more information, see <a href="https://developers.google.com/appengine/docs/java/datastore/">Storing Data</a> in the App Engine datastore. The class shown in the example is of a JPA type. Where</p>
+
+	<ul>
+		<li><span class="c21">Java Data Objects (JDO) is a standard interface for storing objects containing data into a database. For more information, see the App Engine documentation <a href="https://developers.google.com/appengine/docs/java/datastore/jdo/">Using JDO</a>.</li>
+		<li>Java Persistence API (JPA) is a standard interface for storing objects containing data into a relational database. <span class="c21">For more information, see the App Engine documentation <a href="https://developers.google.com/appengine/docs/java/datastore/jpa/">Using JPA</a>.</li>
+	</ul>
+
+	<a name="ecdp"></a>
+	<h2>Entity Class Design Pattern</h2>
+	<p>To create and use an entity class you must follow the following steps:</p>
+
+	<ol>
+		<li>
+			In the <span class="bld">Package Explorer</span>, under the AppEngine project <span class="bld">src</span> folder, right-click the folder, then <span class="bld">-&gt;New-&gt;Class</span>.<br>
+			The <span class="bld">New Java Class</span> wizard is displayed.
+		</li>
+		<li>In the <span class="bld">Name</span>: box enter the name of the class.</li>
+		<li>Click <span class="bld">Finish</span>.</li>
+		<li>In the editor, replace the boiler plate code with the actual code.</li>
+		<li>Save the class.</li>
+		<li>In the <span class="bld">Package Explorer</span>, right-click on the class just created.</li>
+		<li>Select <span class="bld">Google -&gt;Generate Cloud Endpoint Class</span>. The <span class="bld">&lt;classnameEndPoint.java&gt;</span> class is generated. Where the classname prefix is the name you assigned in step 2.</li>
+		<li>In the <span class="bld">Package Explore</span> r, right-click on the App Engine project name.</li>
+		<li>Select <span class="bld">Google -&gt;Generate Cloud Endpoint Client Library</span>. The <span class="bld">lib&lt;classname&gt;endpoint</span> library is created in the mobile client.</li>
+	</ol>
+
+</div>
+ <!-- /maia-main -->
+</div>
+</div>
+</div>

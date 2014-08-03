@@ -1,0 +1,258 @@
+---
+layout: phase2-fr
+title: Cloud Computing &amp; Cloud Hosting Services
+---
+<!DOCTYPE html>
+<html devsite="">
+<head>
+<title>Web Apps Articles &amp; Tutorials — Google Cloud Platform</title>
+<meta name="description" content="Read technical articles about web applications and solutions with Google Cloud Platform, including auto scaling and how to manage complex applications in the cloud.">
+<meta name="hide_page_heading" value="true">
+<meta name="full_width" value="true">
+<meta name="top_category" value="developers">
+<meta name="subcategory" value="articles">
+<meta name="viewport" content="initial-scale=1, minimum-scale=1, width=device-width">
+<link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
+<link href="//fonts.googleapis.com/css?family=Open+Sans:400italic,300,400,600,700" rel="stylesheet">
+<link href="/css/default.css" rel="stylesheet"><!--[if lt IE 9]>
+    <link rel="stylesheet" media="screen" href='/css/cp-ie.css'>
+    <![endif]-->
+<script src="/js/floodlight.js">
+</script>
+</head>
+<body>
+<div id="maia-main" class="cp-article">
+<div class="maia-cols">
+<div class="maia-col-9">
+<div>
+<div style="float:right">
+<div class="g-plusone"></div>
+</div>
+<h1 class="title">Une solution simple et économique&nbsp;: équilibrer les charges avec Google&nbsp;Compute&nbsp;Engine</h1>
+</div>
+<div class="cp-article-tutorial">
+<h4>Comment utiliser la fonction d'équilibrage des charges de Compute&nbsp;Engine pour libérer tout le potentiel de votre application</h4>
+<h2>Présentation</h2>
+<p>Si vous utilisez des produits Google tels que Recherche Google, AdWords ou Gmail, vous savez que les performances, l'évolutivité et la robustesse sont les trois piliers de l'architecture Google. La fonction d'équilibrage des charges de Compute&nbsp;Engine s'articule autour de la même technologie que celle utilisée au cœur de ces produits.</p>
+<p>La fonction d'équilibrage des charges de Compute&nbsp;Engine présente les avantages suivants&nbsp;:</p>
+<ul>
+<li><span class="bld">Facilité de gestion et de configuration</span>&nbsp;: configurez le répartiteur de charges via l'interface de ligne de commande ou une API&nbsp;RESTful automatisée, puis ne vous en préoccupez plus. Nous nous chargeons du reste&nbsp;!</li>
+<li><span class="bld">Équilibrage des charges au sein d'une zone ou entre les différentes zones d'une région</span>&nbsp;: renforcez la robustesse de votre application en présentant une seule adresse&nbsp;IP pour les machines virtuelles qui s'exécutent dans plusieurs zones.</li>
+<li><span class="bld">Performances stables dès le départ</span>&nbsp;: aucun "préchauffage" du service d'équilibrage des charges n'est requis.</li>
+<li><span class="bld">Possibilité de contourner les instances en mauvais état</span>&nbsp;: configurez vos contrôles qualité et laissez la fonction d'équilibrage de Compute&nbsp;Engine se charger du reste.</li>
+<li><span class="bld">Périodes de transition optimisées</span>&nbsp;: vous pouvez facilement mettre à jour votre application sans désactiver les connexions utilisateur déjà établies et vous tenir prêt pour les périodes de maintenance. Le nouveau trafic n'est pas dirigé vers les backends en mauvais état et les connexions établies ne sont pas interrompues.</li>
+<li><span class="bld">Coûts réduits</span>&nbsp;: facilitez la gestion de l'équilibrage des charges et réduisez vos coûts.</li>
+</ul>
+<h2>Équilibrage des charges sur Compute&nbsp;Engine</h2>
+<p>L'équilibrage des charges est un élément essentiel dans le cadre du dimensionnement d'un service. Plusieurs options d'équilibrage des charges matérielles et logicielles sont disponibles. Si vous exécutez un service sur Google&nbsp;Compute&nbsp;Engine, plusieurs de ces options vous sont accessibles. La méthode la plus simple, qui ne nécessite aucune configuration logicielle ou matérielle, consiste à utiliser le système DNS (Domain Name System) avec répétition alternée, une technique par laquelle un seul nom de domaine est utilisé pour plusieurs adresses&nbsp;IP. L'inconvénient majeur de cette technique est que les clients, tels qu'un navigateur Web, peuvent mettre en cache l'entrée DNS et continuer à envoyer du trafic vers des serveurs en mauvais état.</p>
+<p>Une autre méthode consiste à utiliser un logiciel Open&nbsp;Source, comme HAProxy ou Nginx. Ces projets Open&nbsp;Source offrent certes des fonctionnalités supplémentaires, mais ils nécessitent une configuration et une gestion des composants matériels et logiciels. Outre l'introduction d'un point de défaillance unique que cela suppose, cette méthode peut entraîner une augmentation des coûts d'installation, de configuration et de mise à jour.</p>
+<p>Avec Compute&nbsp;Engine, ces inconvénients et exigences appartiennent au passé&nbsp;! L'équilibrage des charges est, en effet, proposé sous la forme d'un service distribué, intégré de manière transparente dans Google&nbsp;Cloud&nbsp;Platform. Cette fonction s'exécute sous la forme d'un service entièrement géré par Google. Il n'est pas nécessaire d'exécuter un répartiteur de charges sur les instances Compute&nbsp;Engine. Vous ne devez pas non plus vous préoccuper de la disponibilité continue de la fonction, ni du contournement des backends en mauvais état. La fonction d'équilibrage des charges de Compute&nbsp;Engine se charge de tout&nbsp;!</p>
+<p>La figure&nbsp;1 illustre les concepts d'équilibrage des charges dans le cadre du service d'équilibrage des charges de Google&nbsp;Compute&nbsp;Engine. Les utilisateurs envoient leurs demandes à l'application exécutée sur Compute&nbsp;Engine via ce service, évitant ainsi les instances en mauvais état.</p>
+<figure><img src="/images/articles/gce-load-balancing-in-action/load-balancing-concepts.png" alt="">
+<figcaption>Figure&nbsp;1&nbsp;: Concepts du service d'équilibrage des charges de Compute&nbsp;Engine. Les demandes des utilisateurs sont transmises via ce service et réparties entre les backends sains.</figcaption>
+</figure>
+<h3>Avantages du service d'équilibrage des charges de Compute&nbsp;Engine</h3>
+<h4>1. Facilité de gestion et de configuration</h4>
+<p>Configurer votre application en vue d'utiliser le service d'équilibrage des charges de Compute&nbsp;Engine est un jeu d'enfant. Vous pouvez, pour ce faire, utiliser la ligne de commande ou l'interface utilisateur de Cloud&nbsp;Console. Quelle que soit la solution retenue, vous commencez avec un certain nombre d'instances qui exécutent la logique d'application sur Compute&nbsp;Engine. Supposons que vous configuriez quatre instances avec des backends de serveur Web Apache ("www-0", "www-1", "www-2" et "www-3"). L'équilibrage des charges a été activée sur ces quatre instances avec les trois commandes suivantes (où $ZONE0 et $ZONE1 sont des zones de votre région $REGION)&nbsp;:</p>
+<pre>
+gcutil --project=&lt;your-project-id&gt; addhttphealthcheck basic-check
+
+gcutil --project=&lt;your-project-id&gt; addtargetpool www-pool --region=$REGION \
+  --instances=$ZONE0/instances/www-0,$ZONE0/instances/www-1,\
+  $ZONE1/instances/www-2,$ZONE1/instances/www-3 --health_checks="basic-check"
+
+gcutil --project=&lt;your-project-id&gt; addforwardingrule www-rule \
+  --region=$REGION --port_range=80 --target=www-pool
+</pre>
+<p>Chaque règle de transfert présente une adresse&nbsp;IP externe que vous pouvez obtenir en exécutant la commande suivante&nbsp;:</p>
+<pre>
+gcutil --project=&lt;your-project-id&gt; listforwardingrules
+</pre>
+<p>Et voilà&nbsp;! Les clients accéderont à l'application à l'aide de l'adresse&nbsp;IP externe et via le service d'équilibrage des charges de Compute&nbsp;Engine. La configuration de ce service est aussi simple que ça. De plus, aucune opération de gestion n'est requise.</p>
+<p>Si vous préférez utiliser une interface Web, vous pouvez configurer des groupes cibles, des règles de transfert et des contrôles qualité avec Google&nbsp;Cloud&nbsp;Console, comme sur illustré à la figure&nbsp;2.</p>
+<figure><img src="/images/articles/gce-load-balancing-in-action/setting-up-2.png" alt="">
+<figcaption>Figure&nbsp;2&nbsp;: Configuration de l'équilibrage des charges dans Cloud&nbsp;Console</figcaption>
+</figure>
+<p>La ligne de commande et l'interface utilisateur permettent aux utilisateurs de configurer des fonctionnalités plus évoluées, telles que des groupes de sauvegarde et la permanence des sessions. Pour en savoir plus sur les options de configuration, consultez la <a href="https://developers.google.com/compute/docs/load-balancing/">documentation</a> complète.</p>
+<h4>2. Équilibrage des charges au sein d'une zone ou entre les différentes zones d'une région</h4>
+<p>Le service d'équilibrage des charges de Compute&nbsp;Engine répartit la charge de manière relativement uniforme entre toutes les instances gérées. La figure&nbsp;3 illustre de quelle manière le service répartit, de façon uniforme, 500&nbsp;000&nbsp;demandes adressées à l'IP externe présentée par le répartiteur de charges. Pour les systèmes réels, la répartition des charges s'impose comme une nécessité absolue à mesure que la charge augmente.</p>
+<figure><img src="/images/articles/gce-load-balancing-in-action/load-spread2.png" alt="">
+<figcaption>Figure&nbsp;3&nbsp;: Répartition de la charge pour un total de 500&nbsp;000&nbsp;demandes envoyées dans 100&nbsp;fils parallèles.<sup><a href="#ftnt1" name="ftnt_ref1" id="ftnt_ref1">[1]</a></sup></figcaption>
+</figure>
+<h4>3. Performances stables dès le départ</h4>
+<p>Nous allons à présent comparer le temps de réponse moyen pour interroger directement des backends avec celui obtenu pour la même opération via le service d'équilibrage des charges de Compute&nbsp;Engine.</p>
+<table class="brdr-table">
+<tbody>
+<tr>
+<td width="20%">
+<p class="ital">Nombre de<br>
+demandes</p>
+</td>
+<td width="20%">
+<p class="ital">Temps de réponse moyen (en ms) pour les demandes adressées directement à un seul backend</p>
+</td>
+<td width="20%">
+<p class="ital">Temps de réponse moyen (en ms) pour les demandes adressées via le service d'équilibrage des charges de Compute&nbsp;Engine avec <span class="bld">un seul</span> backend</p>
+</td>
+<td width="20%">
+<p class="ital">Temps de réponse moyen (en ms) pour les demandes adressées via le service d'équilibrage des charges de Compute&nbsp;Engine avec <span class="bld">quatre</span> backends</p>
+</td>
+<td width="20%">
+<p class="ital">Temps de réponse moyen (en ms) pour les demandes adressées via le service d'équilibrage des charges de Compute&nbsp;Engine avec <span class="bld">quatre</span> backends sur <span class="bld">deux</span> zones</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>1&nbsp;000&nbsp;000</p>
+</td>
+<td>
+<p>100,9 (médiane&nbsp;: 100)</p>
+</td>
+<td>
+<p>101 (médiane&nbsp;: 100)</p>
+</td>
+<td>
+<p>98,89 (médiane&nbsp;: 98)</p>
+</td>
+<td>
+<p>100,7 (médiane&nbsp;: 98)</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="table-caption">Tableau&nbsp;1&nbsp;: Comparaison des temps de réponse pour l'adressage direct de demandes à un backend (100&nbsp;demandes parallèles vers une seule instance) par rapport au service d'équilibrage des charges de Compute&nbsp;Engine (100&nbsp;demandes parallèles vers une et quatre instances).<sup><a href="#ftnt2" name="ftnt_ref2" id="ftnt_ref2">[2]</a></sup></p>
+<p>Comme vous pouvez le voir sur le tableau&nbsp;1, le service d'équilibrage des charges de Compute&nbsp;Engine n'induit aucune latence perceptible par rapport à celle observée lors de l'envoi direct de demandes à un backend. De plus, le dimensionnement vers plusieurs backends n'entraîne aucune latence supplémentaire. Notez que nous avons pris soin, dans la mesure du possible, d'isoler les résultats des facteurs externes susceptibles d'influencer le temps de réponse. Des facteurs tels que l'encombrement sur le système d'origine, et la latence réseau entre le réseau d'origine et le réseau de Google, peuvent avoir une incidence considérable sur les temps de réponse.</p>
+<p>Le service d'équilibrage des charges de Compute&nbsp;Engine permet à des groupes cibles de définir un ensemble d'instances couvrant plusieurs zones d'une région. Cela a pour but de faciliter la conception de systèmes robustes. Lorsque l'une des zones connaît une défaillance, le répartiteur de charges contourne simplement les instances qu'elle contient, lesquelles sont, à ce stade, considérées comme étant en mauvais état. Dans cette section, nous nous pencherons sur les performances du répartiteur de tâches lorsque les instances sont réparties sur plusieurs zones. L'exemple proposé comprend quatre instances&nbsp;: deux dans la zone "us-central1-a" et deux autres dans la zone "us-central1-b". Les quatre instances sont configurées pour se trouver dans le même groupe cible d'une seule règle de transfert. La colonne de droite du tableau&nbsp;1 montre que le temps de réponse moyen reste stable, même lorsque le répartiteur de charges distribue les réponses entre les instances de deux zones différentes.</p>
+<p>Notez que cette stabilité entre les zones constitue également une fonctionnalité essentielle pour les groupes de sauvegarde. Les groupes de sauvegarde sont conçus pour renforcer la robustesse d'une application dans le cas d'une défaillance partielle ou complète d'un groupe cible principal. Ils peuvent également se trouver dans une zone différente du groupe principal. Compte tenu de la stabilité du temps de réponse illustrée ci-dessus, le confort d'utilisation ne sera pas affecté si le trafic doit être redirigé vers un groupe de sauvegarde de machines virtuelles.</p>
+<p>Le service d'équilibrage des charges de Compute&nbsp;Engine offre des performances stables dès le début. Pour les besoins de cette section, nous avons à nouveau utilisé 100&nbsp;fils pour envoyer, au total, 1&nbsp;000&nbsp;000&nbsp;demandes. Comme vous pouvez le voir sur la figure&nbsp;4, le temps de réponse reste stable avec cette charge. Le temps de réponse est représenté sur l'axe des ordonnées, et chaque point du graphique représente une seule demande. Notez que le temps de réponse est stable dès le début. Contrairement à de nombreuses autres solutions, aucun "préchauffage" n'est nécessaire avec le service d'équilibrage des charges de Compute&nbsp;Engine.</p>
+<figure><img src="/images/articles/gce-load-balancing-in-action/response-time.png" alt="">
+<figcaption>Figure&nbsp;4&nbsp;: Temps de réponse pour 1&nbsp;000&nbsp;000&nbsp;demandes (100&nbsp;fils parallèles) adressées à quatre backends via le service d'équilibrage des charges de Compute&nbsp;Engine.<sup><a href="#ftnt3" name="ftnt_ref3" id="ftnt_ref3">[3]</a></sup></figcaption>
+</figure>
+<h4>4. Possibilité de contourner les instances en mauvais état</h4>
+<p>Le service d'équilibrage des charges de Compute&nbsp;Engine contourne, de manière transparente, les instances en mauvais état. Le répartiteur de tâches se base sur les contrôles qualité que vous avez configurés pour détecter les éventuels backends en mauvais état et acheminer le trafic vers les backends restants. La figure&nbsp;5 illustre la répartition de la charge entre les instances, avant et après la défaillance d'une instance. Environ 500&nbsp;000&nbsp;demandes avaient été envoyées avant et après la mise hors service de "www-0". Chaque point de données du graphique représente le nombre de demandes traitées par un backend spécifique en une minute. Si l'instance passe en mode "Périodes de transition optimisées" (décrit de manière plus détaillée ci-après), les connexions déjà établies avec ce backend seront traitées jusqu'à l'arrêt du backend, et aucune demande n'arrivera à expiration.</p>
+<p>Pendant que vous vous attelez à remettre vos instances de backend en état, nous nous appliquons à préserver la qualité de l'expérience utilisateur.</p>
+<figure><img src="/images/articles/gce-load-balancing-in-action/load-spread.png" alt="">
+<figcaption>Figure&nbsp;5&nbsp;: Répartition de la charge lorsque le service d'équilibrage des charges de Compute&nbsp;Engine gère une instance dont l'état s'est dégradé.<sup><a href="#ftnt4" name="ftnt_ref4" id="ftnt_ref4">[4]</a></sup></figcaption>
+</figure>
+<h4>5. Compatibilité avec le mode "Périodes de transition optimisées"</h4>
+<p>Le service d'équilibrage des charges de Compute&nbsp;Engine est compatible avec le mode "Périodes de transition optimisées" qui permet aux administrateurs système de retirer une machine virtuelle du groupe cible sans interrompre le service. Pour mettre une machine virtuelle hors service, configurez-la pour qu'elle échoue aux contrôles qualité. Dès lors, le nouveau trafic ne sera pas acheminé vers cette machine virtuelle et les connexions établies ne seront pas interrompues. Afin d'optimiser l'expérience utilisateur, la présence de connexions pourra être vérifiée sur la machine virtuelle avant sa désactivation.</p>
+<p>Cette fonctionnalité s'avère particulièrement utile dans diverses situations. L'une d'elles concerne les mises à jour de l'application. Lorsqu'une nouvelle version de l'application est disponible, les machines virtuelles sont généralement mises à jour de manière continue. En d'autres termes, une machine est mise hors service, mise à jour, puis de nouveau remise en service. De nombreux outils de gestion, tels que <a href="http://www.opscode.com/chef/">Chef</a> et <a href="http://puppetlabs.com/">Puppet</a>, peuvent être configurés pour procéder de la sorte.</p>
+<p>Le mode "Périodes de transition optimisées" se révèle également utile lorsqu'il est nécessaire de gérer les périodes de maintenance de manière efficace. À mesure que l'échéance de maintenance se rapproche, il est possible de créer davantage de machines virtuelles (et de les ajouter à un groupe cible) dans une zone non concernée par la maintenance. Les machines virtuelles dont l'arrêt est imminent peuvent être supprimées dans les règles&nbsp;: si elles renvoient des signaux "en mauvais état" au contrôle qualité, les connexions déjà établies ne sont pas interrompues, mais le nouveau trafic n'y est pas redirigé. Le même concept est également appliqué lorsque l'application bascule vers un groupe cible de sauvegarde (dans la mesure où l'état d'un pourcentage suffisant des machines virtuelles du groupe principal s'est dégradé). Dans ce cas, les connexions déjà établies sont maintenues avec les machines virtuelles du groupe principal, tandis que toutes les nouvelles connexions sont acheminées vers le groupe cible de sauvegarde.</p>
+<p>Vous trouverez, dans&nbsp;la <a href="https://developers.google.com/compute/docs/load-balancing/">documentation</a>, des informations supplémentaires sur le mode "Périodes de transition optimisées". L'activation du service d'équilibrage des charges de Compute&nbsp;Engine est vivement conseillée sur les systèmes qui configurent Compute&nbsp;Engine dans le but d'optimiser l'expérience utilisateur.</p>
+<h4>6. Coûts réduits</h4>
+<p>Le service d'équilibrage des charges de Compute&nbsp;Engine se révèle particulièrement abordable. Cela peut se traduire par des économies non négligeables par rapport à l'exécution d'un ensemble d'instances de machine virtuelle pour l'équilibrage des charges. Par exemple, si vous exécutez deux instances sur Compute&nbsp;Engine avec un logiciel d'équilibrage des charges sur les instances n1-standard-2 (instances de niveau intermédiaire à usage général, dont l'une est disponible pour le basculement), vous payez actuellement 4&nbsp;029,60&nbsp;USD par an pour les instances seules, sans compter les coûts liés au trafic réseau. Avec le service d'équilibrage des charges de Compute&nbsp;Engine, il vous en coûtera 219&nbsp;USD par an, soit une économie d'environ 95&nbsp;%&nbsp;! Même si vous optez pour l'exécution d'instances plus petites, vous pouvez réaliser de sérieuses économies (voir le tableau&nbsp;2).</p>
+<table class="brdr-table">
+<tbody>
+<tr>
+<td width="20%">&nbsp;</td>
+<td width="20%">
+<p class="ital">Deux instances f1-micro dédiées au logiciel d'équilibrage des charges</p>
+</td>
+<td width="20%">
+<p class="ital">Deux instances g1-small dédiées au logiciel d'équilibrage des charges</p>
+</td>
+<td width="20%">
+<p class="ital">Deux instances n1-standard-2 dédiées au logiciel d'équilibrage des charges</p>
+</td>
+<td>
+<p class="ital"><b>Équilibrage des charges avec Compute&nbsp;Engine</b></p>
+</td>
+</tr>
+<tr>
+<td>
+<p class="ital">Coûts par an</p>
+</td>
+<td>
+<p>332,88&nbsp;USD</p>
+</td>
+<td>
+<p>946,08&nbsp;USD</p>
+</td>
+<td>
+<p>4&nbsp;029,60&nbsp;USD</p>
+</td>
+<td>
+<p><b>219&nbsp;USD</b></p>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="table-caption">Tableau&nbsp;2&nbsp;: Économies potentielles liées à l'utilisation du service d'équilibrage des charges de Compute&nbsp;Engine dans une région des États-Unis.<sup><a href="#ftnt5" name="ftnt_ref5" id="ftnt_ref5">[5]</a></sup></p>
+<h2>Votre application est-elle une bonne candidate pour le service d'équilibrage des charges de Compute&nbsp;Engine&nbsp;?</h2>
+<p>Toute application susceptible d'évoluer peut tirer parti du service d'équilibrage des charges de Compute&nbsp;Engine. Deux scénarios sont décrits ci-après pour vous guider au cours de la conception de votre architecture d'application&nbsp;:</p>
+<h4>1. Application Web sur Compute&nbsp;Engine avec des utilisateurs connectés</h4>
+<p>Le premier scénario présente une application Web avec des utilisateurs connectés. Prenons l'exemple d'une application permettant aux utilisateurs de se connecter, de créer du contenu et de le partager avec d'autres personnes. Ces dernières peuvent simplement se connecter et utiliser le contenu qui a été produit par d'autres. La figure&nbsp;6 présente le croquis d'une architecture adaptée à un scénario d'utilisation standard.</p>
+<figure><img src="/images/articles/gce-load-balancing-in-action/web-apps.png" alt="">
+<figcaption>Figure&nbsp;6&nbsp;: Utilisation du service d'équilibrage des charges de Compute&nbsp;Engine sur une application&nbsp;Web</figcaption>
+</figure>
+<p>Pour la plupart des applications Web, des informations de session doivent être stockées. Dans cet exemple, les informations de session de l'utilisateur actuel peuvent être constituées de tout contenu créé qui n'a pas encore été enregistré. Une architecture robuste fréquemment utilisée stocke les informations de session comme suit&nbsp;:</p>
+<ul>
+<li>De manière permanente dans une base de données</li>
+<li>De manière temporaire dans une mémoire cache à accès rapide pour offrir une meilleure réactivité</li>
+</ul>
+<p>Lorsque vous utilisez le paramètre par défaut, les demandes envoyées à partir de la même adresse&nbsp;IP de client via le service d'équilibrage des charges de Compute&nbsp;Engine ne sont pas permanentes et sont, en fait, réparties entre toutes les instances. Vous pouvez configurer ce service pour qu'il soit associé<sup><a href="#ftnt6" name="ftnt_ref6" id="ftnt_ref6">[6]</a></sup> à un backend spécifique à partir d'une adresse&nbsp;IP donnée. Cela peut améliorer davantage encore les performances, dans la mesure où les informations ne doivent pas être récupérées fréquemment. Le mode "Périodes de transition optimisées" du service d'équilibrage des charges de Compute&nbsp;Engine permet d'effectuer des mises à jour continues et transparentes du logiciel en mettant des instances hors service. Les fonctionnalités du service étant constamment améliorées, ce mode d'utilisation gagnera encore en efficacité dans les prochaines versions. La terminaison SSL au niveau du répartiteur de charges et l'équilibrage des charges de niveau&nbsp;7 font partie des fonctionnalités à venir.</p>
+<h4>2. Traitement intensif sur Compute&nbsp;Engine</h4>
+<p>Le deuxième scénario met en scène une application qui effectue un traitement intensif ou de longue durée en réponse aux demandes utilisateur (voir la figure&nbsp;7). Chaque demande doit faire l'objet d'un traitement sur une ou plusieurs instances Compute&nbsp;Engine. Il peut s'agir de la reconnaissance optique de caractères, du transcodage vidéo, d'une tâche MapReduce, etc.</p>
+<figure><img src="/images/articles/gce-load-balancing-in-action/backend-processing.png" alt="">
+<figcaption>Figure&nbsp;7&nbsp;: Application de traitement backend utilisant le service d'équilibrage des tâches de Compute&nbsp;Engine.</figcaption>
+</figure>
+<p>Le service d'équilibrage des tâches de Compute&nbsp;Engine est particulièrement adapté à ce scénario lorsque les demandes présentent des coûts et une durée semblables. Les machines virtuelles du backend ne comportent pas l'état de la session, mais elles effectuent une tâche unique. Le répartiteur de charges peut choisir n'importe quelle machine pour effectuer chacune de ces tâches, et le service d'équilibrage peut répartir efficacement la charge de travail entre les différents backends.</p>
+<h2>Conclusion</h2>
+<p>Cet article vous a permis de découvrir les avantages de l'équilibrage des charges pour les applications, dont la facilité de configuration et le fait qu'il offre des performances stables dès le début. Vous avez également eu l'occasion de constater les avantages du service d'équilibrage des charges de Compute&nbsp;Engine par rapport aux répartiteurs de charges tiers, tant sur le plan des coûts que de la maintenance.</p>
+<p>La première version du service d'équilibrage des charges de Compute&nbsp;Engine est adaptée à de nombreux scénarios d'utilisation, tels que les applications Web et le traitement intensif. Et ce n'est que le début&nbsp;! En effet, la terminaison SSL et l'équilibrage des charges de niveau&nbsp;7 sont prévus pour les versions à venir. Ces fonctionnalités vous permettront de bénéficier d'autres avantages, tels que la souplesse au niveau des techniques d'équilibrage des charges. Vous pourrez alors créer un site Web à équilibrage des charges hautement évolutif nécessitant une administration minimale.</p>
+<br>
+<br>
+<hr>
+<p><a href="#ftnt_ref1" name="ftnt1" id="ftnt1">[1]</a> Les résultats mentionnés ici portent sur une expérience comportant, en moyenne, plus de 500&nbsp;000&nbsp;demandes. Cette expérience a été réalisée dans un environnement de test contrôlé, configuré au sein d'un réseau Google. Elle est destinée uniquement à être utilisée comme exemple.</p>
+<p><a href="#ftnt_ref2" name="ftnt2" id="ftnt2">[2]</a> Les temps de latence mentionnés ici portent sur une expérience comportant, en moyenne, plus de 1&nbsp;000&nbsp;000&nbsp;demandes. Cette expérience a été réalisée dans un environnement de test contrôlé, configuré au sein d'un réseau Google. Elle est destinée uniquement à être utilisée comme exemple.</p>
+<p><a href="#ftnt_ref3" name="ftnt3" id="ftnt3">[3]</a> Les temps de latence mentionnés ici portent sur une expérience réalisée sur 1&nbsp;000&nbsp;000&nbsp;demandes. Cette expérience a été réalisée dans un environnement de test contrôlé, configuré au sein d'un réseau Google. Elle est destinée uniquement à être utilisée comme exemple.</p>
+<p><a href="#ftnt_ref4" name="ftnt4" id="ftnt4">[4]</a> Les résultats mentionnés ici portent sur une expérience réalisée sur 1&nbsp;000&nbsp;000&nbsp;demandes. Cette expérience a été réalisée dans un environnement de test contrôlé, configuré au sein d'un réseau Google. Elle est destinée uniquement à être utilisée comme exemple.</p>
+<p><a href="#ftnt_ref5" name="ftnt5" id="ftnt5">[5]</a> Consultez la page <a href="/pricing/compute-engine">Tarification de Compute&nbsp;Engine</a> pour obtenir des informations à jour sur les prix des instances Compute&nbsp;Engine et le service d'équilibrage des charges. L'estimation donnée pour le service d'équilibrage des charges de Compute&nbsp;Engine comprend les coûts horaires au taux enregistré aux États-Unis en date de novembre 2013. Les frais de bande passante sont en sus.</p>
+<p><a href="#ftnt_ref6" name="ftnt6" id="ftnt6">[6]</a> Pour en savoir plus, reportez-vous à la <a href="https://developers.google.com/compute/docs/load-balancing/#sessionAffinity">documentation</a>.</p>
+</div>
+<!-- /maia-main --></div>
+<div class="maia-col-3"><br>
+<img src="//www.google.com/images/icons/product/feedback-16.png" class="g-app-icon" alt=""> <a href="javascript:void(0);" class="google-feedback">Commentaires sur ce document</a><br>
+<br></div>
+</div>
+</div>
+<script>
+(function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+</script><script src="//www.gstatic.com/feedback/api.js">
+</script><script>
+$('body').delegate('.google-feedback', 'click', function() {
+      userfeedback.api.startFeedback({'productId': '94614'});
+  });
+</script><!-- Scripts to include both on Goro + Devsite --><script>
+window.___gcfg = {
+     lang: ''
+   };
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+</script><!-- GTM implementation --><!-- Start dataLayer --><script>
+dataLayer = [{
+        'country': 'fr',
+        'region': 'emea',
+        'language': 'fr'
+      }];
+</script><!-- End dataLayer --><!-- Start Google Tag Manager --><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5CVQBG" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript> <script>
+(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-5CVQBG');
+</script><!-- End Google Tag Manager --><!-- Global JS scripts to load; path will depend on whether we're on devsite or Goro --><script src="/js/base.min.js">
+</script><!-- Retina loader; Do not load if partners page because we need to wait until the Angular app runs --><script>
+new lfl.system.RetinaLoader();
+</script><!-- Secondary right-side scroll-nav --><script>
+new lfl.ui.ScrollNav({});
+</script>
+</body>
+</html>

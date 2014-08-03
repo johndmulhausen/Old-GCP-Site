@@ -1,0 +1,318 @@
+---
+layout: phase2-pt-br
+title: Cloud Computing &amp; Cloud Hosting Services
+---
+<!DOCTYPE html>
+<html devsite="">
+<head>
+<title>Mobile Articles &amp; Mobile Development Guides — Google Cloud Platform</title>
+<meta name="description" content="Read technical articles on mobile solutions with Google Cloud Platform. Mobile specific articles cover application development, mobile backend and mobile gaming.">
+<meta name="hide_page_heading" value="true">
+<meta name="full_width" value="true">
+<meta name="top_category" value="developers">
+<meta name="subcategory" value="articles">
+<meta name="viewport" content="initial-scale=1, minimum-scale=1, width=device-width">
+<link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
+<link href="//fonts.googleapis.com/css?family=Open+Sans:400italic,300,400,600,700" rel="stylesheet">
+<link href="/css/default.css" rel="stylesheet"><!--[if lt IE 9]>
+    <link rel="stylesheet" media="screen" href='/css/cp-ie.css'>
+    <![endif]-->
+<script src="/js/floodlight.js">
+</script>
+</head>
+<body>
+<div id="maia-main" class="cp-article">
+<div class="maia-cols">
+<div class="maia-col-9">
+<div>
+<div style="float:right">
+<div class="g-plusone"></div>
+</div>
+<h1 class="title">Empresas que utilizam o Google Cloud Platform</h1>
+</div>
+<div class="cp-article-tutorial">
+<h1>Apresentação</h1>
+<p>O mercado de jogos para dispositivos móveis está crescendo rapidamente. Espera-se que se torne um negócio de US$16 bilhões em 2016<sup><a href="#ftnt1" name="ftnt_ref1" id="ftnt_ref1">[1]</a></sup>. No quarto trimestre de 2012, o gasto global em jogos para as plataformas iOS da Apple e Android do Google, na verdade, ultrapassou os gastos em jogos para dispositivos móveis dedicados<sup><a href="#ftnt2" name="ftnt_ref2" id="ftnt_ref2">[2]</a></sup>.</p>
+<p>O modelo de receita dos jogos para dispositivos móveis está mudando de jogos pagos para jogos gratuitos, em que a receita é gerada pelos produtos virtuais, outras compras realizadas no próprio jogo e também pela publicidade dentro dele. Com essas novas tendências, existe uma demanda por jogos para dispositivos móveis mais envolventes e imersivos.</p>
+<p>Esses jogos não precisam apenas de experiências do usuário atrativas no cliente, mas também de serviços de back-end avançados e escaláveis. O Google Cloud Platform permite criar facilmente o back-end de jogos para dispositivos móveis, como mostrado neste artigo sobre a solução.</p>
+<h2>Escopo</h2>
+<p>Este artigo é destinado a arquitetos e desenvolvedores interessados em criar seus próprios back-ends de jogos para dispositivos móveis e projetar os padrões de interação entre os clientes de dispositivos móveis e o back-end.</p>
+<p>A abordagem e a arquitetura apresentadas aqui são aplicáveis a um novo desenvolvimento de um jogo para dispositivos móveis típico. Porém, também há duas outras alternativas que podem ser relevantes, dependendo do cenário e dos requisitos. A primeira é o <a href="https://developers.google.com/samples/mbs/">Mobile Backend Starter</a>, que pode ser considerado caso você prefira c<a href="https://developers.google.com/samples/mbs/">o</a>meçar sem precisar desenvolver seu próprio back-end de jogos para dispositivos móveis personalizado. A segunda alternativa é a arquitetura de <a href="/resources/articles/dedicated-server-gaming-solution">Solução de jogos com servidores dedicados</a>, que pode ser considerada caso seu jogo para dispositivos móveis exija o uso de servidores dedicados para o jogo.</p>
+<p>Este artigo aborda o desenvolvimento de novos jogos para dispositivos móveis altamente escaláveis no Google Cloud Platform. Ele aplica a arquitetura de referência de soluções para dispositivos móveis publicada <a href="/pt-br/developers/articles/mobile-application-solutions">aqui</a> e também fornece mais detalhes e exemplos, específicos para a criação de jogos para dispositivos móveis. O artigo acompanha um aplicativo de jogo para dispositivos móveis de exemplo com o código fonte completo.</p>
+<p>A criação da parte do cliente dos jogos para dispositivos móveis não é abordada neste documento. No entanto, ele inclui algumas informações básicas relevantes para a comunicação com o back-end de jogos para dispositivos móveis, a autenticação de usuários e o envio de notificações de push.</p>
+<h2>Requisitos</h2>
+<p>Os requisitos típicos de um jogo para dispositivos móveis atrativo incluem:</p>
+<ol>
+<li>Recursos do jogo:
+<ul>
+<li>Conteúdo de jogo dinâmico</li>
+<li>Dados do jogo armazenados fora dos dispositivos</li>
+<li>Placar</li>
+<li>Modo multijogador</li>
+<li>Combinação de jogadores</li>
+<li>Geração de tabuleiros</li>
+<li>Bots do site do servidor</li>
+</ul>
+</li>
+<li>Recursos da plataforma:
+<ul>
+<li>Suporte para dispositivos Android e iOS por meio de aplicativos cliente nativos</li>
+<li>Notificações push para dispositivos Android e iOS</li>
+<li>Autenticação do usuário</li>
+<li>Alta escalabilidade</li>
+</ul>
+</li>
+<li>Recursos comerciais:
+<ul>
+<li>Compras no jogo</li>
+<li>Análise do jogo</li>
+</ul>
+</li>
+</ol>
+<p>A criação do seu jogo para dispositivos móveis no Google Cloud Platform pode ajudá-lo a atender a esses requisitos.</p>
+<h1>Arquitetura de soluções de jogos para dispositivos móveis</h1>
+<p>Este diagrama (Fig. 1) ilustra a arquitetura de alto nível de jogos para dispositivos móveis no Google Cloud Platform:</p>
+<figure><img src="/images/articles/developing-mobile-games-on-gcp/architecture-diag.jpg" alt="">
+<figcaption>Figura 1. Diagrama da arquitetura da solução de jogos para dispositivos móveis proposta</figcaption>
+</figure>
+<h3>Visão geral detalhada</h3>
+<p>Os componentes chave na arquitetura da solução proposta são:</p>
+<ul>
+<li>Seu cliente do jogo para dispositivos móveis: qualquer combinação de aplicativos para Android, iOS e HTML/JavaScript.</li>
+<li>Seu aplicativo de back-end de jogos para dispositivos móveis.</li>
+<li>A camada de comunicação entre seus clientes do jogo para dispositivos móveis e seu back-end para dispositivos móveis.</li>
+<li>Diversos serviços em nuvem para armazenar dados e imagens do jogo, entregar notificações push etc.</li>
+</ul>
+<h3>As funções dos componentes chave</h3>
+<p>Uma das opções de design é determinar quais funcionalidades do seu jogo para dispositivos móveis serão executadas por cada componente da solução. Em especial, qual funcionalidade será implementada no seu aplicativo cliente e qual será implementada pelo back-end de jogos para dispositivos móveis e fornecida pelos serviços em nuvem.</p>
+<p>Com smartphones e tablets cada vez mais potentes, é conveniente implementar o máximo de funcionalidades possível nos clientes de jogos. A função principal do back-end de jogos para dispositivos móveis é aprimorar a experiência geral, torná-la mais envolvente e imersiva, além de fornecer funcionalidades que não seriam possíveis apenas com o aplicativo cliente em si.</p>
+<p>Muitos jogos para dispositivos móveis populares usam os back-ends para dispositivos móveis para:</p>
+<ul>
+<li>Fornecer conteúdo de jogo dinâmico</li>
+<li>Facilitar os jogos do modo multijogador, incluindo a combinação de jogadores</li>
+<li>Armazenar dados fora dos dispositivos móveis, por exemplo, o último nível concluído ou as pontuações atingidas nas jogadas anteriores</li>
+<li>Gerenciar o placar</li>
+<li>Orquestrar as notificações push</li>
+<li>Facilitar as compras no jogo</li>
+<li>Fornecer análises do jogo</li>
+</ul>
+<h3>Back-end<sup><a href="#ftnt3" name="ftnt_ref3" id="ftnt_ref3">[3]</a></sup> de jogos para dispositivos móveis na nuvem</h3>
+<p>Quando o Google Cloud Platform é usado para ativar seu jogo para dispositivos móveis, é possível executar o back-end de jogos no Google App Engine, uma plataforma usada por <a href="/pt-br/solutions/gaming">muitos jogos on-line de sucesso</a> desenvolvidos por <a href="/pt-br/customers/#cp-mobile">empresas grandes e pequenas</a>. Ele oferece estes benefícios da infraestrutura do Google:</p>
+<ul>
+<li><a href="https://developers.google.com/appengine/whyappengine#scale">Escalabilidade</a> <a href="https://developers.google.com/appengine/whyappengine#scale">automática</a></li>
+<li><a href="https://developers.google.com/appengine/docs/whatisgoogleappengine#The_Application_Environment">Balanceamento de carga automático entre as instâncias do back-end para dispositivos móveis</a></li>
+<li><a href="https://developers.google.com/appengine/docs/java/config/appconfig#Static_Files_and_Resource_Files">Fornecimento de conteúdo estático e armazenamento em cache</a></li>
+<li><a href="http://developers.google.com/appengine/whyappengine#reliable">Confiabilidade, desempenho e recursos de segurança</a></li>
+<li><a href="http://developers.google.com/appengine/docs/adminconsole/index">Monitoramento e gerenciamento</a></li>
+<li><a href="https://developers.google.com/appengine/docs/java/config/dos?hl=en">Proteção contra DoS configurável</a></li>
+<li><a href="https://developers.google.com/appengine/docs/python/endpoints/auth">Integração com as Contas do Google para a autenticação OAuth2 (para clientes Android e iOS</a>)</li>
+</ul>
+<h1>Desenvolvimento de um jogo para dispositivos móveis no Google Cloud Platform</h1>
+<h2>Cenário do jogo de exemplo</h2>
+<p>A arquitetura discutida neste artigo pode ser aplicada a muitos jogos para dispositivos móveis. O cenário de exemplo apresentado a seguir é usado principalmente para deixar o design mais específico. A maioria das opções de design discutidas também é relevante para outros jogos para dispositivos móveis.</p>
+<h3>Griddler: jogo de charadas com modo multijogador para dispositivos móveis</h3>
+<p>Imagine que você deseja criar um jogo de charadas ou trivialidades com modo multijogador para dispositivos móveis chamado Griddler. Dois ou mais jogadores competem para resolver o máximo de charadas possível em um período de tempo específico. Essa competição será chamada de partida. Todos os jogadores em uma partida visualizam a mesma grade de letras. Por exemplo, uma como esta:</p>
+<figure><img src="/images/articles/developing-mobile-games-on-gcp/griddler.png" height="195" width="196" alt="">
+<figcaption>Figura 2. Captura de tela do Griddler</figcaption>
+</figure>
+<p>Todos os jogadores são desafiados com a mesma série de charadas de uma grade específica. Por exemplo, a primeira charada pode ser:</p>
+<figure><img src="/images/articles/developing-mobile-games-on-gcp/sample-q.png" height="396" width="222" alt="">
+<figcaption>Figura 3. Pergunta de exemplo no Griddler</figcaption>
+</figure>
+<p>Todos os jogadores precisam descobrir as respostas e realizar um gesto de toque para formar a palavra correta usando as letras adjacentes na grade, como mostrado na Figura 4.</p>
+<figure><img src="/images/articles/developing-mobile-games-on-gcp/answ-entry-griddler.png" height="396" width="222" alt="">
+<figcaption>Figura 4. Entrada da resposta no Griddler</figcaption>
+</figure>
+<p>Quando um jogador descobre a palavra correta ou decide pular uma determinada charada, ele é desafiado com outra charada para a mesma grade, como mostrado na Figura 5.</p>
+<figure><img src="/images/articles/developing-mobile-games-on-gcp/riddle-griddler.png" height="396" width="222" alt="">
+<figcaption>Figura 5. Outra charada de exemplo no Griddler</figcaption>
+</figure>
+<p>Os clientes do jogo recuperam a definição do tabuleiro do back-end de jogos para dispositivos móveis no início de cada partida. Dessa forma, é possível adicionar novos tabuleiros e charadas sem que seja necessário atualizar os aplicativos clientes. A sequência de charadas de um determinado tabuleiro pode ser aleatória ou fixa. A definição do tabuleiro recuperada inclui as charadas para ele e o tempo estabelecido para uma determinada partida. Quando o tempo estabelecido chega ao fim, o jogador que resolveu mais charadas vence. No caso de empate, o jogador que resolveu as charadas mais rápido vence.</p>
+<p>A qualquer momento, podem haver milhões de partidas em andamento, cada uma delas sendo jogada por 1 a N jogadores. Além disso, o Griddler possui o modo de jogador único, que pode ser usado para treinar a mecânica do jogo ou apenas resolver charadas por diversão.</p>
+<p>Além de fornecer as definições de tabuleiro para os clientes, as responsabilidades do back-end de jogos para dispositivos móveis incluem:</p>
+<ul>
+<li>Gerenciar a lista de jogadores e suas estatísticas (por exemplo, de quantas partidas um jogador participou em diferentes dispositivos, quantas partidas do modo multijogador ele venceu).</li>
+<li>Gerenciar a lista de dispositivos usados pelos jogadores para poder enviar notificações push para esses dispositivos.</li>
+<li>Enviar convites para partidas do modo multijogador.</li>
+<li>Retransmitir a aceitação, a recusa ou o cancelamento do convite.</li>
+</ul>
+<h2>Componentes chave das soluções de jogos para dispositivos móveis</h2>
+<p>É possível implementar facilmente o Griddler e outros jogos para dispositivos móveis na arquitetura discutida neste artigo. Os clientes podem ser implementados como aplicativos nativos para Android ou iOS. O back-end de jogos para dispositivos móveis pode ser executado no Google App Engine. É possível usar o Google Cloud Endpoints para expor a API do back-end para dispositivos móveis e consumir essa API dos clientes.</p>
+<h3>Os aplicativos cliente de jogos para dispositivos móveis</h3>
+<p>Os aplicativos cliente Android e iOS são responsáveis por todas as interações e interface do usuário do jogo, assim como pela mecânica do jogo. O design dessa funcionalidade não é muito diferente do usado em um jogo para dispositivos móveis que não utiliza back-ends de jogos para dispositivos móveis e, dessa forma, está fora do escopo deste artigo.</p>
+<p>A diferença é que os clientes Griddler utilizam a tecnologia de back-end de jogos para dispositivos móveis. O cliente se comunica com o back-end para facilitar as partidas do modo multijogador e a combinação de jogadores. Isso também inclui lidar com as notificações push recebidas com os convites de partidas enviados pelo back-end. Além disso, o cliente também recupera do back-end todo o conteúdo dinâmico do jogo, como a definição do tabuleiro de uma determinada partida. Esse conteúdo inclui ainda a grade de letras e todas as charadas de uma grade específica, assim como as respostas válidas para essas charadas.</p>
+<p>Após o início da partida, seja uma partida do modo multijogador ou de jogador único, o cliente não precisa se comunicar com o back-end até a partida terminar. Depois, o cliente envia os resultados da partida para o back-end de jogos para dispositivos móveis e ele armazena esses resultados e determina quem venceu a partida do modo multijogador.</p>
+<h3>O back-end de jogos para dispositivos móveis</h3>
+<p>O back-end de jogos para dispositivos móveis precisa expor a API adequada para o cliente para ativar a mecânica e a experiência do usuário desejadas.</p>
+<p>A Griddler API inclui métodos para:</p>
+<ul>
+<li>Gerenciamento da partida, por exemplo, startNewSinglePlayerGame que, entre outras coisas, recupera a definição de um tabuleiro, e gameFinished.</li>
+<li>Convites de jogador, por exemplo, sendInvitation, acceptInvitation etc.</li>
+<li>Notificações, por exemplo, registerDeviceForPushNotification.</li>
+</ul>
+<p>É possível expor esses métodos para os clientes conforme descrito na <a href="#cbym">próxima seção</a>.</p>
+<p>Ao lidar com solicitações de API síncronas, o back-end para dispositivos móveis <a href="#storedata">armazena, recupera e gerencia dados em um armazenamento persistente</a>. Além disso, para dados acessados com frequência, como as definições de tabuleiro, ele também usa o <a href="#odawm">cache de memória</a>.</p>
+<p>Além de lidar com solicitações do cliente, o back-end para dispositivos móveis é responsável pelo <a href="#odawm">processamento assíncrono</a> necessário para o jogo para dispositivos móveis, pela <a href="#pushnotifications">orquestração de notificações push</a>, por lidar com <a href="#scheduled">tarefas agendadas</a> e assim por diante.</p>
+<a name="cbym" id="cbym"></a>
+<h3>Comunicação entre os clientes do jogo para dispositivos móveis e o back-end de jogos para dispositivos móveis</h3>
+<p>Conforme discutido no <a href="/pt-br/developers/articles/mobile-application-solutions">artigo sobre soluções para dispositivos móveis</a>, a forma recomendada de expor a API do back-end para dispositivos móveis e consumi-la no cliente para dispositivos móveis é usando o <a href="https://developers.google.com/appengine/docs/java/endpoints/overview">Google Cloud Endpoints</a><sup><a href="#ftnt4" name="ftnt_ref4" id="ftnt_ref4">[4]</a></sup>. Essa tecnologia permite definir a API com base em anotações simples no código fonte e usar ferramentas para gerar bibliotecas cliente para Android e iOS fortemente tipificadas, bem como códigos JavaScript para interagir com a API nos clientes da Web. Ela também oferece suporte às autenticações baseadas em OAuth2 com Contas do Google, para que o código do back-end de jogos para dispositivos móveis possa saber a identidade do jogador.</p>
+<p>No Griddler, por exemplo, o método para enviar um convite é declarado desta forma:</p>
+<pre>
+@ApiMethod(httpMethod = "PUT", path ="game/{gameId}/invitation/{playerId}")
+public InvitationResult sendInvitation(@Named("gameId") Long gameId,
+ @Named("playerId") Long playerId, User user) throws ServiceException { }
+</pre>
+<p>O código acima declara a sendInvitation API que, na transmissão, será representada como uma solicitação HTTP PUT usando o URL especificado no argumento de caminho. Os argumentos gameId e playerId serão passados explicitamente pelo cliente. O objeto de usuário será preenchido pela infraestrutura do Google Cloud Endpoints com base nas informações de autenticação fornecidas de maneira implícita pelo cliente. Consulte a <a href="https://developers.google.com/appengine/docs/java/endpoints/annotations"></a><a href="https://developers.google.com/appengine/docs/java/endpoints/annotations">documentação</a> do Cloud Endpoints para encontrar mais informações sobre a anotação @API.</p>
+<p>Quando a ferramenta Cloud Endpoints for usada para gerar as bibliotecas cliente, o cliente Android poderá invocar essa API exposta do back-end para dispositivos móveis apenas chamando:</p>
+<pre>
+InvitationResult invitationResult = gameBackend.sendInvitation(
+gameId, playerId)).execute();
+</pre>
+<p>Normalmente, é preciso executar essa chamada de maneira assíncrona para evitar o bloqueio das chamadas de rede no thread de IU (interface de usuário).</p>
+<figure><img src="/images/articles/developing-mobile-games-on-gcp/communication.png" height="341" width="579" alt="">
+<figcaption>Figura 6. Comunicação entre o cliente do jogo para dispositivos móveis e o back-end do jogo</figcaption>
+</figure>
+<a name="storedata" id="storedata"></a>
+<h3>Armazenamento de dados<sup><a href="#ftnt5" name="ftnt_ref5" id="ftnt_ref5">[5]</a></sup></h3>
+<p>Normalmente, jogos para dispositivos móveis envolventes e imersivos precisam armazenar dados fora dos dispositivos do cliente.</p>
+<p>Alguns jogos para dispositivos móveis podem usar conteúdo dinâmico representado como objetos grandes e, normalmente, binários. Esse conteúdo inclui imagens que definem partes do mundo do jogo virtual ou avatares enviados por upload pelos jogadores. Para esse tipo de dado, é possível usar o <a href="http://developers.google.com/storage/docs/getting-started">Google Cloud Storage</a>, um serviço que pode armazenar objetos e arquivos com até terabytes de tamanho. Consulte também a seção "<a href="#sapi">Fornecimento e processamento de imagens</a>" abaixo.</p>
+<p>Os outros tipos de dados que precisam ser armazenados fora dos dispositivos do cliente são entidades e propriedades específicas. Essas propriedades e entidades podem incluir informações sobre o nível mais alto concluído em um jogo para dispositivos móveis e outras informações sobre os jogadores, como apelidos, registro do dispositivo dos jogadores para notificações push, registros das compras no jogo e outros dados específicos do jogo.</p>
+<p>As propriedades dessas entidades também podem incluir uma referência a objetos armazenados no Google Cloud Storage, como o nome do objeto e, opcionalmente, um URL ou nome de intervalo.</p>
+<p>Com o back-end para dispositivos móveis hospedado no Google App Engine, o <a href="https://developers.google.com/datastore/">Cloud Datastore</a> é o local recomendado para o armazenamento dessas entidades. Ele oferece um armazenamento de dados de objetos NoSQL,<sup><a href="#ftnt6" name="ftnt_ref6" id="ftnt_ref6">[6]</a></sup> altamente escalável e sem esquema, com transações atômicas e um mecanismo de consulta.</p>
+<figure><img src="/images/articles/developing-mobile-games-on-gcp/storing-data.jpg" height="350" width="305" alt="">
+<figcaption>Figura 7. Armazenamento de dados</figcaption>
+</figure>
+<p>No Griddler, por exemplo, as entidades chave são:</p>
+<figure><img src="/images/articles/developing-mobile-games-on-gcp/key-entities.jpg" alt="">
+<figcaption>Figura 8. Entidades chave usadas no Griddler</figcaption>
+</figure>
+<ul>
+<li>Jogador</li>
+<li>Tabuleiro: a definição da grade de uma partida e as charadas dessa grade.</li>
+<li>Partida: uma instância de um ou mais jogadores que competem para resolver charadas em um determinado Tabuleiro.</li>
+<li>Convite: uma entidade usada para iniciar jogos no modo multijogador</li>
+<li>GamePlay: uma entidade que representa o estado e os resultados de uma Partida disputada por um Jogador. Para jogos no modo multijogador, há várias entidades GamePlay para uma Partida específica (uma por Jogador).</li>
+<li>Dispositivo: informações específicas da plataforma necessárias para enviar notificações push para um determinado dispositivo, por exemplo, token do dispositivo para iOS e ID de registro de GCM para Android).</li>
+</ul>
+<p>Para oferecer suporte para forte consistência, Convite e GamePlay pertencem ao <a href="https://developers.google.com/appengine/docs/java/gettingstarted/usingdatastore?hl=en">grupo de entidades</a> originado na entidade ancestral Partida. De maneira semelhante, a entidade Dispositivo pertence ao grupo de entidades originado na entidade ancestral Jogador.</p>
+<p>Ao usar o Datastore para armazenar as entidades, é possível escalonar os jogos para dispositivos móveis facilmente para milhões de jogadores.</p>
+<p>Como o Griddler não usa dados grandes ou binários na implementação atual, ele armazena seus dados totalmente no Datastore. No entanto, se forem implementadas melhorias para fornecer dicas visuais para as charadas ou para permitir que os jogadores façam upload dos seus avatares, o Griddler poderá usar o Google Cloud Storage para armazenar as imagens.</p>
+<a name="odawm" id="odawm"></a>
+<h3>Otimização do acesso aos dados com o Memcache</h3>
+<p>Quando a carga aumenta, o back-end de jogos para dispositivos móveis pode ser composto por milhares de instâncias individuais que lidam com as solicitações. Se os clientes de jogos para dispositivos móveis estiverem realizando solicitações frequentes para o back-end para recuperar os mesmos dados, é possível otimizar o acesso aos dados para evitar recuperar os dados do armazenamento persistente para todas as solicitações.</p>
+<p>Um back-end executado no Google App Engine pode usar um serviço distribuído de cache de dados na memória chamado <a href="http://developers.google.com/appengine/docs/java/memcache/">Memcache</a> para armazenar e recuperar os dados acessados com frequência (Fig. 9). O uso do Memcache não apenas permite que o back-end de jogos para dispositivos móveis apresente um desempenho melhor e seja melhor escalonado, mas também reduz o custo de acessar o Armazenamento de dados do App Engine, pois o aplicativo enviará menos solicitações para ele.</p>
+<p>Por exemplo, podem haver milhões de jogadores jogando Griddler ao mesmo tempo e, potencialmente, haver até centenas de milhares de jogadores resolvendo charadas do mesmo tabuleiro (grade de letras) simultaneamente. Em vez de sempre recuperar as definições do Tabuleiro, faz sentido armazená-las em cache.</p>
+<figure><img src="/images/articles/developing-mobile-games-on-gcp/optimizing-data.jpg" height="421" width="352" alt="">
+<figcaption>Figura 9. Otimização do acesso aos dados com o Memcache</figcaption>
+</figure>
+<h3>Processamento assíncrono com filas de tarefas</h3>
+<p>Às vezes, não é possível ou desejável realizar todo o trabalho associado a uma solicitação recebida de um cliente do jogo para dispositivos móveis antes do envio da resposta de volta para o dispositivo do usuário.</p>
+<p>Por exemplo, para tornar uma partida mais envolvente e social, o Griddler poderia ter um recurso para notificar os amigos do jogador quando ele atingisse uma pontuação muito alta e alcançasse a liderança. Ele poderia ser acionado quando o cliente chamasse a gameFinished API. No entanto, é importante considerar que o jogador pode ter muitos amigos e que o cliente não deve ficar bloqueado até que todos os amigos sejam notificados. Esse design síncrono não apenas bloquearia o cliente, mas também não seria confiável. Em vez disso, como parte da gameFinished API, o back-end de jogos para dispositivos móveis pode armazenar os resultados da partida, registrar a necessidade de processar as notificações e, imediatamente, enviar a resposta para o cliente sem esperar até que todas as notificações sejam processadas.</p>
+<p>O código executado no Google App Engine pode usar um serviço chamado <a href="http://developers.google.com/appengine/docs/java/taskqueue/">Filas de tarefas</a> para enfileirar informações sobre o trabalho (tarefas) que precisa ser realizado de maneira assíncrona. No exemplo discutido anteriormente, o aplicativo poderia enfileirar uma tarefa para notificar os amigos do jogador de que ele chegou às 20 maiores pontuações.</p>
+<p>Normalmente, você poderia configurar o serviço de fila de tarefas para enviar as tarefas enfileiradas (<a href="http://developers.google.com/appengine/docs/java/taskqueue/overview-push">modelo de push</a>) para o código executado no Google App Engine como solicitações HTTP para um URL selecionado. O back-end de jogos para dispositivos móveis pode processar essas solicitações por meio de gerenciadores de solicitações da Web regulares. No exemplo acima, o gerenciador de solicitações poderia recuperar as informações da tarefa da solicitação HTTP, pesquisar os amigos do jogador e notificar cada um deles, criando postagens em um site de mídia social em nome do jogador ou enviando notificações push conforme descrito <a href="#pushnotifications">abaixo</a>.</p>
+<p>De maneira alternativa, o código do back-end para dispositivos móveis pode <a href="http://developers.google.com/appengine/docs/java/taskqueue/overview-pull">puxar as</a> <a href="http://developers.google.com/appengine/docs/java/taskqueue/overview-pull">tarefas</a> das filas. Isso pode ser útil, por exemplo, se você desejar controlar explicitamente o processamento das tarefas. Outro cenário em que puxar as tarefas é útil é quando você deseja processar as tarefas fora do App Engine, por exemplo, pelas instâncias do Google Compute Engine, conforme discutido no <a href="/pt-br/developers/articles/mobile-application-solutions">artigo sobre</a> <a href="/pt-br/developers/articles/mobile-application-solutions">Soluções para</a><a href="/pt-br/developers/articles/mobile-application-solutions">dispositivos móveis</a>.</p>
+<a name="pushnotifications" id="pushnotifications"></a>
+<h3>Notificações push</h3>
+<p>As notificações push permitem que os back-ends de jogos notifiquem os clientes sobre alterações de estado e outras informações relevantes sem a necessidade de uma verificação constante. É possível usar as notificações push para criar uma experiência do usuário avançada, enquanto há otimização do uso da largura de banda e da bateria. Dependendo da plataforma do cliente, o jogo para dispositivos móveis pode usar essa tecnologia para exibir "<a href="http://developer.android.com/guide/topics/ui/notifiers/toasts.html">notificações do sistema</a><a href="http://developer.android.com/guide/topics/ui/notifiers/toasts.html"></a>" e outras notificações nos dispositivos dos usuários, mesmo se o cliente do jogo para dispositivos móveis não estiver ativamente em execução. Também é possível usar esse recurso para continuar a fornecer os dados relevantes para o cliente de jogos para dispositivos móveis.</p>
+<p>No Griddler, as notificações push são usadas para enviar convites quando um jogador deseja desafiar um amigo. O uso de notificações push permite convidar amigos que não estejam com o jogo ativamente em execução no seu dispositivo.</p>
+<p>Com o código do back-end de jogos para dispositivos móveis executado no Google App Engine, é possível orquestrar o envio de notificações push para os usuários utilizando estas tecnologias:</p>
+<ul>
+<li><a href="http://developer.android.com/google/gcm/index.html">Google Cloud Messaging</a> para Android (GCM): um serviço do Google com o qual é possível enviar dados para usuários que tenham seu aplicativo cliente de jogo para dispositivos móveis instalado nos dispositivos com Android deles. Se você usar o Eclipse, o esqueleto de código poderá ser gerado pelo <a href="http://developers.google.com/eclipse/">Plug-in do Google para o Eclipse.</a></li>
+<li>Sockets API<sup><a href="#ftnt7" name="ftnt_ref7" id="ftnt_ref7">[7]</a></sup> para enviar notificações push usando o Serviço de Notificação Push da Apple® para os usuários do iOS. Para começar, leia o artigo sobre <a href="/resources/articles/ios-push-notifications">Osquestração de notificações push para iOS no Google Cloud Platform</a> e revise o <a href="https://github.com/GoogleCloudPlatform/solutions-ios-push-notification-sample-backend-java">código de exemplo publicado no Github.</a></li>
+</ul>
+<figure><img src="/images/articles/developing-mobile-games-on-gcp/push-notification.png" height="438" width="457" alt="">
+<figcaption>Figura 10. Notificação push</figcaption>
+</figure>
+<a name="sapi" id="sapi"></a>
+<h3>Fornecimento e processamento de imagens</h3>
+<p>Algumas imagens estáticas, como os diversos ícones que fazem parte do jogo e são usados para criar a IU do aplicativo cliente, podem ser empacotadas, normalmente em diversas resoluções, nos clientes de jogo para Android e iOS nativos. No entanto, isso aumenta o tamanho do pacote. Se o pacote for grande, poderá desencorajar os usuários a fazerem o download do aplicativo ou deixá-los mais propensos a desinstalá-lo quando ficarem sem espaço nos seus dispositivos.</p>
+<p>Normalmente, não é conveniente ou possível empacotar todas as imagens de que um jogo precisa em um aplicativo cliente. Por exemplo, seu jogo para dispositivos móveis pode ter mundos virtuais grandes e/ou dinâmicos com elementos gráficos elaborados que são representados como imagens com tamanho total de centenas de megabytes ou gigabytes. Mesmo se o tamanho das imagens não for tão grande, será melhor adicionar novos elementos gráficos ao jogo sem fazer com que os usuários precisem atualizar seus aplicativos cliente.</p>
+<p>Por exemplo, o Griddler poderia ser expandido para incluir alguma dica visual para uma determinada charada. Poderia também permitir que os usuários fizessem upload de imagens representativas dos seus avatares.</p>
+<p>Se for possível preparar essas imagens em resoluções e formatos otimizados para seus clientes de jogo para dispositivos móveis, então será possível fazer upload delas para o <a href="http://developers.google.com/storage/docs/getting-started">Google Cloud Storage</a> e fornecer URLs diretos para essas imagens aos clientes. Essa abordagem pode ser muito bem escalonada, uma vez que permite que os clientes para dispositivos móveis recuperem as imagens diretamente do armazenamento em nuvem escalável, sem envolver o código do back-end para dispositivos móveis.</p>
+<p>Em alguns casos, é possível manipular e processar imagens, além de armazená-las. Por exemplo, forneça as imagens em tamanhos ajustados dinamicamente de acordo com a resolução dos dispositivos do cliente. Nesses casos, use o <a href="https://developers.google.com/appengine/docs/java/images/">Serviço de imagens</a> do Google App Engine para redimensionar, girar, virar e cortar imagens, assim como melhorar fotografias usando um algoritmo pré-definido. É possível realizar essas operações em imagens do Google Cloud Storage, além de outras fontes. As imagens modificadas podem ser fornecidas aos clientes diretamente da infraestrutura dinâmica de fornecimento de imagens disponibilizada pelo Google, sem envolver o código do back-end de jogos para dispositivos móveis. O código é responsável apenas por usar a Images Service API para receber o URL correto da imagem e por fornecer esse URL aos clientes de jogos para dispositivos móveis.</p>
+<figure><img src="/images/articles/developing-mobile-games-on-gcp/serving-processing-imgs.jpg" height="373" width="467" alt="">
+<figcaption>Figura 11. Fornecimento e processamento de imagens</figcaption>
+</figure>
+<a name="scheduled" id="scheduled"></a>
+<h3>Tarefas agendadas</h3>
+<p>Além de processar solicitações dos clientes de jogo para dispositivos móveis de maneira síncrona por meio do Google Cloud Endpoints e de maneira assíncrona usando as filas de tarefas, o código do back-end de jogos para dispositivos móveis pode precisar realizar processamentos em vários intervalos regulares ou semirregulares. Por exemplo, você deseja que o back-end de jogos para dispositivos móveis envie notificações push aos jogadores que não usam seu jogo há um determinado número de dias e incentivá-los a jogar novamente e deseja realizar esse processamento em momentos específicos do dia.</p>
+<p>O back-end de jogos para dispositivos móveis também poderia atualizar alguns dados armazenados em cache no Memcache a cada cinco minutos ou atualizar as estatísticas dos principais jogadores a cada 15 minutos.</p>
+<p>Com o código do back-end de jogos para dispositivos móveis executado no Google App Engine, é fácil configurar essas tarefas agendadas usando o <a href="http://developers.google.com/appengine/docs/java/config/cron">Cron Service</a>. É possível configurá-lo para invocar determinados URLs no back-end para dispositivos móveis nos intervalos solicitados ou momentos específicos.</p>
+<figure><img src="/images/articles/developing-mobile-games-on-gcp/scheduled-jobs.jpg" height="282" width="412" alt="">
+<figcaption>Figura 12. Tarefas agendadas com o Cron Service</figcaption>
+</figure>
+<h2>Serviços relacionados a jogos do Google Play</h2>
+<p>Uma maneira fácil de tornar seus jogos para Android, iOS e Web mais sociais é usar os <a href="https://developers.google.com/games/services/">Serviços relacionados a jogos do Google Play</a>. É possível premiar os jogadores com conquistas, orientar o envolvimento com placares e tornar o jogo mais dinâmico ao permitir que vários jogadores compitam ou cooperem simultaneamente.</p>
+<h2>Aplicativos de exemplo</h2>
+<p>É possível fazer o download do aplicativo de exemplo Griddler no <a href="https://github.com/GoogleCloudPlatform/solutions-griddler-sample-backend-java">Github</a>. O back-end para dispositivos móveis é implementado em Java e expõe a REST API usando o Cloud Endpoints. Ele armazena os dados no Datastore usando uma API de nível inferior e envia notificações push. Os clientes de jogo para <a href="https://github.com/GoogleCloudPlatform/solutions-griddler-sample-android-client">Android</a> e <a href="https://github.com/GoogleCloudPlatform/solutions-griddler-sample-iOS-client">iOS</a> são implementados como aplicativos nativos. A comunicação entre os clientes e o back-end de jogos para dispositivos móveis é autenticada usando o OAuth e as Contas do Google.</p>
+<p>Também é possível fazer o download do <a href="https://github.com/GoogleCloudPlatform/solutions-cloud-adventure-sample-backend-java">Cloud Adventure</a>, outro exemplo de jogo para dispositivos móveis desenvolvido em uma arquitetura semelhante. O Cloud Adventure é um <a href="https://github.com/GoogleCloudPlatform/solutions-cloud-adventure-sample-android-client">jogo para Android</a> baseado em texto que mostra alguns cenários interessantes, como uma sala de espera do jogo para vários usuários e seleção de apelidos únicos. Ele também demonstra como usar uma combinação do Google Cloud Messaging para Android e o Cloud Endpoints para lidar com o término de uma partida e totalização dos resultados.</p>
+<h2>Próximas etapas</h2>
+<p>Caso ainda não tenha feito isso, visite o portal do <a href="/">Google Cloud Platform</a> e clique no link "Teste agora". Você será guiado pelas etapas necessárias para criar um projeto gratuito do Google Cloud, que pode ser usado para <a href="https://github.com/GoogleCloudPlatform/solutions-griddler-sample-backend-java">implantar</a> o jogo de exemplo Griddler. Depois, você pode brincar com esse exemplo, explorá-lo e tentar estendê-lo, por exemplo, ao adicionar uma dica visual a cada charada.</p>
+<h2>Conclusão</h2>
+<p>Ao utilizar o Google Cloud Platform, é possível criar com facilidade um back-end para dispositivos móveis para seus jogos. Você pode se concentrar em desenvolver seu jogo sem precisar se preocupar com a implantação, manutenção e solução de problemas da infraestrutura de TI. Também pode criar jogos para dispositivos móveis imersivos, envolventes e atraentes, que podem ser escalonados perfeitamente de alguns usuários para milhões de jogadores no mundo todo.</p>
+<p>Já existem diversos <a href="/pt-br/solutions/gaming">jogos bem-sucedidos</a> que utilizam a tecnologia do Google Cloud Platform e mal podemos esperar para ouvir sobre suas histórias de sucesso.</p>
+<br>
+<hr>
+<p><a href="#ftnt_ref1" name="ftnt1" id="ftnt1">[1]</a> Consulte <a href="http://www.abiresearch.com/press/mobile-gaming-revenues-will-exceed-16-billion-in-2">http://www.abiresearch.com/press/mobile-gaming-revenues-will-exceed-16-billion-in-2</a></p>
+<p><a href="#ftnt_ref2" name="ftnt2" id="ftnt2">[2]</a> Consulte <a href="http://blog.appannie.com/app-annie-idc-portable-gaming-report/#ixzz2MczOY0l8">http://blog.appannie.com/app-annie-idc-portable-gaming-report/#ixzz2MczOY0l8</a></p>
+<p><a href="#ftnt_ref3" name="ftnt3" id="ftnt3">[3]</a> Neste artigo, back-end se refere amplamente à parte de uma solução para dispositivos móveis que é executada fora dos dispositivos cliente. Não confunda com as <a href="http://developers.google.com/appengine/docs/java/backends/overview?hl=en">instâncias de back-end</a> do Google App Engine.</p>
+<p><a href="#ftnt_ref4" name="ftnt4" id="ftnt4">[4]</a> Desde junho de 2013, o Google Cloud Endpoints é um recurso experimental.</p>
+<p><a href="#ftnt_ref5" name="ftnt5" id="ftnt5">[5]</a> A Seção 4.2 dos <a href="https://developers.google.com/appengine/terms">Termos de Serviço do Google App Engine</a> descreve sua obrigação de proteger os direitos legais e a privacidade dos seus usuários finais, incluindo a exigência de fornecer uma política de privacidade legalmente adequada sobre o uso dos dados coletados e receber todas as permissões necessárias dos usuários finais para a coleta, o uso, o monitoramento ou a divulgação desses dados.</p>
+<p><a href="#ftnt_ref6" name="ftnt6" id="ftnt6">[6]</a> Se preferir usar bancos de dados SQL relacionais, você pode optar por usar o <a href="http://developers.google.com/cloud-sql/">Google Cloud SQL</a>, seja <a href="http://developers.google.com/cloud-sql/faq#choice">em substituição ao Armazenamento de dados ou de maneira complementar a ele</a>.</p>
+<p><a href="#ftnt_ref7" name="ftnt7" id="ftnt7">[7]</a> Desde junho de 2013, a Sockets API é um recurso experimental.</p>
+</div>
+<!-- /maia-main --></div>
+<div class="maia-col-3"><br>
+<img src="//www.google.com/images/icons/product/feedback-16.png" class="g-app-icon" alt=""> <a href="javascript:void(0);" class="google-feedback">Feedback sobre este documento</a><br>
+<br>
+<hr>
+<h4>Aplicativos de exemplo</h4>
+<ul>
+<li>Jogo Griddler com modo multijogador para dispositivos móveis<br>
+<a href="https://github.com/GoogleCloudPlatform/solutions-griddler-sample-backend-java" target="popout">[Back-end em Java]</a> <a href="https://github.com/GoogleCloudPlatform/solutions-griddler-sample-android-client" target="popout">[Cliente Android]</a> <a href="https://github.com/GoogleCloudPlatform/solutions-griddler-sample-iOS-client" target="popout">[Cliente iOS]</a> <img src="/images/ext-link-8px.png" height="8px" width="8px" alt=""></li>
+<li>Jogo Cloud Adventure para Android baseado em texto<br>
+<a href="https://github.com/GoogleCloudPlatform/solutions-cloud-adventure-sample-backend-java" target="popout">[Back-end em Java]</a> <a href="https://github.com/GoogleCloudPlatform/solutions-cloud-adventure-sample-android-client" target="popout">[Cliente Android]</a> <img src="/images/ext-link-8px.png" height="8px" width="8px" alt=""></li>
+</ul>
+<hr></div>
+</div>
+</div>
+<script>
+(function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+</script><script src="//www.gstatic.com/feedback/api.js">
+</script><script>
+$('body').delegate('.google-feedback', 'click', function() {
+      userfeedback.api.startFeedback({'productId': '94614'});
+  });
+</script><!-- Scripts to include both on Goro + Devsite --><script>
+window.___gcfg = {
+     lang: ''
+   };
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+</script><!-- GTM implementation --><!-- Start dataLayer --><script>
+dataLayer = [{
+        'country': 'None',
+        'region': 'None',
+        'language': 'pt-br'
+      }];
+</script><!-- End dataLayer --><!-- Start Google Tag Manager --><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5CVQBG" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript> <script>
+(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-5CVQBG');
+</script><!-- End Google Tag Manager --><!-- Global JS scripts to load; path will depend on whether we're on devsite or Goro --><script src="/js/base.min.js">
+</script><!-- Retina loader; Do not load if partners page because we need to wait until the Angular app runs --><script>
+new lfl.system.RetinaLoader();
+</script><!-- Secondary right-side scroll-nav --><script>
+new lfl.ui.ScrollNav({});
+</script>
+</body>
+</html>

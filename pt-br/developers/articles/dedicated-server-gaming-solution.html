@@ -1,0 +1,225 @@
+---
+layout: phase2-pt-br
+title: Cloud Computing &amp; Cloud Hosting Services
+---
+<!DOCTYPE html>
+<html devsite="">
+<head>
+<title>Gaming Articles &amp; Gaming Tutorials — Google Cloud Platform</title>
+<meta name="description" content="Read about technical gaming articles and solutions with Google Cloud Platform. Gaming specific articles cover game hosting solutions and server configurations.">
+<meta name="hide_page_heading" value="true">
+<meta name="full_width" value="true">
+<meta name="top_category" value="developers">
+<meta name="subcategory" value="articles">
+<meta name="viewport" content="initial-scale=1, minimum-scale=1, width=device-width">
+<link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
+<link href="//fonts.googleapis.com/css?family=Open+Sans:400italic,300,400,600,700" rel="stylesheet">
+<link href="/css/default.css" rel="stylesheet"><!--[if lt IE 9]>
+    <link rel="stylesheet" media="screen" href='/css/cp-ie.css'>
+    <![endif]-->
+<script src="/js/floodlight.js">
+</script>
+</head>
+<body>
+<div id="maia-main" class="cp-article">
+<div class="maia-cols">
+<div class="maia-col-9">
+<div>
+<div style="float:right">
+<div class="g-plusone"></div>
+</div>
+<h1 class="title">Solução de jogos com servidores dedicados</h1>
+</div>
+<h2>Apresentação</h2>
+<p>Como o número de pessoas que jogam continua a aumentar, será necessária uma enorme quantidade de recursos de computação para alimentar as atraentes experiências de jogos. Este artigo apresenta uma implementação de jogos altamente escalável e confiável, que utiliza o Google App Engine e o Google Compute Engine para interações entre jogadores em tempo real. Os elementos centrais do jogo, como a combinação e a personalização dos jogadores, são fornecidos pelo App Engine, enquanto o Compute Engine é usado para executar <span title="Servidores de jogo dedicados referem-se aos binários personalizados responsáveis por tratar das interações dos jogadores em tempo real">servidores de jogo dedicados</span> e mecanismos de jogo comuns.</p>
+<p>Estes são os principais pontos abordados nessa solução:</p>
+<ul>
+<li>Escalonamento para atender a milhões de jogadores</li>
+<li>Utilização do Google Cloud Platform para criar uma experiência de jogo completa.</li>
+<li>Utilização do App Engine para interações de front-end e manutenção do estado do jogo no armazenamento de dados.</li>
+<li>Orquestração e escalonamento automático de servidores de jogo dedicados do Compute Engine com o App Engine.</li>
+<li>Aquisição de percepções de negócios por meio da análise de conjuntos de dados maciços do jogo e dos usuários.</li>
+</ul>
+<p>Os jogos on-line evoluíram de apenas algumas pessoas com servidores de jogos nas suas garagens para milhões de jogadores desfrutando de uma experiência on-line contínua com combinação de jogadores, lojas dentro do jogo e listas de amigos. Esses componentes de jogo comuns resultaram no desenvolvimento de sistemas distribuídos sofisticados, que rivalizam com a computação de alto desempenho e implementações da Web em grande escala. A competição acirrada para desenvolver e oferecer o próximo jogo "blockbuster" ou sensação social viral exige que os desenvolvedores de jogos gerenciem cuidadosamente seus recursos para se concentrarem nos componentes críticos dos jogos. O provisionamento excessivo de uma plataforma em nuvem ou o foco em complexidades desnecessárias resulta em muito menos recursos financeiros e mão de obra para se concentrar nos recursos gráficos ou na jogabilidade. Ao usarem o Google Cloud Platform, os desenvolvedores de jogos podem se concentrar na criação de experiências de jogo únicas, enquanto se beneficiam da vasta experiência do Google no desenvolvimento de sistemas distribuídos.</p>
+<p>Essa solução utiliza a escalabilidade e a confiabilidade do App Engine para combinar jogadores com sessões de jogo que estejam ocorrendo em servidores de jogo do Compute Engine totalmente gerenciados. O App Engine é uma plataforma extensível que pode ser usada para fornecer os recursos necessários, como perfis de usuário, combinação de jogos, lojas dentro do jogo, comunidades sociais e o envolvimento de dispositivos móveis. De maneira ideal, é possível usar o App Engine para capacitar todos os aspectos dos jogos on-line. No entanto, muitas vezes, os desenvolvedores precisam ter acesso a máquinas virtuais para a execução de mecanismos de jogo comuns e kits de desenvolvimento de software (SDK, na sigla em inglês). Muitos aspectos dessa solução também podem ser usados para uma implementação puramente do App Engine, mas o foco principal dessa solução é o caso de uso que requer servidores de jogo dedicados no Compute Engine.</p>
+<p>Estes são os produtos usados nessa solução:</p>
+<ul>
+<li>Google App Engine
+<ul>
+<li>Alimenta a interface gráfica do usuário principal para fornecer as configurações do usuário e do jogo</li>
+<li>Fornece combinação de jogadores e navegação do servidor</li>
+<li>Distribui as cargas para as instâncias do Compute Engine</li>
+<li>Mantém clusters para lidar com a carga de jogabilidade do jogador</li>
+</ul>
+</li>
+<li>Google Compute Engine
+<ul>
+<li>Executa servidores de jogo personalizados</li>
+</ul>
+</li>
+<li>Google BigQuery
+<ul>
+<li>Analisa conjuntos de dados maciços de usuários e do jogo</li>
+</ul>
+</li>
+<li>Google Cloud Storage
+<ul>
+<li>Armazena os binários do servidor do jogo</li>
+<li>Distribui os recursos de jogo e os binários do cliente do jogo</li>
+<li>Armazena registros de backup para processar e ingerir no BigQuery</li>
+</ul>
+</li>
+</ul>
+<h2>Cenário</h2>
+<p>Dora tem um momento livre e quer jogar algumas rodadas do seu jogo on-line favorito, o Giant Robot Smash 5000. Ela abre seu laptop, inicia o jogo e faz login no seu perfil personalizado.</p>
+<p>Antes de iniciar uma partida competitiva no modo multijogador, ela nota que há novos lança mísseis disponíveis para compra na loja do jogo. Após alguns cliques, ela compra o novo equipamento por meio da Carteira virtual do Google e configura seu robô gigante favorito.</p>
+<p>Agora, Dora está pronta para iniciar um novo jogo e salvar a galáxia (outra vez) e entra em uma aliança com alguns dos seus amigos que estão on-line. O grupo solicita a entrada em um servidor com seu modo de jogo favorito e, em alguns segundos, todos estão sentados nos cockpits dos seus mechas, prontos para aceitar qualquer desafio.</p>
+<h2>Visão geral da solução</h2>
+<p>O diagrama da arquitetura de referência, mostrado na Figura 1 abaixo, oferece uma visão geral detalhada de como o Compute Engine e o App Engine se integram para criar uma solução de jogos on-line confiável e escalável.</p>
+<figure><img src="/images/articles/dedicated-2.png" alt="Detalhes de implementação">
+<figcaption>Figura 1. Diagrama da arquitetura de referência para uma solução de jogos on-line</figcaption>
+</figure>
+<h2>Componentes chave da solução de jogos on-line proposta</h2>
+<ol>
+<li>Seleção do servidor do jogo</li>
+<li>Conexão do cliente de jogo do jogador com o servidor de jogo dedicado</li>
+<li>Solicitações do jogo e verificações de integridade da instância do Google Compute Engine</li>
+<li>Escalonamento automático de servidores de jogo</li>
+<li>Armazenamento de registros para análise e MapReduce</li>
+<li>Análises de conjuntos de dados maciços do jogo e dos usuários pelo Google BigQuery</li>
+</ol>
+<p>Um usuário começa a jogar uma partida do seu jogo favorito carregando o aplicativo local ou navegando até o website do jogo. Se for a primeira vez que estiver jogando, é possível fazer o download de todos os binários do cliente e recursos do jogo do Cloud Storage. Os clientes de jogo para dispositivos móveis e computadores variam, mas é possível fornecer os recursos centrais do jogo para todos os dispositivos. Os recursos centrais incluem a atualização de perfis de usuário, o gerenciamento das configurações do jogador e a consulta de conquistas dos amigos. É possível usar o App Engine para todos esses dispositivos, atendendo websites diretamente ou fornecendo uma RESTful API para acessar todas as informações necessárias.</p>
+<p>A seção a seguir descreve cada um dos componentes chave da solução de jogos proposta (Fig. 1) mais detalhadamente:</p>
+<ol>
+<li><strong>Seleção do servidor do jogo</strong>
+<p>A possibilidade de os jogadores se conectarem a um servidor de jogo e interagirem com outros jogadores é um dos componentes mais importantes da interface principal. A combinação de jogadores é uma parte integrante dessa solução de jogos, pois associa jogadores a pessoas na mesma região e nos mesmos modos de jogo. De acordo com os requisitos de escalabilidade, desempenho e pesquisa, também é possível estender essa solução para incluir um navegador de servidor completo e recurso de pesquisa utilizando o Google Cloud SQL, a Search API ou o Armazenamento de dados.</p>
+</li>
+<li><strong>Conexão do cliente de jogo do jogador com o servidor de jogo dedicado</strong>
+<p>Depois que o jogador escolhe um servidor no qual entrar e o cliente de jogo recebe o endereço IP do servidor dedicado, o cliente de jogo do jogador estabelece uma conexão com o servidor dedicado executado no Compute Engine e carrega os recursos do jogo.</p>
+<p>Os servidores de jogo do Compute Engine são responsáveis por lidar com todas as interações do jogador por meio da comunicação do servidor do cliente de baixa latência. Informações sobre como criar um servidor de jogo com modo multijogador estão fora do escopo deste artigo. Ao criar servidores de jogo com modo multijogador, recomenda-se utilizar kits de desenvolvimento de software e servidores de jogo existentes.</p>
+</li>
+<li><strong>Solicitações do jogo e verificações de integridade da instância do Compute Engine</strong>
+<p>Quando um servidor de jogo dedicado está sendo executado no Compute Engine, pode precisar enviar solicitações do jogo para o App Engine. Se um jogador comprou itens em uma loja ou criou configurações de jogo personalizadas, o App Engine pode servir como a "fonte da verdade" para essa informação. Além disso, o servidor de jogo dedicado pode se comunicar de volta com o App Engine para atualizar a experiência, as estatísticas e as pontuações do jogador.</p>
+<p>Após o término de uma partida do jogo, os jogadores podem permanecer no servidor de jogo para uma nova rodada ou ser redirecionados para a combinação de jogadores do servidor. As pontuações do jogador, as estatísticas da partida e as recomendações da loja do jogo podem ser exibidas entre as partidas. Se um servidor de jogo dedicado for encerrado inesperadamente, o cliente de jogo deverá lidar com esse evento e redirecionar os jogadores para a combinação de jogadores do servidor para uma nova sessão.</p>
+</li>
+<li><strong>Escalonamento automático de servidores de jogo</strong>
+<p>O escalonamento automático é uma das primeiras tarefas de segundo plano que não afetam a jogabilidade de modo significativo, mas é fundamental para a criação de um jogo escalável e completo. Essa etapa indica a lógica de escalonamento automático de servidores de jogo dedicados implementada por um desenvolvedor no App Engine. Conforme o número de jogadores aumenta, a lógica de orquestração da máquina virtual cria novos servidores dedicados para lidar com o aumento de carga. De forma semelhante, se o número de jogadores diminuir durante o dia, os servidores dedicados não utilizados poderão ser encerrados para eliminar a despesa desnecessária.</p>
+</li>
+<li><strong>Armazenamento de registros para análise e MapReduce</strong>
+<p>É recomendável usar o Google Cloud Storage para armazenar arquivos, como registros de servidor e saída de pipelines de MapReduce. Os servidores de jogo dedicados no Compute Engine produzem uma quantidade significativa de dados valiosos para entender o comportamento do jogador e resolver bugs no software. Para armazenar esses dados em longo prazo, é necessário fazer upload regularmente dos arquivos das instâncias do Compute Engine para o Google Cloud Storage usando um processo em segundo plano. Se forem necessários pipelines de MapReduce para transformar e agregar os dados, é possível fazer o download dos arquivos relevantes do Google Cloud Storage e processá-los em instâncias adicionais do Compute Engine. É possível armazenar as saídas das tarefas de MapReduce no Google Cloud Storage, onde podem ser usadas como entradas para pipelines adicionais, ingeridos no Google BigQuery ou compilados em relatórios.</p>
+</li>
+<li><strong>Análises de conjuntos de dados maciços do jogo e dos usuários pelo Google BigQuery</strong>
+<p>Integrado a essa solução está o Google BigQuery, uma ferramenta de consulta ad hoc para análise de conjuntos de dados maciços em tempo real. Quando servidores de jogo dedicados hospedam milhões de jogadores ativos, é possível criar bilhões de linhas de dados úteis. Quer sejam registros de jogo não processados ou saídas de MapReduce, é possível fazer a ingestão dos dados no Google BigQuery a partir do Google Cloud Storage com um esquema pré-definido. Após o término da ingestão, consultas semelhantes a SQL são concluídas em segundos e podem ser usadas para conseguir informações valiosas, como envolvimento do usuário e impacto dos incentivos do jogo.</p>
+</li>
+</ol>
+<h2>Detalhes de implementação</h2>
+<p>A seção a seguir apresenta detalhes de implementação para a distribuição da carga de jogadores e o fornecimento das funcionalidades centrais do jogo necessárias para criar uma experiência de jogo completa. O foco principal dessa solução é o cenário central de distribuição de servidores de jogo para lidar com as interações de jogadores em tempo real. A solução pode ser expandida para fornecer recursos adicionais, como um modelo de comunidade social e de loja completo, mas isso está fora do escopo deste artigo.</p>
+<p>O diagrama de arquitetura a seguir (Fig. 2) é uma visão geral que descreve como implementar uma solução de jogos escalável com servidores dedicados.</p>
+<figure><img src="/images/articles/dedicated-1.png" alt="Diagrama da arquitetura de referência">
+<figcaption>Figura 2. Detalhes de implementação de uma solução de jogos com servidores dedicados</figcaption>
+</figure>
+<h2>Passo a passo e detalhes de implementação</h2>
+<ol>
+<li><strong>Solicitação de seleção do servidor de jogo</strong>
+<p>Os jogadores usam o navegador de servidores de jogo para solicitar uma lista dos servidores recomendados com base nos critérios de combinação de jogadores. Essa solicitação é enviada por meio do Cloud Endpoints, que oferece uma RESTful API com a tecnologia do App Engine.</p>
+</li>
+<li><strong>Lógica de combinação de jogadores do servidor de jogo</strong>
+<p>A lógica de combinação de jogadores do servidor fornece uma lista dos servidores recomendados para os usuários. Dependendo da escala e da frequência das solicitações de combinação de jogadores do servidor, existem diferentes técnicas para implementar essa solução. Uma abordagem é usar as tarefas de segundo plano do App Engine para manter uma lista de servidores recomendados em cada datacenter e armazená-la no Memcache para recuperação rápida. A lógica para recomendar servidores depende do tipo de jogo. Alguns jogos, por exemplo, têm carga menor para minimizar a latência, ao passo que outros precisam colocar as pessoas nos servidores para que exista uma boa quantidade de pessoas contra as quais jogar. O Memcache fornece um sistema de armazenamento em cache de objetos da memória distribuído e de alto desempenho, mas também é necessário armazenar as recomendações no armazenamento de dados do App Engine para lidar com as remoções do Memcache. É possível programar as tarefas de segundo plano de recomendações para serem executadas a cada minuto pelo App Engine Cron Service. É importante para as tarefas de segundo plano manter uma lista dos servidores recomendados para cada região, pois os jogadores normalmente querem se conectar ao servidor com a menor latência. Outras técnicas de seleção de servidor podem realizar o round-robin pelos servidores disponíveis ou fornecer uma lista com tamanho razoável para o cliente para que ele possa identificar os servidores com menor latência. Soluções mais complexas podem incluir tarefas que mantêm as contagens de jogadores, a carga, a latência e os estados de todos os servidores. As soluções também podem ser projetadas para realizar consultas de forma dinâmica para cada solicitação.</p>
+</li>
+<li><strong>Resultados retornados pela combinação de jogadores do servidor de jogo</strong>
+<p>Os resultados da combinação de jogadores do servidor de jogo são retornados para o cliente em que o jogador realiza a seleção em uma lista ou que o cliente determina automaticamente o servidor ideal.</p>
+</li>
+<li><strong>Conexão do cliente do jogo com o servidor de jogo dedicado</strong>
+<p>O cliente do jogo tenta se conectar ao endereço IP do servidor de jogo dedicado selecionado. Se a conexão falhar ou o servidor estiver cheio, o cliente pode tentar se conectar a outros servidores disponibilizados ou direcionar o jogador novamente para a combinação de jogadores do servidor.</p>
+</li>
+<li><strong>Solicitações do servidor de jogo no jogo</strong>
+<p>Após os jogadores estabelecerem uma conexão com o servidor de jogo dedicado, o servidor é responsável por tratar de todos os eventos do jogador e fornecer informações sobre os outros jogadores atualmente na partida. O App Engine é usado para manter uma experiência de jogo consistente em todos os servidores dedicados, tratando de eventos importantes e fornecendo informações sobre o jogador. Por exemplo, se o jogador tiver uma configuração personalizada, uma solicitação para o App Engine fornecerá informações sobre a configuração e permitirá que o jogador acesse todos os itens comprados. Conforme os jogadores ganham experiência e acontecem eventos importantes no jogo, os detalhes podem ser enviados para o App Engine a fim de manter uma visão completa de todos os jogadores. Uma maneira fácil de conectar os servidores de jogo ao App Engine é usar uma solicitação autenticada para o Cloud Endpoints e a API RESTful fornecida.</p>
+</li>
+<li><strong>Solicitação da configuração do jogador</strong>
+<p>Quando os jogos permitem que o jogador compre itens ou crie uma configuração de personagem personalizada, é preciso manter as informações em um banco de dados escalável e confiável. O armazenamento de dados do App Engine foi projetado para ser ajustado a aplicativos da Web que atendem milhões de usuários, e a tecnologia Google Megastore é utilizada no Google. O armazenamento de dados do App Engine é recomendado para armazenar todas as informações do jogador porque ele é ajustado perfeitamente conforme o jogo aumenta de centenas para milhões de jogadores. Também é possível utilizar o Memcache para armazenar resultados de consultas frequentes do armazenamento de dados do App Engine para melhorar o desempenho. Como o Memcache é um recurso limitado, recomenda-se o uso inteligente. Caso sejam necessárias consultas SQL complexas ou o MySQL precise ser usado por outras razões, o Google Cloud SQL fornece um banco de dados como serviço relacional completamente gerenciado e altamente disponível. O Google Cloud SQL é totalmente integrado ao App Engine, mas não é projetado para ampliação infinita e os testes de carga são altamente recomendados para entender o desempenho do banco de dados internacional real.</p>
+</li>
+<li><strong>Armazenamento de eventos importantes do jogo</strong>
+<p>O tratamento e armazenamento de eventos importantes, como os jogadores ganharem experiência após ações no jogo, são partes fundamentais para a criação de um jogo envolvente e viciante. Da mesma forma que as solicitações de configuração do jogador, essas solicitações são tratadas pelo App Engine e as informações importantes podem ser salvas no armazenamento de dados do App Engine. A principal diferença entre esses dois tipos de solicitação é que os eventos no jogo ocorrem com uma frequência maior para todos os jogadores ativos. Por exemplo, é possível realizar a configuração de um jogador apenas no início da partida, ao passo que os eventos no jogo podem ocorrer sempre que o personagem do jogador ganhar experiência. O armazenamento de dados do App Engine pode ser ajustado para lidar com milhares de eventos de milhões de usuários, mas é necessário entender os grupos de entidades, o NoSQL e a consistência eventual para eliminar potenciais problemas de escalabilidade. Discussões técnicas detalhadas sobre esses tópicos estão localizadas na documentação do desenvolvedor do App Engine.</p>
+</li>
+<li><strong>Processo de pulsação do servidor</strong>
+<p>Um componente crítico da manutenção de um cluster íntegro de servidores de jogo dedicados é o acompanhamento contínuo do estado e das estatísticas de cada servidor. Novamente, o Cloud Endpoints é utilizado para fornecer uma API RESTful autenticada, em que um processo executado em cada instância do Compute Engine pode fornecer estatísticas de uso. Informações relacionadas ao hardware, como utilização de RAM e CPU, podem ser fornecidas juntamente com informações específicas do jogo, como a latência média do jogador e o número de jogadores ativos no servidor.</p>
+</li>
+<li><strong>Armazenamento de estatísticas e informações da integridade do servidor</strong>
+<p>O processo de pulsação em execução em cada instância do Compute Engine pode fornecer uma grande quantidade de informações importantes. A lógica de pulsação do servidor é necessária para analisar e armazenar dados relevantes. Informações diretamente relevantes para o escalonamento automático, como o número de jogadores ativos nos servidores e a latência média, devem ser armazenadas em cache no Memcache para a recuperação rápida pelos processos de back-end do escalonamento automático. Quaisquer valores importantes também devem ser salvos no armazenamento de dados do App Engine para protegê-los da remoção do Memcache. Se essas informações também forem relevantes para análise e manutenção do histórico do servidor, recomenda-se armazenar todos os valores de histórico em uma tabela separada, usada de forma independente do escalonamento automático.</p>
+</li>
+<li><strong>Escalonamento automático de servidores de jogo dedicados e manutenção de um cluster íntegro</strong>
+<p>Existem muitas abordagens para o escalonamento automático de recursos do Compute Engine em relação à carga de jogadores, mas o componente comum envolve a execução de uma tarefa agendada a cada minuto com o App Engine Cron Service. O número ideal de máquinas virtuais pode ser calculado por um cronograma pré-determinado ou com a análise do número de posições disponíveis nos servidores de jogo ou da latência do jogador. Outra informação importante para o escalonamento automático é determinar a contagem de máquinas íntegras ativas no momento, puxando os dados recentes do processo de pulsação do Memcache ou do armazenamento de dados do App Engine. A diferença entre o número ideal e o atual de servidores de jogo pode ser usada para criar ou excluir instâncias. Além disso, é preciso configurar todos os servidores que não estiverem íntegros, para retirá-los da seleção de servidores e excluir as instâncias quando não houver mais jogadores neles. Se os servidores de jogo precisarem ser migrados entre diferentes zonas do Compute Engine, é possível usar a lógica de escalonamento automático para criar instâncias na nova zona enquanto as instâncias vagas na zona antiga são encerradas. Essa é uma visão geral de altíssimo nível do escalonamento automático dos servidores de jogo e é altamente recomendável implementar os algoritmos de escalonamento cuidadosamente. Concentre-se em evitar problemas, como excessos e respostas ruidosas. Os servidores do Compute Engine são cobrados por hora, portanto, para reduzir os custos desnecessários de instâncias do Compute Engine não utilizadas, evite a criação e a exclusão constante de instâncias.</p>
+</li>
+<li><strong>Criação e exclusão de servidores de jogo dedicados</strong>
+<p>Quando é necessário criar ou excluir um servidor de jogo, uma tarefa é adicionada a uma fila de tarefas do App Engine. Uma tarefa de segundo plano separada é responsável por puxar as tarefas de manutenção do servidor e executar as chamadas da Compute Engine API. É possível incluir back-ends adicionais caso o número de chamadas de API aumente além dos limites de um único back-end. Se houver poucas chamadas da Compute Engine API, a manutenção do servidor pode ser realizada por tarefas agendadas para reduzir a utilização de recursos do App Engine. Recomenda-se incluir um timestamp em cada tarefa de manutenção de servidor para criar alertas caso seja gerado um backlog no sistema. As filas push podem ser usadas como uma alternativa para as filas pull e é recomendado executar testes de carga para entender como cada sistema de escalonamento reage sob grande utilização. O Google não fornece um serviço de testes de carga, mas é possível executar tecnologias de código aberto comuns no Compute Engine ou ainda usar serviços de terceiros para um amplo teste de cargas.</p>
+</li>
+<li><strong>Armazenamento de registros no Google Cloud Storage</strong>
+<p>Dos registros de servidor do jogo que gravam as ações e movimentos de todos os jogadores até as estatísticas de final de jogo, são gerados muitos arquivos de registro em cada servidor de jogo. É possível copiar esses arquivos para o Google Cloud Storage usando um processo de segundo plano executado em intervalos regulares. Se dados críticos forem armazenados nos arquivos, será preciso salvá-los em um disco permanente para evitar a perda de dados caso uma instância seja encerrada antes da conclusão do processo de cópia. Caso contrário, o armazenamento de arquivos em discos temporários oferece uma alternativa de menor custo, mas o disco será excluído imediatamente após a instância ser encerrada. Independente da escolha do tipo de disco, é sempre recomendável ter um processo de cópia automatizado para a manutenção de todos os registros e estatísticas no Google Cloud Storage.</p>
+</li>
+<li><strong>Transformação e processamento de arquivos de registro</strong>
+<p>Após coletar uma grande quantidade de dados de registro não processados dos servidores, é preciso limpar os arquivos de registro, complementá-los com dados adicionais e agregá-los a diferentes níveis. É possível utilizar as ferramentas MapReduce ou Extração, Transformação e Carregamento para criar dados que podem ser usados para recursos voltados ao usuário, como recomendações de itens da loja, ou ingeridos no Google BigQuery para análise.</p>
+</li>
+<li><strong>Relatórios e análises</strong>
+<p>O Google BigQuery é uma parte importante de uma solução de jogos, pois permite a análise ad hoc de conjuntos de dados maciços que contenham informações sobre o jogo e sobre os usuários. Por exemplo, é possível utilizá-lo para determinar o impacto de incentivos de jogabilidade, como liquidações na loja ou finais de semana com o dobro de experiência, no envolvimento e retenção do usuário. Além disso, o Google BigQuery mantém um desempenho consistente conforme os dados aumentam para terabytes ou bilhões de linhas.</p>
+</li>
+</ol>
+<h2>Exemplo de aplicativo</h2>
+<p>Um aplicativo de exemplo que demonstra os conceitos de alto nível dessa solução está disponível e pode ser usado como referência de trabalho. A funcionalidade central do aplicativo de exemplo é a seguinte:</p>
+<ul>
+<li>O cliente consulta o App Engine para receber um endereço IP de um servidor de jogo dedicado</li>
+<li>O cliente inicia um novo jogo conectando-se a um servidor de jogo executado no Compute Engine</li>
+<li>Os administradores podem criar e excluir servidores de jogo por meio da interface de usuário de administração do App Engine</li>
+<li>As instâncias do Compute Engine informam os níveis de carga para o App Engine periodicamente</li>
+<li>Os administradores podem visualizar os níveis de carga de todas as instâncias do Compute Engine do servidor de jogo</li>
+<li>O App Engine adiciona automaticamente novas instâncias ao cluster se ele exceder o limite de carga máxima</li>
+</ul>
+<p>Pegue o código fonte no <a href="https://github.com/GoogleCloudPlatform/solutions-load-balanced-gaming-server-on-google-compute-engine" target="_blank">Github</a>.</p>
+<h2>Conclusão</h2>
+<p>Essa solução demonstra como os desenvolvedores podem ajustar seus jogos on-line para suportar milhões de jogadores enquanto oferecem um jogo completo. Ao usar vários componentes do Google Cloud Platform, os desenvolvedores desfrutam da escalabilidade e confiabilidade do App Engine, enquanto executam servidores de jogo padrão do setor no Compute Engine. Isso permite que os desenvolvedores de jogos realizem lançamentos, iterações e escalonamentos com rapidez e, simultaneamente, concentrem-se em fornecer um excelente jogo.</p>
+</div>
+<div class="maia-col-3"><br>
+<img src="//www.google.com/images/icons/product/feedback-16.png" class="g-app-icon" alt=""> <a href="javascript:void(0);" class="google-feedback">Feedback sobre este documento</a><br>
+<br>
+<img src="//www.google.com/images/icons/thirdparty/pdf-16.png" class="g-app-icon" alt=""> <a href="/files/articles/google-cloud_technical-article_dedicated-server.pdf" class="cp-pdf" onclick="javascript: _gaq.push(['_trackPageview', '../../../files/articles/google-cloud_technical-article_dedicated-server.pdf']);">Fazer o download do PDF</a></div>
+</div>
+</div>
+<script>
+(function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+</script><script src="//www.gstatic.com/feedback/api.js">
+</script><script>
+$('body').delegate('.google-feedback', 'click', function() {
+      userfeedback.api.startFeedback({'productId': '94614'});
+  });
+</script><!-- Scripts to include both on Goro + Devsite --><script>
+window.___gcfg = {
+     lang: ''
+   };
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+</script><!-- GTM implementation --><!-- Start dataLayer --><script>
+dataLayer = [{
+        'country': 'None',
+        'region': 'None',
+        'language': 'pt-br'
+      }];
+</script><!-- End dataLayer --><!-- Start Google Tag Manager --><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5CVQBG" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript> <script>
+(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-5CVQBG');
+</script><!-- End Google Tag Manager --><!-- Global JS scripts to load; path will depend on whether we're on devsite or Goro --><script src="/js/base.min.js">
+</script><!-- Retina loader; Do not load if partners page because we need to wait until the Angular app runs --><script>
+new lfl.system.RetinaLoader();
+</script><!-- Secondary right-side scroll-nav --><script>
+new lfl.ui.ScrollNav({});
+</script>
+</body>
+</html>
