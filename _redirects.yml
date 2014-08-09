@@ -22,7 +22,8 @@ ROADSHOW : http://www.googlecloudroadshow.com/cloud-platform-roadshow.html?utm_s
 
 # GCP live event
 "events/watch" : /events/google-cloud-platform-live/
-live : /events/google-cloud-platform-live/
+#live : /events/google-cloud-platform-live/
+live : http://www.gcp-live.com/
 "events/google-cloud-platform-live/invite" : /events/google-cloud-platform-live/
 eap : https://developers.google.com/cloud/early-access
 
