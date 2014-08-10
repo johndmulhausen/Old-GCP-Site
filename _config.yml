@@ -1,4 +1,4 @@
-name: Google Cloud Documentation
+name: Google Cloud Platform
 markdown: kramdown
 kramdown:
   input: GFM
