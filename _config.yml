@@ -11,8 +11,8 @@ safe: false
 lsi: false
 pygments: true
 
-relative_source: ../googledevdocs.github.io/
-destination: ../googledevdocs.github.io-build/
+relative_source: ../GoogleCloudPlatformSite.github.io/
+destination: ../GoogleCloudPlatformSite.github.io-build/
 
 # Settings for deploy rake task
 # Username and repo of Github repo, e.g.
@@ -21,8 +21,8 @@ destination: ../googledevdocs.github.io-build/
 # repo defaults to USERNAME.github.io
 # Branch defaults to "source" for USERNAME.github.io
 # or "master" otherwise
-username: GoogleDevDocs
-repo: googledevdocs.github.io
+username: GoogleCloudPlatformSite
+repo: GoogleCloudPlatformSite.github.io
 branch: build
 
 permalink: pretty
