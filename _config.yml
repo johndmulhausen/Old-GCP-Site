@@ -40,3 +40,6 @@ exclude:
   - "*.yml"
   - .gitignore
   - vendor
+
+include:
+  - "*.yaml"
