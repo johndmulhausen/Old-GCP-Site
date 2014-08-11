@@ -38,7 +38,7 @@ title: Cloud Computing &amp; Cloud Hosting Services
 <h2>범위</h2>
 <p>이 문서는 자체 모바일 게임 백엔드를 구축하고 모바일 클라이언트와 백엔드 간의 상호작용 패턴을 설계하고자 하는 설계자와 개발자를 대상으로 합니다.</p>
 <p>이 문서에 제시된 접근 방식과 아키텍처는 일반적인 모바일 게임을 새로 개발하는 경우에 적용할 수 있습니다. 하지만 시나리오와 요구사항에 따라 다른 두 가지 대안을 적절하게 적용할 수도 있습니다. 첫 번째는 <a href="https://developers.google.com/samples/mbs/">모바일 백엔드 시작 도움말</a>로서, 자체적인 맞춤 모바일 게임 백엔드를 개발하지 않고 <a href="https://developers.google.com/samples/mbs/">시작</a>하려는 경우에 사용을 고려해 볼 수 있습니다. 두 번째는 <a href="/resources/articles/dedicated-server-gaming-solution">게임 전용 서버 솔루션</a> 아키텍처로서, 모바일 게임에 게임 전용 서버가 필요한 경우에 사용을 고려해 볼 수 있습니다.</p>
-<p>이 문서는 Google Cloud Platform에서 확장성 높은 새 모바일 게임을 개발하는 내용에 대해 다룹니다. 또한 이 문서는 <a href="/ko/developers/articles/mobile-application-solutions">여기</a>에 게시된 모바일 솔루션 참고 아키텍처를 적용하는 동시에 모바일 게임 제작에 해당하는 자세한 내용과 예제를 제공합니다. 이 문서에는 전체 소스 코드를 포함한 모바일 게임 애플리케이션 샘플이 포함되어 있습니다.</p>
+<p>이 문서는 Google Cloud Platform에서 확장성 높은 새 모바일 게임을 개발하는 내용에 대해 다룹니다. 또한 이 문서는 <a href="/developers/articles/mobile-application-solutions">여기</a>에 게시된 모바일 솔루션 참고 아키텍처를 적용하는 동시에 모바일 게임 제작에 해당하는 자세한 내용과 예제를 제공합니다. 이 문서에는 전체 소스 코드를 포함한 모바일 게임 애플리케이션 샘플이 포함되어 있습니다.</p>
 <p>모바일 게임의 클라이언트 부분을 구축하는 내용은 이 문서에서 다루지 않습니다. 하지만 이 문서에는 모바일 게임 백엔드와의 통신, 사용자 인증 및 푸시 알림 전송과 관련된 기본 정보가 포함되어 있습니다.</p>
 <h2>요구사항</h2>
 <p>흥미진진한 모바일 게임을 위한 일반적인 요구사항은 다음과 같습니다.</p>
@@ -97,7 +97,7 @@ title: Cloud Computing &amp; Cloud Hosting Services
 <li>게임 분석 제공</li>
 </ul>
 <h3>클라우드의 모바일 백엔드<sup><a href="#ftnt3" name="ftnt_ref3" id="ftnt_ref3">[3]</a></sup></h3>
-<p>Google Cloud Platform을 사용하여 모바일 게임을 구동하는 경우 Google App Engine에서 게임 백엔드를 실행할 수 있습니다. Google App Engine은 <a href="/solutions/gaming">소규모 및 대규모 회사</a>에서 개발한 <a href="/ko/customers/#cp-mobile">많은 성공적인 온라인 게임</a>에서 사용하는 플랫폼으로서, 다음과 같은 Google 인프라의 이점을 제공합니다.</p>
+<p>Google Cloud Platform을 사용하여 모바일 게임을 구동하는 경우 Google App Engine에서 게임 백엔드를 실행할 수 있습니다. Google App Engine은 <a href="/solutions/gaming">소규모 및 대규모 회사</a>에서 개발한 <a href="/customers/#cp-mobile">많은 성공적인 온라인 게임</a>에서 사용하는 플랫폼으로서, 다음과 같은 Google 인프라의 이점을 제공합니다.</p>
 <ul>
 <li><a href="https://developers.google.com/appengine/whyappengine#scale">자동</a> <a href="https://developers.google.com/appengine/whyappengine#scale">확장 기능</a></li>
 <li><a href="https://developers.google.com/appengine/docs/whatisgoogleappengine#The_Application_Environment">모바일 백엔드의 인스턴스에서 자동 부하 분산</a></li>
@@ -155,7 +155,7 @@ title: Cloud Computing &amp; Cloud Hosting Services
 <p>클라이언트의 요청을 처리하는 것 외에도 모바일 백엔드는 모바일 게임에 필요한 <a href="#odawm">비동기 처리</a>, <a href="#pushnotifications">푸시 알림 관리</a>, <a href="#scheduled">예약 작업</a> 처리 등을 담당합니다.</p>
 <a name="cbym" id="cbym"></a>
 <h3>모바일 게임 클라이언트와 모바일 게임 백엔드 간 통신</h3>
-<p><a href="/ko/developers/articles/mobile-application-solutions">모바일 솔루션 문서</a>에서 설명한 것처럼, 모바일 백엔드로부터 API를 노출하고 모바일 클라이언트에서 이를 사용하도록 하는 권장 방법은 <a href="https://developers.google.com/appengine/docs/java/endpoints/overview">Google Cloud Endpoints</a><sup><a href="#ftnt4" name="ftnt_ref4" id="ftnt_ref4">[4]</a></sup>를 사용하는 것입니다. 이 기술을 사용하면 소스 코드의 간단한 주석을 통해 API를 정의하고, 도구를 사용하여 엄격한 유형의 Android 및 iOS 클라이언트 라이브러리는 물론 웹 클라이언트에서 API와 상호작용하기 위한 자바스크립트 코드까지 생성할 수 있습니다. 또한 Google 계정에서 OAuth2 기반 인증을 지원하기 때문에 모바일 게임 백엔드 코드에서 플레이어의 ID를 파악할 수 있습니다.</p>
+<p><a href="/developers/articles/mobile-application-solutions">모바일 솔루션 문서</a>에서 설명한 것처럼, 모바일 백엔드로부터 API를 노출하고 모바일 클라이언트에서 이를 사용하도록 하는 권장 방법은 <a href="https://developers.google.com/appengine/docs/java/endpoints/overview">Google Cloud Endpoints</a><sup><a href="#ftnt4" name="ftnt_ref4" id="ftnt_ref4">[4]</a></sup>를 사용하는 것입니다. 이 기술을 사용하면 소스 코드의 간단한 주석을 통해 API를 정의하고, 도구를 사용하여 엄격한 유형의 Android 및 iOS 클라이언트 라이브러리는 물론 웹 클라이언트에서 API와 상호작용하기 위한 자바스크립트 코드까지 생성할 수 있습니다. 또한 Google 계정에서 OAuth2 기반 인증을 지원하기 때문에 모바일 게임 백엔드 코드에서 플레이어의 ID를 파악할 수 있습니다.</p>
 <p>예를 들어 Griddler에서는 초대 전송을 위한 메소드가 다음과 같은 방식으로 선언됩니다.</p>
 <pre>
 @ApiMethod(httpMethod = "PUT", path ="game/{gameId}/invitation/{playerId}")
@@ -210,7 +210,7 @@ gameId, playerId)).execute();
 <p>예를 들어 게임을 좀 더 흥미진진하게 하고 소셜 기능을 더하기 위해, 플레이어가 매우 높은 점수를 얻고 리더보드에 이름을 올렸을 때 이를 친구에게 알리는 기능을 Griddler에 구현하려는 경우를 생각해 볼 수 있습니다. 클라이언트가 gameFinished API를 호출할 때 이러한 기능이 실행되도록 할 수 있습니다. 하지만 플레이어의 친구가 많을 수도 있다는 점과 모든 친구가 알림을 받을 때까지 클라이언트를 차단해서는 안 된다는 점을 고려해야 합니다. 이러한 동기 설계는 클라이언트를 차단할 뿐만 아니라 신뢰할 수도 없습니다. 대신 gameFinished API의 일부로, 모바일 게임 백엔드에서 게임 결과를 저장하고 알림 처리 요청을 기록한 다음 모든 알림이 처리되는 것을 기다리지 않고 응답을 즉시 클라이언트로 보낼 수 있습니다.</p>
 <p>Google App Engine에서 실행되는 코드는 <a href="http://developers.google.com/appengine/docs/java/taskqueue/">작업 대기열</a>이라고 불리는 서비스를 사용하여 비동기식으로 완료되어야 하는 작업(태스크)에 대한 정보를 대기열에 추가합니다. 조금 전에 설명한 예에서 애플리케이션은 작업을 대기열에 추가하여 플레이어가 상위 20위에 이름을 올렸다는 것을 플레이어의 친구에게 알릴 수 있습니다.</p>
 <p>보통 작업 대기열 서비스를 구성하여 대기열에 추가된 작업(<a href="http://developers.google.com/appengine/docs/java/taskqueue/overview-push">푸시 모델</a>)을 선택한 URL에 대한 HTTP 요청으로 Google App Engine에서 실행되는 코드에 전송할 것입니다. 위의 예에서 요청 핸들러는 HTTP 요청에서 작업 정보를 가져오고 플레이어의 친구를 조회한 다음 각 친구에게 알림을 보낼 수 있으며, 플레이어 대신 소셜 사이트에 게시물을 작성하거나 <a href="#pushnotifications">아래</a>의 설명처럼 푸시 알림을 전송함으로써 이를 수행할 수 있습니다.</p>
-<p>또는 모바일 백엔드 코드가 대기열에서 <a href="http://developers.google.com/appengine/docs/java/taskqueue/overview-pull">작업</a>을 <a href="http://developers.google.com/appengine/docs/java/taskqueue/overview-pull">가져올 수 있습니다</a>. 예를 들어 작업 처리를 명시적으로 제어하고 싶은 경우 이 방법이 유용할 수 있습니다. 작업 가져오기가 유용한 또 다른 시나리오는 App Engine 외부에서 작업을 처리하려는 경우입니다. 예를 들어 <a href="/ko/developers/articles/mobile-application-solutions">모바일</a> <a href="/ko/developers/articles/mobile-application-solutions">솔루션</a><a href="/ko/developers/articles/mobile-application-solutions">문서</a>에서 설명한 Google Compute Engine 인스턴스가 이에 해당합니다.</p>
+<p>또는 모바일 백엔드 코드가 대기열에서 <a href="http://developers.google.com/appengine/docs/java/taskqueue/overview-pull">작업</a>을 <a href="http://developers.google.com/appengine/docs/java/taskqueue/overview-pull">가져올 수 있습니다</a>. 예를 들어 작업 처리를 명시적으로 제어하고 싶은 경우 이 방법이 유용할 수 있습니다. 작업 가져오기가 유용한 또 다른 시나리오는 App Engine 외부에서 작업을 처리하려는 경우입니다. 예를 들어 <a href="/developers/articles/mobile-application-solutions">모바일</a> <a href="/developers/articles/mobile-application-solutions">솔루션</a><a href="/developers/articles/mobile-application-solutions">문서</a>에서 설명한 Google Compute Engine 인스턴스가 이에 해당합니다.</p>
 <a name="pushnotifications" id="pushnotifications"></a>
 <h3>푸시 알림</h3>
 <p>푸시 알림을 사용하면 클라이언트가 지속적으로 폴링을 수행하지 않아도 게임 백엔드에서 상태 변화나 기타 관련 정보를 클라이언트에 알릴 수 있습니다. 푸시 알림을 사용하여 풍부한 사용자 경험을 만드는 동시에 배터리와 대역폭 사용을 최적화할 수 있습니다. 클라이언트 플랫폼에 따라, 모바일 게임은 이 기술을 사용하여 '<a href="http://developer.android.com/guide/topics/ui/notifiers/toasts.html">토스트</a><a href="http://developer.android.com/guide/topics/ui/notifiers/toasts.html"></a>' 및 기타 알림을 사용자 기기에 표시할 수 있으며, 모바일 게임 클라이언트가 활발하게 실행 중이지 않은 경우에도 가능합니다. 또한 모바일 게임 클라이언트에 관련 데이터를 계속해서 제공하는 데에도 이 기술을 사용할 수 있습니다.</p>

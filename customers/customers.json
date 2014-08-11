@@ -1,13 +1,8 @@
 {
 "platforms": [
   {
-    "name": "App Engine",
-    "inactive": true
-  },
-
-  {
-    "name": "Cloud Datastore",
-    "inactive": true
+    "name": "Google Compute Engine",
+    "inactive": false
   },
 
   {
@@ -48,6 +43,7 @@
   {
     "name": "Best Buy",
     "blurb": "\"Developing apps on Google App Engine takes one-fourth to one-tenth of the resources and one-fourth of the time compared to building something ourselves.\"",
+    "blogspotLink": "None",
     "slug": "best-buy",
     "platformTypes": ["App Engine"],
     "industries": [],
@@ -58,6 +54,7 @@
   {
     "name": "Blossom.io",
     "blurb": "\"Cloud Endpoints certainly has enabled us to offer an API that is on par with the best APIs out there... Building all of that without Google Cloud Endpoints would have been unthinkable.\"",
+    "blogspotLink": "None",
     "slug": "blossomio",
     "platformTypes": [],
     "industries": [],
@@ -67,7 +64,8 @@
 
   {
     "name": "Bugsense",
-    "blurb": "\"Our customers love that we have a very predictable service. They love that we've never had downtime. Google App Engine has helped us accomplish this.\"",
+    "blurb": "\"Our customers love that we have a very predictable service. They love that weâ€™ve never had downtime. Google App Engine has helped us accomplish this.\"",
+    "blogspotLink": "None",
     "slug": "bugsense",
     "platformTypes": ["App Engine"],
     "industries": [],
@@ -77,7 +75,8 @@
 
   {
     "name": "Boo-Box",
-    "blurb": "\"We can now provide our customers information that we couldn't in the past. This improves their engagement with the service and has even increased their ad spend.\"",
+    "blurb": "\"We can now provide our customers information that we couldnâ€™t in the past. This improves their engagement with the service and has even increased their ad spend.\"",
+    "blogspotLink": "None",
     "slug": "boo-box",
     "platformTypes": ["Big Query"],
     "industries": [],
@@ -88,6 +87,7 @@
   {
     "name": "Claritics",
     "blurb": "\"Using the big-data analytics infrastructure from Google BigQuery Service has significant time-to-market and performance advantages.\"",
+    "blogspotLink": "None",
     "slug": "claritics",
     "platformTypes": [],
     "industries": [],
@@ -98,6 +98,7 @@
   {
     "name": "CaptureToCloud",
     "blurb": "\"Being able to focus on features that add value to customers, instead of solving infrastructure problems, has been a key advantage. It allows us to respond to feedback quickly and improve our service.\"",
+    "blogspotLink": "None",
     "slug": "capturetocloud",
     "platformTypes": ["App Engine"],
     "industries": [],
@@ -108,6 +109,7 @@
   {
     "name": "CodeFutures",
     "blurb": "\"You can spend millions of dollars a year on a disaster recovery site alone. With these new approaches, you can migrate in much less time and much more cost-effectively with Google Cloud SQL.\"",
+    "blogspotLink": "None",
     "slug": "codefutures",
     "platformTypes": ["Cloud SQL"],
     "industries": [],
@@ -117,7 +119,8 @@
 
   {
     "name": "CloudLock",
-    "blurb": "\"When I present CloudLock to prospective customers, I always say it's powered by Google App Engine. Having Google as a key part of our service gives people confidence.\"",
+    "blurb": "\"When I present CloudLock to prospective customers, I always say itâ€™s powered by Google App Engine. Having Google as a key part of our service gives people confidence.\"",
+    "blogspotLink": "None",
     "slug": "cloudlock",
     "platformTypes": ["App Engine"],
     "industries": [],
@@ -128,6 +131,7 @@
   {
     "name": "floreysoft",
     "blurb": "\"The Google App Engine APIs have enabled us to rapidly develop a lot of exciting functionality in our products.\"",
+    "blogspotLink": "None",
     "slug": "floreysoft",
     "platformTypes": ["App Engine"],
     "industries": [],
@@ -137,7 +141,8 @@
 
   {
     "name": "DNANexus",
-    "blurb": "\"Rather than building your own infrastructure and taking time and resources away from your company, you can use Google's infrastructure and know that it's scalable and secure.\"",
+    "blurb": "\"Rather than building your own infrastructure and taking time and resources away from your company, you can use Googleâ€™s infrastructure and know that itâ€™s scalable and secure.\"",
+    "blogspotLink": "None",
     "slug": "dnanexus",
     "platformTypes": ["Cloud Storage"],
     "industries": [],
@@ -148,6 +153,7 @@
   {
     "name": "Daffodil",
     "blurb": "â€œUsing Google App Engine and Google Cloud SQL make our applications go live in half the time and have provided us with hassle-free control over all processes. The shift to Google Cloud SQL has allowed us to focus on making our applications even better.â€",
+    "blogspotLink": "None",
     "slug": "daffodil",
     "platformTypes": ["App Engine","Cloud SQL"],
     "industries": [],
@@ -158,6 +164,7 @@
   {
     "name": "Gigya",
     "blurb": "\"If you don't want to buy machines and just want to write code and not worry about anything else, Google App Engine is an amazing service.\"",
+    "blogspotLink": "None",
     "slug": "gigya",
     "platformTypes": ["App Engine"],
     "industries": [],
@@ -168,6 +175,7 @@
   {
     "name": "Getaround",
     "blurb": "\"App Engine has allowed us to do many things that would have been difficult otherwise. For startups that are looking to stay lean and move quickly, App Engine should be the top choice.\"",
+    "blogspotLink": "None",
     "slug": "getaround",
     "platformTypes": ["App Engine"],
     "industries": [],
@@ -178,6 +186,7 @@
   {
     "name": "Hudora",
     "blurb": "\"Google App Engine has allowed us to build high-quality software in a more agile way than we could before, without devoting resources to infrastructure issues. In my mind, there is no competition.\"",
+    "blogspotLink": "None",
     "slug": "hudora",
     "platformTypes": ["App Engine"],
     "industries": [],
@@ -187,7 +196,8 @@
 
   {
     "name": "Khan Academy",
-    "blurb": "\"If we didn't have Google App Engine, we'd be spending a lot more time figuring out server setup and working on routers. Our ability to focus on the actual product is the benefit of Google App Engine.\"",
+    "blurb": "\"If we didnâ€™t have Google App Engine, weâ€™d be spending a lot more time figuring out server setup and working on routers. Our ability to focus on the actual product is the benefit of Google App Engine.\"",
+    "blogspotLink": "None",
     "slug": "khan-academy",
     "platformTypes": ["App Engine"],
     "industries": [],
@@ -197,7 +207,8 @@
 
   {
     "name": "Interactions Marketing",
-    "blurb": "We are always looking for ways to maximize return and minimize investment. BigQuery is the perfect combination. It's an on-demand, scalable resource.\"",
+    "blurb": "We are always looking for ways to maximize return and minimize investment. BigQuery is the perfect combination. Itâ€™s an on-demand, scalable resource.\"",
+    "blogspotLink": "None",
     "slug": "interactions-marketing",
     "platformTypes": ["Big Query"],
     "industries": [],
@@ -207,7 +218,8 @@
 
   {
     "name": "Kahuna",
-    "blurb": "\"Our goal has been to be insanely reliable, easy and quick to implement, and very robust. Google App Engine is how we've been able to achieve that.\"",
+    "blurb": "\"Our goal has been to be insanely reliable, easy and quick to implement, and very robust. Google App Engine is how weâ€™ve been able to achieve that.\"",
+    "blogspotLink": "None",
     "slug": "kahuna",
     "platformTypes": ["App Engine"],
     "industries": [],
@@ -217,7 +229,8 @@
 
   {
     "name": "MetOffice",
-    "blurb": "\"Google App Engine has allowed us to benefit from instant scalability. We haven't had anything to worry about as the site grows.\"",
+    "blurb": "\"Google App Engine has allowed us to benefit from instant scalability. We havenâ€™t had anything to worry about as the site grows.\"",
+    "blogspotLink": "None",
     "slug": "metoffice",
     "platformTypes": ["App Engine"],
     "industries": [],
@@ -228,6 +241,7 @@
   {
     "name": "KiSSFLOW",
     "blurb": "\"The Google solution is the only one that gives you the ability to have independent databases, and to provision them affordably.\"",
+    "blogspotLink": "None",
     "slug": "kissflow",
     "platformTypes": ["App Engine","Cloud SQL"],
     "industries": [],
@@ -237,7 +251,8 @@
 
   {
     "name": "Mimiboard",
-    "blurb": "\"Whenever I speak with potential partners, I have to assure them we won't fall down because we're suddenly adding a lot of people to our service. Running on Google App Engine gives me that confidence.\"",
+    "blurb": "\"Whenever I speak with potential partners, I have to assure them we wonâ€™t fall down because weâ€™re suddenly adding a lot of people to our service. Running on Google App Engine gives me that confidence.\"",
+    "blogspotLink": "None",
     "slug": "mimiboard",
     "platformTypes": ["App Engine"],
     "industries": [],
@@ -247,7 +262,8 @@
 
   {
     "name": "MokiMobility",
-    "blurb": "\"Google App Engine created a scenario where we didn't need a platform expert or network person. We simply had to create our application and upload it to the cloud.\"",
+    "blurb": "\"Google App Engine created a scenario where we didnâ€™t need a platform expert or network person. We simply had to create our application and upload it to the cloud.\"",
+    "blogspotLink": "None",
     "slug": "mokimobility",
     "platformTypes": ["App Engine"],
     "industries": [],
@@ -257,7 +273,8 @@
 
   {
     "name": "News Limited",
-    "blurb": "\"With the cloud and Google App Engine, performance becomes a given, so we can focus on our Customers more than anything else. Google App Engine has put us light years ahead of where I thought we'd ever be.\"",
+    "blurb": "\"With the cloud and Google App Engine, performance becomes a given, so we can focus on our Customers more than anything else. Google App Engine has put us light years ahead of where I thought weâ€™d ever be.\"",
+    "blogspotLink": "None",
     "slug": "news-limited",
     "platformTypes": [],
     "industries": [],
@@ -268,6 +285,7 @@
   {
     "name": "Nubbius",
     "blurb": "\"We love how easy it is to add features with Google App Engine. It makes us responsive to users and helps us continuously improve our service.\"",
+    "blogspotLink": "None",
     "slug": "nubbius",
     "platformTypes": [],
     "industries": [],
@@ -277,7 +295,8 @@
 
   {
     "name": "Pulse",
-    "blurb": "\"As we've grown, App Engine has scaled with us. We've been able to scale to many orders of magnitude without having to re-architect our systems.\"",
+    "blurb": "\"As weâ€™ve grown, App Engine has scaled with us. Weâ€™ve been able to scale to many orders of magnitude without having to re-architect our systems.\"",
+    "blogspotLink": "None",
     "slug": "pulse",
     "platformTypes": ["App Engine"],
     "industries": [],
@@ -288,6 +307,7 @@
   {
     "name": "PocketGems",
     "blurb": "\"Google App Engine lets us focus on what we do best: making hit games that are enjoyable and fun.\"",
+    "blogspotLink": "None",
     "slug": "pocketgems",
     "platformTypes": ["App Engine"],
     "industries": [],
@@ -297,7 +317,8 @@
 
   {
     "name": "Sightly",
-    "blurb": "\"We're able to see and act on trends to help us target the right consumer with the right video at the right time. This has helped increase engagement with our ads by 300%. We are delivering more value to our customers, and growing faster and more profitably as a result.\"",
+    "blurb": "\"Weâ€™re able to see and act on trends to help us target the right consumer with the right video at the right time. This has helped increase engagement with our ads by 300%. We are delivering more value to our customers, and growing faster and more profitably as a result.\"",
+    "blogspotLink": "None",
     "slug": "sightly",
     "platformTypes": ["Big Query"],
     "industries": [],
@@ -308,6 +329,7 @@
   {
     "name": "Rovio",
     "blurb": "\"Google App Engine allows us to launch games very quickly with teams of one or two developers per game. Because Google manages all the servers, there is little required of us in terms of maintenance.\"",
+    "blogspotLink": "None",
     "slug": "rovio",
     "platformTypes": ["App Engine"],
     "industries": [],
@@ -318,6 +340,7 @@
   {
     "name": "Redbus",
     "blurb": "\"We explored several data analytics solutions. Nothing comes remotely close to the sheer power of Google BigQuery. It made large-scale data collection and crunching possible with little effort, which has translated to a significant business advantage.\"",
+    "blogspotLink": "None",
     "slug": "redbus",
     "platformTypes": ["Big Query"],
     "industries": [],
@@ -327,7 +350,8 @@
 
   {
     "name": "Simperium",
-    "blurb": "\"You don't have to buy servers. You don't have to hire people with the experience required to configure and maintain those servers. Google App Engine handles all that for you so you can focus on developing your product.\"",
+    "blurb": "\"You donâ€™t have to buy servers. You donâ€™t have to hire people with the experience required to configure and maintain those servers. Google App Engine handles all that for you so you can focus on developing your product.\"",
+    "blogspotLink": "None",
     "slug": "simperium",
     "platformTypes": ["App Engine"],
     "industries": [],
@@ -338,6 +362,7 @@
   {
     "name": "Ubisoft",
     "blurb": "\"It was a huge challenge and a great achievement to get the game up and running on the web browser. Google App Engine and Google Cloud Storage played a significant part in our success.\"",
+    "blogspotLink": "None",
     "slug": "ubisoft",
     "platformTypes": ["App Engine","Cloud Storage"],
     "industries": [],
@@ -348,6 +373,7 @@
   {
     "name": "Streak",
     "blurb": "\"Google App Engine has allowed us to be quick and nimble, which has been a huge advantage to us as a startup. It's been perfect for what we want to accomplish.\"",
+    "blogspotLink": "None",
     "slug": "streak",
     "platformTypes": ["App Engine","Big Query"],
     "industries": [],
@@ -358,6 +384,7 @@
   {
     "name": "WebFilings",
     "blurb": "Google App Engine has the breadth and the depth to grow with you. Every 6 months, it gets better. The Google App Engine team knows what you need to make a competitive application.\"",
+    "blogspotLink": "None",
     "slug": "webfilings",
     "platformTypes": [],
     "industries": [],
@@ -368,6 +395,7 @@
   {
     "name": "Webydo",
     "blurb": "\"Leveraging Google Cloud Platform's great scalability and flexibility, our experts migrated the Webydo environment in a matter of weeks.\"",
+    "blogspotLink": "None",
     "slug": "webydo",
     "platformTypes": [],
     "industries": [],
@@ -376,14 +404,256 @@
   },
 
   {
+    "name": "Zupcat",
+    "blurb": "",
+    "blogspotLink": "http://googlecloudplatform.blogspot.com/2012/10/developer-insights-building-scalable.html",
+    "slug": "zupcat",
+    "platformTypes": [],
+    "industries": [],
+    "blurbAuthor": "",
+    "blurbAuthorRole": ""
+  },
+
+  {
+    "name": "Udacity",
+    "blurb": "\"It is very apparent that the Google services and APIs have been designed by people who know how to scale web applications, and we feel lucky to have the opportunity to ride on the shoulders of such giants.\"",
+    "blogspotLink": "http://googlecloudplatform.blogspot.com/2012/10/developer-insights-teaching-thousands.html",
+    "slug": "udacity",
+    "platformTypes": [],
+    "industries": [],
+    "blurbAuthor": "",
+    "blurbAuthorRole": ""
+  },
+
+  {
+    "name": "Songpop",
+    "blurb": "\"When we speak to other game developers, we always recommend that they use App Engine.\"",
+    "blogspotLink": "http://googlecloudplatform.blogspot.com/2013/02/scaling-songpop-to-60-million-users.html",
+    "slug": "songpop",
+    "platformTypes": [],
+    "industries": [],
+    "blurbAuthor": "",
+    "blurbAuthorRole": ""
+  },
+
+  {
+    "name": "Scalr",
+    "blurb": "\"Google Cloud Platform provided the technology, pricing, and robustness that GrandCentrix and Scalr needed to deliver a high performance solution for Eurovision.\"",
+    "blogspotLink": "http://googlecloudplatform.blogspot.com/2013/05/how-scalr-helped-scale-eurovision-with-compute-engine.html",
+    "slug": "scalr",
+    "platformTypes": [],
+    "industries": [],
+    "blurbAuthor": "",
+    "blurbAuthorRole": ""
+  },
+
+  {
+    "name": "BeDataDriven",
+    "blurb": "\"Our move to Google App Engine has proven to be a successful one, improving the quality of service to our users and allowing us to focus on software development.\"",
+    "blogspotLink": "http://googlecloudplatform.blogspot.com/2013/05/building-humanitarian-project.html",
+    "slug": "bedatadriven",
+    "platformTypes": [],
+    "industries": [],
+    "blurbAuthor": "",
+    "blurbAuthorRole": ""
+  },
+
+  {
+    "name": "Minyanville",
+    "blurb": "\"Itâ€™s rare that everyone wins in a technology transition, but thatâ€™s exactly whatâ€™s been accomplished in our move to Google App Engine.\"",
+    "blogspotLink": "http://googlecloudplatform.blogspot.com/2013/06/google-cloud-platform-powers-minyanville-buzz-and-banter.html",
+    "slug": "minyanville",
+    "platformTypes": [],
+    "industries": [],
+    "blurbAuthor": "",
+    "blurbAuthorRole": ""
+  },
+
+  {
+    "name": "Safari Books Online",
+    "blurb": "\"BigQuery has been very valuable for our company, and weâ€™re just scratching the surface of what is possible.\"",
+    "blogspotLink": "http://googlecloudplatform.blogspot.com/2013/07/how-safari-books-online-uses-google.html",
+    "slug": "safari-books-online",
+    "platformTypes": [],
+    "industries": [],
+    "blurbAuthor": "",
+    "blurbAuthorRole": ""
+  },
+
+  {
+    "name": "R/GA",
+    "blurb": "\"We chose Cloud Platform because itâ€™s a great tool that allows us to build solutions very quickly and deploy them somewhere that can scale to whatever we need.\"",
+    "blogspotLink": "http://googlecloudplatform.blogspot.com/2013/10/rga-shares-why-digital-agencies-are-turning-to-the-cloud.html",
+    "slug": "rga",
+    "platformTypes": [],
+    "industries": [],
+    "blurbAuthor": "",
+    "blurbAuthorRole": ""
+  },
+
+  {
+    "name": "Kaplan",
+    "blurb": "\"App Engine provided us with the tools to rapidly go from concept to production at lightning speed.\"",
+    "blogspotLink": "http://googlecloudplatform.blogspot.com/2013/11/kaplan-builds-online-education-platform-kapx-with-google-app-engine.html",
+    "slug": "kaplan",
+    "platformTypes": [],
+    "industries": [],
+    "blurbAuthor": "",
+    "blurbAuthorRole": ""
+  },
+
+  {
+    "name": "Applibot",
+    "blurb": "\"I consider Google App Engine to be a critical support for our business. It enables us to focus on content development and quality.\"",
+    "blogspotLink": "http://googlecloudplatform.blogspot.com/2013/11/applibot-builds-social-games-on-google-cloud-platform.html",
+    "slug": "applibot",
+    "platformTypes": [],
+    "industries": [],
+    "blurbAuthor": "",
+    "blurbAuthorRole": ""
+  },
+
+  {
+    "name": "JustDevelopIt",
+    "blurb": "\"We view Google as a strategic long-term partner based on our experience with Google Compute Engine and Google Cloud Storage.\"",
+    "blogspotLink": "http://googlecloudplatform.blogspot.com/2013/11/justdevelopit-migrates-petabytes-of-data-to-google-cloud-storage.html",
+    "slug": "justdevelopit",
+    "platformTypes": [],
+    "industries": [],
+    "blurbAuthor": "",
+    "blurbAuthorRole": ""
+  },
+
+  {
+    "name": "Mendelics",
+    "blurb": "\"We find that Compute Engine scales quickly, allowing us to easily meet the flow of new sequencing requests.\"",
+    "blogspotLink": "http://googlecloudplatform.blogspot.com/2013/12/google-compute-engine-helps-mendelics-diagnose-genetic-diseases.html",
+    "slug": "mendelics",
+    "platformTypes": [],
+    "industries": [],
+    "blurbAuthor": "",
+    "blurbAuthorRole": ""
+  },
+
+  {
+    "name": "Outfit7",
+    "blurb": "\"Google Cloud Platform has been the foundation that has enabled us to produce some of the most popular apps in the world.\"",
+    "blogspotLink": "http://googlecloudplatform.blogspot.com/2013/12/outfit-7s-talking-friends-built-on.html",
+    "slug": "outfit7",
+    "platformTypes": [],
+    "industries": [],
+    "blurbAuthor": "",
+    "blurbAuthorRole": ""
+  },
+
+  {
+    "name": "LiveHive",
+    "blurb": "\"Cloud SQL has more than met our expectations of a cloud-based relational database, and we continue to derive value from it.\"",
+    "blogspotLink": "http://googlecloudplatform.blogspot.com/2014/02/livehive-leverages-google-cloud-sql-to.html",
+    "slug": "livehive",
+    "platformTypes": [],
+    "industries": [],
+    "blurbAuthor": "",
+    "blurbAuthorRole": ""
+  },
+
+  {
+    "name": "Ocado",
+    "blurb": "\"The ease, integration and scalability that Google offers with Cloud Platform allow us to offer the simplest, fastest and best online grocery shopping around.\"",
+    "blogspotLink": "http://googlecloudplatform.blogspot.com/2014/02/ocado-uses-google-cloud-platform-to-make-online-food-shopping-a-breeze.html",
+    "slug": "ocado",
+    "platformTypes": [],
+    "industries": [],
+    "blurbAuthor": "",
+    "blurbAuthorRole": ""
+  },
+
+  {
+    "name": "PeopleFun",
+    "blurb": "\"App Engine frees time for us to focus on making the user experience even better, while handling all the heavy computing tasks of our games.\"",
+    "blogspotLink": "http://googlecloudplatform.blogspot.com/2014/03/peoplefun-chooses-google-app-engine-to-offload-infrastructure-tasks-and-build-games-people-love-to-play.html",
+    "slug": "peoplefun",
+    "platformTypes": [],
+    "industries": [],
+    "blurbAuthor": "",
+    "blurbAuthorRole": ""
+  },
+
+  {
+    "name": "Leanplum",
+    "blurb": "\"By giving us the tools to develop, iterate and scale quickly, Cloud Platform provided us more time to focus on the product, which is priceless for any startup.\"",
+    "blogspotLink": "http://googlecloudplatform.blogspot.com/2014/03/google-cloud-platform-and-leanplum-help-app-developers-conduct-on-the-fly-ab-tests.html",
+    "slug": "leanplum",
+    "platformTypes": [],
+    "industries": [],
+    "blurbAuthor": "",
+    "blurbAuthorRole": ""
+  },
+
+  {
+    "name": "Feedly",
+    "blurb": "\"With Googleâ€™s infrastructure on the backend, today we only need to worry about pushing code.\"",
+    "blogspotLink": "http://googlecloudplatform.blogspot.com/2014/04/feedly-delivers-seamless-experience-to-15-million-users-with-app-engine-and-cloud-storage.html",
+    "slug": "feedly",
+    "platformTypes": [],
+    "industries": [],
+    "blurbAuthor": "",
+    "blurbAuthorRole": ""
+  },
+
+  {
+    "name": "Backflip Studios",
+    "blurb": "\"We couldnâ€™t move at anything close to this pace without the services provided by Cloud Platform.\"",
+    "blogspotLink": "http://googlecloudplatform.blogspot.com/2014/04/backflip-studios-scales-mobile-games-with-google-cloud-platform.html",
+    "slug": "backflip-studios",
+    "platformTypes": [],
+    "industries": [],
+    "blurbAuthor": "",
+    "blurbAuthorRole": ""
+  },
+
+  {
+    "name": "GenieConnect",
+    "blurb": "\"Cloud Platform lets us operate the way we like to: lean and cost effectively.\"",
+    "blogspotLink": "http://googlecloudplatform.blogspot.com/2014/04/genieconnect-maximizes-event-attendee.html",
+    "slug": "genieconnect",
+    "platformTypes": [],
+    "industries": [],
+    "blurbAuthor": "",
+    "blurbAuthorRole": ""
+  },
+
+  {
+    "name": "Wix",
+    "blurb": "\"By using Google Cloud Platform, Wix was able to develop a functional system ready for integration test -- all in two weeks.\"",
+    "blogspotLink": "http://googlecloudplatform.blogspot.com/2014/05/how-wix-fortifies-its-disaster-recovery.html",
+    "slug": "wix",
+    "platformTypes": [],
+    "industries": [],
+    "blurbAuthor": "",
+    "blurbAuthorRole": ""
+  },
+
+  {
+    "name": "Evite",
+    "blurb": "\"With App Engine powering all of our customer-facing services and Compute Engine helping us monitor and understand application performance, Evite is in great shape to create and release new products.\"",
+    "blogspotLink": "http://googlecloudplatform.blogspot.com/2013/12/google-compute-engine-and-app-engine-give-evite-freedom-to-expand-services-anytime.html",
+    "slug": "evite",
+    "platformTypes": [],
+    "industries": [],
+    "blurbAuthor": "",
+    "blurbAuthorRole": ""
+  },
+
+  {
     "name": "Appogee",
-    "blurb": "\"Compared with a solution on a traditional computing platform, App Engine is infinitely easier. There's no need to procure and set up hardware and install software. We could just get started on our application.\"",
+    "blurb": "\"Compared with a solution on a traditional computing platform, App Engine is infinitely easier. Thereâ€™s no need to procure and set up hardware and install software. We could just get started on our application.\"",
+    "blogspotLink": "None",
     "slug": "appogee",
     "platformTypes": ["App Engine"],
     "industries": [],
     "blurbAuthor": "",
     "blurbAuthorRole": ""
   }
-
 
 ]}
