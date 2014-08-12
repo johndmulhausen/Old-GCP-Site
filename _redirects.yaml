@@ -45,10 +45,18 @@ redirects:
   to: /events/google-cloud-platform-live/
 - from: /events/WATCH
   to: /events/google-cloud-platform-live/
+#- from: /live
+#  to: /events/google-cloud-platform-live/
+#- from: /LIVE
+#  to: /events/google-cloud-platform-live/
 - from: /live
-  to: /events/google-cloud-platform-live/
+  to: http://www.gcp-live.com/
+- from: /Live
+  to: http://www.gcp-live.com/
 - from: /LIVE
-  to: /events/google-cloud-platform-live/
+  to: http://www.gcp-live.com/
+
+
 - from: /events/google-cloud-platform-live/invite/...
   to: /events/google-cloud-platform-live/
 - from: /eap
