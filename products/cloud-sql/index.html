@@ -696,6 +696,20 @@ No Lock-in</h3>
 
     <!-- maia-footer-global -->
     <div id="maia-footer-global">
+      <div class="maia-locales">
+        <select name="language" 
+        onchange="var lang=this[this.selectedIndex].value;if(lang!='')
+        {window.location.href=window.location.pathname + '?hl=' + lang};">>
+          <option value="en" selected>English</option>
+          <option value="fr" >Français</option>
+          <option value="de" >Deutsch</option>
+          <option value="ja" >日本語</option>
+          <option value="ko" >한국어</option>
+          <option value="pt-br" >Português</option>
+          <option value="es" >Español</option>
+          <option value="zh-tw" >中文（繁體中文）</option>
+        </select>
+      </div>
       <div class="maia-aux">
         <ul>
           <li><a href="http://www.google.com/">Google</a></li>
