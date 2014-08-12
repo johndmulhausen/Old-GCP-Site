@@ -40,6 +40,8 @@ exclude:
   - "*.yml"
   - .gitignore
   - vendor
+  - "doctest.md"
+  - "searchtest.md"
 
 include:
   - "*.yaml"
