@@ -261,6 +261,20 @@
 
     <!-- maia-footer-global -->
     <div id="maia-footer-global">
+      <div class="maia-locales">
+        <select name="language" 
+        onchange="var lang=this[this.selectedIndex].value;if(lang!='')
+        {window.location.href=window.location.pathname + '?hl=' + lang};">>
+          <option value="en" {% if page.lang == 'en' %}selected{% endif %}>English</option>
+          <option value="fr" {% if page.lang == 'fr' %}selected{% endif %}>Français</option>
+          <option value="de" {% if page.lang == 'de' %}selected{% endif %}>Deutsch</option>
+          <option value="ja" {% if page.lang == 'ja' %}selected{% endif %}>日本語</option>
+          <option value="ko" {% if page.lang == 'ko' %}selected{% endif %}>한국어</option>
+          <option value="pt-br" {% if page.lang == 'pt-br' %}selected{% endif %}>Português</option>
+          <option value="es" {% if page.lang == 'es' %}selected{% endif %}>Español</option>
+          <option value="zh-tw" {% if page.lang == 'zh-tw' %}selected{% endif %}>中文（繁體中文）</option>
+        </select>
+      </div>
       <div class="maia-aux">
         <ul>
           <li><a href="http://www.google.com/">Google</a></li>
