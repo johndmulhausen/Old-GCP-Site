@@ -23,13 +23,16 @@ title: Search Results
       <li id="search_pagination_next">Next &raquo;</li>
     </ul>
   </div>
-  <script src="//www.gstatic.com/caja/4969/html-css-sanitizer-bundle.js"></script>
   <script>
-    var cse_data = {
-      'key': 'AIzaSyBtfSp9TSlUDCNJ0jTwFc-PelOc24-LuzM',
-      'cx': '010011940660755410175:-luhdag5fgq',
-      'type': 'Site Wide'
-    };
+   (function() {
+    var cx = '013288817511911618469:7j8xxwrgjxm';
+    var gcse = document.createElement('script');
+    gcse.type = 'text/javascript';
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+   })();
   </script>
-  
-  <script src="/js/sitesearch.js"></script>
+  <gcse:search></gcse:search>
