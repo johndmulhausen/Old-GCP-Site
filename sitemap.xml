@@ -238,24 +238,24 @@
   </url>
   <url>
     <loc>https://cloud.google.com/partners/</loc>
-    <xhtml:link rel="alternate" hreflang="de" href="https://cloud.google.com/products/?hl=de" />
-    <xhtml:link rel="alternate" hreflang="es" href="https://cloud.google.com/products/?hl=es" />
-    <xhtml:link rel="alternate" hreflang="fr" href="https://cloud.google.com/products/?hl=fr" />
-    <xhtml:link rel="alternate" hreflang="pt-br" href="https://cloud.google.com/products/?hl=pt-br" />
-    <xhtml:link rel="alternate" hreflang="ja" href="https://cloud.google.com/products/?hl=ja" />
-    <xhtml:link rel="alternate" hreflang="ko" href="https://cloud.google.com/products/?hl=ko" />
-    <xhtml:link rel="alternate" hreflang="zh-tw" href="https://cloud.google.com/products/?hl=zh-tw" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://cloud.google.com/products/" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://cloud.google.com/partners/?hl=de" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://cloud.google.com/partners/?hl=es" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cloud.google.com/partners/?hl=fr" />
+    <xhtml:link rel="alternate" hreflang="pt-br" href="https://cloud.google.com/partners/?hl=pt-br" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://cloud.google.com/partners/?hl=ja" />
+    <xhtml:link rel="alternate" hreflang="ko" href="https://cloud.google.com/partners/?hl=ko" />
+    <xhtml:link rel="alternate" hreflang="zh-tw" href="https://cloud.google.com/partners/?hl=zh-tw" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cloud.google.com/partners/" />
   </url>
   <url>
     <loc>https://cloud.google.com/contact/</loc>
-    <xhtml:link rel="alternate" hreflang="de" href="https://cloud.google.com/products/?hl=de" />
-    <xhtml:link rel="alternate" hreflang="es" href="https://cloud.google.com/products/?hl=es" />
-    <xhtml:link rel="alternate" hreflang="fr" href="https://cloud.google.com/products/?hl=fr" />
-    <xhtml:link rel="alternate" hreflang="pt-br" href="https://cloud.google.com/products/?hl=pt-br" />
-    <xhtml:link rel="alternate" hreflang="ja" href="https://cloud.google.com/products/?hl=ja" />
-    <xhtml:link rel="alternate" hreflang="ko" href="https://cloud.google.com/products/?hl=ko" />
-    <xhtml:link rel="alternate" hreflang="zh-tw" href="https://cloud.google.com/products/?hl=zh-tw" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://cloud.google.com/products/" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://cloud.google.com/contact/?hl=de" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://cloud.google.com/contact/?hl=es" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cloud.google.com/contact/?hl=fr" />
+    <xhtml:link rel="alternate" hreflang="pt-br" href="https://cloud.google.com/contact/?hl=pt-br" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://cloud.google.com/contact/?hl=ja" />
+    <xhtml:link rel="alternate" hreflang="ko" href="https://cloud.google.com/contact/?hl=ko" />
+    <xhtml:link rel="alternate" hreflang="zh-tw" href="https://cloud.google.com/contact/?hl=zh-tw" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cloud.google.com/contact/" />
   </url>
 </urlset>
