@@ -1,3 +1,14 @@
+/* Custom search */
+.gcs-twiddleRegionCell, .gcs-twiddle-opened
+{
+  display: none;
+}
+.gs-snippet, .gs-bidi-start-align
+{
+  background: none;
+  background-color: none;
+}
+
 /* # Maia overrides (generic)
 ================================================== */
 #maia-signature {
