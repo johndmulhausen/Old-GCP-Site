@@ -1,10 +1,12 @@
 ---
 layout: phase2-en
-title: Service Partners
+title: Technology Partners
 ---
 <script>
   var cloudPartnersPageType = 'Service';
 </script>
+
+<!-- <script src="//www.google.com/js/gweb/ui/lightbox.js"></script> -->
 
 <div class="site-wrapper partners Service" data-ng-controller="CloudPartnersController as ctrl">
   <div class="maia-stage page-header tertiary">
@@ -16,9 +18,6 @@ title: Service Partners
     </div>
   </div>
   <div id="maia-main">
-
-    
-
     <div id="partners" data-ng-cloak>
 
       <div class="maia-cols headline-wrapper serv-partners">
@@ -30,11 +29,11 @@ title: Service Partners
             Service Partners provide consulting and implementation services on various Google Cloud Platform products. You can use their knowledge and expertise to develop applications for a variety of use cases.
           </p>
         </div>
-        <div class="maia-col-3 paginator-wrapper top" data-paginator="ctrl.paginator"></div>
+        <div class="maia-col-12 paginator-wrapper top" data-paginator="ctrl.paginator"></div>
       </div>
-      
+
       <div class="maia-cols serv-partners-container">
-      
+
         <div class="filter-bar map-version maia-col-5">
           <div class="maia-cols">
             <div class="filters-inner maia-col-12">
@@ -71,8 +70,14 @@ title: Service Partners
               <div class="available-filter-container filters-inner">
                 <span class="available-filters-close" data-ng-click="ctrl.filterDropdownActive = !ctrl.filterDropdownActive">Close X</span>
                 <h3 class="available-filters-headline">Products</h3>
-                <ul class="maia-cols filter-list">
-                  <li class="filter-item maia-col-4" data-ng-repeat="filter in ctrl.filters">
+                <ul class="filter-list">
+                  <li class="filter-item" data-ng-repeat="filter in ctrl.filters|filter:{field:'platformTypes'}">
+                    <a data-ng-click="ctrl.toggleFilter(filter)" data-ng-bind="filter.value" ng-class="{'active':filter.active}"></a>
+                  </li>
+                </ul>
+                <h3 class="available-filters-headline">Industry</h3>
+                <ul class="filter-list">
+                  <li class="filter-item" data-ng-repeat="filter in ctrl.filters|filter:{field:'industries'}">
                     <a data-ng-click="ctrl.toggleFilter(filter)" data-ng-bind="filter.value" ng-class="{'active':filter.active}"></a>
                   </li>
                 </ul>
@@ -85,8 +90,6 @@ title: Service Partners
 
           </div>
         </div>
-    
-        
         <div id="service-partners" class="maia-col-7 service-partners-list-container">
           <ul class="partners">
             <li class="generic-section partner maia-cols" data-ng-repeat="partner in ctrl.paginatedFilteredPartners">
@@ -102,7 +105,7 @@ title: Service Partners
                     <ul class="platform-list"><li data-ng-repeat="platform in partner.platformTypes" data-ng-bind="platform"></li></ul>
                   </div>
                 </div>
-                
+
                 <div class="learn-more-container">
                   <p class="partner-paragraph" data-ng-bind="partner.description"></p>
                   <h2 class="learn-more">Learn more</h2>
@@ -125,7 +128,7 @@ title: Service Partners
                       <a class="link" data-ng-href="{[partner.location.website]}">Visit the site</a>
                     </li>
                   </ul>
-                  
+
                   <div id="{[partner.slug]}-location-info" class="lightbox-section lightbox-location" style="display: none;">
                     <div class="lightbox-locations">
                       <h2 class="headline">{[partner.name]}</h2>
@@ -146,23 +149,22 @@ title: Service Partners
                       </div>
                     </div>
                   </div>
-                  
+
                 </div>
              </div>
-           </li>          
+           </li>
           </ul>
-          
-          
+
           <div data-ng-show="!ctrl.paginatedFilteredPartners || !ctrl.paginatedFilteredPartners.length">
             <div class="clear-filters filters" data-ng-show="ctrl.ready">
               <p>No partners were found matching your criteria.  Click <a class="clear-filters-label clear-filter-button" data-ng-click="ctrl.clearFilters()">here</a> to clear filters and restart your search.</p>
             </div>
             <div data-ng-show="!ctrl.ready" class="ajax-loader">
-              <img src="/images/google-spinner.gif">
+              <img src="../../images/google-spinner.gif">
               <span>Loading...</span>
             </div> 
           </div>
-          
+
         </div>
 
       </div>
@@ -170,7 +172,6 @@ title: Service Partners
       <div class="paginator-wrapper" data-paginator="ctrl.paginator"></div>
 
     </div>
-    
 
     <div id="become-a-partner" class="generic-section">
       <div class="maia-cols become-a-partner-section">
