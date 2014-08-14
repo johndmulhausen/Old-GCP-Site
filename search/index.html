@@ -2,9 +2,8 @@
 layout: phase2-en
 title: Search Results
 ---
-  <div id="maia-main" class="cp-page cp-home cp-solutions-page">
-    <div class="cp-hero cp-cloud cp-wrap cp-hero-mob">
 
+<div id="custom-search">
 <script>
   (function() {
     var cx = '013288817511911618469:7j8xxwrgjxm';
@@ -13,10 +12,10 @@ title: Search Results
     gcse.async = true;
     gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
         '//www.google.com/cse/cse.js?cx=' + cx;
-    var s = document.getElementsByTagName('script')[0];
+    var s = document.getElementsByTagName('script')[4];
+    console.log(s);
     s.parentNode.insertBefore(gcse, s);
   })();
 </script>
 <gcse:searchresults-only></gcse:searchresults-only>
-</div>
 </div>
