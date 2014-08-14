@@ -2379,6 +2379,11 @@ pre.prettyprint {
   font-family: Arial;
 }
 
+.post-thumbnail-img {
+  max-width: 158px;
+  padding-top: 19px;
+}
+
 .post-link {
   display: block;
   font-weight: 600;
@@ -5009,7 +5014,7 @@ p.sugcp-title {
 
 
 /* Sprites */
-.icon {
+.starter-icon {
   background: transparent url(/developers/starterpack/starterpack-img/starterpack-sprite.png) no-repeat;
   display: inline-block;
 }
