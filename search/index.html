@@ -2,9 +2,20 @@
 layout: phase2-en
 title: Search Results
 ---
-  <div id="maia-main" class="cp-page cp-home cp-solutions-page">
-    <div class="cp-hero cp-cloud cp-wrap cp-hero-mob">
 
+<div id="maia-main" class="cp-page cp-home cp-solutions-page">
+    <div class="cp-hero cp-cloud cp-wrap cp-hero-mob">
+      <h1>Site search</h1>
+      <form action="/search" id="search_form" class="maia-search">
+        <input type="text" id="search_box" placeholder="Search this site" name="q" size="40" value="" />
+        <button class="maia-button" id="search_button" data-g-label="Search">
+          <span class="maia-search-icon">Search</span>
+        </button>
+      </form>
+    </div>
+  </div>
+
+<div id="custom-search">
 <script>
   (function() {
     var cx = '013288817511911618469:7j8xxwrgjxm';
@@ -13,10 +24,10 @@ title: Search Results
     gcse.async = true;
     gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
         '//www.google.com/cse/cse.js?cx=' + cx;
-    var s = document.getElementsByTagName('script')[0];
+    var s = document.getElementsByTagName('script')[4];
+    console.log(s);
     s.parentNode.insertBefore(gcse, s);
   })();
 </script>
 <gcse:searchresults-only></gcse:searchresults-only>
-</div>
 </div>
