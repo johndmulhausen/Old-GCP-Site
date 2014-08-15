@@ -646,6 +646,28 @@
   },
 
   {
+    "name": "Ezakus",
+    "blurb": "\"Compute Engine was three or four times better than the next-best cloud provider, in terms of processing speed.\"",
+    "blogspotLink": "None",
+    "slug": "ezakus",
+    "platformTypes": [],
+    "industries": [],
+    "blurbAuthor": "",
+    "blurbAuthorRole": ""
+  },
+
+  {
+    "name": "Sony Music",
+    "blurb": "\"It's hard to imagine that this app would have been possible, so quickly, working with anything except Google App Engine.\"",
+    "blogspotLink": "None",
+    "slug": "sony-music",
+    "platformTypes": ["App Engine"],
+    "industries": [],
+    "blurbAuthor": "",
+    "blurbAuthorRole": ""
+  },
+
+  {
     "name": "Appogee",
     "blurb": "\"Compared with a solution on a traditional computing platform, App Engine is infinitely easier. There's no need to procure and set up hardware and install software. We could just get started on our application.\"",
     "blogspotLink": "None",
