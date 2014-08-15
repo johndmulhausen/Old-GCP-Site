@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Ezakus - Google Cloud Platform</title>
+    <meta charset="utf-8" />
+    <link rel="shortcut icon" href="/images/gcp-favicon.ico">
+    <link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
+
+    <!--[if lt IE 9]>
+    <script src="/js/html5.js"></script>
+    <![endif]-->
+
+    <meta name="google-site-verification" content="8dOEM3Xenm6yaBc83y2WKgqQG0iHI7Ph6Rl_YLIZLQ8" />
+    <meta name="viewport" content="initial-scale=1, minimum-scale=1, width=device-width">
+
+    <!-- GSAP animation frameworks -->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+    <script src="//www.gstatic.com/external_hosted/gsap/TweenMax.min.js"></script>
+    <script src="//www.gstatic.com/external_hosted/gsap/TimelineMax.min.js"></script>
+    <script src="/js/floodlight.js"></script>
+
+    <link href="//fonts.googleapis.com/css?family=Open+Sans:400italic,300,400,600,700" rel="stylesheet">
+    <link href="//www.google.com/css/maia.experimental.css" rel="stylesheet">
+    <link href="/css/maia-cloud.css" rel="stylesheet"/>
+    <link href="/css/default.css" rel="stylesheet">
+  </head>
+  <body>
+  <div id="maia-header">
+    <div class="maia-aux">
+      <h1><a href="/"><img src="/images/gcp-logo.png" alt="Cloud Platform" data-retina="383x48"></a></h1>
+
+<div class="search-container">
+  <form action="/search" class="maia-search">
+    <input type="text" placeholder="Search this site" name="q">
+    <button class="maia-button" type="submit" data-g-event="Maia: Button" data-g-action="Maia: Primary – Header" data-g-label="Search">
+      <span class="maia-search-icon">Search this site</span>
+    </button>
+  </form>
+  <div class="cloud-social">
+
+    <div class="cloud-signed-in">
+      <a href="https://console.developers.google.com/" event="autotrack-data-g" data-g-event="Global Nav" data-g-action="Nav Bar" data-g-label="Go to my console">Go to Cloud Console</a>
+    </div>
+
+  </div>
+
+</div>
+
+</div>
+
+    </div>
+  </div>
+  <div id="maia-nav-x" class="maia-nav">
+    <div class="maia-aux">
+   <div class="cp-cta">
+     <a class="cp-track maia-button maia-button-secondary white-button" href="/contact/">Contact Sales</a>
+     
+       <a class="cp-track maia-button blue-button" href="https://console.developers.google.com?getstarted=https://cloud.google.com" style="color: #ffffff;">Try it now</a>
+     
+   </div>
+      <ul>
+        <li >
+            <a href="/why-google/" event="autotrack-data-g" data-g-event="Global Nav" data-g-action="Nav Bar" data-g-label="Why Google">
+            Why Google
+            </a>
+        </li>
+        <li  id="main-nav-product-dropdown" class="dropdown">
+            <a href="/products/" event="autotrack-data-g" data-g-event="Global Nav" data-g-action="Nav Bar" data-g-label="Products">
+            Products
+            </a>
+        </li>
+        <li >
+            <a href="/solutions/" event="autotrack-data-g" data-g-event="Global Nav" data-g-action="Nav Bar" data-g-label="Solutions">
+            Solutions
+            </a>
+        </li>
+        <li  class="active" >
+            <a href="/customers/" event="autotrack-data-g" data-g-event="Global Nav" data-g-action="Nav Bar" data-g-label="Customers">
+            Customers
+            </a>
+        </li>
+        <li >
+            <a href="/developers/" event="autotrack-data-g" data-g-event="Global Nav" data-g-action="Nav Bar" data-g-label="Developers">
+          Developers
+            </a>
+        </li>
+        <li >
+            <a href="/support/" event="autotrack-data-g" data-g-event="Global Nav" data-g-action="Nav Bar" data-g-label="Support">
+            Support
+            </a>
+        </li>
+        <li >
+            <a href="/partners/" event="autotrack-data-g" data-g-event="Global Nav" data-g-action="Nav Bar" data-g-label="Partners">
+            Partners
+            </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+<!-- Products subnav -->
+<div id="maia-nav-x" class="maia-nav products-nav">
+  <div class="maia-aux">
+    <div class="products-nav-dropdown maia-cols">
+
+      <div id="compute-dropdown" class="products-column maia-col-2">
+        <span class="product-list-title">Compute</span>
+        <div class="dropdown-item-container">
+          <a href="/products/compute-engine/">
+            <span class="product-name">Compute Engine</span>
+          </a>
+        </div>
+        <div class="dropdown-item-container">
+          <a href="/products/app-engine/">
+            <span class="product-name">App Engine</span>
+          </a>
+        </div>
+      </div>
+
+      <div id="storage-dropdown" class="products-column maia-col-2">
+        <span class="product-list-title">Storage</span>
+        <div class="dropdown-item-container">
+          <a href="/products/cloud-sql/">
+            <span class="product-name">Cloud SQL</span>
+          </a>
+        </div>
+        <div class="dropdown-item-container">
+          <a href="/products/cloud-storage/">
+            <span class="product-name">Cloud Storage</span>
+          </a>
+        </div>
+        <div class="dropdown-item-container">
+          <a href="/products/cloud-datastore/">
+            <span class="product-name">Cloud Datastore</span>
+          </a>
+        </div>
+      </div>
+
+      <div id="big-data-dropdown" class="products-column maia-col-2">
+        <span class="product-list-title">Big Data</span>
+        <div class="dropdown-item-container">
+          <a href="/products/bigquery/">
+            <span class="product-name">BigQuery</span>
+          </a>
+        </div>
+      </div>
+
+      <div id="services-dropdown" class="products-column maia-col-2">
+        <span class="product-list-title">Services</span>
+        <div class="dropdown-item-container">
+          <a href="/products/cloud-dns/">
+            <span class="product-name">Cloud DNS</span>
+          </a>
+        </div>
+        <div class="dropdown-item-container">
+          <a href="/products/cloud-endpoints/">
+            <span class="product-name">Cloud Endpoints</span>
+          </a>
+        </div>
+        <div class="dropdown-item-container">
+          <a href="/products/translate-api/">
+            <span class="product-name">Translate API</span>
+          </a>
+        </div>
+        <div class="dropdown-item-container">
+          <a href="/products/prediction-api/">
+            <span class="product-name">Prediction API</span>
+          </a>
+        </div>
+        <div class="dropdown-item-container">
+          <a href="/products/cloud-pubsub/">
+            <span class="product-name">Cloud Pub/Sub</span>
+          </a>
+        </div>
+      </div>
+
+      <div id="management-dropdown" class="products-column maia-col-2">
+        <span class="product-list-title">Management</span>
+        <div class="dropdown-item-container">
+          <span class="product-name"><a href="/products/cloud-deployment-manager/">Cloud Deployment Manager</a></span>
+        </div>
+      </div>
+
+      <div id="pricing-dropdown" class="products-column maia-col-2">
+        <span class="product-list-title">Pricing</span>
+        <div class="dropdown-item-container">
+          <span class="product-name"><a href="/products/pricing/">Overview</a></span>
+        </div>
+        <div class="dropdown-item-container">
+          <span class="product-name"><a href="/products/calculator/">Calculator</a></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="site-wrapper customer ezakus">
+  <div id="maia-main">
+   <div class="maia-cols">
+      <div class="maia-col-3 sidebar">
+      <div class="customer-img-container">
+      <img class="customer-img" src="../../images/customers/logo-ezakus.jpg" data-retina="163x93" alt="Ezakus" />
+      </div>
+       <div class="side-section at-a-glance">
+         <h3>At a Glance</h3>
+         <b>Google Compute Engine Results</b>
+<ul><li><span>1,000+ cores of Hadoop with great performance</span></li>
+<li><span>Handling hundreds of terabytes</span></li>
+<li><span>Quick, easy transition from former solution</span</li>
+</ul>
+       </div>
+       <div class="side-section about">
+         <h3></h3>
+       </div>
+       <div class="side-section product">
+         <h3>About Google Cloud Platform</h3>
+         Cloud Platform provides tool for modern applications. It lets developers build, test and deploy applications on Google’s highly- scalable and reliable infrastructure. Choose from computing, storage and application services for your web, mobile and backend solutions.<br><br>
+To learn more, visit<br>
+<a href="https://cloud.google.com">https://cloud.google.com</a>
+       </div>
+       <div class="side-section product">
+         <h3>About Google Compute Engine</h3>
+         Compute Engine is Google’s Infrastructure- as-a-Service (IaaS). Run large-scale workloads on virtual machines hosted on Google’s infrastructure. Choose a VM that fits your needs and gain the performance and consistency of Google’s worldwide fiber network. With per-minute billing, you pay only for what you use.
+<br><br>
+To learn more, visit<br>
+<a href="https://cloud.google.com">https://cloud.google.com</a>
+       </div>
+      </div>
+
+      <div class="maia-col-9 customer-container">
+        <h1 class="headline">Ezakus expands data capacity and client base with Google Cloud Platform</h1>
+
+        <h2>A scalable solution</h2>
+<p>As a leading data management platform (DMP) in Europe, Ezakus found their business growth being hampered by a service provider unable to keep pace with their rapidly expanding data requirements. After careful evaluation, they found their solution in Google Compute Engine, a Google Cloud Platform service.</p>
+
+<h2>‘No point’ to buying or managing hardware</h2>
+
+<p>Ezakus works with scores of digital advertisers and publishers. “Our job is to ‘read the minds’ of users,” explains Jean-Michel Gobet, director of marketing. “We analyze the connection data recorded by the websites of our clients, from third-party cookies or identifiers’ phones, which fully respects the anonymity of users. Every day we ‘brew’ 600 million digital touch points raised by 40 million users and mobile users worldwide.”</p>
+
+<p>The company had been successfully managing Hadoop nodes from a provider to handle all of their data. But as requirements grew, so did their problems. “We didn’t get enough service or support, and we were obliged to manage all the hardware. It was quite time consuming,” says Olivier Gardinetti, chief technology officer. “Hosting and infrastructure management are not the value that Ezakus provides. There was no point for us to buy and manage specific hardware.”</p>
+
+<p>Ezakus methodically tested various other providers and cloud solutions over several months before settling on Google Compute Engine. Compute Engine is infrastructure-as-a-service for running large-scale workloads on virtual machines (VMs) hosted on Google’s infrastructure. Users choose a VM that fits their needs and gain the performance and consistency of Google’s worldwide fiber network.</p>
+
+<div class='quote'>
+<p>“Compute Engine was three or four times better than the next-best cloud provider, in terms of processing speed.” <br>
+— Olivier Gardinetti, CTO, Ezakus</p>
+</div>
+
+<h2>Easy to set up and deploy</h2>
+
+<p>“Google Compute Engine was the best platform we tested, from a stability and performance point of view,” Gardinetti says. “We were very surprised about the performance. Compute Engine was three or four times better than the next-best cloud provider, in terms of processing speed.”</p>
+
+<p>Ezakus transitioned to Compute Engine in December 2013. “We achieved the full switch of our platform in two days—managing hundreds of servers, hundreds of terabytes of data and a large network,” Gardinetti says. “And we didn’t see any impact on the customers or the ongoing services that we operate.” One main benefit, he adds, was “the ability to set up a large amount of VMs in a few minutes. It was very easy to set up and deploy. The network configuration was very easy to update as well.”</p>
+
+<p>Ezakus now uses Compute Engine to manage over a thousand cores and analyze massive amounts of Big Data—hundreds of terabytes overall. “Day-to- day, we manage approximately six hundred million events,” Gardinetti says. “That could be around fifty or sixty million people to process.” Gobet adds that Ezakus’ switch to Compute Engine “transforms and multiplies the service that we provide to our clients. We have greatly increased the parameters and data taken into account, based on demographics, gender, age and historical connection. We can better anticipate buying behavior of Internet users. This predictive knowledge maximizes advertising investments by determining, in real time, categories of users most receptive to banners, promotions and branding campaigns.”</p>
+
+<div class='quote'><p>“Google Compute Engine matches all our expectations. We are able to scale our business, and we don’t have to wait for anything to provide computing power.”
+— Olivier Gardinetti, CTO, Ezakus</p></div>
+
+<h2>Additional clients in France and abroad</h2>
+<p>“What has changed for us day-to-day with Compute Engine is the very simple action to provision the VMs,” Gardinetti says. “Now we are able to set up a large amount of VMs. In a few minutes, for example, we can set up hundreds of VMs. It’s very, very nice for us, because we don’t lose a lot of time. We just want to get the VMs, to produce the data. That’s it. We don’t want to manage hardware.”</p>
+
+<p>Ezakus can now provide more performance and predictions and serve more clients, “because we can more easily deploy all the servers in a very short time,” Gardinetti says. “We can also expand our business to the international environment. If I want to deploy hundreds of machines for a customer in the US, it’s very easy to do. You just need to choose a template of the VM and in a few seconds you have the servers you want. This is a key element in our capacity to make effective predictions, win more customers and make campaigns more efficient.”</p>
+
+<p>The company meanwhile will continue working with Google to refine the overall architecture and real-time processing. “Google Compute Engine matches all our expectations,” Gardinetti says. “We are able to scale our business, and we don’t have to wait for anything to provide computing power.”</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <!-- Scripts to include both on Goro + Devsite -->
+  <script type="text/javascript">
+   window.___gcfg = {
+     lang: ''
+   };
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+  </script>
+
+  <!-- GTM implementation -->
+
+  <!-- Start dataLayer -->
+    <script>
+      dataLayer = [{
+        'country': '',
+        'region': '',
+        'language': 'en'
+      }];
+    </script>
+  <!-- End dataLayer -->
+
+  <!-- Start Google Tag Manager -->
+  <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5CVQBG"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-5CVQBG');</script>
+  <!-- End Google Tag Manager -->
+
+  <!-- Global JS scripts to load; path will depend on whether we're on devsite or Goro -->
+  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular-sanitize.js"></script>
+
+  <script src="/js/base.min.js"></script>
+
+<!-- Secondary right-side scroll-nav -->
+<script>
+  new lfl.ui.ScrollNav({});
+  new lfl.cloud.GlobalProductMenu();
+</script>
+
+<script>new cloud.SocialFeeds(document.getElementById('feeds'));</script>
+
+
+
+  <div id="maia-signature"></div>
+  <div id="maia-footer">
+
+    <!-- maia-footer-local -->
+    <div id="maia-footer-local">
+      <div class="maia-aux">
+
+          <div class="ent-footer-top">
+  <div class="g-plus-wrapper">
+    <div class="g-plusone" data-href="http://cloud.google.com"></div>
+  </div>
+  <div class="g-plus-link"><a href="https://plus.google.com/+googlecloudplatform" rel="publisher">Google+</a></div>
+  <div class="search">
+    <form onsumbit="return false;" class="maia-search" action="/search">
+    <input name="q" placeholder="Search this site" type="text">
+    <input name="hl" type="hidden" value="">
+    <input name="q" type="hidden" value="site:cloud.google.com/">
+    <button class="maia-button" event="autotrack-data-g" data-g-event="Footer" data-g-action="Site Search" data-g-label="Submit">
+      <span class="maia-search-icon">Search</span>
+    </button>
+    </form>
+  </div>
+
+</div>
+
+<div class="ent-footer-links">
+  <div class="ent-footer-unit">
+    <h4><a href="/why-google/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Why Google" data-g-label="Why Google">Why Google</a></h4>
+    <ul>
+      <li><a href="/why-google/#infrastructure" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Why Google" data-g-label="Infrastructure">Infrastructure</a></li>
+      <li><a href="/why-google/#product" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Why Google" data-g-label="Product">Product</a></li>
+      <li><a href="/why-google/#services" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Why Google" data-g-label="Services">Services</a></li>
+      <li><a href="/why-google/#scalability" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Why Google" data-g-label="Scalability">Scalability</a></li>
+      <li><a href="/why-google/#performance" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Why Google" data-g-label="Performance">Performance</a></li>
+      <li><a href="/why-google/#support" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Why Google" data-g-label="Support">Support</a></li>
+    </ul>
+  </div>
+
+  <div class="ent-footer-unit">
+    <h4><a href="/products/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="Products">Products</a></h4>
+    <ul>
+      <li><a href="/products/app-engine/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="App Engine">App Engine</a></li>
+      <li><a href="/products/compute-engine/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="Compute Engine">Compute Engine</a></li>
+      <li><a href="/products/cloud-storage/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="Cloud Storage">Cloud Storage</a></li>
+      <li><a href="/products/cloud-sql/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="Cloud SQL">Cloud SQL</a></li>
+      <li><a href="/products/cloud-datastore/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="Cloud Datastore">Cloud Datastore</a></li>
+      <li><a href="/products/bigquery/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="BigQuery">BigQuery</a></li>
+      <li><a href="/products/prediction-api/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="Prediction API">Prediction API</a></li>
+      <li><a href="/products/translate-api/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="Translate API">Translate API</a></li>
+      <li><a href="/products/cloud-endpoints/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="Cloud Endpoints">Cloud Endpoints</a></li>
+      <li><a href="/products/calculator/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="Pricing Calculator">Pricing Calculator</a></li>
+      <li><a href="/pricing/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="Pricing">Pricing</a></li>
+    </ul>
+  </div>
+
+  <div class="ent-footer-unit">
+    <h4><a href="/solutions" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Solutions" data-g-label="Solutions">Solutions</a></h4>
+    <ul>
+      <li><a href="/solutions/mobile/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Solutions" data-g-label="Mobile">Mobile</a></li>
+      <li><a href="/solutions/gaming/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Solutions" data-g-label="Gaming">Gaming</a></li>
+      <li><a href="/solutions/hadoop/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Solutions" data-g-label="Hadoop">Hadoop</a></li>
+      <li><a href="/solutions/mongodb/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Solutions" data-g-label="mongodb">MongoDB</a></li>
+      <li><a href="/solutions/rabbitmq/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Solutions" data-g-label="rabbitmq">RabbitMQ</a></li>
+      <li><a href="/solutions/cassandra/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Solutions" data-g-label="cassandra">Cassandra</a></li>
+    </ul>
+  </div>
+
+  <div class="ent-footer-unit">
+    <h4><a href="/customers/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Customers" data-g-label="Customers">Customers</a></h4>
+  </div>
+
+  <div class="ent-footer-unit">
+    <h4><a href="/developers/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Developers" data-g-label="Developers">Developers</a></h4>
+    <ul>
+      <li><a href="/developers#documentation" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Developers" data-g-label="Documentation">Documentation</a></li>
+      <li><a href="/developers#resources" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Developers" data-g-label="Resources">Resources</a></li>
+    </ul>
+  </div>
+
+  <div class="ent-footer-unit">
+    <h4><a href="/support/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Support" data-g-label="Support">Support</a></h4>
+    <ul>
+      <li><a href="https://support.google.com/" target="_blank" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Support" data-g-label="Google Cloud Platform Support Help Center">Platform Support Help Center</a></li>
+      <li><a href="https://support.google.com/cloudbilling/" target="_blank" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Support" data-g-label="Google Cloud Billing Help Center">Billing Help Center</a></li>
+      <li><a href="https://enterprise.google.com/supportcenter" target="_blank" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Support" data-g-label="Google Enterprise Support Center">Google Enterprise Support Center</a></li>
+    </ul>
+
+  </div>
+
+
+  <div class="ent-footer-unit">
+    <h4><a href="/partners/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Partners" data-g-label="Partners">Partners</a></h4>
+    <ul>
+      <li><a href="/partners/technology-partners/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Partners" data-g-label="Find A Technology Partner">Technology Partners</a></li>
+      <li><a href="/partners/service-partners/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Partners" data-g-label="Find A Service Partner">Service Partners</a></li>
+    </ul>
+  </div>
+
+  </div>
+  <br class="clear" />
+
+  </div>
+  </div>
+    <!-- /maia-footer-local -->
+
+    <!-- maia-footer-global -->
+    <div id="maia-footer-global">
+      <div class="maia-locales">
+        <select name="language" 
+        onchange="var lang=this[this.selectedIndex].value;if(lang!='')
+        {window.location.href=window.location.pathname + '?hl=' + lang};">>
+          <option value="en" selected>English</option>
+          <option value="fr" >Français</option>
+          <option value="de" >Deutsch</option>
+          <option value="ja" >日本語</option>
+          <option value="ko" >한국어</option>
+          <option value="pt-br" >Português</option>
+          <option value="es" >Español</option>
+          <option value="zh-tw" >中文（繁體中文）</option>
+        </select>
+      </div>
+      <div class="maia-aux">
+        <ul>
+          <li><a href="http://www.google.com/">Google</a></li>
+          <li><a href="https://developers.google.com/readme/terms">Terms of Service</a></li>
+          <li><a href="https://www.google.com/intl/en/policies/privacy/">Privacy Policy</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <!-- /maia-footer-global -->
+  <script src="//www.google.com/js/maia.js"></script>
+  <script type="text/javascript" async defer src="//www.gstatic.com/feedback/api.js"></script>
+  <script id="jqueryui" src="//ajax.googleapis.com/ajax/libs/jqueryui/1.8.10/jquery-ui.min.js"></script>
+  </body>
+</html>
