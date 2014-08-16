@@ -51,7 +51,7 @@ title: Cloud Computing &amp; Cloud Hosting Services
 </figure>
 <h5>접근 방식</h5>
 <ol>
-<li><span class="bld">Commission new DataNodes and TaskTrackers.</span> New instances for these nodes can be created programmatically using the <span class="code">gcutil</span> utility, REST API or Google client libraries, or manually via the <a href="http://cloud.google.com/console">Google Cloud Console</a>. The nodes must then be added into the Hadoop cluster in one of the following ways:
+<li><span class="bld">Commission new DataNodes and TaskTrackers.</span> New instances for these nodes can be created programmatically using the <span class="code">gcutil</span> utility, REST API or Google client libraries, or manually via the <a href="https://console.developers.google.com">Google Cloud Console</a>. The nodes must then be added into the Hadoop cluster in one of the following ways:
 <ol type="a">
 <li>클러스터를 처음 가동할 때 노드의 호스트 이름이 <span class="code">slaves, dfs.hosts/mapred.hosts</span> 또는 <span class="code">dfs.include/mapred.include</span> 파일<sup><a href="#ftnt5" name="ftnt_ref5" id="ftnt_ref5">[5]</a></sup>에 존재하는지 확인하여 이러한 노드가 클러스터에 자동으로 연결되도록 합니다. 이 접근 방식에서는 이러한 이름이 사용 전에 알려져 있어야 하며, 사용자가 제공한 호스트 이름<sup><a href="#ftnt6" name="ftnt_ref6" id="ftnt_ref6">[6]</a></sup>으로 Google Compute Engine 인스턴스를 처리할 수 있기 때문에 이 방식이 가능한 것입니다.</li>
 <li>가동이 시작되면 새 인스턴스 이름을 수동으로 이러한 파일에 추가한 다음, <span style="white-space:nowrap;" class="code">hadoop dfsadmin -refreshNodes</span>를 실행하여 DataNodes 및 <span style="white-space:nowrap;" class="code">hadoop mradmin -refreshNodes</span>를 요청하도록 NameNode에 알리고 TaskTracker에 대한 정보를 JobTracker에 알립니다.</li>

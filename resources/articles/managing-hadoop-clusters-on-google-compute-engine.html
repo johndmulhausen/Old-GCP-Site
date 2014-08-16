@@ -77,7 +77,7 @@
   <h5>Approach</h5>
   <ol>
     <li>
-      Commission new DataNodes and TaskTrackers. New instances for these nodes can be created programmatically using the <span class="code">gcutil</span> utility, REST API or Google client libraries, or manually via the <a href="http://console.developers.google.com">Google Cloud Console</a>. The nodes must then be added into the Hadoop cluster in one of the following ways:
+      Commission new DataNodes and TaskTrackers. New instances for these nodes can be created programmatically using the <span class="code">gcutil</span> utility, REST API or Google client libraries, or manually via the <a href="https://console.developers.google.com">Google Cloud Console</a>. The nodes must then be added into the Hadoop cluster in one of the following ways:
       <ol type="a">
         <li>Enable these nodes to automatically join the cluster by ensuring that their hostnames exist in the <span class="code">slaves, dfs.hosts/mapred.hosts</span> or <span class="code">dfs.include/mapred.include</span> files<sup><a href="#ftnt5" name="ftnt_ref5" id="ftnt_ref5">[5]</a></sup> at the time the cluster is first brought up. This approach implies that these names must be known in advance of their use and is possible because Google Compute Engine instances are addressable by the user-provided hostname<sup><a href="#ftnt6" name="ftnt_ref6" id="ftnt_ref6">[6]</a></sup>. </li>
         <li>Manually add the new instance names to these files once they spin-up and then run <span style="white-space:nowrap;" class="code">hadoop dfsadmin -refreshNodes</span> to notify the NameNode to commission the DataNodes and <span style="white-space:nowrap;" class="code">hadoop mradmin -refreshNodes</span> to notify the JobTracker about the TaskTrackers.</li>
