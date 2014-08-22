@@ -1,0 +1,60 @@
+{% comment %}
+
+Accepts: file, region, lang
+
+file: 
+  the path (assuming root is /_includes folder) to the file
+  
+region:
+  the region (i.e. snippet) of the file to include (
+  
+lang:
+  the language of the snippet in question; e.g. "python" or "java"
+  
+Example use: 
+{% include code.html file="testfile.py" region="greeting" lang="python" %}
+
+{% endcomment %}
+{% capture nl %}
+{% endcapture %}
+{% capture sp %} {% endcapture %}
+{% capture spTruncate %}{{ sp }}...{% endcapture %}
+{% capture rawoutput %}{% include {{ include.file }} %}{% endcapture %}
+{% assign rawarray=rawoutput | split: nl %}
+{% assign appendLine=false %}
+{% assign indentRemoval=0 %}
+{% if include.lang %}{% capture langsuffix %} lang-{{include.lang}}{% endcapture %}{% endif %}
+{% capture output %}<pre class="prettyprint{{langsuffix}}" id="{{include.region}}">{% endcapture %}
+{% capture startToken %}[START {{ include.region }}]{% endcapture %}
+{% capture endToken %}[END {{ include.region }}]{% endcapture %}
+{% assign firstLine=true %}
+{% for line in rawarray %}
+  {% if line contains endToken %}{% assign appendLine=false %}{% endif %}
+  {% if appendLine %}
+    {% assign thisLine=line | strip_newlines %}
+    {% if firstLine %}
+      {% comment %}This is the first line! Use it to align the indentation.{% endcomment %}
+      {% assign firstLine=false %}
+      {% assign lineSize = thisLine | size %}
+      {% assign removedSpaces=0 %}
+      {% for i in (1..lineSize) %}
+        {% assign firstChar = thisLine | truncate: 4 %}
+        {% if firstChar == spTruncate %}
+          {% assign thisLine=thisLine | remove_first: sp %}
+          {% assign indentRemoval=indentRemoval | plus: 1 %}
+        {% else %}{% comment %}You've reached real characters! Exit the loop.{% endcomment %}
+          {% assign i=lineSize %}
+        {% endif %}
+      {% endfor %}
+      {% capture output %}{{ output }}{{ thisLine }}{% endcapture %}
+    {% else %}
+      {% for x in (1..indentRemoval) %}
+        {% assign thisLine=thisLine | remove_first: sp %}
+      {% endfor %}
+      {% capture output %}{{ output }}{{ nl }}{{ thisLine }}{% endcapture %}
+    {% endif %}
+  {% endif %}
+  {% if line contains startToken %}{% assign appendLine=true %}{% endif %}
+{% endfor %}
+
+{{ output | append: nl | append: "</pre>" }}
