@@ -1,8 +1,11 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
   <head>
-    <title>Cloud Computing &amp; Cloud Hosting Services - Google Cloud Platform</title>
+    <title>Cloud Computing &amp; Cloud Hosting Services</title>
     <meta charset="utf-8" />
+    
+      <meta description="Google Cloud Platform lets you build and host applications and websites, store data, and analyze data on Google's scalable infrastructure.">
+    
     <link rel="shortcut icon" href="/images/gcp-favicon.ico">
     <link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
 
@@ -92,6 +95,11 @@
         <li >
             <a href="/partners/" event="autotrack-data-g" data-g-event="Global Nav" data-g-action="Nav Bar" data-g-label="Partners">
             Partners
+            </a>
+        </li>
+         <li >
+            <a href="http://googlecloudplatform.blogspot.com/" event="autotrack-data-g" data-g-event="Global Nav" data-g-action="Nav Bar" data-g-label="Blog">
+            Blog
             </a>
         </li>
       </ul>
@@ -243,7 +251,7 @@
 </figure>
 <h5>Abordagem</h5>
 <ol>
-<li><span class="bld">Commission new DataNodes and TaskTrackers.</span> New instances for these nodes can be created programmatically using the <span class="code">gcutil</span> utility, REST API or Google client libraries, or manually via the <a href="http://cloud.google.com/console">Google Cloud Console</a>. The nodes must then be added into the Hadoop cluster in one of the following ways:
+<li><span class="bld">Commission new DataNodes and TaskTrackers.</span> New instances for these nodes can be created programmatically using the <span class="code">gcutil</span> utility, REST API or Google client libraries, or manually via the <a href="https://console.developers.google.com">Google Cloud Console</a>. The nodes must then be added into the Hadoop cluster in one of the following ways:
 <ol type="a">
 <li>Permita que esses nós se incorporem automaticamente ao cluster garantindo que seus nomes de host existam nos arquivos <span class="code">escravos dfs.hosts/mapred.hosts</span> ou <span class="code">dfs.include/mapred.include</span><sup><a href="#ftnt5" name="ftnt_ref5" id="ftnt_ref5">[5]</a></sup> no momento em que o cluster for criado. Essa abordagem implica é preciso conhecer esses nomes antes do uso e é possível porque as instâncias do Google Compute Engine são endereçáveis pelo nome do host fornecido pelo usuário<sup><a href="#ftnt6" name="ftnt_ref6" id="ftnt_ref6">[6]</a></sup>.</li>
 <li>Adicione manualmente os nomes das novas instâncias a esses arquivos após serem acrescentadas e execute <span style="white-space:nowrap;" class="code">hadoop dfsadmin -refreshNodes</span> para notificar o NameNode de ativar os DataNodes e <span style="white-space:nowrap;" class="code">hadoop mradmin -refreshNodes</span> para notificar o JobTracker sobre os TaskTrackers.</li>
