@@ -1,4 +1,4 @@
-{% include "appengine/_local_variables.html" %}
+{% setvar titleText %}This Was Processed Post-Jekyll{% endsetvar %}
 <html devsite>
   <head>
     <meta name="project_path" value="https://developers.google.com/appengine/_project.yaml" />
@@ -7,16 +7,13 @@
       Python, Java, PHP, and Go">
     <link href="https://developers.google.com/cloud/css/local_css.css" rel="stylesheet" type="text/css" />
     <link href="https://plus.google.com/117105793163182226623" rel="publisher"/>
-    <meta property="og:image" itemprop="image"
-      content="https://developers.google.com/cloud/images/-icon-54x48.png" />
-    <title>TEST TITLE</title>
+    <title>This was processed via Jekyll</title>
   </head>
   <body>
 
     <div class="gs-page-title-with-logo">
-      <img class="product-logo" src="https://developers.google.com/cloud/images/-icon-54x48.png">
       <div class="page-title" id="h2">
-        Google App Engine: Platform as a Service
+        {{ titleText }}
       </div>
     </div>
 
