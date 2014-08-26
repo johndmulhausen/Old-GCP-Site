@@ -1,3 +1,6 @@
+---
+title: TEST TITLE
+---
 {% raw %}{% include "appengine/_local_variables.html" %}{% endraw %}
 <html devsite>
   <head>
@@ -9,7 +12,7 @@
     <link href="https://plus.google.com/117105793163182226623" rel="publisher"/>
     <meta property="og:image" itemprop="image"
       content="https://developers.google.com/cloud/images/{{docs_dir}}-icon-54x48.png" />
-    <meta name="no_page_title" value="true" />
+    <title>{{ page.title }}</title>
   </head>
   <body>
 
