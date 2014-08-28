@@ -5444,17 +5444,15 @@ a.maia-media:after {
 .customer .customer-container .quote {
   border-top: 1px solid #ccc;
   border-bottom: 1px solid #ccc;
-  color: #a4a4a4;
   font-size: 13px;
   padding: 30px 0 40px 0;
   margin: 40px 0 40px 0;
-
 }
 
 .customer .customer-container .quote p {
   font-size:16px;
   font-family: "open sans", arial, sans-serif;
-  font-weight:300;
+  font-weight: 400;
 }
 
 .customer .customer-container .quote p.attribution {
