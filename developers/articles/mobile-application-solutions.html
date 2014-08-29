@@ -326,7 +326,7 @@
       <p>In some cases, you may also benefit from packaging <a href="https://developers.google.com/appengine/docs/java/config/appconfig#Static_Files_and_Resource_Files">static content</a> as part of your Google App Engine application and then having it served by Google App Engine infrastructure using dedicated servers and caches without having your mobile backend code involved at all. This is typically more relevant to HTML/JavaScript clients than to native iOS or Android applications and is applicable to resources such as images, CSS style sheets, or browser JavaScript code.</p>
       <h3 id="serving-and-processing-images">Serving and processing images</h3>
       <p>If your mobile solution includes a manageable number of static images, you can package them (often in multiple resolutions) as part of your native Android and iOS applications. This applies, for example, to various icons that are part of your application and are used to build the UI of your client applications.</p>
-      <p>Other category of images are images that are not part of your applications, but are, rather, related to the data that your application processes, such as thumbnails of movies in your movie related application, pictures of products that can be gifted through your application, or avatars in your game or social applications. If you can store such images in resolutions and formats optimized for your mobile clients then you can upload them to <a href="https://developers.google.com/storage/docs/getting-started">Google Cloud Storage</a> and then provide direct URLs to these images to the mobile clients. This approach is very scalable as it allows mobile clients to retrieve these images directly from the scalable cloud storage without involving your mobile backend code.</p>
+      <p>Other category of images are images that are not part of your applications, but are, rather, related to the data that your application processes, such as thumbnails of movies in your movie related application, pictures of products that can be gifted through your application, or avatars in your game or social applications. If you can store such images in resolutions and formats optimized for your mobile clients then you can upload them to <a href="https://developers.google.com/storage/docs/overview">Google Cloud Storage</a> and then provide direct URLs to these images to the mobile clients. This approach is very scalable as it allows mobile clients to retrieve these images directly from the scalable cloud storage without involving your mobile backend code.</p>
       <p>In some cases, you may want to manipulate and process images in addition to storing them. For example, you may want to serve the images in dynamically adjusted sizes depending on the resolution of your client devices. In such scenarios you can use Google App Engine <a href="https://developers.google.com/appengine/docs/java/images/">Images Service</a> to resize, rotate, flip, and crop images, as well as to enhance photographs using a predefined algorithm. These operations can be performed on images from, among other sources, Google Cloud Storage.  The modified images can then be served to the clients directly from the dynamic image serving infrastructure provided by Google without involving your mobile backend code. Your code is responsible just for using the Images Service API to obtain the appropriate image URL and for providing this URL to the mobile clients.</p>
       <figure>
         <img src="/images/articles/mobile-app-6.png" alt="Serving and processing images" class="f-80" />
@@ -335,7 +335,7 @@
       <h3>Full text and geo-proximity (location based) search</h3>
       <p>If you want to give your users full text search capability over some of the structured data managed by your mobile solution, you can leverage Google App Engine <a href="https://developers.google.com/appengine/docs/java/search/">Search API</a><sup>[<a href="#fn-6" class="ref-6">6</a>]</sup>. For example, if your application provides access to a large and dynamic inventory of items, your users may benefit from being able to find items by entering words that are part of an item’s name or description, even if you provide a convenient touch UI with categorization, paging, etc.</p>
       <p>To use Search API, you can construct “documents” that contain searchable data and then add these “documents” to an index. Then, your mobile backend can construct search queries, including full-text search queries, and run them against the “documents” in the index. In the example above, each item in the inventory could be mapped to a “document” in the index with properties such as name, description, etc.</p>
-      <p>Your mobile solution may also perform geo-proximity search if, for instance, you wanted to retrieve the list of nearby stores. You can avoid the complexity of building such functionality yourself and simply leverage Search API for <a href="https://developers.google.com/appengine/docs/java/search/overview#Performing_Location-Based_Searches">geo-proximity search</a>[<sup><a href="#fn-7" class="ref-7">7</a>]</sup>. The basic flow is very similar to the process described above for full text search. You can simply add geo-location as one of document properties and then include geo-proximity condition in your search queries.</p>
+      <p>Your mobile solution may also perform geo-proximity search if, for instance, you wanted to retrieve the list of nearby stores. You can avoid the complexity of building such functionality yourself and simply leverage Search API for <a href="https://developers.google.com/appengine/docs/java/search/#Performing_Location-Based_Searches">geo-proximity search</a>[<sup><a href="#fn-7" class="ref-7">7</a>]</sup>. The basic flow is very similar to the process described above for full text search. You can simply add geo-location as one of document properties and then include geo-proximity condition in your search queries.</p>
       <figure>
         <img src="/images/articles/mobile-app-7.png" alt="Full text and geo-proximity search" class="f-60" />
         <figcaption>Figure 7. Full text and geo-proximity search</figcaption>
@@ -351,7 +351,7 @@
       <p>Application logs can provide a lot of insight about how your users are using your mobile solution and how your mobile backend behaves. With your mobile backend code running on Google App Engine, you can use <a href="https://developers.google.com/appengine/docs/java/logs/">Logs API</a> to retrieve the application logs. Then, you can upload them to Google Cloud Storage and ingest them into <a href="https://developers.google.com/bigquery/">Google BigQuery</a>. If your mobile client application allows users to make a lot of interactions within the applications without sending regular requests to the backend, you may want to augment the backend logs with logs that the client application can collect and periodically send to your mobile backend through your API exposed over Google Cloud Endpoints.</p>
       <h3 id="running-code">Running code outside of App Engine sandbox</h3>
       <p>If you can build your complete mobile backend using runtimes supported by Google App Engine<sup>[<a href="#fn-8" name="ref-8">8</a>]</sup>, you will be able to avoid having to deal with infrastructural issues such as auto scaling, load-balancing, failover, etc. However, you may have requirements that are not suitable for running in App Engine sandbox. For example, you may want to use some C/C++ libraries, custom binaries, or Perl programs as part of asynchronous request processing or batch processing.</p>
-      <p>In such scenarios, you can use <a href="/products/compute-engine">Google Compute Engine</a><sup>[<a href="#fn-9" name="ref-9">9</a>]</sup> to run the parts of your mobile backend not suitable for hosting on Google App Engine.</p>
+      <p>In such scenarios, you can use <a href="/products/compute-engine/">Google Compute Engine</a><sup>[<a href="#fn-9" name="ref-9">9</a>]</sup> to run the parts of your mobile backend not suitable for hosting on Google App Engine.</p>
       <p>When code running on Compute Engine is used for batch processing or asynchronous request processing<sup>[<a href="#fn-10" name="ref-10">10</a>]</sup>, your code that runs on Google App Engine can enqueue tasks into a pull queue (or multiple queues) and your code that runs on Google Compute Engine can pull these tasks using <a href="https://developers.google.com/appengine/docs/python/taskqueue/rest/">Task Queue REST API</a><sup>[<a href="#fn-11" name="ref-11">11</a>]</sup>.</p>
       <figure>
         <img src="/images/articles/mobile-app-9.png" alt="Running code outside of App Engine sandbox" class="f-90" />
@@ -372,14 +372,14 @@
 
       <br>
       <h2>Notes</h2>
-      <p id="fn-1"><sup>[<a href="#ref-1">1</a>]</sup> In this document, a backend refers broadly to the part of a mobile solution that runs outside of client devices. It should not be confused with Google App Engine <a href="http://developers.google.com/appengine/docs/java/backends/overview?hl=en">backend instances</a>, which represent a type of instances that have <a href="http://developers.google.com/appengine/docs/java/backends/overview?hl=en#Properties_of_Backends">different characteristics</a> than default App Engine instances. In many mobile solutions, default Google App Engine instances should be sufficient. However, if you have specific requirements, you can assemble a mobile solution using a “backend” composed of any combination of default App Engine instances and backend instances.</p>
+      <p id="fn-1"><sup>[<a href="#ref-1">1</a>]</sup> In this document, a backend refers broadly to the part of a mobile solution that runs outside of client devices. It should not be confused with Google App Engine <a href="https://developers.google.com/appengine/docs/java/backends/?hl=en">backend instances</a>, which represent a type of instances that have <a href="https://developers.google.com/appengine/docs/java/backends/?hl=en">different characteristics</a> than default App Engine instances. In many mobile solutions, default Google App Engine instances should be sufficient. However, if you have specific requirements, you can assemble a mobile solution using a “backend” composed of any combination of default App Engine instances and backend instances.</p>
       <p id="fn-2"><sup>[<a href="#ref-2">2</a>]</sup> As of February 2013, Google Cloud Endpoints is an experimental feature.</p>
       <p id="fn-3"><sup>[<a href="#ref-3">3</a>]</sup> Section 4.2 of <a href="https://developers.google.com/appengine/terms">Google App Engine Terms of Service</a> describes your obligation to protect the privacy and legal rights of your End Users,  including the requirement to provide a legally adequate privacy policy about the use of data you collect and to obtain all necessary consents from your end users to the collection, use, monitoring or disclosure of such data.</p>
-      <p id="fn-4"><sup>[<a href="#ref-4">4</a>]</sup> If you prefer to use relational SQL database you can choose to use <a href="http://developers.google.com/cloud-sql/">Google Cloud SQL</a> either <a href="http://developers.google.com/cloud-sql/faq#choice">instead of Datastore or complementary to Datastore</a>.</p>
+      <p id="fn-4"><sup>[<a href="#ref-4">4</a>]</sup> If you prefer to use relational SQL database you can choose to use <a href="https://developers.google.com/cloud-sql/">Google Cloud SQL</a> either <a href="https://developers.google.com/cloud-sql/faq#choice">instead of Datastore or complementary to Datastore</a>.</p>
       <p id="fn-5"><sup>[<a href="#ref-5">5</a>]</sup> As of early January 2013 Sockets API is a feature available for Trusted Testers only and doesn’t have production support.</p>
       <p id="fn-6"><sup>[<a href="#ref-6">6</a>]</sup> As of early January 2013, App Engine Search API is an experimental feature with <a href="http://developers.google.com/appengine/docs/java/search/overview#Quotas">limited free quotas</a>.</p>
       <p id="fn-7"><sup>[<a href="#ref-7">7</a>]</sup> As of December 2012, geo-proximity search works in applications deployed to App Engine. However, it doesn’t work on local dev server.</p>
-      <p id="fn-8"><sup>[<a href="#ref-8">8</a>]</sup> As of December 2012, App Engine <a href="http://developers.google.com/appengine/docs/whatisgoogleappengine">supports</a> Java 5 and 6, Python 2.7.3 and 2.5.2, as well as Go runtime (the last one as experimental feature).</p>
+      <p id="fn-8"><sup>[<a href="#ref-8">8</a>]</sup> As of December 2012, App Engine <a href="https://developers.google.com/appengine/docs/whatisgoogleappengine">supports</a> Java 5 and 6, Python 2.7.3 and 2.5.2, as well as Go runtime (the last one as experimental feature).</p>
       <p id="fn-9"><sup>[<a href="#ref-9">9</a>]</sup> As of December 2012, Google Compute Engine is available to selected users in limited preview.</p>
       <p id="fn-10"><sup>[<a href="#ref-10">10</a>]</sup> Google Compute Engine can be used also in other mobile solutions scenarios, but such usage is beyond the scope of this document.</p>
       <p id="fn-11"><sup>[<a href="#ref-11">11</a>]</sup> As of December 2012, Task Queue REST API is an experimental feature.</p>
@@ -468,9 +468,9 @@
 
           <div class="ent-footer-top">
   <div class="g-plus-wrapper">
-    <div class="g-plusone" data-href="http://cloud.google.com"></div>
+    <div class="g-plusone" data-href="https://cloud.google.com/"></div>
   </div>
-  <div class="g-plus-link"><a href="https://plus.google.com/+googlecloudplatform" rel="publisher">Google+</a></div>
+  <div class="g-plus-link"><a href="https://plus.sandbox.google.com/+googlecloudplatform/posts" rel="publisher">Google+</a></div>
   <div class="search">
     <form onsumbit="return false;" class="maia-search" action="/search">
     <input name="q" placeholder="Search this site" type="text">
@@ -515,7 +515,7 @@
   </div>
 
   <div class="ent-footer-unit">
-    <h4><a href="/solutions" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Solutions" data-g-label="Solutions">Solutions</a></h4>
+    <h4><a href="/solutions/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Solutions" data-g-label="Solutions">Solutions</a></h4>
     <ul>
       <li><a href="/solutions/mobile/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Solutions" data-g-label="Mobile">Mobile</a></li>
       <li><a href="/solutions/gaming/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Solutions" data-g-label="Gaming">Gaming</a></li>
@@ -533,8 +533,8 @@
   <div class="ent-footer-unit">
     <h4><a href="/developers/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Developers" data-g-label="Developers">Developers</a></h4>
     <ul>
-      <li><a href="/developers#documentation" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Developers" data-g-label="Documentation">Documentation</a></li>
-      <li><a href="/developers#resources" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Developers" data-g-label="Resources">Resources</a></li>
+      <li><a href="/developers/#documentation" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Developers" data-g-label="Documentation">Documentation</a></li>
+      <li><a href="/developers/#resources" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Developers" data-g-label="Resources">Resources</a></li>
     </ul>
   </div>
 
@@ -543,7 +543,7 @@
     <ul>
       <li><a href="https://support.google.com/" target="_blank" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Support" data-g-label="Google Cloud Platform Support Help Center">Platform Support Help Center</a></li>
       <li><a href="https://support.google.com/cloudbilling/" target="_blank" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Support" data-g-label="Google Cloud Billing Help Center">Billing Help Center</a></li>
-      <li><a href="https://enterprise.google.com/supportcenter" target="_blank" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Support" data-g-label="Google Enterprise Support Center">Google Enterprise Support Center</a></li>
+      <li><a href="https://enterprise.google.com/supportcenter/" target="_blank" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Support" data-g-label="Google Enterprise Support Center">Google Enterprise Support Center</a></li>
     </ul>
 
   </div>

@@ -281,7 +281,7 @@
 		<li>In the <span class="bld">Eclipse</span> toolbar menu, click <span class="bld">Help</span>.</li>
 		<li>In the drop-down menu, click <span class="bld">Install New Software</span>. The <span class="bld">Install</span> wizard is displayed.</li>
 		<li>In the <span class="bld">Work with</span>: box enter<br>
-			<span class="ital">Google Update Site for Eclipse 4.2 - <a href="http://dl.google.com/eclipse/plugin/4.2">http://dl.google.com/eclipse/plugin/4.2</a></span><br>
+			<span class="ital">Google Update Site for Eclipse 4.2 - <a href="https://developers.google.com/eclipse/docs/install-eclipse-4.2">http://dl.google.com/eclipse/plugin/4.2</a></span><br>
 			Notice that the version of the plugin depends on the version of your Eclipseinstallation.
 		</li>
 		<li>Read and accept the license agreement and click <span class="bld">Finish</span>.</li>
@@ -345,7 +345,7 @@
 		<li>In the <span class="bld">Package Explorer</span>, under the AppEngine project <span class="bld">src</span> folder, right-click the package, then select <span class="bld">-&gt;New-&gt;Class</span>. The <span class="bld">New Java Class</span> wizard is displayed.</li>
 		<li>In the <span class="bld">Name:</span> box enter <span class="ital">CheckIn</span>.</li>
 		<li>Click <span class="bld">Finish</span>.<br>
-			For more information about the kind of class created, see the App Engine <a href="https://developers.google.com/appengine/docs/java/datastore/overview">DataStore Overview</a>.
+			For more information about the kind of class created, see the App Engine <a href="https://developers.google.com/appengine/docs/java/datastore/">DataStore Overview</a>.
 		</li>
 		<li>In the editor, replace the boiler plate code with the code for the <span class="ital">CheckIn.java</span> class that you can obtain from the snippets archive downloaded earlier. Notice that the code shown provides a &ldquo;ready to run&rdquo; class. The most important things you must pay attention to are the 3 properties and the annotations.</li>
 		<li>Save the class.</li>
@@ -511,7 +511,7 @@ android:id="@+id/results"
 	<a name="cus"></a>
 	<h3>Create Upload Script</h3>
 	<p>This is the script that actually uploads the simulated information into the backend datastore.</p>
-	<p>For information about the bulkloader.yaml and more, refer to the App Engine documentation in: <a href="https://developers.google.com/appengine/docs/python/tools/uploadingdata">Uploading and Downloading Data</a>. Also, you can find the bulkloader.yaml file and the test data here <a href="https://github.com/GoogleCloudPlatform/solutions-mobile-shopping-assistant-backend-java/tree/master/MobileAssistant-Data">MobileAssistant-Data</a>.</p>
+	<p>For information about the bulkloader.yaml and more, refer to the App Engine documentation in: <a href="https://developers.google.com/appengine/docs/adminconsole/datastoreadmin#backup_and_restore">Uploading and Downloading Data</a>. Also, you can find the bulkloader.yaml file and the test data here <a href="https://github.com/GoogleCloudPlatform/solutions-mobile-shopping-assistant-backend-java/tree/master/MobileAssistant-Data">MobileAssistant-Data</a>.</p>
 	<ol>
 		<li>Create a new directory and make it your current directory.</li>
 		<li>In your editor, create a script file and call it upload_data.sh.</li>
@@ -848,14 +848,14 @@ return result;
 	<p>This section describes how to run the application using the MobileAssistant-AppEngine backend deployed in the cloud.</p>
 
 	<ol>
-		<li>Make sure that you have created your App Engine application to deploy the <span class="ital">MobileAssistant-AppEngine</span> backend. You create an App Engine application using the <a href="https://appengine.google.com/">App Engine console</a>. For more information, see <a href="https://developers.google.com/appengine/docs/adminconsole/?hl=en">administration console</a>.</li>
+		<li>Make sure that you have created your App Engine application to deploy the <span class="ital">MobileAssistant-AppEngine</span> backend. You create an App Engine application using the <a href="https://appengine.google.com">App Engine console</a>. For more information, see <a href="https://developers.google.com/appengine/docs/adminconsole/?hl=en">administration console</a>.</li>
 		<li>
 			In your test data directory, create a file named upload_data_deploy.sh. Copy and paste the following code into the file.<br>
 <pre>
 #!/bin/sh
 appcfg.py upload_data --config_file bulkloader.yaml --url=http://yourappid.appspot.com/remote_api --filename $1 --kind=$2 -e your_email
 </pre>
-			<p>In <span class="ital">yourappid.appspot.com</span> replace yourappid with your App Engine application ID and replace your_email with the e-mail of the administrator for the application. You get this information from the <a href="https://appengine.google.com/">App Engine console</a>.</p>
+			<p>In <span class="ital">yourappid.appspot.com</span> replace yourappid with your App Engine application ID and replace your_email with the e-mail of the administrator for the application. You get this information from the <a href="https://appengine.google.com">App Engine console</a>.</p>
 			<p>The previous script accepts two arguments separated by a blank space: </p>
 			<p><span class="bld">./upload_data_deploy.sh&lt;data.csv&gt; &lt;class entity name&gt;</span></p>
 			<p>The first argument is the name of the csv file that contains the data you want to upload, The second is the name of the entity class to handle the data.</p>
@@ -874,7 +874,7 @@ appcfg.py upload_data --config_file bulkloader.yaml --url=http://yourappid.appsp
 			<p style="margin-left:30px;">./upload_data_deploy.sh offers.csv Offer</p>
 			<p>You might be asked to enter your account password. Run the script for the other two files.</p>
 		</li>
-		<li>In the <a href="https://appengine.google.com/">App Engine console</a>, in the left panel, click the link <span class="bld">DataStore Viewer</span> and verify that the test data and entities are loaded.</li>
+		<li>In the <a href="https://appengine.google.com">App Engine console</a>, in the left panel, click the link <span class="bld">DataStore Viewer</span> and verify that the test data and entities are loaded.</li>
 		<li>In Eclipse, in the <span class="ital">MobileAssistant</span> (client) project, open the file <span class="ital">CloudEndPointUtils.java</span>.</li>
 		<li>Switch the LOCAL_ADROID_RUN variable to <span class="bld">false</span>. This specifies that the <span class="ital">MobileAssistant-AppEngine</span> backend is running remotely.</li>
 		<li>Save the file.</li>
@@ -902,7 +902,7 @@ appcfg.py upload_data --config_file bulkloader.yaml --url=http://yourappid.appsp
 	<h2>Mobile Solutions</h2>
 
 	<ul>
-		<li><a href="../articles/mobile-application-solutions.html">Mobile Solutions on Google Cloud Platform</a>. This document describes how to leverage the power of Google Cloud Platform to easily create scalable backends in the cloud for your mobile applications that can run on platforms such as Android and iOS.</li>
+		<li><a href="../articles/mobile-application-solutions">Mobile Solutions on Google Cloud Platform</a>. This document describes how to leverage the power of Google Cloud Platform to easily create scalable backends in the cloud for your mobile applications that can run on platforms such as Android and iOS.</li>
 		<li><a href="https://github.com/GoogleCloudPlatform/solutions-mobile-shopping-assistant-backend-java">Sample Application: Mobile Assistant - Java Backend.</a></li>
     <li><a href="https://github.com/GoogleCloudPlatform/solutions-mobile-shopping-assistant-android-client">Sample Application: Mobile Assistant - Android Client.</a></li>
 	</ul>
@@ -932,8 +932,8 @@ appcfg.py upload_data --config_file bulkloader.yaml --url=http://yourappid.appsp
 	<p>An entity class is a POJO (Plain Old Java Object) with JPA/JDO persistence annotations. This is an ordinary Java class that is marked (annotated) as having the ability to represent objects in the database.For more information, see <a href="https://developers.google.com/appengine/docs/java/datastore/">Storing Data</a> in the App Engine datastore. The class shown in the example is of a JPA type. Where</p>
 
 	<ul>
-		<li><span class="c21">Java Data Objects (JDO) is a standard interface for storing objects containing data into a database. For more information, see the App Engine documentation <a href="https://developers.google.com/appengine/docs/java/datastore/jdo/">Using JDO</a>.</li>
-		<li>Java Persistence API (JPA) is a standard interface for storing objects containing data into a relational database. <span class="c21">For more information, see the App Engine documentation <a href="https://developers.google.com/appengine/docs/java/datastore/jpa/">Using JPA</a>.</li>
+		<li><span class="c21">Java Data Objects (JDO) is a standard interface for storing objects containing data into a database. For more information, see the App Engine documentation <a href="https://developers.google.com/appengine/">Using JDO</a>.</li>
+		<li>Java Persistence API (JPA) is a standard interface for storing objects containing data into a relational database. <span class="c21">For more information, see the App Engine documentation <a href="https://developers.google.com/appengine/">Using JPA</a>.</li>
 	</ul>
 
 	<a name="ecdp"></a>
@@ -1021,9 +1021,9 @@ appcfg.py upload_data --config_file bulkloader.yaml --url=http://yourappid.appsp
 
           <div class="ent-footer-top">
   <div class="g-plus-wrapper">
-    <div class="g-plusone" data-href="http://cloud.google.com"></div>
+    <div class="g-plusone" data-href="https://cloud.google.com/"></div>
   </div>
-  <div class="g-plus-link"><a href="https://plus.google.com/+googlecloudplatform" rel="publisher">Google+</a></div>
+  <div class="g-plus-link"><a href="https://plus.sandbox.google.com/+googlecloudplatform/posts" rel="publisher">Google+</a></div>
   <div class="search">
     <form onsumbit="return false;" class="maia-search" action="/search">
     <input name="q" placeholder="Search this site" type="text">
@@ -1068,7 +1068,7 @@ appcfg.py upload_data --config_file bulkloader.yaml --url=http://yourappid.appsp
   </div>
 
   <div class="ent-footer-unit">
-    <h4><a href="/solutions" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Solutions" data-g-label="Solutions">Solutions</a></h4>
+    <h4><a href="/solutions/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Solutions" data-g-label="Solutions">Solutions</a></h4>
     <ul>
       <li><a href="/solutions/mobile/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Solutions" data-g-label="Mobile">Mobile</a></li>
       <li><a href="/solutions/gaming/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Solutions" data-g-label="Gaming">Gaming</a></li>
@@ -1086,8 +1086,8 @@ appcfg.py upload_data --config_file bulkloader.yaml --url=http://yourappid.appsp
   <div class="ent-footer-unit">
     <h4><a href="/developers/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Developers" data-g-label="Developers">Developers</a></h4>
     <ul>
-      <li><a href="/developers#documentation" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Developers" data-g-label="Documentation">Documentation</a></li>
-      <li><a href="/developers#resources" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Developers" data-g-label="Resources">Resources</a></li>
+      <li><a href="/developers/#documentation" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Developers" data-g-label="Documentation">Documentation</a></li>
+      <li><a href="/developers/#resources" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Developers" data-g-label="Resources">Resources</a></li>
     </ul>
   </div>
 
@@ -1096,7 +1096,7 @@ appcfg.py upload_data --config_file bulkloader.yaml --url=http://yourappid.appsp
     <ul>
       <li><a href="https://support.google.com/" target="_blank" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Support" data-g-label="Google Cloud Platform Support Help Center">Platform Support Help Center</a></li>
       <li><a href="https://support.google.com/cloudbilling/" target="_blank" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Support" data-g-label="Google Cloud Billing Help Center">Billing Help Center</a></li>
-      <li><a href="https://enterprise.google.com/supportcenter" target="_blank" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Support" data-g-label="Google Enterprise Support Center">Google Enterprise Support Center</a></li>
+      <li><a href="https://enterprise.google.com/supportcenter/" target="_blank" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Support" data-g-label="Google Enterprise Support Center">Google Enterprise Support Center</a></li>
     </ul>
 
   </div>
