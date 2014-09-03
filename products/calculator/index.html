@@ -32,6 +32,9 @@ eventer(messageEvent,function(e) {
     case 'url':
       location.hash = 'id=' + e.data.data;
       break;
+    case 'clear':
+      location.hash = '';
+      break;
     case 'resize':
       win.style.height = e.data.data + 'px';
       break;
