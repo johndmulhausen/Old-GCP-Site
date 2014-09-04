@@ -223,13 +223,13 @@
     gcse.async = true;
     gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
         '//www.google.com/cse/cse.js?cx=' + cx;
-    var s = document.getElementsByTagName('script')[4];
-    console.log(s);
+    var s = document.getElementsByTagName('script')[0];
     s.parentNode.insertBefore(gcse, s);
   })();
 </script>
-<gcse:searchresults-only></gcse:searchresults-only>
+<gcse:searchresults-only linktarget="_parent"></gcse:searchresults-only>
 </div>
+
 
   <!-- Scripts to include both on Goro + Devsite -->
   <script type="text/javascript">
