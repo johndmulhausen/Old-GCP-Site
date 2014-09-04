@@ -6,10 +6,11 @@ description: Create your own Custom Price Quote for the products offered through
 <div id="maia-main" class="cp-page cp-ctmr cp-std" style="width: 100%">
   <div class="cp-hero cp-cloud cp-wrap" style="width: 100%">
     <div class="cp-header" style="width: 100%">
-      <iframe id="idIframe" src="https://cloudpricingoivonin.googleplex.com" scrolling="no" style="overflow:hidden;height: 1670px; width: 100%;"></iframe>
+      <iframe id="idIframe" src="https://cloudpricingcalculator.appspot.com" scrolling="no" style="overflow:hidden;height: 1670px; width: 100%;"></iframe>
     </div>
   </div>
 </div>
+<!-- Scripts to manage url and size from iframe -->
 <script>
 var eventMethod = window.addEventListener ? "addEventListener" : "attachEvent";
 var eventer = window[eventMethod];
@@ -21,12 +22,12 @@ win.onload = function() {
 
 win.contentWindow.postMessage(
   location.hash.replace('#id=', ''),
-  "https://cloudpricingoivonin.googleplex.com"
+  "https://cloudpricingcalculator.appspot.com"
 )}
 
 // Listen to message from child window
 eventer(messageEvent,function(e) {
-  if ( event.origin !== "https://cloudpricingoivonin.googleplex.com" )
+  if ( event.origin !== "https://cloudpricingcalculator.appspot.com" )
     return
   switch (e.data.type) {
     case 'url':
@@ -40,6 +41,4 @@ eventer(messageEvent,function(e) {
       break;
   }
 },false);
-
-
 </script>
