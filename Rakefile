@@ -9,7 +9,7 @@ require 'rake'
 require 'date'
 require 'yaml'
 
-CONFIG = YAML.load(File.read('_config.yml'))
+CONFIG = YAML.load(File.read('_config_build.yml'))
 USERNAME = CONFIG["username"] || ENV['GIT_NAME']
 REPO = CONFIG["repo"] || "#{USERNAME}.github.io"
 
