@@ -15,7 +15,7 @@ defaults:
     scope:
       path: "" # an empty string here means all files in the project
     values:
-      layout: "devsiteready"
+      layout: "phase2-en"
 
 relative_source: ../GoogleCloudPlatformSite.github.io/
 destination: ../GoogleCloudPlatformSite.github.io-build/
@@ -27,8 +27,8 @@ destination: ../GoogleCloudPlatformSite.github.io-build/
 # repo defaults to USERNAME.github.io
 # Branch defaults to "source" for USERNAME.github.io
 # or "master" otherwise
-username: johndmulhausen
-repo: johndmulhausen.github.io
+username: GoogleCloudPlatformSite
+repo: GoogleCloudPlatformSite.github.io
 branch: build
 
 permalink: pretty
