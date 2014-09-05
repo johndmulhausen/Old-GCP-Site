@@ -1,0 +1,53 @@
+name: Google Cloud Platform
+markdown: kramdown
+kramdown:
+  input: GFM
+  html_to_native: true
+  hard_wrap: false
+  use_coderay: true
+baseurl: /
+
+safe: false
+lsi: false
+pygments: true
+
+defaults:
+  -
+    scope:
+      path: "" # an empty string here means all files in the project
+    values:
+      layout: "devsiteready"
+
+relative_source: ../GoogleCloudPlatformSite.github.io/
+destination: ../GoogleCloudPlatformSite.github.io-build/
+
+# Settings for deploy rake task
+# Username and repo of Github repo, e.g.
+# https://github.com/USERNAME/REPO.git
+# username defaults to ENV['GIT_NAME'] used by Travis
+# repo defaults to USERNAME.github.io
+# Branch defaults to "source" for USERNAME.github.io
+# or "master" otherwise
+username: GoogleCloudPlatformSite
+repo: GoogleCloudPlatformSite.github.io
+branch: build
+
+permalink: pretty
+
+paginate: 10
+paginate_path: "blog/page:num"
+
+exclude:
+  - README.md
+  - Rakefile
+  - Gemfile
+  - Gemfile.lock
+  - changelog.md
+  - "*.Rmd"
+  - "*.yml"
+  - .gitignore
+  - vendor
+  - "searchtest.md"
+
+include:
+  - "*.yaml"
