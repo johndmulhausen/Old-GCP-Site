@@ -221,15 +221,6 @@
 </script>
 </head>
 <body>
-<script>
-function iframeLoaded() {
-      var iFrameID = document.getElementById('idIframe');
-      if(iFrameID) {
-            iFrameID.height = "";
-            iFrameID.height = iFrameID.contentWindow.document.body.scrollHeight + "px";
-      }
-  }
-</script>
 <div id="maia-main" class="cp-page cp-ctmr cp-std" style="width: 100%">
 <div class="cp-hero cp-cloud cp-wrap" style="width: 100%">
 <div class="cp-header" style="width: 100%">
@@ -237,9 +228,41 @@ function iframeLoaded() {
 <h1>Google Cloud 가격 계산기 <span style="color:#737373; font-size: 14px;">베타</span></h1>
 <div class="product-navigation">빠른 링크: <a href="javascript:window.scrollTo(0,%2040);">Compute Engine</a> | <a href="javascript:window.scrollTo(0,%201040);">Cloud Storage</a> | <a href="javascript:window.scrollTo(0,%201640);">Cloud SQL</a></div>
 </center>
-<iframe id="idIframe" onload="iframeLoaded()" src="https://cloudpricingcalculator.appspot.com/pricingcalculator" scrolling="no" style="width: 130%;overflow:hidden;height: 1900px; width: 1100px;" name="idIframe"></iframe></div>
+<iframe id="idIframe" src="https://cloudpricingcalculator.appspot.com" scrolling="no" style="overflow:hidden;height: 1670px; width: 100%;"></iframe></div>
 </div>
 </div>
+<!-- Scripts to manage url and size from iframe -->
+<script>
+var eventMethod = window.addEventListener ? "addEventListener" : "attachEvent";
+var eventer = window[eventMethod];
+var messageEvent = eventMethod == "attachEvent" ? "onmessage" : "message";
+
+var win = document.getElementById("idIframe");
+
+win.onload = function() {
+
+win.contentWindow.postMessage(
+  location.hash.replace('#id=', ''),
+  "https://cloudpricingcalculator.appspot.com"
+)}
+
+// Listen to message from child window
+eventer(messageEvent,function(e) {
+  if ( event.origin !== "https://cloudpricingcalculator.appspot.com" )
+    return
+  switch (e.data.type) {
+    case 'url':
+      location.hash = 'id=' + e.data.data;
+      break;
+    case 'clear':
+      location.hash = '';
+      break;
+    case 'resize':
+      win.style.height = e.data.data + 'px';
+      break;
+  }
+},false);
+</script>
 <!-- Scripts to include both on Goro + Devsite -->
 <script>
 window.___gcfg = {

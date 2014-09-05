@@ -202,22 +202,45 @@
   </div>
 </div>
 
-<script type="text/javascript">
-  function iframeLoaded() {
-      var iFrameID = document.getElementById('idIframe');
-      if(iFrameID) {
-            iFrameID.height = "";
-            iFrameID.height = iFrameID.contentWindow.document.body.scrollHeight + "px";
-      }
-  }
-</script>
 <div id="maia-main" class="cp-page cp-ctmr cp-std" style="width: 100%">
   <div class="cp-hero cp-cloud cp-wrap" style="width: 100%">
     <div class="cp-header" style="width: 100%">
-      <iframe id="idIframe" onload="iframeLoaded()" src="https://cloudpricingcalculator.appspot.com/pricingcalculator" scrolling="no" style="width: 130%;overflow:hidden;height: 2200px; width: 1100px;"></iframe>
+      <iframe id="idIframe" src="https://cloudpricingcalculator.appspot.com" scrolling="no" style="overflow:hidden;height: 1670px; width: 100%;"></iframe>
     </div>
   </div>
 </div>
+<!-- Scripts to manage url and size from iframe -->
+<script>
+var eventMethod = window.addEventListener ? "addEventListener" : "attachEvent";
+var eventer = window[eventMethod];
+var messageEvent = eventMethod == "attachEvent" ? "onmessage" : "message";
+
+var win = document.getElementById("idIframe");
+
+win.onload = function() {
+
+win.contentWindow.postMessage(
+  location.hash.replace('#id=', ''),
+  "https://cloudpricingcalculator.appspot.com"
+)}
+
+// Listen to message from child window
+eventer(messageEvent,function(e) {
+  if ( event.origin !== "https://cloudpricingcalculator.appspot.com" )
+    return
+  switch (e.data.type) {
+    case 'url':
+      location.hash = 'id=' + e.data.data;
+      break;
+    case 'clear':
+      location.hash = '';
+      break;
+    case 'resize':
+      win.style.height = e.data.data + 'px';
+      break;
+  }
+},false);
+</script>
 
 
   <!-- Scripts to include both on Goro + Devsite -->
