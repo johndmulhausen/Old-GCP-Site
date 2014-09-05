@@ -9,7 +9,7 @@ require 'rake'
 require 'date'
 require 'yaml'
 
-CONFIG = YAML.load(File.read('_config.yml'))
+CONFIG = YAML.load(File.read('_config_build.yml'))
 USERNAME = CONFIG["username"] || ENV['GIT_NAME']
 REPO = CONFIG["repo"] || "#{USERNAME}.github.io"
 
@@ -216,7 +216,7 @@ namespace :site do
     Dir.chdir(CONFIG["destination"]) { sh "git checkout #{DESTINATION_BRANCH}" }
 
     # Generate the site
-    sh "bundle exec jekyll build"
+    sh "bundle exec jekyll build --config _config_build.yml"
 
     # Commit and push to github
     sha = `git log`.match(/[a-z0-9]{40}/)[0]
