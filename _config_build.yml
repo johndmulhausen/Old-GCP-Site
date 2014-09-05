@@ -18,8 +18,8 @@ defaults:
     values:
       layout: "devsiteready"
 
-relative_source: ../johndmulhausen.github.io/
-destination: ../johndmulhausen.github.io-build/
+relative_source: ../GoogleCloudPlatformSite.github.io/
+destination: ../GoogleCloudPlatformSite.github.io-build/
 
 # Settings for deploy rake task
 # Username and repo of Github repo, e.g.
