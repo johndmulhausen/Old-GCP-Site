@@ -16,6 +16,7 @@ install:
 
 env:
   global:
-    secure: "kCaLremluhAeD67iCLx/zQGHt6K7sKyZF1gz8TnmK5c+VuoQ9HAiim8pLkG6OfgbiqkqPs/wASRVwXHNJT9NQRfel982KLw6zuKuKEJmTWGY758voi1pMPjoEe9sY6C3rIscMb0/0myLXS5S2Cci6qHPPCHJRh79V1XaVgVFCE0="
-
+    - secure: "kCaLremluhAeD67iCLx/zQGHt6K7sKyZF1gz8TnmK5c+VuoQ9HAiim8pLkG6OfgbiqkqPs/wASRVwXHNJT9NQRfel982KLw6zuKuKEJmTWGY758voi1pMPjoEe9sY6C3rIscMb0/0myLXS5S2Cci6qHPPCHJRh79V1XaVgVFCE0="
+    - secure: "gLSGm2HKob36dDfRKYxdRk0ZVaf4l4y2xWljIFWdutT6JHA8YVw61JXBd5gELXWdYHQ60XgIUoswbELWAmWUbcKlgriVUk0YTbD8GQ2WLPdQAvSiA5vkITXR/Rim5JjFhaKBHj5P0A9pIvT2Lf2CYVV1uQE/2DOjrTL/99xGk18="
+    
 script: bundle exec rake site:deploy --quiet
