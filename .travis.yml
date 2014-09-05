@@ -14,8 +14,8 @@ install:
   # Install Jekyll and dependencies
   - bundle install
 
-script: bundle exec rake site:deploy --quiet
-
 env:
   global:
     secure: "kCaLremluhAeD67iCLx/zQGHt6K7sKyZF1gz8TnmK5c+VuoQ9HAiim8pLkG6OfgbiqkqPs/wASRVwXHNJT9NQRfel982KLw6zuKuKEJmTWGY758voi1pMPjoEe9sY6C3rIscMb0/0myLXS5S2Cci6qHPPCHJRh79V1XaVgVFCE0="
+
+script: bundle exec rake site:deploy --quiet
