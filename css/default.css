@@ -2884,7 +2884,7 @@ pre.prettyprint {
   color: #3679ec;
 }
 .products #tools .tool-block {
-  padding-bottom: 20px;
+  padding-bottom: 62px;
 }
 .products .logo-wrapper {
   margin-right: 0;
@@ -3008,7 +3008,6 @@ pre.prettyprint {
   margin: 0 !important;
 }
 .products .product-block .product-links {
-  width: 50% !important;
   float: left;
 }
 @media (max-width: 767px) {
