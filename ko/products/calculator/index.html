@@ -48,7 +48,7 @@ win.contentWindow.postMessage(
 
 // Listen to message from child window
 eventer(messageEvent,function(e) {
-  if ( event.origin !== "https://cloudpricingcalculator.appspot.com" )
+  if ( e.origin !== "https://cloudpricingcalculator.appspot.com" )
     return
   switch (e.data.type) {
     case 'url':
