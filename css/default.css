@@ -5203,16 +5203,14 @@ a.maia-media:after {
   }
 }
 .pricing .header {
-  max-width: 279px;
   height: 47px;
   margin-top: 55px;
 }
-.pricing .header .headline, .pricing .header img {
+.pricing .header .headline, .pricing .header .app-icon {
   float: left;
 }
 .pricing .header .headline {
   margin: 10px 0px 0px 15px;
-  max-width: 210px;
 }
 @media (min-width: 300px) and (max-width: 432px) {
   .pricing .header .headline {
