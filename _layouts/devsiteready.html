@@ -7,7 +7,7 @@ https://github.com/GoogleCloudPlatformSite/GoogleCloudPlatformSite.github.io/edi
 <!DOCTYPE html>
 <html devsite>
 <head>
-    <title>{{page.title}}</title>
+    <title>{{page.title}} {{page.id}}</title>
 
     {% if page.description %}
       <meta description="{{page.description}}">
@@ -42,6 +42,9 @@ https://github.com/GoogleCloudPlatformSite/GoogleCloudPlatformSite.github.io/edi
   new lfl.ui.ScrollNav({});
   // new lfl.cloud.GlobalProductMenu();
 </script>
+{% if page.feeds %}
+  <script>new cloud.SocialFeeds(document.getElementById('feeds'));</script>
+{% endif %}
 <script src="/js/floodlight.js"></script>
 </body>
 </html>
