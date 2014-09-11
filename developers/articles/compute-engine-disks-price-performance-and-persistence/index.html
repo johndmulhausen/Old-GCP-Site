@@ -308,7 +308,7 @@
   <h4><a name="no_need_to_prewarm"></a>No need to pre-warm volumes</h4>
   <p>When you add a volume, that volume is available to run at full speed.  There is no need to pre-warm the volume; doing so needlessly consumes resources.</p>
 
-  <h2><a name="h.20oskwvx5asf" id="h.20oskwvx5asf"></a>Selecting the right Persistent Disk type and size</h2>
+  <h2><a name="selecting_the_right_disk"></a>Selecting the right Persistent Disk type and size</h2>
   <p>Determining the right Persistent Disk volume type and size requires consideration of both your storage size and performance requirements.</p>
   <p>Performance requirements for a given application are typically separated into two distinct IO patterns:  "small random IOs" and "large IOs".  For small reads and writes, the limiting factor is random input/output operations per second (<a target="_blank" href="http://en.wikipedia.org/wiki/IOPS">IOPS</a>).  For large reads and writes, the limiting factor is <a target="_blank" href="http://en.wikipedia.org/wiki/Throughput">throughput</a> (MB/s).</p>
   <p>This section will give you an overview, some rules of thumb, and some lookup charts for quick reference.  The subsequent section will walk through example computations to help select the right storage for production environments.</p>
@@ -847,11 +847,7 @@
   </ul>
 
   <h4>Throughput-oriented workloads</h4>
-  <p>Streaming operations, such as a Hadoop job, file upload to Google Cloud Storage, or file copies from one disk to another, benefit from fast sequential reads.  As such, higher readahead values are suggested for these operations.</p>
-
-  <p>Google-provided Compute Engine kernels have a default readahead of 256, which is great for IOPS-oriented workloads.  For throughput-oriented workloads, values in the range of 16384 are recommended.</p>
-
-  <p>The default block size on volumes is 4K.  For throughput-oriented workloads, values of 256KB or above are recommended.</p>
+  <p>Streaming operations, such as a Hadoop job, benefit from fast sequential reads. As such, larger block sizes can increase streaming performance. The default block size on volumes is 4K. For throughput-oriented workloads, values of 256KB or above are recommended.</p>
 
   <h2><a name="best_practices"></a>Best Practices</h2>
 
