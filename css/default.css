@@ -107,6 +107,9 @@ distorting the viewport on mobile */
 #maia-nav-x .global-nav-link .products-nav {
   display: none;
 }
+#maia-nav-x .global-nav-link .products-docs-nav {
+  display: none;
+}
 #maia-nav-x .inline-button {
   position: relative;
   margin: 5px !important;
@@ -144,6 +147,16 @@ distorting the viewport on mobile */
   overflow: hidden;
   border-bottom: 0;
 }
+
+#maia-nav-x.products-docs-nav {
+  background-color: #fafafa;
+  height: 0px;
+  transition: height 1s;
+  -webkit-transition: height 1s;
+  overflow: hidden;
+  border-bottom: 0;
+}
+
 #maia-nav-x .product-list-title {
   color: #bdbdbd;
   font-weight: normal;
