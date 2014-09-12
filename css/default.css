@@ -1,5 +1,9 @@
 /* # Maia overrides (generic)
 ================================================== */
+html {
+  padding: 0 !important;
+}
+
 #maia-signature {
   margin-top: 0;
 }
@@ -1264,7 +1268,7 @@ table td {
   vertical-align: middle;
   margin-right: 0.5em;
 }
-.icon.check {
+.icon.check, .check.app-icon {
   height: 23px;
   width: 23px;
   background-image: url('../images/sprite-s8753ea6266.png');
@@ -1275,7 +1279,7 @@ table td {
   text-align: left;
 }
 @media (-webkit-min-device-pixel-ratio: 1.5), (min--moz-device-pixel-ratio: 1.5), (-o-min-device-pixel-ratio: 3 / 2), (min-device-pixel-ratio: 1.5) {
-  .icon.check {
+  .icon.check, .check.app-icon {
     background-image: url('../images/sprite_2x-s7220d7a5b8.png');
     background-position: 0 -104px;
     background-size: 23px, auto;
@@ -1283,58 +1287,223 @@ table td {
 }
 
 .app-icon {
-  height: 55px;
-  width: 55px;
   margin-right: 7px;
-  background-image: url('/images/product-icons-sprites.png');
+}
+.app-icon.app-engine {
+  height: 50px;
+  width: 55px;
+  background-image: url('../images/products/sprite-s4fa3b1c658.png');
+  background-position: 0 -106px;
   background-repeat: no-repeat;
 }
-
-.app-icon.app-engine {
-  background-position: 0 0;
-}
-
-.app-icon.bigquery {
-  background-position: 0 -55px;
-}
-
-.app-icon.cloud-datastore {
-  background-position: 0 -110px;
-}
-
-.app-icon.cloud-endpoints {
-  background-position: 0 -165px;
-}
-
-.app-icon.cloud-sql {
-  background-position: 0 -220px;
-}
-
-.app-icon.cloud-storage {
-  background-position: 0 -275px;
-}
-
-.app-icon.compute-engine {
-  background-position: 0 -330px;
-}
-
-.app-icon.networking {
-  background-position: 0 -385px;
-}
-
-.app-icon.prediction-api {
-  background-position: 0 -440px;
-}
-
-.app-icon.translate-api {
-  background-position: 0 -495px;
-}
-
 @media (-webkit-min-device-pixel-ratio: 1.5), (min--moz-device-pixel-ratio: 1.5), (-o-min-device-pixel-ratio: 3 / 2), (min-device-pixel-ratio: 1.5) {
-  .app-icon {
-    background-size: 55px, 55px;
-    background-image: url('/images/product-icons-sprites-2x.png');
+  .app-icon.app-engine {
+    background-image: url('../images/products/sprite_2x-s7db37e7f78.png');
+    background-position: 0 -108px;
+    background-size: 54px, auto;
   }
+}
+.app-icon.compute-engine {
+  height: 50px;
+  width: 55px;
+  background-image: url('../images/products/sprite-s4fa3b1c658.png');
+  background-position: 0 -325px;
+  background-repeat: no-repeat;
+}
+@media (-webkit-min-device-pixel-ratio: 1.5), (min--moz-device-pixel-ratio: 1.5), (-o-min-device-pixel-ratio: 3 / 2), (min-device-pixel-ratio: 1.5) {
+  .app-icon.compute-engine {
+    background-image: url('../images/products/sprite_2x-s7db37e7f78.png');
+    background-position: 0 -216px;
+    background-size: 54px, auto;
+  }
+}
+.app-icon.cloud-sql {
+  height: 50px;
+  width: 55px;
+  background-image: url('../images/products/sprite-s4fa3b1c658.png');
+  background-position: 0 -436px;
+  background-repeat: no-repeat;
+}
+@media (-webkit-min-device-pixel-ratio: 1.5), (min--moz-device-pixel-ratio: 1.5), (-o-min-device-pixel-ratio: 3 / 2), (min-device-pixel-ratio: 1.5) {
+  .app-icon.cloud-sql {
+    background-image: url('../images/products/sprite_2x-s7db37e7f78.png');
+    background-position: 0 -270px;
+    background-size: 54px, auto;
+  }
+}
+.app-icon.cloud-datastore {
+  height: 51px;
+  width: 55px;
+  background-image: url('../images/products/sprite-s4fa3b1c658.png');
+  background-position: 0 -380px;
+  background-repeat: no-repeat;
+}
+@media (-webkit-min-device-pixel-ratio: 1.5), (min--moz-device-pixel-ratio: 1.5), (-o-min-device-pixel-ratio: 3 / 2), (min-device-pixel-ratio: 1.5) {
+  .app-icon.cloud-datastore {
+    background-image: url('../images/products/sprite_2x-s7db37e7f78.png');
+    background-position: 0 -378px;
+    background-size: 54px, auto;
+  }
+}
+.app-icon.cloud-dns {
+  display: none;
+}
+.app-icon.cloud-storage {
+  height: 50px;
+  width: 55px;
+  background-image: url('../images/products/sprite-s4fa3b1c658.png');
+  background-position: 0 -546px;
+  background-repeat: no-repeat;
+}
+@media (-webkit-min-device-pixel-ratio: 1.5), (min--moz-device-pixel-ratio: 1.5), (-o-min-device-pixel-ratio: 3 / 2), (min-device-pixel-ratio: 1.5) {
+  .app-icon.cloud-storage {
+    background-image: url('../images/products/sprite_2x-s7db37e7f78.png');
+    background-position: 0 -432px;
+    background-size: 54px, auto;
+  }
+}
+.app-icon.bigquery {
+  height: 49px;
+  width: 54px;
+  background-image: url('../images/products/sprite-s4fa3b1c658.png');
+  background-position: 0 -271px;
+  background-repeat: no-repeat;
+}
+@media (-webkit-min-device-pixel-ratio: 1.5), (min--moz-device-pixel-ratio: 1.5), (-o-min-device-pixel-ratio: 3 / 2), (min-device-pixel-ratio: 1.5) {
+  .app-icon.bigquery {
+    background-image: url('../images/products/sprite_2x-s7db37e7f78.png');
+    background-position: 0 -162px;
+    background-size: 54px, auto;
+  }
+}
+.app-icon.cloud-endpoints {
+  height: 50px;
+  width: 55px;
+  background-image: url('../images/products/sprite-s4fa3b1c658.png');
+  background-position: 0 -491px;
+  background-repeat: no-repeat;
+}
+@media (-webkit-min-device-pixel-ratio: 1.5), (min--moz-device-pixel-ratio: 1.5), (-o-min-device-pixel-ratio: 3 / 2), (min-device-pixel-ratio: 1.5) {
+  .app-icon.cloud-endpoints {
+    background-image: url('../images/products/sprite_2x-s7db37e7f78.png');
+    background-position: 0 -324px;
+    background-size: 54px, auto;
+  }
+}
+.app-icon.translate-api {
+  height: 50px;
+  width: 55px;
+  background-image: url('../images/products/sprite-s4fa3b1c658.png');
+  background-position: 0 -161px;
+  background-repeat: no-repeat;
+}
+@media (-webkit-min-device-pixel-ratio: 1.5), (min--moz-device-pixel-ratio: 1.5), (-o-min-device-pixel-ratio: 3 / 2), (min-device-pixel-ratio: 1.5) {
+  .app-icon.translate-api {
+    background-image: url('../images/products/sprite_2x-s7db37e7f78.png');
+    background-position: 0 0;
+    background-size: 54px, auto;
+  }
+}
+.app-icon.prediction-api {
+  height: 50px;
+  width: 55px;
+  background-image: url('../images/products/sprite-s4fa3b1c658.png');
+  background-position: 0 -216px;
+  background-repeat: no-repeat;
+}
+@media (-webkit-min-device-pixel-ratio: 1.5), (min--moz-device-pixel-ratio: 1.5), (-o-min-device-pixel-ratio: 3 / 2), (min-device-pixel-ratio: 1.5) {
+  .app-icon.prediction-api {
+    background-image: url('../images/products/sprite_2x-s7db37e7f78.png');
+    background-position: 0 -54px;
+    background-size: 54px, auto;
+  }
+}
+.icon.flex, .flex.app-icon {
+  height: 23px;
+  width: 23px;
+  background-image: url('../images/home/sprite-s8ff637626e.png');
+  background-position: 0 -78px;
+  background-repeat: no-repeat;
+}
+@media (-webkit-min-device-pixel-ratio: 1.5), (min--moz-device-pixel-ratio: 1.5), (-o-min-device-pixel-ratio: 3 / 2), (min-device-pixel-ratio: 1.5) {
+  .icon.flex, .flex.app-icon {
+    background-image: url('../images/home/sprite_2x-s316a8dc7a4.png');
+    background-position: 0 -43px;
+    background-size: 28px, auto;
+  }
+}
+.icon.reliability, .reliability.app-icon {
+  height: 15px;
+  width: 24px;
+  background-image: url('../images/home/sprite-s8ff637626e.png');
+  background-position: 0 -43px;
+  background-repeat: no-repeat;
+}
+@media (-webkit-min-device-pixel-ratio: 1.5), (min--moz-device-pixel-ratio: 1.5), (-o-min-device-pixel-ratio: 3 / 2), (min-device-pixel-ratio: 1.5) {
+  .icon.reliability, .reliability.app-icon {
+    background-image: url('../images/home/sprite_2x-s316a8dc7a4.png');
+    background-position: 0 -123px;
+    background-size: 28px, auto;
+  }
+}
+.icon.security, .security.app-icon {
+  height: 16px;
+  width: 24px;
+  background-image: url('../images/home/sprite-s8ff637626e.png');
+  background-position: 0 -202px;
+  background-repeat: no-repeat;
+}
+@media (-webkit-min-device-pixel-ratio: 1.5), (min--moz-device-pixel-ratio: 1.5), (-o-min-device-pixel-ratio: 3 / 2), (min-device-pixel-ratio: 1.5) {
+  .icon.security, .security.app-icon {
+    background-image: url('../images/home/sprite_2x-s316a8dc7a4.png');
+    background-position: 0 -202px;
+    background-size: 28px, auto;
+  }
+}
+.icon.speed, .speed.app-icon {
+  height: 23px;
+  width: 20px;
+  background-image: url('../images/home/sprite-s8ff637626e.png');
+  background-position: 0 0;
+  background-repeat: no-repeat;
+}
+@media (-webkit-min-device-pixel-ratio: 1.5), (min--moz-device-pixel-ratio: 1.5), (-o-min-device-pixel-ratio: 3 / 2), (min-device-pixel-ratio: 1.5) {
+  .icon.speed, .speed.app-icon {
+    background-image: url('../images/home/sprite_2x-s316a8dc7a4.png');
+    background-position: 0 0;
+    background-size: 28px, auto;
+  }
+}
+.icon.usability, .usability.app-icon {
+  height: 17px;
+  width: 22px;
+  background-image: url('../images/home/sprite-s8ff637626e.png');
+  background-position: 0 -165px;
+  background-repeat: no-repeat;
+}
+@media (-webkit-min-device-pixel-ratio: 1.5), (min--moz-device-pixel-ratio: 1.5), (-o-min-device-pixel-ratio: 3 / 2), (min-device-pixel-ratio: 1.5) {
+  .icon.usability, .usability.app-icon {
+    background-image: url('../images/home/sprite_2x-s316a8dc7a4.png');
+    background-position: 0 -86px;
+    background-size: 28px, auto;
+  }
+}
+.icon.support, .support.app-icon {
+  height: 24px;
+  width: 28px;
+  background-image: url('../images/home/sprite-s8ff637626e.png');
+  background-position: 0 -121px;
+  background-repeat: no-repeat;
+}
+@media (-webkit-min-device-pixel-ratio: 1.5), (min--moz-device-pixel-ratio: 1.5), (-o-min-device-pixel-ratio: 3 / 2), (min-device-pixel-ratio: 1.5) {
+  .icon.support, .support.app-icon {
+    background-image: url('../images/home/sprite_2x-s316a8dc7a4.png');
+    background-position: 0 -158px;
+    background-size: 28px, auto;
+  }
+}
+
+
 
 /* # Global (Pane/tabs module)
 ================================================== */
@@ -5136,7 +5305,7 @@ table.startup-eligibility td.startup-eligibility-contact h2 a {
 }
 .pricing .header {
   height: 47px;
-  margin-top: 55px;
+  margin-top: 10px;
 }
 .pricing .header .headline, .pricing .header .app-icon {
   float: left;
