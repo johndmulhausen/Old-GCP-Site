@@ -55,12 +55,10 @@ redirects:
   to: http://www.gcp-live.com/
 - from: /LIVE
   to: http://www.gcp-live.com/
-
-
 - from: /events/google-cloud-platform-live/invite/...
   to: /events/google-cloud-platform-live/
 - from: /eap
-  to: https://developers.google.com/cloud/early-access 
+  to: https://developers.google.com/cloud/early-access
 
 ### Old site redirects ###
 # Resources section
@@ -117,15 +115,25 @@ redirects:
 
 # Campaign redirects
 - from: /startups
-  to: /resources/startups
+  to: /developers/startups/
+- from: /startup
+  to: /developers/startups/
 - from: /starterpack
-  to: /developers/starterpack
+  to: /developers/startercredit
+- from: /developers/starterpack
+  to: /developers/startercredit
+- from: /startercredit
+  to: /developers/startercredit
 - from: /gdc
   to: /solutions/gaming
 - from: /hipaa
   to: /index#hipaa
 - from: /redeem
   to: https://console.developers.google.com/billing/redeem
+- from: /products/pubsub
+  to: /products/cloud-pubsub
+- from: /pubsub
+  to: /products/cloud-pubsub
 
 # form redirects
 - from: /r/managed-vms
