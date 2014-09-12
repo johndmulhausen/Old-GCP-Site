@@ -1,9 +1,5 @@
 /* # Maia overrides (generic)
 ================================================== */
-html {
-  padding: 0 !important;
-}
-
 #maia-signature {
   margin-top: 0;
 }
@@ -12,6 +8,19 @@ img.maia-media {
   outline: none;
 }
 
+body.docs h2::after, .docs .memitem table h2::after {
+  background: #fff;
+  border: auto;
+  content: "";
+  display: block;
+  margin: 0;
+  height: auto;
+  overflow: auto;
+}
+
+.kd-butterbar {
+  width: auto;
+}
 
 /* # Maia override (buttons)
 ================================================== */
@@ -177,7 +186,8 @@ distorting the viewport on mobile */
 }
 #maia-nav-x .products-nav-dropdown {
   display: block;
-  height: 190px;
+  font-size: 0.9em;
+  height: 210px;
   background-color: #fafafa;
   transition: all 0.4s ease-in-out;
   -webkit-transition: all 0.4s ease-in-out;
@@ -188,7 +198,7 @@ distorting the viewport on mobile */
   }
 }
 #maia-nav-x .dropdown-item-container {
-  margin-bottom: 10px;
+  margin-bottom: 8px;
   display: block;
 }
 #maia-nav-x a {
@@ -842,7 +852,9 @@ a:visited {
 }
 .site-wrapper p,
 .site-wrapper a.read-more {
+  color: #444;
   font-family: 'Arial';
+  font-size: 13px;
 }
 .inline-icon {
   vertical-align: middle;
@@ -1145,6 +1157,7 @@ table td {
 }
 
 .page-header .subheadline {
+  color: #fff;
   font-size: 18px;
 }
 
