@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Cloud Platform for Startups - Google Cloud Platform</title>
+    <meta charset="utf-8" />
+    
+      <meta description="Focus on building your product and don't worry about complex infrastructure. Google manages your application, database, and storage servers so you don't have to.">
+    
+    <link rel="shortcut icon" href="/images/gcp-favicon.ico">
+    <link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
+
+    <!--[if lt IE 9]>
+    <script src="/js/html5.js"></script>
+    <![endif]-->
+
+    <meta name="google-site-verification" content="8dOEM3Xenm6yaBc83y2WKgqQG0iHI7Ph6Rl_YLIZLQ8" />
+    <meta name="viewport" content="initial-scale=1, minimum-scale=1, width=device-width">
+
+    <!-- GSAP animation frameworks -->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+    <script src="//www.gstatic.com/external_hosted/gsap/TweenMax.min.js"></script>
+    <script src="//www.gstatic.com/external_hosted/gsap/TimelineMax.min.js"></script>
+    <script src="/js/floodlight.js"></script>
+
+    <link href="/developers/startups/" rel="canonical">
+    <link href="//fonts.googleapis.com/css?family=Open+Sans:400italic,300,400,600,700" rel="stylesheet">
+    <link href="//www.google.com/css/maia.experimental.css" rel="stylesheet">
+    <link href="/css/maia-cloud.css" rel="stylesheet"/>
+    <link href="/css/default.css" rel="stylesheet">
+  </head>
+  <body>
+  <div id="maia-header">
+    <div class="maia-aux">
+      <h1><a href="/"><img src="/images/gcp-logo.png" alt="Cloud Platform" data-retina="383x48"></a></h1>
+
+<div class="search-container">
+  <form action="/search" class="maia-search">
+    <input type="text" placeholder="Search this site" name="q">
+    <button class="maia-button" type="submit" data-g-event="Maia: Button" data-g-action="Maia: Primary – Header" data-g-label="Search">
+      <span class="maia-search-icon">Search this site</span>
+    </button>
+  </form>
+  <div class="cloud-social">
+
+    <div class="cloud-signed-in">
+      <a href="https://console.developers.google.com/" event="autotrack-data-g" data-g-event="Global Nav" data-g-action="Nav Bar" data-g-label="Go to my console">Go to Cloud Console</a>
+    </div>
+
+  </div>
+
+</div>
+
+</div>
+
+    </div>
+  </div>
+  <div id="maia-nav-x" class="maia-nav">
+    <div class="maia-aux">
+   <div class="cp-cta">
+     <a class="cp-track maia-button maia-button-secondary white-button" href="/contact/" event="autotrack-data-g" data-g-event="Global Nav" data-g-action="Contact Sales" data-g-label="Global Nav: Click" >Contact Sales</a>
+     
+       <a class="cp-track maia-button blue-button" href="https://console.developers.google.com?getstarted=https://cloud.google.com" event="autotrack-data-g" data-g-event="Global Nav" data-g-action="Try It Now" data-g-label="Global Nav: Click" style="color: #fff;">Try it now</a>
+     
+   </div>
+      <ul>
+        <li >
+            <a href="/why-google/" event="autotrack-data-g" data-g-event="Global Nav" data-g-action="Nav Bar" data-g-label="Why Google">
+            Why Google
+            </a>
+        </li>
+        <li  id="main-nav-product-dropdown" class="dropdown">
+            <a href="/products/" event="autotrack-data-g" data-g-event="Global Nav" data-g-action="Nav Bar" data-g-label="Products">
+            Products
+            </a>
+        </li>
+        <li >
+            <a href="/solutions/" event="autotrack-data-g" data-g-event="Global Nav" data-g-action="Nav Bar" data-g-label="Solutions">
+            Solutions
+            </a>
+        </li>
+        <li >
+            <a href="/customers/" event="autotrack-data-g" data-g-event="Global Nav" data-g-action="Nav Bar" data-g-label="Customers">
+            Customers
+            </a>
+        </li>
+        <li  class="active" >
+            <a href="/developers/" event="autotrack-data-g" data-g-event="Global Nav" data-g-action="Nav Bar" data-g-label="Developers">
+          Developers
+            </a>
+        </li>
+        <li >
+            <a href="/support/" event="autotrack-data-g" data-g-event="Global Nav" data-g-action="Nav Bar" data-g-label="Support">
+            Support
+            </a>
+        </li>
+        <li >
+            <a href="/partners/" event="autotrack-data-g" data-g-event="Global Nav" data-g-action="Nav Bar" data-g-label="Partners">
+            Partners
+            </a>
+        </li>
+         <li >
+            <a href="http://googlecloudplatform.blogspot.com/" event="autotrack-data-g" data-g-event="Global Nav" data-g-action="Nav Bar" data-g-label="Blog">
+            Blog
+            </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+<!-- Products subnav -->
+<div id="maia-nav-x" class="maia-nav products-nav">
+  <div class="maia-aux">
+    <div class="products-nav-dropdown maia-cols">
+
+      <div id="compute-dropdown" class="products-column maia-col-2">
+        <span class="product-list-title">Compute</span>
+        <div class="dropdown-item-container">
+          <a href="/products/compute-engine/">
+            <span class="product-name">Compute Engine</span>
+          </a>
+        </div>
+        <div class="dropdown-item-container">
+          <a href="/products/app-engine/">
+            <span class="product-name">App Engine</span>
+          </a>
+        </div>
+      </div>
+
+      <div id="storage-dropdown" class="products-column maia-col-2">
+        <span class="product-list-title">Storage</span>
+        <div class="dropdown-item-container">
+          <a href="/products/cloud-sql/">
+            <span class="product-name">Cloud SQL</span>
+          </a>
+        </div>
+        <div class="dropdown-item-container">
+          <a href="/products/cloud-storage/">
+            <span class="product-name">Cloud Storage</span>
+          </a>
+        </div>
+        <div class="dropdown-item-container">
+          <a href="/products/cloud-datastore/">
+            <span class="product-name">Cloud Datastore</span>
+          </a>
+        </div>
+      </div>
+
+      <div id="big-data-dropdown" class="products-column maia-col-2">
+        <span class="product-list-title">Big Data</span>
+        <div class="dropdown-item-container">
+          <a href="/products/bigquery/">
+            <span class="product-name">BigQuery</span>
+          </a>
+        </div>
+      </div>
+
+      <div id="services-dropdown" class="products-column maia-col-2">
+        <span class="product-list-title">Services</span>
+        <div class="dropdown-item-container">
+          <a href="/products/cloud-dns/">
+            <span class="product-name">Cloud DNS</span>
+          </a>
+        </div>
+        <div class="dropdown-item-container">
+          <a href="/products/cloud-endpoints/">
+            <span class="product-name">Cloud Endpoints</span>
+          </a>
+        </div>
+        <div class="dropdown-item-container">
+          <a href="/products/translate-api/">
+            <span class="product-name">Translate API</span>
+          </a>
+        </div>
+        <div class="dropdown-item-container">
+          <a href="/products/prediction-api/">
+            <span class="product-name">Prediction API</span>
+          </a>
+        </div>
+        <div class="dropdown-item-container">
+          <a href="/products/cloud-pubsub/">
+            <span class="product-name">Cloud Pub/Sub</span>
+          </a>
+        </div>
+      </div>
+
+      <div id="management-dropdown" class="products-column maia-col-2">
+        <span class="product-list-title">Management</span>
+        <div class="dropdown-item-container">
+          <span class="product-name"><a href="/products/cloud-deployment-manager/">Cloud Deployment Manager</a></span>
+        </div>
+      </div>
+
+      <div id="pricing-dropdown" class="products-column maia-col-2">
+        <span class="product-list-title">Pricing</span>
+        <div class="dropdown-item-container">
+          <span class="product-name"><a href="/products/pricing/">Overview</a></span>
+        </div>
+        <div class="dropdown-item-container">
+          <span class="product-name"><a href="/products/calculator/">Calculator</a></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="site-wrapper startup-offer">
+  <div class="maia-stage page-header gray-header scroll-section" data-section-label="Cloud Platform for Startups">
+    <div class="maia-aux page-header-inner">
+      <div class="page-header-inner-inner">
+        <div class="maia-cols">
+          <div class="maia-col-7">
+            <h1 class="headline">
+              Cloud Platform for Startups
+            </h1>
+            <p class="subheadline">
+              <em>$100,000 in credit and 24/7 support for eligible startups.</em><br>
+              Focus on building your product and don't worry about complex <br>
+              infrastructure.  Google manages your application, database, <br>
+              and storage servers so you don't have to.
+            </p>
+          </div>
+          <div class="maia-col-5">
+            <div class="page-header-img">
+              <img src="../../images/developers/startup-logos.png" style="width: 260px;">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="maia-main">
+  <div id="startup-benefits" class="startup-offer startup-generic-section scroll-section" data-section-label="Startup benefits">
+    <div class="maia-cols">
+        <div class="header center">
+          <h2 class="headline">Startup benefits</h2>
+        </div>
+      </div>
+      <div class="maia-cols">
+        <div class="maia-col-4 inner-block">
+          <h3 class="headline"><img class="inline-icon" src="/images/products/icons/storage-2.png" alt="$100,000 free">$100,000 free</h3>
+          <p>Get $100,000 in Cloud Platform credit for 1 year.<br>
+          Credit can be applied to <a href="../../products/">all Cloud Platform products</a>.</p>
+        </div>
+
+        <div class="maia-col-4 inner-block">
+          <h3 class="headline"><img class="inline-icon" src="/images/products/icons/appengine-2.png" alt="Office hours">Office hours</h3>
+          <p>Schedule 1:1 technical architecture reviews with Cloud Platform solutions engineers.</p>
+        </div>
+
+        <div class="maia-col-4 inner-block">
+          <h3 class="headline"><img class="inline-icon" src="/images/products/icons/pred-5.png" alt="24/7 support">24/7 support</h3>
+          <p>We offer 24/7 coverage, with phone support and rapid response times.</p>
+        </div>
+      </div>
+    </div>
+
+    <div id="eligibility" class="startup-offer startup-generic-section scroll-section" data-section-label="Eligibility">
+      <div class="maia-cols">
+        <div class="header center">
+          <h2 class="headline">Eligibility</h2>
+          <h3 class="headline">This offer is available to startups that meet the following criteria:</h3>
+        </div>
+      </div>
+      <div class="maia-cols">
+        <div class="maia-col-12">
+          <table class="startup-eligibility">
+            <tr>
+              <td>
+               <img class="checkmark-icon" src="../../images/developers/checkmark.png" alt="checkmark icon">
+               <h2>In an approved Accelerator, Incubator or VC fund</h2>
+              </td>
+              <td>
+               <img class="checkmark-icon" src="../../images/developers/checkmark.png" alt="checkmark icon">
+               <h2>Haven't received previous Cloud Platform credits</h2>
+              </td>
+              <td>
+               <img class="checkmark-icon" src="../../images/developers/checkmark.png" alt="checkmark icon">
+               <h2>Less than $5 million in funding</h2>
+              </td>
+              <td>
+               <img class="checkmark-icon" src="../../images/developers/checkmark.png" alt="checkmark icon">
+               <h2>Less than $500,000 in annual revenue</h2>
+              </td>
+            </tr>
+            <tr>
+              <td class="startup-eligibility-contact" colspan="4">
+                <h2>To apply, contact your Accelerator, Incubator, or VC about Google Cloud Platform for Startups.<br>
+                If they are not in the program, email <a href="mailto:CloudPlatformStartups@google.com">CloudPlatformStartups@google.com</a> to get them added.</h2>
+              </td>
+            </tr>
+          </table>
+        </div>
+       </div>
+
+      <div class="maia-cols">
+        <div class="header center">
+          <h3 class="startup-headline">Below are some of the partners we work with:</h3>
+        </div>
+      </div>
+
+      <div class="maia-cols">
+          <div class="maia-col-12">
+            <img src="../../images/developers/startups_logos.png">
+          </div>
+      </div>
+
+      <div class="maia-cols">
+          <div class="maia-col-12 center">
+            <p>If you're an Accelerator, Incubator or VC and want to make this offer available to your startups,<br>
+               pleae email <a href="mailto:CloudPlatformStartups@google.com">CloudPlatformStartups@google.com</a></p>
+          </div>
+      </div>
+    </div>
+
+    <div id="customers" class="startup-offer startup-generic-section scroll-section" data-section-label="Our customers">
+
+        <div class="maia-cols">
+        <div class="header center">
+          <h2 class="headline">Who's using Cloud Platform?</h2>
+          <h3 class="headline">Over 4 million applications are built on Cloud Platform.</h3>
+        </div>
+      </div>
+
+      <div class="customer-stories">
+        <div class="maia-cols">
+          <div class="inner-block maia-col-6">
+            <div class="maia-cols">
+              <div class="image-wrapper maia-col-4">
+                <img src="/images/home/casestudy-snapchat.png" alt="SnapChat" data-retina="139x123" />
+              </div>
+              <div class="details maia-col-8">
+                <h3 class="headline">Snapchat</h3>
+                <p class="subheadline">“Cloud Platform gives you up front ease of use with the added comfort of knowing whatever you are building, if it needs to, will scale ad infinitum.”</p>
+                <p><span class="case-study-author">Bobby Murphy, </span><span class="case-study-role">CTO and co-Founder</span></p>
+                <a href="http://gigaom.com/2013/05/07/snapchats-act-of-faith-in-building-on-google-compute-engine/" class="read-more" target="_blank" event="autotrack-data-g" data-g-event="Home" data-g-action="Customer Case Study" data-g-label="Snapchat">Read Snapchat's story</a>
+              </div>
+            </div>
+          </div>
+          <div class="inner-block maia-col-6">
+            <div class="maia-cols">
+              <div class="image-wrapper maia-col-4">
+                <img src="/images/case-studies/landing/leanplum.png" alt="Leanplum" data-retina="139x123" />
+              </div>
+              <div class="details maia-col-8">
+                <h3 class="headline">Leanplum</h3>
+                <p class="subheadline">“By giving us the tools to develop, iterate and scale quickly, Cloud Platform provided us more time to focus on the product, which is priceless for any startup.”</p>
+                <p><span class="case-study-author">Andrew First, </span><span class="case-study-role">CTO and co-Founder</span></p>
+                <a href="http://googlecloudplatform.blogspot.com/2014/03/google-cloud-platform-and-leanplum-help-app-developers-conduct-on-the-fly-ab-tests.html" class="read-more" event="autotrack-data-g" data-g-event="Home" data-g-action="Customer Case Study" data-g-label="Leanplum">Read Leanplum's story</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="maia-cols">
+          <div class="inner-block maia-col-6">
+            <div class="maia-cols">
+              <div class="image-wrapper maia-col-4">
+                <img src="../../images/home/casestudy-getaround.png" alt="Getaround" data-retina="139x123" />
+              </div>
+              <div class="details maia-col-8">
+                <h3 class="headline">Getaround</h3>
+                <p class="subheadline">“Google App Engine has the breadth and the depth to grow with you. Every 6 months, it gets better. The Google App Engine team knows what you need to make a competitive application.”</p>
+                <p><span class="case-study-author">Elliot Kroo, </span><span class="case-study-role">Founder and Director of Engineering</span></p>
+                <a href="../../customers/getaround/" class="read-more" event="autotrack-data-g" data-g-event="Home" data-g-action="Customer Case Study" data-g-label="Getaround">Read Getaround's story</a>
+              </div>
+            </div>
+          </div>
+          <div class="inner-block maia-col-6">
+            <div class="maia-cols">
+              <div class="image-wrapper maia-col-4">
+                <img src="../../images/home/casestudy-udacity.png" alt="udacity" data-retina="139x123" />
+              </div>
+              <div class="details maia-col-8">
+                <h3 class="headline">Udacity</h3>
+                <p class="subheadline">“It is very apparent that the Google services and APIs have been designed by people
+                who know how to scale web applications, and we feel lucky to have the opportunity to ride on the shoulders of
+                such giants.”</p>
+                <p><span class="case-study-author">Chris Chew, </span><span class="case-study-role">Senior Software Engineer</span></p>
+                <a href="../../customers/udacity/" class="read-more" event="autotrack-data-g" data-g-event="Home" data-g-action="Customer Case Study" data-g-label="Udacity">Read Udacity's story</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+     <div id="startup-benefits" class="startup-offer startup-generic-section scroll-section" data-section-label="Startup benefits">
+    <div class="maia-cols">
+        <div class="header center">
+          <h2 class="headline">Why Google</h2>
+        </div>
+      </div>
+      <div class="maia-cols">
+        <div class="maia-col-6 inner-block">
+          <h3 class="headline"><img class="inline-icon" src="/images/why-google/icon-network.png" alt="Google infrastructure">Run on Google's infrastructure</h3>
+          <p>Build on the same infrastructure that allows Google to return billions of search results in milliseconds, serve 6 billion hours
+          of YouTube videos per month and provide storage for 425 million Gmail users.</p>
+          <p><a href="../../why-google/#infrastructure">Find out more</a></p>
+        </div>
+
+        <div class="maia-col-6 inner-block">
+          <h3 class="headline"><img class="inline-icon" src="/images/why-google/icon-scaleup.png" alt="Scale to millions of users">Scale to millions of users</h3>
+          <p>Applications hosted on Cloud Platform can automatically scale up to handle the most demanding Internet-scale workloads and scale down when traffic subsides.  You pay only for what you use.<p>
+          <p><a href="../../why-google/#scalability">Find out more</a></p>
+        </div>
+
+         <div class="maia-col-6 inner-block">
+          <h3 class="headline"><img class="inline-icon" src="/images/why-google/icon-tools.png" alt="Easy development">Easy development</h3>
+          <p>Cloud Platform is designed to make development easy.  Use our debugger, trace and monitoring tools to understand your system in production.</p>
+          <p><a href="../../why-google/#product">Find out more</a></p>
+        </div>
+
+        <div class="maia-col-6 inner-block">
+          <h3 class="headline"><img class="inline-icon" src="/images/why-google/icon-cloud.png" alt="Mix and match services">Mix and match services</h3>
+          <p>Virtual machines.  Managed platform.  Blob storage. Block storage. NoSQL datastore.  MySQL database. Big Data Analytics. Google Cloud Platform has all the services your application architecture needs.</p>
+          <p><a href="../../why-google/#services">Find out more</a></p>
+        </div>
+
+      </div>
+    </div>
+
+      <div id="startup-benefits" class="startup-offer startup-generic-section scroll-section" data-section-label="Startup benefits">
+    <div class="maia-cols">
+        <div class="header center">
+          <h2 class="headline">Learn more about Cloud Platform</h2>
+        </div>
+      </div>
+      <div class="maia-cols">
+        <div class="maia-col-4 inner-block">
+         <a class="lb" data-g-action="Video" data-lightbox-index="1" data-g-event="Video Open" data-g-label="Your app at scale" data-lightbox-height="360" data-lightbox-width="640" href="//www.youtube.com/embed/ytT2-kL9v2o?autoplay=1">
+            <img class="startup-video-img" alt="Video Image" src="../../images/developers/yt-screenshot-yourappatscale.png">
+          </a>
+
+          <p><a href="//www.youtube.com/watch?v=ytT2-kL9v2o?autoplay=1" target="_blank">Your App at Scale</a></p>
+          <p>Learn how to use Google App Engine at each level of your application needs, from
+          initial development to beta to your 5 millionth user.</p>
+
+        </div>
+
+        <div class="maia-col-4 inner-block">
+         <a class="lb" data-g-action="Video" data-lightbox-index="1" data-g-event="Video Open" data-g-label="Virtual Machines on Cloud Platform" data-lightbox-height="360" data-lightbox-width="640" href="//www.youtube.com/embed/43gvHZyPRVk?autoplay=1">
+            <img class="startup-video-img" alt="Video Image" src="../../images/developers/yt-screenshot-virtualmachines.png">
+          </a>
+
+          <p><a href="//www.youtube.com/watch?v=43gvHZyPRVk?rel=0&autoplay=1" target="_blank">Virtual Machines on Cloud Platform</a></p>
+          <p>Learn the fundamentals of Google Compute Engine in less than five minutes.</p>
+        </div>
+
+        <div class="maia-col-4 inner-block">
+         <a class="lb" data-g-action="Video" data-lightbox-index="1" data-g-event="Video Open" data-g-label="Let's talk about Big Data" data-lightbox-height="360" data-lightbox-width="640" href="//www.youtube.com/embed/aupC-Wj7XDY?autoplay=1">
+            <img class="startup-video-img" alt="Video Image" src="../../images/developers/yt-screenshot-bigdata.png">
+          </a>
+
+          <p><a href="//www.youtube.com/watch?v=aupC-Wj7XDY?autoplay=1" target="_blank">Let's talk about Big Data</a></p>
+          <p>See how you can analyze terabytes of data in seconds.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts to include both on Goro + Devsite -->
+  <script type="text/javascript">
+   window.___gcfg = {
+     lang: ''
+   };
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+  </script>
+
+  <!-- GTM implementation -->
+
+  <!-- Start dataLayer -->
+    <script>
+      dataLayer = [{
+        'country': '',
+        'region': '',
+        'language': 'en'
+      }];
+    </script>
+  <!-- End dataLayer -->
+
+  <!-- Start Google Tag Manager -->
+  <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5CVQBG"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-5CVQBG');</script>
+  <!-- End Google Tag Manager -->
+
+  <!-- Global JS scripts to load; path will depend on whether we're on devsite or Goro -->
+  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular-sanitize.js"></script>
+
+  <script src="/js/base.min.js"></script>
+
+<!-- Secondary right-side scroll-nav -->
+<script>
+  new lfl.ui.ScrollNav({});
+  new lfl.cloud.GlobalProductMenu();
+</script>
+
+<script>new cloud.SocialFeeds(document.getElementById('feeds'));</script>
+
+
+
+  <div id="maia-signature"></div>
+  <div id="maia-footer">
+
+    <!-- maia-footer-local -->
+    <div id="maia-footer-local">
+      <div class="maia-aux">
+
+          <div class="ent-footer-top">
+  <div class="g-plus-wrapper">
+    <div class="g-plusone" data-href="https://cloud.google.com/"></div>
+  </div>
+  <div class="g-plus-link"><a href="https://plus.sandbox.google.com/+googlecloudplatform/posts" rel="publisher">Google+</a></div>
+  <div class="search">
+    <form onsumbit="return false;" class="maia-search" action="/search">
+    <input name="q" placeholder="Search this site" type="text">
+    <input name="hl" type="hidden" value="">
+    <input name="q" type="hidden" value="site:cloud.google.com/">
+    <button class="maia-button" event="autotrack-data-g" data-g-event="Footer" data-g-action="Site Search" data-g-label="Submit">
+      <span class="maia-search-icon">Search</span>
+    </button>
+    </form>
+  </div>
+
+</div>
+
+<div class="ent-footer-links">
+  <div class="ent-footer-unit">
+    <h4><a href="/why-google/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Why Google" data-g-label="Why Google">Why Google</a></h4>
+    <ul>
+      <li><a href="/why-google/#infrastructure" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Why Google" data-g-label="Infrastructure">Infrastructure</a></li>
+      <li><a href="/why-google/#product" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Why Google" data-g-label="Product">Product</a></li>
+      <li><a href="/why-google/#services" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Why Google" data-g-label="Services">Services</a></li>
+      <li><a href="/why-google/#scalability" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Why Google" data-g-label="Scalability">Scalability</a></li>
+      <li><a href="/why-google/#performance" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Why Google" data-g-label="Performance">Performance</a></li>
+      <li><a href="/why-google/#support" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Why Google" data-g-label="Support">Support</a></li>
+    </ul>
+  </div>
+
+  <div class="ent-footer-unit">
+    <h4><a href="/products/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="Products">Products</a></h4>
+    <ul>
+      <li><a href="/products/app-engine/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="App Engine">App Engine</a></li>
+      <li><a href="/products/compute-engine/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="Compute Engine">Compute Engine</a></li>
+      <li><a href="/products/cloud-storage/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="Cloud Storage">Cloud Storage</a></li>
+      <li><a href="/products/cloud-sql/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="Cloud SQL">Cloud SQL</a></li>
+      <li><a href="/products/cloud-datastore/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="Cloud Datastore">Cloud Datastore</a></li>
+      <li><a href="/products/bigquery/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="BigQuery">BigQuery</a></li>
+      <li><a href="/products/prediction-api/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="Prediction API">Prediction API</a></li>
+      <li><a href="/products/translate-api/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="Translate API">Translate API</a></li>
+      <li><a href="/products/cloud-endpoints/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="Cloud Endpoints">Cloud Endpoints</a></li>
+      <li><a href="/products/calculator/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="Pricing Calculator">Pricing Calculator</a></li>
+      <li><a href="/pricing/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="Pricing">Pricing</a></li>
+    </ul>
+  </div>
+
+  <div class="ent-footer-unit">
+    <h4><a href="/solutions/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Solutions" data-g-label="Solutions">Solutions</a></h4>
+    <ul>
+      <li><a href="/solutions/mobile/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Solutions" data-g-label="Mobile">Mobile</a></li>
+      <li><a href="/solutions/gaming/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Solutions" data-g-label="Gaming">Gaming</a></li>
+      <li><a href="/solutions/hadoop/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Solutions" data-g-label="Hadoop">Hadoop</a></li>
+      <li><a href="/solutions/mongodb/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Solutions" data-g-label="mongodb">MongoDB</a></li>
+      <li><a href="/solutions/rabbitmq/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Solutions" data-g-label="rabbitmq">RabbitMQ</a></li>
+      <li><a href="/solutions/cassandra/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Solutions" data-g-label="cassandra">Cassandra</a></li>
+    </ul>
+  </div>
+
+  <div class="ent-footer-unit">
+    <h4><a href="/customers/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Customers" data-g-label="Customers">Customers</a></h4>
+  </div>
+
+  <div class="ent-footer-unit">
+    <h4><a href="/developers/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Developers" data-g-label="Developers">Developers</a></h4>
+    <ul>
+      <li><a href="/developers/#documentation" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Developers" data-g-label="Documentation">Documentation</a></li>
+      <li><a href="/developers/#resources" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Developers" data-g-label="Resources">Resources</a></li>
+    </ul>
+  </div>
+
+  <div class="ent-footer-unit">
+    <h4><a href="/support/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Support" data-g-label="Support">Support</a></h4>
+    <ul>
+      <li><a href="https://support.google.com/cloud/" target="_blank" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Support" data-g-label="Google Cloud Platform Support Help Center">Platform Support Help Center</a></li>
+      <li><a href="https://support.google.com/cloudbilling/" target="_blank" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Support" data-g-label="Google Cloud Billing Help Center">Billing Help Center</a></li>
+      <li><a href="https://enterprise.google.com/supportcenter/" target="_blank" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Support" data-g-label="Google for Work Support Center">Google for Work Support Center</a></li>
+    </ul>
+
+  </div>
+
+
+  <div class="ent-footer-unit">
+    <h4><a href="/partners/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Partners" data-g-label="Partners">Partners</a></h4>
+    <ul>
+      <li><a href="/partners/technology-partners/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Partners" data-g-label="Find A Technology Partner">Technology Partners</a></li>
+      <li><a href="/partners/service-partners/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Partners" data-g-label="Find A Service Partner">Service Partners</a></li>
+    </ul>
+  </div>
+
+  </div>
+  <br class="clear" />
+
+  </div>
+  </div>
+    <!-- /maia-footer-local -->
+
+    <!-- maia-footer-global -->
+    <div id="maia-footer-global">
+      <div class="maia-locales">
+        <select name="language" 
+        onchange="var lang=this[this.selectedIndex].value;if(lang!='')
+        {window.location.href=window.location.pathname + '?hl=' + lang};">>
+          <option value="en" selected>English</option>
+          <option value="fr" >Français</option>
+          <option value="de" >Deutsch</option>
+          <option value="ja" >日本語</option>
+          <option value="ko" >한국어</option>
+          <option value="pt-br" >Português</option>
+          <option value="es" >Español</option>
+          <option value="zh-tw" >中文（繁體中文）</option>
+        </select>
+      </div>
+      <div class="maia-aux">
+        <ul>
+          <li><a href="http://www.google.com/">Google</a></li>
+          <li><a href="https://developers.google.com/readme/terms">Terms of Service</a></li>
+          <li><a href="https://www.google.com/intl/en/policies/privacy/">Privacy Policy</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <!-- /maia-footer-global -->
+  <script src="//www.google.com/js/maia.js"></script>
+  <script type="text/javascript" async defer src="//www.gstatic.com/feedback/api.js"></script>
+  <script id="jqueryui" src="//ajax.googleapis.com/ajax/libs/jqueryui/1.8.10/jquery-ui.min.js"></script>
+  </body>
+</html>
