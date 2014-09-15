@@ -8,6 +8,19 @@ img.maia-media {
   outline: none;
 }
 
+body.docs h2::after, .docs .memitem table h2::after {
+  background: #fff;
+  border: auto;
+  content: "";
+  display: block;
+  margin: 0;
+  height: auto;
+  overflow: auto;
+}
+
+.kd-butterbar {
+  width: auto;
+}
 
 /* # Maia override (buttons)
 ================================================== */
@@ -186,7 +199,8 @@ distorting the viewport on mobile */
 }
 #maia-nav-x .products-nav-dropdown {
   display: block;
-  height: 190px;
+  font-size: 0.9em;
+  height: 210px;
   background-color: #fafafa;
   transition: all 0.4s ease-in-out;
   -webkit-transition: all 0.4s ease-in-out;
@@ -197,7 +211,7 @@ distorting the viewport on mobile */
   }
 }
 #maia-nav-x .dropdown-item-container {
-  margin-bottom: 10px;
+  margin-bottom: 8px;
   display: block;
 }
 #maia-nav-x a {
@@ -851,7 +865,9 @@ a:visited {
 }
 .site-wrapper p,
 .site-wrapper a.read-more {
+  color: #444;
   font-family: 'Arial';
+  font-size: 13px;
 }
 .inline-icon {
   vertical-align: middle;
@@ -1154,6 +1170,7 @@ table td {
 }
 
 .page-header .subheadline {
+  color: #fff;
   font-size: 18px;
 }
 
@@ -5188,6 +5205,103 @@ a.maia-media:after {
   content: url(/developers/starterpack/starterpack-img/video-play-icon.png);
 }
 
+/* # Startup Offer page
+================================================== */
+.startup-offer .page-header {
+  background-color: #262626;
+  padding-top: 0px;
+  padding-bottom: 0px;
+  height: 310px;
+  max-height: 350px;
+}
+
+.startup-offer .page-header-inner-inner {
+  margin-top: 48px !important;
+}
+
+.startup-generic-section {
+  margin: 0;
+  padding: 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.startup-offer h1.headline {
+  margin: 27px 0;
+}
+
+.startup-generic-section h2 {
+  font-size: 27px;
+  font-weight: 400;
+  margin-bottom: 40px;
+}
+
+.startup-offer h3.headline {
+  font-weight: 500;
+  font-size: 18px;
+  margin: 0 0 17px 0;
+}
+
+.startup-offer h3.startup-headline {
+  font-weight: 500;
+  font-size: 18px;
+  margin: 15px 0 37px 0;
+}
+
+.startup-offer .page-header-img {
+  float: right;
+  margin: 0 54px 0 0;
+}
+
+.startup-offer .center {
+  text-align: center;
+}
+
+table.startup-eligibility {
+  border: none !important;
+  width: 990px;
+}
+
+table.startup-eligibility tr {
+  background-color: #fff;
+}
+
+table.startup-eligibility td {
+  background-color: #F9F9F9;
+  border: 4px solid #fff !important;
+  width: 200px;
+  padding: 37px 43px 0;
+}
+
+table.startup-eligibility .checkmark-icon {
+  width: 30px;
+}
+
+table.startup-eligibility h2 {
+  font-size: 16px;
+  font-weight: 400;
+}
+
+table.startup-eligibility td.startup-eligibility-contact {
+  background-color: #2c95ff;
+  border-top: 4px solid #fff !important;
+  padding: 18px 0 0px 0;
+}
+
+table.startup-eligibility td.startup-eligibility-contact h2 {
+  font-size: 18px;
+  font-weight: 400;
+  color: #fff;
+  line-height: 2em;
+}
+
+table.startup-eligibility td.startup-eligibility-contact h2 a {
+  color: #fff;
+  text-decoration: underline;
+}
+
+.startup-offer .customer-stories {
+  margin-top: 54px;
+}
 
 /* # Pricing page
 ================================================== */
@@ -5217,7 +5331,7 @@ a.maia-media:after {
 }
 .pricing .header {
   height: 47px;
-  margin-top: 55px;
+  margin-top: 10px;
 }
 .pricing .header .headline, .pricing .header .app-icon {
   float: left;
