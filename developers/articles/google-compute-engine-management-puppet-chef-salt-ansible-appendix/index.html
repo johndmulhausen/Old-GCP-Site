@@ -684,7 +684,7 @@ table td {
           &nbsp; &nbsp; &nbsp; package {"apache2":<br />
           &nbsp; &nbsp; &nbsp; &nbsp; ensure =&gt; $version,<br />
           &nbsp; &nbsp; &nbsp; }<br />
-          &nbsp; &nbsp; &nbsp; file {"/var/www/index.html":<br />
+          &nbsp; &nbsp; &nbsp; file {"/var/www/":<br />
           &nbsp; &nbsp; &nbsp; &nbsp; ensure &nbsp;=&gt; present,<br />
           &nbsp; &nbsp; &nbsp; &nbsp; content =&gt; "&lt;html&gt;\n&lt;body&gt;\n\t&lt;h2&gt;Hi, this is $hostname
           ($gce_external_ip).&lt;/h2&gt;\n&lt;/body&gt;\n&lt;/html&gt;\n",<br />
@@ -693,7 +693,7 @@ table td {
           &nbsp; &nbsp; &nbsp; service {"apache2":<br />
           &nbsp; &nbsp; &nbsp; &nbsp; ensure =&gt; running,<br />
           &nbsp; &nbsp; &nbsp; &nbsp; enable =&gt; true,<br />
-          &nbsp; &nbsp; &nbsp; &nbsp; require =&gt; File["/var/www/index.html"],<br />
+          &nbsp; &nbsp; &nbsp; &nbsp; require =&gt; File["/var/www/"],<br />
           &nbsp; &nbsp; &nbsp; }<br />
           &nbsp; &nbsp; }<br />
           <br />
@@ -759,7 +759,7 @@ table td {
           &nbsp; package {"apache2":<br />
           &nbsp; &nbsp; ensure =&gt; $version,<br />
           &nbsp; }<br />
-          &nbsp; file {"/var/www/index.html":<br />
+          &nbsp; file {"/var/www/":<br />
           &nbsp; &nbsp; ensure &nbsp;=&gt; present,<br />
           &nbsp; &nbsp; content =&gt; "&lt;html&gt;\n&lt;body&gt;\n\t&lt;h2&gt;Hi, this is
           $hostname.&lt;/h2&gt;\n&lt;/body&gt;\n&lt;/html&gt;\n",<br />
@@ -768,7 +768,7 @@ table td {
           &nbsp; service {"apache2":<br />
           &nbsp; &nbsp; ensure =&gt; running,<br />
           &nbsp; &nbsp; enable =&gt; true,<br />
-          &nbsp; &nbsp; require =&gt; File["/var/www/index.html"],<br />
+          &nbsp; &nbsp; require =&gt; File["/var/www/"],<br />
           &nbsp; }<br />
           }<br />
 
@@ -1388,9 +1388,9 @@ table td {
     &nbsp;service:<br />
     &nbsp; &nbsp;- running<br />
     <br />
-    /var/www/index.html:<br />
+    /var/www/:<br />
     &nbsp;file.managed:<br />
-    &nbsp; &nbsp;- source: salt://webserver/index.html<br />
+    &nbsp; &nbsp;- source: salt://webserver/<br />
     &nbsp; &nbsp;- user: root<br />
     &nbsp; &nbsp;- group: root<br />
     &nbsp; &nbsp;- mode: 644<br />
@@ -1402,7 +1402,7 @@ table td {
     "c11">index.html</span><span>&nbsp;file as a Jinja template</span> <span>that will
     utilize the minion's local</span> <span class="c3"><a class="c5" target="_blank" href=
     "http://docs.saltstack.com/topics/targeting/grains.html">grains</a></span><span>.
-    <br /></span><span class="c11">cat &gt; /srv/salt/webserver/index.html
+    <br /></span><span class="c11">cat &gt; /srv/salt/webserver/
     &lt;&lt;EOF<br />
     &lt;html&gt;<br />
     &lt;title&gt;Welcome to '&#123;&#123; grains.id &#125;&#125;'&lt;/title&gt;<br />
@@ -1527,9 +1527,9 @@ table td {
           &nbsp;&nbsp; &nbsp;- name: Install apache<br />
           &nbsp;&nbsp; &nbsp; &nbsp;apt: pkg=apache2 state=present<br />
           &nbsp;&nbsp; &nbsp;- name: Create custom index.html<br />
-          &nbsp;&nbsp; &nbsp; &nbsp;copy: dest=/var/www/index.html content='Hi, I am &#123;&#123; ansible_hostname &#125;&#125;'<br />
+          &nbsp;&nbsp; &nbsp; &nbsp;copy: dest=/var/www/ content='Hi, I am &#123;&#123; ansible_hostname &#125;&#125;'<br />
           &nbsp;&nbsp; &nbsp;- name: set file stats on index.html<br />
-          &nbsp;&nbsp; &nbsp; &nbsp;file: path=/var/www/index.html owner=root group=root mode=0644<br />
+          &nbsp;&nbsp; &nbsp; &nbsp;file: path=/var/www/ owner=root group=root mode=0644<br />
           &nbsp;&nbsp; &nbsp;- name: Start apache<br />
           &nbsp;&nbsp; &nbsp; &nbsp;service: name=apache2 state=started<br />
           <br />

@@ -83,9 +83,9 @@
             고객사
             </a>
         </li>
-        <li  class="active" >
-            <a href="/developers/" event="autotrack-data-g" data-g-event="Global Nav" data-g-action="Nav Bar" data-g-label="Developers">
-          개발자
+        <li  id="main-nav-docs-dropdown" class="dropdown">
+            <a href="/docs/" event="autotrack-data-g" data-g-event="Global Nav" data-g-action="Nav Bar" data-g-label="Documentation">
+            Documentation
             </a>
         </li>
         <li >
@@ -115,12 +115,12 @@
       <div id="compute-dropdown" class="products-column maia-col-2">
         <span class="product-list-title">Compute</span>
         <div class="dropdown-item-container">
-          <a href="/products/compute-engine/">
+          <a href="/compute/">
             <span class="product-name">Compute Engine</span>
           </a>
         </div>
         <div class="dropdown-item-container">
-          <a href="/products/app-engine/">
+          <a href="/appengine/">
             <span class="product-name">App Engine</span>
           </a>
         </div>
@@ -129,17 +129,17 @@
       <div id="storage-dropdown" class="products-column maia-col-2">
         <span class="product-list-title">Storage</span>
         <div class="dropdown-item-container">
-          <a href="/products/cloud-sql/">
+          <a href="/sql/">
             <span class="product-name">Cloud SQL</span>
           </a>
         </div>
         <div class="dropdown-item-container">
-          <a href="/products/cloud-storage/">
+          <a href="/storage/">
             <span class="product-name">Cloud Storage</span>
           </a>
         </div>
         <div class="dropdown-item-container">
-          <a href="/products/cloud-datastore/">
+          <a href="/datastore/">
             <span class="product-name">Cloud Datastore</span>
           </a>
         </div>
@@ -148,7 +148,7 @@
       <div id="big-data-dropdown" class="products-column maia-col-2">
         <span class="product-list-title">Big Data</span>
         <div class="dropdown-item-container">
-          <a href="/products/bigquery/">
+          <a href="/bigquery/">
             <span class="product-name">BigQuery</span>
           </a>
         </div>
@@ -157,27 +157,27 @@
       <div id="services-dropdown" class="products-column maia-col-2">
         <span class="product-list-title">Services</span>
         <div class="dropdown-item-container">
-          <a href="/products/cloud-dns/">
+          <a href="/dns/">
             <span class="product-name">Cloud DNS</span>
           </a>
         </div>
         <div class="dropdown-item-container">
-          <a href="/products/cloud-endpoints/">
+          <a href="/endpoints/">
             <span class="product-name">Cloud Endpoints</span>
           </a>
         </div>
         <div class="dropdown-item-container">
-          <a href="/products/translate-api/">
+          <a href="/translate/">
             <span class="product-name">Translate API</span>
           </a>
         </div>
         <div class="dropdown-item-container">
-          <a href="/products/prediction-api/">
+          <a href="/prediction/">
             <span class="product-name">Prediction API</span>
           </a>
         </div>
         <div class="dropdown-item-container">
-          <a href="/products/cloud-pubsub/">
+          <a href="/pubsub/">
             <span class="product-name">Cloud Pub/Sub</span>
           </a>
         </div>
@@ -186,7 +186,7 @@
       <div id="management-dropdown" class="products-column maia-col-2">
         <span class="product-list-title">Management</span>
         <div class="dropdown-item-container">
-          <span class="product-name"><a href="/products/cloud-deployment-manager/">Cloud Deployment Manager</a></span>
+          <span class="product-name"><a href="/deployment-manager/">Cloud Deployment Manager</a></span>
         </div>
       </div>
 
@@ -202,6 +202,113 @@
     </div>
   </div>
 </div>
+<!-- Docs subnav -->
+<div id="maia-nav-x" class="maia-nav products-docs-nav">
+  <div class="maia-aux">
+    <div class="products-nav-dropdown maia-cols">
+
+      <div id="compute-dropdown" class="products-column maia-col-2">
+        <span class="product-list-title">Compute</span>
+        <div class="dropdown-item-container">
+          <a href="/compute/docs">
+            <span class="product-name">Compute Engine</span>
+          </a>
+        </div>
+        <div class="dropdown-item-container">
+          <a href="/appengine/docs">
+            <span class="product-name">App Engine</span>
+          </a>
+        </div>
+      </div>
+
+      <div id="storage-dropdown" class="products-column maia-col-2">
+        <span class="product-list-title">Storage</span>
+        <div class="dropdown-item-container">
+          <a href="/sql/docs">
+            <span class="product-name">Cloud SQL</span>
+          </a>
+        </div>
+        <div class="dropdown-item-container">
+          <a href="/storage/docs">
+            <span class="product-name">Cloud Storage</span>
+          </a>
+        </div>
+        <div class="dropdown-item-container">
+          <a href="/datastore/docs">
+            <span class="product-name">Cloud Datastore</span>
+          </a>
+        </div>
+      </div>
+
+      <div id="big-data-dropdown" class="products-column maia-col-2">
+        <span class="product-list-title">Big Data</span>
+        <div class="dropdown-item-container">
+          <a href="/bigquery/docs">
+            <span class="product-name">BigQuery</span>
+          </a>
+        </div>
+        <div class="dropdown-item-container">
+          <a href="/hadoop/docs">
+            <span class="product-name">Hadoop</span>
+          </a>
+        </div>
+      </div>
+
+      <div id="services-dropdown" class="products-column maia-col-2">
+        <span class="product-list-title">Services</span>
+        <div class="dropdown-item-container">
+          <a href="/dns/docs">
+            <span class="product-name">Cloud DNS</span>
+          </a>
+        </div>
+        <div class="dropdown-item-container">
+          <a href="/endpoints/docs">
+            <span class="product-name">Cloud Endpoints</span>
+          </a>
+        </div>
+        <div class="dropdown-item-container">
+          <a href="/translate/">
+            <span class="product-name">Translate API</span>
+          </a>
+        </div>
+        <div class="dropdown-item-container">
+          <a href="/prediction/docs">
+            <span class="product-name">Prediction API</span>
+          </a>
+        </div>
+        <div class="dropdown-item-container">
+          <a href="/pubsub/docs">
+            <span class="product-name">Cloud Pub/Sub</span>
+          </a>
+        </div>
+      </div>
+
+      <div id="management-dropdown" class="products-column maia-col-2">
+        <span class="product-list-title">Management</span>
+        <div class="dropdown-item-container">
+          <span class="product-name"><a href="/deployment-manager/docs">Cloud Deployment Manager</a></span>
+        </div>
+      </div>
+
+      <div id="pricing-dropdown" class="products-column maia-col-2">
+        <span class="product-list-title">Tools</span>
+        <div class="dropdown-item-container">
+          <span class="product-name"><a href="/sdk/">Google Cloud SDK</a></span>
+        </div>
+        <div class="dropdown-item-container">
+          <span class="product-name"><a href="/mobile/">Android Studio</a></span>
+        </div>
+        <div class="dropdown-item-container">
+          <span class="product-name"><a href="https://developers.google.com/eclipse/">Plugin for Eclipse</a></span>
+        </div>
+        <div class="dropdown-item-container">
+          <span class="product-name"><a href="/devtools/repo/cloud-repositories">Cloud Repositories (Git)</a></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 
 <!DOCTYPE html>
 <html>
@@ -233,7 +340,7 @@
 </div>
 <h2><a name="h.wntts6bhyclb" id="h.wntts6bhyclb"></a> 소개</h2>
 <p>최근에 스마트폰이나 태블릿을 사용해 보았다면 푸시 알림 기능을 접해 본 적이 있을 것입니다. 푸시 알림은 휴대전화에서 제공하는 작은 핑입니다. 이는 새로운 소셜 네트워크 메시지를 받거나, 최신 게임에서 친구가 내 플레이를 기다리거나, 좋아하는 밴드가 내 도시에서 콘서트를 연다고 발표했다는 것을 알려주는 역할을 합니다. 개발자의 입장에서 푸시 알림은 앱을 열었는지 또는 현재 휴대전화를 사용 중인지에 관계없이, 사용자와 언제든지 실시간으로 만날 수 있는 새로운 차원의 기능을 제공해 줍니다. 간단히 말해 푸시 알림은 더 많은 참여를 유도하는 모바일 솔루션을 개발하기 위한 중요한 메커니즘이라고 할 수 있습니다.</p>
-<p>Android 기기를 타겟팅하는 경우 GPE(Eclipse용 Google 플러그인)을 사용하여 작업을 쉽게 시작할 수 있습니다. GPE를 사용하면 <a href="https://developers.google.com/eclipse/docs/endpoints-androidconnected-gae">App Engine에 연결된 Android 프로젝트</a>를 생성할 수 있습니다. 이 프로젝트는 <a href="http://developer.android.com/google/gcm/index.html">Google App Engine</a>에서 실행되는 모바일 백엔드에서 <a href="https://developers.google.com/appengine/">Android용 Google Cloud Messaging</a>을 사용하여 푸시 알림을 전송하는 데 필요한 기본 로직을 제공합니다.</p>
+<p>Android 기기를 타겟팅하는 경우 GPE(Eclipse용 Google 플러그인)을 사용하여 작업을 쉽게 시작할 수 있습니다. GPE를 사용하면 <a href="https://developers.google.com/eclipse/docs/endpoints-androidconnected-gae">App Engine에 연결된 Android 프로젝트</a>를 생성할 수 있습니다. 이 프로젝트는 <a href="http://developer.android.com/google/gcm/">Google App Engine</a>에서 실행되는 모바일 백엔드에서 <a href="https://developers.google.com/appengine/">Android용 Google Cloud Messaging</a>을 사용하여 푸시 알림을 전송하는 데 필요한 기본 로직을 제공합니다.</p>
 <p>또한 Google Cloud Platform은 iOS 기기에 푸시 알림을 전송하는 데에도 사용할 수 있습니다. 단, APN(Apple® Push Notification) 서비스를 사용하여 iOS 기기에 푸시 알림을 전송하려면 다른 접근 방식이 필요합니다. 주된 이유는 APN 프로토콜이 영구 소켓을 기반으로 하고 있고, 발신자가 설정 및 해제되는 연결의 수를 제한해야 하기 때문입니다. 이는 일반적으로 발신자가 각 발신 요청에 대해 단순히 별개의 연결을 구축할 수 없으며, 대신 구축된 연결을 재사용하거나 연결 풀링을 사용해야 한다는 것을 의미합니다.<br>
 <br>
 이 문서 및 함께 제공되는 샘플에서는 Google App Engine을 통해 iOS 푸시 알림을 관리하는 데 사용할 수 있는 설계를 제시하고 있습니다.</p>
@@ -524,6 +631,7 @@ new lfl.ui.ScrollNav({});
 <script>
   new lfl.ui.ScrollNav({});
   new lfl.cloud.GlobalProductMenu();
+  new lfl.cloud.GlobalNavDocsSubMenu();
 </script>
 
 <script>new cloud.SocialFeeds(document.getElementById('feeds'));</script>
@@ -571,15 +679,15 @@ new lfl.ui.ScrollNav({});
   <div class="ent-footer-unit">
     <h4><a href="/products/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="Products">Products</a></h4>
     <ul>
-      <li><a href="/products/app-engine/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="App Engine">App Engine</a></li>
-      <li><a href="/products/compute-engine/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="Compute Engine">Compute Engine</a></li>
-      <li><a href="/products/cloud-storage/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="Cloud Storage">Cloud Storage</a></li>
-      <li><a href="/products/cloud-sql/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="Cloud SQL">Cloud SQL</a></li>
-      <li><a href="/products/cloud-datastore/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="Cloud Datastore">Cloud Datastore</a></li>
-      <li><a href="/products/bigquery/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="BigQuery">BigQuery</a></li>
-      <li><a href="/products/prediction-api/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="Prediction API">Prediction API</a></li>
-      <li><a href="/products/translate-api/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="Translate API">Translate API</a></li>
-      <li><a href="/products/cloud-endpoints/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="Cloud Endpoints">Cloud Endpoints</a></li>
+      <li><a href="/appengine/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="App Engine">App Engine</a></li>
+      <li><a href="/compute/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="Compute Engine">Compute Engine</a></li>
+      <li><a href="/storage/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="Cloud Storage">Cloud Storage</a></li>
+      <li><a href="/sql/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="Cloud SQL">Cloud SQL</a></li>
+      <li><a href="/datastore/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="Cloud Datastore">Cloud Datastore</a></li>
+      <li><a href="/bigquery/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="BigQuery">BigQuery</a></li>
+      <li><a href="/prediction/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="Prediction API">Prediction API</a></li>
+      <li><a href="/translate/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="Translate API">Translate API</a></li>
+      <li><a href="/endpoints/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="Cloud Endpoints">Cloud Endpoints</a></li>
       <li><a href="/products/calculator/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="Pricing Calculator">Pricing Calculator</a></li>
       <li><a href="/pricing/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="Pricing">Pricing</a></li>
     </ul>
