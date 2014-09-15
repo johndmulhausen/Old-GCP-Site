@@ -114,32 +114,42 @@ redirects:
   to: /?hl=ja
 
 # Campaign redirects
-- from: /startups/.../...
-  to: /resources/startups
-- from: /starterpack/...
-  to: /developers/starterpack/...
-- from: /gdc/...
-  to: /solutions/gaming/...
-- from: /hipaa/...
+- from: /startups
+  to: /developers/startups/
+- from: /startup
+  to: /developers/startups/
+- from: /starterpack
+  to: /developers/startercredit
+- from: /developers/starterpack
+  to: /developers/startercredit
+- from: /startercredit
+  to: /developers/startercredit
+- from: /gdc
+  to: /solutions/gaming
+- from: /hipaa
   to: /index#hipaa
-- from: /redeem/...
+- from: /redeem
   to: https://console.developers.google.com/billing/redeem
+- from: /products/pubsub
+  to: /products/cloud-pubsub
+- from: /pubsub
+  to: /products/cloud-pubsub
 
 # form redirects
-- from: /r/managed-vms/...
+- from: /r/managed-vms
   to: http://goo.gl/JEv1ue
-- from: /r/windows/...
+- from: /r/windows
   to: http://goo.gl/7KNJhC
 
 # developers.google.com redirects
-- from: /r/deployment-manager/...
+- from: /r/deployment-manager
   to: http://goo.gl/ZsvrV1
 - from: /r/replica-pools
   to: http://goo.gl/IumEj2 
 
 # Legacy URLs that need to be redirected to avoid 404 error
 - from: /bigquery-tour
-  to: /bigquery/
+  to: /products/bigquery/
 - from: /m/...
   to: /
 - from: /solutions/mobile-b
@@ -149,4 +159,4 @@ redirects:
 
 # Redirects outdated hadoop white paper link - b/15434206
 - from: /developers/articles/apache-hadoop-hive-and-pig-on-google-compute-engine
-  to: /docs/
+  to: /developers/
