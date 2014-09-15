@@ -126,7 +126,7 @@ title: Cloud Computing &amp; Cloud Hosting Services
 <p>푸시 알림은 휴대기기에서의 전반적인 사용자 경험에 있어 매우 중요합니다. 클라이언트 플랫폼에 따라 모바일 솔루션에서 이 기술을 사용하여 <a href="http://developer.android.com/guide/topics/ui/notifiers/toasts.html">토스트(toast)</a>를 표시하고 사용자의 기기에 다른 알림을 표시할 수 있습니다. 이는 애플리케이션이 실행 중이지 않은 경우에도 수행이 가능합니다. 또한 이 기술을 사용하여 모바일 클라이언트 애플리케이션에 관련 데이터를 계속해서 제공할 수도 있습니다.</p>
 <p>Google App Engine에 모바일 백엔드에서 코드를 실행하면 다음 기술을 활용하여 사용자에게 푸시 알림을 전송하는 방식을 관리할 수 있습니다.</p>
 <ul>
-<li><a href="http://developer.android.com/google/gcm/index.html">Android용 Google Cloud Messaging</a> - Android 기반 기기에 클라이언트 애플리케이션을 설치한 사용자에게 데이터를 전송할 수 있게 해 주는 Google 서비스입니다. Eclipse 사용자는 <a href="https://developers.google.com/eclipse/">Eclipse용 Google 플러그인</a>에서 생성한 기본 코드를 얻을 수 있습니다.</li>
+<li><a href="http://developer.android.com/google/gcm/">Android용 Google Cloud Messaging</a> - Android 기반 기기에 클라이언트 애플리케이션을 설치한 사용자에게 데이터를 전송할 수 있게 해 주는 Google 서비스입니다. Eclipse 사용자는 <a href="https://developers.google.com/eclipse/">Eclipse용 Google 플러그인</a>에서 생성한 기본 코드를 얻을 수 있습니다.</li>
 <li>Sockets API<sup>[<a href="#fn-5" name="ref-5" id="ref-5">5</a>]</sup> - Apple ® 푸시 알림 서비스를 사용하여 iOS 사용자에게 알림을 푸시할 수 있습니다.</li>
 </ul>
 <p>친구가 레스토랑에 체크인하거나 리뷰를 올릴 때 모바일 솔루션 사용자에게 푸시 알림이 전송되는 경우를 예로 들 수 있습니다(그림 5).</p>
@@ -159,7 +159,7 @@ title: Cloud Computing &amp; Cloud Hosting Services
 <p>애플리케이션 로그는 사용자가 모바일 솔루션을 사용하는 방식과 모바일 백엔드가 작동하는 방식에 대한 많은 통계를 제공합니다. Google App Engine에서 실행되는 모바일 백엔드 코드를 사용하면 <a href="https://developers.google.com/appengine/docs/java/logs/">Logs API</a>로 애플리케이션 로그를 검색할 수 있습니다. 그런 다음 로그를 Google Cloud Storage에 업로드하여 <a href="https://developers.google.com/bigquery/">Google BigQuery</a>로 내부 데이터화할 수 있습니다. 모바일 클라이언트 애플리케이션에서 사용자가 백엔드에 정기적인 요청을 전송하지 않고도 애플리케이션 내에서 많은 상호작용을 할 수 있도록 허용하는 경우, 클라이언트 애플리케이션에서 수집할 수 있고 Google Cloud Endpoints에 노출된 API를 통해 모바일 백엔드에 정기적으로 전송할 수 있는 로그를 백엔드 로그에 추가할 수도 있습니다.</p>
 <h3 id="running-code">App Engine 샌드박스 외부에서 코드 실행</h3>
 <p>Google App Engine<sup>[<a href="#fn-8" name="ref-8" id="ref-8">8</a>]</sup>에서 지원하는 런타임을 사용하여 완전한 모바일 백엔드를 구축할 수 있으면 자동 확장, 부하 분산, 장애 조치 등의 인프라 문제를 처리하지 않아도 됩니다. 하지만 App Engine 샌드박스에서 실행하기에 적합하지 않은 요구사항이 있을 수도 있습니다. 예를 들어 비동기 요청 처리 또는 일괄 처리의 일부로 몇몇 C/C++ 라이브러리, 맞춤 바이너리 또는 Perl 프로그램을 사용하고자 할 수 있습니다.</p>
-<p>이러한 시나리오에서는 <a href="/products/compute-engine">Google Compute Engine</a><sup>[<a href="#fn-9" name="ref-9" id="ref-9">9</a>]</sup>을 사용하여 Google App Engine에서 호스팅하기에 적합하지 않은 모바일 백엔드의 일부를 실행할 수 있습니다.</p>
+<p>이러한 시나리오에서는 <a href="/compute/">Google Compute Engine</a><sup>[<a href="#fn-9" name="ref-9" id="ref-9">9</a>]</sup>을 사용하여 Google App Engine에서 호스팅하기에 적합하지 않은 모바일 백엔드의 일부를 실행할 수 있습니다.</p>
 <p>Compute Engine에서 실행되는 코드가 일괄 처리 또는 비동기 요청 처리에 사용된 경우<sup>[<a href="#fn-10" name="ref-10" id="ref-10">10</a>]</sup>, Google App Engine에서 실행되는 코드는 가져오기 대기열 또는 여러 대기열에 작업을 추가할 수 있습니다. 그러면 Google Compute Engine에서 실행되는 코드가 <a href="https://developers.google.com/appengine/docs/python/taskqueue/rest/">Task Queue REST API</a><sup>[<a href="#fn-11" name="ref-11" id="ref-11">11</a>]</sup>를 사용하여 이러한 작업을 가져올 수 있습니다.</p>
 <figure><img src="/images/articles/mobile-app-9.png" alt="App Engine 샌드박스 외부에서 코드 실행" class="f-90">
 <figcaption>그림 9. App Engine 샌드박스 외부에서 코드 실행</figcaption>
