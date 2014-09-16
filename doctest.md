@@ -21,14 +21,6 @@ toc: book
 {% include jswidgets.html %}
 {{pagetoc}}
 
-## Included Markdown content
-
-Testing Markdown, Includes, and Submoduled templates.
-
-{% include _testinclude.md %}
-
-Testing Travis CI
-
 ## CSS Tests
 
 ### Buttons
