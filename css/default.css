@@ -82,7 +82,7 @@ distorting the viewport on mobile */
 }
 #maia-nav-x .dropdown a:before {
   content: '';
-  background: url("../images/base/dropdown-arrow-gray-icon.png") no-repeat bottom center;
+  background: url("/images/base/dropdown-arrow-gray-icon.png") no-repeat bottom center;
   z-index: 99;
   bottom: -12px;
   left: 20px;
@@ -98,7 +98,7 @@ distorting the viewport on mobile */
   content: '';
   display: inline-block;
   vertical-align: middle;
-  background: url("../images/base/arrow.png") no-repeat;
+  background: url("/images/base/arrow.png") no-repeat;
   height: 6px;
   width: 7px;
   -webkit-transform: rotate(180deg);
@@ -924,7 +924,7 @@ table td {
 .bounce-link:after {
   height: 23px;
   width: 23px;
-  background-image: url('../images/sprite-s8753ea6266.png');
+  background-image: url('/images/sprite-s8753ea6266.png');
   background-position: 0 0;
   background-repeat: no-repeat;
   display: -moz-inline-stack;
@@ -939,7 +939,7 @@ table td {
 }
 @media (-webkit-min-device-pixel-ratio: 1.5), (min--moz-device-pixel-ratio: 1.5), (-o-min-device-pixel-ratio: 3 / 2), (min-device-pixel-ratio: 1.5) {
   .bounce-link:after {
-    background-image: url('../images/sprite_2x-s7220d7a5b8.png');
+    background-image: url('/images/sprite_2x-s7220d7a5b8.png');
     background-position: 0 0;
     background-size: 23px, auto;
   }
@@ -964,13 +964,13 @@ table td {
   margin-left: 7px;
   height: 11px;
   width: 10px;
-  background-image: url('../images/sprite-s8753ea6266.png');
+  background-image: url('/images/sprite-s8753ea6266.png');
   background-position: 0 -43px;
   background-repeat: no-repeat;
 }
 @media (-webkit-min-device-pixel-ratio: 1.5), (min--moz-device-pixel-ratio: 1.5), (-o-min-device-pixel-ratio: 3 / 2), (min-device-pixel-ratio: 1.5) {
   .link-out:after {
-    background-image: url('../images/sprite_2x-s7220d7a5b8.png');
+    background-image: url('/images/sprite_2x-s7220d7a5b8.png');
     background-position: 0 -43px;
     background-size: 23px, auto;
   }
@@ -978,13 +978,13 @@ table td {
 .link-out.white:after {
   height: 10px;
   width: 10px;
-  background-image: url('../images/sprite-s8753ea6266.png');
+  background-image: url('/images/sprite-s8753ea6266.png');
   background-position: 0 -74px;
   background-repeat: no-repeat;
 }
 @media (-webkit-min-device-pixel-ratio: 1.5), (min--moz-device-pixel-ratio: 1.5), (-o-min-device-pixel-ratio: 3 / 2), (min-device-pixel-ratio: 1.5) {
   .link-out.white:after {
-    background-image: url('../images/sprite_2x-s7220d7a5b8.png');
+    background-image: url('/images/sprite_2x-s7220d7a5b8.png');
     background-position: 0 -74px;
     background-size: 23px, auto;
   }
@@ -1084,7 +1084,7 @@ table td {
   font-weight: bold;
 }
 .page-header {
-  background-image: url(../images/products/products-header.jpg);
+  background-image: url(/images/products/products-header.jpg);
   background: no-repeat center center;
   background-size: cover;
   position: relative;
@@ -1297,7 +1297,7 @@ table td {
 .icon.check, .check.app-icon {
   height: 23px;
   width: 23px;
-  background-image: url('../images/sprite-s8753ea6266.png');
+  background-image: url('/images/sprite-s8753ea6266.png');
   background-position: 0 -104px;
   background-repeat: no-repeat;
   text-indent: -119988px;
@@ -1306,7 +1306,7 @@ table td {
 }
 @media (-webkit-min-device-pixel-ratio: 1.5), (min--moz-device-pixel-ratio: 1.5), (-o-min-device-pixel-ratio: 3 / 2), (min-device-pixel-ratio: 1.5) {
   .icon.check, .check.app-icon {
-    background-image: url('../images/sprite_2x-s7220d7a5b8.png');
+    background-image: url('/images/sprite_2x-s7220d7a5b8.png');
     background-position: 0 -104px;
     background-size: 23px, auto;
   }
@@ -1318,13 +1318,13 @@ table td {
 .app-icon.app-engine {
   height: 50px;
   width: 55px;
-  background-image: url('../images/products/sprite-s4fa3b1c658.png');
+  background-image: url('/images/products/sprite-s4fa3b1c658.png');
   background-position: 0 -106px;
   background-repeat: no-repeat;
 }
 @media (-webkit-min-device-pixel-ratio: 1.5), (min--moz-device-pixel-ratio: 1.5), (-o-min-device-pixel-ratio: 3 / 2), (min-device-pixel-ratio: 1.5) {
   .app-icon.app-engine {
-    background-image: url('../images/products/sprite_2x-s7db37e7f78.png');
+    background-image: url('/images/products/sprite_2x-s7db37e7f78.png');
     background-position: 0 -108px;
     background-size: 54px, auto;
   }
@@ -1332,13 +1332,13 @@ table td {
 .app-icon.compute-engine {
   height: 50px;
   width: 55px;
-  background-image: url('../images/products/sprite-s4fa3b1c658.png');
+  background-image: url('/images/products/sprite-s4fa3b1c658.png');
   background-position: 0 -325px;
   background-repeat: no-repeat;
 }
 @media (-webkit-min-device-pixel-ratio: 1.5), (min--moz-device-pixel-ratio: 1.5), (-o-min-device-pixel-ratio: 3 / 2), (min-device-pixel-ratio: 1.5) {
   .app-icon.compute-engine {
-    background-image: url('../images/products/sprite_2x-s7db37e7f78.png');
+    background-image: url('/images/products/sprite_2x-s7db37e7f78.png');
     background-position: 0 -216px;
     background-size: 54px, auto;
   }
@@ -1346,13 +1346,13 @@ table td {
 .app-icon.cloud-sql {
   height: 50px;
   width: 55px;
-  background-image: url('../images/products/sprite-s4fa3b1c658.png');
+  background-image: url('/images/products/sprite-s4fa3b1c658.png');
   background-position: 0 -436px;
   background-repeat: no-repeat;
 }
 @media (-webkit-min-device-pixel-ratio: 1.5), (min--moz-device-pixel-ratio: 1.5), (-o-min-device-pixel-ratio: 3 / 2), (min-device-pixel-ratio: 1.5) {
   .app-icon.cloud-sql {
-    background-image: url('../images/products/sprite_2x-s7db37e7f78.png');
+    background-image: url('/images/products/sprite_2x-s7db37e7f78.png');
     background-position: 0 -270px;
     background-size: 54px, auto;
   }
@@ -1360,13 +1360,13 @@ table td {
 .app-icon.cloud-datastore {
   height: 51px;
   width: 55px;
-  background-image: url('../images/products/sprite-s4fa3b1c658.png');
+  background-image: url('/images/products/sprite-s4fa3b1c658.png');
   background-position: 0 -380px;
   background-repeat: no-repeat;
 }
 @media (-webkit-min-device-pixel-ratio: 1.5), (min--moz-device-pixel-ratio: 1.5), (-o-min-device-pixel-ratio: 3 / 2), (min-device-pixel-ratio: 1.5) {
   .app-icon.cloud-datastore {
-    background-image: url('../images/products/sprite_2x-s7db37e7f78.png');
+    background-image: url('/images/products/sprite_2x-s7db37e7f78.png');
     background-position: 0 -378px;
     background-size: 54px, auto;
   }
@@ -1377,13 +1377,13 @@ table td {
 .app-icon.cloud-storage {
   height: 50px;
   width: 55px;
-  background-image: url('../images/products/sprite-s4fa3b1c658.png');
+  background-image: url('/images/products/sprite-s4fa3b1c658.png');
   background-position: 0 -546px;
   background-repeat: no-repeat;
 }
 @media (-webkit-min-device-pixel-ratio: 1.5), (min--moz-device-pixel-ratio: 1.5), (-o-min-device-pixel-ratio: 3 / 2), (min-device-pixel-ratio: 1.5) {
   .app-icon.cloud-storage {
-    background-image: url('../images/products/sprite_2x-s7db37e7f78.png');
+    background-image: url('/images/products/sprite_2x-s7db37e7f78.png');
     background-position: 0 -432px;
     background-size: 54px, auto;
   }
@@ -1391,13 +1391,13 @@ table td {
 .app-icon.bigquery {
   height: 49px;
   width: 54px;
-  background-image: url('../images/products/sprite-s4fa3b1c658.png');
+  background-image: url('/images/products/sprite-s4fa3b1c658.png');
   background-position: 0 -271px;
   background-repeat: no-repeat;
 }
 @media (-webkit-min-device-pixel-ratio: 1.5), (min--moz-device-pixel-ratio: 1.5), (-o-min-device-pixel-ratio: 3 / 2), (min-device-pixel-ratio: 1.5) {
   .app-icon.bigquery {
-    background-image: url('../images/products/sprite_2x-s7db37e7f78.png');
+    background-image: url('/images/products/sprite_2x-s7db37e7f78.png');
     background-position: 0 -162px;
     background-size: 54px, auto;
   }
@@ -1405,13 +1405,13 @@ table td {
 .app-icon.cloud-endpoints {
   height: 50px;
   width: 55px;
-  background-image: url('../images/products/sprite-s4fa3b1c658.png');
+  background-image: url('/images/products/sprite-s4fa3b1c658.png');
   background-position: 0 -491px;
   background-repeat: no-repeat;
 }
 @media (-webkit-min-device-pixel-ratio: 1.5), (min--moz-device-pixel-ratio: 1.5), (-o-min-device-pixel-ratio: 3 / 2), (min-device-pixel-ratio: 1.5) {
   .app-icon.cloud-endpoints {
-    background-image: url('../images/products/sprite_2x-s7db37e7f78.png');
+    background-image: url('/images/products/sprite_2x-s7db37e7f78.png');
     background-position: 0 -324px;
     background-size: 54px, auto;
   }
@@ -1419,13 +1419,13 @@ table td {
 .app-icon.translate-api {
   height: 50px;
   width: 55px;
-  background-image: url('../images/products/sprite-s4fa3b1c658.png');
+  background-image: url('/images/products/sprite-s4fa3b1c658.png');
   background-position: 0 -161px;
   background-repeat: no-repeat;
 }
 @media (-webkit-min-device-pixel-ratio: 1.5), (min--moz-device-pixel-ratio: 1.5), (-o-min-device-pixel-ratio: 3 / 2), (min-device-pixel-ratio: 1.5) {
   .app-icon.translate-api {
-    background-image: url('../images/products/sprite_2x-s7db37e7f78.png');
+    background-image: url('/images/products/sprite_2x-s7db37e7f78.png');
     background-position: 0 0;
     background-size: 54px, auto;
   }
@@ -1433,13 +1433,13 @@ table td {
 .app-icon.prediction-api {
   height: 50px;
   width: 55px;
-  background-image: url('../images/products/sprite-s4fa3b1c658.png');
+  background-image: url('/images/products/sprite-s4fa3b1c658.png');
   background-position: 0 -216px;
   background-repeat: no-repeat;
 }
 @media (-webkit-min-device-pixel-ratio: 1.5), (min--moz-device-pixel-ratio: 1.5), (-o-min-device-pixel-ratio: 3 / 2), (min-device-pixel-ratio: 1.5) {
   .app-icon.prediction-api {
-    background-image: url('../images/products/sprite_2x-s7db37e7f78.png');
+    background-image: url('/images/products/sprite_2x-s7db37e7f78.png');
     background-position: 0 -54px;
     background-size: 54px, auto;
   }
@@ -1447,13 +1447,13 @@ table td {
 .icon.flex, .flex.app-icon {
   height: 23px;
   width: 23px;
-  background-image: url('../images/home/sprite-s8ff637626e.png');
+  background-image: url('/images/home/sprite-s8ff637626e.png');
   background-position: 0 -78px;
   background-repeat: no-repeat;
 }
 @media (-webkit-min-device-pixel-ratio: 1.5), (min--moz-device-pixel-ratio: 1.5), (-o-min-device-pixel-ratio: 3 / 2), (min-device-pixel-ratio: 1.5) {
   .icon.flex, .flex.app-icon {
-    background-image: url('../images/home/sprite_2x-s316a8dc7a4.png');
+    background-image: url('/images/home/sprite_2x-s316a8dc7a4.png');
     background-position: 0 -43px;
     background-size: 28px, auto;
   }
@@ -1461,13 +1461,13 @@ table td {
 .icon.reliability, .reliability.app-icon {
   height: 15px;
   width: 24px;
-  background-image: url('../images/home/sprite-s8ff637626e.png');
+  background-image: url('/images/home/sprite-s8ff637626e.png');
   background-position: 0 -43px;
   background-repeat: no-repeat;
 }
 @media (-webkit-min-device-pixel-ratio: 1.5), (min--moz-device-pixel-ratio: 1.5), (-o-min-device-pixel-ratio: 3 / 2), (min-device-pixel-ratio: 1.5) {
   .icon.reliability, .reliability.app-icon {
-    background-image: url('../images/home/sprite_2x-s316a8dc7a4.png');
+    background-image: url('/images/home/sprite_2x-s316a8dc7a4.png');
     background-position: 0 -123px;
     background-size: 28px, auto;
   }
@@ -1475,13 +1475,13 @@ table td {
 .icon.security, .security.app-icon {
   height: 16px;
   width: 24px;
-  background-image: url('../images/home/sprite-s8ff637626e.png');
+  background-image: url('/images/home/sprite-s8ff637626e.png');
   background-position: 0 -202px;
   background-repeat: no-repeat;
 }
 @media (-webkit-min-device-pixel-ratio: 1.5), (min--moz-device-pixel-ratio: 1.5), (-o-min-device-pixel-ratio: 3 / 2), (min-device-pixel-ratio: 1.5) {
   .icon.security, .security.app-icon {
-    background-image: url('../images/home/sprite_2x-s316a8dc7a4.png');
+    background-image: url('/images/home/sprite_2x-s316a8dc7a4.png');
     background-position: 0 -202px;
     background-size: 28px, auto;
   }
@@ -1489,13 +1489,13 @@ table td {
 .icon.speed, .speed.app-icon {
   height: 23px;
   width: 20px;
-  background-image: url('../images/home/sprite-s8ff637626e.png');
+  background-image: url('/images/home/sprite-s8ff637626e.png');
   background-position: 0 0;
   background-repeat: no-repeat;
 }
 @media (-webkit-min-device-pixel-ratio: 1.5), (min--moz-device-pixel-ratio: 1.5), (-o-min-device-pixel-ratio: 3 / 2), (min-device-pixel-ratio: 1.5) {
   .icon.speed, .speed.app-icon {
-    background-image: url('../images/home/sprite_2x-s316a8dc7a4.png');
+    background-image: url('/images/home/sprite_2x-s316a8dc7a4.png');
     background-position: 0 0;
     background-size: 28px, auto;
   }
@@ -1503,13 +1503,13 @@ table td {
 .icon.usability, .usability.app-icon {
   height: 17px;
   width: 22px;
-  background-image: url('../images/home/sprite-s8ff637626e.png');
+  background-image: url('/images/home/sprite-s8ff637626e.png');
   background-position: 0 -165px;
   background-repeat: no-repeat;
 }
 @media (-webkit-min-device-pixel-ratio: 1.5), (min--moz-device-pixel-ratio: 1.5), (-o-min-device-pixel-ratio: 3 / 2), (min-device-pixel-ratio: 1.5) {
   .icon.usability, .usability.app-icon {
-    background-image: url('../images/home/sprite_2x-s316a8dc7a4.png');
+    background-image: url('/images/home/sprite_2x-s316a8dc7a4.png');
     background-position: 0 -86px;
     background-size: 28px, auto;
   }
@@ -1517,13 +1517,13 @@ table td {
 .icon.support, .support.app-icon {
   height: 24px;
   width: 28px;
-  background-image: url('../images/home/sprite-s8ff637626e.png');
+  background-image: url('/images/home/sprite-s8ff637626e.png');
   background-position: 0 -121px;
   background-repeat: no-repeat;
 }
 @media (-webkit-min-device-pixel-ratio: 1.5), (min--moz-device-pixel-ratio: 1.5), (-o-min-device-pixel-ratio: 3 / 2), (min-device-pixel-ratio: 1.5) {
   .icon.support, .support.app-icon {
-    background-image: url('../images/home/sprite_2x-s316a8dc7a4.png');
+    background-image: url('/images/home/sprite_2x-s316a8dc7a4.png');
     background-position: 0 -158px;
     background-size: 28px, auto;
   }
@@ -2382,11 +2382,11 @@ pre.prettyprint {
 }
 
 .blogspot-post .post-header:before {
-  background-image: url('../images/home/blogger.png');
+  background-image: url('/images/home/blogger.png');
 }
 
 .youtube .post-header:before {
-  background-image: url('../images/home/youtube.png');
+  background-image: url('/images/home/youtube.png');
 }
 
 #feeds .post-title.headline {
@@ -2493,7 +2493,7 @@ pre.prettyprint {
 /* # Home page
 ================================================== */
 .home .page-header {
-  background-image: url(../images/home/home-hero.jpg);
+  background-image: url(/images/home/home-hero.jpg);
 }
 .home .page-header .headline {
   vertical-align: middle;
@@ -2613,7 +2613,7 @@ pre.prettyprint {
 /* # Solutions landing page
 ================================================== */
 .solutions .page-header {
-  background-image: url(../images/solutions/solutions-header.jpg);
+  background-image: url(/images/solutions/solutions-header.jpg);
 }
 .solutions #case-studies .wrapper {
   margin-bottom: 40px;
@@ -2678,22 +2678,22 @@ pre.prettyprint {
 /* # Solution details page
 ================================================== */
 .solution-details.hadoop .page-header {
-  background-image: url(../images/solutions/hadoop/hadoop-header.jpg);
+  background-image: url(/images/solutions/hadoop/hadoop-header.jpg);
 }
 .solution-details.mobile .page-header {
-  background-image: url(../images/solutions/mobile/mobile-header.jpg);
+  background-image: url(/images/solutions/mobile/mobile-header.jpg);
 }
 .solution-details.gaming .page-header {
-  background-image: url(../images/solutions/gaming/gaming-header.jpg);
+  background-image: url(/images/solutions/gaming/gaming-header.jpg);
 }
 .solution-details.mongodb .page-header {
-  background-image: url(../images/solutions/solutions-header.jpg);
+  background-image: url(/images/solutions/solutions-header.jpg);
 }
 .solution-details.rabbitmq .page-header {
-  background-image: url(../images/solutions/solutions-header.jpg);
+  background-image: url(/images/solutions/solutions-header.jpg);
 }
 .solution-details.cassandra .page-header {
-  background-image: url(../images/solutions/solutions-header.jpg);
+  background-image: url(/images/solutions/solutions-header.jpg);
 }
 .solution-details #customers .author-image {
   border: 1px solid #dbdbdb;
@@ -2779,13 +2779,13 @@ pre.prettyprint {
 }
 
 .solution-details #maia-main .overlay {
-  background-image: url("../images/solutions/gaming/play-button-icon.png");
+  background-image: url("/images/solutions/gaming/play-button-icon.png");
 }
 .solution-details #maia-main .image-right, .developers #training-center .image-right, .developers-training .image-right {
-  background-image: url("../images/solutions/gaming/bsb.jpg");
+  background-image: url("/images/solutions/gaming/bsb.jpg");
 }
 .solution-details #maia-main .image-left, .developers #training-center .image-left, .developers-training .image-left {
-  background-image: url("../images/solutions/gaming/dog.jpg");
+  background-image: url("/images/solutions/gaming/dog.jpg");
 }
 
 
@@ -2871,7 +2871,7 @@ pre.prettyprint {
 /* # Products landing page
 ================================================== */
 .products .page-header {
-  background-image: url(../images/products/products-header.jpg);
+  background-image: url(/images/products/products-header.jpg);
 }
 
 .products .product-block .product-links {
@@ -3128,51 +3128,51 @@ pre.prettyprint {
 /* # Product details page
 ================================================== */
 .app-engine.product .page-header {
-  background-image: url(../images/products/appengine/appengine-header.jpg);
+  background-image: url(/images/products/appengine/appengine-header.jpg);
 }
 
 .compute-engine.product .page-header {
-  background-image: url(../images/products/computeengine/computeengine-header.jpg);
+  background-image: url(/images/products/computeengine/computeengine-header.jpg);
 }
 
 .cloud-storage.product .page-header {
-  background-image: url(../images/products/cloudstorage/cloudstorage-header.jpg);
+  background-image: url(/images/products/cloudstorage/cloudstorage-header.jpg);
 }
 
 .cloud-datastore.product .page-header {
-  background-image: url(../images/products/clouddatastore/clouddatastore-header.jpg);
+  background-image: url(/images/products/clouddatastore/clouddatastore-header.jpg);
 }
 
 .cloud-dns.product .page-header {
-  background-image: url(../images/products/products-header.jpg);
+  background-image: url(/images/products/products-header.jpg);
 }
 
 .cloud-sql.product .page-header {
-  background-image: url(../images/products/cloudsql/cloudsql-header.jpg);
+  background-image: url(/images/products/cloudsql/cloudsql-header.jpg);
 }
 
 .cloud-deployment-manager.product .page-header {
-  background-image: url(../images/products/products-header.jpg);
+  background-image: url(/images/products/products-header.jpg);
 }
 
 .bigquery.product .page-header {
-  background-image: url(../images/products/bigquery/bigquery-header.jpg);
+  background-image: url(/images/products/bigquery/bigquery-header.jpg);
 }
 
 .prediction-api.product .page-header {
-  background-image: url(../images/products/prediction-api/prediction-header.jpg);
+  background-image: url(/images/products/prediction-api/prediction-header.jpg);
 }
 
 .translate-api.product .page-header {
-  background-image: url(../images/products/translate-api/translate-header.jpg);
+  background-image: url(/images/products/translate-api/translate-header.jpg);
 }
 
 .cloud-endpoints.product .page-header {
-  background-image: url(../images/products/cloudendpoints/cloudendpoints-header.jpg);
+  background-image: url(/images/products/cloudendpoints/cloudendpoints-header.jpg);
 }
 
 .cloud-pubsub.product .page-header {
-  background-image: url(../images/products/products-header.jpg);
+  background-image: url(/images/products/products-header.jpg);
 }
 
 .product #case-studies .read-more {
@@ -3301,7 +3301,7 @@ pre.prettyprint {
   padding-top: 30px;
 }
 .partners-landing .page-header {
-  background-image: url(../images/partners/partners-header.jpg);
+  background-image: url(/images/partners/partners-header.jpg);
 }
 .partners-landing .generic-section .headline {
   font-weight: 300;
@@ -3358,7 +3358,7 @@ pre.prettyprint {
   margin-bottom: 30px;
 }
 .partners .page-header {
-  background-image: url(../images/partners/partners-header.jpg);
+  background-image: url(/images/partners/partners-header.jpg);
 }
 .partners .generic-section .partners-wrapper {
   display: -moz-inline-stack;
@@ -3568,14 +3568,14 @@ pre.prettyprint {
 .partners .inner-block .partner-links .phone:before {
   height: 16px;
   width: 16px;
-  background-image: url('../images/partners/sprite-sbacd6bb5e2.png');
+  background-image: url('/images/partners/sprite-sbacd6bb5e2.png');
   background-position: 0 0;
   background-repeat: no-repeat;
 }
 }
 @media (-webkit-min-device-pixel-ratio: 1.5), (min--moz-device-pixel-ratio: 1.5), (-o-min-device-pixel-ratio: 3 / 2), (min-device-pixel-ratio: 1.5) {
   .partners .inner-block .partner-links .phone:before {
-    background-image: url('../images/partners/sprite_2x-s9a3f205ebb.png');
+    background-image: url('/images/partners/sprite_2x-s9a3f205ebb.png');
     background-position: 0 -31px;
     background-size: 16px, auto;
   }
@@ -3585,13 +3585,13 @@ pre.prettyprint {
   margin-right: 7px;
   height: 16px;
   width: 9px;
-  background-image: url('../images/partners/sprite-sbacd6bb5e2.png');
+  background-image: url('/images/partners/sprite-sbacd6bb5e2.png');
   background-position: 0 -67px;
   background-repeat: no-repeat;
 }
 @media (-webkit-min-device-pixel-ratio: 1.5), (min--moz-device-pixel-ratio: 1.5), (-o-min-device-pixel-ratio: 3 / 2), (min-device-pixel-ratio: 1.5) {
   .partners .inner-block .partner-links .location:before {
-    background-image: url('../images/partners/sprite_2x-s9a3f205ebb.png');
+    background-image: url('/images/partners/sprite_2x-s9a3f205ebb.png');
     background-position: 0 -67px;
     background-size: 16px, auto;
   }
@@ -3599,13 +3599,13 @@ pre.prettyprint {
 .partners .inner-block .partner-links .email:before {
   height: 11px;
   width: 16px;
-  background-image: url('../images/partners/sprite-sbacd6bb5e2.png');
+  background-image: url('/images/partners/sprite-sbacd6bb5e2.png');
   background-position: 0 -36px;
   background-repeat: no-repeat;
 }
 @media (-webkit-min-device-pixel-ratio: 1.5), (min--moz-device-pixel-ratio: 1.5), (-o-min-device-pixel-ratio: 3 / 2), (min-device-pixel-ratio: 1.5) {
   .partners .inner-block .partner-links .email:before {
-    background-image: url('../images/partners/sprite_2x-s9a3f205ebb.png');
+    background-image: url('/images/partners/sprite_2x-s9a3f205ebb.png');
     background-position: 0 0;
     background-size: 16px, auto;
   }
@@ -3613,20 +3613,20 @@ pre.prettyprint {
 .partners .inner-block .partner-links .website:before {
   height: 13px;
   width: 16px;
-  background-image: url('../images/partners/sprite-sbacd6bb5e2.png');
+  background-image: url('/images/partners/sprite-sbacd6bb5e2.png');
   background-position: 0 -103px;
   background-repeat: no-repeat;
 }
 @media (-webkit-min-device-pixel-ratio: 1.5), (min--moz-device-pixel-ratio: 1.5), (-o-min-device-pixel-ratio: 3 / 2), (min-device-pixel-ratio: 1.5) {
   .partners .inner-block .partner-links .website:before {
-    background-image: url('../images/partners/sprite_2x-s9a3f205ebb.png');
+    background-image: url('/images/partners/sprite_2x-s9a3f205ebb.png');
     background-position: 0 -103px;
     background-size: 16px, auto;
   }
 }
 
 .partners-join .page-header {
-  background-image: url(../images/partners/partners-header.jpg);
+  background-image: url(/images/partners/partners-header.jpg);
 }
 .partners-join .page-header .side-block .link-list li {
   margin: 0;
@@ -3908,7 +3908,7 @@ pre.prettyprint {
 /* # Case studies page
 ================================================== */
 .case-studies .page-header {
-  background-image: url(../images/case-studies/landing/casestudies-header.jpg);
+  background-image: url(/images/case-studies/landing/casestudies-header.jpg);
 }
 
 
@@ -3916,7 +3916,7 @@ pre.prettyprint {
 /* # Support page
 ================================================== */
 .support .page-header {
-  background-image: url(../images/support/support-header.jpg);
+  background-image: url(/images/support/support-header.jpg);
 }
 
 .support .generic-section {
@@ -4083,7 +4083,7 @@ pre.prettyprint {
 /* # Developers page
 ================================================== */
 .developers .page-header {
-  background-image: url(../images/developers/developers-header.jpg);
+  background-image: url(/images/developers/developers-header.jpg);
 }
 
 .developers #product-documentation #second-row, .developers #product-documentation #third-row {
@@ -4107,7 +4107,7 @@ pre.prettyprint {
   width: 330px;
 }
 .developers-training .page-header {
-  background-image: url(../images/developers/developers-training-hero.png);
+  background-image: url(/images/developers/developers-training-hero.png);
 }
 .developers-training #maia-main {
   padding-top: 25px;
@@ -4259,7 +4259,7 @@ pre.prettyprint {
   position: relative;
 }
 .developers #training-center .overlay, .developers-training .feature-vid-container .overlay {
-  background-image: url("../images/developers/training-play-icon.png");
+  background-image: url("/images/developers/training-play-icon.png");
   background-repeat: no-repeat;
   height: 45px;
   width: 45px;
@@ -4343,7 +4343,7 @@ pre.prettyprint {
 /* # Developers page (training video details)
 ================================================== */
 .video-details .page-header.primary {
-  background-image: url("../images/developers/developers-training-hero.png");
+  background-image: url("/images/developers/developers-training-hero.png");
   max-height: 334px;
   height: 200px;
 }
@@ -4451,7 +4451,7 @@ pre.prettyprint {
 }
 
 .video-details .video-container .overlay {
-  background-image: url("../images/developers/dev-training-detail-play-icon.png");
+  background-image: url("/images/developers/dev-training-detail-play-icon.png");
   z-index: 500;
   height: 129px;
   width: 129px;
@@ -4566,7 +4566,7 @@ pre.prettyprint {
 /* # Why google page
 ================================================== */
 .why .page-header {
-  background-image: url(../images/why/why-header.jpg);
+  background-image: url(/images/why/why-header.jpg);
 }
 
 .why .generic-section {
@@ -4644,19 +4644,19 @@ pre.prettyprint {
 }
 
 .why-infr-author {
-  background: url(../images/why-google/whyggl-infrust.jpg) no-repeat 0 0/100%;
+  background: url(/images/why-google/whyggl-infrust.jpg) no-repeat 0 0/100%;
 }
 
 .why-svcs-author {
-  background: url(../images/why-google/whyggl-mixmatch.jpg) no-repeat 0 0/100%;
+  background: url(/images/why-google/whyggl-mixmatch.jpg) no-repeat 0 0/100%;
 }
 
 .why-perf-author {
-  background: url(../images/why-google/whyggl-perform.jpg) no-repeat 0 0/100%;
+  background: url(/images/why-google/whyggl-perform.jpg) no-repeat 0 0/100%;
 }
 
 .why-spprt-author {
-  background: url(../images/why-google/whyggl-support.jpg) no-repeat 0 0/100%;
+  background: url(/images/why-google/whyggl-support.jpg) no-repeat 0 0/100%;
 }
 .why .why-author blockquote {
   margin: 0;
@@ -5310,7 +5310,7 @@ table.startup-eligibility td.startup-eligibility-contact h2 a {
   font-weight: 400;
 }
 .pricing .page-header {
-  background-image: url(../images/products/background-image-icon.png);
+  background-image: url(/images/products/background-image-icon.png);
 }
 @media (min-width: 300px) and (max-width: 457px) {
   .pricing .page-header .page-header-inner {
@@ -5347,7 +5347,7 @@ table.startup-eligibility td.startup-eligibility-contact h2 a {
 .pricing .collapse {
   float: right;
   margin-right: 20px;
-  background-image: url(../images/products/circle-plus-icon.png);
+  background-image: url(/images/products/circle-plus-icon.png);
   background-repeat: no-repeat;
   height: 16px;
   width: 16px;
@@ -5405,7 +5405,7 @@ table.startup-eligibility td.startup-eligibility-contact h2 a {
   display: block;
 }
 .pricing .buttonToggle {
-  background-image: url(../images/products/minus-button-icon.png);
+  background-image: url(/images/products/minus-button-icon.png);
 }
 .pricing .gray-container, .pricing .dark-gray-header, .pricing #important-notice {
   border: 1px solid #CCC;
@@ -5664,7 +5664,7 @@ table.startup-eligibility td.startup-eligibility-contact h2 a {
 /* # Newsletter
 ================================================== */
 .unsubscribe .page-header {
-  background-image: url(../images/unsubscribe/unsubscribe-newsletter-icon.png);
+  background-image: url(/images/unsubscribe/unsubscribe-newsletter-icon.png);
   max-height: 488px;
 }
 .unsubscribe .page-header-inner-inner {
@@ -5707,7 +5707,7 @@ table.startup-eligibility td.startup-eligibility-contact h2 a {
 }
 
 .newsletter .page-header {
-  background-image: url(../images/newsletter/news-icon.png);
+  background-image: url(/images/newsletter/news-icon.png);
   max-height: 485px;
 }
 .newsletter .page-header p.subheadline {
@@ -5769,7 +5769,7 @@ table.startup-eligibility td.startup-eligibility-contact h2 a {
 }
 
 .contact .page-header {
-  background-image: url(../images/contact/contact-header.jpg);
+  background-image: url(/images/contact/contact-header.jpg);
 }
 
 .cp-contact .cp-hero.cp-cloud {
@@ -6968,7 +6968,7 @@ h3.gcp-category-label {
   *display: inline;
   width: 104px;
   height: 92px;
-  background-image: url(../images/animated-gcp-icons/gcp-bg.png);
+  background-image: url(/images/animated-gcp-icons/gcp-bg.png);
   position: relative;
   overflow: hidden;
   -webkit-transition: all 0.3s ease-in-out;
@@ -7004,7 +7004,7 @@ h3.gcp-category-label {
 .gcp-anim-icon.app-engine .logo-shadow {
   width: 100%;
   height: 100%;
-  background: url(../images/animated-gcp-icons/app-engine-shadow.png) no-repeat 21px bottom;
+  background: url(/images/animated-gcp-icons/app-engine-shadow.png) no-repeat 21px bottom;
   -webkit-transform: scale(1);
   -ms-transform: scale(1);
   transform: scale(1);
@@ -7012,17 +7012,17 @@ h3.gcp-category-label {
 .gcp-anim-icon.app-engine .logo-main {
   width: 86.8px;
   height: 86.8px;
-  background-image: url(../images/animated-gcp-icons/app-engine-main.png);
+  background-image: url(/images/animated-gcp-icons/app-engine-main.png);
 }
 .gcp-anim-icon.app-engine .logo-circle {
-  background-image: url(../images/animated-gcp-icons/app-engine-circle.png);
+  background-image: url(/images/animated-gcp-icons/app-engine-circle.png);
   width: 53.004px;
   height: 53.004px;
 }
 .gcp-anim-icon.app-engine .logo-inner {
   width: 23.8px;
   height: 23.8px;
-  background-image: url(../images/animated-gcp-icons/app-engine-middle.png);
+  background-image: url(/images/animated-gcp-icons/app-engine-middle.png);
   padding-left: 4px;
   background-position: right bottom;
   padding-top: 3px;
@@ -7036,7 +7036,7 @@ h3.gcp-category-label {
   width: 35px;
   height: 35px;
   border-radius: 50%;
-  background: url(../images/animated-gcp-icons/app-engine-code.png) repeat;
+  background: url(/images/animated-gcp-icons/app-engine-code.png) repeat;
 }
 .gcp-anim-icon.cloud-storage > span {
   -webkit-transform: scale(0.69);
@@ -7046,7 +7046,7 @@ h3.gcp-category-label {
 .gcp-anim-icon.cloud-storage .logo-shadow {
   width: 100%;
   height: 100%;
-  background: url(../images/animated-gcp-icons/cloud-storage-shadow.png) no-repeat 32px bottom;
+  background: url(/images/animated-gcp-icons/cloud-storage-shadow.png) no-repeat 32px bottom;
   -webkit-transform: scale(1);
   -ms-transform: scale(1);
   transform: scale(1);
@@ -7054,19 +7054,19 @@ h3.gcp-category-label {
 .gcp-anim-icon.cloud-storage .logo-main {
   width: 55.5px;
   height: 37px;
-  background-image: url(../images/animated-gcp-icons/cloud-storage-main.png);
+  background-image: url(/images/animated-gcp-icons/cloud-storage-main.png);
 }
 .gcp-anim-icon.cloud-storage .logo-document {
   width: 100%;
   height: 50%;
-  background: url(../images/animated-gcp-icons/cloud-storage-file.png) no-repeat center 0;
+  background: url(/images/animated-gcp-icons/cloud-storage-file.png) no-repeat center 0;
   opacity: 0;
   bottom: auto;
 }
 .gcp-anim-icon.cloud-datastore .logo-shadow {
   width: 100%;
   height: 100%;
-  background: url(../images/animated-gcp-icons/cloud-datastore-shadow.png) no-repeat 32px bottom;
+  background: url(/images/animated-gcp-icons/cloud-datastore-shadow.png) no-repeat 32px bottom;
   -webkit-transform: scale(1);
   -ms-transform: scale(1);
   transform: scale(1);
@@ -7096,7 +7096,7 @@ h3.gcp-category-label {
 .gcp-anim-icon.compute-engine .logo-shadow {
   width: 100%;
   height: 100%;
-  background: url(../images/animated-gcp-icons/compute-engine-shadow.png) no-repeat 31px bottom;
+  background: url(/images/animated-gcp-icons/compute-engine-shadow.png) no-repeat 31px bottom;
   -webkit-transform: scale(1);
   -ms-transform: scale(1);
   transform: scale(1);
@@ -7104,7 +7104,7 @@ h3.gcp-category-label {
 .gcp-anim-icon.compute-engine .logo-main {
   width: 40px;
   height: 40px;
-  background-image: url(../images/animated-gcp-icons/compute-engine-main.png);
+  background-image: url(/images/animated-gcp-icons/compute-engine-main.png);
 }
 .gcp-anim-icon.compute-engine .logo-line {
   background: #f9f9f9;
@@ -7120,7 +7120,7 @@ h3.gcp-category-label {
 .gcp-anim-icon.cloud-sql .logo-shadow {
   width: 100%;
   height: 100%;
-  background: url(../images/animated-gcp-icons/cloud-sql-shadow.png) no-repeat 27px bottom;
+  background: url(/images/animated-gcp-icons/cloud-sql-shadow.png) no-repeat 27px bottom;
   -webkit-transform: scale(1);
   -ms-transform: scale(1);
   transform: scale(1);
@@ -7128,12 +7128,12 @@ h3.gcp-category-label {
 .gcp-anim-icon.cloud-sql .logo-main {
   width: 51px;
   height: 23px;
-  background-image: url(../images/animated-gcp-icons/cloud-sql-main.png);
+  background-image: url(/images/animated-gcp-icons/cloud-sql-main.png);
 }
 .gcp-anim-icon.translate-api .logo-shadow {
   width: 100%;
   height: 100%;
-  background: url(../images/animated-gcp-icons/translate-shadow.png) no-repeat 18px bottom;
+  background: url(/images/animated-gcp-icons/translate-shadow.png) no-repeat 18px bottom;
   -webkit-transform: scale(1);
   -ms-transform: scale(1);
   transform: scale(1);
@@ -7141,7 +7141,7 @@ h3.gcp-category-label {
 .gcp-anim-icon.translate-api .logo-arrow {
   width: 17px;
   height: 8px;
-  background-image: url(../images/animated-gcp-icons/translate-arrow.png);
+  background-image: url(/images/animated-gcp-icons/translate-arrow.png);
 }
 .gcp-anim-icon.translate-api .logo-from,
 .gcp-anim-icon.translate-api .logo-to {
@@ -7150,23 +7150,23 @@ h3.gcp-category-label {
   background-position: center;
 }
 .gcp-anim-icon.translate-api .logo-from {
-  background-image: url(../images/animated-gcp-icons/translate-from.png);
+  background-image: url(/images/animated-gcp-icons/translate-from.png);
   right: 38px;
 }
 .gcp-anim-icon.translate-api .logo-to {
   left: 46px;
 }
 .gcp-anim-icon.translate-api .logo-to.one {
-  background-image: url(../images/animated-gcp-icons/translate-to1.png);
+  background-image: url(/images/animated-gcp-icons/translate-to1.png);
 }
 .gcp-anim-icon.translate-api .logo-to.two {
-  background-image: url(../images/animated-gcp-icons/translate-to2.png);
+  background-image: url(/images/animated-gcp-icons/translate-to2.png);
   opacity: 0;
 }
 .gcp-anim-icon.cloud-endpoints .logo-shadow {
   width: 100%;
   height: 100%;
-  background: url(../images/animated-gcp-icons/cloud-endpoints-shadow.png) no-repeat 30px bottom;
+  background: url(/images/animated-gcp-icons/cloud-endpoints-shadow.png) no-repeat 30px bottom;
 }
 .gcp-anim-icon.cloud-endpoints .logo-left-arrow,
 .gcp-anim-icon.cloud-endpoints .logo-right-arrow {
@@ -7174,16 +7174,16 @@ h3.gcp-category-label {
   height: 23px;
 }
 .gcp-anim-icon.cloud-endpoints .logo-left-arrow {
-  background-image: url(../images/animated-gcp-icons/cloud-endpoints-left.png);
+  background-image: url(/images/animated-gcp-icons/cloud-endpoints-left.png);
   right: 36px;
 }
 .gcp-anim-icon.cloud-endpoints .logo-right-arrow {
-  background-image: url(../images/animated-gcp-icons/cloud-endpoints-right.png);
+  background-image: url(/images/animated-gcp-icons/cloud-endpoints-right.png);
   left: 36px;
 }
 .gcp-anim-icon.cloud-endpoints .logo-secondary,
 .gcp-anim-icon.cloud-endpoints .logo-main {
-  background: url(../images/animated-gcp-icons/cloud-endpoints-main.png) repeat-x;
+  background: url(/images/animated-gcp-icons/cloud-endpoints-main.png) repeat-x;
   width: 18px;
   height: 5px;
   -webkit-transition: all 0.3s ease-in-out, top 0.3s ease-in-out 0.1s;
@@ -7215,10 +7215,10 @@ h3.gcp-category-label {
 .gcp-anim-icon.prediction-api .logo-shadow {
   width: 100%;
   height: 100%;
-  background: url(../images/animated-gcp-icons/prediction-api-shadow.png) no-repeat 30px bottom;
+  background: url(/images/animated-gcp-icons/prediction-api-shadow.png) no-repeat 30px bottom;
 }
 .gcp-anim-icon.prediction-api .logo-line {
-  background-image: url(../images/animated-gcp-icons/prediction-api-main.png);
+  background-image: url(/images/animated-gcp-icons/prediction-api-main.png);
   background-position: left bottom;
 }
 .gcp-anim-icon.prediction-api .logo-line.one {
@@ -7260,7 +7260,7 @@ h3.gcp-category-label {
 .gcp-anim-icon.big-query .logo-shadow {
   width: 100%;
   height: 100%;
-  background: url(../images/animated-gcp-icons/big-query-shadow.png) no-repeat 33px bottom;
+  background: url(/images/animated-gcp-icons/big-query-shadow.png) no-repeat 33px bottom;
 }
 .gcp-anim-icon.big-query .logo-bar-wrapper {
   width: 23px;
@@ -7290,7 +7290,7 @@ h3.gcp-category-label {
   top: 14px;
 }
 .gcp-anim-icon.big-query .logo-main {
-  background-image: url(../images/animated-gcp-icons/big-query-main.png);
+  background-image: url(/images/animated-gcp-icons/big-query-main.png);
   width: 43px;
   height: 42px;
 }
@@ -8954,7 +8954,7 @@ h3.gcp-category-label {
 .gcp-anim-icon.compute-engine .logo-shadow {
   width: 100%;
   height: 100%;
-  background: url(../images/animated-gcp-icons/compute-engine-shadow.png) no-repeat 31px bottom;
+  background: url(/images/animated-gcp-icons/compute-engine-shadow.png) no-repeat 31px bottom;
   -webkit-transform: scale(1);
   -ms-transform: scale(1);
   transform: scale(1);
@@ -8962,7 +8962,7 @@ h3.gcp-category-label {
 .gcp-anim-icon.compute-engine .logo-main {
   width: 40px;
   height: 40px;
-  background-image: url(../images/animated-gcp-icons/compute-engine-main.png);
+  background-image: url(/images/animated-gcp-icons/compute-engine-main.png);
 }
 .gcp-anim-icon.compute-engine .logo-center {
   background-color: #f9f9f9;
@@ -9360,7 +9360,7 @@ h3.gcp-category-label {
 .gcp-anim-icon.cloud-sql .logo-shadow {
   width: 100%;
   height: 100%;
-  background: url(../images/animated-gcp-icons/cloud-sql-shadow.png) no-repeat 27px bottom;
+  background: url(/images/animated-gcp-icons/cloud-sql-shadow.png) no-repeat 27px bottom;
   -webkit-transform: scale(1);
   filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
   opacity: 1;
@@ -9368,229 +9368,229 @@ h3.gcp-category-label {
 .gcp-anim-icon.cloud-sql .logo-main {
   width: 51px;
   height: 23px;
-  background-image: url(../images/animated-gcp-icons/cloud-sql-main.png);
+  background-image: url(/images/animated-gcp-icons/cloud-sql-main.png);
   filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
   opacity: 1;
 }
 .gcp-anim-icon.cloud-sql .s-1 {
-  background-image: url(../images/animated-gcp-icons/s-1.png);
+  background-image: url(/images/animated-gcp-icons/s-1.png);
   width: 4px;
   height: 5px;
   top: -17px;
   left: -43px;
 }
 .gcp-anim-icon.cloud-sql .s-2 {
-  background-image: url(../images/animated-gcp-icons/s-2.png);
+  background-image: url(/images/animated-gcp-icons/s-2.png);
   width: 5px;
   height: 5px;
   top: -17px;
   left: -34px;
 }
 .gcp-anim-icon.cloud-sql .s-3 {
-  background-image: url(../images/animated-gcp-icons/s-3.png);
+  background-image: url(/images/animated-gcp-icons/s-3.png);
   width: 4px;
   height: 5px;
   top: -17px;
   left: -26px;
 }
 .gcp-anim-icon.cloud-sql .s-4 {
-  background-image: url(../images/animated-gcp-icons/s-4.png);
+  background-image: url(/images/animated-gcp-icons/s-4.png);
   width: 4px;
   height: 5px;
   top: -7px;
   left: -43px;
 }
 .gcp-anim-icon.cloud-sql .s-5 {
-  background-image: url(../images/animated-gcp-icons/s-5.png);
+  background-image: url(/images/animated-gcp-icons/s-5.png);
   width: 4px;
   height: 5px;
   top: 1px;
   left: -43px;
 }
 .gcp-anim-icon.cloud-sql .s-6 {
-  background-image: url(../images/animated-gcp-icons/s-6.png);
+  background-image: url(/images/animated-gcp-icons/s-6.png);
   width: 5px;
   height: 5px;
   top: 1px;
   left: -34px;
 }
 .gcp-anim-icon.cloud-sql .s-7 {
-  background-image: url(../images/animated-gcp-icons/s-7.png);
+  background-image: url(/images/animated-gcp-icons/s-7.png);
   width: 4px;
   height: 5px;
   top: 1px;
   left: -26px;
 }
 .gcp-anim-icon.cloud-sql .s-8 {
-  background-image: url(../images/animated-gcp-icons/s-8.png);
+  background-image: url(/images/animated-gcp-icons/s-8.png);
   width: 4px;
   height: 5px;
   top: 10px;
   left: -26px;
 }
 .gcp-anim-icon.cloud-sql .s-9 {
-  background-image: url(../images/animated-gcp-icons/s-9.png);
+  background-image: url(/images/animated-gcp-icons/s-9.png);
   width: 4px;
   height: 5px;
   top: 19px;
   left: -43px;
 }
 .gcp-anim-icon.cloud-sql .s-10 {
-  background-image: url(../images/animated-gcp-icons/s-10.png);
+  background-image: url(/images/animated-gcp-icons/s-10.png);
   width: 4px;
   height: 5px;
   top: 19px;
   left: -34px;
 }
 .gcp-anim-icon.cloud-sql .s-11 {
-  background-image: url(../images/animated-gcp-icons/s-11.png);
+  background-image: url(/images/animated-gcp-icons/s-11.png);
   width: 4px;
   height: 5px;
   top: 19px;
   left: -26px;
 }
 .gcp-anim-icon.cloud-sql .q-1 {
-  background-image: url(../images/animated-gcp-icons/q-1.png);
+  background-image: url(/images/animated-gcp-icons/q-1.png);
   width: 4px;
   height: 5px;
   top: -17px;
   left: -10px;
 }
 .gcp-anim-icon.cloud-sql .q-2 {
-  background-image: url(../images/animated-gcp-icons/q-2.png);
+  background-image: url(/images/animated-gcp-icons/q-2.png);
   width: 5px;
   height: 5px;
   top: -17px;
   left: -1px;
 }
 .gcp-anim-icon.cloud-sql .q-3 {
-  background-image: url(../images/animated-gcp-icons/q-3.png);
+  background-image: url(/images/animated-gcp-icons/q-3.png);
   width: 4px;
   height: 5px;
   top: -17px;
   left: 7px;
 }
 .gcp-anim-icon.cloud-sql .q-4 {
-  background-image: url(../images/animated-gcp-icons/q-4.png);
+  background-image: url(/images/animated-gcp-icons/q-4.png);
   width: 4px;
   height: 5px;
   top: -7px;
   left: -10px;
 }
 .gcp-anim-icon.cloud-sql .q-5 {
-  background-image: url(../images/animated-gcp-icons/q-5.png);
+  background-image: url(/images/animated-gcp-icons/q-5.png);
   width: 4px;
   height: 5px;
   top: -7px;
   left: 7px;
 }
 .gcp-anim-icon.cloud-sql .q-6 {
-  background-image: url(../images/animated-gcp-icons/q-6.png);
+  background-image: url(/images/animated-gcp-icons/q-6.png);
   width: 4px;
   height: 5px;
   top: 1px;
   left: -10px;
 }
 .gcp-anim-icon.cloud-sql .q-7 {
-  background-image: url(../images/animated-gcp-icons/q-7.png);
+  background-image: url(/images/animated-gcp-icons/q-7.png);
   width: 4px;
   height: 5px;
   top: 1px;
   left: 7px;
 }
 .gcp-anim-icon.cloud-sql .q-8 {
-  background-image: url(../images/animated-gcp-icons/q-8.png);
+  background-image: url(/images/animated-gcp-icons/q-8.png);
   width: 4px;
   height: 5px;
   top: 10px;
   left: -10px;
 }
 .gcp-anim-icon.cloud-sql .q-9 {
-  background-image: url(../images/animated-gcp-icons/q-9.png);
+  background-image: url(/images/animated-gcp-icons/q-9.png);
   width: 4px;
   height: 5px;
   top: 10px;
   left: 7px;
 }
 .gcp-anim-icon.cloud-sql .q-10 {
-  background-image: url(../images/animated-gcp-icons/q-10.png);
+  background-image: url(/images/animated-gcp-icons/q-10.png);
   width: 4px;
   height: 5px;
   top: 19px;
   left: -10px;
 }
 .gcp-anim-icon.cloud-sql .q-11 {
-  background-image: url(../images/animated-gcp-icons/q-11.png);
+  background-image: url(/images/animated-gcp-icons/q-11.png);
   width: 5px;
   height: 5px;
   top: 19px;
   left: -1px;
 }
 .gcp-anim-icon.cloud-sql .q-12 {
-  background-image: url(../images/animated-gcp-icons/q-12.png);
+  background-image: url(/images/animated-gcp-icons/q-12.png);
   width: 4px;
   height: 5px;
   top: 19px;
   left: 7px;
 }
 .gcp-anim-icon.cloud-sql .q-13 {
-  background-image: url(../images/animated-gcp-icons/q-13.png);
+  background-image: url(/images/animated-gcp-icons/q-13.png);
   width: 2px;
   height: 5px;
   top: 19px;
   left: 14px;
 }
 .gcp-anim-icon.cloud-sql .l-1 {
-  background-image: url(../images/animated-gcp-icons/l-1.png);
+  background-image: url(/images/animated-gcp-icons/l-1.png);
   width: 4px;
   height: 5px;
   top: -17px;
   left: 28px;
 }
 .gcp-anim-icon.cloud-sql .l-2 {
-  background-image: url(../images/animated-gcp-icons/l-2.png);
+  background-image: url(/images/animated-gcp-icons/l-2.png);
   width: 5px;
   height: 5px;
   top: -7px;
   left: 28px;
 }
 .gcp-anim-icon.cloud-sql .l-3 {
-  background-image: url(../images/animated-gcp-icons/l-3.png);
+  background-image: url(/images/animated-gcp-icons/l-3.png);
   width: 4px;
   height: 5px;
   top: 1px;
   left: 28px;
 }
 .gcp-anim-icon.cloud-sql .l-4 {
-  background-image: url(../images/animated-gcp-icons/l-4.png);
+  background-image: url(/images/animated-gcp-icons/l-4.png);
   width: 4px;
   height: 5px;
   top: 10px;
   left: 28px;
 }
 .gcp-anim-icon.cloud-sql .l-5 {
-  background-image: url(../images/animated-gcp-icons/l-5.png);
+  background-image: url(/images/animated-gcp-icons/l-5.png);
   width: 4px;
   height: 5px;
   top: 19px;
   left: 28px;
 }
 .gcp-anim-icon.cloud-sql .l-6 {
-  background-image: url(../images/animated-gcp-icons/l-6.png);
+  background-image: url(/images/animated-gcp-icons/l-6.png);
   width: 5px;
   height: 5px;
   top: 19px;
   left: 37px;
 }
 .gcp-anim-icon.cloud-sql .l-7 {
-  background-image: url(../images/animated-gcp-icons/l-7.png);
+  background-image: url(/images/animated-gcp-icons/l-7.png);
   width: 4px;
   height: 5px;
   top: 19px;
   left: 44px;
 }
 .gcp-anim-icon.cloud-sql .drop-1 {
-  background-image: url(../images/animated-gcp-icons/s-2.png);
+  background-image: url(/images/animated-gcp-icons/s-2.png);
   width: 5px;
   height: 5px;
   top: -100px;
@@ -9599,7 +9599,7 @@ h3.gcp-category-label {
   opacity: 0;
 }
 .gcp-anim-icon.cloud-sql .drop-2 {
-  background-image: url(../images/animated-gcp-icons/s-2.png);
+  background-image: url(/images/animated-gcp-icons/s-2.png);
   width: 5px;
   height: 5px;
   top: -100px;
@@ -9608,7 +9608,7 @@ h3.gcp-category-label {
   opacity: 0;
 }
 .gcp-anim-icon.cloud-sql .drop-3 {
-  background-image: url(../images/animated-gcp-icons/s-2.png);
+  background-image: url(/images/animated-gcp-icons/s-2.png);
   width: 5px;
   height: 5px;
   top: -100px;
@@ -9617,7 +9617,7 @@ h3.gcp-category-label {
   opacity: 0;
 }
 .gcp-anim-icon.cloud-sql .drop-4 {
-  background-image: url(../images/animated-gcp-icons/s-2.png);
+  background-image: url(/images/animated-gcp-icons/s-2.png);
   width: 5px;
   height: 5px;
   top: -100px;
@@ -9626,7 +9626,7 @@ h3.gcp-category-label {
   opacity: 0;
 }
 .gcp-anim-icon.cloud-sql .drop-5 {
-  background-image: url(../images/animated-gcp-icons/s-2.png);
+  background-image: url(/images/animated-gcp-icons/s-2.png);
   width: 5px;
   height: 5px;
   top: -100px;
@@ -9635,7 +9635,7 @@ h3.gcp-category-label {
   opacity: 0;
 }
 .gcp-anim-icon.cloud-sql .drop-6 {
-  background-image: url(../images/animated-gcp-icons/s-2.png);
+  background-image: url(/images/animated-gcp-icons/s-2.png);
   width: 5px;
   height: 5px;
   top: -100px;
