@@ -3,6 +3,8 @@
   margin: 0px 0px;
   background-color: #f0f0f0;
   border-bottom: 1px solid #999;
+  margin-left: -15px;
+  margin-right: -15px;
 }
 #links {
   max-width: 978px;
