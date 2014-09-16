@@ -1,7 +1,7 @@
 <div class="link-wrapper">
     <div id="links">
       <ul>
-        {% for item in page.subnav %}
+        {% for item in include.subnav %}
           <li><a href="{{ item.url }}">{{ item.name }}</a></li>
         {% endfor %}
       </ul>
