@@ -133,11 +133,9 @@ redirects:
 - from: /gdc
   to: /solutions/gaming
 - from: /hipaa
-  to: /index#hipaa
+  to: /#hipaa
 - from: /redeem
   to: https://console.developers.google.com/billing/redeem
-- from: /products/pubsub/...
-  to: /pubsub/...
 
 # form redirects
 - from: /r/managed-vms
