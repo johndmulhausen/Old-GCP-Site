@@ -1,7 +1,7 @@
 /**
  * Functions for working with DoubleClick floodlight tags.
  * DoubleClick floodlight documentation:
- * http://support.google.com/dfa/partner/answer/134533
+ * http://support.google.com/dfa/partner/answer/134533?hl=en
  */
 
 var floodlight = floodlight || {};
