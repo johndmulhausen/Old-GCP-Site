@@ -99,7 +99,7 @@ title: Cloud Computing &amp; Cloud Hosting Services
 <figcaption>그림 1: Cloud Backend API의 클래스 다이어그램</figcaption>
 </figure>
 <h2><a name="dawcb" id="dawcb"></a>(A) Cloud Backend API로 Datastore 액세스</h2>
-<p>Cloud Backend API의 핵심 기능은 클라이언트에서 바로 액세스할 수 있는 <a href="https://developers.google.com/appengine/docs/java/datastore/overview">App Engine Datastore</a> 기능의 하위 집합을 만드는 것입니다. 따라서 Datastore에서 CRUD(Create, Read, Update, Delete - 생성, 읽기, 업데이트 및 삭제) 작업 및 쿼리를 실행하기 위해 서버 측 코드를 작성하지 않아도 됩니다.</p>
+<p>Cloud Backend API의 핵심 기능은 클라이언트에서 바로 액세스할 수 있는 <a href="/appengine/docs/java/datastore/overview">App Engine Datastore</a> 기능의 하위 집합을 만드는 것입니다. 따라서 Datastore에서 CRUD(Create, Read, Update, Delete - 생성, 읽기, 업데이트 및 삭제) 작업 및 쿼리를 실행하기 위해 서버 측 코드를 작성하지 않아도 됩니다.</p>
 <figure><img src="/images/articles/mobile-backend-starter-baas-paas/api-classes.png" alt="">
 <figcaption>그림 2: Cloud Backend API 클래스</figcaption>
 </figure>
@@ -329,15 +329,15 @@ F.in(String, Object...)</td>
 </tbody>
 </table>
 <h3><a name="roq" id="roq"></a>쿼리 제한사항</h3>
-<p>For other forms, you get a DatastoreNeedIndexException from by the backend. To use a more complex form of queries, add the <a href="https://developers.google.com/appengine/docs/java/datastore/indexes#Index_Configuration">Index Configuration</a> on the backend. See <a href="https://developers.google.com/samples/mbs/">Mobile Backend Starter document</a> for details about customizing the backend. It is important to understand that the queries in Cloud Backend API have some restrictions derived from App Engine Datastore. By default, App Engine automatically creates an index for each user-defined property, with the exception of List/Map properties. This index handles the following forms of queries:</p>
+<p>For other forms, you get a DatastoreNeedIndexException from by the backend. To use a more complex form of queries, add the <a href="/appengine/docs/java/datastore/indexes#Index_Configuration">Index Configuration</a> on the backend. See <a href="https://developers.google.com/samples/mbs/">Mobile Backend Starter document</a> for details about customizing the backend. It is important to understand that the queries in Cloud Backend API have some restrictions derived from App Engine Datastore. By default, App Engine automatically creates an index for each user-defined property, with the exception of List/Map properties. This index handles the following forms of queries:</p>
 <ul>
 <li>필터 또는 정렬 없이 한 가지 유형 이름만 사용하는 쿼리</li>
 <li>정렬 없이 색인생성된 속성에 균등 필터(F.eq)만 사용하는 쿼리</li>
 <li>색인생성된 하나의 속성에 F.lt 또는 F.ge와 같은 비균등 필터만 사용하는 쿼리</li>
 <li>필터 없이 한 속성에 하나의 정렬 순서를 사용하는 쿼리</li>
 </ul>
-<p>App Engine 데이터 저장소 쿼리 및 관련 제한사항에 대한 자세한 내용은 <span class="c62"><a href="https://developers.google.com/appengine/docs/java/datastore/queries#Restrictions_on_Queries">쿼리 제한사항</a> 문서를 참조하세요. Google App Engine 가격 책정에 대한 자세한 내용은 <a href="https://developers.google.com/appengine/docs/billing">유료 앱: 예산, 결제 및 리소스 구매</a> 문서</span>를 참조하세요.</p>
-<p><span class="c62">쿼리는 <a href="http://en.wikipedia.org/wiki/Eventual_consistency">최종 일관성</a> 결과만을 보장합니다. CloudEntities의 최신 상태는 보장되지 않습니다. 또한 Cloud Backend API는 현재 트랜잭션을 지원하지 않고 있습니다. <a href="http://en.wikipedia.org/wiki/Strong_consistency">강력한 일관성</a>을 보장하거나 트랜잭션을 사용하려면 백엔드를 맞춤설정하여 항목 그룹 및 상위 쿼리를 사용해야 합니다. 자세한 내용은 <a href="https://developers.google.com/appengine/docs/java/datastore/structuring_for_strong_consistency">강력한 일관성을 위한 데이터 구조화</a> 및 <a href="https://developers.google.com/appengine/docs/java/datastore/transactions">트랜잭션</a>을 참조하세요.</span></p>
+<p>App Engine 데이터 저장소 쿼리 및 관련 제한사항에 대한 자세한 내용은 <span class="c62"><a href="/appengine/docs/java/datastore/queries#Restrictions_on_Queries">쿼리 제한사항</a> 문서를 참조하세요. Google App Engine 가격 책정에 대한 자세한 내용은 <a href="/appengine/docs/billing">유료 앱: 예산, 결제 및 리소스 구매</a> 문서</span>를 참조하세요.</p>
+<p><span class="c62">쿼리는 <a href="http://en.wikipedia.org/wiki/Eventual_consistency">최종 일관성</a> 결과만을 보장합니다. CloudEntities의 최신 상태는 보장되지 않습니다. 또한 Cloud Backend API는 현재 트랜잭션을 지원하지 않고 있습니다. <a href="http://en.wikipedia.org/wiki/Strong_consistency">강력한 일관성</a>을 보장하거나 트랜잭션을 사용하려면 백엔드를 맞춤설정하여 항목 그룹 및 상위 쿼리를 사용해야 합니다. 자세한 내용은 <a href="/appengine/docs/java/datastore/structuring_for_strong_consistency">강력한 일관성을 위한 데이터 구조화</a> 및 <a href="/appengine/docs/java/datastore/transactions">트랜잭션</a>을 참조하세요.</span></p>
 <h2><span class="c62"><a name="adaacq" id="adaacq"></a>(B) 비동기 Datastore 액세스 및 지속 쿼리</span></h2>
 <p><span class="c62">CloudBackend CRUD 및 쿼리 메소드는 모두 동기식이며, Android 인터페이스 스레드에서 바로 사용할 수 없습니다. 액티비티 또는 프래그먼트의 인터페이스 스레드에서 이러한 메소드를 사용하려면 <span class="code">CloudBackendAsync</span> 클래스를 사용해야 합니다.</span></p>
 <h3><a name="acaq" id="acaq"></a>비동기 CRUD 및 쿼리</h3>
@@ -424,7 +424,7 @@ cb.insert(ce);
 </tbody>
 </table>
 <p>App Engine 관리콘솔의 탐색 메뉴에 있는 모바일 백엔드 설정 링크에서 모든 지속 쿼리를 수동으로 제거할 수도 있습니다.</p>
-<p>Mobile Backend Starter는 <a href="https://developers.google.com/appengine/docs/java/prospectivesearch/">Prospective Search API</a>와 <a href="http://developer.android.com/google/gcm/">Google Cloud Messaging</a>을 백엔드에서 조합하여 지속 쿼리를 구현합니다. CloudQuery의 필터링 조건은 예상 검색 수신 쿼리로 변환됩니다. App Engine 관리콘솔에서 탐색 메뉴의 'Prospective Search'(예상 검색) 링크를 클릭하여 수신 상태를 확인할 수 있습니다. 지속 쿼리에서 사용하는 모든 기본 서비스는 확장성과 가용성이 높으므로 수천 개의 지속 쿼리를 온라인에서 사용하는 대규모 시스템을 설계할 수 있습니다.</p>
+<p>Mobile Backend Starter는 <a href="/appengine/docs/java/prospectivesearch/">Prospective Search API</a>와 <a href="http://developer.android.com/google/gcm/">Google Cloud Messaging</a>을 백엔드에서 조합하여 지속 쿼리를 구현합니다. CloudQuery의 필터링 조건은 예상 검색 수신 쿼리로 변환됩니다. App Engine 관리콘솔에서 탐색 메뉴의 'Prospective Search'(예상 검색) 링크를 클릭하여 수신 상태를 확인할 수 있습니다. 지속 쿼리에서 사용하는 모든 기본 서비스는 확장성과 가용성이 높으므로 수천 개의 지속 쿼리를 온라인에서 사용하는 대규모 시스템을 설계할 수 있습니다.</p>
 <h3><a name="rocq" id="rocq"></a>쿼리 제한사항</h3>
 <p>문자열 속성 지속 쿼리는 현재 균등 필터(F.eq 및 F.ne)만 지원합니다.</p>
 <p>Prospective Search API 확장성이 높으며 대규모 동시 수신을 지원할 수 있지만, Google App Engine에는 애플리케이션당 최대 수신 횟수가 정해져 있습니다. 현재 할당량은 10,000입니다. 현재 수신 횟수는 App Engine 관리콘솔의 'Quota Details'(할당량 세부정보) 페이지에서 모니터링할 수 있습니다. 이 제한값을 초과하는 애플리케이션을 보유한 경우, 제한값에 도달하기 전에 할당량을 늘릴 수 있도록 <a href="/support/packages">지원 프로그램</a>을 통해 문의해 주세요.</p>
@@ -520,7 +520,7 @@ GoogleAccountCredential credential =
 credential.setSelectedAccountName("<span class="code">&lt;Google Account Name&gt;</span>");
 cloudBackend.<span class="code">setCredential</span>(credential);
 </pre>
-<p>위의 코드에서 백엔드는 '클라이언트 ID로 보안 설정됨' 모드인 호출을 허용하며, <span class="code">CloudEntity</span>의 createdBy/updatedBy/owner 속성을 자동으로 설정합니다. 클라이언트에서 <span class="code">GoogleAccountCredential</span> 개체를 생성하는 방법(예: 'AccountPicker' 대화를 표시하여 계정 선택)에 대해 자세히 알아보려면, <a href="https://developers.google.com/appengine/docs/java/endpoints/consume_android#making-authenticated-calls">인증된 호출하기</a> 문서 또는 <span class="code">CloudBackendActivity</span> 클래스의 소스 코드를 참조하세요.</p>
+<p>위의 코드에서 백엔드는 '클라이언트 ID로 보안 설정됨' 모드인 호출을 허용하며, <span class="code">CloudEntity</span>의 createdBy/updatedBy/owner 속성을 자동으로 설정합니다. 클라이언트에서 <span class="code">GoogleAccountCredential</span> 개체를 생성하는 방법(예: 'AccountPicker' 대화를 표시하여 계정 선택)에 대해 자세히 알아보려면, <a href="/appengine/docs/java/endpoints/consume_android#making-authenticated-calls">인증된 호출하기</a> 문서 또는 <span class="code">CloudBackendActivity</span> 클래스의 소스 코드를 참조하세요.</p>
 <h3><a name="acfce" id="acfce"></a>클라우드 항목 액세스 제어</h3>
 <p>Cloud Backend API는 CloudEntities에 대한 액세스 제어 기능을 제공하며, 항목의 유형 이름에 다음 프리픽스를 추가하여 액세스 제어를 지정할 수 있습니다.</p>
 <table style="width:100%;">
@@ -553,11 +553,11 @@ cloudBackend.<span class="code">setCredential</span>(credential);
 </tr>
 </tbody>
 </table>
-<p>예를 들어 유형 이름 'MyAddressBook'을 사용하면 모든 사용자가 항목을 삽입하고 기존 항목을 가져오거나 쿼리할 수 있습니다. 하지만 항목 소유자만이 각 항목을 업데이트하거나 삭제할 수 있습니다. 한 사용자가 다른 사용자의 항목을 업데이트하려고 하면 백엔드에서 <span class="code">UnauthorizedException</span>을 표시합니다. MyAddressBook을 모든 사용자가 읽을 수 없는 항목으로 설정하려면 유형 이름을 '[private]MyAddressBook'으로 지정합니다. 이 유형에서 전체 항목을 가져오는 쿼리를 수행하면 쿼리한 사용자가 소유한 항목만 반환됩니다. [private] 유형의 항목은 각 Google 계정에서 <a href="https://developers.google.com/appengine/docs/java/multitenancy/multitenancy#Creating_Namespaces_on_a_per_User_Basis">다른 네임스페이스로 저장</a>되므로 사용자 간에 구분될 수 있습니다.</p>
+<p>예를 들어 유형 이름 'MyAddressBook'을 사용하면 모든 사용자가 항목을 삽입하고 기존 항목을 가져오거나 쿼리할 수 있습니다. 하지만 항목 소유자만이 각 항목을 업데이트하거나 삭제할 수 있습니다. 한 사용자가 다른 사용자의 항목을 업데이트하려고 하면 백엔드에서 <span class="code">UnauthorizedException</span>을 표시합니다. MyAddressBook을 모든 사용자가 읽을 수 없는 항목으로 설정하려면 유형 이름을 '[private]MyAddressBook'으로 지정합니다. 이 유형에서 전체 항목을 가져오는 쿼리를 수행하면 쿼리한 사용자가 소유한 항목만 반환됩니다. [private] 유형의 항목은 각 Google 계정에서 <a href="/appengine/docs/java/multitenancy/multitenancy#Creating_Namespaces_on_a_per_User_Basis">다른 네임스페이스로 저장</a>되므로 사용자 간에 구분될 수 있습니다.</p>
 <p>이름을 '[public]Guestbook'으로 지정하여 유형을 생성하면 모든 사용자가 전체 항목을 읽고 쓸 수 있습니다. 소유자 속성에 올바른 UserID가 할당되지 않은 모든 항목 또한 누구나 읽고 쓸 수 있습니다.</p>
 <p>Android 클라이언트와 백엔드 간에 교환되는 모든 요청과 응답은 https 연결로 보안이 설정됩니다. 하지만 CloudEntities의 값은 백엔드의 저장소에서 암호화되지 않으므로 재무 또는 의료 데이터와 같은 민감한 정보를 저장하는 데 사용해서는 안 됩니다. 또한 <a href="https://github.com/GoogleCloudPlatform/solutions-mobile-backend-starter-java">백엔드 소스 코드</a>를 확장하여 저장 전에 데이터 암호화를 구현할 수도 있습니다.</p>
 <h3><a name="easysec" id="easysec"></a>간편한 보안</h3>
-<p>클라이언트 ID 및 Google 계정 인증 보안을 위해, 일반적으로 <a href="https://developers.google.com/appengine/docs/java/endpoints/consume_android#making-authenticated-calls">여러 줄의 코드</a>를 작성해야 합니다. 이 코드를 사용하면 다음과 같은 작업을 수행할 수 있습니다.</p>
+<p>클라이언트 ID 및 Google 계정 인증 보안을 위해, 일반적으로 <a href="/appengine/docs/java/endpoints/consume_android#making-authenticated-calls">여러 줄의 코드</a>를 작성해야 합니다. 이 코드를 사용하면 다음과 같은 작업을 수행할 수 있습니다.</p>
 <ul>
 <li>GoogleAccountCredential 개체를 생성하여 CloudBackend에 전달</li>
 <li>AccountPicker 대화를 표시하여 사용자가 Google 계정을 선택하도록 허용</li>

@@ -22,7 +22,7 @@ title: Real-Time Bidder Solution for Google Cloud Platform
 		<p>This paper presents a pair of solutions that can be used as references for building and deploying multi-region, real-time bidders on <a href="/" target="_blank" >Google Cloud Platform</a>. The following products and services are used herein:</p>
 
 		<ul>
-			<li><a href="https://developers.google.com/compute/" target="_blank" >Google Compute Engine</a>
+			<li><a href="/compute/" target="_blank" >Google Compute Engine</a>
 				<ul>
 					<li>Bidders will consistently experience no latency in responding to bid requests from Google Adx Exchange, giving them the full 100ms compute their response.</li>
 					<li>Bidders run in standard Google Cloud Platform availability zone which supports the use of other Google services such as the use of data analytics to maximize profits.</li>
@@ -40,7 +40,7 @@ title: Real-Time Bidder Solution for Google Cloud Platform
 					<li>Enable pre-targeting filtering and accurate reporting of table sizes and match rates.</li>
 				</ul>
 			</li>
-			<li><a href="https://developers.google.com/appengine/" target="_blank" >Google App Engine</a>
+			<li><a href="/appengine/" target="_blank" >Google App Engine</a>
 				<ul>
 					<li>Host administrative, campaign management, and client-facing web applications fully connected with other Google services without operational overhead.</li>
 				</ul>
@@ -52,7 +52,7 @@ title: Real-Time Bidder Solution for Google Cloud Platform
 					<li>Preserve disk snapshots and database backups for zone migration and disaster recovery.</li>
 				</ul>
 			</li>
-			<li><a href="/products/bigquery" target="_blank" >Google BigQuery</a> and <a href="https://developers.google.com/prediction/" target="_blank" >Prediction API</a>
+			<li><a href="/products/bigquery" target="_blank" >Google BigQuery</a> and <a href="/prediction/" target="_blank" >Prediction API</a>
 				<ul>
 					<li>Analyze server logs and exchange reports for generating reports and dashboards, and tuning the bid model.</li>
 				</ul>
@@ -61,7 +61,7 @@ title: Real-Time Bidder Solution for Google Cloud Platform
 		<p>Alternative components include:</p>
 
 		<ul>
-			<li><a href="https://developers.google.com/datastore/index" target="_blank" >Google Cloud Datastore </a>and/or <a href="https://developers.google.com/cloud-sql" target="_blank" >Google Cloud SQL</a>
+			<li><a href="/datastore/index" target="_blank" >Google Cloud Datastore </a>and/or <a href="/sql/" target="_blank" >Google Cloud SQL</a>
 				<ul>
 					<li>Store bid model, campaigns and user tracking data.</li>
 				</ul>
@@ -96,7 +96,7 @@ title: Real-Time Bidder Solution for Google Cloud Platform
 
 			<h5>Frontends</h5>
 
-				<p><a href="https://developers.google.com/compute/docs/load-balancing/" target="_blank" >Google’s Compute Engine Load Balancing</a><a href="https://developers.google.com/compute/docs/load-balancing/" target="_blank" > </a>or software load balancers (such as <a href="http://haproxy.1wt.eu/" target="_blank" >HAProxy</a> and <a href="http://wiki.nginx.org/HttpUpstreamModule" target="_blank" >Nginx</a>) running on Compute Engine virtual machines handle all request traffic from exchanges and user browsers. Load balancing is particularly important for maximizing aggregate effectiveness of the bidder, as well as, minimizing error rates and request pressure on individual bid servers.</p>
+				<p><a href="/compute/docs/load-balancing/" target="_blank" >Google’s Compute Engine Load Balancing</a><a href="/compute/docs/load-balancing/" target="_blank" > </a>or software load balancers (such as <a href="http://haproxy.1wt.eu/" target="_blank" >HAProxy</a> and <a href="http://wiki.nginx.org/HttpUpstreamModule" target="_blank" >Nginx</a>) running on Compute Engine virtual machines handle all request traffic from exchanges and user browsers. Load balancing is particularly important for maximizing aggregate effectiveness of the bidder, as well as, minimizing error rates and request pressure on individual bid servers.</p>
 
 			<h5>Backends</h5>
 
@@ -150,11 +150,11 @@ title: Real-Time Bidder Solution for Google Cloud Platform
 
 			<h4 class="gray italic">Storage</h4>
 
-				<p>Google Cloud Storage is used for storing and staging log files, intermediate and final results from BigQuery, MapReduce and Prediction API. Other solutions can take advantage of the global edge caching as well as the ability to host data local to either U.S. or Europe for serving static ad content. <a href="https://developers.google.com/storage/docs/durable-reduced-availability" target="_blank" >Durable Reduced Availability Storage</a> is ideal for third-party database backups and disaster recovery.</p>
+				<p>Google Cloud Storage is used for storing and staging log files, intermediate and final results from BigQuery, MapReduce and Prediction API. Other solutions can take advantage of the global edge caching as well as the ability to host data local to either U.S. or Europe for serving static ad content. <a href="/storage/docs/durable-reduced-availability" target="_blank" >Durable Reduced Availability Storage</a> is ideal for third-party database backups and disaster recovery.</p>
 
 		<h3>Managed Database Solution</h3>
 
-			<p>This solution leverages a highly available and scalable database service fully managed by Google and the reduced operational overhead that comes with it. Either Google Cloud Datastore or Cloud SQL, or possibly both, can be used - the choice is driven by the nature of the data schema and application usage semantics. Cloud Datastore is a NoSQL data solution, built on Google’s <a href="http://research.google.com/pubs/pub36971.html" target="_blank" >Megastore</a>, and offers massive scalability, high availability and strong write consistency. It is accessible from many other Google Cloud Platform services, including App Engine and Compute Engine, and can be used with hosted MapReduce and other data pipelines, as well as with the Search API for full-text and location-based searches. Cloud SQL is a secure, fully managed, highly available MySQL service with built-in, automatic <a href="https://developers.google.com/cloud-sql/faq#replication" target="_blank" >replication</a> across geographic regions. </p>
+			<p>This solution leverages a highly available and scalable database service fully managed by Google and the reduced operational overhead that comes with it. Either Google Cloud Datastore or Cloud SQL, or possibly both, can be used - the choice is driven by the nature of the data schema and application usage semantics. Cloud Datastore is a NoSQL data solution, built on Google’s <a href="http://research.google.com/pubs/pub36971.html" target="_blank" >Megastore</a>, and offers massive scalability, high availability and strong write consistency. It is accessible from many other Google Cloud Platform services, including App Engine and Compute Engine, and can be used with hosted MapReduce and other data pipelines, as well as with the Search API for full-text and location-based searches. Cloud SQL is a secure, fully managed, highly available MySQL service with built-in, automatic <a href="/sql/faq#replication" target="_blank" >replication</a> across geographic regions. </p>
 
 			<h4 class="gray italic">Reference Architecture</h4>
 
@@ -245,7 +245,7 @@ title: Real-Time Bidder Solution for Google Cloud Platform
 
 			<p>Google Cloud Platform provides:</p>
 			<ul>
-				<li>numerous virtual machine <a href="https://developers.google.com/compute/docs/pricing#machinetype" target="_blank" >configurations</a> to suit the systems requirements,</li>
+				<li>numerous virtual machine <a href="/compute/docs/pricing#machinetype" target="_blank" >configurations</a> to suit the systems requirements,</li>
 				<li>high performance local and persistent disks with transparent at-rest encryption for data security,</li>
 				<li>high bandwidth, low latency networking that can support synchronous multi-zone writes within the same region,</li>
 				<li>a global fiber network that helps ensure asynchronous writes across regions are optimally routed.</li>

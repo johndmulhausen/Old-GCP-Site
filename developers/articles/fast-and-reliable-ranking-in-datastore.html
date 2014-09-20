@@ -132,9 +132,9 @@ title: Fast and Reliable Ranking in Google Datastore
     <li><strong>Backend</strong>: Runs an infinite loop with a single thread that pulls the update requests from the queue and executes them with the Code Jam ranking library.</li>
   </ul>
 
-  <p>The PoC creates a <a href="https://developers.google.com/appengine/docs/python/taskqueue/overview-pull">pull queue</a>, which is a kind of <a href="https://developers.google.com/appengine/docs/python/taskqueue/">Task Queue</a> in App Engine that allows developers to implement one or multiple workers that consume the tasks added to the queue. The backend instance has a single thread in an infinite loop that keeps pulling as many tasks as possible (up to 1000) from the queue. The thread passes each update request to the Code Jam ranking library, which executes them as a batch in a single transaction. The transaction may be open for a second or more, but because there is a single thread driving the library and Datastore, there is no contention and no concurrent modification problem.</p>
+  <p>The PoC creates a <a href="/appengine/docs/python/taskqueue/overview-pull">pull queue</a>, which is a kind of <a href="/appengine/docs/python/taskqueue/">Task Queue</a> in App Engine that allows developers to implement one or multiple workers that consume the tasks added to the queue. The backend instance has a single thread in an infinite loop that keeps pulling as many tasks as possible (up to 1000) from the queue. The thread passes each update request to the Code Jam ranking library, which executes them as a batch in a single transaction. The transaction may be open for a second or more, but because there is a single thread driving the library and Datastore, there is no contention and no concurrent modification problem.</p>
 
-  <p>The backend instance is defined as a <a href="https://developers.google.com/appengine/docs/python/modules/">module</a>, a feature of App Engine that allows developers to define an Application Instance with various characteristics. In this PoC, the backend instance is defined as a manual scaling instance. Only one such instance is running at any given time.</p>
+  <p>The backend instance is defined as a <a href="/appengine/docs/python/modules/">module</a>, a feature of App Engine that allows developers to define an Application Instance with various characteristics. In this PoC, the backend instance is defined as a manual scaling instance. Only one such instance is running at any given time.</p>
 
   <p>Kaz load-tested the PoC by using JMeter. He confirmed that the PoC was able to process 200 SetScore requests per second, with batches of 500 to 600 updates per transaction. Job Aggregation works!</p>
 
@@ -210,7 +210,7 @@ title: Fast and Reliable Ranking in Google Datastore
 
   <p>In general, coordinating the trees is not required or expected. In the simplest case, each <code>SetScore</code> update is randomly dispatched to a queue. With three such trees, each with its own Datastore entity group and backend server, the expected update throughput would be three times greater. The tradeoff is that FindRank must query each ranking tree to obtain the rank of a score,  and then sum the rank from each tree to find the actual rank, which will take a bit longer. The query time for <code>FindRank</code> can be substantially reduced by keeping entities in Memcache.</p>
 
-  <p>This is similar to the well-known approach of using <a href="https://developers.google.com/appengine/articles/sharding_counters">sharded counters</a>: each counter is incremented independently, and the total sum is computed only when needed by the client.</p>
+  <p>This is similar to the well-known approach of using <a href="/appengine/articles/sharding_counters">sharded counters</a>: each counter is incremented independently, and the total sum is computed only when needed by the client.</p>
 
   <p>For example, with three trees, FindRank(865) might find the three ranks 124, 183, and 156, indicating that each tree holds the respective number of scores higher than 865. The computed total number of scores higher than 865 is then 124 + 183 + 156 = 463. </p>
 

@@ -27,7 +27,7 @@ title: ow to Configure SSH Port Forwarding and Set Up Load Testing on Google Com
   <p>This document presents an efficient way of setting up a distributed load test environment with JMeter on Compute Engine instances.</p>
 
   <h3>Assumptions</h3>
-  <p>This document provides a detailed description of how a <a href="http://jmeter.apache.org/">JMeter</a> load test environment can be setup to run load tests on Compute Engine. It assumes you have a technical understanding of networks and requires some familiarity with <a href="https://developers.google.com/compute/">Compute Engine</a> and its <a href="https://developers.google.com/compute/docs/gcutil/">gcutil</a> command line tool.</p>
+  <p>This document provides a detailed description of how a <a href="http://jmeter.apache.org/">JMeter</a> load test environment can be setup to run load tests on Compute Engine. It assumes you have a technical understanding of networks and requires some familiarity with <a href="/compute/">Compute Engine</a> and its <a href="/compute/docs/gcutil/">gcutil</a> command line tool.</p>
   <p>Although this document describes how you can set up a JMeter test environment, it doesn&rsquo;t go into any details about JMeter itself. Building a test plan and executing tests on JMeter are outside the scope of this document.</p>
 
   <h3>Content</h3>
@@ -199,7 +199,7 @@ bin/jmeter.sh -Djava.rmi.server.hostname=127.0.0.1
   <p>We can create test cases using the JMeter UI as usual. The JMeter client automatically recognizes the remote JMeter server, issues the <span class="code">remote start all</span> command to initiate a connection with the JMeter server, and starts sending requests from the remote JMeter server to the target system being tested.</p>
 
   <h4>Setting up JMeter Servers on Google Compute Engine</h4>
-  <p>Since a Compute Engine instance works as a regular Linux box, no special configuration is required. However, the easiest way to <span class="code">ssh</span> into it is to use the <a href="https://developers.google.com/compute/docs/instances#sshing">gcutil ssh</a> command rather than the vanilla <span class="code">ssh</span> command, because gcutil <span class="code">ssh</span> pre-sets some options for connecting to Compute Engine.</p>
+  <p>Since a Compute Engine instance works as a regular Linux box, no special configuration is required. However, the easiest way to <span class="code">ssh</span> into it is to use the <a href="/compute/docs/instances#sshing">gcutil ssh</a> command rather than the vanilla <span class="code">ssh</span> command, because gcutil <span class="code">ssh</span> pre-sets some options for connecting to Compute Engine.</p>
   <p>With the <span class="code">gcutil ssh</span> command you need to specify the <span class="code">--ssh_arg</span> option to pass parameters to ssh. </p>
   <p>To set up the the SSH port forwarding for Compute Engine, use the following command:</p>
 
@@ -261,8 +261,8 @@ mode=Statistical
   <p>&ldquo;jmeter_cluster.py&rdquo; uses:</p>
   <ul>
     <li><a href="https://developers.google.com/api-client-library/python/">Google APIs Client Library for Python</a> to control Compute Engine instances</li>
-    <li><a href="https://developers.google.com/compute/docs/gcutil/">gcutil</a> command line tool to set up SSH port forwarding</li>
-    <li><a href="https://developers.google.com/storage/">Google Cloud Storage</a> to store Compute Engine instance&rsquo;s startup script and JMeter server package</li>
+    <li><a href="/compute/docs/gcutil/">gcutil</a> command line tool to set up SSH port forwarding</li>
+    <li><a href="/storage/">Google Cloud Storage</a> to store Compute Engine instance&rsquo;s startup script and JMeter server package</li>
   </ul>
   <p>The JMeter server package includes pre-configured jmeter.properties in the &ldquo;bin&rdquo; subdirectory. However, port numbers must be customized per instance. The startup script will overwrite the port numbers for you.</p>
   <p>Here&rsquo;s of an overview of what the script does:</p>
@@ -272,7 +272,7 @@ mode=Statistical
     	<ul style="list-style-type:circle;">
 	      <li>Starts Compute Engine instances.</li>
 	      <li>Startup script downloads JMeter server package from Cloud Storage.</li>
-	      <li>Startup script modifies port numbers in JMeter configuration based on its server ID number in the cluster (0, 1, 2, &hellip;). The server ID is passed to each instance as custom <a href="https://developers.google.com/compute/docs/metadata">metadata</a> of Compute Engine instance.</li>
+	      <li>Startup script modifies port numbers in JMeter configuration based on its server ID number in the cluster (0, 1, 2, &hellip;). The server ID is passed to each instance as custom <a href="/compute/docs/metadata">metadata</a> of Compute Engine instance.</li>
 	      <li>Startup script starts JMeter server process.</li>
 	    </ul>
     </li>
@@ -341,8 +341,8 @@ mode=Statistical
   <a name="resources"></a>
   <h2>Additional Resources</h2>
   <ul>
-    <li><a href="https://developers.google.com/compute/">Google Compute Engine developer documentation</a></li>
-    <li><a href="https://developers.google.com/compute/docs/instances#sshing">Connecting to Google Compute Engine using SSH</a></li>
+    <li><a href="/compute/">Google Compute Engine developer documentation</a></li>
+    <li><a href="/compute/docs/instances#sshing">Connecting to Google Compute Engine using SSH</a></li>
     <li><a href="http://jmeter.apache.org/">JMeter</a></li>
     <li><a href="http://www.google.com/url?q=http%3A%2F%2Fionelmc.wordpress.com%2F2012%2F02%2F16%2Fhow-to-run-jmeter-over-ssh-tunnel%2F&amp;sa=D&amp;sntz=1&amp;usg=AFQjCNG8dqQYCuEU-RITYdHZoFcLR3JWeQ">How to run JMeter over SSH tunnel</a></li>
   </ul>

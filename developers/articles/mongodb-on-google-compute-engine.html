@@ -133,7 +133,7 @@ title: MongoDB on Google Compute Engine Solutions
 
   <p>MongoDB also allows you to save on resources.  If you need only two copies of your data, you can create two MongoDB server instances and an <a target="_blank" href="http://docs.mongodb.org/manual/core/replica-set-arbiter/">arbiter member</a>.  An arbiter can vote but holds no replica set data.  This gives you three voting members in the replica set, but without the full cost of a third server instance.</p>
 
-  <p>When adding members to a replica set to satisfy these different uses, Compute Engine allows you to choose different <a target="_blank" href="https://developers.google.com/compute/docs/machine-types">virtual machine types</a>.  This provides the flexibility to purchase the right amount of computing power for needs such as:</p>
+  <p>When adding members to a replica set to satisfy these different uses, Compute Engine allows you to choose different <a target="_blank" href="/compute/docs/machine-types">virtual machine types</a>.  This provides the flexibility to purchase the right amount of computing power for needs such as:</p>
 
   <ul>
     <li>A secondary node for reporting may require different CPU and memory than the primary node</li>
@@ -224,15 +224,15 @@ MongoDB servers are configured with <a target="_blank" href="http://docs.mongodb
 
   <h3><a name="performance_machine_types" id="performance_machine_types"></a>Choose machine types</h3>
 
-  <p>Google Compute Engine provides many <a target="_blank" href="https://developers.google.com/compute/docs/machine-types">virtual machine types</a>, giving you options for selecting the right number of CPU cores and the right amount of memory for your virtual machines.</p>
+  <p>Google Compute Engine provides many <a target="_blank" href="/compute/docs/machine-types">virtual machine types</a>, giving you options for selecting the right number of CPU cores and the right amount of memory for your virtual machines.</p>
 
   <p>MongoDB servers perform best when disk access can be minimized.  The <a target="_blank" href="http://docs.mongodb.org/manual/administration/production-notes/#hardware-requirements-and-limitations">recommended</a> way to do this is to size MongoDB server instances such that the active working data set can be kept in memory.  Different applications will have different demands, but more memory will often be a more cost-effective way to improve performance than more cores.</p>
 
-  <p>If your deployment includes MongoDB arbiter servers, consider using <code>f1-micro</code> instances.  Arbiter instances are mostly idle, exchanging heartbeat information with MongoDB servers and only becoming significantly active for a short period when a new primary needs to be elected.  Using a <a target="_blank" href="https://developers.google.com/compute/docs/machine-types#sharedcore">shared-core instance</a> such as <code>f1-micro</code> or <code>g1-small</code> is an inexpensive way to reserve critical CPU cycles which are needed infrequently.</p>
+  <p>If your deployment includes MongoDB arbiter servers, consider using <code>f1-micro</code> instances.  Arbiter instances are mostly idle, exchanging heartbeat information with MongoDB servers and only becoming significantly active for a short period when a new primary needs to be elected.  Using a <a target="_blank" href="/compute/docs/machine-types#sharedcore">shared-core instance</a> such as <code>f1-micro</code> or <code>g1-small</code> is an inexpensive way to reserve critical CPU cycles which are needed infrequently.</p>
 
   <h3><a name="performance_disk_size" id="performance_disk_size"></a>Calculate persistent disks sizes</h3>
 
-  <p>Persistent disks offer high performing and consistent block storage for Compute Engine instances.  Disk performance <span class="emphasis-text"><a target="_blank" href="https://developers.google.com/compute/docs/disks#pdperformance">scales with the size of the disk</a></span> up to the maximum capacity of its associated virtual machine.</p>
+  <p>Persistent disks offer high performing and consistent block storage for Compute Engine instances.  Disk performance <span class="emphasis-text"><a target="_blank" href="/compute/docs/disks#pdperformance">scales with the size of the disk</a></span> up to the maximum capacity of its associated virtual machine.</p>
 
   <p>Thus when sizing disks for your MongoDB data:</p>
 
@@ -292,7 +292,7 @@ MongoDB servers are configured with <a target="_blank" href="http://docs.mongodb
 
   <p>As your system grows, you end up with more data needing to be sharded using fewer resources.  Depending on the size of your database and the available compute resources for your cluster, sharding can take hours or days.</p>
 
-  <p>With Google Compute Engine, you can add new virtual machines as you need them, and you have many <a target="_blank" href="https://developers.google.com/compute/docs/machine-types">choices in the amount of CPU and memory</a> for your deployments.   By <a target="_blank" href="http://docs.mongodb.org/manual/administration/monitoring/">monitoring your MongoDB</a> infrastructure and configuring smaller shards over larger ones, you can keep your deployments nimble and stay on top of your resource needs.</p>
+  <p>With Google Compute Engine, you can add new virtual machines as you need them, and you have many <a target="_blank" href="/compute/docs/machine-types">choices in the amount of CPU and memory</a> for your deployments.   By <a target="_blank" href="http://docs.mongodb.org/manual/administration/monitoring/">monitoring your MongoDB</a> infrastructure and configuring smaller shards over larger ones, you can keep your deployments nimble and stay on top of your resource needs.</p>
 
   <h3><a name="upgrade_downgrade_vms" id="upgrade_downgrade_vms"></a>Upgrade/Downgrade VMs</h3>
 
@@ -363,7 +363,7 @@ MongoDB servers are configured with <a target="_blank" href="http://docs.mongodb
     </li>
 
     <li>Google Compute Engine<br />
-        <a target="_blank" href="https://developers.google.com/compute/">https://developers.google.com/compute/</a><br />
+        <a target="_blank" href="/compute/">/compute/</a><br />
     </li>
 
     <li>MongoDB<br />

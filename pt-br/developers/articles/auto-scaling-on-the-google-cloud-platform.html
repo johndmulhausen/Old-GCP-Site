@@ -47,12 +47,12 @@ title: Cloud Computing &amp; Cloud Hosting Services
 <p>Nosso aplicativo "orquestrado" é o aplicativo comercial real que o orquestrador observa e gerencia ao expandir e reduzir as instâncias de VM. Conforme descrito acima, esse aplicativo orquestrado pode ser qualquer coisa com back-ends do Compute Engine e uso variável. No nosso exemplo, ele é um aplicativo para fazer upload, processar e gerar imagens novas e transformadas. Ele é implementado como um aplicativo para dispositivos móveis e do App Engine, que se comunica com as VMs do Compute Engine por meio de filas pull. O aplicativo do App Engine enfileira tarefas de processamento e geração de imagens, enquanto os back-ends do Compute Engine fazem o leasing dessas tarefas.</p>
 <p>Estes produtos são usados nessa solução:</p>
 <ul>
-<li><a href="https://developers.google.com/appengine/">Google App Engine</a>, para implementar os aplicativos orquestrados para dispositivos móveis/da Web e o orquestrador</li>
-<li><a href="https://developers.google.com/appengine/docs/java/config/cron">Tarefas de Cron do Google App Engine</a>, para recuperar periodicamente as informações de status das instâncias do Compute Engine</li>
-<li><a href="https://developers.google.com/appengine/docs/java/config/backends">Back-ends do Google App Engine</a>, para executar as instâncias do App Engine de maneira confiável sem precisar gerenciá-las, o que é uma boa opção para executar o orquestrador</li>
+<li><a href="/appengine/">Google App Engine</a>, para implementar os aplicativos orquestrados para dispositivos móveis/da Web e o orquestrador</li>
+<li><a href="/appengine/docs/java/config/cron">Tarefas de Cron do Google App Engine</a>, para recuperar periodicamente as informações de status das instâncias do Compute Engine</li>
+<li><a href="/appengine/docs/java/config/backends">Back-ends do Google App Engine</a>, para executar as instâncias do App Engine de maneira confiável sem precisar gerenciá-las, o que é uma boa opção para executar o orquestrador</li>
 <li><a href="/compute/">Compute Engine</a>, para implementar a lógica de back-end do aplicativo orquestrado para dispositivos móveis/da Web, bem como para publicar o status das instâncias</li>
-<li><a href="https://developers.google.com/compute/docs/reference/latest/">Compute Engine REST API</a> para executar tarefas de orquestração, como recuperar IPs das instâncias em execução e acrescentar novas instâncias</li>
-<li><a href="https://developers.google.com/appengine/docs/java/taskqueue/overview-pull">Filas de tarefas do Cloud Platform</a> para a comunicação entre o App Engine e o Compute Engine</li>
+<li><a href="/compute/docs/reference/latest/">Compute Engine REST API</a> para executar tarefas de orquestração, como recuperar IPs das instâncias em execução e acrescentar novas instâncias</li>
+<li><a href="/appengine/docs/java/taskqueue/overview-pull">Filas de tarefas do Cloud Platform</a> para a comunicação entre o App Engine e o Compute Engine</li>
 </ul>
 <h2>Diagrama da arquitetura</h2>
 <p>Estes são os componentes nessa solução:</p>

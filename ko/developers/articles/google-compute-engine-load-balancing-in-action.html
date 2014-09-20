@@ -73,7 +73,7 @@ gcutil --project=&lt;your-project-id&gt; listforwardingrules
 <figure><img src="/images/articles/gce-load-balancing-in-action/setting-up-2.png" alt="">
 <figcaption>그림 2: Cloud Console에서 부하 분산 설정</figcaption>
 </figure>
-<p>명령줄 및 UI 모두 사용자가 백업 풀 및 세션 유지와 같은 고급 기능을 설정할 수 있게 해 줍니다. 설정 옵션에 대한 자세한 내용은 전체 <a href="https://developers.google.com/compute/docs/load-balancing/">문서</a>를 참조해 주세요.</p>
+<p>명령줄 및 UI 모두 사용자가 백업 풀 및 세션 유지와 같은 고급 기능을 설정할 수 있게 해 줍니다. 설정 옵션에 대한 자세한 내용은 전체 <a href="/compute/docs/load-balancing/">문서</a>를 참조해 주세요.</p>
 <h4>2. 지역의 단일 영역 또는 여러 영역 내에서 부하가 분산됨</h4>
 <p>Compute Engine 부하 분산은 분산을 실행하는 모든 인스턴스 간에 균등한 수준으로 부하를 분배합니다. 그림 3은 Compute Engine 부하 분산이 부하 분산기에 의해 노출된 외부 측 IP에 500,000건의 요청을 균등하게 분배하는 방식을 보여줍니다. 실제로 시스템에서 부하가 증가하고 있으므로 부하 분배의 필요성이 더욱 커지고 있습니다.</p>
 <figure><img src="/images/articles/gce-load-balancing-in-action/load-spread2.png" alt="">
@@ -137,7 +137,7 @@ gcutil --project=&lt;your-project-id&gt; listforwardingrules
 <p>Compute Engine 부하 분산은 '레임덕 모드'를 지원합니다. 이 모드를 사용하면 시스템 관리자가 서비스를 중단하지 않고 VM을 대상 풀에서 제거할 수 있습니다. 분산 배치에서 VM을 제거하려면 상태 점검에 반응하지 않도록 VM을 구성합니다. 이 VM으로 새로운 트래픽이 라우팅되지 않으며 기존 연결이 중단되지 않습니다. 최상의 사용자 경험을 위해, 종료하기 전에 기존 연결이 있는지 VM을 모니터링하는 것이 좋습니다.</p>
 <p>이 기능은 다양한 시나리오에서 유용하게 사용할 수 있습니다. 이 기능이 특히 유용한 시나리오는 애플리케이션을 업데이트하는 경우입니다 .새 버전의 애플리케이션을 제공할 수 있게 되면 VM은 보통 순환식으로 업그레이드됩니다. 즉, VM이 한 번에 하나씩 분산 배치에서 제거되고, 업데이트를 거친 후 다시 분산 배치에 포함됩니다. <a href="http://www.opscode.com/chef/">Chef</a> 및 <a href="http://puppetlabs.com/">Puppet</a>과 같은 많은 관리 도구를 구성하여 이러한 방식으로 작동하도록 할 수 있습니다.</p>
 <p>'레임덕 모드'를 유용하게 사용할 수 있는 또 다른 사용 사례는 유지관리 기간을 효과적으로 처리해야 하는 경우입니다. 유지관리 기간이 다가오면, 유지관리 기간에 포함되지 않은 영역에서 더 많은 VM이 생성되어 대상 풀에 추가됩니다. 곧 종료되는 VM은 깔끔하게 제거할 수 있습니다. 상태 확인에서 VM이 '비정상' 신호를 응답하는 경우 기존 연결은 중단되지 않지만 이러한 VM으로 새로운 트래픽이 전송되지 않습니다. 기본 풀의 VM이 상당 부분 비정상이기 때문에 애플리케이션에서 백업 대상 풀로 장애 조치를 수행하는 경우에도 동일한 개념이 적용됩니다. 이 경우 기본 풀에서 VM의 기존 연결이 유지되는 반면, 모든 새로운 연결이 백업 대상 풀로 전송됩니다.</p>
-<p><a href="https://developers.google.com/compute/docs/load-balancing/">문서</a>에는 '레임덕 모드'에 대한 자세한 내용이 포함되어 있습니다. Compute Engine 부하 분산을 설정하는 시스템의 경우, 사용자 경험을 최적화할 수 있도록 '레임덕 모드'를 사용 설정하는 것을 적극 권장합니다.</p>
+<p><a href="/compute/docs/load-balancing/">문서</a>에는 '레임덕 모드'에 대한 자세한 내용이 포함되어 있습니다. Compute Engine 부하 분산을 설정하는 시스템의 경우, 사용자 경험을 최적화할 수 있도록 '레임덕 모드'를 사용 설정하는 것을 적극 권장합니다.</p>
 <h4>6. 저렴한 비용</h4>
 <p>Compute Engine 부하 분산은 비용이 매우 저렴합니다. 즉, 부하 분산을 위해 VM 인스턴스 집합을 실행하는 경우에 비해 많은 비용을 줄일 수 있습니다. 예를 들어 부하 분산 소프트웨어가 설치되어 있는 Compute Engine에서 n1-standard-2 인스턴스(중간 등급의 일반적인 용도 인스턴스로서, 하나는 장애 조치 시 사용) 두 개를 실행하는 경우, 네트워크 트래픽 비용을 제외한 인스턴스만 현재 연간 4,029.60달러를 지불해야 할 것입니다. Compute Engine 부하 분산은 이에 비해 상당히 저렴합니다. 현재 가격 책정을 기준으로 연간 최대 219달러까지 비용이 내려갈 수 있는데, 이는 거의 95%를 절약하는 셈입니다. 더 작은 규모의 인스턴스를 선택하는 경우에도 상당한 비용을 절약할 수 있습니다(표 2 참조).</p>
 <table class="brdr-table">
@@ -207,7 +207,7 @@ gcutil --project=&lt;your-project-id&gt; listforwardingrules
 <p><a href="#ftnt_ref3" name="ftnt3" id="ftnt3">[3]</a> 여기에 보고된 지연 시간은 1,000,000회의 요청을 수행한 테스트에 기반하고 있습니다. 이 테스트는 Google 네트워크 내에 설정된 통제된 테스트 환경에서, 보여주기 예제에만 사용할 목적으로 수행되었습니다.</p>
 <p><a href="#ftnt_ref4" name="ftnt4" id="ftnt4">[4]</a> 여기에 보고된 결과는 1,000,000회의 요청을 수행한 테스트에 기반하고 있습니다. 이 테스트는 Google 네트워크 내에 설정된 통제된 테스트 환경에서, 보여주기 예제에만 사용할 목적으로 수행되었습니다.</p>
 <p><a href="#ftnt_ref5" name="ftnt5" id="ftnt5">[5]</a> Compute Engine 부하 분산 및 Compute Engine 인스턴스 요금에 대한 최신 정보는 <a href="/pricing/compute-engine">Compute Engine 가격 책정</a> 페이지를 참조해 주세요. 2013년 11월 현재, Compute Engine 부하 분산의 예상 비용에는 시간당 요금(미화 기준)이 포함되며, 대역폭 요금은 별도로 부과됩니다. 2014년 1월 이전 프로모션 가격 기간 중에는 Compute Engine 부하 분산을 무료로 사용할 수 있습니다.</p>
-<p><a href="#ftnt_ref6" name="ftnt6" id="ftnt6">[6]</a> 자세한 내용은 <a href="https://developers.google.com/compute/docs/load-balancing/#sessionAffinity">이 문서</a>를 참조해 주세요.</p>
+<p><a href="#ftnt_ref6" name="ftnt6" id="ftnt6">[6]</a> 자세한 내용은 <a href="/compute/docs/load-balancing/#sessionAffinity">이 문서</a>를 참조해 주세요.</p>
 </div>
 <!-- /maia-main --></div>
 <div class="maia-col-3"><br>

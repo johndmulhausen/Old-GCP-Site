@@ -136,7 +136,7 @@ cd Lipstick
 
 <ul>
   <li><a target="_blank" href="https://github.com/GoogleCloudPlatform/solutions-google-compute-engine-cluster-for-hadoop">Cloud Solutions Cluster for Hadoop</a></li>
-  <li><a target="_blank" href="https://developers.google.com/hadoop/setting-up-a-hadoop-cluster">Bash Script Quickstart for Hadoop</a></li>
+  <li><a target="_blank" href="/hadoop/setting-up-a-hadoop-cluster">Bash Script Quickstart for Hadoop</a></li>
 </ul>
 
 <p>However, there should be no reason that the Lipstick deployment instructions would not work for other Hadoop installations on Google Compute Engine.</p>
@@ -147,7 +147,7 @@ cd Lipstick
 
 <p>As Lipstick is a web-based application, the first step will be to add a firewall rule to allow web traffic into the Hadoop instance. The instructions here deploy Lipstick under the Tomcat 6 web server, which by default uses port 8080.</p>
 
-<p>Opening port 8080 to public traffic can be performed through the <a target="_blank" href="https://console.developers.google.com">Google Developers console</a> or with the <a target="_blank" href="https://developers.google.com/compute/docs/networking#firewalls">gcutil addfirewall</a> command.</p>
+<p>Opening port 8080 to public traffic can be performed through the <a target="_blank" href="https://console.developers.google.com">Google Developers console</a> or with the <a target="_blank" href="/compute/docs/networking#firewalls">gcutil addfirewall</a> command.</p>
 
 <p>1. Add a firewall rule to the network of your Hadoop master instance.  This example adds a firewall rule named &quot;allow-http-lipstick&quot; to the &quot;default&quot; network.</p>
 
@@ -156,7 +156,7 @@ cd Lipstick
     --network=default --allowed=&quot;tcp:8080&quot;</pre>
 </blockquote>
 
-<p>2. Connect as a <a target="_blank" href="https://developers.google.com/compute/docs/access">Compute Engine user</a> with <span class="code">sudo</span> privileges by <a target="_blank" href="https://developers.google.com/compute/docs/instances#sshing">connecting with gcutil ssh</a>.</p>
+<p>2. Connect as a <a target="_blank" href="/compute/docs/access">Compute Engine user</a> with <span class="code">sudo</span> privileges by <a target="_blank" href="/compute/docs/instances#sshing">connecting with gcutil ssh</a>.</p>
 
 <blockquote>
 <pre style="width:90%;">gcutil ssh &lt;hadoop-master-name&gt;</pre>
@@ -177,7 +177,7 @@ sudo apt-get update</pre>
 <dt><p>4a. Google Cloud SQL</p></dt>
 <dd>
     <p>i. Create and configure a Cloud SQL instance.</p>
-    <p>Instructions for creating a Google Cloud SQL instance can be found <a target="_blank" href="https://developers.google.com/cloud-sql/docs/getting-started">here</a>. </p>
+    <p>Instructions for creating a Google Cloud SQL instance can be found <a target="_blank" href="/sql/docs/getting-started">here</a>. </p>
     <p>For use with Lipstick you must:</p>
     <ul>
       <li>Select <strong>Assign IP Address</strong>.</li>
@@ -385,7 +385,7 @@ DUMP res;</pre>
 
 <p>See the <a target="_blank" href="https://github.com/Netflix/Lipstick/wiki/User-Guide">Lipstick User&rsquo;s Guide</a> for details of the Lipstick Graph Page. </p>
 
-<p>14. When you are done with your build server, you can destroy. This can be performed through the <a target="_blank" href="https://console.developers.google.com">Google Developers console</a> or with the <a target="_blank" href="https://developers.google.com/compute/docs/instances#stop_job">gcutil deleteinstance</a> command.</p>
+<p>14. When you are done with your build server, you can destroy. This can be performed through the <a target="_blank" href="https://console.developers.google.com">Google Developers console</a> or with the <a target="_blank" href="/compute/docs/instances#stop_job">gcutil deleteinstance</a> command.</p>
 
 <p>To preserve the boot disk and its contents for future use, pass the <span class="code"><nobr>--nodelete_boot_pd</nobr></span> parameter.  This example destroys the instance and its boot disk:</p>
 

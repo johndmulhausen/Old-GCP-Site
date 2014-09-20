@@ -144,7 +144,7 @@ title: How to build a mobile app with an App Engine backend (Tutorial)
 		<li>In the <span class="bld">Package Explorer</span>, under the AppEngine project <span class="bld">src</span> folder, right-click the package, then select <span class="bld">-&gt;New-&gt;Class</span>. The <span class="bld">New Java Class</span> wizard is displayed.</li>
 		<li>In the <span class="bld">Name:</span> box enter <span class="ital">CheckIn</span>.</li>
 		<li>Click <span class="bld">Finish</span>.<br>
-			For more information about the kind of class created, see the App Engine <a href="https://developers.google.com/appengine/docs/java/datastore/">DataStore Overview</a>.
+			For more information about the kind of class created, see the App Engine <a href="/appengine/docs/java/datastore/">DataStore Overview</a>.
 		</li>
 		<li>In the editor, replace the boiler plate code with the code for the <span class="ital">CheckIn.java</span> class that you can obtain from the snippets archive downloaded earlier. Notice that the code shown provides a &ldquo;ready to run&rdquo; class. The most important things you must pay attention to are the 3 properties and the annotations.</li>
 		<li>Save the class.</li>
@@ -310,7 +310,7 @@ android:id="@+id/results"
 	<a name="cus"></a>
 	<h3>Create Upload Script</h3>
 	<p>This is the script that actually uploads the simulated information into the backend datastore.</p>
-	<p>For information about the bulkloader.yaml and more, refer to the App Engine documentation in: <a href="https://developers.google.com/appengine/docs/adminconsole/datastoreadmin#backup_and_restore">Uploading and Downloading Data</a>. Also, you can find the bulkloader.yaml file and the test data here <a href="https://github.com/GoogleCloudPlatform/solutions-mobile-shopping-assistant-backend-java/tree/master/MobileAssistant-Data">MobileAssistant-Data</a>.</p>
+	<p>For information about the bulkloader.yaml and more, refer to the App Engine documentation in: <a href="/appengine/docs/adminconsole/datastoreadmin#backup_and_restore">Uploading and Downloading Data</a>. Also, you can find the bulkloader.yaml file and the test data here <a href="https://github.com/GoogleCloudPlatform/solutions-mobile-shopping-assistant-backend-java/tree/master/MobileAssistant-Data">MobileAssistant-Data</a>.</p>
 	<ol>
 		<li>Create a new directory and make it your current directory.</li>
 		<li>In your editor, create a script file and call it upload_data.sh.</li>
@@ -647,7 +647,7 @@ return result;
 	<p>This section describes how to run the application using the MobileAssistant-AppEngine backend deployed in the cloud.</p>
 
 	<ol>
-		<li>Make sure that you have created your App Engine application to deploy the <span class="ital">MobileAssistant-AppEngine</span> backend. You create an App Engine application using the <a href="https://appengine.google.com">App Engine console</a>. For more information, see <a href="https://developers.google.com/appengine/docs/adminconsole/?hl=en">administration console</a>.</li>
+		<li>Make sure that you have created your App Engine application to deploy the <span class="ital">MobileAssistant-AppEngine</span> backend. You create an App Engine application using the <a href="https://appengine.google.com">App Engine console</a>. For more information, see <a href="/appengine/docs/adminconsole/">administration console</a>.</li>
 		<li>
 			In your test data directory, create a file named upload_data_deploy.sh. Copy and paste the following code into the file.<br>
 <pre>
@@ -709,11 +709,11 @@ appcfg.py upload_data --config_file bulkloader.yaml --url=http://yourappid.appsp
 	<h2>App Engine</h2>
 
 	<ul>
-		<li><span class="bld">Google Cloud Endpoints</span> allow you to define business logic on App Engine and access it via RESTful or RPC APIs on multiple platforms including Android, IOS and JavaScript. For more information, see: <a href="https://developers.google.com/appengine/docs/java/endpoints/overview">Overview of Google Cloud Endpoints</a>.</li>
+		<li><span class="bld">Google Cloud Endpoints</span> allow you to define business logic on App Engine and access it via RESTful or RPC APIs on multiple platforms including Android, IOS and JavaScript. For more information, see: <a href="/appengine/docs/java/endpoints/overview">Overview of Google Cloud Endpoints</a>.</li>
 	</ul>
 
 	<ul>
-		<li><span class="bld">Getting started</span>. Google App Engine lets you run web applications on Google's infrastructure. For beginner&rsquo;s information, see: <a href="https://developers.google.com/appengine/docs/whatisgoogleappengine">What is Google App Engine</a> ?</li>
+		<li><span class="bld">Getting started</span>. Google App Engine lets you run web applications on Google's infrastructure. For beginner&rsquo;s information, see: <a href="/appengine/docs/whatisgoogleappengine">What is Google App Engine</a> ?</li>
 	</ul>
 
 	<h2>Android</h2>
@@ -725,14 +725,14 @@ appcfg.py upload_data --config_file bulkloader.yaml --url=http://yourappid.appsp
 	<h1>Appendix</h1>
   <a name="eclb"></a>
 	<h2>EndPoint Client Library Basics</h2>
-	<p>Google Cloud Endpoints allow you to define business logic on App Engine and access them via RESTful APIs on multiple platforms including Android, IOS and JavaScript. Cloud Endpoints are built using Google&rsquo;s API infrastructure. For more information, see <a href="https://developers.google.com/appengine/docs/java/endpoints/overview">Overview of Google Cloud Endpoints</a>.</p>
+	<p>Google Cloud Endpoints allow you to define business logic on App Engine and access them via RESTful APIs on multiple platforms including Android, IOS and JavaScript. Cloud Endpoints are built using Google&rsquo;s API infrastructure. For more information, see <a href="/appengine/docs/java/endpoints/overview">Overview of Google Cloud Endpoints</a>.</p>
 	<p>The Google Plugin for Eclipse (GPE), that you have installed when setting the development environment, allows you to create and consume Cloud Endpoints. </p>
 	<p>In particular, it allows the automatic <span class="bld">generation of askeleton Endpoint class</span> that contains code to create, get, list, update and delete your entity classes.</p>
-	<p>An entity class is a POJO (Plain Old Java Object) with JPA/JDO persistence annotations. This is an ordinary Java class that is marked (annotated) as having the ability to represent objects in the database.For more information, see <a href="https://developers.google.com/appengine/docs/java/datastore/">Storing Data</a> in the App Engine datastore. The class shown in the example is of a JPA type. Where</p>
+	<p>An entity class is a POJO (Plain Old Java Object) with JPA/JDO persistence annotations. This is an ordinary Java class that is marked (annotated) as having the ability to represent objects in the database.For more information, see <a href="/appengine/docs/java/datastore/">Storing Data</a> in the App Engine datastore. The class shown in the example is of a JPA type. Where</p>
 
 	<ul>
-		<li><span class="c21">Java Data Objects (JDO) is a standard interface for storing objects containing data into a database. For more information, see the App Engine documentation <a href="https://developers.google.com/appengine/">Using JDO</a>.</li>
-		<li>Java Persistence API (JPA) is a standard interface for storing objects containing data into a relational database. <span class="c21">For more information, see the App Engine documentation <a href="https://developers.google.com/appengine/">Using JPA</a>.</li>
+		<li><span class="c21">Java Data Objects (JDO) is a standard interface for storing objects containing data into a database. For more information, see the App Engine documentation <a href="/appengine/">Using JDO</a>.</li>
+		<li>Java Persistence API (JPA) is a standard interface for storing objects containing data into a relational database. <span class="c21">For more information, see the App Engine documentation <a href="/appengine/">Using JPA</a>.</li>
 	</ul>
 
 	<a name="ecdp"></a>

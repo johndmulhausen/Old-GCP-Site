@@ -65,13 +65,13 @@ title: Cloud Computing &amp; Cloud Hosting Services
 <h2>솔루션 개요</h2>
 <p>제시된 솔루션에서 사용한 Cloud Platform 제품은 다음과 같습니다.</p>
 <ul>
-<li><a href="https://developers.google.com/appengine/">App Engine</a></li>
-<li><a href="https://developers.google.com/appengine/docs/python/taskqueue/">App Engine 작업 대기열</a></li>
+<li><a href="/appengine/">App Engine</a></li>
+<li><a href="/appengine/docs/python/taskqueue/">App Engine 작업 대기열</a></li>
 <li><a href="/storage/">Cloud Storage</a></li>
-<li><a href="https://developers.google.com/cloud-sql/">Cloud SQL</a></li>
+<li><a href="/sql/">Cloud SQL</a></li>
 <li><a href="/compute/">Compute Engine</a></li>
-<li><a href="https://developers.google.com/datastore/">Cloud Datastore</a></li>
-<li><a href="https://developers.google.com/appengine/docs/java/endpoints/">Mobile Cloud Endpoints</a></li>
+<li><a href="/datastore/">Cloud Datastore</a></li>
+<li><a href="/appengine/docs/java/endpoints/">Mobile Cloud Endpoints</a></li>
 <li>App Engine 모듈</li>
 </ul>
 <p>또한 솔루션에는 다음과 같은 제3자 오픈소스 도구가 사용됩니다(Google에서 승인하지 않음).</p>
@@ -242,12 +242,12 @@ title: Cloud Computing &amp; Cloud Hosting Services
 <figure><img src="/images/articles/managing-complex-applications-in-the-cloud/hadoop-deployment-architecture.png" alt="">
 <figcaption>그림 4: Hadoop 배포 아키텍처</figcaption>
 </figure>
-<p>Google은 데이터 분석을 위한 몇 가지 대안을 제공합니다. 특히 감성 분석과 관련하여 <a href="https://developers.google.com/prediction/">Google Prediction API</a>는 머신 학습 환경에 REST 인터페이스를 제공하며, 이 인터페이스는 여러 옵션 중에서도 특히 사용자 데이터에 대한 감성 분석을 수행합니다. 좀 더 일반적인 데이터 분석의 경우 <a href="https://developers.google.com/bigquery/">Google Big Query</a>에서 맞춤 개발로 인한 간접 비용이 없는 테라바이트 단위의 데이터를 처리할 수 있는 엔진을 제공합니다. 맞춤형 Datastore 처리를 위한 또 다른 이상적인 대안은 <a href="https://developers.google.com/appengine/docs/python/dataprocessing/">App Engine Map Reduce</a>입니다.</p>
+<p>Google은 데이터 분석을 위한 몇 가지 대안을 제공합니다. 특히 감성 분석과 관련하여 <a href="/prediction/">Google Prediction API</a>는 머신 학습 환경에 REST 인터페이스를 제공하며, 이 인터페이스는 여러 옵션 중에서도 특히 사용자 데이터에 대한 감성 분석을 수행합니다. 좀 더 일반적인 데이터 분석의 경우 <a href="/bigquery/">Google Big Query</a>에서 맞춤 개발로 인한 간접 비용이 없는 테라바이트 단위의 데이터를 처리할 수 있는 엔진을 제공합니다. 맞춤형 Datastore 처리를 위한 또 다른 이상적인 대안은 <a href="/appengine/docs/python/dataprocessing/">App Engine Map Reduce</a>입니다.</p>
 <h2>복잡성 관리</h2>
 <p>애플리케이션의 여러 논리적 서비스를 고려하여 Google Cloud Platform의 몇 가지 핵심 기능을 최대한 사용했습니다. 이 플랫폼은 이러한 모든 기능을 함께 사용하여 클라우드의 복잡한 비즈니스 애플리케이션을 지원하기 위한 강력한 기반을 형성합니다.</p>
 <h5>Cloud Endpoints</h5>
-<p>Cloud Endpoints는 App Engine 애플리케이션에서 REST API 및 클라이언트 라이브러리를 생성하여 웹 클라이언트와 모바일 클라이언트 액세스를 모두 간소화하는 데 사용되는 도구 및 서비스 모음입니다. 이 조합을 사용하면 Android 애플리케이션에서 신속하게 API 서버를 시작할 수 있습니다. Cloud Endpoints는 App Engine 애플리케이션과의 통신을 간소화함으로써 Cloud <a href="https://developers.google.com/appengine/docs/java/datastore">Datastore</a>, <a href="https://developers.google.com/appengine/docs/java/googlestorage">Cloud Storage</a>, <a href="https://developers.google.com/appengine/docs/java/mail">Mail</a>, <a href="https://developers.google.com/appengine/docs/java/taskqueue">작업 대기열</a>과 같은 현재 사용 가능한 서비스의 이점을 활용할 수 있게 해 줍니다. 이 제품은 보이지 않는 곳에서 REST API 호출을 백엔드 애플리케이션의 메소드 호출로 변환하고 OAuth 2.0 인증을 통해 각 호출에 보안을 설정합니다. 현재 Eclipse, Android Studio 및 Apache Maven을 포함한 기존 개발 환경에서는 프로젝트 내에 클라이언트 라이브러리를 생성할 수 있는 기능을 제공합니다. Cloud Endpoints 기술을 사용하면 API 개발로 인한 간접 비용을 없앨 수 있으며 개발자는 자신에게 가장 중요한 일인 '제품'에 집중할 수 있습니다.</p>
-<p>Google Cloud Endpoints를 시작하기 위해 2013년 Google I/O에서 제공되었던 <a href="https://developers.google.com/events/io/sessions/333508149">From Nothing to Nirvana in Minutes(몇 분 만에 무에서 열반의 경지로)</a> 세션과 <a href="https://developers.google.com/appengine/docs/java/endpoints/">Cloud Endpoints</a> 개발자 문서를 참조할 수 있습니다. 또한 Google Cloud Endpoints는 <a href="https://github.com/GoogleCloudPlatform/appengine-endpoints-tictactoe-java">웹 앱</a>, <a href="/developers/articles/mobile-application-solutions">모바일 쇼핑 도우미</a> 및 <a href="https://developers.google.com/samples/mbs/">Mobile Backend Starter</a>를 포함한 여러 솔루션 샘플에 포함되어 있습니다.</p>
+<p>Cloud Endpoints는 App Engine 애플리케이션에서 REST API 및 클라이언트 라이브러리를 생성하여 웹 클라이언트와 모바일 클라이언트 액세스를 모두 간소화하는 데 사용되는 도구 및 서비스 모음입니다. 이 조합을 사용하면 Android 애플리케이션에서 신속하게 API 서버를 시작할 수 있습니다. Cloud Endpoints는 App Engine 애플리케이션과의 통신을 간소화함으로써 Cloud <a href="/appengine/docs/java/datastore">Datastore</a>, <a href="/appengine/docs/java/googlestorage">Cloud Storage</a>, <a href="/appengine/docs/java/mail">Mail</a>, <a href="/appengine/docs/java/taskqueue">작업 대기열</a>과 같은 현재 사용 가능한 서비스의 이점을 활용할 수 있게 해 줍니다. 이 제품은 보이지 않는 곳에서 REST API 호출을 백엔드 애플리케이션의 메소드 호출로 변환하고 OAuth 2.0 인증을 통해 각 호출에 보안을 설정합니다. 현재 Eclipse, Android Studio 및 Apache Maven을 포함한 기존 개발 환경에서는 프로젝트 내에 클라이언트 라이브러리를 생성할 수 있는 기능을 제공합니다. Cloud Endpoints 기술을 사용하면 API 개발로 인한 간접 비용을 없앨 수 있으며 개발자는 자신에게 가장 중요한 일인 '제품'에 집중할 수 있습니다.</p>
+<p>Google Cloud Endpoints를 시작하기 위해 2013년 Google I/O에서 제공되었던 <a href="https://developers.google.com/events/io/sessions/333508149">From Nothing to Nirvana in Minutes(몇 분 만에 무에서 열반의 경지로)</a> 세션과 <a href="/appengine/docs/java/endpoints/">Cloud Endpoints</a> 개발자 문서를 참조할 수 있습니다. 또한 Google Cloud Endpoints는 <a href="https://github.com/GoogleCloudPlatform/appengine-endpoints-tictactoe-java">웹 앱</a>, <a href="/developers/articles/mobile-application-solutions">모바일 쇼핑 도우미</a> 및 <a href="https://developers.google.com/samples/mbs/">Mobile Backend Starter</a>를 포함한 여러 솔루션 샘플에 포함되어 있습니다.</p>
 <h5>Compute Engine API</h5>
 <p>Compute Engine API는 Google Cloud 환경에서 가상 머신 그룹을 제어할 수 있도록 프로그래밍 방식의 메소드를 제공합니다. 따라서 기본적인 가상 머신을 실행한 다음 필요한 사양에 맞게 시스템을 보완할 수 있습니다. 또한 머신 이미지를 미리 생성하여 실행에 필요한 시간을 단축할 수 있습니다. 자동 확장은 시스템 부하를 주기적으로 점검함으로써 구현할 수 있습니다. App Engine 작업 대기열을 사용하면 작업을 나누고 이에 맞게 처리 환경을 수평으로 확장할 수 있습니다. Google Compute Engine의 이점을 활용하면 거의 모든 작업 부하를 일괄적으로 혹은 맞춤 형식으로 처리할 수 있습니다.</p>
 <p>Compute Engine API 조정에 대한 자세한 내용은 <a href="https://github.com/GoogleCloudPlatform/solutions-load-balanced-gaming-server-on-google-compute-engine">부하 분산 게임 서버 샘플</a>을 참조하세요. 샘플에서는 게임을 시나리오로 사용하지만 대부분의 설계 패턴은 다른 시나리오에서도 일반적으로 사용할 수 있습니다.</p>
@@ -293,7 +293,7 @@ title: Cloud Computing &amp; Cloud Hosting Services
 <br>
 <hr>
 <p><a href="#ftnt_ref1" name="ftnt1" id="ftnt1">[1]</a> 클라우드 프로젝트는 Cloud Console로 제작되며 App Engine, Compute Engine, Storage 및 Datastore를 포함한 여러 Cloud 제품을 관리하는 데 필요한 프레임워크를 제공합니다. 또한 이 프로젝트에서는 애플리케이션의 모든 부분에 액세스할 수 있는 <a href="https://console.developers.google.com">공용 공간</a>은 물론 사용자 보안 및 API 액세스까지도 제공합니다.</p>
-<p><a href="#ftnt_ref2" name="ftnt2" id="ftnt2">[2]</a> 현재 Google Cloud Platform에서는 기존 패키지 애플리케이션의 경우 제한적인 지원을 제공합니다. <a href="https://developers.google.com/compute/docs/support">온라인</a>을 통해 최신 지원 기능을 확인할 수 있습니다.</p>
+<p><a href="#ftnt_ref2" name="ftnt2" id="ftnt2">[2]</a> 현재 Google Cloud Platform에서는 기존 패키지 애플리케이션의 경우 제한적인 지원을 제공합니다. <a href="/compute/docs/support">온라인</a>을 통해 최신 지원 기능을 확인할 수 있습니다.</p>
 </div>
 <!-- /maia-main --></div>
 <div class="maia-col-3"><br>

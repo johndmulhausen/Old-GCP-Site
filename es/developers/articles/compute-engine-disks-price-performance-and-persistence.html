@@ -42,7 +42,7 @@ title: Cloud Computing &amp; Cloud Hosting Services
 </style>
 <div class="cp-article-tutorial ced-price-perf-persist">
 <h2><a name="h.w3kz4fze562t" id="h.w3kz4fze562t"></a>Presentación</h2>
-<p><a target="_blank" href="/compute/">Google Compute Engine</a> se esfuerza en proporcionar funciones de procesamiento ágiles, fiables y de bajo coste para tus servicios de software. Además de CPU y memoria, la mayoría de aplicaciones necesitan tener almacenamiento en bloque fiable y de alto rendimiento. Con este fin, Google Cloud Platform ofrece los <a target="_blank" href="https://developers.google.com/compute/docs/disks">discos persistentes</a> de Compute Engine.</p>
+<p><a target="_blank" href="/compute/">Google Compute Engine</a> se esfuerza en proporcionar funciones de procesamiento ágiles, fiables y de bajo coste para tus servicios de software. Además de CPU y memoria, la mayoría de aplicaciones necesitan tener almacenamiento en bloque fiable y de alto rendimiento. Con este fin, Google Cloud Platform ofrece los <a target="_blank" href="/compute/docs/disks">discos persistentes</a> de Compute Engine.</p>
 <p>A la hora de crear la infraestructura de hardware y de software para los discos persistentes, los ingenieros de Google dan máxima prioridad a:</p>
 <ul>
 <li>Seguridad</li>
@@ -68,7 +68,7 @@ title: Cloud Computing &amp; Cloud Hosting Services
 </ul>
 <h3><a name="h.hblytow164l9" id="h.hblytow164l9"></a>Características fundamentales</h3>
 <h4><a name="h.k40zex5efw5h" id="h.k40zex5efw5h"></a>Resistencia</h4>
-<p>Los discos persistentes tienen redundancia integrada para proteger tus datos contra fallos del equipo y para seguir disponibles durante los eventos de mantenimiento del centro de datos. <a href="https://developers.google.com/compute/docs/instances#schedulingoptions">Google Live Migration</a> puede trasladar tus instancias, sin almacenamiento local, a hardware nuevo sin que tengas que intervenir en el proceso. Así los centros de datos de Google pueden seguir funcionando al más alto nivel; es decir, el software, el hardware y las instalaciones se pueden actualizar sin descanso para garantizar un rendimiento y una fiabilidad excelentes para tus servicios basados en la nube.</p>
+<p>Los discos persistentes tienen redundancia integrada para proteger tus datos contra fallos del equipo y para seguir disponibles durante los eventos de mantenimiento del centro de datos. <a href="/compute/docs/instances#schedulingoptions">Google Live Migration</a> puede trasladar tus instancias, sin almacenamiento local, a hardware nuevo sin que tengas que intervenir en el proceso. Así los centros de datos de Google pueden seguir funcionando al más alto nivel; es decir, el software, el hardware y las instalaciones se pueden actualizar sin descanso para garantizar un rendimiento y una fiabilidad excelentes para tus servicios basados en la nube.</p>
 <h4><a name="h.p4063icl0ptv" id="h.p4063icl0ptv"></a>Rendimiento constante</h4>
 <p>El disco persistente distribuye los datos entre muchos volúmenes físicos dentro de una zona para mejorar la uniformidad del rendimiento. Como resultado, los volúmenes del mismo tamaño que se encuentran en la misma zona suelen tener el mismo rendimiento en un momento dado. El rendimiento de los volúmenes puede variar con el tiempo a medida que la carga total de E/S de la zona sube y baja. Sin embargo, al dividirse en muchos volúmenes físicos, esa variabilidad se reduce considerablemente.</p>
 <h4><a name="h.t3xil3z2275e" id="h.t3xil3z2275e"></a>Encriptación</h4>
@@ -87,10 +87,10 @@ title: Cloud Computing &amp; Cloud Hosting Services
 <li>Menor tráfico en la red y menor E/S en disco al inicio de la instancia</li>
 </ul>
 <h4><a name="h.6weg86eazizc" id="h.6weg86eazizc"></a>Se puede copiar rápidamente en capturas de acceso global</h4>
-<p>Las <a href="https://developers.google.com/compute/docs/disks#snapshots">capturas</a> permiten hacer copias de seguridad periódicas de los discos persistentes. La redundancia de los discos persistentes se limita a una zona, mientras que las capturas se replican automáticamente en varias zonas. Si se pierde una zona por completo durante un fallo, puedes recuperarla rápidamente creando nuevos discos persistentes en otra zona a partir de capturas que hayas creado. Además, si un usuario final elimina datos fundamentales, puedes crear un nuevo disco persistente a partir de una captura anterior para recuperarlos.</p>
+<p>Las <a href="/compute/docs/disks#snapshots">capturas</a> permiten hacer copias de seguridad periódicas de los discos persistentes. La redundancia de los discos persistentes se limita a una zona, mientras que las capturas se replican automáticamente en varias zonas. Si se pierde una zona por completo durante un fallo, puedes recuperarla rápidamente creando nuevos discos persistentes en otra zona a partir de capturas que hayas creado. Además, si un usuario final elimina datos fundamentales, puedes crear un nuevo disco persistente a partir de una captura anterior para recuperarlos.</p>
 <p>Las capturas repetidas de un mismo disco persistente son incrementales, lo que significa que solo se almacenan los cambios posteriores a la captura anterior. Esto permite realizar <a href="http://googlecloudplatform.blogspot.com/2013/10/persistent-disk-backups-using-snapshots.html#gpluscomments">copias de seguridad más rápidas</a> y reduce los gastos por almacenamiento de capturas.</p>
 <h4>Se puede modificar el tamaño a partir de capturas</h4>
-<p>Cuando se crea un nuevo volumen del disco persistente a partir de una captura, se puede <a target="_blank" href="https://developers.google.com/compute/docs/disks#restoresnapshotlargersize">especificar un tamaño de volumen superior</a> al del original. Esto permite ser conservador con el tamaño del volumen a medida que se amplía la implementación. Se puede empezar con un volumen de tamaño modesto durante el desarrollo y las pruebas iniciales. Después resulta evidente que crear un nuevo volumen a partir de la captura es mucho más rápido que crear un nuevo volumen y copiar manualmente los datos desde el volumen anterior.</p>
+<p>Cuando se crea un nuevo volumen del disco persistente a partir de una captura, se puede <a target="_blank" href="/compute/docs/disks#restoresnapshotlargersize">especificar un tamaño de volumen superior</a> al del original. Esto permite ser conservador con el tamaño del volumen a medida que se amplía la implementación. Se puede empezar con un volumen de tamaño modesto durante el desarrollo y las pruebas iniciales. Después resulta evidente que crear un nuevo volumen a partir de la captura es mucho más rápido que crear un nuevo volumen y copiar manualmente los datos desde el volumen anterior.</p>
 <h4><a name="h.5seopampg6g6" id="h.5seopampg6g6"></a>Se puede conectar a varios nodos en modo de solo lectura</h4>
 <p>Los discos persistentes se pueden conectar a varios nodos en modo de solo lectura (cuando no están conectados a ninguna instancia en modo de lectura y escritura). El contenido estático se puede distribuir entre varias instancias de Compute Engine sin provocar gastos por replicar el almacenamiento.</p>
 <h3><a name="h.nhrjtm7bctwy" id="h.nhrjtm7bctwy"></a>Facilidad de uso del disco persistente</h3>
@@ -290,9 +290,9 @@ title: Cloud Computing &amp; Cloud Hosting Services
 <p>Para obtener más información sobre los discos persistentes de Google Compute Engine, consulta:</p>
 <ul>
 <li>Documentación fundamental<br>
-<a target="_blank" href="https://developers.google.com/compute/docs/disks">https://developers.google.com/compute/docs/disks</a></li>
+<a target="_blank" href="/compute/docs/disks">/compute/docs/disks</a></li>
 <li>Precios<br>
-<a target="_blank" href="https://developers.google.com/compute/pricing#persistentdisk">https://developers.google.com/compute/pricing#persistentdisk</a></li>
+<a target="_blank" href="/compute/pricing#persistentdisk">/compute/pricing#persistentdisk</a></li>
 <li>Presentación en Google I/O 2013<br>
 <a target="_blank" href="https://developers.google.com/events/io/sessions/350753683">https://developers.google.com/events/io/sessions/350753683</a></li>
 <li>Capturas del disco persistente de Compute Engine<br>
@@ -305,7 +305,7 @@ title: Cloud Computing &amp; Cloud Hosting Services
 <br>
 <br>
 <hr>
-<p><a href="#ftnt_ref1" name="ftnt1" id="ftnt1">[1]</a> En la fecha de publicación de este artículo. Consulta la <a target="_blank" href="https://developers.google.com/compute/pricing#persistentdisk">página de precios</a> para ver los datos más recientes.</p>
+<p><a href="#ftnt_ref1" name="ftnt1" id="ftnt1">[1]</a> En la fecha de publicación de este artículo. Consulta la <a target="_blank" href="/compute/pricing#persistentdisk">página de precios</a> para ver los datos más recientes.</p>
 </div>
 <!-- /maia-main --></div>
 <div class="maia-col-3"><br>

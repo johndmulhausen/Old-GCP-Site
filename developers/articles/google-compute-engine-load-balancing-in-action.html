@@ -74,7 +74,7 @@ gcutil --project=&lt;your-project-id&gt; listforwardingrules
     <figcaption>Figure 2: Setting up load balancing in the Cloud Console.</figcaption>
   </figure>
 
-  <p>Both the command line and the UI allow users to set up more advanced features such as backup pools and session stickiness. For more information on setup options, please refer to the full <a href="https://developers.google.com/compute/docs/load-balancing/">documentation</a>.</p>
+  <p>Both the command line and the UI allow users to set up more advanced features such as backup pools and session stickiness. For more information on setup options, please refer to the full <a href="/compute/docs/load-balancing/">documentation</a>.</p>
 
   <h4>2. Load-balanced within a zone or across zones within a region</h4>
 
@@ -158,7 +158,7 @@ gcutil --project=&lt;your-project-id&gt; listforwardingrules
   <p>Compute Engine Load Balancing supports &ldquo;lame-duck mode,&rdquo; which allows system administrators to take a VM out of the target pool while not interrupting the service. To take a VM out of rotation, configure it to respond negatively to health checks. New traffic will not be routed to that VM, and existing connections will not be interrupted. For the best user experience, the VM can then be monitored for existing connections before being shut down.</p>
   <p>This feature is useful in various scenarios. One scenario where this feature is particularly useful is with application updates. When a new version of the application becomes available, VMs are often upgraded in a rolling fashion &ndash; one VM is taken out of rotation at a time, updated, and brought back into rotation. Many management tools such as <a href="http://www.opscode.com/chef/">Chef</a> and <a href="http://puppetlabs.com/">Puppet</a> can be configured to work this way.</p>
   <p>Another use case where the &ldquo;lame-duck mode&rdquo; is useful is when there is a need to deal with maintenance windows effectively. As a maintenance window approaches, more VMs can be created (and added to the target pool) in a zone that will not go into a maintenance window. Those VMs that are about to be shut down can again be removed gracefully: if they respond to health check with &ldquo;unhealthy&rdquo; signals, existing connections will not be interrupted, but no new traffic will be sent to those VMs. The same concept also applies to cases where the application fails over to a backup target pool (because a sufficient portion of the VMs in the primary pool have become unhealthy). In that case, existing connections will be kept alive to VMs in the primary pool, while all new connections will be sent to the backup target pool.</p>
-  <p>The <a href="https://developers.google.com/compute/docs/load-balancing/">documentation</a> contains additional details about the &ldquo;lame-duck mode&rdquo;. For any system that sets up Compute Engine Load Balancing, enabling the &ldquo;lame-duck mode&rdquo; is highly recommended in order to  optimize the user experience.</p>
+  <p>The <a href="/compute/docs/load-balancing/">documentation</a> contains additional details about the &ldquo;lame-duck mode&rdquo;. For any system that sets up Compute Engine Load Balancing, enabling the &ldquo;lame-duck mode&rdquo; is highly recommended in order to  optimize the user experience.</p>
 
   <h4>6. Affordable</h4>
 
@@ -261,7 +261,7 @@ gcutil --project=&lt;your-project-id&gt; listforwardingrules
       <a href="#ftnt_ref5" name="ftnt5" id="ftnt5">[5]</a> Please refer to the <a href="/pricing/compute-engine">Compute Engine Pricing</a> page for the most up-to-date information both for Compute Engine Load Balancing and for Compute Engine instance charges. The estimate for Compute Engine Load Balancing includes hourly charges at the US rate as of November 2013. Bandwith charges will be additional.
   </p>
   <p>
-      <a href="#ftnt_ref6" name="ftnt6" id="ftnt6">[6]</a> Please see the <a href="https://developers.google.com/compute/docs/load-balancing/#sessionAffinity">documentation</a> for further details.
+      <a href="#ftnt_ref6" name="ftnt6" id="ftnt6">[6]</a> Please see the <a href="/compute/docs/load-balancing/#sessionAffinity">documentation</a> for further details.
   </p>
 
 </div>

@@ -42,7 +42,7 @@ title: Cloud Computing &amp; Cloud Hosting Services
 </style>
 <div class="cp-article-tutorial ced-price-perf-persist">
 <h2><a name="h.w3kz4fze562t" id="h.w3kz4fze562t"></a>Einführung</h2>
-<p><a target="_blank" href="/compute/">Google Compute Engine</a> stellt Ihnen flexible, zuverlässige und kostengünstige Rechenleistung für Ihre Software-Dienstleistungen zur Verfügung. Neben CPU und Arbeitsspeicher benötigen die meisten Anwendungen leistungsstarken und zuverlässigen Blockspeicher. Hierfür bietet die Google Cloud Platform <a target="_blank" href="https://developers.google.com/compute/docs/disks">persistente Google Compute Engine-Festplatten</a> an.</p>
+<p><a target="_blank" href="/compute/">Google Compute Engine</a> stellt Ihnen flexible, zuverlässige und kostengünstige Rechenleistung für Ihre Software-Dienstleistungen zur Verfügung. Neben CPU und Arbeitsspeicher benötigen die meisten Anwendungen leistungsstarken und zuverlässigen Blockspeicher. Hierfür bietet die Google Cloud Platform <a target="_blank" href="/compute/docs/disks">persistente Google Compute Engine-Festplatten</a> an.</p>
 <p>Bei der Entwicklung der Hardware- und Softwareinfrastruktur für persistente Festplatten stehen für die Google-Techniker folgende Aspekte im Vordergrund:</p>
 <ul>
 <li>Sicherheit</li>
@@ -68,7 +68,7 @@ title: Cloud Computing &amp; Cloud Hosting Services
 </ul>
 <h3><a name="h.hblytow164l9" id="h.hblytow164l9"></a>Hauptmerkmale</h3>
 <h4><a name="h.k40zex5efw5h" id="h.k40zex5efw5h"></a>Strapazierfähigkeit</h4>
-<p>Persistente Festplatten verfügen über integrierte Redundanz zum Schutz Ihrer Daten vor Geräteausfällen und für die Aufrechterhaltung der Verfügbarkeit während Wartungsarbeiten im Rechenzentrum. Ihre Instanzen, die nicht mit einem lokalen Speicher verbunden sind, können per <a href="https://developers.google.com/compute/docs/instances#schedulingoptions">Google Live Migration</a> auf neuere Hardware verschoben werden, ohne dass Sie eingreifen müssen. Auf diese Weise können die Google-Rechenzentren auf höchstem Niveau gehalten und Software, Hardware und Ausstattung kontinuierlich aktualisiert werden, um für Ihre cloudbasierten Dienstleistungen eine herausragende Leistung und Zuverlässigkeit sicherzustellen.</p>
+<p>Persistente Festplatten verfügen über integrierte Redundanz zum Schutz Ihrer Daten vor Geräteausfällen und für die Aufrechterhaltung der Verfügbarkeit während Wartungsarbeiten im Rechenzentrum. Ihre Instanzen, die nicht mit einem lokalen Speicher verbunden sind, können per <a href="/compute/docs/instances#schedulingoptions">Google Live Migration</a> auf neuere Hardware verschoben werden, ohne dass Sie eingreifen müssen. Auf diese Weise können die Google-Rechenzentren auf höchstem Niveau gehalten und Software, Hardware und Ausstattung kontinuierlich aktualisiert werden, um für Ihre cloudbasierten Dienstleistungen eine herausragende Leistung und Zuverlässigkeit sicherzustellen.</p>
 <h4><a name="h.p4063icl0ptv" id="h.p4063icl0ptv"></a>Konstante Leistung</h4>
 <p>Bei einer persistenten Festplatte werden die Daten auf viele physische Volumes innerhalb einer Zone aufgeteilt (Striping), um die Leistungskonsistenz zu verbessern. Dadurch besitzen Volumes gleicher Größe in derselben Zone grundsätzlich identische Leistungsniveaus. Die Leistungsfähigkeit der Volumes kann im Zeitverlauf schwanken, da die aggregierte E/A-Last der Zone steigt und fällt, aber durch das Striping über viele physische Volumes hinweg lassen sich diese Schwankungen erheblich reduzieren.</p>
 <h4><a name="h.t3xil3z2275e" id="h.t3xil3z2275e"></a>Verschlüsselung</h4>
@@ -87,10 +87,10 @@ title: Cloud Computing &amp; Cloud Hosting Services
 <li>Weniger Netzwerkverkehr und Laufwerk-E/A beim Start der Instanz</li>
 </ul>
 <h4><a name="h.6weg86eazizc" id="h.6weg86eazizc"></a>Schnelles Kopieren auf global zugängliche Snapshots</h4>
-<p>Persistente Festplatten können mittels <a href="https://developers.google.com/compute/docs/disks#snapshots">Snapshots</a> auf regelmäßiger Basis gesichert werden. Die Redundanz einer persistenten Festplatte bezieht sich auf eine Zone, während Snapshots in mehreren Zonen repliziert werden. Wenn eine Zone in einer Notfallsituation vollständig verlorengeht, können Sie eine schnelle Wiederherstellung erreichen, indem Sie neue persistente Festplatten in einer anderen Zone auf Basis der angelegten Snapshots erstellen. Auch wenn ein Nutzer kritische Daten löscht, können Sie zur Wiederherstellung eine neue persistente Festplatte aus einem vorherigen Snapshot erstellen.</p>
+<p>Persistente Festplatten können mittels <a href="/compute/docs/disks#snapshots">Snapshots</a> auf regelmäßiger Basis gesichert werden. Die Redundanz einer persistenten Festplatte bezieht sich auf eine Zone, während Snapshots in mehreren Zonen repliziert werden. Wenn eine Zone in einer Notfallsituation vollständig verlorengeht, können Sie eine schnelle Wiederherstellung erreichen, indem Sie neue persistente Festplatten in einer anderen Zone auf Basis der angelegten Snapshots erstellen. Auch wenn ein Nutzer kritische Daten löscht, können Sie zur Wiederherstellung eine neue persistente Festplatte aus einem vorherigen Snapshot erstellen.</p>
 <p>Snapshots derselben persistenten Festplatte werden inkrementell angelegt, das heißt, dass nur Änderungen seit dem vorherigen Snapshot gespeichert werden. Das führt zu <a href="http://googlecloudplatform.blogspot.com/2013/10/persistent-disk-backups-using-snapshots.html#gpluscomments">schnelleren Sicherungen</a> und senkt die Kosten für die Snapshot-Speicherung.</p>
 <h4>Anpassung der Größe auf der Grundlage von Snapshots möglich</h4>
-<p>Wenn Sie ein neues persistentes Festplatten-Volume aus einem Snapshot erstellen, können Sie <a target="_blank" href="https://developers.google.com/compute/docs/disks#restoresnapshotlargersize">eine Volume-Größe wählen</a>, die die Originalgröße übersteigt. Dies gibt Ihnen die Möglichkeit, beim Ausbau Ihrer Bereitstellung einen konservativen Ansatz im Hinblick auf die Volume-Größe zu wählen. Sie können bei der Entwicklung und den ersten Tests klein anfangen, denn Sie werden feststellen, dass die Erstellung eines neuen Volumes aus einem Snapshot viel weniger Zeit in Anspruch nimmt als die Erstellung eines neuen Volumes und das manuelle Kopieren der Daten vom alten Volume.</p>
+<p>Wenn Sie ein neues persistentes Festplatten-Volume aus einem Snapshot erstellen, können Sie <a target="_blank" href="/compute/docs/disks#restoresnapshotlargersize">eine Volume-Größe wählen</a>, die die Originalgröße übersteigt. Dies gibt Ihnen die Möglichkeit, beim Ausbau Ihrer Bereitstellung einen konservativen Ansatz im Hinblick auf die Volume-Größe zu wählen. Sie können bei der Entwicklung und den ersten Tests klein anfangen, denn Sie werden feststellen, dass die Erstellung eines neuen Volumes aus einem Snapshot viel weniger Zeit in Anspruch nimmt als die Erstellung eines neuen Volumes und das manuelle Kopieren der Daten vom alten Volume.</p>
 <h4><a name="h.5seopampg6g6" id="h.5seopampg6g6"></a>Anfügen an mehrere Knoten im schreibgeschützten Modus</h4>
 <p>Persistente Festplatten können im schreibgeschützten Modus an mehrere Knoten angefügt werden, vorausgesetzt, sie sind nicht im Lese-/Schreibmodus an eine Instanz angefügt. Sie können statische Inhalte über mehrere Compute Engine-Instanzen verteilen, ohne dass Kosten für die Speicherreplizierung anfallen.</p>
 <h3><a name="h.nhrjtm7bctwy" id="h.nhrjtm7bctwy"></a>Bedienfreundlichkeit von persistenten Festplatten</h3>
@@ -290,9 +290,9 @@ title: Cloud Computing &amp; Cloud Hosting Services
 <p>Weitere Informationen über persistente Google Compute Engine-Festplatten finden Sie hier:</p>
 <ul>
 <li>Hauptdokumentation<br>
-<a target="_blank" href="https://developers.google.com/compute/docs/disks">https://developers.google.com/compute/docs/disks</a></li>
+<a target="_blank" href="/compute/docs/disks">/compute/docs/disks</a></li>
 <li>Preise<br>
-<a target="_blank" href="https://developers.google.com/compute/pricing#persistentdisk">https://developers.google.com/compute/pricing#persistentdisk</a></li>
+<a target="_blank" href="/compute/pricing#persistentdisk">/compute/pricing#persistentdisk</a></li>
 <li>Google-E/A-Präsentation 2013<br>
 <a target="_blank" href="https://developers.google.com/events/io/sessions/350753683">https://developers.google.com/events/io/sessions/350753683</a></li>
 <li>Compute Engine Persistent Disk Snapshots (in englischer Sprache)<br>
@@ -305,7 +305,7 @@ title: Cloud Computing &amp; Cloud Hosting Services
 <br>
 <br>
 <hr>
-<p><a href="#ftnt_ref1" name="ftnt1" id="ftnt1">[1]</a> Zum Zeitpunkt der Veröffentlichung dieses Artikels. Die aktuellen Preise <a target="_blank" href="https://developers.google.com/compute/pricing#persistentdisk">finden Sie in der Preisliste</a>.</p>
+<p><a href="#ftnt_ref1" name="ftnt1" id="ftnt1">[1]</a> Zum Zeitpunkt der Veröffentlichung dieses Artikels. Die aktuellen Preise <a target="_blank" href="/compute/pricing#persistentdisk">finden Sie in der Preisliste</a>.</p>
 </div>
 <!-- /maia-main --></div>
 <div class="maia-col-3"><br>

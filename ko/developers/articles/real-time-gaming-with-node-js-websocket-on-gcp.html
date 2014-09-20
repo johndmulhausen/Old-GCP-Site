@@ -101,13 +101,13 @@ title: Cloud Computing &amp; Cloud Hosting Services
 <figure><img src="/images/articles/real-time-gaming-with-node-js-websocket-on-gcp/ae-web-frontend.png" alt="">
 <figcaption>그림 4: 웹 프론트엔드에 App Engine 사용</figcaption>
 </figure>
-<p>App Engine의 가장 큰 장점은 자동으로 실행되는 확장성 및 가용성 기능입니다. App Engine 애플리케이션은 각각의 <a href="https://developers.google.com/appengine/docs/whatisgoogleappengine">고유한 App Engine 런타임 환경</a> 및 다양한 <a href="https://developers.google.com/appengine/docs/java/apis">App Engine 서비스</a> <a href="https://developers.google.com/appengine/docs/java/apis">API</a>와 관련된 설계 가이드라인을 따라야 합니다. 런타임 및 API는 데이터 센터를 애플리케이션을 구동하는 하나의 거대한 병렬 컴퓨터로 구성하고, 단일 머신 오류로부터 이를 분리할 수 있도록 신중하게 설계되었습니다. 이러한 강력한 기능을 통해 개발자는 트래픽 대량 급증, 사용자 수와 서비스에서의 급박한 변경사항 및 데이터 센터 전체 다운타임과 같은 상황에 잘 대처할 수 있는 플랫폼에 액세스할 수 있습니다.</p>
+<p>App Engine의 가장 큰 장점은 자동으로 실행되는 확장성 및 가용성 기능입니다. App Engine 애플리케이션은 각각의 <a href="/appengine/docs/whatisgoogleappengine">고유한 App Engine 런타임 환경</a> 및 다양한 <a href="/appengine/docs/java/apis">App Engine 서비스</a> <a href="/appengine/docs/java/apis">API</a>와 관련된 설계 가이드라인을 따라야 합니다. 런타임 및 API는 데이터 센터를 애플리케이션을 구동하는 하나의 거대한 병렬 컴퓨터로 구성하고, 단일 머신 오류로부터 이를 분리할 수 있도록 신중하게 설계되었습니다. 이러한 강력한 기능을 통해 개발자는 트래픽 대량 급증, 사용자 수와 서비스에서의 급박한 변경사항 및 데이터 센터 전체 다운타임과 같은 상황에 잘 대처할 수 있는 플랫폼에 액세스할 수 있습니다.</p>
 <figure><img src="/images/articles/real-time-gaming-with-node-js-websocket-on-gcp/traffic-peak.png" alt="">
 <figcaption>그림 5: WWM App Engine 관리 콘솔에서의 최대 트래픽</figcaption>
 </figure>
 <p>WWM에서는 App Engine을 부하 분산기로 사용하여 초당 1,000건의 요청에 달하는 최대 트래픽(그림 5 참조)을 처리할 수 있었습니다. 이는 App Engine의 자동 확장 기능을 사용하여 실시간 게임 세션을 Compute Engine 인스턴스에 원활하게 전달할 수 있었기 때문에 가능했습니다.</p>
 <h3><a name="h.3jrjcfu0g87k" id="h.3jrjcfu0g87k"></a>WebSocket 서버에 Compute Engine 사용</h3>
-<p>처음에 개발자는 App Engine만을 사용하여 전체 게임 서비스를 구현하는 것을 고려했고, App Engine의 <a href="https://developers.google.com/appengine/docs/java/channel/">Channel API</a> 및 <a href="https://developers.google.com/appengine/docs/java/sockets/">Socket API</a>가 실시간 통신 요구사항을 지원할 수 있는지 평가했습니다. 하지만 200밀리초 안에 메시지를 전송해야 하는 WWM에 양방향 연결을 구현하는 데 이러한 API가 적합하지 않다는 사실을 알게 되었고, 결국 App Engine과 Compute Engine을 조합하여 WebSocket 서버 연결을 구현하기로 결정했습니다.</p>
+<p>처음에 개발자는 App Engine만을 사용하여 전체 게임 서비스를 구현하는 것을 고려했고, App Engine의 <a href="/appengine/docs/java/channel/">Channel API</a> 및 <a href="/appengine/docs/java/sockets/">Socket API</a>가 실시간 통신 요구사항을 지원할 수 있는지 평가했습니다. 하지만 200밀리초 안에 메시지를 전송해야 하는 WWM에 양방향 연결을 구현하는 데 이러한 API가 적합하지 않다는 사실을 알게 되었고, 결국 App Engine과 Compute Engine을 조합하여 WebSocket 서버 연결을 구현하기로 결정했습니다.</p>
 <figure><img src="/images/articles/real-time-gaming-with-node-js-websocket-on-gcp/webSocket-server.png" alt="">
 <figcaption>그림 5: WebSocket 서버에 Compute Engine 사용</figcaption>
 </figure>
@@ -142,7 +142,7 @@ title: Cloud Computing &amp; Cloud Hosting Services
 <p>WebSocket 서버 제한은 부하 테스트에 의해 결정되었습니다. 테스트 결과에 따르면 서버는 360개의 WebSocket 연결을 평균 175밀리초의 지연 시간으로 처리할 수 있었습니다.</p>
 <p>출시 이후에 급작스런 트래픽 증가가 있었지만, 관리자는 스테이지 제작 도구의 Compute Engine 인스턴스와 WebSocket 서버를 원활하게 프로비저닝했습니다. 따라서 트래픽 급증으로 인한 어떠한 심각한 문제도 발생하지 않았습니다.</p>
 <h3><a name="h.2jfpvn3lour7" id="h.2jfpvn3lour7"></a>여러 영역의 Compute Engine 인스턴스 간의 장애 극복 조치</h3>
-<p>두 번째 과제는 단일 인스턴스에서 <a href="https://developers.google.com/compute/docs/zones?hl=en">가용성 영역</a>(여러 지리적인 지역의 인스턴스 그룹)에 이르기까지, Compute Engine 인스턴스의 예정되었거나 예정되지 않은 다운타임 모두를 처리하는 것이었습니다. WWM에서 개발자는 권장사항에 따라, 부하를 분산하고 영역 간에 빠르게 장애를 극복할 수 있도록 시스템이 배치된 여러 영역에 인스턴스를 배포했습니다.</p>
+<p>두 번째 과제는 단일 인스턴스에서 <a href="/compute/docs/zones">가용성 영역</a>(여러 지리적인 지역의 인스턴스 그룹)에 이르기까지, Compute Engine 인스턴스의 예정되었거나 예정되지 않은 다운타임 모두를 처리하는 것이었습니다. WWM에서 개발자는 권장사항에 따라, 부하를 분산하고 영역 간에 빠르게 장애를 극복할 수 있도록 시스템이 배치된 여러 영역에 인스턴스를 배포했습니다.</p>
 <p>WWM에서는 다음 두 가지 기술을 활용하여 예정되었거나 예정되지 않은 다운타임을 적절하게 처리하고 있습니다.</p>
 <ul>
 <li>데이터 백업에 영구 디스크 사용</li>
@@ -151,7 +151,7 @@ title: Cloud Computing &amp; Cloud Hosting Services
 <h4><a name="h.6rgxjfglm26h" id="h.6rgxjfglm26h"></a>데이터 백업에 영구 디스크 사용</h4>
 <p>영구 디스크는 확장성과 가용성이 높은 Compute Engine용 영구 저장소 기기입니다. 백업 및 복구에 영구 디스크를 활용하면 데이터를 안전하게 유지할 수 있으며 예정되었거나 예정되지 않은 다운타임이 Compute Engine에 발생하더라도 이에 대처할 수 있습니다. WWM의 데이터베이스 서버는 MySQL 데이터베이스의 주기적인 백업에 영구 디스크를 사용합니다. Compute Engine의 예정된 유지관리 기간에는 WWM 운영자가 다운타임 전에 복원 프로세스를 호출합니다. 운영자는 영구 디스크에 백업된 MySQL 데이터를 사용하고, 다른 영역에서 예약된 Compute Engine 인스턴스에 이 데이터를 복원합니다.</p>
 <h4><a name="h.lo6e3zikdjpp" id="h.lo6e3zikdjpp"></a>Compute Engine 인스턴스 간에 외부 정적 IP 주소 전환</h4>
-<p>장애 극복에 사용되는 두 번째 기술은 정적 IP 주소 전환입니다. Compute Engine을 사용하면 간단한 명령으로 Compute Engine 인스턴스의 <a href="https://developers.google.com/compute/docs/instances_and_network#externaladdresses">외부 정적 IP 주소</a>를 즉시 전환할 수 있습니다. 이 기능은 역 프록시나 부하 분산기와 같은 프론트엔드 없이도, 지역 내 영역 간에 원활한 마이그레이션이 가능하도록 해줍니다.</p>
+<p>장애 극복에 사용되는 두 번째 기술은 정적 IP 주소 전환입니다. Compute Engine을 사용하면 간단한 명령으로 Compute Engine 인스턴스의 <a href="/compute/docs/instances_and_network#externaladdresses">외부 정적 IP 주소</a>를 즉시 전환할 수 있습니다. 이 기능은 역 프록시나 부하 분산기와 같은 프론트엔드 없이도, 지역 내 영역 간에 원활한 마이그레이션이 가능하도록 해줍니다.</p>
 <p>WWM 에서는 예정된 유지관리 기간이 다가오면 다음 절차에 따라 인스턴스를 한 영역으로부터 이동합니다.</p>
 <ol>
 <li>웹 프론트엔드(App Engine)에서 '제작' 버전을 '유지관리' 버전으로 전환하여 유지관리 화면을 표시함</li>
@@ -168,8 +168,8 @@ title: Cloud Computing &amp; Cloud Hosting Services
 <hr>
 <p><a href="#ftnt_ref1" name="ftnt1" id="ftnt1">[1]</a> <a href="http://prty.jp/">PARTY</a>, AID, <a href="http://katamari.co.jp/">katamari</a> 및 <a href="http://www.futurek.com/">Futurek</a></p>
 <p><a href="#ftnt_ref2" name="ftnt2" id="ftnt2">[2]</a> <a href="http://www.google.com/url?q=http%3A%2F%2Fnews.cnet.com%2F8301-17938_105-57575847-1%2Fplaying-crave-with-nifty-chrome-world-wide-maze%2F&amp;sa=D&amp;sntz=1&amp;usg=AFQjCNH1f4w2oXpZ10fCKE48944Oa-hLUQ">'</a><a href="http://www.google.com/url?q=http%3A%2F%2Fnews.cnet.com%2F8301-17938_105-57575847-1%2Fplaying-crave-with-nifty-chrome-world-wide-maze%2F&amp;sa=D&amp;sntz=1&amp;usg=AFQjCNH1f4w2oXpZ10fCKE48944Oa-hLUQ">‘</a><a href="http://news.cnet.com/8301-17938_105-57575847-1/playing-crave-with-nifty-chrome-world-wide-maze/">멋진 Chrome World Wide Maze로 Crave 플레이하기</a><a href="http://www.google.com/url?q=http%3A%2F%2Fnews.cnet.com%2F8301-17938_105-57575847-1%2Fplaying-crave-with-nifty-chrome-world-wide-maze%2F&amp;sa=D&amp;sntz=1&amp;usg=AFQjCNH1f4w2oXpZ10fCKE48944Oa-hLUQ">'</a>(CNET), <a href="http://www.google.com/url?q=http%3A%2F%2Fwww.pcmag.com%2Farticle2%2F0%2C2817%2C2416931%2C00.asp&amp;sa=D&amp;sntz=1&amp;usg=AFQjCNEt7BMEKNmbmDADR4CiSGuLL_3Zww">'</a><a href="http://www.pcmag.com/article2/0,2817,2416931,00.asp">Chrome 'World Wide Maze' 시험 기능이 웹사이트를 놀이터로 바꿔 놓다</a><a href="http://www.google.com/url?q=http%3A%2F%2Fwww.pcmag.com%2Farticle2%2F0%2C2817%2C2416931%2C00.asp&amp;sa=D&amp;sntz=1&amp;usg=AFQjCNEt7BMEKNmbmDADR4CiSGuLL_3Zww">'</a>(PC Magazine), <a href="http://www.google.com/url?q=http%3A%2F%2Fwww.engadget.com%2F2013%2F03%2F21%2Fchrome-world-wide-maze-browser-game%2F&amp;sa=D&amp;sntz=1&amp;usg=AFQjCNEmLWAosWpZCXQbkaWeam63CmwA3w">'</a><a href="http://www.engadget.com/2013/03/21/chrome-world-wide-maze-browser-game/">Google Chrome의 World Wide Maze가 즐겨찾기 웹사이트를 휴대기기에 적합한 3D 게임으로 바꿔 놓다</a><a href="http://www.google.com/url?q=http%3A%2F%2Fwww.engadget.com%2F2013%2F03%2F21%2Fchrome-world-wide-maze-browser-game%2F&amp;sa=D&amp;sntz=1&amp;usg=AFQjCNEmLWAosWpZCXQbkaWeam63CmwA3w">'</a>(Engadget) 등</p>
-<p><a href="#ftnt_ref3" name="ftnt3" id="ftnt3">[3]</a> 이런 유형의 대기열을 구현하는 다른 방법은 App Engine에서 <a href="https://developers.google.com/appengine/docs/java/taskqueue/">작업 대기열</a>을 사용하는 것입니다.</p>
-<p><a href="#ftnt_ref4" name="ftnt4" id="ftnt4">[4]</a> 이러한 작업에 <a href="https://developers.google.com/compute/docs/gcutil/tips?hl=en#moving">gcutil moveinstances 명령</a>을 유용하게 사용할 수 있습니다.</p>
+<p><a href="#ftnt_ref3" name="ftnt3" id="ftnt3">[3]</a> 이런 유형의 대기열을 구현하는 다른 방법은 App Engine에서 <a href="/appengine/docs/java/taskqueue/">작업 대기열</a>을 사용하는 것입니다.</p>
+<p><a href="#ftnt_ref4" name="ftnt4" id="ftnt4">[4]</a> 이러한 작업에 <a href="/compute/docs/gcutil/tips#moving">gcutil moveinstances 명령</a>을 유용하게 사용할 수 있습니다.</p>
 <p><a href="#ftnt_ref5" name="ftnt5" id="ftnt5">[5]</a> 외부 정적 IP 주소는 다른 지역에 있는 영역 간에는 전환할 수 없습니다. 다른 지역 간에 장애 극복 조치를 구현하려면 DNS를 사용하여 호스트 이름과 IP 주소 매핑을 전환해야 합니다. 또 다른 방법으로는 여러 지역에 IP 그룹을 만들고, 활성 인스턴스를 전환하는 애플리케이션 로직으로 제작하는 것입니다.</p>
 </div>
 <!-- /maia-main --></div>

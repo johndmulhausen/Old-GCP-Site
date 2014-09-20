@@ -50,13 +50,13 @@ title: Managing Complex Applications in the Cloud
   <h2>Overview of the Solution</h2>
   <p>Our proposed solution makes use of the following products from the Cloud Platform:</p>
   <ul>
-    <li><a href="https://developers.google.com/appengine/">App Engine</a></li>
-    <li><a href="https://developers.google.com/appengine/docs/python/taskqueue/">App Engine Task Queues</a></li>
+    <li><a href="/appengine/">App Engine</a></li>
+    <li><a href="/appengine/docs/python/taskqueue/">App Engine Task Queues</a></li>
     <li><a href="/storage/">Cloud Storage</a></li>
-    <li><a href="https://developers.google.com/cloud-sql/">Cloud SQL</a></li>
+    <li><a href="/sql/">Cloud SQL</a></li>
     <li><a href="/compute/">Compute Engine</a></li>
-    <li><a href="https://developers.google.com/datastore/">Cloud Datastore</a></li>
-    <li><a href="https://developers.google.com/appengine/docs/java/endpoints/">Mobile Cloud Endpoints</a></li>
+    <li><a href="/datastore/">Cloud Datastore</a></li>
+    <li><a href="/appengine/docs/java/endpoints/">Mobile Cloud Endpoints</a></li>
     <li>App Engine Modules</li>
   </ul>
   <p>The solution also uses the following third-party and open source tools (not endorsed by Google):</p>
@@ -245,14 +245,14 @@ title: Managing Complex Applications in the Cloud
     <figcaption>Figure 4: Hadoop Deployment Architecture</figcaption>
   </figure>
 
-  <p>Google provides several alternatives for data analysis. Specifically for sentiment analysis, the <a href="https://developers.google.com/prediction/">Google Prediction API</a> provides a REST interface to a machine learning environment that, among other options, will conduct sentiment analysis for user data. For more general data analysis, <a href="https://developers.google.com/bigquery/">Google Big Query</a> provides an engine for processing terabytes of data without the overhead of custom development. Another great alternative for customizable Datastore processing is <a href="https://developers.google.com/appengine/docs/python/dataprocessing/">App Engine Map Reduce</a>.</p>
+  <p>Google provides several alternatives for data analysis. Specifically for sentiment analysis, the <a href="/prediction/">Google Prediction API</a> provides a REST interface to a machine learning environment that, among other options, will conduct sentiment analysis for user data. For more general data analysis, <a href="/bigquery/">Google Big Query</a> provides an engine for processing terabytes of data without the overhead of custom development. Another great alternative for customizable Datastore processing is <a href="/appengine/docs/python/dataprocessing/">App Engine Map Reduce</a>.</p>
 
   <h2>Managing Complexity</h2>
   <p>Given the range of logical services in our application, we made heavy use of several key features of the Google Cloud Platform. Together, they provide a strong base for supporting complex business applications in the cloud.</p>
 
   <h5>Cloud Endpoints</h5>
-  <p>Cloud Endpoints is a collection of tools and services for generating REST APIs and client libraries from an App Engine application to simplify both web client and mobile client access. The combination allows for rapid rollout of an API server for Android applications. Cloud Endpoints simplifies communication with an App Engine application opening up the benefits of the available services, including:  Cloud <a href="https://developers.google.com/appengine/docs/java/datastore">Datastore</a>, <a href="https://developers.google.com/appengine/docs/java/googlestorage">Cloud Storage</a>, <a href="https://developers.google.com/appengine/docs/java/mail">Mail</a>, <a href="https://developers.google.com/appengine/docs/java/taskqueue">Task Queue</a>s, etc. Behind the scenes, it converts the REST API calls to method invocation on the backend application and secures each call with OAuth 2.0 authentication. Existing development environments, including Eclipse, Android Studio and Apache Maven, currently offer functionality to generate a client library from within a project. Cloud Endpoints technology removes the overhead of API development and allows developers to focus on what really matters, their product.</p>
-  <p>To get started with Google Cloud Endpoints, check out the <a href="https://developers.google.com/events/io/sessions/333508149">From Nothing to Nirvana in Minutes</a> session given at Google I/O 2013 and the developer documentation for <a href="https://developers.google.com/appengine/docs/java/endpoints/">Cloud Endpoints</a>. In addition, Google Cloud Endpoints are showcased in several solution samples including the  <a href="https://github.com/GoogleCloudPlatform/appengine-endpoints-tictactoe-java">Web App</a>,  the <a href="/developers/articles/mobile-application-solutions">Mobile Shopping Assistant</a>, and the <a href="https://developers.google.com/samples/mbs/">Mobile Backend Starter</a>.</p>
+  <p>Cloud Endpoints is a collection of tools and services for generating REST APIs and client libraries from an App Engine application to simplify both web client and mobile client access. The combination allows for rapid rollout of an API server for Android applications. Cloud Endpoints simplifies communication with an App Engine application opening up the benefits of the available services, including:  Cloud <a href="/appengine/docs/java/datastore">Datastore</a>, <a href="/appengine/docs/java/googlestorage">Cloud Storage</a>, <a href="/appengine/docs/java/mail">Mail</a>, <a href="/appengine/docs/java/taskqueue">Task Queue</a>s, etc. Behind the scenes, it converts the REST API calls to method invocation on the backend application and secures each call with OAuth 2.0 authentication. Existing development environments, including Eclipse, Android Studio and Apache Maven, currently offer functionality to generate a client library from within a project. Cloud Endpoints technology removes the overhead of API development and allows developers to focus on what really matters, their product.</p>
+  <p>To get started with Google Cloud Endpoints, check out the <a href="https://developers.google.com/events/io/sessions/333508149">From Nothing to Nirvana in Minutes</a> session given at Google I/O 2013 and the developer documentation for <a href="/appengine/docs/java/endpoints/">Cloud Endpoints</a>. In addition, Google Cloud Endpoints are showcased in several solution samples including the  <a href="https://github.com/GoogleCloudPlatform/appengine-endpoints-tictactoe-java">Web App</a>,  the <a href="/developers/articles/mobile-application-solutions">Mobile Shopping Assistant</a>, and the <a href="https://developers.google.com/samples/mbs/">Mobile Backend Starter</a>.</p>
 
   <h5>Compute Engine API</h5>
   <p>The Compute Engine API provides a programmatic method to control a set of virtual machines in the Google Cloud Environment. Bare virtual machines can be launched and built up to needed specifications. Alternatively, machine images can be created beforehand to reduce the time required to launch them. Auto scaling can be achieved through periodic checks of machine load. Through the use of App Engine Task Queues, you can partition your work  and horizontally scale your processing environment. The benefits of Google Compute Engine can be harnessed to provide batch or custom processing for practically any workload.</p>
@@ -307,7 +307,7 @@ title: Managing Complex Applications in the Cloud
 
   <br><hr>
   <p><a href="#ftnt_ref1" name="ftnt1" id="ftnt1">[1]</a> Cloud projects are created via the Cloud Console and provide a framework for managing the range of Cloud products including App Engine, Compute Engine, Storage, and Datastore. They provide user security and API access in addition to a <a href="https://console.developers.google.com">common place</a> to access all parts of an application.</p>
-    <p><a href="#ftnt_ref2" name="ftnt2" id="ftnt2">[2]</a> Google Cloud Platform currently has limited support for traditional packaged applications. Check <a href="https://developers.google.com/compute/docs/support">online</a> for the latest supported features.</p>
+    <p><a href="#ftnt_ref2" name="ftnt2" id="ftnt2">[2]</a> Google Cloud Platform currently has limited support for traditional packaged applications. Check <a href="/compute/docs/support">online</a> for the latest supported features.</p>
 
 </div>
 <!-- /maia-main -->

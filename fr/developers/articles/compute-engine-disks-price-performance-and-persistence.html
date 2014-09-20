@@ -42,7 +42,7 @@ title: Cloud Computing &amp; Cloud Hosting Services
 </style>
 <div class="cp-article-tutorial ced-price-perf-persist">
 <h2><a name="h.w3kz4fze562t" id="h.w3kz4fze562t"></a>Introduction</h2>
-<p>Avec <a target="_blank" href="/compute/">Google&nbsp;Compute&nbsp;Engine</a>, vous disposez d'une puissance de calcul agile, fiable et peu coûteuse pour vos services logiciels. La plupart des applications nécessitent non seulement des processeurs et de la mémoire, mais également un stockage par blocs à la fois performant et fiable. C'est pourquoi Google&nbsp;Cloud&nbsp;Platform inclut des <a target="_blank" href="https://developers.google.com/compute/docs/disks">disques persistants</a> Compute&nbsp;Engine.</p>
+<p>Avec <a target="_blank" href="/compute/">Google&nbsp;Compute&nbsp;Engine</a>, vous disposez d'une puissance de calcul agile, fiable et peu coûteuse pour vos services logiciels. La plupart des applications nécessitent non seulement des processeurs et de la mémoire, mais également un stockage par blocs à la fois performant et fiable. C'est pourquoi Google&nbsp;Cloud&nbsp;Platform inclut des <a target="_blank" href="/compute/docs/disks">disques persistants</a> Compute&nbsp;Engine.</p>
 <p>Ces disques persistants reposent sur une infrastructure matérielle et logicielle conçue avant tout pour offrir les caractéristiques suivantes&nbsp;:</p>
 <ul>
 <li>Sécurité</li>
@@ -68,7 +68,7 @@ title: Cloud Computing &amp; Cloud Hosting Services
 </ul>
 <h3><a name="h.hblytow164l9" id="h.hblytow164l9"></a>Fonctionnalités essentielles</h3>
 <h4><a name="h.k40zex5efw5h" id="h.k40zex5efw5h"></a>Résilience</h4>
-<p>Les disques persistants sont dotés d'une fonction de redondance intégrée qui protège les données contre les pannes de matériel et qui assure la disponibilité de celles-ci au cours des opérations de maintenance du centre de données. Étant donné que les instances ne sont pas associées à un stockage local, elles peuvent être transférées sur du matériel plus récent, sans aucune intervention de votre part, grâce à la <a href="https://developers.google.com/compute/docs/instances#schedulingoptions">migration à chaud Google</a>. La maintenance des centres de données de Google est ainsi optimale. Les logiciels, le matériel et les installations font continuellement l'objet de mises à jour qui vous assurent une fiabilité et des performances supérieures pour vos services de cloud.</p>
+<p>Les disques persistants sont dotés d'une fonction de redondance intégrée qui protège les données contre les pannes de matériel et qui assure la disponibilité de celles-ci au cours des opérations de maintenance du centre de données. Étant donné que les instances ne sont pas associées à un stockage local, elles peuvent être transférées sur du matériel plus récent, sans aucune intervention de votre part, grâce à la <a href="/compute/docs/instances#schedulingoptions">migration à chaud Google</a>. La maintenance des centres de données de Google est ainsi optimale. Les logiciels, le matériel et les installations font continuellement l'objet de mises à jour qui vous assurent une fiabilité et des performances supérieures pour vos services de cloud.</p>
 <h4><a name="h.p4063icl0ptv" id="h.p4063icl0ptv"></a>Performances constantes</h4>
 <p>Le disque persistant permet de répartir les données par bandes sur de nombreux volumes physiques au sein d'une zone afin d'améliorer la constance des performances. Par conséquent, les volumes de la même taille situés dans une même zone offrent généralement un niveau de performances identique à un moment donné. Leurs performances varient avec le temps, selon que la charge totale d'E/S de la zone augmente ou diminue, mais la répartition sur plusieurs volumes physiques atténue considérablement ces variations.</p>
 <h4><a name="h.t3xil3z2275e" id="h.t3xil3z2275e"></a>Cryptage</h4>
@@ -87,10 +87,10 @@ title: Cloud Computing &amp; Cloud Hosting Services
 <li>Un trafic réseau et des E/S de disque réduits lors du démarrage de l'instance</li>
 </ul>
 <h4><a name="h.6weg86eazizc" id="h.6weg86eazizc"></a>Copie rapide sur des instantanés accessibles à l'échelle mondiale</h4>
-<p>Les disques persistants peuvent être sauvegardés régulièrement à l'aide d'<a href="https://developers.google.com/compute/docs/disks#snapshots">instantanés</a>. La redondance du disque persistant s'effectue à l'intérieur d'une zone, tandis que les instantanés sont répliqués automatiquement sur plusieurs zones. En cas de perte complète d'une zone à la suite d'un sinistre, vous pouvez rétablir rapidement vos activités en créant des disques persistants dans une autre zone à partir de clichés que vous avez créés. Si un utilisateur final supprime des données sensibles, vous pouvez également créer un disque persistant à partir d'un instantané précédent afin de les récupérer.</p>
+<p>Les disques persistants peuvent être sauvegardés régulièrement à l'aide d'<a href="/compute/docs/disks#snapshots">instantanés</a>. La redondance du disque persistant s'effectue à l'intérieur d'une zone, tandis que les instantanés sont répliqués automatiquement sur plusieurs zones. En cas de perte complète d'une zone à la suite d'un sinistre, vous pouvez rétablir rapidement vos activités en créant des disques persistants dans une autre zone à partir de clichés que vous avez créés. Si un utilisateur final supprime des données sensibles, vous pouvez également créer un disque persistant à partir d'un instantané précédent afin de les récupérer.</p>
 <p>Les instantanés répétés du même disque persistant sont incrémentiels, ce qui signifie que seules les modifications effectuées depuis le dernier instantané sont stockées. Cela permet d'effectuer des <a href="http://googlecloudplatform.blogspot.com/2013/10/persistent-disk-backups-using-snapshots.html#gpluscomments">sauvegardes plus rapides</a> et de réduire les coûts liés au stockage des instantanés.</p>
 <h4>Redimensionnement à partir d'un instantané</h4>
-<p>Lorsque vous créez un volume de disque persistant à partir d'un instantané, vous pouvez <a target="_blank" href="https://developers.google.com/compute/docs/disks#restoresnapshotlargersize">indiquer une taille supérieure</a> à celle du volume d'origine. Cela vous permet de dimensionner prudemment les volumes au fur et à mesure du déploiement. Commencez par un volume de taille modeste en phase de développement et de test initial. Ensuite, vous constaterez sans doute que la création d'un volume à partir d'un instantané est bien plus rapide que la copie manuelle des données d'un ancien volume vers un nouveau.</p>
+<p>Lorsque vous créez un volume de disque persistant à partir d'un instantané, vous pouvez <a target="_blank" href="/compute/docs/disks#restoresnapshotlargersize">indiquer une taille supérieure</a> à celle du volume d'origine. Cela vous permet de dimensionner prudemment les volumes au fur et à mesure du déploiement. Commencez par un volume de taille modeste en phase de développement et de test initial. Ensuite, vous constaterez sans doute que la création d'un volume à partir d'un instantané est bien plus rapide que la copie manuelle des données d'un ancien volume vers un nouveau.</p>
 <h4><a name="h.5seopampg6g6" id="h.5seopampg6g6"></a>Connexion à plusieurs nœuds en mode lecture seule</h4>
 <p>Les disques persistants peuvent être connectés à plusieurs nœuds en mode lecture seule (s'ils ne sont connectés à aucune instance en mode lecture/écriture). Vous pouvez répartir le contenu statique sur plusieurs instances Compute&nbsp;Engine sans supporter les coûts de réplication du stockage.</p>
 <h3><a name="h.nhrjtm7bctwy" id="h.nhrjtm7bctwy"></a>Facilité d'utilisation des disques persistants</h3>
@@ -290,9 +290,9 @@ title: Cloud Computing &amp; Cloud Hosting Services
 <p>Pour en savoir plus sur les disques persistants Google&nbsp;Compute&nbsp;Engine, consultez les pages suivantes&nbsp;:</p>
 <ul>
 <li>Documentation de base<br>
-<a target="_blank" href="https://developers.google.com/compute/docs/disks">https://developers.google.com/compute/docs/disks</a></li>
+<a target="_blank" href="/compute/docs/disks">/compute/docs/disks</a></li>
 <li>Tarification<br>
-<a target="_blank" href="https://developers.google.com/compute/pricing#persistentdisk">https://developers.google.com/compute/pricing#persistentdisk</a></li>
+<a target="_blank" href="/compute/pricing#persistentdisk">/compute/pricing#persistentdisk</a></li>
 <li>Présentation Google&nbsp;I/O&nbsp;2013<br>
 <a target="_blank" href="https://developers.google.com/events/io/sessions/350753683">https://developers.google.com/events/io/sessions/350753683</a></li>
 <li>Instantanés de disques persistants Compute&nbsp;Engine<br>
@@ -305,7 +305,7 @@ title: Cloud Computing &amp; Cloud Hosting Services
 <br>
 <br>
 <hr>
-<p><a href="#ftnt_ref1" name="ftnt1" id="ftnt1">[1]</a>&nbsp;À la date de publication de cet article. Pour connaître les prix les plus récents, consultez la page des <a target="_blank" href="https://developers.google.com/compute/pricing#persistentdisk">tarifs</a>.</p>
+<p><a href="#ftnt_ref1" name="ftnt1" id="ftnt1">[1]</a>&nbsp;À la date de publication de cet article. Pour connaître les prix les plus récents, consultez la page des <a target="_blank" href="/compute/pricing#persistentdisk">tarifs</a>.</p>
 </div>
 <!-- /maia-main --></div>
 <div class="maia-col-3"><br>

@@ -47,12 +47,12 @@ title: Cloud Computing &amp; Cloud Hosting Services
 <p>Notre application ordonnancée est l'application métier que l'ordonnanceur de tâches surveille et gère en faisant évoluer les instances de machine virtuelle. Comme indiqué ci-dessus, une telle application peut se présenter sous la forme de tout élément comprenant des backends Compute&nbsp;Engine et une utilisation variable. Dans cet exemple, il s'agit d'une application destinée à importer, traiter et générer de nouvelles images transformées. Elle est mise en œuvre comme une application App&nbsp;Engine et pour mobile qui communique avec des machines virtuelles Compute&nbsp;Engine via des files d'attente de retrait. L'application App&nbsp;Engine place les tâches en file d'attente en vue du traitement et de la génération d'images, tandis que les backends Compute&nbsp;Engine les louent.</p>
 <p>Les produits utilisés dans cette solution sont les suivants&nbsp;:</p>
 <ul>
-<li><a href="https://developers.google.com/appengine/">Google&nbsp;App&nbsp;Engine</a>&nbsp;: pour la mise en œuvre de l'application pour mobile/Web ordonnancée et de l'ordonnanceur de tâche.</li>
-<li><a href="https://developers.google.com/appengine/docs/java/config/cron">Tâches Cron de Google&nbsp;App&nbsp;Engine</a>&nbsp;: pour récupérer régulièrement des informations sur l'état des instances Compute&nbsp;Engine.</li>
-<li><a href="https://developers.google.com/appengine/docs/java/config/backends">Backends Google&nbsp;App&nbsp;Engine</a>&nbsp;: pour exécuter des instances App&nbsp;Engine de manière fiable, sans devoir les gérer. Il s'agit d'un choix idéal pour exécuter l'ordonnanceur de tâches.</li>
+<li><a href="/appengine/">Google&nbsp;App&nbsp;Engine</a>&nbsp;: pour la mise en œuvre de l'application pour mobile/Web ordonnancée et de l'ordonnanceur de tâche.</li>
+<li><a href="/appengine/docs/java/config/cron">Tâches Cron de Google&nbsp;App&nbsp;Engine</a>&nbsp;: pour récupérer régulièrement des informations sur l'état des instances Compute&nbsp;Engine.</li>
+<li><a href="/appengine/docs/java/config/backends">Backends Google&nbsp;App&nbsp;Engine</a>&nbsp;: pour exécuter des instances App&nbsp;Engine de manière fiable, sans devoir les gérer. Il s'agit d'un choix idéal pour exécuter l'ordonnanceur de tâches.</li>
 <li><a href="/compute/">Compute&nbsp;Engine</a>&nbsp;: pour mettre en œuvre la logique de backend de l'application pour mobile/Web ordonnancée, ainsi que pour publier l'état des instances.</li>
-<li><a href="https://developers.google.com/compute/docs/reference/latest/">API&nbsp;REST Compute&nbsp;Engine</a>&nbsp;: pour effectuer des tâches d'ordonnancement telles que la récupération d'adresses&nbsp;IP d'instances en cours d'exécution et la création d'instances.</li>
-<li><a href="https://developers.google.com/appengine/docs/java/taskqueue/overview-pull">Files d'attente des tâches Cloud&nbsp;Platform</a>&nbsp;: pour la communications entre App&nbsp;Engine et Compute&nbsp;Engine.</li>
+<li><a href="/compute/docs/reference/latest/">API&nbsp;REST Compute&nbsp;Engine</a>&nbsp;: pour effectuer des tâches d'ordonnancement telles que la récupération d'adresses&nbsp;IP d'instances en cours d'exécution et la création d'instances.</li>
+<li><a href="/appengine/docs/java/taskqueue/overview-pull">Files d'attente des tâches Cloud&nbsp;Platform</a>&nbsp;: pour la communications entre App&nbsp;Engine et Compute&nbsp;Engine.</li>
 </ul>
 <h2>Schéma de l'architecture</h2>
 <p>Composants de la solution&nbsp;:</p>

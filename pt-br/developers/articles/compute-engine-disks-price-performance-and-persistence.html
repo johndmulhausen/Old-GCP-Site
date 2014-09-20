@@ -42,7 +42,7 @@ title: Cloud Computing &amp; Cloud Hosting Services
 </style>
 <div class="cp-article-tutorial ced-price-perf-persist">
 <h2><a name="h.w3kz4fze562t" id="h.w3kz4fze562t"></a>Apresentação</h2>
-<p>O objetivo do <a target="_blank" href="/compute/">Google Compute Engine</a> é fornecer capacidade computacional ágil, confiável e de baixo custo para os seus serviços de software. Além de CPU e memória, a maioria dos aplicativos requer alto desempenho e um sistema confiável de armazenamento em bloco. Para isso, o Google Cloud Platform oferece <a target="_blank" href="https://developers.google.com/compute/docs/disks">discos permanentes</a> do Google Compute Engine.</p>
+<p>O objetivo do <a target="_blank" href="/compute/">Google Compute Engine</a> é fornecer capacidade computacional ágil, confiável e de baixo custo para os seus serviços de software. Além de CPU e memória, a maioria dos aplicativos requer alto desempenho e um sistema confiável de armazenamento em bloco. Para isso, o Google Cloud Platform oferece <a target="_blank" href="/compute/docs/disks">discos permanentes</a> do Google Compute Engine.</p>
 <p>Para construir a infraestrutura de hardware e software dos discos permanentes, os engenheiros do Google priorizaram:</p>
 <ul>
 <li>Segurança</li>
@@ -68,7 +68,7 @@ title: Cloud Computing &amp; Cloud Hosting Services
 </ul>
 <h3><a name="h.hblytow164l9" id="h.hblytow164l9"></a>Características principais</h3>
 <h4><a name="h.k40zex5efw5h" id="h.k40zex5efw5h"></a>Resiliência</h4>
-<p>Os discos permanentes têm redundância incorporada para proteger seus dados contra falhas de equipamento e manter a disponibilidade durante eventos de manutenção de datacenters. Suas instâncias, livres de armazenamento local, podem ser transferidas pelo <a href="https://developers.google.com/compute/docs/instances#schedulingoptions">Google Live Migration</a> para um hardware mais recente sem a intervenção do usuário. Isso permite que os datacenters do Google sejam mantidos no mais alto nível. O software, o hardware e as instalações podem ser atualizados continuamente para garantir um excelente desempenho e confiabilidade para serviços baseados em nuvem.</p>
+<p>Os discos permanentes têm redundância incorporada para proteger seus dados contra falhas de equipamento e manter a disponibilidade durante eventos de manutenção de datacenters. Suas instâncias, livres de armazenamento local, podem ser transferidas pelo <a href="/compute/docs/instances#schedulingoptions">Google Live Migration</a> para um hardware mais recente sem a intervenção do usuário. Isso permite que os datacenters do Google sejam mantidos no mais alto nível. O software, o hardware e as instalações podem ser atualizados continuamente para garantir um excelente desempenho e confiabilidade para serviços baseados em nuvem.</p>
 <h4><a name="h.p4063icl0ptv" id="h.p4063icl0ptv"></a>Consistência de desempenho</h4>
 <p>Os discos permanentes gravam dados em muitos volumes físicos de uma zona para melhorar a consistência de desempenho. Como resultado, volumes do mesmo tamanho e na mesma zona geralmente são executados no mesmo nível em um determinado período. O desempenho do volume pode variar com o tempo, conforme a carga de entrada/saída agregada à zona aumenta e diminui. No entanto, ao se gravar dados em muitos volumes físicos, essa variabilidade é muito reduzida.</p>
 <h4><a name="h.t3xil3z2275e" id="h.t3xil3z2275e"></a>Criptografia</h4>
@@ -87,10 +87,10 @@ title: Cloud Computing &amp; Cloud Hosting Services
 <li>Diminuir o tráfego de rede e a entrada e saída do disco na inicialização da instância</li>
 </ul>
 <h4><a name="h.6weg86eazizc" id="h.6weg86eazizc"></a>Pode ser copiado rapidamente para instantâneos de acesso global</h4>
-<p>É possível fazer regularmente backup dos discos permanentes usando <a href="https://developers.google.com/compute/docs/disks#snapshots">instantâneos</a>. A redundância do disco permanente é dentro de uma zona, enquanto os instantâneos são automaticamente replicados em várias zonas. Se uma zona for completamente perdida em um desastre, será possível recuperá-la rapidamente, criando novos discos permanentes em outra zona de instantâneos criada. Além disso, se um usuário final excluir dados críticos, você poderá criar um novo disco permanente a partir de um instantâneo anterior para recuperá-los.</p>
+<p>É possível fazer regularmente backup dos discos permanentes usando <a href="/compute/docs/disks#snapshots">instantâneos</a>. A redundância do disco permanente é dentro de uma zona, enquanto os instantâneos são automaticamente replicados em várias zonas. Se uma zona for completamente perdida em um desastre, será possível recuperá-la rapidamente, criando novos discos permanentes em outra zona de instantâneos criada. Além disso, se um usuário final excluir dados críticos, você poderá criar um novo disco permanente a partir de um instantâneo anterior para recuperá-los.</p>
 <p>Instantâneos repetidos do mesmo disco permanente são incrementais, o que significa que apenas as alterações do instantâneo anterior são armazenadas. Isto permite <a href="http://googlecloudplatform.blogspot.com/2013/10/persistent-disk-backups-using-snapshots.html#gpluscomments">fazer backups mais rápidos</a> e reduz os custos de armazenamento de instantâneos.</p>
 <h4>Redimensionar a partir de instantâneos</h4>
-<p>Ao criar um volume de disco permanente a partir de um instantâneo, é possível <a target="_blank" href="https://developers.google.com/compute/docs/disks#restoresnapshotlargersize">especificar um volume maior</a> que o original. Isso permite certa prudência em relação ao dimensionamento do volume, à medida que você amplia sua implantação. É possível começar com um volume modesto durante os testes iniciais e o desenvolvimento. Você verá que criar um novo volume a partir de um instantâneo é muito mais rápido que criar um novo volume copiando manualmente os dados de um volume antigo.</p>
+<p>Ao criar um volume de disco permanente a partir de um instantâneo, é possível <a target="_blank" href="/compute/docs/disks#restoresnapshotlargersize">especificar um volume maior</a> que o original. Isso permite certa prudência em relação ao dimensionamento do volume, à medida que você amplia sua implantação. É possível começar com um volume modesto durante os testes iniciais e o desenvolvimento. Você verá que criar um novo volume a partir de um instantâneo é muito mais rápido que criar um novo volume copiando manualmente os dados de um volume antigo.</p>
 <h4><a name="h.5seopampg6g6" id="h.5seopampg6g6"></a>Pode ser anexado a vários nós no modo somente leitura</h4>
 <p>Os discos permanentes podem ser anexados a vários nós no modo somente leitura, quando não anexados a qualquer instância no modo de leitura e gravação. É possível distribuir o conteúdo estático em várias instâncias do Compute Engine sem incidir no custo de replicação do armazenamento.</p>
 <h3><a name="h.nhrjtm7bctwy" id="h.nhrjtm7bctwy"></a>Facilidade de uso do disco permanente</h3>
@@ -290,9 +290,9 @@ title: Cloud Computing &amp; Cloud Hosting Services
 <p>Para encontrar mais informações sobre discos permanentes do Google Compute Engine, consulte:</p>
 <ul>
 <li>Documentação principal<br>
-<a target="_blank" href="https://developers.google.com/compute/docs/disks">https://developers.google.com/compute/docs/disks</a></li>
+<a target="_blank" href="/compute/docs/disks">/compute/docs/disks</a></li>
 <li>Preços<br>
-<a target="_blank" href="https://developers.google.com/compute/pricing#persistentdisk">https://developers.google.com/compute/pricing#persistentdisk</a></li>
+<a target="_blank" href="/compute/pricing#persistentdisk">/compute/pricing#persistentdisk</a></li>
 <li>Apresentação Google I/O 2013<br>
 <a target="_blank" href="https://developers.google.com/events/io/sessions/350753683">https://developers.google.com/events/io/sessions/350753683</a></li>
 <li>Instantâneos de discos permanentes do Google Compute Engine<br>
@@ -305,7 +305,7 @@ title: Cloud Computing &amp; Cloud Hosting Services
 <br>
 <br>
 <hr>
-<p><a href="#ftnt_ref1" name="ftnt1" id="ftnt1">[1]</a>A partir da data da publicação deste artigo. Consulte a <a target="_blank" href="https://developers.google.com/compute/pricing#persistentdisk">página de preços</a> para ver as últimas informações.</p>
+<p><a href="#ftnt_ref1" name="ftnt1" id="ftnt1">[1]</a>A partir da data da publicação deste artigo. Consulte a <a target="_blank" href="/compute/pricing#persistentdisk">página de preços</a> para ver as últimas informações.</p>
 </div>
 <!-- /maia-main --></div>
 <div class="maia-col-3"><br>

@@ -38,8 +38,8 @@ title: Unleashing App Engine Scalability
 
   <ul>
     <li><strong>App Engine front end</strong> servers are responsible for load balancing and failover of App Engine applications. As shown in Figure 1, the App Engine front end receives user requests from the Google front end and dispatches each request either to an app server for dynamic content or to a static server for static content.</li>
-    <li><p><strong>App servers</strong> are containers for App Engine applications. An app server creates <a href="https://developers.google.com/appengine/docs/adminconsole/instances">application instances</a> and distributes requests based on traffic load. The application instances contain your code—the request handlers that implement your application.</p>
-      <p>The app server runtime environment includes APIs to access the full suite of <a href="https://developers.google.com/appengine/features/#generally_available_ga_features">App Engine services</a>, allowing you to easily build scalable and highly available web applications.</p>
+    <li><p><strong>App servers</strong> are containers for App Engine applications. An app server creates <a href="/appengine/docs/adminconsole/instances">application instances</a> and distributes requests based on traffic load. The application instances contain your code—the request handlers that implement your application.</p>
+      <p>The app server runtime environment includes APIs to access the full suite of <a href="/appengine/features/#generally_available_ga_features">App Engine services</a>, allowing you to easily build scalable and highly available web applications.</p>
     </li>
     <li><strong>Static servers</strong> are dedicated to serving static files for App Engine applications; they are optimized to provide the content rapidly with minimal latency. (To further reduce latency, Google may move high-volume public content to an edge cache.)</li>
     <li>The <strong>app master</strong> is the conductor of the whole App Engine orchestra. When you deploy a new version of an App Engine application, the app master uploads your program code to app servers and your static content to static servers.</li>
@@ -93,7 +93,7 @@ title: Unleashing App Engine Scalability
 
   <p>Code modules deployed to a backend instance do not have a limit on processing time and can be used to process tasks from a task queue, do long-running computations, run MapReduce jobs or implement other data-processing pipelines.</p>
 
-  <p>There are <a href="https://developers.google.com/appengine/docs/java/modules/#Java_Instance_scaling_and_class">three types of instance scaling</a> available. For modules on backend instance classes, you use either:</p>
+  <p>There are <a href="/appengine/docs/java/modules/#Java_Instance_scaling_and_class">three types of instance scaling</a> available. For modules on backend instance classes, you use either:</p>
 
   <ul>
     <li><strong>Manual scaling</strong>—App Engine creates the number of instances that you specify in a configuration file. The number of instances you configure depends on the desired throughput, the speed of the instances, and the size of your dataset balanced against cost considerations. Manually scaled instances run continuously, so complex initializations and other in-memory data is preserved across requests.</li>
@@ -109,7 +109,7 @@ title: Unleashing App Engine Scalability
     <li>Optimize idle instances and pending latency.</li>
   </ol>
 
-  <p>The rest of this paper will focus on applying these practices to automatic-scaling frontend instance classes. Refer to the App Engine Modules documentation (<a href="https://developers.google.com/appengine/docs/java/modules/">Java</a>, <a href="https://developers.google.com/appengine/docs/python/modules/">Python</a>, <a href="https://developers.google.com/appengine/docs/go/modules/">Go</a>, <a href="https://developers.google.com/appengine/docs/php/modules/">PHP</a>) for information on managing backend instance classes.</p>
+  <p>The rest of this paper will focus on applying these practices to automatic-scaling frontend instance classes. Refer to the App Engine Modules documentation (<a href="/appengine/docs/java/modules/">Java</a>, <a href="/appengine/docs/python/modules/">Python</a>, <a href="/appengine/docs/go/modules/">Go</a>, <a href="/appengine/docs/php/modules/">PHP</a>) for information on managing backend instance classes.</p>
 
   <h2>Less Latency, More QPS</h2>
 
@@ -142,16 +142,16 @@ title: Unleashing App Engine Scalability
     <li>Your instance is busy during that time, so App Engine may create another instance to handle additional requests. If you can optimize your code to execute in 200 ms, the user experience is improved, and your QPS may be doubled without running extra instances.</li>
   </ul>
 
-  <p><a href="https://developers.google.com/appengine/docs/python/tools/appstats">Appstats</a> is a powerful tool you can use to understand, optimize, and improve your application’s QPS. As shown in Figure 5,  it shows the number of RPC calls that are invoked inside each request, the duration of each RPC call (such as Datastore or Memcache access), and the contribution of each RPC call to the overall latency of the request. This information gives you hints for finding bottlenecks in your application.</p>
+  <p><a href="/appengine/docs/python/tools/appstats">Appstats</a> is a powerful tool you can use to understand, optimize, and improve your application’s QPS. As shown in Figure 5,  it shows the number of RPC calls that are invoked inside each request, the duration of each RPC call (such as Datastore or Memcache access), and the contribution of each RPC call to the overall latency of the request. This information gives you hints for finding bottlenecks in your application.</p>
 
   <figure>
     <img src="/images/articles/unleashing-appengine-scalability/image06.png">
     <figcaption>Figure 5: Example timeline from Appstats</figcaption>
   </figure>
 
-  <p>If the Appstats graphs indicate that your application’s bottleneck is in CPU-intensive tasks, rather than waiting for RPC calls to return, you could try a <a href="https://developers.google.com/appengine/docs/adminconsole/performancesettings#Setting_the_Frontend_Instance_Class">higher CPU class for the frontend instances</a> to reduce the latency. While this increases the CPU cost of each instance, the number of instances required to support the load will decrease, and the user experience improves without a major shift in the total cost.</p>
+  <p>If the Appstats graphs indicate that your application’s bottleneck is in CPU-intensive tasks, rather than waiting for RPC calls to return, you could try a <a href="/appengine/docs/adminconsole/performancesettings#Setting_the_Frontend_Instance_Class">higher CPU class for the frontend instances</a> to reduce the latency. While this increases the CPU cost of each instance, the number of instances required to support the load will decrease, and the user experience improves without a major shift in the total cost.</p>
 
-  <p>You can also increase the QPS by letting App Engine assign multiple requests to each instance simultaneously. By default, one instance can run only one thread to prevent unexpected behavior or errors caused by concurrent processing. If your application code is thread-safe and implements proper concurrency control, you can increase the QPS of each instance without additional cost by <a href="https://developers.google.com/appengine/docs/python/config/appconfig#Python_app_yaml_Using_concurrent_requests">specifying the threadsafe element in the configuration file</a>.</p>
+  <p>You can also increase the QPS by letting App Engine assign multiple requests to each instance simultaneously. By default, one instance can run only one thread to prevent unexpected behavior or errors caused by concurrent processing. If your application code is thread-safe and implements proper concurrency control, you can increase the QPS of each instance without additional cost by <a href="/appengine/docs/python/config/appconfig#Python_app_yaml_Using_concurrent_requests">specifying the threadsafe element in the configuration file</a>.</p>
 
   <h2>Optimize Idle Instances and Pending Latency</h2>
 
@@ -164,11 +164,11 @@ title: Unleashing App Engine Scalability
 
   <h3>Idle Instances</h3>
 
-  <p>Idle instances help your site handle a sudden influx of requests. Usually, requests are handled by existing, active, available application instances. If a request arrives and there are no available application instances, App Engine may need to activate an application instance to handle that request (called a <a href="https://developers.google.com/appengine/docs/adminconsole/instances?hl=en#Loading_Requests">loading request</a>). A loading request takes longer to respond, because it must wait while the new instance is initialized.</p>
+  <p>Idle instances help your site handle a sudden influx of requests. Usually, requests are handled by existing, active, available application instances. If a request arrives and there are no available application instances, App Engine may need to activate an application instance to handle that request (called a <a href="/appengine/docs/adminconsole/instances#Loading_Requests">loading request</a>). A loading request takes longer to respond, because it must wait while the new instance is initialized.</p>
 
   <p>Idle instances (also called resident instances) represent the number of instances that App Engine keeps loaded and initialized, even when the application is not receiving any requests. The default is to have zero idle instances, which means requests will be delayed every time your application scales up to more instances.</p>
 
-  <p>You can <a href="https://developers.google.com/appengine/docs/adminconsole/performancesettings#scheduler">adjust the minimum and maximum number of idle instances</a> independently with sliders in the Admin Console.</p>
+  <p>You can <a href="/appengine/docs/adminconsole/performancesettings#scheduler">adjust the minimum and maximum number of idle instances</a> independently with sliders in the Admin Console.</p>
 
   <p>We recommend that you maintain idle instances if you do not want requests to wait for instance creation and initialization. For example, if you specify a minimum of ten idle instances, your application will be able to service a burst of requests immediately on those ten instances. We recommend that you allocate idle instances carefully because they will always be resident and incur some cost.</p>
 
@@ -293,7 +293,7 @@ title: Unleashing App Engine Scalability
 
   <h3>Minimizing Loading Request Time</h3>
 
-  <p>It is also important to reduce the time it takes for a <a href="https://developers.google.com/appengine/docs/adminconsole/instances?hl=en#Loading_Requests">loading request</a> to complete. Loading requests take a long time to complete and result in a poor user experience for the users who happen to trigger them. In extreme cases, the user request may time out.</p>
+  <p>It is also important to reduce the time it takes for a <a href="/appengine/docs/adminconsole/instances#Loading_Requests">loading request</a> to complete. Loading requests take a long time to complete and result in a poor user experience for the users who happen to trigger them. In extreme cases, the user request may time out.</p>
 
   <p>Do the following to minimize the time required for loading requests:</p>
 
@@ -313,26 +313,26 @@ title: Unleashing App Engine Scalability
   <ol>
     <li>The term QPS is Google’s terminology to express requests per second. It includes all HTTP requests to the servers and is not restricted to search queries.</li>
     <li>For the mathematically precise: QPS is computed over the past 60 seconds. The seven instances handled 4401 requests in 60 seconds for 4401 / 60 = 74.35 QPS, so the average is 74.35 / 7 = 10.479 QPS. For the first instance: 13.133 QPS implies that the instance processed 13.333 * 60 = 787 requests.</li>
-    <li>If you <a href="https://developers.google.com/appengine/docs/python/modules/converting">convert your application to use modules</a>, this graphical interface is replaced by parameter settings in the per-module configuration files.</li>
-    <li><a href="https://developers.google.com/appengine/docs/adminconsole/instances#How_Applications_Scale">App Engine</a> knows what requests are outstanding, how long those requests are likely to take (from past statistics), and how loaded the various app servers are. This means it can predict whether an instance will be available in time to service a request before the maximum pending latency is reached.</li>
-    <li>The minimum idle instances is enabled using the Console for a <a href="https://developers.google.com/appengine/pricing#Enabling_Paid_Apps">paid app</a>.</li>
-    <li>The maximum pending latency is enabled using the Console for a <a href="https://developers.google.com/appengine/pricing#Enabling_Paid_Apps">paid app</a>.</li>
+    <li>If you <a href="/appengine/docs/python/modules/converting">convert your application to use modules</a>, this graphical interface is replaced by parameter settings in the per-module configuration files.</li>
+    <li><a href="/appengine/docs/adminconsole/instances#How_Applications_Scale">App Engine</a> knows what requests are outstanding, how long those requests are likely to take (from past statistics), and how loaded the various app servers are. This means it can predict whether an instance will be available in time to service a request before the maximum pending latency is reached.</li>
+    <li>The minimum idle instances is enabled using the Console for a <a href="/appengine/pricing#Enabling_Paid_Apps">paid app</a>.</li>
+    <li>The maximum pending latency is enabled using the Console for a <a href="/appengine/pricing#Enabling_Paid_Apps">paid app</a>.</li>
   </ol>
 
   <h2>References</h2>
 
   <p>App Engine Documents</p>
   <ul>
-    <li><a href="https://developers.google.com/appengine/docs/adminconsole/">Instances in the Admin Console</a></li>
-    <li><a href="https://developers.google.com/appengine/docs/adminconsole/performancesettings">Adjusting Application Performance</a></li>
-    <li><a href="https://developers.google.com/appengine/docs/adminconsole/performancesettings#scheduler">Configuring the Scheduler</a></li>
-    <li><a href="https://developers.google.com/appengine/docs/adminconsole/instances#How_Applications_Scale">How Applications Scale</a></li>
+    <li><a href="/appengine/docs/adminconsole/">Instances in the Admin Console</a></li>
+    <li><a href="/appengine/docs/adminconsole/performancesettings">Adjusting Application Performance</a></li>
+    <li><a href="/appengine/docs/adminconsole/performancesettings#scheduler">Configuring the Scheduler</a></li>
+    <li><a href="/appengine/docs/adminconsole/instances#How_Applications_Scale">How Applications Scale</a></li>
   </ul>
 
   <p>Further Reading</p>
   <ul>
-    <li><a href="https://developers.google.com/appengine/docs/python/modules/">App Engine Modules in Python</a></li>
-    <li><a href="https://developers.google.com/appengine/docs/java/modules/">App Engine Modules in Java</a></li>
+    <li><a href="/appengine/docs/python/modules/">App Engine Modules in Python</a></li>
+    <li><a href="/appengine/docs/java/modules/">App Engine Modules in Java</a></li>
   </ul>
 
 <!-- /maia-main -->

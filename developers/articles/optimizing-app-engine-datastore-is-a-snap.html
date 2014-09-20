@@ -34,7 +34,7 @@ title: Optimizing App Engine Datastore is a Snap
   <p>App Engine uses a key-value datastore to persist data as entities. You define a key for the data, and put the data in the datastore as an entity with properties (for example, User entity Bobby might have properties &ldquo;friends&rdquo; and &ldquo;userid&rdquo;). When you need to retrieve the data entity, you either get it by the key, or you run queries (for example, find all User entities where the the friends property includes Bobby).</p>
   <p> To optimize query performance, App Engine uses pre-configured indexes for all queries. One thing Google is very, very good at it is indexing and retrieving information, and App Engine applications capitalize on the expertise and infrastructure that gave us the Google search engine.</p>
   <p>Part of the secret sauce that goes into Google&rsquo;s ability to speedily return search results, and App Engine query results, is that potential queries are pre-indexed. When an application saves an entity, App Engine gets ready for every possible query by not only writing the data to the datastore, but also creating two index entries for every indexed property in the entity, one by ascending value and the other by descending value. If the application will be running complex queries on the entity, an additional, composite index entry is required.</p>
-  <p>In summary, there are multiple write operations for each new Entity, as explained in <a href="https://developers.google.com/appengine/docs/python/datastore/entities?hl=en#Python_Understanding_write_costs">Understanding Write Costs</a>:</p>
+  <p>In summary, there are multiple write operations for each new Entity, as explained in <a href="/appengine/docs/python/datastore/entities#Python_Understanding_write_costs">Understanding Write Costs</a>:</p>
 
   <ul>
     <li>one write operation for the entity itself</li>
@@ -87,7 +87,7 @@ title: Optimizing App Engine Datastore is a Snap
   <h2><a name="h.tv6euxa6hrqh" id="h.tv6euxa6hrqh"></a>Front Almost Everything with Memcache</h2>
   <p>Refactoring the way entities are stored reduced the cost of writes to the datastore, but what about the costs of getting data? For that, Snapchat uses App Engine&rsquo;s memcache, a fast distributed cache for App Engine applications. Not only is getting data out of memcache faster than getting it out of the datastore, it&rsquo;s also cheaper.</p>
   <p>The generally available version of memcache is free, but it comes with some limitations -- there&rsquo;s a limit to the maximum amount of data (across all applications) that can be saved in memcache, and data in memcache is subject to eviction at any time.</p>
-  <p>The Snapchat app saves everything in datastore, so they weren&rsquo;t losing data by eviction from memcache, but the unpredictability of the costs was a big concern. If the data got evicted from memcache and queries starting hitting the datastore directly, costs went up. So they enrolled as a trusted tester for <a href="https://developers.google.com/appengine/docs/adminconsole/memcache">Dedicated memcache</a>, starting out with several terabytes of dedicated memcache.</p>
+  <p>The Snapchat app saves everything in datastore, so they weren&rsquo;t losing data by eviction from memcache, but the unpredictability of the costs was a big concern. If the data got evicted from memcache and queries starting hitting the datastore directly, costs went up. So they enrolled as a trusted tester for <a href="/appengine/docs/adminconsole/memcache">Dedicated memcache</a>, starting out with several terabytes of dedicated memcache.</p>
   <p>Murphy said that with the dedicated memcache, 95%of queries for snaps and friends were being served from memcache instead of datastore. For lists (such as lists of snaps), they store a list of keys, and then do batch gets into memcache to get the entities.</p>
   <p>&ldquo;Most entities that we store we keep in memcache,&rdquo; said Murphy. &ldquo;Memcache is a huge help. There&rsquo;s a world of difference between the queries that solely hit memcache and that hit the datastore.&rdquo;</p>
 
@@ -107,13 +107,13 @@ title: Optimizing App Engine Datastore is a Snap
   <h4>Datastore and Memcache Developer Documentation</h4>
 
   <ul>
-    <li>App Engine Datastore Developer Docs (<a href="https://developers.google.com/appengine/docs/java/datastore/">Java</a>)  (<a href="https://developers.google.com/appengine/docs/python/datastore/">Python</a>)  (<a href="https://developers.google.com/appengine/docs/go/datastore/">Go</a>)</li>
-    <li>App Engine Memcache Developer Docs (<a href="https://developers.google.com/appengine/docs/java/memcache/">Java</a>) (<a href="https://developers.google.com/appengine/docs/python/memcache/">Python</a>) (<a href="https://developers.google.com/appengine/docs/go/memcache/">Go</a>)</li>
-    <li><a href="https://developers.google.com/appengine/docs/python/datastore/entities?hl=en#Python_Understanding_write_costs">Understanding Datastore Write Costs</a></li>
-    <li><a href="https://developers.google.com/appengine/docs/billing#cost_resource%20">Datastore Costs</a> and <a href="https://developers.google.com/appengine/docs/quotas#Datastore">Quotas</a> </li>
-    <li><a href="https://developers.google.com/appengine/docs/adminconsole/memcache">About App Engine Memcache</a></li>
-    <li><a href="https://developers.google.com/appengine/articles/indexselection">Datastore Index Selection and Advanced Search</a></li>
-    <li><a href="https://developers.google.com/datastore/">Cloud Datastore</a> (Datastore outside App Engine)</li>
+    <li>App Engine Datastore Developer Docs (<a href="/appengine/docs/java/datastore/">Java</a>)  (<a href="/appengine/docs/python/datastore/">Python</a>)  (<a href="/appengine/docs/go/datastore/">Go</a>)</li>
+    <li>App Engine Memcache Developer Docs (<a href="/appengine/docs/java/memcache/">Java</a>) (<a href="/appengine/docs/python/memcache/">Python</a>) (<a href="/appengine/docs/go/memcache/">Go</a>)</li>
+    <li><a href="/appengine/docs/python/datastore/entities#Python_Understanding_write_costs">Understanding Datastore Write Costs</a></li>
+    <li><a href="/appengine/docs/billing#cost_resource%20">Datastore Costs</a> and <a href="/appengine/docs/quotas#Datastore">Quotas</a> </li>
+    <li><a href="/appengine/docs/adminconsole/memcache">About App Engine Memcache</a></li>
+    <li><a href="/appengine/articles/indexselection">Datastore Index Selection and Advanced Search</a></li>
+    <li><a href="/datastore/">Cloud Datastore</a> (Datastore outside App Engine)</li>
   </ul>
 
 </div>
