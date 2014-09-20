@@ -352,7 +352,7 @@
 </ul>
 <p>이 문서에서는 Compute Engine 인스턴스에서 JMeter를 사용하여 분산 부하 테스트 환경을 설정하는 효율적인 방법을 제시합니다.</p>
 <h3>가정</h3>
-<p>이 문서는 <a href="http://jmeter.apache.org/">JMeter</a> 부하 테스트 환경을 설정하여 Compute Engine에서 부하 테스트를 실행하는 방법을 자세하게 설명합니다. 문서에서는 개발자가 네트워크에 대해 기술적으로 이해하고 있다고 가정하며, 개발자는 <a href="https://developers.google.com/compute/">Compute Engine</a> 및 <a href="https://developers.google.com/compute/docs/gcutil/">gcutil</a> 명령줄 도구에 어느 정도 익숙해야 합니다.</p>
+<p>이 문서는 <a href="http://jmeter.apache.org/">JMeter</a> 부하 테스트 환경을 설정하여 Compute Engine에서 부하 테스트를 실행하는 방법을 자세하게 설명합니다. 문서에서는 개발자가 네트워크에 대해 기술적으로 이해하고 있다고 가정하며, 개발자는 <a href="/compute/">Compute Engine</a> 및 <a href="/compute/docs/gcutil/">gcutil</a> 명령줄 도구에 어느 정도 익숙해야 합니다.</p>
 <p>이 문서는 JMeter 테스트 환경을 설정하는 방법을 설명하지만 JMeter 자체를 자세히 다루지는 않습니다. JMeter에서 테스트 계획을 수립하고 테스트를 실행하는 것은 이 문서의 범위에 포함되지 않습니다.</p>
 <h3>목차</h3>
 <ul>
@@ -476,7 +476,7 @@ bin/jmeter.sh -Djava.rmi.server.hostname=127.0.0.1
 <p>Windows에서는 bin/jmeter.bat를 사용해야 한다는 점에 유의해 주세요.</p>
 <p>평소처럼 JMeter 인터페이스를 사용하여 테스트 사례를 생성할 수 있습니다. JMeter 클라이언트는 원격 JMeter 서버를 자동으로 인식하고 <span class="code">remote start all</span> 명령을 발급하여 JMeter 서버와의 연결을 시작합니다. 그리고 원격 JMeter 서버에서 테스트 중인 대상 시스템으로 요청을 전송하기 시작합니다.</p>
 <h4>Google Compute Engine에서 JMeter 서버 설정</h4>
-<p>Compute Engine 인스턴스는 일반 Linux 박스로 작동하므로 특별한 구성이 필요하지 않습니다. 하지만 gcutil <span class="code">ssh</span>는 Compute Engine에 연결하는 일부 옵션을 사전 설정하므로, Compute Engine 인스턴스에 <a href="https://developers.google.com/compute/docs/instances#sshing">ssh</a>를 설정하는 가장 쉬운 방법은 vanilla <span class="code">ssh</span> 명령 대신 <span class="code">gcutil ssh</span> 명령을 사용하는 것입니다.</p>
+<p>Compute Engine 인스턴스는 일반 Linux 박스로 작동하므로 특별한 구성이 필요하지 않습니다. 하지만 gcutil <span class="code">ssh</span>는 Compute Engine에 연결하는 일부 옵션을 사전 설정하므로, Compute Engine 인스턴스에 <a href="/compute/docs/instances#sshing">ssh</a>를 설정하는 가장 쉬운 방법은 vanilla <span class="code">ssh</span> 명령 대신 <span class="code">gcutil ssh</span> 명령을 사용하는 것입니다.</p>
 <p><span class="code">gcutil ssh</span> 명령과 함께, <span class="code">--ssh_arg</span> 옵션을 지정하여 매개변수를 ssh에 전달해야 합니다.</p>
 <p>Compute Engine에 SSH 포트 포워딩을 설정하려면 다음 명령을 사용합니다.</p>
 <pre>
@@ -526,8 +526,8 @@ mode=Statistical
 <p>'jmeter_cluster.py'는 다음을 사용합니다.</p>
 <ul>
 <li>Compute Engine 인스턴스를 제어하는 <a href="https://developers.google.com/api-client-library/python/">Python용 Google API 클라이언트 라이브러리</a></li>
-<li>SSH 포트 포워딩을 설정하는 <a href="https://developers.google.com/compute/docs/gcutil/">gcutil</a> 명령줄 도구</li>
-<li>Compute Engine 인스턴스의 시작 스크립트와 JMeter 서버 패키지를 저장하는 <a href="https://developers.google.com/storage/">Google Cloud Storage</a></li>
+<li>SSH 포트 포워딩을 설정하는 <a href="/compute/docs/gcutil/">gcutil</a> 명령줄 도구</li>
+<li>Compute Engine 인스턴스의 시작 스크립트와 JMeter 서버 패키지를 저장하는 <a href="/storage/">Google Cloud Storage</a></li>
 </ul>
 <p>JMeter 서버 패키지에는 'bin' 하위 디렉토리의 사전 구성된 jmeter.properties가 포함되어 있습니다. 하지만 포트 번호는 인스턴스에 따라 맞춤설정되어야 합니다. 시작 스크립트는 포트 번호를 덮어씁니다.</p>
 <p>스크립트가 수행하는 작업에 대한 개요는 다음과 같습니다.</p>
@@ -536,7 +536,7 @@ mode=Statistical
 <ul style="list-style-type:circle;">
 <li>Compute Engine 인스턴스를 시작합니다.</li>
 <li>시작 스크립트가 Cloud Storage에서 JMeter 서버 패키지를 다운로드합니다.</li>
-<li>시작 스크립트는 JMeter 구성에서 클러스터의 서버 ID 번호(0, 1, 2, …)에 따라 포트 번호를 수정합니다. 서버 ID는 각 인스턴스에 Compute Engine 인스턴스의 맞춤 <a href="https://developers.google.com/compute/docs/metadata">메타데이터</a>로 전달됩니다.</li>
+<li>시작 스크립트는 JMeter 구성에서 클러스터의 서버 ID 번호(0, 1, 2, …)에 따라 포트 번호를 수정합니다. 서버 ID는 각 인스턴스에 Compute Engine 인스턴스의 맞춤 <a href="/compute/docs/metadata">메타데이터</a>로 전달됩니다.</li>
 <li>시작 스크립트는 JMeter 서버 프로세스를 시작합니다.</li>
 </ul>
 </li>
@@ -594,8 +594,8 @@ mode=Statistical
 <a name="resources" id="resources"></a>
 <h2>추가 리소스</h2>
 <ul>
-<li><a href="https://developers.google.com/compute/">Google Compute Engine 개발자 문서</a></li>
-<li><a href="https://developers.google.com/compute/docs/instances#sshing">SSH를 사용하여 Google Compute Engine에 연결</a></li>
+<li><a href="/compute/">Google Compute Engine 개발자 문서</a></li>
+<li><a href="/compute/docs/instances#sshing">SSH를 사용하여 Google Compute Engine에 연결</a></li>
 <li><a href="http://jmeter.apache.org/">JMeter</a></li>
 <li><a href="http://www.google.com/url?q=http%3A%2F%2Fionelmc.wordpress.com%2F2012%2F02%2F16%2Fhow-to-run-jmeter-over-ssh-tunnel%2F&amp;sa=D&amp;sntz=1&amp;usg=AFQjCNG8dqQYCuEU-RITYdHZoFcLR3JWeQ">SSH 터널에서 JMeter를 실행하는 방법</a></li>
 </ul>

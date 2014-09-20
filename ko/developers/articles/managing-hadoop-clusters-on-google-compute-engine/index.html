@@ -343,17 +343,17 @@
 <div class="cp-article-tutorial">
 <h2>소개</h2>
 <p>Google Compute Engine은 Hadoop 실행을 위한 <a href="http://www.mapr.com/press-release/mapr-and-google-compute-engine-set-new-world-record-for-hadoop-terasort">검증된</a> 플랫폼입니다. 일관성 있는 고성능 가상 머신과 이러한 가상 머신을 서로 연결해 주고 Google Cloud Platform의 다른 서비스에도 연결해 주는 지연 시간이 낮은 고대역폭 네트워크와 결합하여 클라우드 기반 데이터 처리 아키텍처를 위한 단단한 토대를 제공해 줍니다. 요청 시 다수의 가상 머신을 신속하게 인스턴스화할 수 있는 기능과 분당 가격 책정 서비스를 제공하므로 Compute Engine은 즉석 클러스터를 가동 및 중지하는 데 매우 적합하며 비용 면에서도 효율적입니다. 또한 Google의 전 세계적인 네트워크 성능과 함께 Compute Engine의 고급 라우팅 및 데이터 암호화 기능을 통해 안전하고 강력한 하이브리드 솔루션을 만들 수 있습니다.</p>
-<p>이 문서에서는 Google Compute Engine에 자체적으로 Hadoop을 설치하려는 개발자를 위한 몇 가지 기술과, 장기간 가동되는 클러스터를 처리하고 여러 영역에서 작업할 때 발생할 수 있는 엄선된 시나리오(영역 간 마이그레이션, 재해 복구 및 고가용성)를 제시합니다. 다른 솔루션이 분명히 존재하고 이를 특정 상황에 적용하는 것이 더 적합할 수 있으므로, 이러한 목록이 완전하거나 항상 권장되는 것은 아닙니다. 하지만 이 문서는 Hadoop 실행에 있어 Compute Engine을 강력한 플랫폼으로 만들어주는 동일한 일부 기능을 <a href="https://developers.google.com/compute/docs/gcutil/"><span class="code">gcutil</span></a> 명령줄 유틸리티와 함께 사용했을 경우, 어떻게 Hadoop 클러스터 관리 솔루션을 위한 토대를 제공해 줄 수 있는지를 보여주는 데 목적이 있습니다.</p>
+<p>이 문서에서는 Google Compute Engine에 자체적으로 Hadoop을 설치하려는 개발자를 위한 몇 가지 기술과, 장기간 가동되는 클러스터를 처리하고 여러 영역에서 작업할 때 발생할 수 있는 엄선된 시나리오(영역 간 마이그레이션, 재해 복구 및 고가용성)를 제시합니다. 다른 솔루션이 분명히 존재하고 이를 특정 상황에 적용하는 것이 더 적합할 수 있으므로, 이러한 목록이 완전하거나 항상 권장되는 것은 아닙니다. 하지만 이 문서는 Hadoop 실행에 있어 Compute Engine을 강력한 플랫폼으로 만들어주는 동일한 일부 기능을 <a href="/compute/docs/gcutil/"><span class="code">gcutil</span></a> 명령줄 유틸리티와 함께 사용했을 경우, 어떻게 Hadoop 클러스터 관리 솔루션을 위한 토대를 제공해 줄 수 있는지를 보여주는 데 목적이 있습니다.</p>
 <h2>시나리오</h2>
 <p>이 섹션에서 제시된 시나리오는 모두 부정적인 환경 관련 사건(예: 영역에 예상치 못한 정전이 발생하는 경우)에 직면했을 때 고려 중인 클러스터가 최대한 잘 보존되어야 한다는 전제를 바탕으로 하고 있습니다. 이는 작업 파이프라인 및 스트림 처리를 지원하는 데 사용되는 장기간 클러스터에서 발생하기 힘든 상황이지만 그렇다고 가능성이 없는 것은 아닙니다. 요청형 클러스터<sup><a href="#ftnt1" name="ftnt_ref1" id="ftnt_ref1">[1]</a></sup>는 관리할 필요가 거의 없으므로, 일반적으로 이 문서의 범위에 포함되지 않습니다. 또한 제시된 시나리오는 클러스터에서 사용하고 생성하는 데이터가 자체 관리되는 HDFS(Hadoop 분산 파일 시스템)에서 지속적으로 유지되어야 한다고 가정합니다.<sup><a href="#ftnt2" name="ftnt_ref2" id="ftnt_ref2">[2]</a></sup></p>
 <p>관리자는 유지관리 이벤트에 맞게 계획을 수립하고 클러스터 가용성을 관리할 수 있습니다. 하지만 예상치 못한 상황이 발생할 경우 현재 처리 중인 작업이 영향을 받을 가능성이 높습니다. 구체적은 결과는 Hadoop <a href="http://wiki.apache.org/hadoop/Distributions%20and%20Commercial%20Support">배포판</a>에 따라 다르지만, 대부분의 경우 이러한 작업은 재개되는 대신 다시 시작되며, 작업을 다시 제출해야 할 수도 있습니다.</p>
 <h3>영역 마이그레이션</h3>
-<p>특정 시점에 클러스터를 한 영역에서 다른 영역으로 이동 또는 복제하는 것이 바람직하거나 <a href="https://developers.google.com/compute/docs/faq#maintenance">필요</a>할 수 있습니다. 이 섹션에서는 이러한 작업을 수행할 수 있는 서로 다른 두 가지 시나리오를 제시합니다. 첫 번째 시나리오에서는 운영이 복잡해지는 대신, 클러스터의 비가용성을 최소화하여 MapReduce 작업을 수락하고 실행하는 데 목적이 있습니다. 두 번째 시나리오에서는 매우 간단한 관리 방식을 얻는 대신, 비가용성이 추가적으로 발생합니다.</p>
+<p>특정 시점에 클러스터를 한 영역에서 다른 영역으로 이동 또는 복제하는 것이 바람직하거나 <a href="/compute/docs/faq#maintenance">필요</a>할 수 있습니다. 이 섹션에서는 이러한 작업을 수행할 수 있는 서로 다른 두 가지 시나리오를 제시합니다. 첫 번째 시나리오에서는 운영이 복잡해지는 대신, 클러스터의 비가용성을 최소화하여 MapReduce 작업을 수락하고 실행하는 데 목적이 있습니다. 두 번째 시나리오에서는 매우 간단한 관리 방식을 얻는 대신, 비가용성이 추가적으로 발생합니다.</p>
 <h4>시나리오 1: 비가용성 최소화</h4>
 <p>보통 클러스터는 지속적으로 사용할 수 있습니다(특히 클러스터가 한 개인 경우). 하지만 사용자가 작업을 제출할 수 없는 기간이 있으면 큰 손실로 이어질 수 있습니다. 첫 번째 접근 방식에서는 기존 배포에서 이러한 기간을 최대한 줄이려고 합니다.<sup><a href="#ftnt3" name="ftnt_ref3" id="ftnt_ref3">[3]</a></sup> 먼저 새 <a href="http://wiki.apache.org/hadoop/DataNode">DataNodes</a> 및 <a href="http://wiki.apache.org/hadoop/TaskTracker">TaskTrackers</a>(또는 <a href="http://hadoop.apache.org/docs/current/hadoop-yarn/hadoop-yarn-site/YARN.html">YARN NodeManagers</a>)가 도착 영역의 클러스터에 추가됩니다. 그런 다음 마스터 노드(예: <a href="http://wiki.apache.org/hadoop/NameNode">NameNode</a>, <a href="http://wiki.apache.org/hadoop/JobTracker">JobTracker</a> 또는 <a href="http://hadoop.apache.org/docs/current/hadoop-yarn/hadoop-yarn-site/YARN.html">YARN ResourceManager</a>) 또한 전환됩니다. 이 방식을 사용하면 클러스터의 비가용성이 대략 소스 영역의 마스터 서비스 중단부터 도착 영역의 서비스 시작까지의 간격으로 정의됩니다.</p>
 <h5>고려사항</h5>
 <ol>
-<li>DataNode는 HDFS에 <a href="https://developers.google.com/compute/docs/disks">영구 디스크</a>를 사용합니다. 영구 디스크는 인스턴스 기간 이상의 데이터 지속성을 제공합니다. 그러면 관리자가 HDFS 복제 요인을 줄일 수 있는 한편, 영역을 사용할 수 없는 사건이 발생할 때 데이터가 손실되지 않도록 할 수 있습니다.</li>
+<li>DataNode는 HDFS에 <a href="/compute/docs/disks">영구 디스크</a>를 사용합니다. 영구 디스크는 인스턴스 기간 이상의 데이터 지속성을 제공합니다. 그러면 관리자가 HDFS 복제 요인을 줄일 수 있는 한편, 영역을 사용할 수 없는 사건이 발생할 때 데이터가 손실되지 않도록 할 수 있습니다.</li>
 <li>이 시나리오에서는 <a href="http://hadoop.apache.org/docs/stable/cluster_setup.html#Hadoop+Rack+Awareness">HDFS 랙 인식</a> 기능을 사용하여 DataNode 그룹이 해제되는 동안 클러스터가 계속 실행되도록 합니다. HDFS NameNode가 블록 복제본을 별도의 랙에서 <a href="https://issues.apache.org/jira/secure/attachment/12345251/Rack_aware_HDFS_proposal.pdf">구성</a>한다는 사실을 잘 활용하면 해제 과정 동안 데이터가 여러 영역에서 복사되도록 할 수 있습니다. 랙은 같은 영역에서 실행되는 DataNode 모음으로 시뮬레이션되며, 영역당 정확히 두 개만 구성됩니다.</li>
 </ol>
 <figure><img src="/images/articles/managing-hadoop-clusters-on-gce/minimizing-unavailability.png" alt="">
@@ -371,7 +371,7 @@
 <p class="ital">자동</p>
 <ol type="a">
 <li>클러스터가 대기 상태인지 확인하고 마스터 서비스를 중단합니다.</li>
-<li><a class="code" href="https://developers.google.com/compute/docs/gcutil/tips#moving">gcutil moveinstances</a> 명령을 사용하여 노드를 도착 영역으로 마이그레이션합니다. 이 명령은 인스턴스 구성을 복사하고, 디스크 스냅샷을 캡처하고, 기존 인스턴스를 삭제한 다음 도착 영역에 인스턴스를 다시 생성합니다.</li>
+<li><a class="code" href="/compute/docs/gcutil/tips#moving">gcutil moveinstances</a> 명령을 사용하여 노드를 도착 영역으로 마이그레이션합니다. 이 명령은 인스턴스 구성을 복사하고, 디스크 스냅샷을 캡처하고, 기존 인스턴스를 삭제한 다음 도착 영역에 인스턴스를 다시 생성합니다.</li>
 <li>새 인스턴스가 준비되고 서비스가 실행되면 클러스터에서 작업을 수락할 수 있습니다.</li>
 </ol>
 <p class="ital">수동</p>
@@ -476,8 +476,8 @@
 <p><a href="#ftnt_ref5" name="ftnt5" id="ftnt5">[5]</a> 대부분의 배포에서 보통 이러한 파일을 무시하지만, 클러스터에서 이러한 노드를 원활하게 요청하고 해제하는 것을 지원하기 위해 파일이 필요합니다. 자세한 내용은 Hadoop <a href="http://hadoop.apache.org/docs/stable/cluster_setup.html">클러스터 설정</a> 및 <a href="http://wiki.apache.org/hadoop/FAQ">FAQ</a>를 참조하세요.</p>
 <p><a href="#ftnt_ref6" name="ftnt6" id="ftnt6">[6]</a> Google Compute Engine 인스턴스 이름은 내부 IP 주소로 지정되지 않으며, 추가적인 이름 확인자를 사용하지 않고도 생성 시 제공된 호스트 이름으로 처리할 수 있습니다.</p>
 <p><a href="#ftnt_ref7" name="ftnt7" id="ftnt7">[7]</a> 노드 해제에 대한 자세한 내용은 <a href="http://wiki.apache.org/hadoop/FAQ">Hadoop FAQ</a> §3.6을 참조하세요.</p>
-<p><a href="#ftnt_ref8" name="ftnt8" id="ftnt8">[8]</a> <a href="https://developers.google.com/compute/docs/sla">Google Compute Engine 서비스 수준 계약</a></p>
-<p><a href="#ftnt_ref9" name="ftnt9" id="ftnt9">[9]</a> 스냅샷 생성에 대한 자세한 내용은 <a href="https://developers.google.com/compute/docs/disks#snapshots">이 문서</a>를 참조하세요.</p>
+<p><a href="#ftnt_ref8" name="ftnt8" id="ftnt8">[8]</a> <a href="/compute/docs/sla">Google Compute Engine 서비스 수준 계약</a></p>
+<p><a href="#ftnt_ref9" name="ftnt9" id="ftnt9">[9]</a> 스냅샷 생성에 대한 자세한 내용은 <a href="/compute/docs/disks#snapshots">이 문서</a>를 참조하세요.</p>
 <p><a href="#ftnt_ref10" name="ftnt10" id="ftnt10">[10]</a> 이 옵션은 완벽을 기하기 위한 용도로 제공되며, 추가 비용이 발생하고 성능에 영향을 줄 수 있으므로 보통 권장하지 않습니다.</p>
 <p><a href="#ftnt_ref11" name="ftnt11" id="ftnt11">[11]</a> 이러한 메커니즘의 설계 및 구현은 이 문서의 범위에 포함되지 않으며, 이를 제작 상황에서 사용하려면 항상 엄격한 테스트를 거쳐야 합니다.</p>
 <p><a href="#ftnt_ref12" name="ftnt12" id="ftnt12">[12]</a> 2013년 7월 현재, Apache Hadoop 2.0은 아직 알파 상태입니다.</p>

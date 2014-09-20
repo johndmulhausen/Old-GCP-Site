@@ -393,10 +393,10 @@
 </ul>
 <p>There are multiple tools available for transferring data into Cloud Storage:</p>
 <ol>
-<li>The <a href="https://developers.google.com/storage/docs/gsutil"><span class="code">gsutil</span></a> command line tool.</li>
+<li>The <a href="/storage/docs/gsutil"><span class="code">gsutil</span></a> command line tool.</li>
 <li>Google Cloud Storage Manager accessible via the Cloud Console at: https://console.developers.google.com.</li>
 <li>Third-party high-speed file transfer software.</li>
-<li><a href="https://developers.google.com/storage/docs/early-access?utm_source=cloud-google-com&amp;utm_medium=article&amp;utm_campaign=loading-terabytes">Offline disk import</a> service provided by Google.</li>
+<li><a href="/storage/docs/early-access?utm_source=cloud-google-com&amp;utm_medium=article&amp;utm_campaign=loading-terabytes">Offline disk import</a> service provided by Google.</li>
 </ol>
 <p>The following discusses strategies to consider for each option.</p>
 <h3><a name="h.45u7pv5fem82" id="h.45u7pv5fem82"></a>Using the <span class="code">gsutil</span> Command Line Tool</h3>
@@ -407,7 +407,7 @@
 <li><span class="bld">Error detection:</span> It handles error detection by performing checksum of the the files uploaded.</li>
 <li><span class="bld">Parallelized uploads:</span> It provides options to upload data in parallel to maximize the network bandwidth while reducing the time it takes to upload.</li>
 </ol>
-<p>The gsutil <a href="https://developers.google.com/storage/docs/gsutil">reference</a> guide documents how to use this tool with all the various options. This next section offers some tips on how to use <span class="code">gsutil</span> effectively for large data sets.</p>
+<p>The gsutil <a href="/storage/docs/gsutil">reference</a> guide documents how to use this tool with all the various options. This next section offers some tips on how to use <span class="code">gsutil</span> effectively for large data sets.</p>
 <h5>Identify Throughputs</h5>
 <p><span class="code">gsutil</span> provides an option to run a suite of diagnostic tests that measures the network performance. The results include the write throughput that can be used to estimate the time it takes to upload a file:</p>
 <pre>
@@ -465,7 +465,7 @@ $ gsutil cp -c -L cp.log -R &lt;source dir&gt; gs://&lt;bucket&gt;
 <li>The requirement to encrypt the data for security.</li>
 <li>The turnaround time for shipping the data.</li>
 </ul>
-<p>More information on Cloud Storage Offline Disk Import can be found at: <a href="https://developers.google.com/storage/docs/early-access?utm_source=cloud-google-com&amp;utm_medium=article&amp;utm_campaign=loading-terabytes">https://developers.google.com/storage/docs/early-access</a>.</p>
+<p>More information on Cloud Storage Offline Disk Import can be found at: <a href="/storage/docs/early-access?utm_source=cloud-google-com&amp;utm_medium=article&amp;utm_campaign=loading-terabytes">/storage/docs/early-access</a>.</p>
 <h3><a name="h.5pm9gjrl0xu" id="h.5pm9gjrl0xu"></a>Other Considerations</h3>
 <h4><a name="h.pbk1w09jvq4q" id="h.pbk1w09jvq4q"></a>Update Data</h4>
 <p>Tables in BigQuery are append-only. This means that data cannot be updated once it is loaded. If there is ever a need to update data, the following strategies can be used:</p>
@@ -493,7 +493,7 @@ $ gsutil ls -L gs://&lt;bucket&gt;/&lt;object&gt;
 <li><span class="bld">Data transformation</span> — BigQuery supports a well-defined set of data types, however, some data types must be specified in a format recognized by BigQuery. An example is the timestamp data type. BigQuery supports either an integer number that specifies the number of seconds since the epoch, or a calendar date formatted as YYYY-MM-DD HH:MM:SS.</li>
 <li><span class="bld">Data denormalization</span> — Denormalization is reversing the process of normalization by adding redundant data to the schema. Because it reduces the number of JOINs required when querying the data, it offers better performance and makes the query simpler to construct.</li>
 </ol>
-<p>More information on “Preparing Data For BigQuery” can be found at: <a href="https://developers.google.com/bigquery/preparing-data-for-bigquery?utm_source=cloud-google-com&amp;utm_medium=article&amp;utm_campaign=loading-terabytes">https://developers.google.com/bigquery/preparing-data-for-bigquery</a>.</p>
+<p>More information on “Preparing Data For BigQuery” can be found at: <a href="/bigquery/preparing-data-for-bigquery?utm_source=cloud-google-com&amp;utm_medium=article&amp;utm_campaign=loading-terabytes">/bigquery/preparing-data-for-bigquery</a>.</p>
 <p>The following are considerations when transforming multi-terabytes of data:</p>
 <ul>
 <li>Which technologies, such as Hadoop for example, are relevant and available?</li>
@@ -623,7 +623,7 @@ dt = datetime.strptime(input, '%d%b%Y:%H:%M:%S').strftime('%Y-%m-%d %H:%M:%S')
 </li>
 </ul>
 <h3><a name="h.oz4pjrkoym30" id="h.oz4pjrkoym30"></a>On-Premises ETL Tool</h3>
-<p>If the source data is spread across many systems and in different formats, you should consider using an on-premises ETL tool. There are many <a href="https://developers.google.com/bigquery/docs/third_party_tools">third-party</a> vendors that provide ETL tools for BigQuery. To check whether the tool is already in-use in your environment, please refer to the <a href="https://developers.google.com/bigquery/docs/third_party_tools">Third-party Tools</a> page for the list of companies that have integrated their software with BigQuery.</p>
+<p>If the source data is spread across many systems and in different formats, you should consider using an on-premises ETL tool. There are many <a href="/bigquery/docs/third_party_tools">third-party</a> vendors that provide ETL tools for BigQuery. To check whether the tool is already in-use in your environment, please refer to the <a href="/bigquery/docs/third_party_tools">Third-party Tools</a> page for the list of companies that have integrated their software with BigQuery.</p>
 <p>The following are factors you should consider if on-premises ETL tools are used:</p>
 <ul>
 <li>What are the costs associated with hardware and software procurement?</li>
@@ -672,19 +672,19 @@ $ bq  --project_id=&lt;project_id&gt; query --destination_table &lt;dataset.tabl
 <pre>
 $ bq load --job_id &lt;id&gt; -F '&lt;delimiter&gt;' &lt;table_name&gt; gs://&lt;bucket_name&gt;/&lt;data_file&gt; &lt;schema&gt;
 </pre>
-<p>A new table will be created if the specified table does not exist. Otherwise, data will be appended to the existing table. For more information about this tool and how to set it up, see <a href="https://developers.google.com/bigquery/docs/hello_bigquery">bq Command-Line Tutorial</a>.</p>
+<p>A new table will be created if the specified table does not exist. Otherwise, data will be appended to the existing table. For more information about this tool and how to set it up, see <a href="/bigquery/docs/hello_bigquery">bq Command-Line Tutorial</a>.</p>
 <p>Refer to the section on <a href="#h.wakkkkkyjmt">Job Management</a> for the use of the job_id flag.</p>
 <h3><a name="h.yaqkapodiar" id="h.yaqkapodiar"></a>REST API</h3>
 <p>Data can be loaded programmatically using the REST API.The <a href="https://developers.google.com/apis-explorer/">Google APIs Explorer</a> is a good starting point to learn about the available methods and try out the API. Alternatively, the <span class="code">bq</span> command provides a flag to log all server requests and responses.</p>
 <pre>
 $ bq --apilog &lt;log file&gt; &lt;command&gt; ...
 </pre>
-<p>More information on “BigQuery API Reference” can be found on <a href="https://developers.google.com/bigquery/docs/reference/v2/?utm_source=cloud-google-com&amp;utm_medium=article&amp;utm_campaign=loading-terabytes">developers.google.com</a>.</p>
+<p>More information on “BigQuery API Reference” can be found on <a href="/bigquery/docs/reference/v2/?utm_source=cloud-google-com&amp;utm_medium=article&amp;utm_campaign=loading-terabytes">developers.google.com</a>.</p>
 <h3><a name="h.s5jppsqprfy" id="h.s5jppsqprfy"></a>ETL BigQuery Connector</h3>
-<p>Most <a href="https://developers.google.com/bigquery/third-party-tools">third-party ETL</a> tools have developed direct connectors to BigQuery that make the workflow seamless. These tools are a mature technology and are commonly used by most IT organizations. They have a visual interface that makes it easy to configure and maintain the workflow. Familiarity with these tools can be leveraged to import data to BigQuery, hence minimal additional learning is required to get started.</p>
+<p>Most <a href="/bigquery/third-party-tools">third-party ETL</a> tools have developed direct connectors to BigQuery that make the workflow seamless. These tools are a mature technology and are commonly used by most IT organizations. They have a visual interface that makes it easy to configure and maintain the workflow. Familiarity with these tools can be leveraged to import data to BigQuery, hence minimal additional learning is required to get started.</p>
 <h3><a name="h.wakkkkkysia" id="h.wakkkkkysia"></a>Streaming Insert API</h3>
 <p>Data can be streamed into BigQuery one record at a time. Streamed data is available for query before the entire load job completes. Streaming API generally is not used for batch uploading but is more appropriate for near real-time ingestion.</p>
-<p>More information on “Streaming Insert” can be found at <a href="https://developers.google.com/bigquery/streaming-data-into-bigquery?utm_source=cloud-google-com&amp;utm_medium=article&amp;utm_campaign=loading-terabytes">https://developers.google.com/bigquery/streaming-data-into-bigquery</a>.</p>
+<p>More information on “Streaming Insert” can be found at <a href="/bigquery/streaming-data-into-bigquery?utm_source=cloud-google-com&amp;utm_medium=article&amp;utm_campaign=loading-terabytes">/bigquery/streaming-data-into-bigquery</a>.</p>
 <h3><a name="h.oiei0nfxjjd7" id="h.oiei0nfxjjd7"></a>Considerations</h3>
 <p>The following section includes considerations when loading large data sets into BigQuery.</p>
 <h4><a name="h.wakkkkkyjmt" id="h.wakkkkkyjmt"></a>Job Management</h4>
@@ -734,7 +734,7 @@ body['jobReference']['jobId'] = job_id  # job id for each unique load
 <li>Storage Cost - CSV and JSON files yield very good compression ratios and are more cost effective.</li>
 <li>Network bandwidth - Compressed files consume less network bandwidth.</li>
 </ul>
-<p>For more information about the trade-offs between the two, please refer to <a href="https://developers.google.com/bigquery/preparing-data-for-bigquery?utm_source=cloud-google-com&amp;utm_medium=article&amp;utm_campaign=loading-terabytes">Preparing Data for BigQuery</a>.</p>
+<p>For more information about the trade-offs between the two, please refer to <a href="/bigquery/preparing-data-for-bigquery?utm_source=cloud-google-com&amp;utm_medium=article&amp;utm_campaign=loading-terabytes">Preparing Data for BigQuery</a>.</p>
 <h4><a name="h.5do7qxq1kzmg" id="h.5do7qxq1kzmg"></a>Flat Schema or Nested/Repeated Schema</h4>
 <p>Some entity relationships are more naturally expressed as a hierarchy. An order transaction and line items is a perfect example. BigQuery supports nested/repeated fields using the JSON format. Alternatively, hierarchical relationships can be flattened first before loading into BigQuery. Once the data is flattened, then it can be loaded either in a CSV or JSON format. Here are the considerations when deciding between the two schemas:</p>
 <ul>
@@ -746,7 +746,7 @@ body['jobReference']['jobId'] = job_id  # job id for each unique load
 <p>BigQuery imposes quota policy to ensure that all users have a fair share of the resources. This prevents a few users from monopolizing and degrading the performance for all users. The quota policy includes limits on the number of import jobs that can be run each day.</p>
 <p>For example, the current limit is 10,000 load jobs per project per day. So if there are 1000 tables that are actively being loaded daily, then there can only be 10 load jobs per table per day.</p>
 <p>Plan ahead to stay within the quota policy. The quota policy is a soft limit. If there is a specific scenario that simply cannot be accommodated with the current quota, check with support to see if it may be possible to increase the limit.</p>
-<p>More information on “BigQuery Quota Policy” can be found at: <a href="https://developers.google.com/bigquery/docs/quota-policy#import?utm_source=cloud-google-com&amp;utm_medium=article&amp;utm_campaign=loading-terabytes">https://developers.google.com/bigquery/docs/quota-policy#import</a></p>
+<p>More information on “BigQuery Quota Policy” can be found at: <a href="/bigquery/docs/quota-policy#import?utm_source=cloud-google-com&amp;utm_medium=article&amp;utm_campaign=loading-terabytes">/bigquery/docs/quota-policy#import</a></p>
 <h4><a name="h.m3wwyhppvwv7" id="h.m3wwyhppvwv7"></a>Table Partitioning</h4>
 <p>One of the design decisions that needs to be made before loading large data sets is whether or not the table should be split up into multiple tables. The following are some reasons for partitioning the tables:</p>
 <ol>
@@ -756,7 +756,7 @@ body['jobReference']['jobId'] = job_id  # job id for each unique load
 <pre>
 SELECT column1, column2 FROM Q1, Q2, Q3, Q4 WHERE …
 </pre>
-<p>Bear in mind that there is a limit to the length of the query so don’t be overly aggressive in sharding the tables. Refer to the <a href="https://developers.google.com/bigquery/quota-policy">quota policy</a> page for this limit.</p>
+<p>Bear in mind that there is a limit to the length of the query so don’t be overly aggressive in sharding the tables. Refer to the <a href="/bigquery/quota-policy">quota policy</a> page for this limit.</p>
 </li>
 <li><span class="bld">Usage Patterns</span> - Data can be loaded into smaller tables for ad-hoc analytics and later moved to another aggregate table for durable analytics when ad-hoc analytics is no longer required.</li>
 <li><span class="bld">Data Isolation and Security Management</span> - BigQuery’s data access is controlled at the project and dataset level. Data should be partitioned into different datasets for security and isolation.</li>
@@ -813,15 +813,15 @@ SELECT column1, column2 FROM Q1, Q2, Q3, Q4 WHERE …
 <p>When dealing with large data sets, saving twice the amount of time can mean a difference in hours or days. It's important to weigh the various considerations during the planning phase, depending on the use case.</p>
 <h1><a name="h.toroz5nln1sm" id="h.toroz5nln1sm"></a>Additional Resources and References</h1>
 <p><a href="/resources/articles/getting-started-with-google-bigquery">Getting Started With Google BigQuery</a><br>
-<a href="https://developers.google.com/bigquery/">Google BigQuery</a><br>
+<a href="/bigquery/">Google BigQuery</a><br>
 <a href="http://www.saama.com/wp-content/uploads/2013/08/HowToIngestDataIntoGoogleBigQuery.pdf">How to Ingest Data into Google BigQuery using Talend for Big Data</a><br>
 <a href="/files/BigQueryTechnicalWP.pdf">An Inside Look at Google BigQuery</a><br>
 <a href="/resources/articles/managing-hadoop-clusters-on-google-compute-engine">Managing Hadoop Clusters on Google Compute Engine</a></p>
 <br>
 <p><a href="#ftnt_ref1" name="ftnt1" id="ftnt1">[1]</a> A list of vendors that provide high speed file transfer software can be found under the Google Cloud Storage section of the Cloud Platform Partners page at: <a href="/partners">https://cloud.google.com/partners</a>.</p>
 <p><a href="#ftnt_ref2" name="ftnt2" id="ftnt2">[2]</a> Hadoop is a registered trademark owned by the Apache Software Foundation.</p>
-<p><a href="#ftnt_ref3" name="ftnt3" id="ftnt3">[3]</a> A comprehensive list of ETL tools supporting BigQuery can be found at <a href="https://developers.google.com/bigquery/third-party-tools?utm_source=cloud-google-com&amp;utm_medium=article&amp;utm_campaign=loading-terabytes">https://developers.google.com/bigquery/third-party-tools</a>.</p>
-<p><a href="#ftnt_ref4" name="ftnt4" id="ftnt4">[4]</a> More information on the quota on loading data into BigQuery can be found at <a href="https://developers.google.com/bigquery/quota-policy#import">https://developers.google.com/bigquery/quota-policy#import?utm_source=cloud-google-com&amp;utm_medium=article&amp;utm_campaign=loading-terabytes</a>.</p>
+<p><a href="#ftnt_ref3" name="ftnt3" id="ftnt3">[3]</a> A comprehensive list of ETL tools supporting BigQuery can be found at <a href="/bigquery/third-party-tools?utm_source=cloud-google-com&amp;utm_medium=article&amp;utm_campaign=loading-terabytes">/bigquery/third-party-tools</a>.</p>
+<p><a href="#ftnt_ref4" name="ftnt4" id="ftnt4">[4]</a> More information on the quota on loading data into BigQuery can be found at <a href="/bigquery/quota-policy#import">/bigquery/quota-policy#import?utm_source=cloud-google-com&amp;utm_medium=article&amp;utm_campaign=loading-terabytes</a>.</p>
 </div>
 <!-- /maia-main --></div>
 <div class="maia-col-3"><br>

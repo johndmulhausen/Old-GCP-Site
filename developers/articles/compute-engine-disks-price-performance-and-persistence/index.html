@@ -44,7 +44,7 @@ https://github.com/GoogleCloudPlatformSite/GoogleCloudPlatformSite.github.io/edi
 <div class="cp-article-tutorial ced-price-perf-persist">
 
   <h2><a name="h.w3kz4fze562t" id="h.w3kz4fze562t"></a>Introduction</h2>
-  <p><a target="_blank" href="/compute/">Google Compute Engine</a> endeavors to provide nimble, reliable, and inexpensive compute power for your software services.  Beyond CPU and memory, most applications require high performing and reliable block storage.  For that the Google Cloud Platform offers Compute Engine <a target="_blank" href="https://developers.google.com/compute/docs/disks">Persistent Disks</a>.</p>
+  <p><a target="_blank" href="/compute/">Google Compute Engine</a> endeavors to provide nimble, reliable, and inexpensive compute power for your software services.  Beyond CPU and memory, most applications require high performing and reliable block storage.  For that the Google Cloud Platform offers Compute Engine <a target="_blank" href="/compute/docs/disks">Persistent Disks</a>.</p>
   <p>In building the hardware and software infrastructure for Persistent Disks, Google engineers put top priority on:</p>
   <ul>
     <li>Security</li>
@@ -76,7 +76,7 @@ https://github.com/GoogleCloudPlatformSite/GoogleCloudPlatformSite.github.io/edi
   </ul>
   <h3><a name="h.hblytow164l9" id="h.hblytow164l9"></a>Core Features</h3>
   <h4><a name="h.k40zex5efw5h" id="h.k40zex5efw5h"></a>Resilience</h4>
-  <p>Persistent Disks have built-in redundancy to protect your data against equipment failure and to remain available through datacenter maintenance events.  Your instances, free of local storage, can be moved by <a href="https://developers.google.com/compute/docs/instances#schedulingoptions">Google Live Migration</a> to newer hardware without your intervention.  This allows Google datacenters to be maintained at the highest level; software, hardware, and facilities can be continually updated to ensure excellent performance and reliability for your cloud-based services.</p>
+  <p>Persistent Disks have built-in redundancy to protect your data against equipment failure and to remain available through datacenter maintenance events.  Your instances, free of local storage, can be moved by <a href="/compute/docs/instances#schedulingoptions">Google Live Migration</a> to newer hardware without your intervention.  This allows Google datacenters to be maintained at the highest level; software, hardware, and facilities can be continually updated to ensure excellent performance and reliability for your cloud-based services.</p>
   <h4><a name="h.p4063icl0ptv" id="h.p4063icl0ptv"></a>Performance Consistency</h4>
   <p>Persistent Disk stripes data across many physical volumes within a zone to improve performance consistency.  As a result, volumes of the same size in the same zone generally perform at the same level at a given time.  Volume performance can vary over time as the aggregate IO load of the zone rises and falls, but by striping across many physical volumes, that variability is greatly reduced.</p>
   <h4><a name="h.t3xil3z2275e" id="h.t3xil3z2275e"></a>Encryption</h4>
@@ -95,12 +95,12 @@ https://github.com/GoogleCloudPlatformSite/GoogleCloudPlatformSite.github.io/edi
     <li>Lower network traffic and disk IO on instance startup</li>
   </ul>
   <h4><a name="copy_to_snapshots"></a>Can be copied quickly to globally accessible snapshots</h4>
-  <p>Whether on-premises or in the cloud, you need an effective backup strategy.  Google Compute Engine Persistent Disk volumes can be backed up on a regular basis using <a target="_blank" href="https://developers.google.com/compute/docs/disks#snapshots">Snapshots</a>.</p>
+  <p>Whether on-premises or in the cloud, you need an effective backup strategy.  Google Compute Engine Persistent Disk volumes can be backed up on a regular basis using <a target="_blank" href="/compute/docs/disks#snapshots">Snapshots</a>.</p>
   <p>Thanks to Persistent Disk design <a target="_blank" href="http://googlecloudplatform.blogspot.com/2013/10/persistent-disk-backups-using-snapshots.html">snapshots can be taken quickly</a>, and repeated snapshots of the same Persistent Disk are incremental.  This means that only changes since the previous snapshot are stored, reducing your snapshot storage charges.</p>
   <p>Snapshots are automatically replicated across multiple zones, whereas Persistent Disk redundancy is within a zone.  So if you take regular snapshots, and an entire zone were completely lost in a disaster, you could quickly recover by creating new Persistent Disks in another zone.  Also if an end user deleted critical data, you could create a new Persistent Disk from a previous snapshot to recover.</p>
 
   <h4><a name="resize_from_snapshots"></a>Can be resized from snapshots</h4>
-  <p>When you create a new Persistent Disk volume from a snapshot, you can <a target="_blank" href="https://developers.google.com/compute/docs/disks#restoresnapshotlargersize">specify a volume size larger</a> than that of the original.  This allows you to be conservative with volume sizing as you build out your deployment.  You can start with a modestly sized volume during development and initial testing, then create a new volume from snapshot.  You should find this to be much faster than creating a new volume and manually copying the data from the original volume.</p>
+  <p>When you create a new Persistent Disk volume from a snapshot, you can <a target="_blank" href="/compute/docs/disks#restoresnapshotlargersize">specify a volume size larger</a> than that of the original.  This allows you to be conservative with volume sizing as you build out your deployment.  You can start with a modestly sized volume during development and initial testing, then create a new volume from snapshot.  You should find this to be much faster than creating a new volume and manually copying the data from the original volume.</p>
 
   <h4><a name="snapshot_restore_to_different_type" id="snapshot_restore_to_different_type"></a>Can be restored from snapshot to a different Persistent Disk type</h4>
   <p>When you create a new Persistent disk volume from a snapshot, you can specify the Persistent Disk type for the new volume.  This allows you to start with a Standard Persistent Disk volume during development and initial testing, and then create a new SSD Persistent Disk volume from a snapshot of the original to take advantage of the increased performance.</p>
@@ -695,8 +695,8 @@ https://github.com/GoogleCloudPlatformSite/GoogleCloudPlatformSite.github.io/edi
   <h2><a name="h.x8nxc43ulxgk" id="h.x8nxc43ulxgk"></a>References and Resources</h2>
   <p>For more information on Google Compute Engine Persistent Disks see:</p>
   <ul>
-    <li>Core documentation<br><a target="_blank" href="https://developers.google.com/compute/docs/disks">https://developers.google.com/compute/docs/disks</a></li>
-    <li>Pricing<br><a target="_blank" href="https://developers.google.com/compute/pricing#persistentdisk">https://developers.google.com/compute/pricing#persistentdisk</a></li>
+    <li>Core documentation<br><a target="_blank" href="/compute/docs/disks">/compute/docs/disks</a></li>
+    <li>Pricing<br><a target="_blank" href="/compute/pricing#persistentdisk">/compute/pricing#persistentdisk</a></li>
     <li>Google I/O 2013 Presentation<br><a target="_blank" href="https://developers.google.com/events/io/sessions/350753683">https://developers.google.com/events/io/sessions/350753683</a></li>
     <li>Google I/O 2014 Presentation<br><a target="_blank" href="https://www.youtube.com/watch?v=qdyNKNt2XLY">https://www.youtube.com/watch?v=qdyNKNt2XLY</a></li>
     <li>Compute Engine Persistent Disk Snapshots<br><a target="_blank" href="http://googlecloudplatform.blogspot.com/2013/10/persistent-disk-backups-using-snapshots.html">http://googlecloudplatform.blogspot.com/2013/10/persistent-disk-backups-using-snapshots.html</a></li>
@@ -712,7 +712,7 @@ https://github.com/GoogleCloudPlatformSite/GoogleCloudPlatformSite.github.io/edi
   <br>
   <br>
   <hr>
-  <p><a href="#ftnt_ref1" name="ftnt1" id="ftnt1">[1]</a> As of the date this paper was published.  See the <a target="_blank" href="https://developers.google.com/compute/pricing#persistentdisk">pricing page</a> for the latest.</p>
+  <p><a href="#ftnt_ref1" name="ftnt1" id="ftnt1">[1]</a> As of the date this paper was published.  See the <a target="_blank" href="/compute/pricing#persistentdisk">pricing page</a> for the latest.</p>
 
 </div>
 <!-- /maia-main -->

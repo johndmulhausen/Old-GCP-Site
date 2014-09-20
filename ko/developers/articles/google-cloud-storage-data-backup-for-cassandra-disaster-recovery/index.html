@@ -356,7 +356,7 @@
 </ul>
 <a name="wywl" id="wywl"></a>
 <h2>학습할 내용</h2>
-<p>간단한 다음 가이드를 통해 Google Cloud Storage를 사용하여 데이터를 Google 클라우드에 백업하고 Google 클라우드에서 복원함으로써 설치된 <a href="http://cassandra.apache.org/">Cassandra</a>에 재해 복구를 쉽게 추가하는 방법을 알아볼 수 있습니다. 이 가이드는 특히 Cassandra 데이터를 백업 및 복원하는 데 집중하고 있지만, 관련 개념은 모든 백업 사용 사례에 광범위하게 적용할 수 있습니다. 이 가이드는 Linux를 실행하는 Google Compute Engine 가상 머신에서 개발 및 테스트되었으나, 이 가이드에서 제공하는 정보는 <a href="https://developers.google.com/storage/docs/gsutil_install#specifications">gsutil</a> 도구에서 지원하는 모든 환경에 적용할 수 있습니다.</p>
+<p>간단한 다음 가이드를 통해 Google Cloud Storage를 사용하여 데이터를 Google 클라우드에 백업하고 Google 클라우드에서 복원함으로써 설치된 <a href="http://cassandra.apache.org/">Cassandra</a>에 재해 복구를 쉽게 추가하는 방법을 알아볼 수 있습니다. 이 가이드는 특히 Cassandra 데이터를 백업 및 복원하는 데 집중하고 있지만, 관련 개념은 모든 백업 사용 사례에 광범위하게 적용할 수 있습니다. 이 가이드는 Linux를 실행하는 Google Compute Engine 가상 머신에서 개발 및 테스트되었으나, 이 가이드에서 제공하는 정보는 <a href="/storage/docs/gsutil_install#specifications">gsutil</a> 도구에서 지원하는 모든 환경에 적용할 수 있습니다.</p>
 <a name="requir" id="requir"></a>
 <h2>요구사항</h2>
 <p>이 가이드를 진행하려면 다음이 필요합니다.</p>
@@ -393,11 +393,11 @@
 <p>이 가이드에서 사용된 전략은 스냅샷을 Google Cloud Storage에 매일 백업하는 방법과 조합하는 것입니다.</p>
 <a name="gsgcs" id="gsgcs"></a>
 <h2>Google Cloud Storage 설정</h2>
-<p>Google Cloud Storage 계정이 이미 있으며 <a href="https://developers.google.com/storage/docs/gsutil">gsutil</a>을 설치한 경우 다음 섹션으로 건너뛰어도 됩니다.</p>
+<p>Google Cloud Storage 계정이 이미 있으며 <a href="/storage/docs/gsutil">gsutil</a>을 설치한 경우 다음 섹션으로 건너뛰어도 됩니다.</p>
 <p><a href="/storage/">Google Cloud Storage</a>는 Google Cloud Platform 내 서비스입니다. 개발자는 이 서비스를 통해 애플리케이션 데이터를 Google 인프라에 바로 저장할 수 있습니다.</p>
 <p>Google Cloud Storage는 <a href="https://console.developers.google.com">Google API 콘솔</a>을 통해 활성화할 수 있습니다. Google API 콘솔에 익숙하지 않은 경우 프로젝트 설정을 안내하는 <a href="https://developers.google.com/console/help/#ApiConsole">이 문서</a>를 참조해 주세요.</p>
 <p>Google API 콘솔에서 프로젝트를 생성하면 <a href="https://developers.google.com/console/help/#ApiConsole">Google Cloud Storage를 이 프로젝트와 연결</a>해야 합니다.</p>
-<p>마지막으로 gsutil 애플리케이션을 다운로드 및 설치합니다. 이때 gsutil 설치를 위한 <a href="https://developers.google.com/storage/docs/gsutil_install">안내</a>를 사용할 수 있습니다. gsutil이 경로에 있는지 확인합니다. 그렇지 않으면 스크립트에서 gsutil을 참조할 때 설치에 전체 경로를 포함해야 합니다.</p>
+<p>마지막으로 gsutil 애플리케이션을 다운로드 및 설치합니다. 이때 gsutil 설치를 위한 <a href="/storage/docs/gsutil_install">안내</a>를 사용할 수 있습니다. gsutil이 경로에 있는지 확인합니다. 그렇지 않으면 스크립트에서 gsutil을 참조할 때 설치에 전체 경로를 포함해야 합니다.</p>
 <a name="wbs" id="wbs"></a>
 <h2>백업 스크립트 작성</h2>
 <p>다음 섹션에서는 데이터를 Google Cloud Storage에 백업하는 작업을 자동화하는 소규모 Python 스크립트를 생성합니다. 다음 스크립트를 템플릿으로 사용할 수 있습니다.</p>
@@ -429,7 +429,7 @@ from yaml import safe_load  # Requires the PyYaml module.
 
 # Prepare variables for constructing bucket path.
 # Be mindful of the naming guidelines.
-# (<a href="https://developers.google.com/storage/docs/bucketnaming">https://developers.google.com/storage/docs/bucketnaming</a>)
+# (<a href="/storage/docs/bucketnaming">/storage/docs/bucketnaming</a>)
 
 # An existing bucket in Google Cloud Storage that you intend to store your data too.
 COMPANY_ROOT = 'gs://my_company_bucket/'  # Use your own bucket here
@@ -635,9 +635,9 @@ call(['service', 'cassandra', 'start'])
 <h2>추가 고려사항</h2>
 <p>이 가이드에서는 높은 수준의 개요를 제시했고 데이터 백업 및 복구를 위한 템플릿을 제공했습니다. 이에 덧붙여 개발자가 고려해야 하는 다음과 같은 몇 가지 사항도 조금 더 설명해 드리겠습니다.</p>
 <h4>권장사항</h4>
-<p>많은 양의 데이터를 작업하는 경우 초기 업로드 동안 파일이 완전히 업로드되지 않는 상황이 발생할 수 있습니다. gsutil에서 파일 업로드를 포기하기 전에 최대 6회까지 자동으로 다시 시도하기는 하지만, 30분 간격으로 실행되어 업로드 실패를 확인하고 다시 시도하는 다른 크론 작업을 생성하는 것이 좋습니다. 제작 관련 전송을 gsutil로 스크립팅하기 위한 추가 가이드 및 권장사항은 Google 개발자 사이트의 <a href="https://developers.google.com/storage/docs/gsutil/addlhelp/ScriptingProductionTransfers">이 문서</a>를 검토해 주세요.</p>
+<p>많은 양의 데이터를 작업하는 경우 초기 업로드 동안 파일이 완전히 업로드되지 않는 상황이 발생할 수 있습니다. gsutil에서 파일 업로드를 포기하기 전에 최대 6회까지 자동으로 다시 시도하기는 하지만, 30분 간격으로 실행되어 업로드 실패를 확인하고 다시 시도하는 다른 크론 작업을 생성하는 것이 좋습니다. 제작 관련 전송을 gsutil로 스크립팅하기 위한 추가 가이드 및 권장사항은 Google 개발자 사이트의 <a href="/storage/docs/gsutil/addlhelp/ScriptingProductionTransfers">이 문서</a>를 검토해 주세요.</p>
 <h4>가용성을 낮춘 지속성</h4>
-<p><a href="https://developers.google.com/storage/docs/durable-reduced-availability">가용성을 낮춘 지속성 있는 저장소</a>가 자신의 백업 요구사항에 적합한 옵션인지 확인하고자 할 수 있습니다. 이 옵션은 표준 Google Cloud Storage보다 가용성을 낮춘 대신, 데이터를 저렴한 비용으로 저장할 수 있게 해줍니다.</p>
+<p><a href="/storage/docs/durable-reduced-availability">가용성을 낮춘 지속성 있는 저장소</a>가 자신의 백업 요구사항에 적합한 옵션인지 확인하고자 할 수 있습니다. 이 옵션은 표준 Google Cloud Storage보다 가용성을 낮춘 대신, 데이터를 저렴한 비용으로 저장할 수 있게 해줍니다.</p>
 <h4>자신의 사용 환경 파악</h4>
 <p>이 가이드에서 사용한 스크립트는 Cassandra가 서비스로 설치된 Linux 시스템에서 작성되었습니다. 일부 명령은 다른 OS 및 설치된 Cassandra에 맞도록 변경되어야 합니다.</p>
 </div>

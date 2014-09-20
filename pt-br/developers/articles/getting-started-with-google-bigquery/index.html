@@ -418,7 +418,7 @@ Figura 1. Componentes do pipeline até a análise do Big Data para o BigQuery</p
 <li>É possível usar a App Engine Mail API em qualquer parte desse processo para gerar uma notificação de conclusão de tarefa.</li>
 </ol>
 <h5><a name="h.cb8xji59oiym" id="h.cb8xji59oiym"></a>Uso de fornecedores de terceiros para pipeline de dados</h5>
-<p>No mercado atual, existem muitos fornecedores de terceiros que oferecem ferramentas de extração, transformação e carga (ETL) para o BigQuery. Essas ferramentas fornecem uma interface de usuário "arrastar e soltar" fácil de usar para transformar e desnormalizar dados e têm a capacidade de carregar dados diretamente no BigQuery. Basicamente, elas executam todos os passos acima de uma maneira contínua. Essas ferramentas serão especialmente úteis se houver dados da empresa provenientes de diversas fontes. Consulte a página <a href="https://developers.google.com/bigquery/docs/third_party_tools">Ferramentas de terceiros</a> para ver a lista atual de empresas que integraram seu software ao BigQuery.</p>
+<p>No mercado atual, existem muitos fornecedores de terceiros que oferecem ferramentas de extração, transformação e carga (ETL) para o BigQuery. Essas ferramentas fornecem uma interface de usuário "arrastar e soltar" fácil de usar para transformar e desnormalizar dados e têm a capacidade de carregar dados diretamente no BigQuery. Basicamente, elas executam todos os passos acima de uma maneira contínua. Essas ferramentas serão especialmente úteis se houver dados da empresa provenientes de diversas fontes. Consulte a página <a href="/bigquery/docs/third_party_tools">Ferramentas de terceiros</a> para ver a lista atual de empresas que integraram seu software ao BigQuery.</p>
 <h4><a name="h.win4wmvvsml0" id="h.win4wmvvsml0"></a>Visualização de dados</h4>
 <p>Interfaces do BigQuery</p>
 <p>O BigQuery é compatível com várias interfaces para a realização de consultas. Para consulta interativa, uma interface da Web e uma ferramenta de linha de comando estão disponíveis. Da mesma forma, é possível usar a REST API de forma programática. Como as consultas são expressas em um subconjunto simplificado de SQL, a curva de aprendizado é reduzida para quem já está familiarizado com SQL padrão.</p>
@@ -430,13 +430,13 @@ Figura 1. Componentes do pipeline até a análise do Big Data para o BigQuery</p
 <li>Crie um&nbsp;ID do cliente OAuth 2.0 para que o aplicativo acesse o BigQuery.</li>
 <li>Crie um aplicativo do Google App Engine que utiliza a BigQuery API e a Charts API para criar o painel.</li>
 </ol>
-<p>Para encontrar mais detalhes sobre como criar um painel personalizado, consulte este codelab em <a href="http://developers.google.com">developers.google.com</a>: "<a href="https://developers.google.com/bigquery/articles/dashboard">Codelab: criação de um painel do BigQuery</a>".</p>
+<p>Para encontrar mais detalhes sobre como criar um painel personalizado, consulte este codelab em <a href="http://developers.google.com">developers.google.com</a>: "<a href="/bigquery/articles/dashboard">Codelab: criação de um painel do BigQuery</a>".</p>
 <h5><a name="h.kdj5xvm5l9tn" id="h.kdj5xvm5l9tn"></a>Uso de fornecedores de visualização de terceiros</h5>
-<p>O Google tem uma lista de empresas que já integraram o BigQuery a seus produtos. Esses produtos oferecem&nbsp;interfaces "arrastar e soltar" fáceis de usar para consultar os dados e criar painéis de relatórios, sem ter que especificar instruções SQL. Consulte a página <a href="https://developers.google.com/bigquery/docs/third_party_tools">Ferramentas de terceiros</a> para ver a lista atual de empresas que integraram seu software ao BigQuery.</p>
+<p>O Google tem uma lista de empresas que já integraram o BigQuery a seus produtos. Esses produtos oferecem&nbsp;interfaces "arrastar e soltar" fáceis de usar para consultar os dados e criar painéis de relatórios, sem ter que especificar instruções SQL. Consulte a página <a href="/bigquery/docs/third_party_tools">Ferramentas de terceiros</a> para ver a lista atual de empresas que integraram seu software ao BigQuery.</p>
 <h2><a name="h.h7dmxw21ml5g" id="h.h7dmxw21ml5g"></a>Práticas de projeto</h2>
 <p>Ao carregar dados no BigQuery, é preciso considerar algumas práticas de projeto desde o início para garantir uma implantação bem-sucedida do projeto de análise de Big Data.</p>
 <h3><a name="h.p1i0bmel8gcm" id="h.p1i0bmel8gcm"></a>Considere políticas de cota ao arquitetar uma solução</h3>
-<p>É preciso considerar várias políticas de cota existentes. Um exemplo ocorre com o processamento de dados, em que é importante não exceder o <a href="https://developers.google.com/bigquery/quota-policy#import">tamanho máximo de arquivo por tarefa de carregamento</a>. Saber dessa limitação é importante porque, se um arquivo exceder o limite, terá que ser dividido em arquivos menores e carregado separadamente. As políticas de cota mais atuais para o BigQuery são documentadas no <a href="https://developers.google.com/bigquery/docs/quota-policy#import">site de desenvolvedores do Google BigQuery</a>.</p>
+<p>É preciso considerar várias políticas de cota existentes. Um exemplo ocorre com o processamento de dados, em que é importante não exceder o <a href="/bigquery/quota-policy#import">tamanho máximo de arquivo por tarefa de carregamento</a>. Saber dessa limitação é importante porque, se um arquivo exceder o limite, terá que ser dividido em arquivos menores e carregado separadamente. As políticas de cota mais atuais para o BigQuery são documentadas no <a href="/bigquery/docs/quota-policy#import">site de desenvolvedores do Google BigQuery</a>.</p>
 <h3><a name="h.gctgul14rasn" id="h.gctgul14rasn"></a>Desnormalização de dados antes do carregamento de dados</h3>
 <p>A implementação técnica do BigQuery é diferente de um RDBMS. O BigQuery usa armazenamento colunar e árvores de execução de vários níveis <sup><a href="#ftnt10" name="ftnt_ref10" id="ftnt_ref10">[10]</a></sup> para alcançar escalonamento e desempenho. O Apêndice 1 explica o processo de desnormalização de tabelas em mais detalhes.</p>
 <h3><a name="h.9s787yspk7x4" id="h.9s787yspk7x4"></a>JSON x CSV</h3>
@@ -488,12 +488,12 @@ select date_of_visit, page, sum(time_spent_on_page)<br>from weblog_20130301 w<br
 <li><a href="/files/BigQueryTechnicalWP.pdf">Análise detalhada do Google BigQuery</a></li>
 <li><a href="/customers/#cp-interactive">Estudos de caso do Google BigQuery</a></li>
 <li><a href="/bigquery-tour">Google BigQuery em ação: um tour pelo BigQuery</a></li>
-<li><a href="https://developers.google.com/bigquery/docs/browser_tool">Navegador do Google BigQuery</a></li>
-<li><a href="https://developers.google.com/bigquery/docs/third_party_tools">Ferramentas de terceiros para o Google BigQuery</a></li>
-<li><a href="https://developers.google.com/bigquery/articles/ingestionbestpractices">Práticas recomendadas do BigQuery</a></li>
-<li><a href="https://developers.google.com/bigquery/docs/reference/v2/">Referência da Google BigQuery API</a></li>
-<li><a href="https://developers.google.com/storage/docs/gsutil">Ferramenta gsutil do Google Cloud Storage</a></li>
-<li><a href="https://developers.google.com/bigquery/docs/cli_tool">Ferramenta bq do Google BigQuery</a></li>
+<li><a href="/bigquery/docs/browser_tool">Navegador do Google BigQuery</a></li>
+<li><a href="/bigquery/docs/third_party_tools">Ferramentas de terceiros para o Google BigQuery</a></li>
+<li><a href="/bigquery/articles/ingestionbestpractices">Práticas recomendadas do BigQuery</a></li>
+<li><a href="/bigquery/docs/reference/v2/">Referência da Google BigQuery API</a></li>
+<li><a href="/storage/docs/gsutil">Ferramenta gsutil do Google Cloud Storage</a></li>
+<li><a href="/bigquery/docs/cli_tool">Ferramenta bq do Google BigQuery</a></li>
 </ol>
 <p><a href="#" name="id.60g9gyxi6n4f" id="id.60g9gyxi6n4f"></a></p>
 <h2><a name="h.66ttc9wlit26" id="h.66ttc9wlit26"></a>Apêndice 1 - Desnormalização de dados</h2>
@@ -505,23 +505,23 @@ Figura 6. Diagrama Relacionamento de entidades aprimorado</p>
 <p><img height="186" src="getting-started-with-google-bigquery/image02.png" width="169" alt="Tabelas desnormalizadas em uma única tabela"><br>
 Figura 7. Tabelas desnormalizadas em uma única tabela</p>
 <hr>
-<p><a href="#ftnt_ref1" name="ftnt1" id="ftnt1">[1]</a> https://developers.google.com/bigquery/docs/sla</p>
-<p><a href="#ftnt_ref2" name="ftnt2" id="ftnt2">[2]</a> https://developers.google.com/bigquery/docs/pricing</p>
+<p><a href="#ftnt_ref1" name="ftnt1" id="ftnt1">[1]</a> /bigquery/docs/sla</p>
+<p><a href="#ftnt_ref2" name="ftnt2" id="ftnt2">[2]</a> /bigquery/docs/pricing</p>
 <p><a href="#ftnt_ref3" name="ftnt3" id="ftnt3">[3]</a> Uma consulta de exemplo para encontrar os 10 principais artigos revisados na Wikipedia geralmente é feita em 10 segundos. O tamanho do conjunto de dados é de 36 GB, com 313 milhões de linhas.</p>
 <p><a href="#ftnt_ref4" name="ftnt4" id="ftnt4">[4]</a> Para encontrar mais informações, consulte <a href="http://googleenterprise.blogspot.com/2012/07/gmail-log-search-feature-enhances.html">O recurso de pesquisa de registro do Gmail melhora a visibilidade dos administradores de domínio</a>.</p>
 <p><a href="#ftnt_ref5" name="ftnt5" id="ftnt5">[5]</a> Para encontrar mais informações, consulte o <a href="/files/Redbus.pdf">Estudo de caso de negócios da Redbus</a>.</p>
 <p><a href="#ftnt_ref6" name="ftnt6" id="ftnt6">[6]</a> Hadoop é uma marca registrada de propriedade da Apache Software Foundation.</p>
 <p><a href="#ftnt_ref7" name="ftnt7" id="ftnt7">[7]</a> Para mais detalhes, consulte <a href="http://static.googleusercontent.com/external_content/untrusted_dlcp/research.google.com/en/us/pubs/archive/36632.pdf">Dremel: análise interativa de conjuntos de dados da Web</a> <a href="http://static.googleusercontent.com/external_content/untrusted_dlcp/research.google.com/en/us/pubs/archive/36632.pdf">.</a></p>
 <p><a href="#ftnt_ref8" name="ftnt8" id="ftnt8">[8]</a> O delimitador de campo não se restringe a vírgulas. O BigQuery suporta qualquer caractere de byte único como delimitador.</p>
-<p><a href="#ftnt_ref9" name="ftnt9" id="ftnt9">[9]</a> https://developers.google.com/bigquery/docs/cli_tool</p>
+<p><a href="#ftnt_ref9" name="ftnt9" id="ftnt9">[9]</a> /bigquery/docs/cli_tool</p>
 <p><a href="#ftnt_ref10" name="ftnt10" id="ftnt10">[10]</a> Para encontrar mais detalhes, consulte <a href="http://static.googleusercontent.com/external_content/untrusted_dlcp/research.google.com/en/us/pubs/archive/36632.pdf">Dremel: análise interativa de conjuntos de dados da Web</a></p>
-<p><a href="#ftnt_ref11" name="ftnt11" id="ftnt11">[11]</a> O Google faz melhorias constantemente. Verifique a documentação on-line sobre a <a href="https://developers.google.com/bigquery/docs/query-reference#joins"></a> <a href="https://developers.google.com/bigquery/docs/query-reference#joins">cláusula JOIN</a> para ver o limite atual.</p>
+<p><a href="#ftnt_ref11" name="ftnt11" id="ftnt11">[11]</a> O Google faz melhorias constantemente. Verifique a documentação on-line sobre a <a href="/bigquery/docs/query-reference#joins"></a> <a href="/bigquery/docs/query-reference#joins">cláusula JOIN</a> para ver o limite atual.</p>
 <p><a href="#ftnt_ref12" name="ftnt12" id="ftnt12">[12]</a> Para encontrar mais detalhes, consulte <a href="http://static.googleusercontent.com/external_content/untrusted_dlcp/research.google.com/en/us/pubs/archive/36632.pdf">Dremel: análise interativa de conjuntos de dados da Web</a></p>
 </div>
 <div class="maia-col-3"><br>
 <img src="//www.google.com/images/icons/product/feedback-16.png" class="g-app-icon" alt=""> <a href="javascript:void(0);" class="google-feedback">Feedback sobre este documento</a><br>
 <br>
-<img src="//www.google.com/images/icons/thirdparty/pdf-16.png" class="g-app-icon" alt=""> <a href="/files/articles/google-cloud_technical-article_bigquery.pdf" class="cp-pdf" onclick="javascript: _gaq.push(['_trackPageview', '../../../files/articles/google-cloud_technical-article_bigquery.pdf']);">Fazer o download do PDF</a>
+<img src="//www.google.com/images/icons/thirdparty/pdf-16.png" class="g-app-icon" alt=""> <a href="/files/articles/google-cloud_technical-article_bigquery.pdf" class="cp-pdf" onclick="javascript: _gaq.push(['_trackPageview', '/files/articles/google-cloud_technical-article_bigquery.pdf']);">Fazer o download do PDF</a>
 <hr>
 <h4>Aplicativos de exemplo</h4>
 <ul>

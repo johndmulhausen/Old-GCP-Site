@@ -418,7 +418,7 @@
 <li>App Engine Mail API가 작업 완료 알림을 생성하기 위해 이 프로세스의 특정 부분에서 사용될 수 있습니다.</li>
 </ol>
 <h5><a name="h.cb8xji59oiym" id="h.cb8xji59oiym"></a>데이터 파이프라인의 제3자 제공업체 사용</h5>
-<p>현재 시장에는 BigQuery용 ETL(추출, 변환 및 로드) 도구를 제공하는 수많은 제3자 공급업체가 있습니다. 이러한 도구는 데이터 변환 및 비정규화를 위해 사용이 간편한 '드래그 앤 드롭' 사용자 인터페이스를 제공하며 데이터를 BigQuery에 바로 로드할 수 있게 해 주고 기본적으로 위에서 설명한 모든 단계를 완벽하게 수행합니다. 이러한 도구는 여러 출처에서 파생된 기업 데이터가 있는 경우 특히 유용합니다. BigQuery로 자체 소프트웨어를 통합한 기업의 최신 목록을 확인하려면 <a href="https://developers.google.com/bigquery/docs/third_party_tools">제3자 도구</a> 페이지를 방문해 주세요.</p>
+<p>현재 시장에는 BigQuery용 ETL(추출, 변환 및 로드) 도구를 제공하는 수많은 제3자 공급업체가 있습니다. 이러한 도구는 데이터 변환 및 비정규화를 위해 사용이 간편한 '드래그 앤 드롭' 사용자 인터페이스를 제공하며 데이터를 BigQuery에 바로 로드할 수 있게 해 주고 기본적으로 위에서 설명한 모든 단계를 완벽하게 수행합니다. 이러한 도구는 여러 출처에서 파생된 기업 데이터가 있는 경우 특히 유용합니다. BigQuery로 자체 소프트웨어를 통합한 기업의 최신 목록을 확인하려면 <a href="/bigquery/docs/third_party_tools">제3자 도구</a> 페이지를 방문해 주세요.</p>
 <h4><a name="h.win4wmvvsml0" id="h.win4wmvvsml0"></a>데이터 시각화</h4>
 <p>BigQuery 인터페이스</p>
 <p>BigQuery는 쿼리 수행을 위한 여러 인터페이스를 지원합니다. 양방향 쿼리 시에는 웹 인터페이스 및 명령줄 도구를 사용할 수 있으며 마찬가지로 REST API를 프로그래밍 방식으로 사용할 수도 있습니다. 쿼리는 SQL의 간소화된 하위 집합으로 표시되므로 표준 SQL에 이미 익숙한 사용자라면 어렵지 않게 배울 수 있습니다.</p>
@@ -430,13 +430,13 @@
 <li>애플리케이션에서 BigQuery에 액세스할 수 있도록 OAuth 2.0 클라이언트 ID를 생성합니다.</li>
 <li>BigQuery API 및 Charts API를 사용하는 Google App Engine 애플리케이션을 작성하여 대시보드를 생성합니다.</li>
 </ol>
-<p>맞춤 대시보드를 구축하는 방법에 대한 자세한 내용은 코드 실험실(<a href="http://developers.google.com">developers.google.com</a>: '<a href="https://developers.google.com/bigquery/articles/dashboard">코드 실험실: BigQuery 대시보드 만들기</a>')를 참조하세요.</p>
+<p>맞춤 대시보드를 구축하는 방법에 대한 자세한 내용은 코드 실험실(<a href="http://developers.google.com">developers.google.com</a>: '<a href="/bigquery/articles/dashboard">코드 실험실: BigQuery 대시보드 만들기</a>')를 참조하세요.</p>
 <h5><a name="h.kdj5xvm5l9tn" id="h.kdj5xvm5l9tn"></a>제3자 시각화 제공업체의 사용</h5>
-<p>Google에는 BigQuery를 자체 제품에 이미 통합한 기업의 목록이 있습니다. 이러한 제품은 SQL 구문을 따로 지정하지 않고도 데이터를 쿼리하고 보고용 대시보드를 구축할 수 있도록 사용이 간편한 '드래그 앤 드롭' 인터페이스를 제공합니다. BigQuery로 자체 소프트웨어를 통합한 기업의 최신 목록을 확인하려면 <a href="https://developers.google.com/bigquery/docs/third_party_tools">제3자 도구</a> 페이지를 방문해 주세요.</p>
+<p>Google에는 BigQuery를 자체 제품에 이미 통합한 기업의 목록이 있습니다. 이러한 제품은 SQL 구문을 따로 지정하지 않고도 데이터를 쿼리하고 보고용 대시보드를 구축할 수 있도록 사용이 간편한 '드래그 앤 드롭' 인터페이스를 제공합니다. BigQuery로 자체 소프트웨어를 통합한 기업의 최신 목록을 확인하려면 <a href="/bigquery/docs/third_party_tools">제3자 도구</a> 페이지를 방문해 주세요.</p>
 <h2><a name="h.h7dmxw21ml5g" id="h.h7dmxw21ml5g"></a>설계 사례</h2>
 <p>BigQuery에 데이터를 로드하는 경우에는 빅 데이터 분석 프로젝트를 성공적으로 전개할 수 있도록 몇 가지 설계 사례를 미리 고려해 보아야 합니다.</p>
 <h3><a name="h.p1i0bmel8gcm" id="h.p1i0bmel8gcm"></a>A 솔루션의 아키텍처 구성 시의 할댱량 정책 사용 고려</h3>
-<p>고려해야 하는 할당량 정책에는 여러 가지가 있습니다. 이 중에서도 <a href="https://developers.google.com/bigquery/quota-policy#import">로드 작업당 최대 파일 크기</a>를 초과하지 않는 것이 중요한 데이터 처리와 관련된 경우를 예로 들 수 있습니다. 파일이 한도를 초과하는 경우 이 파일을 더 작은 파일로 나누어 따로 로드해야 하기 때문에 한도를 아는 것은 매우 중요합니다. BigQuery와 관련된 최신 할당량 정책은 <a href="https://developers.google.com/bigquery/docs/quota-policy#import">Google BigQuery 개발자 사이트</a>에 문서화되어 있습니다.</p>
+<p>고려해야 하는 할당량 정책에는 여러 가지가 있습니다. 이 중에서도 <a href="/bigquery/quota-policy#import">로드 작업당 최대 파일 크기</a>를 초과하지 않는 것이 중요한 데이터 처리와 관련된 경우를 예로 들 수 있습니다. 파일이 한도를 초과하는 경우 이 파일을 더 작은 파일로 나누어 따로 로드해야 하기 때문에 한도를 아는 것은 매우 중요합니다. BigQuery와 관련된 최신 할당량 정책은 <a href="/bigquery/docs/quota-policy#import">Google BigQuery 개발자 사이트</a>에 문서화되어 있습니다.</p>
 <h3><a name="h.gctgul14rasn" id="h.gctgul14rasn"></a>데이터 로드 이전의 데이터 비정규화</h3>
 <p>BigQuery의 기술적 구현은 RDBMS와는 차이가 있습니다. BigQuery는 열 형식 저장소 및 여러 수준의 실행 트리<sup><a href="#ftnt10" name="ftnt_ref10" id="ftnt_ref10">[10]</a></sup>를 사용하여 확장성과 성능을 달성합니다. 부록 1에는 테이블 비정규화 프로세스에 대한 자세한 내용이 나와 있습니다.</p>
 <h3><a name="h.9s787yspk7x4" id="h.9s787yspk7x4"></a>JSON 및 CSV 비교</h3>
@@ -488,12 +488,12 @@ select date_of_visit, page, sum(time_spent_on_page)<br>from weblog_20130301 w<br
 <li><a href="/files/BigQueryTechnicalWP.pdf">Google BigQuery 세부정보</a></li>
 <li><a href="/customers/#cp-interactive">Google BigQuery 사례 연구</a></li>
 <li><a href="/bigquery-tour">Google BigQuery 활용 - BigQuery 둘러보기</a></li>
-<li><a href="https://developers.google.com/bigquery/docs/browser_tool">Google BigQuery 브라우저</a></li>
-<li><a href="https://developers.google.com/bigquery/docs/third_party_tools">Google BigQuery용 제3자 도구</a></li>
-<li><a href="https://developers.google.com/bigquery/articles/ingestionbestpractices">BigQuery 권장사항</a></li>
-<li><a href="https://developers.google.com/bigquery/docs/reference/v2/">Google BigQuery API 참조 자료</a></li>
-<li><a href="https://developers.google.com/storage/docs/gsutil">Google Cloud Storage gsutil 도구</a></li>
-<li><a href="https://developers.google.com/bigquery/docs/cli_tool">Google Bigquery bq 도구</a></li>
+<li><a href="/bigquery/docs/browser_tool">Google BigQuery 브라우저</a></li>
+<li><a href="/bigquery/docs/third_party_tools">Google BigQuery용 제3자 도구</a></li>
+<li><a href="/bigquery/articles/ingestionbestpractices">BigQuery 권장사항</a></li>
+<li><a href="/bigquery/docs/reference/v2/">Google BigQuery API 참조 자료</a></li>
+<li><a href="/storage/docs/gsutil">Google Cloud Storage gsutil 도구</a></li>
+<li><a href="/bigquery/docs/cli_tool">Google Bigquery bq 도구</a></li>
 </ol>
 <p><a href="#" name="id.60g9gyxi6n4f" id="id.60g9gyxi6n4f"></a></p>
 <h2><a name="h.66ttc9wlit26" id="h.66ttc9wlit26"></a>부록 1 - 데이터 비정규화</h2>
@@ -505,23 +505,23 @@ select date_of_visit, page, sum(time_spent_on_page)<br>from weblog_20130301 w<br
 <p><img height="186" src="getting-started-with-google-bigquery/image02.png" width="169" alt="단일 테이블로 비정규화된 테이블"><br>
 그림 7. 단일 테이블로 비정규화된 테이블</p>
 <hr>
-<p><a href="#ftnt_ref1" name="ftnt1" id="ftnt1">[1]</a> https://developers.google.com/bigquery/docs/sla</p>
-<p><a href="#ftnt_ref2" name="ftnt2" id="ftnt2">[2]</a> https://developers.google.com/bigquery/docs/pricing</p>
+<p><a href="#ftnt_ref1" name="ftnt1" id="ftnt1">[1]</a> /bigquery/docs/sla</p>
+<p><a href="#ftnt_ref2" name="ftnt2" id="ftnt2">[2]</a> /bigquery/docs/pricing</p>
 <p><a href="#ftnt_ref3" name="ftnt3" id="ftnt3">[3]</a> 위키피디아에서 상위 열 개의 수정된 항목을 찾기 위한 샘플 쿼리는 대개 10초 이내에 완료됩니다. 데이터세트의 크기는 36GB이며 3억 1천 300만 개의 행으로 구성되어 있습니다.</p>
 <p><a href="#ftnt_ref4" name="ftnt4" id="ftnt4">[4]</a> 자세한 내용은 <a href="http://googleenterprise.blogspot.com/2012/07/gmail-log-search-feature-enhances.html">Gmail 로그 검색 기능을 통한 도메인 관리자의 가시성 향상</a>을 참조하세요.</p>
 <p><a href="#ftnt_ref5" name="ftnt5" id="ftnt5">[5]</a> 자세한 내용은 <a href="/files/Redbus.pdf">Redbus 비즈니스 사례 연구</a>를 참조하세요.</p>
 <p><a href="#ftnt_ref6" name="ftnt6" id="ftnt6">[6]</a> Hadoop은 Apache 소프트웨어 재단에서 소유한 등록 상표입니다.</p>
 <p><a href="#ftnt_ref7" name="ftnt7" id="ftnt7">[7]</a> 자세한 내용은 <a href="http://static.googleusercontent.com/external_content/untrusted_dlcp/research.google.com/en/us/pubs/archive/36632.pdf">Dremel: 웹 규모 데이터세트의 양방향 분석</a><a href="http://static.googleusercontent.com/external_content/untrusted_dlcp/research.google.com/en/us/pubs/archive/36632.pdf">을 참조하세요.</a></p>
 <p><a href="#ftnt_ref8" name="ftnt8" id="ftnt8">[8]</a> 필드 구분 문자는 쉼표로 제한되지 않습니다. BigQuery는 모든 단일 바이트 문자를 구분 문자로 지원합니다.</p>
-<p><a href="#ftnt_ref9" name="ftnt9" id="ftnt9">[9]</a> https://developers.google.com/bigquery/docs/cli_tool</p>
+<p><a href="#ftnt_ref9" name="ftnt9" id="ftnt9">[9]</a> /bigquery/docs/cli_tool</p>
 <p><a href="#ftnt_ref10" name="ftnt10" id="ftnt10">[10]</a> 자세한 내용은 <a href="http://static.googleusercontent.com/external_content/untrusted_dlcp/research.google.com/en/us/pubs/archive/36632.pdf">Dremel: 웹 규모 데이터세트의 양방향 분석</a>을 참조하세요.</p>
-<p><a href="#ftnt_ref11" name="ftnt11" id="ftnt11">[11]</a> Google은 개선을 위해 끊임 없이 노력하고 있습니다. <a href="https://developers.google.com/bigquery/docs/query-reference#joins"></a><a href="https://developers.google.com/bigquery/docs/query-reference#joins">JOIN 절</a>과 관련된 온라인 문서를 통해 최신 제한사항을 확인하세요.</p>
+<p><a href="#ftnt_ref11" name="ftnt11" id="ftnt11">[11]</a> Google은 개선을 위해 끊임 없이 노력하고 있습니다. <a href="/bigquery/docs/query-reference#joins"></a><a href="/bigquery/docs/query-reference#joins">JOIN 절</a>과 관련된 온라인 문서를 통해 최신 제한사항을 확인하세요.</p>
 <p><a href="#ftnt_ref12" name="ftnt12" id="ftnt12">[12]</a> 자세한 내용은 <a href="http://static.googleusercontent.com/external_content/untrusted_dlcp/research.google.com/en/us/pubs/archive/36632.pdf">Dremel: 웹 규모 데이터세트의 양방향 분석</a>을 참조하세요.</p>
 </div>
 <div class="maia-col-3"><br>
 <img src="//www.google.com/images/icons/product/feedback-16.png" class="g-app-icon" alt=""> <a href="javascript:void(0);" class="google-feedback">이 문서에 대한 의견 보내기</a><br>
 <br>
-<img src="//www.google.com/images/icons/thirdparty/pdf-16.png" class="g-app-icon" alt=""> <a href="/files/articles/google-cloud_technical-article_bigquery.pdf" class="cp-pdf" onclick="javascript: _gaq.push(['_trackPageview', '../../../files/articles/google-cloud_technical-article_bigquery.pdf']);">PDF 다운로드</a>
+<img src="//www.google.com/images/icons/thirdparty/pdf-16.png" class="g-app-icon" alt=""> <a href="/files/articles/google-cloud_technical-article_bigquery.pdf" class="cp-pdf" onclick="javascript: _gaq.push(['_trackPageview', '/files/articles/google-cloud_technical-article_bigquery.pdf']);">PDF 다운로드</a>
 <hr>
 <h4>샘플 앱</h4>
 <ul>

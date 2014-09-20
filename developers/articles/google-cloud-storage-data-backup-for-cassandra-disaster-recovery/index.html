@@ -44,7 +44,7 @@ https://github.com/GoogleCloudPlatformSite/GoogleCloudPlatformSite.github.io/edi
 
   <a name="wywl"></a>
   <h2>What you will learn</h2>
-  <p>By going through this brief tutorial, you will learn how Google Cloud Storage can be used to easily add disaster recovery to your <a href="http://cassandra.apache.org/">Cassandra</a> installation by backing your data up into, and restoring it from, Google&rsquo;s cloud. Although this tutorial focuses on backing up and restoring Cassandra data in particular, the concepts can be applied broadly to any backup use case. This tutorial was developed and tested on Google Compute Engine virtual machines running Linux, however the information provided is applicable for any environment supported by the <a href="https://developers.google.com/storage/docs/gsutil_install#specifications">gsutil</a> tool.</p>
+  <p>By going through this brief tutorial, you will learn how Google Cloud Storage can be used to easily add disaster recovery to your <a href="http://cassandra.apache.org/">Cassandra</a> installation by backing your data up into, and restoring it from, Google&rsquo;s cloud. Although this tutorial focuses on backing up and restoring Cassandra data in particular, the concepts can be applied broadly to any backup use case. This tutorial was developed and tested on Google Compute Engine virtual machines running Linux, however the information provided is applicable for any environment supported by the <a href="/storage/docs/gsutil_install#specifications">gsutil</a> tool.</p>
 
   <a name="requir"></a>
   <h2>Requirements</h2>
@@ -89,11 +89,11 @@ https://github.com/GoogleCloudPlatformSite/GoogleCloudPlatformSite.github.io/edi
 
   <a name="gsgcs"></a>
   <h2>Getting Set Up with Google Cloud Storage</h2>
-  <p>If you already have a Google Cloud Storage account and have installed <a href="https://developers.google.com/storage/docs/gsutil">gsutil</a>, you may skip to the next section.</p>
+  <p>If you already have a Google Cloud Storage account and have installed <a href="/storage/docs/gsutil">gsutil</a>, you may skip to the next section.</p>
   <p><a href="/storage/">Google Cloud Storage</a> is a service within Google Cloud Platform. It allows developers to store application data directly to Google&rsquo;s infrastructure.</p>
   <p>Google Cloud Storage can be activated via the <a href="https://console.developers.google.com">Google APIs Console</a>. If you are unfamiliar with the Google APIs Console, please refer to the <a href="https://developers.google.com/console/help/#ApiConsole">documentation</a> which walks you through project setup.</p>
   <p>Once you have created a project in the Google APIs Console you will need to <a href="https://developers.google.com/console/help/#ApiConsole">associate Google Cloud Storage with that project</a>.</p>
-  <p>Finally, download and install the gsutil application. <a href="https://developers.google.com/storage/docs/gsutil_install">Instructions</a> for installing gsutil are available. Ensure that gsutil is on your path, otherwise you will need to include the complete path to your installation when referencing gsutil in your scripts.</p>
+  <p>Finally, download and install the gsutil application. <a href="/storage/docs/gsutil_install">Instructions</a> for installing gsutil are available. Ensure that gsutil is on your path, otherwise you will need to include the complete path to your installation when referencing gsutil in your scripts.</p>
 
   <a name="wbs"></a>
   <h2>Writing the Backup Script</h2>
@@ -127,7 +127,7 @@ from yaml import safe_load  # Requires the PyYaml module.
 
 # Prepare variables for constructing bucket path.
 # Be mindful of the naming guidelines.
-# (<a href="https://developers.google.com/storage/docs/bucketnaming">https://developers.google.com/storage/docs/bucketnaming</a>)
+# (<a href="/storage/docs/bucketnaming">/storage/docs/bucketnaming</a>)
 
 # An existing bucket in Google Cloud Storage that you intend to store your data too.
 COMPANY_ROOT = 'gs://my_company_bucket/'  # Use your own bucket here
@@ -343,9 +343,9 @@ call(['service', 'cassandra', 'start'])
   <p>This tutorial presented you with a high level overview and provided templates for backing up and recovering data. However it is worth mentioning a few more things that you should consider.</p>
 
   <h4>Best Practices</h4>
-  <p>When working with large amounts of data, there may be instances where your files do not fully upload during the initial attempt. Even though gsutil will automatically retry up to six times before giving up, it is advisable to create another cron job that runs in 30 minute intervals checking for failed upload attempts and retrying them. Please review the <a href="https://developers.google.com/storage/docs/gsutil/addlhelp/ScriptingProductionTransfers">documentation</a> found on the Google Developers site for more guidance and best practices for scripting production transfers with gsutil.</p>
+  <p>When working with large amounts of data, there may be instances where your files do not fully upload during the initial attempt. Even though gsutil will automatically retry up to six times before giving up, it is advisable to create another cron job that runs in 30 minute intervals checking for failed upload attempts and retrying them. Please review the <a href="/storage/docs/gsutil/addlhelp/ScriptingProductionTransfers">documentation</a> found on the Google Developers site for more guidance and best practices for scripting production transfers with gsutil.</p>
   <h4>Durable Reduced Availability</h4>
-  <p>You may wish to investigate whether <a href="https://developers.google.com/storage/docs/durable-reduced-availability">Durable Reduced Availability Storage</a> is a viable option for your backup needs. This offering enables you to store data at a lower cost, but with the tradeoff of lower availability than standard Google Cloud Storage.</p>
+  <p>You may wish to investigate whether <a href="/storage/docs/durable-reduced-availability">Durable Reduced Availability Storage</a> is a viable option for your backup needs. This offering enables you to store data at a lower cost, but with the tradeoff of lower availability than standard Google Cloud Storage.</p>
 
   <h4>Know Your Environment</h4>
   <p>The scripts used in this tutorial were written on a Linux system, with Cassandra installed as a service. Some of the commands will need to be changed to accommodate different OSes and Cassandra installations.</p>

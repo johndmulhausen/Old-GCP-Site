@@ -390,15 +390,15 @@
 <figcaption>그림 1. 제시된 디지털 미디어 애셋 관리 및 공유 시스템의 핵심 구성요소</figcaption>
 </figure>
 <h3>내부 데이터화</h3>
-<p>Google Cloud Storage와 Google App Engine 모두 미디어 콘텐츠의 내부 데이터화에서 중요한 역할을 합니다. 업로드 중에는 미디어 콘텐츠가 전 세계 Google 네트워크를 통해 클라이언트에서 Google Cloud Storage로 바로 전송됩니다. 전 세계적인 도달범위, 엄청난 대역폭 및 Google Cloud Storage와의 통합을 통해, Google 네트워크는 거의 모든 지역에서 지연 시간을 낮게 유지하면서 콘텐츠를 저장소로 내부 데이터화할 수 있도록 해 줍니다. Google Cloud Storage에서는 <a href="https://developers.google.com/storage/docs/accesscontrol">서명된 URL</a>을 사용하는 HTTP POST 및 <a href="https://developers.google.com/storage/docs/developer-guide">RESTful API</a>, 이렇게 두 가지의 주요 업로드 메커니즘을 지원합니다.</p>
-<p>Google App Engine은 수백만 명의 사용자를 처리하는 확장 가능한 웹 애플리케이션을 구동하도록 설계되었으므로, 콘텐츠 내부 데이터화를 위한 프론트엔드 애플리케이션을 App Engine에서 개발할 수 있습니다. 이 애플리케이션은 인증을 담당하며 승인된 사용자만 콘텐츠를 업로드할 수 있게 해 줍니다. 동시에 이 애플리케이션은 내부 데이터화 워크플로를 관리하고 클라이언트와 조정하여 콘텐츠를 Google Cloud Storage에 업로드합니다. 브라우저 클라이언트의 경우 애플리케이션은 콘텐츠 업로드를 위한 웹 사용자 인터페이스도 구현합니다. 모바일 또는 데스크톱 클라이언트의 경우 사용자 인터페이스가 클라이언트 애플리케이션 내에 유지되지만, App Engine 애플리케이션에서는 <a href="https://developers.google.com/appengine/docs/java/endpoints/overview">Google Cloud Endpoints</a>를 사용하여 관련 기능을 RESTful API로 노출합니다. 클라이언트 측 애플리케이션은 인증과 Google Cloud Storage에 대한 액세스 권한을 얻기 위해 API를 호출합니다.</p>
-<p>App Engine 애플리케이션의 또 다른 중요한 역할은 메타데이터를 내부 데이터화하고 이 데이터와 미디어 콘텐츠 간의 동기화 상태를 유지하는 것입니다. 메타데이터는 애플리케이션 데이터와 함께 App Engine Datastore 또는 Google Cloud SQL 데이터베이스에 저장됩니다. 저장소 옵션 선택은 애플리케이션의 특성에 따라 결정됩니다. 메타데이터와 미디어 콘텐츠의 내부 데이터화를 동기화하는 데에는 여러 가지 방법이 있습니다. 예를 들면 (1) <a href="https://developers.google.com/appengine/docs/java/blobstore/overview">Blobstore 업로드 콜백 URL</a>을 사용하거나 (2) Cloud Storage 개체 변경 알림을 사용하거나 (3) 간단히 <a href="http://www.youtube.com/watch?v=NU_wNR_UUn4">Google Cloud Endpoints</a>를 사용하여 App Engine 애플리케이션에서 적절한 API를 노출할 수 있습니다.</p>
+<p>Google Cloud Storage와 Google App Engine 모두 미디어 콘텐츠의 내부 데이터화에서 중요한 역할을 합니다. 업로드 중에는 미디어 콘텐츠가 전 세계 Google 네트워크를 통해 클라이언트에서 Google Cloud Storage로 바로 전송됩니다. 전 세계적인 도달범위, 엄청난 대역폭 및 Google Cloud Storage와의 통합을 통해, Google 네트워크는 거의 모든 지역에서 지연 시간을 낮게 유지하면서 콘텐츠를 저장소로 내부 데이터화할 수 있도록 해 줍니다. Google Cloud Storage에서는 <a href="/storage/docs/accesscontrol">서명된 URL</a>을 사용하는 HTTP POST 및 <a href="/storage/docs/developer-guide">RESTful API</a>, 이렇게 두 가지의 주요 업로드 메커니즘을 지원합니다.</p>
+<p>Google App Engine은 수백만 명의 사용자를 처리하는 확장 가능한 웹 애플리케이션을 구동하도록 설계되었으므로, 콘텐츠 내부 데이터화를 위한 프론트엔드 애플리케이션을 App Engine에서 개발할 수 있습니다. 이 애플리케이션은 인증을 담당하며 승인된 사용자만 콘텐츠를 업로드할 수 있게 해 줍니다. 동시에 이 애플리케이션은 내부 데이터화 워크플로를 관리하고 클라이언트와 조정하여 콘텐츠를 Google Cloud Storage에 업로드합니다. 브라우저 클라이언트의 경우 애플리케이션은 콘텐츠 업로드를 위한 웹 사용자 인터페이스도 구현합니다. 모바일 또는 데스크톱 클라이언트의 경우 사용자 인터페이스가 클라이언트 애플리케이션 내에 유지되지만, App Engine 애플리케이션에서는 <a href="/appengine/docs/java/endpoints/overview">Google Cloud Endpoints</a>를 사용하여 관련 기능을 RESTful API로 노출합니다. 클라이언트 측 애플리케이션은 인증과 Google Cloud Storage에 대한 액세스 권한을 얻기 위해 API를 호출합니다.</p>
+<p>App Engine 애플리케이션의 또 다른 중요한 역할은 메타데이터를 내부 데이터화하고 이 데이터와 미디어 콘텐츠 간의 동기화 상태를 유지하는 것입니다. 메타데이터는 애플리케이션 데이터와 함께 App Engine Datastore 또는 Google Cloud SQL 데이터베이스에 저장됩니다. 저장소 옵션 선택은 애플리케이션의 특성에 따라 결정됩니다. 메타데이터와 미디어 콘텐츠의 내부 데이터화를 동기화하는 데에는 여러 가지 방법이 있습니다. 예를 들면 (1) <a href="/appengine/docs/java/blobstore/overview">Blobstore 업로드 콜백 URL</a>을 사용하거나 (2) Cloud Storage 개체 변경 알림을 사용하거나 (3) 간단히 <a href="http://www.youtube.com/watch?v=NU_wNR_UUn4">Google Cloud Endpoints</a>를 사용하여 App Engine 애플리케이션에서 적절한 API를 노출할 수 있습니다.</p>
 <h3>저장소</h3>
 <p>Google Cloud Storage는 미디어 콘텐츠를 위한 거의 무제한적인 저장소를 저렴한 비용으로 제공합니다. 미디어 데이터는 중복을 위해 여러 데이터 센터에서 복제됩니다. Google 네트워크를 활용하면 Google Cloud Storage의 콘텐츠를 Google App Engine, Google Compute Engine 및 Google Cloud Platform 외부의 공용 인터넷을 통해 전 세계 어디에서나 액세스할 수 있습니다.</p>
-<p>또한 Google Cloud Storage에서는 더욱 낮은 비용으로 <a href="https://developers.google.com/storage/docs/durable-reduced-availability">DRA(가용성을 낮춘 지속성 있는)</a> 저장소 옵션을 제공합니다. 더욱 저렴한 비용으로 이용할 수 있는 대신 표준 Google Cloud Storage에 비해 가용성이 낮아집니다. 항상 바로 필요하지는 않은 애셋 또는 다시 생성할 수 있는 애셋을 저장하는 경우 DRA 옵션을 유용하게 사용할 수 있습니다. 미디어 처리 파이프라인의 출력 콘텐츠와 같은 경우를 한 가지 예를 들 수 있습니다.</p>
+<p>또한 Google Cloud Storage에서는 더욱 낮은 비용으로 <a href="/storage/docs/durable-reduced-availability">DRA(가용성을 낮춘 지속성 있는)</a> 저장소 옵션을 제공합니다. 더욱 저렴한 비용으로 이용할 수 있는 대신 표준 Google Cloud Storage에 비해 가용성이 낮아집니다. 항상 바로 필요하지는 않은 애셋 또는 다시 생성할 수 있는 애셋을 저장하는 경우 DRA 옵션을 유용하게 사용할 수 있습니다. 미디어 처리 파이프라인의 출력 콘텐츠와 같은 경우를 한 가지 예를 들 수 있습니다.</p>
 <h3>처리</h3>
 <p>Google Compute Engine은 일괄 컴퓨팅에 탁월한 성능을 제공합니다. 문서 형식 변환, 트랜스코딩 및 이미지 조작과 같은 미디어 처리 작업은 Compute Engine을 사용하면 가장 좋은 작업입니다. 이 경우 Google Cloud Storage는 미디어 처리 파이프라인의 입력 소스와 출력 대상, 두 가지 역할을 모두 수행합니다. Google Cloud Storage는 Google Compute Engine과 원활하게 통합되기 때문에(예: 서비스 계정을 통한 자동 인증) Compute Engine에서 쉽게 액세스할 수 있습니다.</p>
-<p>또한 미디어 처리 워크플로는 이전에 언급된 App Engine 애플리케이션에 의해서도 관리됩니다. 미디어 콘텐츠가 저장소에 업로드되면 App Engine 애플리케이션에서 미디어 처리 작업을 생성하여 <a href="https://developers.google.com/appengine/docs/java/taskqueue/">TaskQueue</a>에 추가합니다. Compute Engine에서 실행되는 미디어 처리 소프트웨어가 RESTful API를 사용하여 대기열에 추가된 작업을 가져오면, 적절한 방식으로 작업을 처리합니다. 또한 Compute Engine 인스턴스가 자동으로 확장할 수 있도록 App Engine 애플리케이션에서 미디어 콘텐츠의 처리 상태와 가상 머신의 로드 정보를 유지관리합니다.</p>
+<p>또한 미디어 처리 워크플로는 이전에 언급된 App Engine 애플리케이션에 의해서도 관리됩니다. 미디어 콘텐츠가 저장소에 업로드되면 App Engine 애플리케이션에서 미디어 처리 작업을 생성하여 <a href="/appengine/docs/java/taskqueue/">TaskQueue</a>에 추가합니다. Compute Engine에서 실행되는 미디어 처리 소프트웨어가 RESTful API를 사용하여 대기열에 추가된 작업을 가져오면, 적절한 방식으로 작업을 처리합니다. 또한 Compute Engine 인스턴스가 자동으로 확장할 수 있도록 App Engine 애플리케이션에서 미디어 콘텐츠의 처리 상태와 가상 머신의 로드 정보를 유지관리합니다.</p>
 <h3>제공</h3>
 <p>Google Cloud Storage는 낮은 지연 시간과 높은 가용성을 유지하면서 미디어 콘텐츠를 인터넷에 제공할 수 있도록 하기 위해 Google 네트워크를 활용합니다. Google 네트워크에서는 공개 콘텐츠에 에지 캐싱 기능을 자동으로 제공하며, 이를 통해 제공 관련 비용을 크게 줄일 수 있습니다.</p>
 <p>내부 데이터화 경우와 마찬가지로, Google App Engine 애플리케이션은 사용자 인증 및 승인을 처리하며 클라이언트의 Google Cloud Storage 액세스를 조정합니다. 브라우저 클라이언트의 경우 App Engine 애플리케이션은 미디어 콘텐츠 다운로드를 위해 웹 사용자 인터페이스를 구동합니다. 모바일 또는 데스크톱 클라이언트의 경우 클라이언트 측 애플리케이션은 사용자 인터페이스를 구현하고 <a href="http://www.youtube.com/watch?v=NU_wNR_UUn4">Google Cloud Endpoints</a>으로 노출된 API를 통해 App Engine 애플리케이션과 통신합니다.</p>
@@ -459,7 +459,7 @@
 <li>클라이언트가 Google App Engine 애플리케이션에 액세스하여 업로드를 시작합니다. 클라이언트 유형에 따라 이 요청은 (1) 브라우저의 단순한 HTTP 요청이거나 (2) App Engine 애플리케이션에 의해 구현된 엔드포인트에 대한 모바일 또는 데스크톱 애플리케이션의 요청(예: 일괄 업로더)일 수 있습니다. App Engine 애플리케이션은 클라이언트/사용자 인증을 담당하고 Cloud Storage에 대한 액세스를 조정합니다.</li>
 <li>클라이언트가 웹브라우저인 경우 애플리케이션은 HTTP POST 양식에 삽입된 Cloud Storage로 연결되는 서명된 업로드 URL을 생성할 수 있습니다. 또는 클라이언트가 모바일 또는 데스크톱 애플리케이션인 경우 웹 애플리케이션에서 Cloud Storage 액세스 정보를 엔드포인트 호출 응답으로 반환합니다.</li>
 <li>클라이언트와 상관없이 미디어 파일은 웹 양식이나 Cloud Storage RESTful API 중 하나를 사용하여 Google Cloud Storage에 직접 업로드됩니다.</li>
-<li>Google Cloud Storage는 클라이언트에 응답을 반환합니다. 3단계에서 사용된 업로드 메커니즘에 따라 응답은 양식 기반 업로드를 위한 <a href="https://developers.google.com/storage/docs/reference-methods#postobject">HTTP 응답</a>이거나 <a href="https://developers.google.com/storage/docs/reference-methods#putobject">RESTful API 응답</a>이 될 수 있습니다.</li>
+<li>Google Cloud Storage는 클라이언트에 응답을 반환합니다. 3단계에서 사용된 업로드 메커니즘에 따라 응답은 양식 기반 업로드를 위한 <a href="/storage/docs/reference-methods#postobject">HTTP 응답</a>이거나 <a href="/storage/docs/reference-methods#putobject">RESTful API 응답</a>이 될 수 있습니다.</li>
 <li>업로드가 정상적으로 완료되면 미디어 메타데이터를 App Engine 애플리케이션으로 푸시해야 합니다. 이 과정을 간소화할 수 있는 다음과 같은 몇 가지 방법이 있습니다.
 <ol>
 <li>업로드 양식을 사용하는 브라우저 클라이언트의 경우 업로드 URL 내에 콜백 URL을 지정할 수 있습니다. 응답에 따라 브라우저가 이 URL로 리디렉션될 수 있지만, 콜백 URL에 삽입되는 메타데이터 정보가 제한됩니다.</li>
@@ -481,10 +481,10 @@
 <li>클라이언트는 App Engine 애플리케이션과 통신하여 미디어를 다운로드하기 시작합니다. App Engine 애플리케이션은 클라이언트를 인증하고 승인하며 특정 미디어 콘텐츠를 탐색하고 검색할 수 있도록 해 줍니다. 이는 브라우저 클라이언트에 웹 사용자 인터페이스를 제시하거나 App Engine 애플리케이션에서 Google Cloud Endpoints를 사용하여 제공하는 RESTful API를 통해 수행할 수 있습니다.</li>
 <li>Datastore 또는 Cloud SQL의 미디어 메타데이터 또는 애플리케이션 데이터에 따라 App Engine 애플리케이션은 애플리케이션에 정의된 콘텐츠 공유 규칙을 확인하고, Google Cloud Storage에 저장된 콘텐츠의 액세스 정보를 조회할 수 있습니다.</li>
 <li>Google Cloud Storage에서 콘텐츠를 안전하게 다운로드할 수 있도록, App Engine 애플리케이션은 Cloud Storage 버킷 및 개체 이름과 함께 서명된 URL을 생성하거나 OAuth 액세스 토큰을 클라이언트에 제공할 수 있습니다. 브라우저의 경우 이 정보가 웹 사용자 인터페이스에 삽입됩니다. 모바일 및 데스크톱 클라이언트의 경우 1단계에서 언급한 RESTful API의 응답으로 정보가 반환됩니다.</li>
-<li>클라이언트는 HTTP를 전송하거나 RESTful API를 호출하여 Google Cloud Storage에 콘텐츠 다운로드 요청을 합니다. Google Cloud Storage는 공개 콘텐츠에 Google 네트워크의 <a href="https://developers.google.com/storage/docs/developer-guide">캐싱 기능</a>을 활용할 수 있습니다. 콘텐츠가 캐시에 있으면 이 콘텐츠는 캐시에서 반환됩니다. 그렇지 아니면 다음 작업이 수행됩니다.
+<li>클라이언트는 HTTP를 전송하거나 RESTful API를 호출하여 Google Cloud Storage에 콘텐츠 다운로드 요청을 합니다. Google Cloud Storage는 공개 콘텐츠에 Google 네트워크의 <a href="/storage/docs/developer-guide">캐싱 기능</a>을 활용할 수 있습니다. 콘텐츠가 캐시에 있으면 이 콘텐츠는 캐시에서 반환됩니다. 그렇지 아니면 다음 작업이 수행됩니다.
 <ol>
 <li>Google Cloud Storage에서 콘텐츠가 검색되고 캐시가 채워집니다.</li>
-<li>App Engine 애플리케이션이 Cloud Storage에서 검색된 콘텐츠를 '실시간' 크기 조절 및 이미지 자르기를 위해 App Engine <a href="https://developers.google.com/appengine/docs/java/images/overview">이미지 서비스</a>를 거치도록 합니다.</li>
+<li>App Engine 애플리케이션이 Cloud Storage에서 검색된 콘텐츠를 '실시간' 크기 조절 및 이미지 자르기를 위해 App Engine <a href="/appengine/docs/java/images/overview">이미지 서비스</a>를 거치도록 합니다.</li>
 </ol>
 </li>
 <li>미디어 콘텐츠가 클라이언트에 제공됩니다.</li>
@@ -518,7 +518,7 @@
 <div class="maia-col-3"><br>
 <img src="//www.google.com/images/icons/product/feedback-16.png" class="g-app-icon" alt=""> <a href="javascript:void(0);" class="google-feedback">이 문서에 대한 의견 보내기</a><br>
 <br>
-<img src="//www.google.com/images/icons/thirdparty/pdf-16.png" class="g-app-icon" alt=""> <a href="/files/articles/google-cloud_technical-article_digital-media-asset-management.pdf" class="cp-pdf" onclick="javascript: _gaq.push(['_trackPageview', '../../../files/articles/google-cloud_technical-article_digital-media-asset-management.pdf']);">PDF 다운로드</a></div>
+<img src="//www.google.com/images/icons/thirdparty/pdf-16.png" class="g-app-icon" alt=""> <a href="/files/articles/google-cloud_technical-article_digital-media-asset-management.pdf" class="cp-pdf" onclick="javascript: _gaq.push(['_trackPageview', '/files/articles/google-cloud_technical-article_digital-media-asset-management.pdf']);">PDF 다운로드</a></div>
 </div>
 </div>
 <script>

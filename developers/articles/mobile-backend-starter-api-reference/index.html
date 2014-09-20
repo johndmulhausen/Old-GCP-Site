@@ -108,7 +108,7 @@ https://github.com/GoogleCloudPlatformSite/GoogleCloudPlatformSite.github.io/edi
   </figure>
 
   <h2><a name="dawcb"></a>(A) Datastore access with Cloud Backend API</h2>
-  <p>The core function of the Cloud Backend API is to make a subset of <a href="https://developers.google.com/appengine/docs/java/datastore/overview">App Engine Datastore</a> features directly accessible from the clients. You do not have to write server-side code to execute create, read, update and delete (CRUD) operations and queries on Datastore.</p>
+  <p>The core function of the Cloud Backend API is to make a subset of <a href="/appengine/docs/java/datastore/overview">App Engine Datastore</a> features directly accessible from the clients. You do not have to write server-side code to execute create, read, update and delete (CRUD) operations and queries on Datastore.</p>
 
   <figure>
     <img src="/images/articles/mobile-backend-starter-baas-paas/api-classes.png">
@@ -512,7 +512,7 @@ List&lt;CloudEntity&gt; results = cloudBackend.list(cq);
 
 
   <h3><a name="roq"></a>Restrictions on query</h3>
-  <p>For other forms, you get a DatastoreNeedIndexException from by the backend. To use a more complex form of queries, add the <a href="https://developers.google.com/appengine/docs/java/datastore/indexes#Index_Configuration">Index Configuration</a> on the backend. See <a href="https://developers.google.com/samples/mbs/">Mobile Backend Starter document</a> for details about customizing the backend. It is important to understand that the queries in Cloud Backend API have some restrictions derived from App Engine Datastore. By default, App Engine automatically creates an index for each user-defined property, with the exception of List/Map properties. This index handles the following forms of queries:</p>
+  <p>For other forms, you get a DatastoreNeedIndexException from by the backend. To use a more complex form of queries, add the <a href="/appengine/docs/java/datastore/indexes#Index_Configuration">Index Configuration</a> on the backend. See <a href="https://developers.google.com/samples/mbs/">Mobile Backend Starter document</a> for details about customizing the backend. It is important to understand that the queries in Cloud Backend API have some restrictions derived from App Engine Datastore. By default, App Engine automatically creates an index for each user-defined property, with the exception of List/Map properties. This index handles the following forms of queries:</p>
 
   <ul>
     <li>Queries using only a kind name with no filters or sorting</li>
@@ -520,8 +520,8 @@ List&lt;CloudEntity&gt; results = cloudBackend.list(cq);
     <li>Queries using only inequality filters, such as F.lt or F.ge, on one indexed property</li>
     <li>Queries using one sort order on one property with no filters</li>
   </ul>
-  <p>For more information on App Engine datastore queries and their restrictions, see the <span class="c62"><a href="https://developers.google.com/appengine/docs/java/datastore/queries#Java_Restrictions_on_queries">Restrictions on Queries</a> document. For details about Google App Engine pricing, see the <a href="https://developers.google.com/appengine/docs/billing">Paid Apps: Budgeting, Billing, and Buying Resources</a> document.</p>
-  <p>The query only guarantees <a href="http://en.wikipedia.org/wiki/Eventual_consistency">eventually consistent</a> results. The latest status of the CloudEntities are not guaranteed. Also, Cloud Backend API does not currently support transaction. To guarantee <a href="http://en.wikipedia.org/wiki/Strong_consistency">strong consistency</a> or to use transactions, customize the backend to use an entity group and an ancestor query. See <a href="https://developers.google.com/appengine/docs/java/datastore/structuring_for_strong_consistency">Structuring Data for Strong Consistency</a> and <a href="https://developers.google.com/appengine/docs/java/datastore/transactions">Transactions</a> for details.</p>
+  <p>For more information on App Engine datastore queries and their restrictions, see the <span class="c62"><a href="/appengine/docs/java/datastore/queries#Java_Restrictions_on_queries">Restrictions on Queries</a> document. For details about Google App Engine pricing, see the <a href="/appengine/docs/billing">Paid Apps: Budgeting, Billing, and Buying Resources</a> document.</p>
+  <p>The query only guarantees <a href="http://en.wikipedia.org/wiki/Eventual_consistency">eventually consistent</a> results. The latest status of the CloudEntities are not guaranteed. Also, Cloud Backend API does not currently support transaction. To guarantee <a href="http://en.wikipedia.org/wiki/Strong_consistency">strong consistency</a> or to use transactions, customize the backend to use an entity group and an ancestor query. See <a href="/appengine/docs/java/datastore/structuring_for_strong_consistency">Structuring Data for Strong Consistency</a> and <a href="/appengine/docs/java/datastore/transactions">Transactions</a> for details.</p>
 
 
   <h2><a name="adaacq"></a>(B) Asynchronous Datastore access and Continuous Query</h2>
@@ -661,7 +661,7 @@ cb.insert(ce);
 
   <p>You can also remove all continuous queries manually from the Mobile Backend settings link from the navigation menu of the App Engine Admin Console.</p>
 
-  <p>Mobile Backend Starter implements Continuous Query by a combination of the <a href="https://developers.google.com/appengine/docs/java/prospectivesearch/">Prospective Search API</a> and <a href="http://developer.android.com/google/gcm/">Google Cloud Messaging</a> at the backend. CloudQuery&rsquo;s filtering condition is converted to queries of Prospective Search subscriptions. On the App Engine Admin Console, you see the status of subscriptions by clicking Prospective Search link from the navigation menu. All underlying services used by the Continuous Query are highly scalable and available, which means you can design a large system that uses thousands of continuous queries online.</p>
+  <p>Mobile Backend Starter implements Continuous Query by a combination of the <a href="/appengine/docs/java/prospectivesearch/">Prospective Search API</a> and <a href="http://developer.android.com/google/gcm/">Google Cloud Messaging</a> at the backend. CloudQuery&rsquo;s filtering condition is converted to queries of Prospective Search subscriptions. On the App Engine Admin Console, you see the status of subscriptions by clicking Prospective Search link from the navigation menu. All underlying services used by the Continuous Query are highly scalable and available, which means you can design a large system that uses thousands of continuous queries online.</p>
 
 
   <h3><a name="rocq"></a>Restrictions on Continuous Query</h3>
@@ -800,7 +800,7 @@ cloudBackend.<span class="code">setCredential</span>(credential);
 </pre>
 
 
-  <p>In the code above, the backend allows the call in &ldquo;Secured by Client ID&rdquo; mode. It also sets createdBy/updatedBy/owner properties of <span class="code">CloudEntity</span> automatically. To learn more about how your client creates a <span class="code">GoogleAccountCredential</span> object, such as showing the &ldquo;AccountPicker&rdquo; dialog to select an account, see <a href="https://developers.google.com/appengine/docs/java/endpoints/consume_android#making-authenticated-calls">Making Authenticated Calls</a> document or the source code of the <span class="code">CloudBackendActivity</span> class.</p>
+  <p>In the code above, the backend allows the call in &ldquo;Secured by Client ID&rdquo; mode. It also sets createdBy/updatedBy/owner properties of <span class="code">CloudEntity</span> automatically. To learn more about how your client creates a <span class="code">GoogleAccountCredential</span> object, such as showing the &ldquo;AccountPicker&rdquo; dialog to select an account, see <a href="/appengine/docs/java/endpoints/consume_android#making-authenticated-calls">Making Authenticated Calls</a> document or the source code of the <span class="code">CloudBackendActivity</span> class.</p>
 
 
   <h3><a name="acfce"></a>Access control for Cloud Entities</h3>
@@ -869,13 +869,13 @@ cloudBackend.<span class="code">setCredential</span>(credential);
     </tbody>
   </table>
 
-  <p>A kind name "MyAddressBook" lets anyone insert entities and get/query existing entities, for example. But only the entity owners can update or delete each entity. If any user tries to update somebody else&rsquo;s entity, the backend raises an <span class="code">UnauthorizedException</span>. If you do not want to make the MyAddressBook entities readable by everyone, name the kind "[private]MyAddressBook".  A query on the kind to get a list of all entities gets only the entities owned by the querying user. The entities in [private] kinds are <a href="https://developers.google.com/appengine/docs/java/multitenancy/multitenancy#Creating_Namespaces_on_a_per_User_Basis">stored with a different namespace</a> for each Google Account, assuring isolation between users.</p>
+  <p>A kind name "MyAddressBook" lets anyone insert entities and get/query existing entities, for example. But only the entity owners can update or delete each entity. If any user tries to update somebody else&rsquo;s entity, the backend raises an <span class="code">UnauthorizedException</span>. If you do not want to make the MyAddressBook entities readable by everyone, name the kind "[private]MyAddressBook".  A query on the kind to get a list of all entities gets only the entities owned by the querying user. The entities in [private] kinds are <a href="/appengine/docs/java/multitenancy/multitenancy#Creating_Namespaces_on_a_per_User_Basis">stored with a different namespace</a> for each Google Account, assuring isolation between users.</p>
   <p>If you create a kind named "[public]Guestbook", all the entities are readable and writable by anyone. Any entities without a valid UserID assigned to its owner property will be readable and writable by anyone, too.</p>
   <p>All requests and responses exchanged between an Android client and the backend are secured by an https connection.  But the values of CloudEntities are not encrypted in storage on the backend, and should not be used for storing sensitive information such as financial or health data. Also, you may extend <a href="https://github.com/GoogleCloudPlatform/solutions-mobile-backend-starter-java">the backend source code</a>  to implement your data encryption before storage.</p>
 
 
   <h3><a name="easysec"></a>Easy security</h3>
-  <p>For client ID and Google Account authentication security, you ordinarily need to write <a href="https://developers.google.com/appengine/docs/java/endpoints/consume_android#making-authenticated-calls">many lines of code</a>. The code lets you do things like these:</p>
+  <p>For client ID and Google Account authentication security, you ordinarily need to write <a href="/appengine/docs/java/endpoints/consume_android#making-authenticated-calls">many lines of code</a>. The code lets you do things like these:</p>
   <ul>
     <li>Create a GoogleAccountCredential object and pass it to to the CloudBackend</li>
     <li>Show the AccountPicker dialog to allow a user to select a Google Account</li>

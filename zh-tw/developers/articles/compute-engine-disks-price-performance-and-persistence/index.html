@@ -352,7 +352,7 @@
 </style>
 <div class="cp-article-tutorial ced-price-perf-persist">
 <h2><a name="h.w3kz4fze562t" id="h.w3kz4fze562t"></a>簡介</h2>
-<p><a target="_blank" href="/compute/">Google Compute Engine</a> 致力於為您的軟體服務提供靈活可靠、價格低廉的運算功能。不只是 CPU 和記憶體，事實上，大多數應用程式的運作均有賴效能高且穩定可靠的資料庫儲存空間。有鑑於此，Google Cloud Platform 提供了 Compute Engine <a target="_blank" href="https://developers.google.com/compute/docs/disks">永久磁碟</a>。</p>
+<p><a target="_blank" href="/compute/">Google Compute Engine</a> 致力於為您的軟體服務提供靈活可靠、價格低廉的運算功能。不只是 CPU 和記憶體，事實上，大多數應用程式的運作均有賴效能高且穩定可靠的資料庫儲存空間。有鑑於此，Google Cloud Platform 提供了 Compute Engine <a target="_blank" href="/compute/docs/disks">永久磁碟</a>。</p>
 <p>Google 工程師為「永久磁碟」設計軟硬體基礎架構時，特別著重於下列幾點：</p>
 <ul>
 <li>安全性</li>
@@ -378,7 +378,7 @@
 </ul>
 <h3><a name="h.hblytow164l9" id="h.hblytow164l9"></a>核心功能</h3>
 <h4><a name="h.k40zex5efw5h" id="h.k40zex5efw5h"></a>彈性</h4>
-<p>永久磁碟內建備援空間，就算遇上裝置毀損也能保護您的資料，而且在資料中心進行維護時仍可存取資料。您的執行個體可透過 <a href="https://developers.google.com/compute/docs/instances#schedulingoptions">Google Live Migration</a> 遷移至新的硬體上，您不必親自動手處理，也不需要使用本機儲存空間。這樣一來，Google 資料中心就能維持在最佳狀態；軟體、硬體和相關設施皆可持續更新，確保您的雲端服務能提供最佳效能與可靠性。</p>
+<p>永久磁碟內建備援空間，就算遇上裝置毀損也能保護您的資料，而且在資料中心進行維護時仍可存取資料。您的執行個體可透過 <a href="/compute/docs/instances#schedulingoptions">Google Live Migration</a> 遷移至新的硬體上，您不必親自動手處理，也不需要使用本機儲存空間。這樣一來，Google 資料中心就能維持在最佳狀態；軟體、硬體和相關設施皆可持續更新，確保您的雲端服務能提供最佳效能與可靠性。</p>
 <h4><a name="h.p4063icl0ptv" id="h.p4063icl0ptv"></a>性能一致</h4>
 <p>永久磁碟在區域內的多個實體磁碟區放置等量的資料，藉此提高效能一致性。一般來說，同一區域中同樣大小的磁碟區隨時都能發揮相同的效能。磁碟區效能可能會在一段時間後產生變化，並隨著區域 IO 總負載上升及下降；而永久磁碟會在區域內的多個實體磁碟區放置等量資料，因此可有效降低這類變化。</p>
 <h4><a name="h.t3xil3z2275e" id="h.t3xil3z2275e"></a>加密</h4>
@@ -397,10 +397,10 @@
 <li>在啟動執行個體時降低網路流量和磁碟 IO</li>
 </ul>
 <h4><a name="h.6weg86eazizc" id="h.6weg86eazizc"></a>可以快速複製到可隨處存取的快照</h4>
-<p>「永久磁碟」可定期備份<a href="https://developers.google.com/compute/docs/disks#snapshots">快照</a>。「永久磁碟」的多餘空間替換功能是位於區域內，但快照可跨越多個區域自動複製。如果某個區域因受災而完全遺失，您可以從所建立的快照在另一個區域建立新的「永久磁碟」，快速進行復原。此外，如果使用者刪除了關鍵資料，您可以建立新的「永久磁碟」，從以前的快照進行復原。</p>
+<p>「永久磁碟」可定期備份<a href="/compute/docs/disks#snapshots">快照</a>。「永久磁碟」的多餘空間替換功能是位於區域內，但快照可跨越多個區域自動複製。如果某個區域因受災而完全遺失，您可以從所建立的快照在另一個區域建立新的「永久磁碟」，快速進行復原。此外，如果使用者刪除了關鍵資料，您可以建立新的「永久磁碟」，從以前的快照進行復原。</p>
 <p>同一個「永久磁碟」的重複快照是累加的，這表示只有跟上次快照不一樣的內容會加以儲存。因此可進行<a href="http://googlecloudplatform.blogspot.com/2013/10/persistent-disk-backups-using-snapshots.html#gpluscomments">更快速的備份</a>，減少快照儲存費用。</p>
 <h4>可從快照調整大小</h4>
-<p>當您從快照建立新的永久磁碟區時，可以<a target="_blank" href="https://developers.google.com/compute/docs/disks#restoresnapshotlargersize">指定比原始磁碟區更大的容量</a>，以便在進行部署作業時妥善設定磁碟區的大小。進行部署作業及首次測試時，建議您選用適當大小的磁碟，這樣您就能迅速從快照建立新磁碟區，速度會比建立新磁碟區並從舊磁碟區手動複製資料還快得多。</p>
+<p>當您從快照建立新的永久磁碟區時，可以<a target="_blank" href="/compute/docs/disks#restoresnapshotlargersize">指定比原始磁碟區更大的容量</a>，以便在進行部署作業時妥善設定磁碟區的大小。進行部署作業及首次測試時，建議您選用適當大小的磁碟，這樣您就能迅速從快照建立新磁碟區，速度會比建立新磁碟區並從舊磁碟區手動複製資料還快得多。</p>
 <h4><a name="h.5seopampg6g6" id="h.5seopampg6g6"></a>可以透過唯讀模式連接至多個節點</h4>
 <p>「永久磁碟」可以透過唯讀模式連接至多個節點 (當沒有在讀寫模式下連接到任何執行個體)。您可以將統計內容分散至多個 Compute Engine 執行個體，而不會產生重複的儲存成本。</p>
 <h3><a name="h.nhrjtm7bctwy" id="h.nhrjtm7bctwy"></a>便於使用的永久磁碟</h3>
@@ -600,9 +600,9 @@
 <p>有關 Google Compute Engine 永久磁碟的更多資訊：</p>
 <ul>
 <li>核心說明文件<br>
-<a target="_blank" href="https://developers.google.com/compute/docs/disks">https://developers.google.com/compute/docs/disks</a></li>
+<a target="_blank" href="/compute/docs/disks">/compute/docs/disks</a></li>
 <li>價格<br>
-<a target="_blank" href="https://developers.google.com/compute/pricing#persistentdisk">https://developers.google.com/compute/pricing#persistentdisk</a></li>
+<a target="_blank" href="/compute/pricing#persistentdisk">/compute/pricing#persistentdisk</a></li>
 <li>Google I/O 2013 簡報<br>
 <a target="_blank" href="https://developers.google.com/events/io/sessions/350753683">https://developers.google.com/events/io/sessions/350753683</a></li>
 <li>Compute Engine 永久磁碟快照<br>
@@ -615,7 +615,7 @@
 <br>
 <br>
 <hr>
-<p><a href="#ftnt_ref1" name="ftnt1" id="ftnt1">[1]</a> 以本說明文章發佈當天的資訊為依據。最新價格資訊請參閱<a target="_blank" href="https://developers.google.com/compute/pricing#persistentdisk">價格網頁</a>。</p>
+<p><a href="#ftnt_ref1" name="ftnt1" id="ftnt1">[1]</a> 以本說明文章發佈當天的資訊為依據。最新價格資訊請參閱<a target="_blank" href="/compute/pricing#persistentdisk">價格網頁</a>。</p>
 </div>
 <!-- /maia-main --></div>
 <div class="maia-col-3"><br>

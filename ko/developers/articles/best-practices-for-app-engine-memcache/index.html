@@ -345,7 +345,7 @@
 <p>이 문서는 Google App Engine Memcache 기능을 사용하기 위한 몇 가지 권장사항을 간략하게 설명합니다. 주로 다루게 되는 주제는 동시 실행, 성능 및 마이그레이션입니다. Memcache를 사용 중인 개발자는 코드 보완 시 위험 요소와 고려사항에 대해 숙지하는 것이 좋습니다.</p>
 <h2>소개</h2>
 <p>Memcache는 메모리 내 임시 저장소를 제공하는 App Engine 기능으로서, Google Cloud Datastore와 같은 일부 영구 저장소 형식에 의해 백업되는 데이터의 빠른 검색을 위한 캐시로 제공됩니다. Memcache는 읽을 수 있지만 수정할 수 없는 블로그, 뉴스 피드 및 기타 콘텐츠와 같은 게시된 데이터를 캐싱하는 경우에 사용하는 것이 가장 좋습니다. Memcache에 저장된 데이터는 언제든지 삭제될 수 있으므로 항목의 존재 여부에 의존하지 않는 방식으로 애플리케이션을 구조화해야 합니다. Memcache는 동일한 데이터에 액세스하는 여러 원격 클라이언트로 동시 요청을 전달할 수 있습니다. 따라서 데이터 일관성을 염두에 두어야 합니다. 조회율을 비롯한 Memcache 통계는 App Engine 콘솔에 표시되며, 성능 최적화에 도움이 될 수 있습니다.</p>
-<p>Memcache 서비스에는 <a href="https://developers.google.com/appengine/docs/adminconsole/memcache?hl=en">공유 및 전용</a>이라는 두 가지 등급이 있습니다. 공유 Memcache는 무료로 제공되는 최선형 서비스로서, 이 서비스로 저장되는 데이터는 언제든지 삭제될 수 있습니다. 전용 Memcache는 유료 서비스로서 애플리케이션의 메모리를 보관할 수 있도록 해 줍니다. 이를 통해 개발자는 좀 더 예측 가능한 수준의 서비스를 제공받을 수 있습니다. 하지만 캐시가 가득 차면 키가 삭제되므로 Memcache에 예약된 공간보다 더 많은 데이터를 저장해야 하는 경우에는 데이터가 삭제될 수 있습니다. 또한 정기 또는 예정되지 않은 유지보수로 인해 Memcache 서비스가 다시 시작되는 경우에도 데이터가 제거될 수 있습니다. API 서명 및 사용은 공유 및 전용 Memcache 모두 동일합니다. 사용 방식에 있어 차이점은 App Engine 관리 콘솔에서 구성이 서로 다르다는 점입니다. 전용 Memcache의 경우 애플리케이션에 특정한 양의 메모리를 할당할 수 있습니다.</p>
+<p>Memcache 서비스에는 <a href="/appengine/docs/adminconsole/memcache">공유 및 전용</a>이라는 두 가지 등급이 있습니다. 공유 Memcache는 무료로 제공되는 최선형 서비스로서, 이 서비스로 저장되는 데이터는 언제든지 삭제될 수 있습니다. 전용 Memcache는 유료 서비스로서 애플리케이션의 메모리를 보관할 수 있도록 해 줍니다. 이를 통해 개발자는 좀 더 예측 가능한 수준의 서비스를 제공받을 수 있습니다. 하지만 캐시가 가득 차면 키가 삭제되므로 Memcache에 예약된 공간보다 더 많은 데이터를 저장해야 하는 경우에는 데이터가 삭제될 수 있습니다. 또한 정기 또는 예정되지 않은 유지보수로 인해 Memcache 서비스가 다시 시작되는 경우에도 데이터가 제거될 수 있습니다. API 서명 및 사용은 공유 및 전용 Memcache 모두 동일합니다. 사용 방식에 있어 차이점은 App Engine 관리 콘솔에서 구성이 서로 다르다는 점입니다. 전용 Memcache의 경우 애플리케이션에 특정한 양의 메모리를 할당할 수 있습니다.</p>
 <h3>가정</h3>
 <p>이 문서는 개발자가 지원되는 언어인 Python, 자바, Go 또는 PHP 중 하나로 프로그래밍하는 것을 비롯하여 App Engine에 대한 기본 지식을 보유하고 있다고 가정하며, 문서의 예제는 Python으로 제공됩니다. 다른 지원 언어로 제공되는 Memcache Python API 소개 문서의 링크는 <a href="#h.hcpwxlh68lnh">추가 리소스</a> 섹션에 나와 있습니다.</p>
 <h2>목차</h2>
@@ -453,23 +453,23 @@ tvalues = memcache.get_multi(('comment', 'comment_by'))
 </pre>
 <p>코드 조각은 <span class="code">set_multi()</span> 함수로 여러 값을 설정하고, <span class="code">get_multi()</span> 함수로 여러 값을 가져오는 방법을 보여줍니다. 여러 값을 설정할 때 두 값이 본질적으로 관련이 있는 경우 이를 하나의 값으로 저장하는 것이 가장 좋습니다.</p>
 <h3><a name="h.dvl6r64mnvyr" id="h.dvl6r64mnvyr"></a>키스페이스에 로드 분산</h3>
-<p>전용 Memcache 서비스는 기가바이트당 1초에 10,000개의 작업을 처리할 수 있습니다(전용 Memcache 서비스 및 제한사항에 대한 자세한 내용은 <a href="https://developers.google.com/appengine/docs/adminconsole/memcache?hl=en">Memcache 문서</a> 참조). 개발자는 다수의 요청을 처리하는 App Engine 애플리케이션에 대해 이러한 제한사항을 염두에 두어야 합니다. 초당 10,000개 작업 제한은 초당 수백 건에 이르는 HTTP 요청을 처리하기에 충분할 수 있지만, 몇몇 애플리케이션의 경우 키 사용에서 편향적인 분배 패턴을 보입니다. 예를 들어 Memcache 액세스 호출의 80%가 20개 키에 집중될 수 있습니다. 이는 잘못된 키 이름 분배로 인해 특정 서버에 키가 집중되는 경우 문제가 될 수 있으며, 오류 및 성능 저하로 이어질 수 있습니다.</p>
+<p>전용 Memcache 서비스는 기가바이트당 1초에 10,000개의 작업을 처리할 수 있습니다(전용 Memcache 서비스 및 제한사항에 대한 자세한 내용은 <a href="/appengine/docs/adminconsole/memcache">Memcache 문서</a> 참조). 개발자는 다수의 요청을 처리하는 App Engine 애플리케이션에 대해 이러한 제한사항을 염두에 두어야 합니다. 초당 10,000개 작업 제한은 초당 수백 건에 이르는 HTTP 요청을 처리하기에 충분할 수 있지만, 몇몇 애플리케이션의 경우 키 사용에서 편향적인 분배 패턴을 보입니다. 예를 들어 Memcache 액세스 호출의 80%가 20개 키에 집중될 수 있습니다. 이는 잘못된 키 이름 분배로 인해 특정 서버에 키가 집중되는 경우 문제가 될 수 있으며, 오류 및 성능 저하로 이어질 수 있습니다.</p>
 <p>성능 저하를 방지하려면 개발자는 데이터 액세스를 여러 키에 분배하고 읽기가 수행되면 데이터를 집계합니다. 예를 들어 카운터에 여러 번 쓰기 작업을 수행하는 경우, 카운터를 여러 키에 분배한 다음 Memcache에서 카운터 읽기가 수행되면 관련 값을 합산합니다. 이제 관리자 콘솔의 Memcache 보기에는 상위 키 목록이 포함되며, 병목 현상을 파악하는 데 이 목록을 활용할 수 있습니다. 일반적으로는 상위 10개 키의 비율을 합한 값이 총 트래픽의 5% 미만이 되도록 하는 것이 좋습니다.</p>
-<p>Memcache 작업 속도는 대략 <a href="https://developers.google.com/appengine/docs/adminconsole/memcache">Memcache 문서 페이지</a>의 표에 따른 항목 크기별로 다릅니다. 항목 크기가 커지는 경우 초당 최대 작업 속도가 크게 낮아집니다. 이러한 문제를 해결하려면 큰 값을 여러 항목으로 분할하거나 이를 압축합니다.</p>
+<p>Memcache 작업 속도는 대략 <a href="/appengine/docs/adminconsole/memcache">Memcache 문서 페이지</a>의 표에 따른 항목 크기별로 다릅니다. 항목 크기가 커지는 경우 초당 최대 작업 속도가 크게 낮아집니다. 이러한 문제를 해결하려면 큰 값을 여러 항목으로 분할하거나 이를 압축합니다.</p>
 <h2><a name="h.4w4l8tnb9s7a" id="h.4w4l8tnb9s7a"></a>추가 리소스</h2>
 <p>다음 링크는 유용한 추가 리소스로 연결됩니다.</p>
 <ul>
-<li><a href="https://developers.google.com/appengine/docs/adminconsole/memcache">Google App Engine 관리 콘솔: Memcache</a></li>
-<li><a href="https://developers.google.com/appengine/docs/python/memcache/">Memcache Python API</a></li>
-<li><a href="https://developers.google.com/appengine/docs/java/memcache/">Memcache Java API</a></li>
-<li><a href="https://developers.google.com/appengine/docs/go/memcache/">Memcache Go API</a></li>
-<li><a href="https://developers.google.com/appengine/docs/php/memcache/">Memcache PHP API</a></li>
+<li><a href="/appengine/docs/adminconsole/memcache">Google App Engine 관리 콘솔: Memcache</a></li>
+<li><a href="/appengine/docs/python/memcache/">Memcache Python API</a></li>
+<li><a href="/appengine/docs/java/memcache/">Memcache Java API</a></li>
+<li><a href="/appengine/docs/go/memcache/">Memcache Go API</a></li>
+<li><a href="/appengine/docs/php/memcache/">Memcache PHP API</a></li>
 <li><a href="http://www.youtube.com/watch?feature=player_embedded&amp;v=TGl81wr8lz8">Memcache 기본사항 프레젠테이션 동영상</a></li>
-<li><a href="https://developers.google.com/appengine/articles/scaling/memcache">효과적인 Memcache</a></li>
-<li><a href="https://developers.google.com/appengine/articles/scaling/overview">확장 가능한 애플리케이션 작성을 위한 권장사항(시리즈)</a></li>
+<li><a href="/appengine/articles/scaling/memcache">효과적인 Memcache</a></li>
+<li><a href="/appengine/articles/scaling/overview">확장 가능한 애플리케이션 작성을 위한 권장사항(시리즈)</a></li>
 <li><a href="http://neopythonic.blogspot.com/2011/08/compare-and-set-in-memcache.html">Memcache의 '비교 및 설정' 기능</a></li>
-<li><a href="https://developers.google.com/appengine/docs/python/python25/migrate27">Python 2.7로 마이그레이션</a></li>
-<li><a href="https://developers.google.com/appengine/docs/python/ndb/">Python NDB</a></li>
+<li><a href="/appengine/docs/python/python25/migrate27">Python 2.7로 마이그레이션</a></li>
+<li><a href="/appengine/docs/python/ndb/">Python NDB</a></li>
 <li><a href="https://code.google.com/p/protobuf/">프로토콜 버퍼(Protobuf)</a></li>
 <li><a href="https://code.google.com/p/memcached/wiki/NewStart">Memcached 위키</a></li>
 </ul>

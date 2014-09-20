@@ -352,7 +352,7 @@
 </ul>
 <p>Este artigo apresenta uma maneira eficiente de configurar um ambiente de teste de carga distribuída com o JMeter em instâncias do Compute Engine.</p>
 <h3>Considerações</h3>
-<p>Este artigo fornece uma descrição detalhada de como é possível configurar um ambiente de teste de carga com o <a href="http://jmeter.apache.org/">JMeter</a> para executar testes de carga no Compute Engine. Ele pressupõe que você tem uma compreensão técnica de redes e requer um pouco de familiaridade com o <a href="https://developers.google.com/compute/">Compute Engine</a> e sua ferramenta de linha de comando <a href="https://developers.google.com/compute/docs/gcutil/">gcutil</a>.</p>
+<p>Este artigo fornece uma descrição detalhada de como é possível configurar um ambiente de teste de carga com o <a href="http://jmeter.apache.org/">JMeter</a> para executar testes de carga no Compute Engine. Ele pressupõe que você tem uma compreensão técnica de redes e requer um pouco de familiaridade com o <a href="/compute/">Compute Engine</a> e sua ferramenta de linha de comando <a href="/compute/docs/gcutil/">gcutil</a>.</p>
 <p>Este documento descreve como é possível configurar um ambiente de teste com o JMeter, mas não apresenta nenhum detalhe sobre o JMeter em si. A criação de um plano de teste e a execução de testes no JMeter estão fora do escopo deste artigo.</p>
 <h3>Conteúdo</h3>
 <ul>
@@ -476,7 +476,7 @@ bin/jmeter.sh -Djava.rmi.server.hostname=127.0.0.1
 <p>No Windows, será necessário usar o bin/jmeter.bat</p>
 <p>Podemos criar casos de teste usando a UI do JMeter, como de costume. O cliente JMeter reconhece automaticamente o servidor JMeter remoto, emite o comando <span class="code">remote start all</span> para iniciar uma conexão com o servidor JMeter e começa a enviar solicitações do servidor JMeter remoto para o sistema de destino que está sendo testado.</p>
 <h4>Configuração dos servidores JMeter no Google Compute Engine</h4>
-<p>Uma instância do Compute Engine funciona como um computador com Linux normal, portanto, não são necessárias configurações especiais. No entanto, a maneira mais fácil de introduzir o <span class="code">ssh</span> nela é usar o comando <a href="https://developers.google.com/compute/docs/instances#sshing">gcutil ssh</a> em vez do comando <span class="code">ssh</span> simples, pois o gcutil <span class="code">ssh</span> pré-configura algumas opções para a conexão com o Compute Engine.</p>
+<p>Uma instância do Compute Engine funciona como um computador com Linux normal, portanto, não são necessárias configurações especiais. No entanto, a maneira mais fácil de introduzir o <span class="code">ssh</span> nela é usar o comando <a href="/compute/docs/instances#sshing">gcutil ssh</a> em vez do comando <span class="code">ssh</span> simples, pois o gcutil <span class="code">ssh</span> pré-configura algumas opções para a conexão com o Compute Engine.</p>
 <p>Com o comando <span class="code">gcutil ssh</span>, é necessário especificar a opção <span class="code">--ssh_arg</span> para transmitir os parâmetros para ssh.</p>
 <p>Para configurar o encaminhamento de porta SSH para o Compute Engine, use este comando:</p>
 <pre>
@@ -526,8 +526,8 @@ mode=Statistical
 <p>O "jmeter_cluster.py" usa:</p>
 <ul>
 <li><a href="https://developers.google.com/api-client-library/python/">Google APIs Client Library for Python</a> para controlar as instâncias do Compute Engine</li>
-<li>Ferramenta de linha de comando <a href="https://developers.google.com/compute/docs/gcutil/">gcutil</a> para configurar o encaminhamento de porta SSH</li>
-<li><a href="https://developers.google.com/storage/">Google Cloud Storage</a> para armazenar o script de inicialização da instância do Compute Engine e o pacote do servidor JMeter</li>
+<li>Ferramenta de linha de comando <a href="/compute/docs/gcutil/">gcutil</a> para configurar o encaminhamento de porta SSH</li>
+<li><a href="/storage/">Google Cloud Storage</a> para armazenar o script de inicialização da instância do Compute Engine e o pacote do servidor JMeter</li>
 </ul>
 <p>O pacote do servidor JMeter inclui o jmeter.properties pré-configurado no subdiretório "bin". No entanto, é preciso personalizar os números de porta para cada instância. O script de inicialização substituirá os números de porta.</p>
 <p>Esta é uma visão geral do que o script faz:</p>
@@ -536,7 +536,7 @@ mode=Statistical
 <ul style="list-style-type:circle;">
 <li>Inicializa as instâncias do Compute Engine</li>
 <li>Faz o download do pacote do servidor JMeter a partir do Cloud Storage.</li>
-<li>Modifica os números de porta na configuração do JMeter com base no seu número de ID de servidor no cluster (0, 1, 2, …). O ID do servidor é transmitido para cada instância como <a href="https://developers.google.com/compute/docs/metadata">metadados</a> personalizados da instância do Compute Engine.</li>
+<li>Modifica os números de porta na configuração do JMeter com base no seu número de ID de servidor no cluster (0, 1, 2, …). O ID do servidor é transmitido para cada instância como <a href="/compute/docs/metadata">metadados</a> personalizados da instância do Compute Engine.</li>
 <li>Inicia o processo do servidor JMeter.</li>
 </ul>
 </li>
@@ -594,8 +594,8 @@ mode=Statistical
 <a name="resources" id="resources"></a>
 <h2>Recursos adicionais</h2>
 <ul>
-<li><a href="https://developers.google.com/compute/">Documentação do desenvolvedor do Google Compute Engine</a></li>
-<li><a href="https://developers.google.com/compute/docs/instances#sshing">Como se conectar ao Google Compute Engine usando o SSH</a></li>
+<li><a href="/compute/">Documentação do desenvolvedor do Google Compute Engine</a></li>
+<li><a href="/compute/docs/instances#sshing">Como se conectar ao Google Compute Engine usando o SSH</a></li>
 <li><a href="http://jmeter.apache.org/">JMeter</a></li>
 <li><a href="http://www.google.com/url?q=http%3A%2F%2Fionelmc.wordpress.com%2F2012%2F02%2F16%2Fhow-to-run-jmeter-over-ssh-tunnel%2F&amp;sa=D&amp;sntz=1&amp;usg=AFQjCNG8dqQYCuEU-RITYdHZoFcLR3JWeQ">Como executar o JMeter em um túnel SSH</a></li>
 </ul>

@@ -352,7 +352,7 @@
 </style>
 <div class="cp-article-tutorial ced-price-perf-persist">
 <h2><a name="h.w3kz4fze562t" id="h.w3kz4fze562t"></a>はじめに</h2>
-<p><a target="_blank" href="/compute/">Google Compute Engine</a> では、ソフトウェア サービスを構築するデベロッパーに軽快で信頼性が高く安価な計算能力を提供するよう努めています。ほとんどのアプリケーションでは、CPU やメモリだけでなく、高いパフォーマンスと信頼性を兼ね備えたブロック ストレージが必要です。Google Cloud Platform においてその役割を担うのが、Compute Engine <a target="_blank" href="https://developers.google.com/compute/docs/disks">永続ディスク</a>です。</p>
+<p><a target="_blank" href="/compute/">Google Compute Engine</a> では、ソフトウェア サービスを構築するデベロッパーに軽快で信頼性が高く安価な計算能力を提供するよう努めています。ほとんどのアプリケーションでは、CPU やメモリだけでなく、高いパフォーマンスと信頼性を兼ね備えたブロック ストレージが必要です。Google Cloud Platform においてその役割を担うのが、Compute Engine <a target="_blank" href="/compute/docs/disks">永続ディスク</a>です。</p>
 <p>永続ディスク用のハードウェア/ソフトウェア インフラストラクチャを構築するにあたり、Google では以下の点を最優先しました:</p>
 <ul>
 <li>セキュリティ</li>
@@ -378,7 +378,7 @@
 </ul>
 <h3><a name="h.hblytow164l9" id="h.hblytow164l9"></a>主な特長</h3>
 <h4><a name="h.k40zex5efw5h" id="h.k40zex5efw5h"></a>復元力</h4>
-<p>永続ディスクには冗長性が組み込まれており、機器の障害からデータが保護され、データセンターのメンテナンス中でも利用が可能です。インスタンスにローカル ストレージが不要なため、<a href="https://developers.google.com/compute/docs/instances#schedulingoptions">Google Live Migration</a> を使用して新しいハードウェアに自動的に移行できます。この方法により Google データセンターのメンテナンスは最高水準に保たれており、ソフトウェア、ハードウェア、設備を継続的に更新することでクラウドベース サービスの高パフォーマンスと信頼性を実現しているのです。</p>
+<p>永続ディスクには冗長性が組み込まれており、機器の障害からデータが保護され、データセンターのメンテナンス中でも利用が可能です。インスタンスにローカル ストレージが不要なため、<a href="/compute/docs/instances#schedulingoptions">Google Live Migration</a> を使用して新しいハードウェアに自動的に移行できます。この方法により Google データセンターのメンテナンスは最高水準に保たれており、ソフトウェア、ハードウェア、設備を継続的に更新することでクラウドベース サービスの高パフォーマンスと信頼性を実現しているのです。</p>
 <h4><a name="h.p4063icl0ptv" id="h.p4063icl0ptv"></a>パフォーマンスの一貫性</h4>
 <p>永続ディスクでは、単一のゾーン内の多数の物理ボリュームにデータをストライプ化して、パフォーマンスの一貫性を維持します。その結果、同じゾーン内の同じサイズのボリュームは一般に、いつでも同レベルのパフォーマンスで処理されます。ゾーンの IO の総合負荷が増減するにつれて、ボリュームのパフォーマンスは変わる可能性がありますが、多数の物理ボリュームにストライプ化することによりその変動は大幅に抑えられます。</p>
 <h4><a name="h.t3xil3z2275e" id="h.t3xil3z2275e"></a>暗号化</h4>
@@ -397,10 +397,10 @@
 <li>インスタンス起動時のネットワーク トラフィックとディスク IO が低減</li>
 </ul>
 <h4><a name="h.6weg86eazizc" id="h.6weg86eazizc"></a>グローバルにアクセスできるスナップショットにすぐにコピー可能</h4>
-<p>永続ディスクでは<a href="https://developers.google.com/compute/docs/disks#snapshots">スナップショット</a>を使って、定期的にバックアップできます。永続ディスクは単一のゾーン内で冗長性がありますが、スナップショットは複数のゾーン間で自動的に複製されます。あるゾーンが災害によって完全に失われた場合、作成したスナップショットから、別のゾーンで新しい永続ディスクを作成して、すぐに復元することができます。エンドユーザーが重要なデータを削除した場合でも、以前のスナップショットから新しい永続ディスクを作成して復元できます。</p>
+<p>永続ディスクでは<a href="/compute/docs/disks#snapshots">スナップショット</a>を使って、定期的にバックアップできます。永続ディスクは単一のゾーン内で冗長性がありますが、スナップショットは複数のゾーン間で自動的に複製されます。あるゾーンが災害によって完全に失われた場合、作成したスナップショットから、別のゾーンで新しい永続ディスクを作成して、すぐに復元することができます。エンドユーザーが重要なデータを削除した場合でも、以前のスナップショットから新しい永続ディスクを作成して復元できます。</p>
 <p>同じ永続ディスクのスナップショットを繰り返し作成する場合は、インクリメンタルとなります。つまり、前回のスナップショットが保存されてからの変更のみが保存されます。これによって、<a href="http://googlecloudplatform.blogspot.com/2013/10/persistent-disk-backups-using-snapshots.html#gpluscomments">高速なバックアップ</a>と、スナップショットのストレージ費用の削減が可能になります。</p>
 <h4>スナップショットからのサイズ変更が可能</h4>
-<p>スナップショットから新しい永続ディスク ボリュームを作成する際に、元のボリュームよりも<a target="_blank" href="https://developers.google.com/compute/docs/disks#restoresnapshotlargersize">大きなサイズを指定</a>できます。つまり、デプロイを構築するにあたって、ボリューム サイズを保守的に決めることができるということです。デプロイや初期テストの段階ではボリューム サイズを控えめに設定しておき、スナップショットから新しいボリュームを作成する際にサイズを変更する方が、新しいボリュームを作成して古いボリュームから手動でデータをコピーするよりずっと簡単です。</p>
+<p>スナップショットから新しい永続ディスク ボリュームを作成する際に、元のボリュームよりも<a target="_blank" href="/compute/docs/disks#restoresnapshotlargersize">大きなサイズを指定</a>できます。つまり、デプロイを構築するにあたって、ボリューム サイズを保守的に決めることができるということです。デプロイや初期テストの段階ではボリューム サイズを控えめに設定しておき、スナップショットから新しいボリュームを作成する際にサイズを変更する方が、新しいボリュームを作成して古いボリュームから手動でデータをコピーするよりずっと簡単です。</p>
 <h4><a name="h.5seopampg6g6" id="h.5seopampg6g6"></a>読み取りモードで複数のノードに接続可能</h4>
 <p>永続ディスクは、読み取りモードで複数のノードに接続できます（読み書き可能なモードのインスタンスにまったく接続していない場合）。Compute Engine の複数のインスタンスに静的コンテンツを配信しても、ストレージの複製費用は発生しません。</p>
 <h3><a name="h.nhrjtm7bctwy" id="h.nhrjtm7bctwy"></a>永続ディスクの使いやすさ</h3>
@@ -600,9 +600,9 @@
 <p>Google Compute Engine の永続ディスクについて詳しくは、以下をご覧ください:</p>
 <ul>
 <li>主要ドキュメント<br>
-<a target="_blank" href="https://developers.google.com/compute/docs/disks">https://developers.google.com/compute/docs/disks</a></li>
+<a target="_blank" href="/compute/docs/disks">/compute/docs/disks</a></li>
 <li>料金<br>
-<a target="_blank" href="https://developers.google.com/compute/pricing#persistentdisk">https://developers.google.com/compute/pricing#persistentdisk</a></li>
+<a target="_blank" href="/compute/pricing#persistentdisk">/compute/pricing#persistentdisk</a></li>
 <li>Google I/O 2013 でのプレゼンテーション<br>
 <a target="_blank" href="https://developers.google.com/events/io/sessions/350753683">https://developers.google.com/events/io/sessions/350753683</a></li>
 <li>Compute Engine 永続ディスクのスナップショット<br>
@@ -615,7 +615,7 @@
 <br>
 <br>
 <hr>
-<p><a href="#ftnt_ref1" name="ftnt1" id="ftnt1">[1]</a> 本ドキュメントの執筆時点。最新の料金については<a target="_blank" href="https://developers.google.com/compute/pricing#persistentdisk">こちらのページ</a>でご確認ください。</p>
+<p><a href="#ftnt_ref1" name="ftnt1" id="ftnt1">[1]</a> 本ドキュメントの執筆時点。最新の料金については<a target="_blank" href="/compute/pricing#persistentdisk">こちらのページ</a>でご確認ください。</p>
 </div>
 <!-- /maia-main --></div>
 <div class="maia-col-3"><br>

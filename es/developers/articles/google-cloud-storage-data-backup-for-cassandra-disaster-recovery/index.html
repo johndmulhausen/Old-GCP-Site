@@ -356,7 +356,7 @@
 </ul>
 <a name="wywl" id="wywl"></a>
 <h2>Objetivos de aprendizaje</h2>
-<p>Si sigues este breve tutorial, aprenderás que Google Cloud Storage se puede usar para añadir fácilmente la función de recuperación ante desastres a tu instalación de <a href="http://cassandra.apache.org/">Cassandra</a> y que solo implica hacer una copia de seguridad de los datos y restaurarlos desde la nube de Google. Aunque este tutorial se centra en concreto en la copia de seguridad y en la restauración de datos de Cassandra, los conceptos se pueden aplicar en general a cualquier caso de uso de copia de seguridad. Este tutorial se ha desarrollado y se ha probado en máquinas virtuales de Google Compute Engine con Linux en ejecución, pero la información proporcionada se puede aplicar a cualquier entorno que sea compatible con la herramienta <a href="https://developers.google.com/storage/docs/gsutil_install#specifications">gsutil</a>.</p>
+<p>Si sigues este breve tutorial, aprenderás que Google Cloud Storage se puede usar para añadir fácilmente la función de recuperación ante desastres a tu instalación de <a href="http://cassandra.apache.org/">Cassandra</a> y que solo implica hacer una copia de seguridad de los datos y restaurarlos desde la nube de Google. Aunque este tutorial se centra en concreto en la copia de seguridad y en la restauración de datos de Cassandra, los conceptos se pueden aplicar en general a cualquier caso de uso de copia de seguridad. Este tutorial se ha desarrollado y se ha probado en máquinas virtuales de Google Compute Engine con Linux en ejecución, pero la información proporcionada se puede aplicar a cualquier entorno que sea compatible con la herramienta <a href="/storage/docs/gsutil_install#specifications">gsutil</a>.</p>
 <a name="requir" id="requir"></a>
 <h2>Requisitos</h2>
 <p>Para seguir este tutorial, necesitarás:</p>
@@ -393,11 +393,11 @@
 <p>La estrategia utilizada en este tutorial será combinar capturas con copias de seguridad diarias en Google Cloud Storage.</p>
 <a name="gsgcs" id="gsgcs"></a>
 <h2>Preparación con Google Cloud Storage</h2>
-<p>Si ya tienes una cuenta de Google Cloud Storage y has instalado <a href="https://developers.google.com/storage/docs/gsutil">gsutil</a>, puedes pasar a la siguiente sección.</p>
+<p>Si ya tienes una cuenta de Google Cloud Storage y has instalado <a href="/storage/docs/gsutil">gsutil</a>, puedes pasar a la siguiente sección.</p>
 <p><a href="/storage/">Google Cloud Storage</a> es un servicio incluido dentro de Google Cloud Platform. Permite a los desarrolladores almacenar datos de aplicación directamente en la infraestructura de Google.</p>
 <p>Google Cloud Storage se puede activar a través de la <a href="https://console.developers.google.com">consola de API de Google</a>. Si no estás familiarizado con la consola de API de Google, consulta la <a href="https://developers.google.com/console/help/#ApiConsole">documentación</a> que te guía en la configuración del proyecto.</p>
 <p>Una vez creado un proyecto en la consola de API de Google, tendrás que <a href="https://developers.google.com/console/help/#ApiConsole">asociar Google Cloud Storage con ese proyecto</a>.</p>
-<p>Por último, descarga e instala la aplicación gsutil. Hay <a href="https://developers.google.com/storage/docs/gsutil_install">instrucciones</a> disponibles para instalar gsutil. Asegúrate de que gsutil esté en tu ruta, de lo contrario tendrás que incluir la ruta completa de la instalación cuando hagas referencia a gsutil en las secuencia de comandos.</p>
+<p>Por último, descarga e instala la aplicación gsutil. Hay <a href="/storage/docs/gsutil_install">instrucciones</a> disponibles para instalar gsutil. Asegúrate de que gsutil esté en tu ruta, de lo contrario tendrás que incluir la ruta completa de la instalación cuando hagas referencia a gsutil en las secuencia de comandos.</p>
 <a name="wbs" id="wbs"></a>
 <h2>Redacción de la secuencia de comandos de copia de seguridad</h2>
 <p>En la siguiente sección tendrás que crear una pequeña secuencia de comandos en Python que automatice la tarea de realizar copias de seguridad de tus datos en Google Cloud Storage. Puedes utilizar la siguiente secuencia de comandos como plantilla:</p>
@@ -429,7 +429,7 @@ from yaml import safe_load  # Requires the PyYaml module.
 
 # Prepare variables for constructing bucket path.
 # Be mindful of the naming guidelines.
-# (<a href="https://developers.google.com/storage/docs/bucketnaming">https://developers.google.com/storage/docs/bucketnaming</a>)
+# (<a href="/storage/docs/bucketnaming">/storage/docs/bucketnaming</a>)
 
 # An existing bucket in Google Cloud Storage that you intend to store your data too.
 COMPANY_ROOT = 'gs://my_company_bucket/'  # Use your own bucket here
@@ -635,9 +635,9 @@ call(['service', 'cassandra', 'start'])
 <h2>Otras consideraciones</h2>
 <p>En este tutorial te hemos proporcionado información general de alto nivel y te hemos ofrecido plantillas para realizar copias de seguridad de datos y para recuperarlos. Sin embargo, vale la pena mencionar un par de cosas más que debes tener en cuenta.</p>
 <h4>Prácticas recomendadas</h4>
-<p>Cuando se trabaja con grandes cantidades de datos, puede haber casos en los que tus archivos no suban del todo en el primer intento. Aunque gsutil volverá a intentarlo automáticamente hasta seis veces antes de darse por vencida, es recomendable crear otra tarea cron que se ejecute en intervalos de 30 minutos para comprobar si hay intentos de subida fallidos y así volver a intentarlos. Consulta la <a href="https://developers.google.com/storage/docs/gsutil/addlhelp/ScriptingProductionTransfers">documentación</a> que encontrarás en el sitio de Google Developers para obtener más orientación y prácticas recomendadas para crear secuencias de comandos de transferencias de producción con gsutil.</p>
+<p>Cuando se trabaja con grandes cantidades de datos, puede haber casos en los que tus archivos no suban del todo en el primer intento. Aunque gsutil volverá a intentarlo automáticamente hasta seis veces antes de darse por vencida, es recomendable crear otra tarea cron que se ejecute en intervalos de 30 minutos para comprobar si hay intentos de subida fallidos y así volver a intentarlos. Consulta la <a href="/storage/docs/gsutil/addlhelp/ScriptingProductionTransfers">documentación</a> que encontrarás en el sitio de Google Developers para obtener más orientación y prácticas recomendadas para crear secuencias de comandos de transferencias de producción con gsutil.</p>
 <h4>Disponibilidad reducida duradera</h4>
-<p>Puede que quieras estudiar si el <a href="https://developers.google.com/storage/docs/durable-reduced-availability">Almacenamiento de disponibilidad reducida duradera</a> es una opción viable para tus necesidades de copia de seguridad. Esta oferta te permite almacenar datos a un menor coste, pero a cambio de tener menos disponibilidad que una instancia estándar de Google Cloud Storage.</p>
+<p>Puede que quieras estudiar si el <a href="/storage/docs/durable-reduced-availability">Almacenamiento de disponibilidad reducida duradera</a> es una opción viable para tus necesidades de copia de seguridad. Esta oferta te permite almacenar datos a un menor coste, pero a cambio de tener menos disponibilidad que una instancia estándar de Google Cloud Storage.</p>
 <h4>Conocimiento del entorno</h4>
 <p>Las secuencias de comandos que se utilizan en este tutorial se han escrito en un sistema Linux, con Cassandra instalada como servicio. Algunos de los comandos se tendrán que cambiar para adaptarse a diferentes SO y a diferentes instalaciones de Cassandra.</p>
 </div>

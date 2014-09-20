@@ -357,12 +357,12 @@
 <p>Bei unserer orchestrierten Anwendung handelt es sich um die eigentliche Geschäftsanwendung, die vom Orchestrator beobachtet und von diesem über die Hoch- und Rückskalierung der VM-Instanzen verwaltet wird. Wie oben ausgeführt, kann jede Anwendung mit Compute Engine-Back-Ends und variabler Nutzung auf diese Weise orchestriert werden. In unserem Beispiel ist es eine Anwendung zum Hochladen, Verarbeiten und Erstellen neuer, transformierter Bilder. Diese ist als mobile und App Engine-Anwendung implementiert, die mit Compute Engine-VMs über Pull-Warteschlangen kommuniziert. Die App Engine-Anwendung stellt Aufgaben zur Verarbeitung und Bilderstellung in die Warteschlangen, während die Compute Engine-Back-Ends diese Aufgaben freigeben.</p>
 <p>Die folgenden Produkte werden in dieser Lösung verwendet:</p>
 <ul>
-<li><a href="https://developers.google.com/appengine/">Google App Engine</a>; für die Implementierung der orchestrierten Web- bzw. mobilen Anwendung und des Orchestrators</li>
-<li><a href="https://developers.google.com/appengine/docs/java/config/cron">Google App Engine Cron Jobs</a>; für den regelmäßigen Abruf der Statusinformationen von den Compute Engine-Instanzen</li>
-<li><a href="https://developers.google.com/appengine/docs/java/config/backends">Google App Engine Back-Ends</a>; für die zuverlässige Ausführung von App Engine-Instanzen, ohne diese verwalten zu müssen, was sich für den Betrieb des Orchestrators gut eignet</li>
+<li><a href="/appengine/">Google App Engine</a>; für die Implementierung der orchestrierten Web- bzw. mobilen Anwendung und des Orchestrators</li>
+<li><a href="/appengine/docs/java/config/cron">Google App Engine Cron Jobs</a>; für den regelmäßigen Abruf der Statusinformationen von den Compute Engine-Instanzen</li>
+<li><a href="/appengine/docs/java/config/backends">Google App Engine Back-Ends</a>; für die zuverlässige Ausführung von App Engine-Instanzen, ohne diese verwalten zu müssen, was sich für den Betrieb des Orchestrators gut eignet</li>
 <li><a href="/compute/">Compute Engine</a>; für die Implementierung der Back-End-Logik der orchestrierten Web- bzw. mobilen Anwendung sowie die Veröffentlichung des Status der Instanzen</li>
-<li><a href="https://developers.google.com/compute/docs/reference/latest/">Compute Engine REST API</a>; zur Durchführung von Orchestrierungsaufgaben wie dem Abruf von IPs laufender Instanzen und dem Hochfahren neuer Instanzen</li>
-<li><a href="https://developers.google.com/appengine/docs/java/taskqueue/overview-pull">Cloud Platform Task Queues</a>; für die Kommunikation zwischen App Engine und Compute Engine</li>
+<li><a href="/compute/docs/reference/latest/">Compute Engine REST API</a>; zur Durchführung von Orchestrierungsaufgaben wie dem Abruf von IPs laufender Instanzen und dem Hochfahren neuer Instanzen</li>
+<li><a href="/appengine/docs/java/taskqueue/overview-pull">Cloud Platform Task Queues</a>; für die Kommunikation zwischen App Engine und Compute Engine</li>
 </ul>
 <h2>Architekturdiagramm</h2>
 <p>Das sind die Komponenten dieser Lösung:</p>

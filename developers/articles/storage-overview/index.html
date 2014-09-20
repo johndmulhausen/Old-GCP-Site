@@ -28,7 +28,7 @@ https://github.com/GoogleCloudPlatformSite/GoogleCloudPlatformSite.github.io/edi
     <p><q>Learn about the different ways to store your data in Google's cloud.</q></p>
 
     <p>This document discusses  the options for storing and analyzing your data in the Google Cloud Platform. </p>
-    <p class="note">This is an introductory article. If you are already familiar with the services provided by the Google Cloud Platform, you might want to dive straight into the developer documentation: <a href="http://developers.google.com/appengine">App Engine</a>, <a href="https://developers.google.com/storage">Google Cloud Storage</a>, <a href="https://developers.google.com/cloud-sql">Google Cloud SQL</a>, <a href="https://developers.google.com/bigquery">BigQuery</a>, <a href="http://developer.google.com/compute">Google Compute Engine</a>.</p>
+    <p class="note">This is an introductory article. If you are already familiar with the services provided by the Google Cloud Platform, you might want to dive straight into the developer documentation: <a href="/appengine">App Engine</a>, <a href="https://developers.google.com/storage">Google Cloud Storage</a>, <a href="/sql/">Google Cloud SQL</a>, <a href="/bigquery/">BigQuery</a>, <a href="http://developer.google.com/compute">Google Compute Engine</a>.</p>
     <!-- snapshot of comments taken at 12:40pm Dec 20 -->
     <p><strong>Contents</strong></p>
 
@@ -135,7 +135,7 @@ https://github.com/GoogleCloudPlatformSite/GoogleCloudPlatformSite.github.io/edi
     <p>Google Cloud SQL allows you to create, configure, and use MySQL databases that live in Google's cloud. It is a fully-managed service that maintains, manages, and administers your databases.</p>
     <p>Google Cloud SQL is  primarily intended for programmatic use within applications. It has an interactive UI, which is helpful for learning about the product, getting started using it, investigating the schema, and submitting trial queries.</p>
     <p><img src="/images/articles/which_to_use_when/cloud_sql_ui.png" width="650"></p>
-    <p>MySQL is a full relational database system that supports full SQL syntax and table management tools. Google Cloud SQL supports a subset of MySQL, which includes most of the features of MySQL. For a list of differences, see the <a href="https://developers.google.com/cloud-sql/faq#supportmysqlfeatures">Google Cloud SQL FAQ</a>.</p>
+    <p>MySQL is a full relational database system that supports full SQL syntax and table management tools. Google Cloud SQL supports a subset of MySQL, which includes most of the features of MySQL. For a list of differences, see the <a href="/sql/faq#supportmysqlfeatures">Google Cloud SQL FAQ</a>.</p>
     <h3>Typical Use Cases</h3>
     <p>Google Cloud SQL is good for small or medium data sets that:</p>
     <ul>
@@ -144,7 +144,7 @@ https://github.com/GoogleCloudPlatformSite/GoogleCloudPlatformSite.github.io/edi
       <li>are queried frequently in many different ways</li>
     </ul>
     <p>Google Cloud SQL  is typically used to manage, rather than analyze, data because it supports update, append, and delete queries. In database terms, Google Cloud SQL is an <a href="http://en.wikipedia.org/wiki/OLTP">OLTP</a> (online transactional processing) system.</p>
-    <p class="note">As of Feb 2014, the limit for databases in Google Cloud SQL is 500GB, but check the<a href="https://developers.google.com/cloud-sql/docs/billing"> Google Cloud SQL Pricing documentation</a> for the latest information.</p>
+    <p class="note">As of Feb 2014, the limit for databases in Google Cloud SQL is 500GB, but check the<a href="/sql/docs/billing"> Google Cloud SQL Pricing documentation</a> for the latest information.</p>
     <p>Typical uses include keeping track of user orders, product catalogs, discussion boards and blogs, content management systems, and workflow applications.</p>
     <p class="note">Note: For case studies, see  <a href="/sql/">cloud.google.com/sql</a>.</p>
     <h3>Cloud SQL Data Creation and Ingestion</h3>
@@ -168,14 +168,14 @@ https://github.com/GoogleCloudPlatformSite/GoogleCloudPlatformSite.github.io/edi
     <p>To use BigQuery, you upload your data into BigQuery and then you can query it interactively or programmatically. You can also query publicly available datasets as well as datasets that other people have shared with you. </p>
     <p>You can use BigQuery in the following ways:</p>
     <ul>
-      <li>interactively through the <a href="https://developers.google.com/bigquery/docs/browser_tool">BigQuery browser tool</a></li>
-      <li>using the <a href="https://developers.google.com/bigquery/docs/cli_tool">bq command-line tool</a></li>
+      <li>interactively through the <a href="/bigquery/docs/browser_tool">BigQuery browser tool</a></li>
+      <li>using the <a href="/bigquery/docs/cli_tool">bq command-line tool</a></li>
       <li>programmatically by making calls to the REST API using various client libraries in multiple languages, such as Java and Python</li>
     </ul>
     <h3>Typical Use Cases</h3>
     <p>BigQuery is ideal for running queries over vast amounts of data &mdash;up to billions of rows&mdash; in seconds. It is good for analyzing vast quantities of data quickly, but not for modifying it. In data analysis terms, BigQuery is an <a href="http://en.wikipedia.org/wiki/Online_analytical_processing">OLAP</a> (online analytical processing) system, and works best for interactive analysis of very large datasets, typically using a small number of very large, append-only tables.</p>
-    <p>One specific example use of BigQuery is by RedBus, an online travel agency which introduced Internet bus ticketing to India in 2006. Using BigQuery, they analyzed customer travel activity to identify which routes needed more buses, where new bus routes were needed, and whether reduced bookings on specific routes were caused by server problems or simply by less demand. According to Pradeep Kumar, the author of their <a href="https://developers.google.com/bigquery/case_studies/redbus">technical case study</a>, &quot;We had a table which contained 2TB of data but still returned query results in under 30 seconds for most queries.&quot;</p>
-    <p class="note">See more case studies at <a href="https://developers.google.com/bigquery/case_studies/">BigQuery Case Studies</a>.</p>
+    <p>One specific example use of BigQuery is by RedBus, an online travel agency which introduced Internet bus ticketing to India in 2006. Using BigQuery, they analyzed customer travel activity to identify which routes needed more buses, where new bus routes were needed, and whether reduced bookings on specific routes were caused by server problems or simply by less demand. According to Pradeep Kumar, the author of their <a href="/bigquery/case_studies/redbus">technical case study</a>, &quot;We had a table which contained 2TB of data but still returned query results in under 30 seconds for most queries.&quot;</p>
+    <p class="note">See more case studies at <a href="/bigquery/case_studies/">BigQuery Case Studies</a>.</p>
     <h3>BigQuery Data Creation and Ingestion</h3>
     <p>BigQuery can import data in the following formats:</p>
     <ul>
@@ -199,7 +199,7 @@ https://github.com/GoogleCloudPlatformSite/GoogleCloudPlatformSite.github.io/edi
       <li>Using the Excel connector</li>
       <li>Using third party tools, discussed <a href="#thirdparty-ingest">later</a> in this document.</li>
     </ul>
-    <p class="note">For hints and tips on ingesting data into BigQuery, see <a href="https://developers.google.com/bigquery/articles/ingestioncookbook">BigQuery Data Ingestion and Best Practices Cookbook</a>.</p>
+    <p class="note">For hints and tips on ingesting data into BigQuery, see <a href="/bigquery/articles/ingestioncookbook">BigQuery Data Ingestion and Best Practices Cookbook</a>.</p>
     <h4>Using the BigQuery UI to Upload Data</h4>
     <p>You can use the online UI to interactively upload data either from local files or from Google Cloud Storage. Here's a screenshot of the dialog box for interactive upload:</p>
     <p><img src="/images/articles/which_to_use_when/biq_query_ingestion.png" width="537" height="267"></p>
@@ -225,7 +225,7 @@ https://github.com/GoogleCloudPlatformSite/GoogleCloudPlatformSite.github.io/edi
       <li><a href="http://www.talend.com/products-big-data/big-query.php">Talend</a> has added support for BigQuery in their Open Studio for Big Data, an open source set of code generation tools to design and implement data integration.</li>
       <li><a href="http://www.sqlstream.com/blog/2012/07/sqlstreams-continuous-etl-connector-for-google-bigquery/">SQLstream</a> provides a Continuous ETL connector for BigQuery. When data comes into SQLstream's s-Server matching a specific pattern, it is queued for inserting into BigQuery on a regular basis.</li>
     </ul>
-    <p>See <a href="https://developers.google.com/bigquery/docs/third_party_tools">BigQuery Third Party Tools</a> for more information.</p>
+    <p>See <a href="/bigquery/docs/third_party_tools">BigQuery Third Party Tools</a> for more information.</p>
     <h3>Should I use BigQuery or Google Cloud SQL?</h3>
     <p>The use cases for BigQuery and Google Cloud SQL are very different. BigQuery lets you import huge amounts of data and then very quickly analyze it.  Google Cloud SQL lets you host a MySQL relational database in Google's cloud, and create and update your tables and rows directly.</p>
     <p><strong>OLAP versus OLTP</strong>
@@ -243,19 +243,19 @@ https://github.com/GoogleCloudPlatformSite/GoogleCloudPlatformSite.github.io/edi
 
           <p>BigQuery is append-only, so you can’t update or change data that is already in a BigQuery table, wherease with Google Cloud SQL, you have full control over changing the data in the tables.</p>
 
-    <p>For a further comparison, see BigQuery versus Google Cloud SQL in the <a href="https://developers.google.com/bigquery/docs/overview">Overview</a> of BigQuery.</p>
+    <p>For a further comparison, see BigQuery versus Google Cloud SQL in the <a href="/bigquery/docs/overview">Overview</a> of BigQuery.</p>
     <h2 id="appengine"></a>App Engine Datastore</h2>
     <p>App Engine is a Platform as a Service (PaaS) service. It provides an SDK and a set of tools for developing applications in Java and Python. App Engine is a framework for rapidly developing highly scalable web applications that run on Google's infrastructure. As the traffic to your app increases, more instances of your app are automatically created to handle the load, allowing your application to scale up to handling millions of users.</p>
     <p>App Engine provides a full SDK to help you develop your application.</p>
-    <p>There is much to say about App Engine, but this article focuses on how to store data, and whether to use the inbuilt datastore or whether it is better for your App Engine application to use Google Cloud SQL or Google Cloud Storage to store its data. To learn more about App Engine, see <a href="https://developers.google.com/appengine/">Google App Engine</a>.</p>
+    <p>There is much to say about App Engine, but this article focuses on how to store data, and whether to use the inbuilt datastore or whether it is better for your App Engine application to use Google Cloud SQL or Google Cloud Storage to store its data. To learn more about App Engine, see <a href="/appengine/">Google App Engine</a>.</p>
     <h3>What is the Datastore?</h3>
 
     <p>The Datastore is a NoSQL (non-relational) key/value store that supports unlimited scaling. You can store any key/value pairs you want; entities stored in the Datastore  do not need to conform to the same structure. The Datastore stores the data on Google's infrastructure.</p>
     <p>You can also use the Memcache service to keep data values in the cache to reduce hits to the datastore.</p>
 
- <p class="special">   <b>Update:</b> <a href="https://developers.google.com/datastore/">Cloud Datastore,</a>  now available as a preview release, makes the Datastore available to all applications, not just App Engine applications.</p>
+ <p class="special">   <b>Update:</b> <a href="/datastore/">Cloud Datastore,</a>  now available as a preview release, makes the Datastore available to all applications, not just App Engine applications.</p>
     <h4>Querying the Datastore</h4>
-    <p>App Engine's Datastore allows you to save data as key value pairs (known as entities). The entity properties are indexed and you can query them. App Engine provides an API for querying the datastore, both in <a href="https://developers.google.com/appengine/docs/java/datastore/queries">Java</a> and in <a href="https://developers.google.com/appengine/docs/python/datastore/queries">Python</a>. Although the Query API does not provide the complex query functionality of SQL, it is optimized for the schemaless format of the datastore entries, and allows you to set filters and criteria for searching for entities.  There is also a SQL-like querying language called GQL that is syntactically identical to SQL (but only implements a subset of the functionality)</p>
+    <p>App Engine's Datastore allows you to save data as key value pairs (known as entities). The entity properties are indexed and you can query them. App Engine provides an API for querying the datastore, both in <a href="/appengine/docs/java/datastore/queries">Java</a> and in <a href="/appengine/docs/python/datastore/queries">Python</a>. Although the Query API does not provide the complex query functionality of SQL, it is optimized for the schemaless format of the datastore entries, and allows you to set filters and criteria for searching for entities.  There is also a SQL-like querying language called GQL that is syntactically identical to SQL (but only implements a subset of the functionality)</p>
     <h4>The Admin Console</h4>
     <p>The App Engine admin console provides views into the saved data and lets you run GQL queries directly in the Datastore Viewer, which can be very useful for admins to interrogate and trouble-shoot stored data.</p>
     <h3>Should I use Google Cloud Storage or the App Engine Datastore?</h3>
@@ -263,7 +263,7 @@ https://github.com/GoogleCloudPlatformSite/GoogleCloudPlatformSite.github.io/edi
     <p>Your App Engine application can use Google Cloud Storage as a conduit for sharing data with consumers outside the scope of the application. If your data already exists as files outside of App Engine, the logical solution is to move it to Google Cloud Storage and pull it into your application. If your App Engine application generates large chunks of data that need to be accessible outside the application, store the data in Google Cloud Storage. </p>
     <h4>Using Google Cloud Storage with App Engine</h4>
     <p>To access Google Cloud Storage, App Engine applications can either use the REST API provided by Google Cloud Storage, or use a custom App Engine Files API.</p>
-    <p>App Engine's <a href="https://developers.google.com/appengine/docs/java/googlestorage">custom API</a> for storing and serving data from the Google Cloud Storage service is more direct and efficient than the RESTful HTTP interface. [<a href="https://developers.google.com/appengine/docs/java/googlestorage/">Java API</a>, <a href="https://developers.google.com/appengine/docs/python/googlestorage/">Python API</a>]</p>
+    <p>App Engine's <a href="/appengine/docs/java/googlestorage">custom API</a> for storing and serving data from the Google Cloud Storage service is more direct and efficient than the RESTful HTTP interface. [<a href="/appengine/docs/java/googlestorage/">Java API</a>, <a href="/appengine/docs/python/googlestorage/">Python API</a>]</p>
     <h3>Should I use Google Cloud SQL or the App Engine Datastore?</h3>
     <p>The App Engine Datastore and Google Cloud SQL can be used to store the same kind of application data in general, but the datastore uses schemaless, NoSQL data while Google Cloud SQL stores data in MySQL tables.</p>
     <p>The App Engine Datastore provides NoSQL key-value storage that is highly scalable. Google Cloud SQL supports complex queries and ACID transactions, but this means the database acts as a &lsquo;fixed pipe' and performance is less scalable. The decision likely comes down to whether you are more comfortable with traditional SQL with tightly-managed schema, or NoSQL where there are no requirements of conformity across objects of the same kind. Many applications use both types of storage.</p>
@@ -277,8 +277,8 @@ https://github.com/GoogleCloudPlatformSite/GoogleCloudPlatformSite.github.io/edi
     <h3>How do I choose between App Engine and Google Compute Engine?</h3>
     <p>App Engine is a Platform as a Service (PaaS) service. It provides an SDK and a set of tools for developing applications in Java and Python. It provides plugins for easy integration with the Eclipse development environment, and comes with templates for running a &quot;Hello World&quot; application right out of the box. The SDK provides boilerplate code for creating web applications, and allows you to deploy your applications with just a click. You still have to write the logic of the application, but once you've deployed your application, Google keeps it running for you and replicates the data. You can use App Engine to get started quickly developing and deploying a web application, but you are constrained to the supported languages and the requirements of the framework.</p>
     <p>Google Compute Engine, on the other hand, is an Infrastructure as a Service (IaaS) offering. Google provides the infrastructure for you to run your applications, but you have to design them, develop them, run them and manage them on your own.</p>
-    <p>To deploy a simple &quot;Hello World&quot; application using Google App Engine takes a few clicks (in Java) or a few lines of code (Python) to build  and deploy the application. From there, you can add files to extend it. (<a href="https://developers.google.com/appengine/docs/java/gettingstarted/creating">Java Getting Started codelab</a>, <a href="https://developers.google.com/appengine/docs/python/gettingstartedpython27/helloworld">Python Helloworld Exercise</a>)</p>
-    <p>To deploy a simple &quot;Hello World&quot; application on Google Compute Engine, you need to setup a firewall, start the virtual machine instance, login into to the instance, install and configure a web server such as Apache, and create the web page that displays &quot;Hello World.&quot; (<a href="https://developers.google.com/compute/docs/hello_world">Google Compute Engine Hello World exercise</a>)</p>
+    <p>To deploy a simple &quot;Hello World&quot; application using Google App Engine takes a few clicks (in Java) or a few lines of code (Python) to build  and deploy the application. From there, you can add files to extend it. (<a href="/appengine/docs/java/gettingstarted/creating">Java Getting Started codelab</a>, <a href="/appengine/docs/python/gettingstartedpython27/helloworld">Python Helloworld Exercise</a>)</p>
+    <p>To deploy a simple &quot;Hello World&quot; application on Google Compute Engine, you need to setup a firewall, start the virtual machine instance, login into to the instance, install and configure a web server such as Apache, and create the web page that displays &quot;Hello World.&quot; (<a href="/compute/docs/hello_world">Google Compute Engine Hello World exercise</a>)</p>
     <h2 id="summary">Summary</h2>
     <p>The decision as to which of the Google's Cloud Platform services to use depends on your business and data needs, and whether you're starting from scratch building web applications, you have existing relational databases, you're primarily looking for a cloud-hosted content repository, you need to analyze massive datasets, or you want to create your application entirely yourself but run them on Google's infrastructure.</p>
     <p>You can use Google Cloud Storage as a content repository in its own right, for all kinds of files of any size, and you can also use it as a staging area for files to be shared not only by other Google Cloud Platform services but by any external applications. You can use Google Cloud SQL to  run your MySQL databases in the cloud, leaving Google to host it, manage it and keep it running. BigQuery lets you analyze massive datasets, and has hooks into third party tools for visualization and ETL. App Engine hosts and runs your web application using Google's infrastructure, allowing you to store data in the application's datastore or save it out to Google Cloud SQL and Google Cloud Storage. And Google Compute Engine provides the ultimate freedom in developing and designing applications, and lets you run your programs on Google's cloud almost as if our data centers were your own private servers.</p>
@@ -287,7 +287,7 @@ https://github.com/GoogleCloudPlatformSite/GoogleCloudPlatformSite.github.io/edi
     <h3>Entry Points</h3>
     <ul>
       <li><a href="/">Google Cloud home page</a></li>
-      <li><a href="http://developers.google.com/cloud">Google Cloud portal for developers</a></li>
+      <li><a href="/docs/">Google Cloud portal for developers</a></li>
       <li><a href="https://bigquery.cloud.google.com/">BigQuery Service</a></li>
       <li><a href="https://console.developers.google.com">Cloud Console</a> (for accessing App Engine, Cloud Storage, and Cloud SQL)</li></ul>
     <h3>Case studies</h3>
@@ -295,23 +295,23 @@ https://github.com/GoogleCloudPlatformSite/GoogleCloudPlatformSite.github.io/edi
       <li><a href="/customers/">App Engine</a></li>
       <li><a href="/storage/">Google Cloud Storage </a></li>
       <li><a href="/sql/">Google Cloud SQL</a></li>
-      <li><a href="https://developers.google.com/bigquery/case_studies/">BigQuery</a></li>
+      <li><a href="/bigquery/case_studies/">BigQuery</a></li>
     </ul>
     <h3>Developer Documentation and Getting Started Guides</h3>
     <ul>
-      <li><a href="https://developers.google.com/appengine/">App Engine</a>     [<a href="https://developers.google.com/appengine/docs/whatisgoogleappengine">Get Started]</a></li>
-      <li><a href="https://developers.google.com/storage/">Google Cloud Storage</a>     [<a href="https://developers.google.com/storage/docs/signup">Get Started</a>]</li>
-      <li><a href="https://developers.google.com/cloud-sql/">Google Cloud SQL</a> [<a href="https://developers.google.com/cloud-sql/docs/before_you_begin">Get Started</a>]</li>
-      <li><a href="https://developers.google.com/bigquery/">BigQuery</a>     [<a href="https://developers.google.com/bigquery/docs/getting-started">Get Started]</a></li>
-      <li><a href="https://developers.google.com/compute/">Google Compute Engine</a> [<a href="https://developers.google.com/compute/docs/signup">Get Started</a>]</li></ul>
+      <li><a href="/appengine/">App Engine</a>     [<a href="/appengine/docs/whatisgoogleappengine">Get Started]</a></li>
+      <li><a href="/storage/">Google Cloud Storage</a>     [<a href="/storage/docs/signup">Get Started</a>]</li>
+      <li><a href="/sql/">Google Cloud SQL</a> [<a href="/sql/docs/before_you_begin">Get Started</a>]</li>
+      <li><a href="/bigquery/">BigQuery</a>     [<a href="/bigquery/docs/getting-started">Get Started]</a></li>
+      <li><a href="/compute/">Google Compute Engine</a> [<a href="/compute/docs/signup">Get Started</a>]</li></ul>
     <h3>Articles</h3>
     <ul>
-      <li><a href="https://developers.google.com/bigquery/articles/datastoretobigquery">Extracting and Transforming App Engine Datastore Data</a> (This is a Datastore to BigQuery codelab)</li>
-      <li><a href="https://developers.google.com/bigquery/articles/ingestioncookbook">BigQuery Data Ingestion and Best Practices Cookbook</a></li>
-      <li><a href="https://developers.google.com/bigquery/docs/third_party_tools">BigQuery Third Party Tools</a></li>
+      <li><a href="/bigquery/articles/datastoretobigquery">Extracting and Transforming App Engine Datastore Data</a> (This is a Datastore to BigQuery codelab)</li>
+      <li><a href="/bigquery/articles/ingestioncookbook">BigQuery Data Ingestion and Best Practices Cookbook</a></li>
+      <li><a href="/bigquery/docs/third_party_tools">BigQuery Third Party Tools</a></li>
       <li><a href="/files/BigQueryTechnicalWP.pdf">Insiders guide to BigQuery</a></li>
-      <li><a href="https://developers.google.com/appengine/articles/scaling/overview">Best Practices for Writing Scalable App Engine Applications</a></li>
-      <li><a href="https://developers.google.com/cloud-sql/faq#supportmysqlfeatures">What MySQL syntax does Google Cloud SQL support?</a></li>
+      <li><a href="/appengine/articles/scaling/overview">Best Practices for Writing Scalable App Engine Applications</a></li>
+      <li><a href="/sql/faq#supportmysqlfeatures">What MySQL syntax does Google Cloud SQL support?</a></li>
     </ul>
     <h3>About our Data Centers</h3>
     <ul>
@@ -324,7 +324,7 @@ https://github.com/GoogleCloudPlatformSite/GoogleCloudPlatformSite.github.io/edi
       <br>
       
       <img src="//www.google.com/images/icons/thirdparty/pdf-16.png" class="g-app-icon">
-      <a href="/files/articles/google-cloud_technical-article_overview-of-storage-options.pdf" class="cp-pdf" onclick="javascript: _gaq.push(['_trackPageview', '../../../files/articles/google-cloud_technical-article_overview-of-storage-options.pdf']);">Download PDF</a>
+      <a href="/files/articles/google-cloud_technical-article_overview-of-storage-options.pdf" class="cp-pdf" onclick="javascript: _gaq.push(['_trackPageview', '/files/articles/google-cloud_technical-article_overview-of-storage-options.pdf']);">Download PDF</a>
 
     </div>
   </div>
