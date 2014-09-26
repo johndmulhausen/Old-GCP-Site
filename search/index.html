@@ -26,7 +26,7 @@ title: Search Results
     var s = document.getElementsByTagName('script')[0];
     s.parentNode.insertBefore(gcse, s);
     
-    $.getJSON( "/search/urls.json", function( data ) {
+    $.getJSON( "/search/urls.json", function( data.urls ) {
     var items = [];
     $.each( data, function( key, val ) {
         items.push( "<li id='" + key + "'>" + val + "</li>" );
