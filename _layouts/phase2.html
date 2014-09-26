@@ -29,6 +29,29 @@
     <link href="//www.google.com/css/maia.experimental.css" rel="stylesheet">
     <link href="/css/maia-cloud.css" rel="stylesheet"/>
     <link href="/css/default.css" rel="stylesheet">
+    <script language="javascript">
+      $( document ).ready(function() {
+        $.getJSON( "/search/urls.json", function( data ) {
+          var subdirFound=false;
+          var subdirURL = "";
+          var subdirName = "";
+          $.each( data.urls, function( key, val ) {
+            if (window.location.pathname.indexOf(key) > -1)
+            {
+              subdirURL=key;
+              subdirName=val;
+              subdirFound=true;
+            }
+          });
+          if (subdirFound)
+          {
+            $("#searchBox").html("Search " + subdirName);
+          } else {
+            $("#searchBox").html("Search the site");
+          }
+        });
+      });
+    </script>
   </head>
   <body>
   <div id="maia-header">
@@ -39,7 +62,7 @@
   <form action="/search" class="maia-search">
     <input type="text" placeholder="Search this site" name="q">
     <button class="maia-button" type="submit" data-g-event="Maia: Button" data-g-action="Maia: Primary – Header" data-g-label="Search">
-      <span class="maia-search-icon">{{page.search_string}}</span>
+      <span id="searchBox" class="maia-search-icon"></span>
     </button>
   </form>
   <div class="cloud-social">
