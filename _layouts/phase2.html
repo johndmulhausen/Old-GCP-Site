@@ -31,6 +31,12 @@
     <link href="/css/default.css" rel="stylesheet">
     <script language="javascript">
       $( document ).ready(function() {
+        if ($("#q").val().indexOf("https://cloud.google.com") > -1) 
+        {
+          // The user hit "back" and now has this interference in their way
+          var cdcPos = $("#q").val().indexOf("https://cloud.google.com");
+          $("#q").val($("#q").val().substring(0,cdcPos));
+        }
         $.getJSON( "/search/urls.json", function( data ) {
           var subdirFound=false;
           var subdirURL = "";
