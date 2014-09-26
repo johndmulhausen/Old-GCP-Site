@@ -26,9 +26,9 @@ title: Search Results
     var s = document.getElementsByTagName('script')[0];
     s.parentNode.insertBefore(gcse, s);
     
-    $.getJSON( "/search/urls.json", function( data.urls ) {
+    $.getJSON( "/search/urls.json", function( data ) {
     var items = [];
-    $.each( data, function( key, val ) {
+    $.each( data.urls, function( key, val ) {
         items.push( "<li id='" + key + "'>" + val + "</li>" );
     });
  
