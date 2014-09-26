@@ -45,9 +45,9 @@
           });
           if (subdirFound)
           {
-            $("#searchBox").html("Search " + subdirName);
+            $("#q").attr("placeholder","Search " + subdirName);
           } else {
-            $("#searchBox").html("Search the site");
+            $("#q").attr("placeholder","Search the site");
           }
         });
       });
@@ -60,7 +60,7 @@
 
 <div class="search-container">
   <form action="/search" class="maia-search">
-    <input type="text" placeholder="Search this site" name="q">
+    <input type="text" placeholder="" name="q" id="q">
     <button class="maia-button" type="submit" data-g-event="Maia: Button" data-g-action="Maia: Primary – Header" data-g-label="Search">
       <span id="searchBox" class="maia-search-icon"></span>
     </button>
