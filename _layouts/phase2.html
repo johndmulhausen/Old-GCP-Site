@@ -47,7 +47,7 @@
           {
             $("#q").attr("placeholder","Search " + subdirName);
             $(".maia-search").submit(function(){
-              $("#q").val(this.val() + " site:https://cloud.google.com" + subdirURL)
+              $("#q").val($("#q").val() + " site:https://cloud.google.com" + subdirURL)
             });
           } else {
             $("#q").attr("placeholder","Search the site");
