@@ -38,7 +38,8 @@
           return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
       }
       $( document ).ready(function() {
-        var searchTerm = getParameterByName("q");
+        var searchInput = getParameterByName("q")
+        var searchTerm = searchInput;
         if (searchTerm.length > 0)
         {
           // A previous search was done. Make sure the previous search term is viewable (minus 
@@ -46,7 +47,7 @@
           searchTerm = searchTerm.substring(0,searchTerm.indexOf(siteStringToAppend));
           $("#q").val(searchTerm);
           $("#search_box").val(searchTerm);
-          $("#searchScopeURL").html(searchTerm.substring((searchTerm.indexOf(siteStringToAppend)+siteStringToAppend.length),searchTerm.length))
+          $("#searchScopeURL").html(searchInput.substring((searchInput.indexOf(siteStringToAppend)+siteStringToAppend.length),searchInput.length))
         }
         if ($("#q").val().indexOf(siteStringToAppend) > -1) 
         {
