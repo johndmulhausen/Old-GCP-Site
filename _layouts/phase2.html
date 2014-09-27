@@ -40,17 +40,22 @@
         var searchTerm = getParameterByName("q");
         if (searchTerm.length > 0)
         {
-          // A previous search was done.
+          // A previous search was done. Make sure the previous search term is viewable (minus 
+          // any c.d.c appending that might have been done to narrow the search )
           searchTerm = searchTerm.substring(0,searchTerm.indexOf(" site:https://cloud.google.com"));
           $("#q").val(searchTerm);
         }
         if ($("#q").val().indexOf(" site:https://cloud.google.com") > -1) 
         {
-          // The user hit "back" and now has this interference in their way
+          // The user hit "back" and now has this interference in their way. Remove it.
           var cdcPos = $("#q").val().indexOf(" site:https://cloud.google.com");
           $("#q").val($("#q").val().substring(0,cdcPos));
         }
         $.getJSON( "/search/urls.json", function( data ) {
+          // Check to see if we're in a URL path that is defined in urls.json
+          // If so, then we should narrow the search so that it's only seraching within
+          // the path defined in urls.json or lower/deeper. In other words, we're using
+          // urls.json to group the site into searchable "buckets"
           var subdirFound=false;
           var subdirURL = "";
           var subdirName = "";
