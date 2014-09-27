@@ -30,7 +30,20 @@
     <link href="/css/maia-cloud.css" rel="stylesheet"/>
     <link href="/css/default.css" rel="stylesheet">
     <script language="javascript">
+      function getParameterByName(name) {
+          name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+          var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+              results = regex.exec(location.search);
+          return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+      }
       $( document ).ready(function() {
+        var searchTerm = getParameterByName("q");
+        if (searchTerm.length > 0)
+        {
+          // A previous search was done.
+          searchTerm = searchTerm.substring(0,searchTerm.indexOf(" site:https://cloud.google.com"));
+          $("#q").val(searchTerm);
+        }
         if ($("#q").val().indexOf(" site:https://cloud.google.com") > -1) 
         {
           // The user hit "back" and now has this interference in their way
@@ -55,9 +68,6 @@
             $(".maia-search").submit(function(){
               $("#q").val($("#q").val() + " site:https://cloud.google.com" + subdirURL)
             });
-          } else {
-            $("#q").attr("placeholder","Search the site");
-          }
         });
       });
     </script>
@@ -69,7 +79,7 @@
 
 <div class="search-container">
   <form action="/search" class="maia-search">
-    <input type="text" placeholder="" name="q" id="q">
+    <input type="text" placeholder="Search the site" name="q" id="q">
     <button class="maia-button" type="submit" data-g-event="Maia: Button" data-g-action="Maia: Primary – Header" data-g-label="Search">
       <span id="searchBox" class="maia-search-icon">Search</span>
     </button>
