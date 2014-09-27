@@ -44,6 +44,7 @@
           // any c.d.c appending that might have been done to narrow the search )
           searchTerm = searchTerm.substring(0,searchTerm.indexOf(" site:https://cloud.google.com"));
           $("#q").val(searchTerm);
+          $("#search_box").val(searchTerm);
         }
         if ($("#q").val().indexOf(" site:https://cloud.google.com") > -1) 
         {
