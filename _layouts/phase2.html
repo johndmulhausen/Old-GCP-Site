@@ -1,6 +1,18 @@
 <!DOCTYPE html>
 <html lang="{{page.lang}}">
   <head>
+    <script type="application/ld+json">
+    {
+      "@context": "http://schema.org",
+      "@type": "WebSite",
+      "url": "https://cloud.google.com",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://cloud.google.com/search/?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    }
+    </script>
     <title>{{page.title}}</title>
     <meta charset="utf-8" />
     {% if page.description %}
