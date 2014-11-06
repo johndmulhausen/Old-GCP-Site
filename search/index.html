@@ -51,7 +51,7 @@ title: Search Results
                 $("#search-filter").html($("#search-filter").html() + "<input type='checkbox' value='" + key + "'>" + val + "<br>");
             }
           });
-          $("#search-filter").html($("#search-filter").html() + "<button type='button' class='button' id='filterButton'>Filter Search</button>");
+          $("#search-filter").html($("#search-filter").html() + "<p><button type='button' class='button-blue button' id='filterButton'>Filter Search</button></p>");
           $("#filterButton").prop("disabled",true);
           $("#search-filter [type=checkbox]").click(function() {
                 var somethingIsChecked = false;
