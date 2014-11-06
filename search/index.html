@@ -40,7 +40,7 @@ title: Search Results
 </style>
     <script language="javascript">
       $( document ).ready(function() {
-        var rawSearchTerm = getParameterByName("q").split(" site:");
+        var rawSearchTerm = getParameterByName("q").split(" AND ");
         $("#q").val(rawSearchTerm);
         var checked = "";
         $.getJSON( "/search/urls.json", function( data ) {
