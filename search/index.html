@@ -38,6 +38,16 @@ title: Search Results
         float: left;
     }
 </style>
+    <script language="javascript">
+      $( document ).ready(function() {
+        $.getJSON( "/search/urls.json", function( data ) {
+          // Fetch list of URls we use to narrow searches, display each result as a checkbox
+          $.each( data.urls, function( key, val ) {
+            $("#search-filter").html($("#search-filter").html() + val + "<br>")
+          });
+        });
+      });
+    </script>
 <ul id="search-container">
 <li id="custom-search">
 <script>
