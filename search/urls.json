@@ -1,7 +1,7 @@
 {
   "urls":
   {
-    "heading": "Compute",
+    "heading1": "Compute",
     "/appengine": "App Engine: All",
     "/appengine/docs/go": "App Engine: Go docs",
     "/appengine/docs/java": "App Engine: Java docs",
@@ -10,21 +10,21 @@
     "/compute": "Compute Engine",
     "/container-engine": "Container Engine",
     
-    "heading": "Storage",
+    "heading2": "Storage",
     "/sql": "Cloud SQL",
     "/storage": "Cloud Storage",
     "/datastore": "Cloud Datastore",
     
-    "heading": "Networking",
+    "heading3": "Networking",
     "/dns": "Cloud DNS",
     "/interconnect": "Cloud Interconnect",
     
-    "heading": "Big Data",
+    "heading4": "Big Data",
     "/bigquery": "Big Query",
     "/pubsub": "Cloud Pub/Sub",
     "/hadoop": "Apache Hadoop",
     
-    "heading": "Solutions",
+    "heading5": "Solutions",
     "/solutions/cassandra": "Cassandra",
     "/solutions/gitlab": "Gitlab",
     "/solutions/lamp": "LAMP Stack",
@@ -34,10 +34,10 @@
     "/solutions/redis": "Redis",
     "/solutions/ruby": "Ruby Stack",
     
-    "heading": "Samples",
+    "heading6": "Samples",
     "https://www.github.com/GoogleCloudPlatform": "GitHub Samples",
     
-    "heading": "Tools",
+    "heading7": "Tools",
     "/deployment-manger": "Deployment Manager",
     "/endpoints": "Cloud Endpoints",
     "/genomics": "Google Genomics",
@@ -48,7 +48,7 @@
     "/tools": "Developer Tools",
     "/translate": "Translate API",
     
-    "heading": "Site Sections",
+    "heading8": "Site Sections",
     "/customers": "Customers",
     "/partners": "Partners",
     "/pricing": "Pricing",
