@@ -72,7 +72,7 @@ title: Search Results
             var siteFilter = "";
             $('input[type=checkbox]').each(function () {
                     if (this.checked) {
-                        base = (this.val.indexOf("http:") < 0) ? "https://cloud.google.com" : "";
+                        base = (this.value.indexOf("http:") < 0) ? "https://cloud.google.com" : "";
                         if (siteFilter.length == 0) 
                         {
                             siteFilter = "site:" + base + val;
