@@ -75,9 +75,9 @@ title: Search Results
                         base = (this.value.indexOf("http:") < 0) ? "https://cloud.google.com" : "";
                         if (siteFilter.length == 0) 
                         {
-                            siteFilter = "site:" + base + val;
+                            siteFilter = "site:" + base + this.value;
                         } else {
-                            siteFilter += "OR site:" + base + val
+                            siteFilter += "OR site:" + base + this.value;
                         }
                     }
                 });
