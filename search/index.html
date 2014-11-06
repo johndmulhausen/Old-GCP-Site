@@ -26,12 +26,13 @@ title: Search Results
         padding: 15px;
         border-radius: 5px;
     }
-    #custom-search
-    {
+    #search-container li {
+        display: inline;
         float: left;
     }
 </style>
-<div id="search-filter">
+<ul id="search-container">
+<li id="search-filter">
     <!-- sdk AND site:cloud.google.com/appengine OR site:cloud.google.com/compute -->
     TESTING<BR>
     TESTING<BR>
@@ -46,8 +47,8 @@ title: Search Results
     TESTING<BR>
     TESTING<BR>
     TESTING<BR>
-</div>
-<div id="custom-search">
+</li>
+<li id="custom-search">
 <script>
   (function() {
     var cx = '013288817511911618469:7j8xxwrgjxm';
@@ -61,4 +62,5 @@ title: Search Results
   })();
 </script>
 <gcse:searchresults-only linktarget="_parent"></gcse:searchresults-only>
-</div>
+</li>
+</ul>
