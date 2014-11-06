@@ -46,7 +46,6 @@ title: Search Results
         $.getJSON( "/search/urls.json", function( data ) {
           // Fetch list of URls we use to narrow searches, display each result as a checkbox
           $.each( data.urls, function( key, val ) {
-            console.log(key + '=' + val);
             if(key.indexOf("heading")==0)
             {
                 $("#search-filter").html($("#search-filter").html() + "<h4>" + val + "</h4>");
@@ -84,8 +83,7 @@ title: Search Results
                     }
                 });
             var finalSearch = "/search/?q=" + $("#q").val() + " AND " + siteFilter;
-            console.log(finalSearch);
-            // window.location = finalSearch;
+            window.location = finalSearch;
           });
         });
       });
