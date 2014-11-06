@@ -40,6 +40,8 @@ title: Search Results
 </style>
     <script language="javascript">
       $( document ).ready(function() {
+        var rawSearchTerm = getParameterByName("q").split(" site:");
+        $("#q").val(rawSearchTerm);
         var checked = "";
         $.getJSON( "/search/urls.json", function( data ) {
           // Fetch list of URls we use to narrow searches, display each result as a checkbox
@@ -81,8 +83,7 @@ title: Search Results
                         }
                     }
                 });
-            var rawSearchTerm = getParameterByName("q").split(" site:");
-            var finalSearch = "/search/?q=" + rawSearchTerm[0] + " AND " + siteFilter;
+            var finalSearch = "/search/?q=" + $("#q").val() + " AND " + siteFilter;
             console.log(finalSearch);
             // window.location = finalSearch;
           });
