@@ -22,7 +22,7 @@ title: Search Results
     #search-filter {
         background-color: #efefef;
         border: 1px solid #ccc;
-        width: 150px;
+        width: 200px;
         padding: 15px;
         border-radius: 5px;
     }
@@ -43,8 +43,19 @@ title: Search Results
         $.getJSON( "/search/urls.json", function( data ) {
           // Fetch list of URls we use to narrow searches, display each result as a checkbox
           $.each( data.urls, function( key, val ) {
-            $("#search-filter").html($("#search-filter").html() + val + "<br>")
+            $("#search-filter").html($("#search-filter").html() + "<input type='checkbox' value='" + key + "'>" val + "<br>");
           });
+          $("#search-filter").html($("#search-filter").html() + "<button type='button' id='filterButton'>Filter Search</button>");
+          $("#filterButton").prop("disabled",true);
+          $("#search-filter [type=checkbox]").click(function() {
+                var somethingIsChecked = false;
+                $('input[type=checkbox]').each(function () {
+                    if (this.checked) {
+                        somethingIsChecked = true;
+                    }
+                });
+                if (somethingIsChecked) $("#filterButton").prop("disabled",false);
+            })
         });
       });
     </script>
@@ -66,18 +77,5 @@ title: Search Results
 </li>
 <li id="search-filter">
     <!-- sdk AND site:cloud.google.com/appengine OR site:cloud.google.com/compute -->
-    TESTING<BR>
-    TESTING<BR>
-    TESTING<BR>
-    TESTING<BR>
-    TESTING<BR>
-    TESTING<BR>
-    TESTING<BR>
-    TESTING<BR>
-    TESTING<BR>
-    TESTING<BR>
-    TESTING<BR>
-    TESTING<BR>
-    TESTING<BR>
 </li>
 </ul>
