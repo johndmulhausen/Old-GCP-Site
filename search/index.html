@@ -41,7 +41,7 @@ title: Search Results
     <script language="javascript">
       $( document ).ready(function() {
         var rawSearchTerm = getParameterByName("q").split(" AND ");
-        $("#q").val(rawSearchTerm);
+        $("#q").val(rawSearchTerm[0]);
         var checked = "";
         $.getJSON( "/search/urls.json", function( data ) {
           // Fetch list of URls we use to narrow searches, display each result as a checkbox
