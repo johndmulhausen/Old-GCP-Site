@@ -83,6 +83,7 @@ title: Search Results
                 });
             var rawSearchTerm = getParameterByName("q").split(" site:");
             var finalSearch = "/search/?q=" + rawSearchTerm[0] + " AND " + siteFilter;
+            console.log(finalSearch);
             window.location = finalSearch;
           });
         });
