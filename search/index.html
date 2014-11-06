@@ -49,7 +49,7 @@ title: Search Results
             {
                 $("#search-filter").html($("#search-filter").html() + "<h4>" + val + "</h4>");
             } else {
-                checked = (getParameterByName(q).indexOf(key) > 0) ? "checked" : "";
+                checked = (getParameterByName("q").indexOf(key) > 0) ? "checked" : "";
                 $("#search-filter").html($("#search-filter").html() + "<input type='checkbox' value='" + key + " "+ checked +"'>" + val + "<br>");
             }
           });
@@ -81,7 +81,7 @@ title: Search Results
                         }
                     }
                 });
-            var finalSearch = "/search/?q=" + getParameterByName(q) + " AND " + siteFilter;
+            var finalSearch = "/search/?q=" + getParameterByName("q") + " AND " + siteFilter;
           });
         });
       });
