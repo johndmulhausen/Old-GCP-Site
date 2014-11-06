@@ -45,7 +45,7 @@ title: Search Results
           $.each( data.urls, function( key, val ) {
             $("#search-filter").html($("#search-filter").html() + "<input type='checkbox' value='" + key + "'>" + val + "<br>");
           });
-          $("#search-filter").html($("#search-filter").html() + "<button type='button' id='filterButton'>Filter Search</button>");
+          $("#search-filter").html($("#search-filter").html() + "<button type='button' class='button' id='filterButton'>Filter Search</button>");
           $("#filterButton").prop("disabled",true);
           $("#search-filter [type=checkbox]").click(function() {
                 var somethingIsChecked = false;
@@ -54,7 +54,11 @@ title: Search Results
                         somethingIsChecked = true;
                     }
                 });
-                if (somethingIsChecked) $("#filterButton").prop("disabled",false);
+                if (somethingIsChecked) {
+                    $("#filterButton").prop("disabled",false);
+                } else {
+                    $("#filterButton").prop("disabled",true);
+                }
             })
         });
       });
