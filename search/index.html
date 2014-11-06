@@ -81,7 +81,8 @@ title: Search Results
                         }
                     }
                 });
-            var finalSearch = "/search/?q=" + getParameterByName("q") + " AND " + siteFilter;
+            var rawSearchTerm = getParameterByName("q").split(" site:");
+            var finalSearch = "/search/?q=" + rawSearchTerm[0] + " AND " + siteFilter;
             window.location = finalSearch;
           });
         });
