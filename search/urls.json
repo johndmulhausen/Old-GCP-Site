@@ -32,7 +32,7 @@
     
     "heading6": "Samples",
     "https://github.com/GoogleCloudPlatform": "GitHub Samples",
-    "https://google.bitnami.com": "Deployable Applications",
+    "https://google.bitnami.com OR https://cloud.google.com/solutions/mongodb/click-to-deploy OR https://cloud.google.com/solutions/mean/click-to-deploy OR https://cloud.google.com/solutions/cassandra/click-to-deploy OR https://cloud.google.com/solutions/lamp/click-to-deploy OR https://cloud.google.com/solutions/redis/click-to-deploy": "Deployable Applications",
     
     "heading7": "Tools",
     "/deployment-manger": "Deployment Manager",
