@@ -27,6 +27,7 @@
         "heading6": "Samples",
         "https://github.com/GoogleCloudPlatform": "GitHub Samples",
         "section_Applications": [
+            "Deployable Applications",
             "https://google.bitnami.com",
             "/solutions/mongodb/click-to-deploy",
             "/solutions/mean/click-to-deploy",
