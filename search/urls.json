@@ -3,10 +3,6 @@
   {
     "heading1": "Compute",
     "/appengine": "App Engine: All",
-    "/appengine/docs/go": "App Engine: Go docs",
-    "/appengine/docs/java": "App Engine: Java docs",
-    "/appengine/docs/php": "App Engine: PHP docs",
-    "/appengine/docs/python": "App Engine: Python docs",
     "/compute": "Compute Engine",
     "/container-engine": "Container Engine",
     
@@ -36,6 +32,7 @@
     
     "heading6": "Samples",
     "https://github.com/GoogleCloudPlatform": "GitHub Samples",
+    "https://google.bitnami.com": "Deployable Applications",
     
     "heading7": "Tools",
     "/deployment-manger": "Deployment Manager",
