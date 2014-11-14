@@ -2,7 +2,7 @@
   "urls":
   {
     "heading1": "Compute",
-    "/appengine": "App Engine: All",
+    "/appengine": "App Engine",
     "/compute": "Compute Engine",
     "/container-engine": "Container Engine",
     
@@ -32,7 +32,7 @@
     
     "heading6": "Samples",
     "https://github.com/GoogleCloudPlatform": "GitHub Samples",
-    "https://google.bitnami.com OR https://cloud.google.com/solutions/mongodb/click-to-deploy OR https://cloud.google.com/solutions/mean/click-to-deploy OR https://cloud.google.com/solutions/cassandra/click-to-deploy OR https://cloud.google.com/solutions/lamp/click-to-deploy OR https://cloud.google.com/solutions/redis/click-to-deploy": "Deployable Applications",
+    "https://google.bitnami.com": "Deployable Applications",
     
     "heading7": "Tools",
     "/deployment-manger": "Deployment Manager",
@@ -45,14 +45,5 @@
     "/tools": "Developer Tools",
     "/translate": "Translate API",
     
-    "heading8": "Site Sections",
-    "/customers": "Customers",
-    "/partners": "Partners",
-    "/pricing": "Pricing",
-    "/reseller": "Resellers",
-    "/events": "Events",
-    "/terms": "Terms of Service",
-    "/resources": "Resources",
-    "/newsletter": "Newsletter Archive"
   }
 }
