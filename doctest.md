@@ -18,8 +18,7 @@ toc: book
 {% assign sotag2="task-queue" %}
 {% include sidebar.html %}
 
-{% include jswidgets.html %}
-{{pagetoc}}
+{% include jswidgets.html %}{{pagetoc}}
 
 ## CSS Tests
 
